@@ -11,14 +11,17 @@ environment:
 dependencies:
   flutter:
     sdk: flutter
-  material:
+     
   teta_core:
-    path: ../teta_core
+    git:
+      url: git@github.com:andreabuttarelli/Teta.git
+      path: teta_core
+      ref: develop
+  very_good_analysis: ^2.4.0
 
 dev_dependencies:
   flutter_test:
     sdk: flutter
-  flutter_lints: ^1.0.0
 
 # For information on the generic Dart part of this file, see the
 # following page: https://dart.dev/tools/pub/pubspec
