@@ -6,6 +6,6 @@ You can contribute to help us to support new widgets and add new functionalities
 [Teta](https://teta.so) is an online cooperative app builder. You can use Teta to build apps visually in few days.
 
 # Community & Support
-[Discord](http://discord.gg/z9MjHSMaSX)
-GitHub Issues
-[Instagram](http://instagram.com/teta.so)
+[Discord](http://discord.gg/z9MjHSMaSX)<br>
+GitHub Issues<br>
+[Instagram](http://instagram.com/teta.so)<br>
