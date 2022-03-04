@@ -18,15 +18,15 @@ import 'package:teta_widgets/src/elements/features/text_type_input.dart';
 class TextBuilder extends StatelessWidget {
   /// Constructor
   const TextBuilder({
-    Key? key,
     required FTextStyle textStyle,
     required FTextTypeInput value,
-    FTextTypeInput? maxLines,
     required List<VariableObject> params,
     required List<VariableObject> states,
     required List<DatasetObject> dataset,
     required bool forPlay,
+    FTextTypeInput? maxLines,
     int? loop,
+    Key? key,
   })  : _textStyle = textStyle,
         _value = value,
         _params = params,

@@ -11,10 +11,10 @@ import 'package:teta_core/src/design_system/text.dart';
 
 class FlagControl extends StatefulWidget {
   const FlagControl({
-    Key? key,
     required this.title,
     required this.value,
     required this.callBack,
+    Key? key,
   }) : super(key: key);
 
   final String title;

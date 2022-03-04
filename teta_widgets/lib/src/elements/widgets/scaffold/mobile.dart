@@ -14,7 +14,6 @@ import 'package:tinycolor/tinycolor.dart';
 class ScaffoldMobile extends StatelessWidget {
   /// Returns a [Scaffold] widget for page
   const ScaffoldMobile({
-    Key? key,
     required this.children,
     required this.node,
     required this.fill,
@@ -30,6 +29,7 @@ class ScaffoldMobile extends StatelessWidget {
     required this.params,
     required this.states,
     required this.dataset,
+    Key? key,
     this.index,
     this.appBar,
     this.bottomBar,

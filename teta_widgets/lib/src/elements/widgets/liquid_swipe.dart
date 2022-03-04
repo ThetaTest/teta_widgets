@@ -9,15 +9,15 @@ import 'package:teta_widgets/src/elements/index.dart';
 
 class WLiquidSwipe extends StatelessWidget {
   /// Returns a LiquidSwipe widget
-  const WLiquidSwipe({
-    Key? key,
+  const WLiquidSwipe(
+    Key? key, {
     required this.children,
     required this.node,
-    this.loop,
     required this.forPlay,
     required this.params,
     required this.states,
     required this.dataset,
+    this.loop,
   }) : super(key: key);
 
   final CNode node;

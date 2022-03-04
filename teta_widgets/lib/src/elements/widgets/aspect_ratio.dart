@@ -7,15 +7,15 @@ import 'package:teta_widgets/src/elements/index.dart';
 
 class WAspectRatio extends StatelessWidget {
   /// Returns a [Center] widget in Teta
-  const WAspectRatio({
-    Key? key,
+  const WAspectRatio(
+    Key? key, {
     required this.node,
     required this.forPlay,
     required this.params,
     required this.states,
     required this.dataset,
-    this.child,
     required this.aspectRatio,
+    this.child,
     this.loop,
   }) : super(key: key);
 
@@ -39,6 +39,7 @@ class WAspectRatio extends StatelessWidget {
       child: AspectRatio(
         aspectRatio: rawDouble,
         child: ChildConditionBuilder(
+          ValueKey('${node.nid} $loop'),
           name: node.intrinsicState.displayName,
           child: child,
           params: params,

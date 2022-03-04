@@ -9,8 +9,8 @@ import 'package:teta_widgets/src/elements/index.dart';
 
 class WCupertinoSegmentedControl extends StatefulWidget {
   /// Returns a Gesture Detector
-  const WCupertinoSegmentedControl({
-    Key? key,
+  const WCupertinoSegmentedControl(
+    Key? key, {
     required this.children,
     required this.node,
     required this.forPlay,
@@ -18,11 +18,11 @@ class WCupertinoSegmentedControl extends StatefulWidget {
     required this.selectedColor,
     required this.unselectedColor,
     required this.borderColor,
-    this.loop,
     required this.action,
     required this.params,
     required this.states,
     required this.dataset,
+    this.loop,
   }) : super(key: key);
 
   final CNode node;

@@ -21,10 +21,10 @@ import 'package:teta_widgets/src/elements/nodes/node.dart';
 
 class AssetFillControl extends StatefulWidget {
   const AssetFillControl({
-    Key? key,
     required this.node,
     required this.fill,
     required this.callBack,
+    Key? key,
   }) : super(key: key);
 
   final CNode node;

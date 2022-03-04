@@ -11,36 +11,28 @@ import 'package:youtube_player_iframe/youtube_player_iframe.dart';
 
 class WVideo extends StatelessWidget {
   /// Returns a Video widget in Teta
-  const WVideo({
-    Key? key,
+  const WVideo(
+    Key? key, {
     required this.node,
-    this.nid,
-    this.parent,
     required this.value,
     required this.startAt,
     required this.showControls,
     required this.showFullScreen,
     required this.forPlay,
-    this.index,
-    this.component,
-    this.loop,
     required this.params,
     required this.states,
     required this.loopVideo,
     required this.dataset,
+    this.loop,
   }) : super(key: key);
 
   final CNode node;
-  final String? nid;
-  final String? parent;
   final FTextTypeInput value;
   final int startAt;
   final bool showControls;
   final bool showFullScreen;
   final bool loopVideo;
   final bool forPlay;
-  final double? index;
-  final String? component;
   final int? loop;
 
   final List<VariableObject> params;

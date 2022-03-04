@@ -17,12 +17,12 @@ import 'package:uuid/uuid.dart';
 
 class ActionControl extends StatefulWidget {
   const ActionControl({
-    Key? key,
     required this.prj,
     required this.page,
     required this.node,
     required this.action,
     required this.callBack,
+    Key? key,
   }) : super(key: key);
 
   final ProjectObject prj;

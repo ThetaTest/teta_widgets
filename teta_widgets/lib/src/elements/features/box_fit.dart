@@ -104,7 +104,9 @@ class FBoxFit {
         return 'fW';
       case BoxFit.scaleDown:
         return 's';
-      default:
+      case BoxFit.cover:
+        return 'cv';
+      case BoxFit.none:
         return 'cv';
     }
   }
@@ -121,7 +123,9 @@ class FBoxFit {
         return 'fitWidth';
       case BoxFit.scaleDown:
         return 'scaleDown';
-      default:
+      case BoxFit.cover:
+        return 'cover';
+      case BoxFit.none:
         return 'cover';
     }
   }
@@ -140,7 +144,7 @@ class FBoxFit {
         return 'contain';
       case BoxFit.scaleDown:
         return 'scale-down';
-      default:
+      case BoxFit.none:
         return 'cover';
     }
   }
@@ -172,7 +176,9 @@ class FBoxFit {
         return 'BoxFit.fitWidth';
       case BoxFit.scaleDown:
         return 'BoxFit.scaleDown';
-      default:
+      case BoxFit.cover:
+        return 'BoxFit.cover';
+      case BoxFit.none:
         return 'BoxFit.cover';
     }
   }

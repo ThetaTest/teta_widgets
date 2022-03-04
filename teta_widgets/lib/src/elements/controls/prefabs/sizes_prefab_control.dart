@@ -15,11 +15,11 @@ import 'package:teta_widgets/src/elements/nodes/node.dart';
 
 class SizesPrefabControl extends StatelessWidget {
   const SizesPrefabControl({
-    Key? key,
     required this.prj,
     required this.page,
     required this.node,
     required this.values,
+    Key? key,
   }) : super(key: key);
 
   final ProjectObject prj;

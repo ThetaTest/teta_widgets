@@ -7,8 +7,8 @@ import 'package:teta_widgets/src/elements/index.dart';
 
 class WAnimatedAlign extends StatelessWidget {
   /// Returns a [Align] widget in Teta
-  const WAnimatedAlign({
-    Key? key,
+  const WAnimatedAlign(
+    Key? key, {
     required this.node,
     required this.align,
     required this.duration,
@@ -43,6 +43,7 @@ class WAnimatedAlign extends StatelessWidget {
         ),
         alignment: align.align!,
         child: ChildConditionBuilder(
+          ValueKey('${node.nid} $loop'),
           name: NodeType.name(NType.align),
           child: child,
           params: params,

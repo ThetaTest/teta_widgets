@@ -1,35 +1,28 @@
 // Flutter imports:
-// ignore_for_file: public_member_api_docs, sort_constructors_first, use_key_in_widget_constructors, lines_longer_than_80_chars
+// ignore_for_file: public_member_api_docs, use_key_in_widget_constructors, lines_longer_than_80_chars
 
 import 'package:flutter/material.dart';
 import 'package:teta_core/teta_core.dart';
 import 'package:teta_widgets/src/elements/index.dart';
 
 class WNumericStepButton extends StatefulWidget {
+  const WNumericStepButton(
+    Key? key, {
+    required this.node,
+    required this.forPlay,
+    required this.params,
+    required this.states,
+    required this.dataset,
+    this.loop,
+  }) : super(key: key);
+
   final CNode node;
-  final String? nid;
-  final String? parent;
   final bool forPlay;
-  final double? index;
-  final String? component;
   final int? loop;
 
   final List<VariableObject> params;
   final List<VariableObject> states;
   final List<DatasetObject> dataset;
-
-  const WNumericStepButton({
-    required this.node,
-    this.nid,
-    this.parent,
-    required this.forPlay,
-    this.index,
-    this.component,
-    this.loop,
-    required this.params,
-    required this.states,
-    required this.dataset,
-  });
 
   @override
   _WNumericStepButtonState createState() => _WNumericStepButtonState();

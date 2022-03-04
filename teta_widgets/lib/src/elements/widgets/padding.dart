@@ -7,30 +7,22 @@ import 'package:teta_widgets/src/elements/index.dart';
 
 class WPadding extends StatelessWidget {
   /// Returns a Padding widget
-  const WPadding({
-    Key? key,
-    this.child,
+  const WPadding(
+    Key? key, {
     required this.node,
     required this.padding,
-    this.nid,
-    this.parent,
     required this.forPlay,
-    this.index,
-    this.component,
-    this.loop,
     required this.params,
     required this.states,
     required this.dataset,
+    this.child,
+    this.loop,
   }) : super(key: key);
 
   final CNode node;
-  final String? nid;
-  final String? parent;
   final CNode? child;
   final FMargins padding;
   final bool forPlay;
-  final double? index;
-  final String? component;
   final int? loop;
 
   final List<VariableObject> params;
@@ -45,6 +37,7 @@ class WPadding extends StatelessWidget {
       child: Padding(
         padding: padding.get(context),
         child: ChildConditionBuilder(
+          ValueKey('${node.nid} $loop'),
           name: node.intrinsicState.displayName,
           child: child,
           params: params,

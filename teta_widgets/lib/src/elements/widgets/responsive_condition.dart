@@ -10,18 +10,18 @@ import 'package:teta_widgets/src/elements/index.dart';
 
 class WResponsiveCondition extends StatelessWidget {
   /// Returns a Responsive Condition in Teta
-  const WResponsiveCondition({
-    Key? key,
-    this.child,
+  const WResponsiveCondition(
+    Key? key, {
     required this.node,
     required this.visibleOnMobile,
     required this.visibleOnTablet,
     required this.visibleOnDesktop,
     required this.forPlay,
-    this.loop,
     required this.params,
     required this.states,
     required this.dataset,
+    this.child,
+    this.loop,
   }) : super(key: key);
 
   final CNode node;
@@ -43,6 +43,7 @@ class WResponsiveCondition extends StatelessWidget {
         if (state.identifier.type == DeviceType.desktop) {
           return visibleOnDesktop
               ? ChildConditionBuilder(
+                  ValueKey('${node.nid} $loop'),
                   name: node.intrinsicState.displayName,
                   child: child,
                   params: params,
@@ -56,6 +57,7 @@ class WResponsiveCondition extends StatelessWidget {
         if (state.identifier.type == DeviceType.tablet) {
           return visibleOnTablet
               ? ChildConditionBuilder(
+                  ValueKey('${node.nid} $loop'),
                   name: node.intrinsicState.displayName,
                   child: child,
                   params: params,
@@ -68,6 +70,7 @@ class WResponsiveCondition extends StatelessWidget {
         }
         return visibleOnMobile
             ? ChildConditionBuilder(
+                ValueKey('${node.nid} $loop'),
                 name: node.intrinsicState.displayName,
                 child: child,
                 params: params,

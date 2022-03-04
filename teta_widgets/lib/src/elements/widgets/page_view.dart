@@ -7,18 +7,18 @@ import 'package:teta_widgets/src/elements/index.dart';
 
 class WPageView extends StatefulWidget {
   /// Returns a PageViewwidget
-  const WPageView({
-    Key? key,
+  const WPageView(
+    Key? key, {
     required this.children,
     required this.isVertical,
     required this.flagValue,
     required this.node,
     required this.action,
-    this.loop,
     required this.forPlay,
     required this.params,
     required this.states,
     required this.dataset,
+    this.loop,
   }) : super(key: key);
 
   final CNode node;

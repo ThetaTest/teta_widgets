@@ -3,7 +3,6 @@
 
 import 'package:camera/camera.dart';
 import 'package:collection/collection.dart';
-import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 // Package imports:
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -17,32 +16,24 @@ import 'package:webviewx/webviewx.dart';
 
 class WComponent extends StatefulWidget {
   /// Returns a Component
-  const WComponent({
-    Key? key,
-    this.child,
+  const WComponent(
+    Key? key, {
     required this.node,
-    this.componentName,
-    this.paramsToSend,
-    this.nid,
-    this.parent,
     required this.forPlay,
-    this.index,
-    this.component,
-    this.loop,
     required this.params,
     required this.states,
     required this.dataset,
+    this.child,
+    this.componentName,
+    this.paramsToSend,
+    this.loop,
   }) : super(key: key);
 
   final CNode node;
-  final String? nid;
-  final String? parent;
   final CNode? child;
   final String? componentName;
   final Map<String, dynamic>? paramsToSend;
   final bool forPlay;
-  final double? index;
-  final String? component;
   final int? loop;
 
   final List<VariableObject> params;

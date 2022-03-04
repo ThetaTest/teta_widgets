@@ -7,8 +7,8 @@ import 'package:teta_widgets/src/elements/index.dart';
 
 class WButton extends StatelessWidget {
   /// Returns a Button widget in Teta
-  const WButton({
-    Key? key,
+  const WButton(
+    Key? key, {
     required this.value,
     required this.node,
     required this.width,

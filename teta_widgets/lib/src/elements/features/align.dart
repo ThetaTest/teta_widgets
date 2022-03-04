@@ -120,5 +120,9 @@ class FAlign {
   /// ```dart
   /// Alignment.topLeft
   /// ```
-  String toCode() => convertValueToCode(align);
+  String toCode() => 'FAlign(align: ${convertValueToCode(align)})';
 }
+
+
+/// ma ora a noi ci serve
+/// FAlign(align: ${convertValueToCode(align)})

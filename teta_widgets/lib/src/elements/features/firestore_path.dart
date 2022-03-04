@@ -52,9 +52,9 @@ class FFirestorePath {
     List<VariableObject> params,
     List<VariableObject> states,
     List<DatasetObject> dataset,
-    bool forPlay,
-    int? loop,
-  ) {
+    int? loop, {
+    required bool forPlay,
+  }) {
     return values != null
         ? values!
             .map((value) => value.get(params, states, dataset, forPlay, loop))
@@ -68,12 +68,18 @@ class FFirestorePath {
     List<VariableObject> params,
     List<VariableObject> states,
     List<DatasetObject> dataset,
-    bool forPlay,
-    int? loop,
-  ) {
+    int? loop, {
+    required bool forPlay,
+  }) {
     final finalPath = StringBuffer()..write('');
-    final values =
-        getFinalValues(context, params, states, dataset, forPlay, loop);
+    final values = getFinalValues(
+      context,
+      params,
+      states,
+      dataset,
+      loop,
+      forPlay: forPlay,
+    );
     for (final e in values) {
       if (values.indexOf(e) != values.length - 1) {
         finalPath.write('$e/');
@@ -96,9 +102,9 @@ class FFirestorePath {
   /// ```
   String toCode(
     BuildContext context,
-    bool isStream,
-    int? loop,
-  ) {
+    int? loop, {
+    required bool isStream,
+  }) {
     final fPath = StringBuffer()..write('');
     final temp = values != null
         ? values!.map((value) => value.toCode(null)).toList()

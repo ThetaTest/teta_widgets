@@ -7,16 +7,16 @@ import 'package:teta_widgets/src/elements/index.dart';
 
 class WTextButton extends StatelessWidget {
   /// Returns a TextButton widget in Teta
-  const WTextButton({
-    Key? key,
-    this.child,
+  const WTextButton(
+    Key? key, {
     required this.node,
     required this.forPlay,
-    this.loop,
-    this.action,
     required this.params,
     required this.states,
     required this.dataset,
+    this.child,
+    this.loop,
+    this.action,
   }) : super(key: key);
 
   final CNode node;
@@ -47,6 +47,7 @@ class WTextButton extends StatelessWidget {
           forPlay: forPlay,
         ),
         child: ChildConditionBuilder(
+          ValueKey('${node.nid} $loop'),
           name: node.intrinsicState.displayName,
           child: child,
           params: params,

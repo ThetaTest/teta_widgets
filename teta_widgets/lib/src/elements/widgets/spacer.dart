@@ -7,10 +7,9 @@ import 'package:teta_widgets/src/elements/index.dart';
 
 class WSpacer extends StatelessWidget {
   /// Returns a Spacer widget
-  const WSpacer({
-    Key? key,
+  const WSpacer(
+    Key? key, {
     required this.node,
-    this.nid,
     required this.forPlay,
     required this.params,
     required this.states,
@@ -18,19 +17,11 @@ class WSpacer extends StatelessWidget {
   }) : super(key: key);
 
   final CNode node;
-  final String? nid;
   final bool forPlay;
-
   final List<VariableObject> params;
   final List<VariableObject> states;
   final List<DatasetObject> dataset;
 
   @override
-  Widget build(BuildContext context) {
-    return NodeSelectionBuilder(
-      node: node,
-      forPlay: forPlay,
-      child: const Spacer(),
-    );
-  }
+  Widget build(BuildContext context) => const Spacer();
 }

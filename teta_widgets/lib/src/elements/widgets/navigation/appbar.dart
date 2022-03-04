@@ -8,15 +8,15 @@ import 'package:teta_widgets/src/elements/index.dart';
 
 class WAppBar extends StatelessWidget {
   /// Returns a empty widget which contains all the app bar widgets
-  const WAppBar({
-    Key? key,
-    this.child,
+  const WAppBar(
+    Key? key, {
     required this.node,
     required this.forPlay,
-    this.loop,
     required this.params,
     required this.states,
     required this.dataset,
+    this.child,
+    this.loop,
   }) : super(key: key);
 
   final CNode node;
@@ -33,6 +33,7 @@ class WAppBar extends StatelessWidget {
       node: node,
       forPlay: forPlay,
       child: ChildConditionBuilder(
+        ValueKey('${node.nid} $loop'),
         name: node.intrinsicState.displayName,
         child: child,
         params: params,

@@ -12,18 +12,18 @@ import 'package:teta_widgets/src/elements/index.dart';
 
 class WLoginWithApple extends StatelessWidget {
   /// Returns a Apple SignIn button
-  const WLoginWithApple({
-    Key? key,
-    this.child,
+  const WLoginWithApple(
+    Key? key, {
     required this.node,
     required this.forPlay,
-    this.loop,
-    this.action,
     required this.width,
     required this.height,
     required this.params,
     required this.states,
     required this.dataset,
+    this.child,
+    this.loop,
+    this.action,
   }) : super(key: key);
 
   final CNode node;

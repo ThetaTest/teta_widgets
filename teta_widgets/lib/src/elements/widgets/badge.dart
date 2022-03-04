@@ -9,18 +9,18 @@ import 'package:teta_widgets/src/elements/index.dart';
 
 class WBadge extends StatelessWidget {
   /// Returns a [Badge] widget in Teta
-  const WBadge({
-    Key? key,
+  const WBadge(
+    Key? key, {
     required this.value,
-    this.child,
     required this.node,
     required this.textStyle,
     required this.fill,
     required this.forPlay,
-    this.loop,
     required this.params,
     required this.states,
     required this.dataset,
+    this.child,
+    this.loop,
   }) : super(key: key);
 
   final CNode node;
@@ -51,6 +51,7 @@ class WBadge extends StatelessWidget {
         ),
         badgeColor: HexColor(fill.getHexColor(context)),
         child: ChildConditionBuilder(
+          ValueKey('${node.nid} $loop'),
           name: node.intrinsicState.displayName,
           child: child,
           params: params,

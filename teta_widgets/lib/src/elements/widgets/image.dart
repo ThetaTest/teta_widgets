@@ -11,8 +11,8 @@ import 'package:teta_widgets/src/elements/index.dart';
 
 class WImage extends StatefulWidget {
   /// Returns a Image
-  const WImage({
-    Key? key,
+  const WImage(
+    Key? key, {
     required this.image,
     required this.node,
     required this.width,
@@ -20,18 +20,14 @@ class WImage extends StatefulWidget {
     required this.boxFit,
     required this.borderRadius,
     required this.shadows,
-    this.nid,
     required this.forPlay,
-    this.index,
-    this.component,
-    this.loop,
     required this.params,
     required this.states,
     required this.dataset,
+    this.loop,
   }) : super(key: key);
 
   final CNode node;
-  final String? nid;
   final FSize width;
   final FSize height;
   final FTextTypeInput image;
@@ -39,8 +35,6 @@ class WImage extends StatefulWidget {
   final FBorderRadius borderRadius;
   final FShadow shadows;
   final bool forPlay;
-  final double? index;
-  final String? component;
   final int? loop;
 
   final List<VariableObject> params;

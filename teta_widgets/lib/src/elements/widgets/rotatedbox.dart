@@ -7,15 +7,15 @@ import 'package:teta_widgets/src/elements/index.dart';
 
 class WRotatedBox extends StatelessWidget {
   /// Returns a [Center] widget in Teta
-  const WRotatedBox({
-    Key? key,
+  const WRotatedBox(
+    Key? key, {
     required this.node,
     required this.forPlay,
     required this.params,
     required this.states,
     required this.dataset,
-    this.child,
     required this.quarterTurns,
+    this.child,
     this.loop,
   }) : super(key: key);
 
@@ -38,6 +38,7 @@ class WRotatedBox extends StatelessWidget {
       child: RotatedBox(
         quarterTurns: int.tryParse(val) ?? 0,
         child: ChildConditionBuilder(
+          ValueKey('${node.nid} $loop'),
           name: node.intrinsicState.displayName,
           child: child,
           params: params,

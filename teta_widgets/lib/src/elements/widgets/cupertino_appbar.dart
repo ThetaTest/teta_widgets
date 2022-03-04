@@ -7,8 +7,8 @@ import 'package:teta_widgets/src/elements/index.dart';
 
 class WCupertinoAppBar extends StatelessWidget {
   /// Returns a MaterialAppBar widget in Teta
-  const WCupertinoAppBar({
-    Key? key,
+  const WCupertinoAppBar(
+    Key? key, {
     required this.node,
     required this.fill,
     required this.forPlay,

@@ -65,5 +65,8 @@ class FBlendMode {
   static String convertValueToCode(BlendMode? value) =>
       EnumToString.convertToString(value);
 
-  String toCode() => 'BlendMode.${convertValueToCode(mode)}';
+  String toCode() => 'FBlendMode(mode: BlendMode.${convertValueToCode(mode)})';
 }
+
+/// questo toCode printa BlendMode.qualche valore di BlendMode
+/// Ma a noi serve in quest'altro modo: FBlendMode(mode: BlendMode.${convertValueToCode(mode)})

@@ -64,7 +64,7 @@ class FCrossAxisAlignment {
         return 'st';
       case CrossAxisAlignment.baseline:
         return 'b';
-      default:
+      case CrossAxisAlignment.start:
         return 's';
     }
   }
@@ -79,7 +79,7 @@ class FCrossAxisAlignment {
         return 'Stretch';
       case CrossAxisAlignment.baseline:
         return 'Baseline';
-      default:
+      case CrossAxisAlignment.start:
         return 'Start';
     }
   }
@@ -117,7 +117,9 @@ class FCrossAxisAlignment {
         return 'CrossAxisAlignment.stretch';
       case CrossAxisAlignment.baseline:
         return 'CrossAxisAlignment.baseline';
-      default:
+      case CrossAxisAlignment.start:
+        return 'CrossAxisAlignment.start';
+      case null:
         return 'CrossAxisAlignment.start';
     }
   }

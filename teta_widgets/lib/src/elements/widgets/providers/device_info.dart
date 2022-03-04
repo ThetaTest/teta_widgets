@@ -11,8 +11,8 @@ import 'package:teta_widgets/src/elements/index.dart';
 class WDeviceInfo extends StatefulWidget {
   /// Returns a DeviceInfo Repository,
   /// which provides info for the actual device.
-  const WDeviceInfo({
-    Key? key,
+  const WDeviceInfo(
+    Key? key, {
     required this.node,
     required this.forPlay,
     required this.params,
@@ -68,6 +68,7 @@ class _WDeviceInfoState extends State<WDeviceInfo> {
   Widget body(BuildContext context) {
     final list = addDataset(context, widget.dataset, _map);
     return ChildConditionBuilder(
+      ValueKey('${widget.node.nid} ${widget.loop}'),
       name: widget.node.intrinsicState.displayName,
       child: widget.child,
       params: widget.params,

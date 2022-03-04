@@ -12,12 +12,12 @@ import 'package:teta_widgets/src/elements/nodes/node.dart';
 
 class ActionvalueControl extends StatefulWidget {
   const ActionvalueControl({
-    Key? key,
     required this.node,
     required this.page,
     required this.title,
     required this.actionValue,
     required this.callBack,
+    Key? key,
   }) : super(key: key);
 
   final CNode node;

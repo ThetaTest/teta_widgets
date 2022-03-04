@@ -19,10 +19,10 @@ import 'package:uuid/uuid.dart';
 
 class StatesControl extends StatefulWidget {
   const StatesControl({
-    Key? key,
     required this.node,
     required this.page,
     required this.callBack,
+    Key? key,
   }) : super(key: key);
 
   final CNode node;

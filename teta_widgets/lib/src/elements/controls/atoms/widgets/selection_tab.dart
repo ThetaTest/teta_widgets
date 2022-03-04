@@ -9,10 +9,10 @@ import 'package:teta_core/src/design_system/palette.dart';
 
 class SelectionTab extends StatelessWidget {
   const SelectionTab({
-    Key? key,
     required this.isSelected,
     required this.onTap,
     required this.icon,
+    Key? key,
   }) : super(key: key);
 
   final bool isSelected;

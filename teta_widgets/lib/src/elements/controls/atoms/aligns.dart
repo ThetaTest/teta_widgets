@@ -11,10 +11,10 @@ import 'package:teta_widgets/src/elements/nodes/node.dart';
 
 class AlignsControl extends StatefulWidget {
   const AlignsControl({
-    Key? key,
     required this.node,
     required this.align,
     required this.callBack,
+    Key? key,
   }) : super(key: key);
 
   final CNode node;

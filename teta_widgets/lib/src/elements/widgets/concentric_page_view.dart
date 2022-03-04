@@ -8,16 +8,16 @@ import 'package:teta_widgets/src/elements/index.dart';
 
 class WConcentricPageView extends StatefulWidget {
   /// Returns a PageViewwidget
-  const WConcentricPageView({
-    Key? key,
+  const WConcentricPageView(
+    Key? key, {
     required this.children,
     required this.fill,
     required this.node,
-    this.loop,
     required this.forPlay,
     required this.params,
     required this.states,
     required this.dataset,
+    this.loop,
   }) : super(key: key);
 
   final CNode node;

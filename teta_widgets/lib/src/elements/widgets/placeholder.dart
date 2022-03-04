@@ -7,18 +7,18 @@ import 'package:teta_widgets/src/elements/index.dart';
 
 class WPlaceholder extends StatelessWidget {
   /// Returns a [Center] widget in Teta
-  const WPlaceholder({
-    Key? key,
+  const WPlaceholder(
+    Key? key, {
     required this.node,
     required this.forPlay,
     required this.params,
     required this.states,
     required this.dataset,
-    this.child,
     required this.value,
     required this.color,
     required this.width,
     required this.height,
+    this.child,
     this.loop,
   }) : super(key: key);
 

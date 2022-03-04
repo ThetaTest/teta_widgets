@@ -7,8 +7,11 @@ import 'package:teta_core/src/design_system/dropdowns/dropdown.dart';
 import 'package:teta_widgets/src/elements/features/box_fit.dart';
 
 class BoxFitControl extends StatefulWidget {
-  const BoxFitControl({Key? key, required this.boxFit, required this.callBack})
-      : super(key: key);
+  const BoxFitControl({
+    required this.boxFit,
+    required this.callBack,
+    Key? key,
+  }) : super(key: key);
 
   final FBoxFit boxFit;
   final Function(FBoxFit, FBoxFit) callBack;

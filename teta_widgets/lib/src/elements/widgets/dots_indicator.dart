@@ -11,10 +11,8 @@ import 'package:teta_widgets/src/elements/index.dart';
 
 class WDotsIndicator extends StatelessWidget {
   /// Returns a DotsIndicator widget
-  const WDotsIndicator({
-    Key? key,
-    this.nid,
-    this.child,
+  const WDotsIndicator(
+    Key? key, {
     required this.node,
     required this.forPlay,
     required this.dotsCount,
@@ -28,16 +26,14 @@ class WDotsIndicator extends StatelessWidget {
     required this.color,
     required this.activeColor,
     required this.shadow,
-    this.index,
-    this.component,
-    this.loop,
     required this.params,
     required this.states,
     required this.dataset,
+    this.child,
+    this.loop,
   }) : super(key: key);
 
   final CNode node;
-  final String? nid;
   final CNode? child;
   final FTextTypeInput dotsCount;
   final FTextTypeInput position;
@@ -51,8 +47,6 @@ class WDotsIndicator extends StatelessWidget {
   final FFill color;
   final FFill activeColor;
   final bool forPlay;
-  final double? index;
-  final String? component;
   final int? loop;
 
   final List<VariableObject> params;

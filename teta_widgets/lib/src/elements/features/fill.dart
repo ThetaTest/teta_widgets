@@ -303,7 +303,7 @@ class FFill {
     return 'null';
   }
 
-  static String? toCode(FFill fill, BuildContext context, bool? flagConst) {
+  static String? toCode(FFill fill, BuildContext context, {bool? flagConst}) {
     final state = BlocProvider.of<PaletteBloc>(context).state;
     FFill? finalFill;
     if (state.isNotEmpty) {
@@ -343,6 +343,7 @@ class FFill {
         )
       ''';
     }
+    return null;
   }
 
   @override

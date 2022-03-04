@@ -43,10 +43,6 @@ String pageComponentCodeTemplate(
 
   /// If the component is hardcoded, display its code
   if (page.isHardCoded) {
-    print(page.code
-        ?.replaceAll('void main() {', '')
-        .replaceAll('runApp(${pageNameRC.pascalCase}());', '')
-        .replaceFirst('}', ''));
     return page.code
             ?.replaceAll('void main() {', '')
             .replaceAll('runApp(${pageNameRC.pascalCase}());', '')

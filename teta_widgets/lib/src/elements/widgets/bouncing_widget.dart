@@ -9,8 +9,8 @@ import 'package:teta_widgets/src/elements/index.dart';
 
 class WBouncingWidget extends StatelessWidget {
   /// Returns a Container widget
-  const WBouncingWidget({
-    Key? key,
+  const WBouncingWidget(
+    Key? key, {
     required this.node,
     required this.action,
     required this.value,
@@ -57,6 +57,7 @@ class WBouncingWidget extends StatelessWidget {
           forPlay: forPlay,
         ),
         child: ChildConditionBuilder(
+          ValueKey('${node.nid} $loop'),
           name: node.intrinsicState.displayName,
           child: child,
           params: params,

@@ -7,8 +7,8 @@ import 'package:teta_widgets/src/elements/index.dart';
 
 class WOverFlowBox extends StatelessWidget {
   /// Returns a [Center] widget in Teta
-  const WOverFlowBox({
-    Key? key,
+  const WOverFlowBox(
+    Key? key, {
     required this.node,
     required this.forPlay,
     required this.params,
@@ -46,6 +46,7 @@ class WOverFlowBox extends StatelessWidget {
         maxWidth: maxWidth.get(context: context, isWidth: true) ?? 0,
         maxHeight: maxHeight.get(context: context, isWidth: false) ?? 0,
         child: ChildConditionBuilder(
+          ValueKey('${node.nid} $loop'),
           name: node.intrinsicState.displayName,
           child: child,
           params: params,

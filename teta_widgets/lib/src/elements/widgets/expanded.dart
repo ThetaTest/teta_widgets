@@ -12,26 +12,20 @@ import 'package:teta_widgets/src/elements/index.dart';
 
 class WExpanded extends StatelessWidget {
   /// Returns a Expanded widget
-  const WExpanded({
-    Key? key,
-    this.nid,
-    this.child,
+  const WExpanded(
+    Key? key, {
     required this.node,
     required this.forPlay,
-    this.index,
-    this.component,
-    this.loop,
     required this.params,
     required this.states,
     required this.dataset,
+    this.child,
+    this.loop,
   }) : super(key: key);
 
   final CNode node;
-  final String? nid;
   final CNode? child;
   final bool forPlay;
-  final double? index;
-  final String? component;
   final int? loop;
 
   final List<VariableObject> params;
@@ -42,6 +36,7 @@ class WExpanded extends StatelessWidget {
   Widget build(BuildContext context) {
     return Expanded(
       child: ChildConditionBuilder(
+        ValueKey('${node.nid} $loop'),
         name: node.intrinsicState.displayName,
         child: child,
         params: params,

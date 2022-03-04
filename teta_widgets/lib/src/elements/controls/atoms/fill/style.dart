@@ -15,12 +15,12 @@ import 'package:teta_widgets/src/elements/nodes/node.dart';
 //ignore: must_be_immutable
 class StyleFillControl extends StatefulWidget {
   const StyleFillControl({
-    Key? key,
     required this.onlySolid,
     required this.node,
     required this.model,
     required this.fill,
     required this.callBack,
+    Key? key,
   }) : super(key: key);
 
   final bool onlySolid;

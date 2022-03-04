@@ -36,8 +36,8 @@ class NTemplate extends CNode {
     required List<VariableObject> params,
     required List<VariableObject> states,
     required List<DatasetObject> dataset,
-    int? loop,
     required bool forPlay,
+    int? loop,
   }) =>
       const SizedBox();
 

@@ -11,10 +11,9 @@ import 'package:teta_widgets/src/elements/index.dart';
 
 class WBottomBarItem extends StatelessWidget {
   /// Returns a Icon widget in Teta
-  const WBottomBarItem({
-    Key? key,
+  const WBottomBarItem(
+    Key? key, {
     required this.icon,
-    this.action,
     required this.node,
     required this.width,
     required this.fill,
@@ -22,10 +21,11 @@ class WBottomBarItem extends StatelessWidget {
     required this.isFullWidth,
     required this.value,
     required this.forPlay,
-    this.loop,
     required this.params,
     required this.states,
     required this.dataset,
+    this.action,
+    this.loop,
   }) : super(key: key);
 
   final CNode node;

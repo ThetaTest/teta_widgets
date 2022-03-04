@@ -17,12 +17,12 @@ import 'package:teta_widgets/src/elements/nodes/node.dart';
 
 class FirestoreParameterControl extends StatefulWidget {
   const FirestoreParameterControl({
-    Key? key,
-    this.node,
     required this.page,
     required this.title,
     required this.value,
     required this.callBack,
+    Key? key,
+    this.node,
   }) : super(key: key);
 
   final CNode? node;

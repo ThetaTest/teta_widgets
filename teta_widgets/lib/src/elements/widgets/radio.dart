@@ -7,29 +7,21 @@ import 'package:teta_widgets/src/elements/index.dart';
 
 class WRadio extends StatefulWidget {
   /// Returns a Radio widget in Teta
-  const WRadio({
-    Key? key,
+  const WRadio(
+    Key? key, {
     required this.node,
-    this.nid,
-    this.parent,
     required this.forPlay,
-    this.index,
     required this.action,
     required this.value,
     required this.groupValue,
-    this.component,
-    this.loop,
     required this.params,
     required this.states,
     required this.dataset,
+    this.loop,
   }) : super(key: key);
 
   final CNode node;
-  final String? nid;
-  final String? parent;
   final bool forPlay;
-  final double? index;
-  final String? component;
   final int? loop;
   final FAction action;
   final FTextTypeInput value;

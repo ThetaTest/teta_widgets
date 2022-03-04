@@ -9,11 +9,11 @@ import 'package:teta_core/src/design_system/text.dart';
 
 class SliderControls extends StatelessWidget {
   const SliderControls({
-    Key? key,
     required this.title,
     required this.value,
     required this.maxAndMin,
     required this.callBack,
+    Key? key,
   }) : super(key: key);
 
   final String title;
@@ -66,8 +66,8 @@ class CustomTrackShape extends RoundedRectSliderTrackShape {
   @override
   Rect getPreferredRect({
     required RenderBox parentBox,
-    Offset offset = Offset.zero,
     required SliderThemeData sliderTheme,
+    Offset offset = Offset.zero,
     bool isEnabled = false,
     bool isDiscrete = false,
   }) {

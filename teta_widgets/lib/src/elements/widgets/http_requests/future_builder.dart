@@ -11,8 +11,8 @@ import 'package:teta_widgets/src/elements/index.dart';
 
 class WHTTPRequestFutureBuilder extends StatefulWidget {
   /// Construct
-  const WHTTPRequestFutureBuilder({
-    Key? key,
+  const WHTTPRequestFutureBuilder(
+    Key? key, {
     required this.node,
     required this.from,
     required this.forPlay,

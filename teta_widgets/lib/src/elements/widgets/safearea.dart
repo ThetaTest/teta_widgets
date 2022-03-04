@@ -7,19 +7,19 @@ import 'package:teta_widgets/src/elements/index.dart';
 
 class WSafeArea extends StatelessWidget {
   /// Constructor
-  const WSafeArea({
-    Key? key,
-    CNode? child,
+  const WSafeArea(
+    Key? key, {
     required CNode node,
     required bool left,
     required bool top,
     required bool right,
     required bool bottom,
     required bool forPlay,
-    int? loop,
     required List<VariableObject> params,
     required List<VariableObject> states,
     required List<DatasetObject> dataset,
+    CNode? child,
+    int? loop,
   })  : _child = child,
         _node = node,
         _left = left,
@@ -59,6 +59,7 @@ class WSafeArea extends StatelessWidget {
           right: _right ? 0 : 0,
         ),
         child: ChildConditionBuilder(
+          ValueKey('${_node.nid} $_loop'),
           name: _node.intrinsicState.displayName,
           child: _child,
           params: _params,

@@ -5,9 +5,9 @@ import 'package:flutter/material.dart';
 import 'package:teta_core/teta_core.dart';
 import 'package:teta_widgets/src/elements/index.dart';
 
-class WText extends StatelessWidget {
+class OText extends StatelessWidget {
   /// Returns a Text widget in Teta
-  const WText(
+  const OText(
     Key? key, {
     required this.value,
     required this.node,
@@ -18,15 +18,21 @@ class WText extends StatelessWidget {
     required this.states,
     required this.dataset,
     required this.maxLines,
+    this.nid,
+    this.component,
     this.loop,
+    this.index,
   }) : super(key: key);
 
   final CNode node;
+  final String? nid;
   final FTextTypeInput value;
   final FTextStyle textStyle;
   final bool forPlay;
   final int? loop;
   final bool isFullWidth;
+  final double? index;
+  final String? component;
   final FTextTypeInput maxLines;
 
   final List<VariableObject> params;
@@ -35,24 +41,10 @@ class WText extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return NodeSelectionBuilder(
-      node: node,
-      forPlay: forPlay,
-      child: isFullWidth
-          ? SizedBox(
-              width: double.maxFinite,
-              child: TextBuilder(
-                textStyle: textStyle,
-                value: value,
-                maxLines: maxLines,
-                params: params,
-                states: states,
-                dataset: dataset,
-                forPlay: forPlay,
-                loop: loop,
-              ),
-            )
-          : TextBuilder(
+    return isFullWidth
+        ? SizedBox(
+            width: double.maxFinite,
+            child: TextBuilder(
               textStyle: textStyle,
               value: value,
               maxLines: maxLines,
@@ -62,6 +54,16 @@ class WText extends StatelessWidget {
               forPlay: forPlay,
               loop: loop,
             ),
-    );
+          )
+        : TextBuilder(
+            textStyle: textStyle,
+            value: value,
+            maxLines: maxLines,
+            params: params,
+            states: states,
+            dataset: dataset,
+            forPlay: forPlay,
+            loop: loop,
+          );
   }
 }

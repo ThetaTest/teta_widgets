@@ -10,8 +10,8 @@ import 'package:teta_widgets/src/elements/index.dart';
 
 class WScaffold extends StatefulWidget {
   /// Returns a Scaffold
-  const WScaffold({
-    Key? key,
+  const WScaffold(
+    Key? key, {
     required this.children,
     required this.node,
     required this.fill,
@@ -19,9 +19,6 @@ class WScaffold extends StatefulWidget {
     required this.height,
     required this.action,
     required this.forPlay,
-    this.appBar,
-    this.bottomBar,
-    this.drawer,
     required this.showAppBar,
     required this.showBottomBar,
     required this.showDrawer,
@@ -31,6 +28,9 @@ class WScaffold extends StatefulWidget {
     required this.params,
     required this.states,
     required this.dataset,
+    this.appBar,
+    this.bottomBar,
+    this.drawer,
     this.loop,
   }) : super(key: key);
 

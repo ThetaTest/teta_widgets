@@ -6,8 +6,8 @@ import 'package:teta_widgets/src/elements/index.dart';
 
 class WClipRect extends StatelessWidget {
   /// Returns a [Center] widget in Teta
-  const WClipRect({
-    Key? key,
+  const WClipRect(
+    Key? key, {
     required this.node,
     required this.forPlay,
     required this.params,
@@ -33,6 +33,7 @@ class WClipRect extends StatelessWidget {
       forPlay: forPlay,
       child: ClipRect(
         child: ChildConditionBuilder(
+          ValueKey('${node.nid} $loop'),
           name: node.intrinsicState.displayName,
           child: child,
           params: params,

@@ -7,8 +7,8 @@ import 'package:teta_widgets/src/elements/index.dart';
 
 class WListTile extends StatelessWidget {
   /// Returns a MaterialAppBar widget in Teta
-  const WListTile({
-    Key? key,
+  const WListTile(
+    Key? key, {
     required this.node,
     required this.value,
     required this.isThreeLine,

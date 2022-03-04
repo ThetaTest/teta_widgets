@@ -11,11 +11,11 @@ import 'package:teta_widgets/src/elements/features/text_type_input.dart';
 
 class AddDataElement extends StatefulWidget {
   const AddDataElement({
-    Key? key,
     required this.name,
     required this.value,
     required this.page,
     required this.callback,
+    Key? key,
   }) : super(key: key);
 
   final String name;

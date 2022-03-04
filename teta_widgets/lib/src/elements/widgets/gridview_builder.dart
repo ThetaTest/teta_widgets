@@ -10,17 +10,14 @@ import 'package:teta_widgets/src/elements/index.dart';
 
 class WGridViewBuilder extends StatefulWidget {
   /// Returns a StaggeredGridView (children: [ ]) in Teta
-  const WGridViewBuilder({
-    Key? key,
-    this.nid,
-    this.child,
+  const WGridViewBuilder(
+    Key? key, {
     required this.node,
     required this.forPlay,
     required this.value,
     required this.crossAxisCount,
     required this.mainAxisSpacing,
     required this.crossAxisSpacing,
-    this.loop,
     required this.isVertical,
     required this.params,
     required this.states,
@@ -28,10 +25,11 @@ class WGridViewBuilder extends StatefulWidget {
     required this.primary,
     required this.shrinkWrap,
     required this.childAspectRatio,
+    this.child,
+    this.loop,
   }) : super(key: key);
 
   final CNode node;
-  final String? nid;
   final CNode? child;
   final bool forPlay;
   final int? loop;

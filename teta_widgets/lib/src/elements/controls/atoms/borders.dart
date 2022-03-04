@@ -20,10 +20,10 @@ import 'package:teta_widgets/src/elements/nodes/node.dart';
 
 class BordersControl extends StatefulWidget {
   const BordersControl({
-    Key? key,
     required this.node,
     required this.borders,
     required this.callBack,
+    Key? key,
   }) : super(key: key);
 
   final CNode node;

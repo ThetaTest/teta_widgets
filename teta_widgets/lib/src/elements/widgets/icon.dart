@@ -11,17 +11,17 @@ import 'package:teta_widgets/src/elements/index.dart';
 
 class WIcon extends StatelessWidget {
   /// Returns a Icon widget in Teta
-  const WIcon({
-    Key? key,
+  const WIcon(
+    Key? key, {
     required this.icon,
     required this.node,
     required this.width,
     required this.fill,
     required this.forPlay,
-    this.loop,
     required this.params,
     required this.states,
     required this.dataset,
+    this.loop,
   }) : super(key: key);
 
   final CNode node;

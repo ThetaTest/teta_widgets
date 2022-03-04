@@ -16,11 +16,11 @@ import 'package:teta_widgets/src/elements/nodes/node.dart';
 class NodeSelection extends StatefulWidget {
   /// Make a widget selectable
   const NodeSelection({
-    Key? key,
     required this.node,
     required this.child,
     required this.forPlay,
     required this.nid,
+    Key? key,
   }) : super(key: key);
 
   final CNode node;

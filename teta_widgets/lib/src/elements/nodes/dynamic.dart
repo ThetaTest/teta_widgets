@@ -21,15 +21,15 @@ class NDynamic extends CNode {
   NDynamic({
     required this.globalType,
     required this.body,
+    required this.childrenIds,
+    required this.inSpawned,
     this.name,
     this.description,
     this.nid = 0,
     this.parent,
     this.index,
-    required this.childrenIds,
     this.pageId,
     this.context,
-    required this.inSpawned,
   })  : intrinsicState = getIntrinsicStates(globalType),
         super(
           childrenIds: childrenIds,
@@ -194,8 +194,8 @@ class NDynamic extends CNode {
     required List<VariableObject> params,
     required List<VariableObject> states,
     required List<DatasetObject> dataset,
-    int? loop,
     required bool forPlay,
+    int? loop,
   }) {
     return body.toWidget(
       params: params,

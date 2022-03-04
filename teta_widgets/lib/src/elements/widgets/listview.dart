@@ -7,25 +7,23 @@ import 'package:teta_widgets/src/elements/index.dart';
 
 class WListView extends StatelessWidget {
   /// Returns a ListView in Teta
-  const WListView({
-    Key? key,
-    this.nid,
+  const WListView(
+    Key? key, {
     required this.children,
     required this.node,
     required this.forPlay,
     required this.flagValue,
     required this.value,
-    this.loop,
     required this.isVertical,
     required this.params,
     required this.states,
     required this.dataset,
     required this.isPrimary,
     required this.shrinkWrap,
+    this.loop,
   }) : super(key: key);
 
   final CNode node;
-  final String? nid;
   final List<CNode> children;
   final bool forPlay;
   final bool isVertical;

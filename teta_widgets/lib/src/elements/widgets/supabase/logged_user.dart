@@ -11,8 +11,8 @@ import 'package:teta_widgets/src/elements/index.dart';
 
 class WSupabaseLoggedUser extends StatefulWidget {
   /// Construct
-  const WSupabaseLoggedUser({
-    Key? key,
+  const WSupabaseLoggedUser(
+    Key? key, {
     required this.node,
     required this.forPlay,
     required this.params,

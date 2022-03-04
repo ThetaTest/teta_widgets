@@ -20,8 +20,8 @@ import 'package:teta_widgets/src/elements/nodes/dynamic.dart';
 
 class WMap extends StatefulWidget {
   /// Returns a [Map] widget in Teta
-  const WMap({
-    Key? key,
+  const WMap(
+    Key? key, {
     required this.node,
     required this.controller,
     required this.forPlay,

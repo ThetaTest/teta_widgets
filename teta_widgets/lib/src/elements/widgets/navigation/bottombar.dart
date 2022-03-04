@@ -9,15 +9,15 @@ import 'package:teta_widgets/src/elements/index.dart';
 //ignore: must_be_immutable
 class WBottomBar extends StatelessWidget {
   /// Returns a empty widget which contains all the bottom bar widgets
-  const WBottomBar({
-    Key? key,
-    this.child,
+  const WBottomBar(
+    Key? key, {
     required this.node,
     required this.forPlay,
-    this.loop,
     required this.params,
     required this.states,
     required this.dataset,
+    this.child,
+    this.loop,
   }) : super(key: key);
 
   final CNode node;
@@ -34,6 +34,7 @@ class WBottomBar extends StatelessWidget {
       node: node,
       forPlay: forPlay,
       child: ChildConditionBuilder(
+        ValueKey('${node.nid} $loop'),
         name: node.intrinsicState.displayName,
         child: child,
         params: params,

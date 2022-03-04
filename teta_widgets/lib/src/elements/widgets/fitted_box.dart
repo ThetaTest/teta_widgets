@@ -8,8 +8,8 @@ import 'package:teta_widgets/src/elements/index.dart';
 
 class WFittedBox extends StatelessWidget {
   /// Returns a Container widget
-  const WFittedBox({
-    Key? key,
+  const WFittedBox(
+    Key? key, {
     required this.node,
     required this.boxFit,
     required this.forPlay,
@@ -37,6 +37,7 @@ class WFittedBox extends StatelessWidget {
       forPlay: forPlay,
       child: FittedBox(
         child: ChildConditionBuilder(
+          ValueKey('${node.nid} $loop'),
           name: node.intrinsicState.displayName,
           child: child,
           params: params,

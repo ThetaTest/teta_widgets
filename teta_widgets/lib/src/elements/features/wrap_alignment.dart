@@ -12,6 +12,9 @@ class FWrapAlignment {
     this.align = WrapAlignment.start,
   });
 
+  FWrapAlignment.fromJson(String? json)
+      : align = _convertJsonToValue(json ?? '');
+
   WrapAlignment align;
 
   WrapAlignment get get => align;
@@ -19,16 +22,6 @@ class FWrapAlignment {
   String get getString => _convertValueToDropDown(align);
 
   void set(String text) => align = _convertJsonToValue(text);
-
-  static FWrapAlignment fromJson(String? json) {
-    if (json != null) {
-      return FWrapAlignment(
-        align: _convertJsonToValue(json),
-      );
-    } else {
-      return FWrapAlignment();
-    }
-  }
 
   String toJson() => _convertValueToJson(align);
 

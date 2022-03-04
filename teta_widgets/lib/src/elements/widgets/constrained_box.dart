@@ -7,8 +7,8 @@ import 'package:teta_widgets/src/elements/index.dart';
 
 class WConstrainedBox extends StatelessWidget {
   /// Returns a [Center] widget in Teta
-  const WConstrainedBox({
-    Key? key,
+  const WConstrainedBox(
+    Key? key, {
     required this.node,
     required this.forPlay,
     required this.params,
@@ -55,6 +55,7 @@ class WConstrainedBox extends StatelessWidget {
           maxHeight: maxH,
         ),
         child: ChildConditionBuilder(
+          ValueKey('${node.nid} $loop'),
           name: node.intrinsicState.displayName,
           child: child,
           params: params,

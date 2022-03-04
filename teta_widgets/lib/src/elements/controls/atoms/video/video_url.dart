@@ -16,10 +16,10 @@ import 'package:youtube_player_iframe/youtube_player_iframe.dart';
 
 class VideoUrlControl extends StatefulWidget {
   const VideoUrlControl({
-    Key? key,
     required this.node,
     required this.value,
     required this.callBack,
+    Key? key,
   }) : super(key: key);
 
   final CNode node;

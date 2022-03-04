@@ -10,18 +10,18 @@ import 'package:teta_widgets/src/elements/index.dart';
 
 class WLoginWithFacebook extends StatelessWidget {
   /// Returns a Facebook login button
-  const WLoginWithFacebook({
-    Key? key,
-    this.child,
+  const WLoginWithFacebook(
+    Key? key, {
     required this.node,
     required this.width,
     required this.height,
     required this.forPlay,
-    this.loop,
-    this.action,
     required this.params,
     required this.states,
     required this.dataset,
+    this.child,
+    this.loop,
+    this.action,
   }) : super(key: key);
 
   final CNode node;

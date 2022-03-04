@@ -17,12 +17,12 @@ import 'package:teta_widgets/src/elements/nodes/node.dart';
 class LinearFillControl extends StatefulWidget {
   /// Constructor
   const LinearFillControl({
-    Key? key,
     required this.title,
     required this.fill,
     required this.node,
     required this.isStyled,
     required this.callBack,
+    Key? key,
   }) : super(key: key);
 
   final FFill fill;
@@ -469,13 +469,13 @@ class ColorControlState extends State<LinearFillControl> {
 class FillElement extends StatefulWidget {
   /// Constructor
   const FillElement({
-    Key? key,
     required this.element,
     required this.fill,
     required this.index,
     required this.node,
     required this.callBackIndex,
     required this.callBack,
+    Key? key,
   }) : super(key: key);
 
   final FFill fill;

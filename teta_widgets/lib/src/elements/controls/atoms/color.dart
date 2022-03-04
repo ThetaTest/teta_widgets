@@ -16,11 +16,11 @@ import 'package:teta_widgets/src/elements/nodes/node.dart';
 //ignore: must_be_immutable
 class SingleColorControl extends StatefulWidget {
   const SingleColorControl({
-    Key? key,
     required this.title,
     required this.color,
     required this.node,
     required this.callBack,
+    Key? key,
   }) : super(key: key);
 
   final String title;

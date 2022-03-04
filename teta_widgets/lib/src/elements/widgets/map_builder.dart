@@ -25,8 +25,8 @@ import 'package:teta_widgets/src/elements/nodes/node.dart';
 
 class WMapBuilder extends StatefulWidget {
   /// Returns a [Map] widget in Teta
-  const WMapBuilder({
-    Key? key,
+  const WMapBuilder(
+    Key? key, {
     required this.node,
     required this.controller,
     required this.forPlay,
@@ -199,7 +199,7 @@ class _WMapBuilderState extends State<WMapBuilder> {
                 final markers = <LatLng>[];
 
                 for (var i = 0; i < db.getMap.length; i++) {
-                  if ((widget.child as NDynamic).intrinsicState.type ==
+                  if ((widget.child as NDynamic?)?.intrinsicState.type ==
                       NType.marker) {
                     final lat = (widget.child!.body.attributes[DBKeys.latitude]
                             as FTextTypeInput)
@@ -247,7 +247,7 @@ class _WMapBuilderState extends State<WMapBuilder> {
                     .toList();
 
                 for (var i = 0; i < markersChildren.length; i++) {
-                  if ((widget.child as NDynamic).intrinsicState.type ==
+                  if ((widget.child as NDynamic?)?.intrinsicState.type ==
                       NType.marker) {
                     markersWidgets.add(
                       Positioned(
@@ -313,7 +313,8 @@ class _WMapBuilderState extends State<WMapBuilder> {
   void _setDataset() {
     try {
       final index = widget.dataset.indexWhere(
-          (element) => element.getName == widget.datasetInput.datasetName);
+        (element) => element.getName == widget.datasetInput.datasetName,
+      );
       final db = index != -1 ? widget.dataset[index] : DatasetObject.empty;
       if (mounted) {
         if (db.getName != '') {

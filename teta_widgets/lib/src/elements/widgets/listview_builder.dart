@@ -7,23 +7,21 @@ import 'package:teta_widgets/src/elements/index.dart';
 
 class WListViewBuilder extends StatefulWidget {
   /// Returns a ListView.builder in Teta
-  const WListViewBuilder({
-    Key? key,
-    this.nid,
+  const WListViewBuilder(
+    Key? key, {
     required this.child,
     required this.node,
     required this.forPlay,
     required this.value,
-    this.loop,
     required this.shrinkWrap,
     required this.isVertical,
     required this.params,
     required this.states,
     required this.dataset,
+    this.loop,
   }) : super(key: key);
 
   final CNode node;
-  final String? nid;
   final CNode? child;
   final bool forPlay;
   final bool shrinkWrap;

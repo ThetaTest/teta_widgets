@@ -8,10 +8,10 @@ import 'package:teta_widgets/src/elements/nodes/node.dart';
 class NodeSelectionBuilder extends StatelessWidget {
   /// Constructor
   const NodeSelectionBuilder({
-    Key? key,
     required Widget child,
     required CNode node,
     required bool forPlay,
+    Key? key,
   })  : _child = child,
         _node = node,
         _forPlay = forPlay,

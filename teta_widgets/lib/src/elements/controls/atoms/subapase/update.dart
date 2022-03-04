@@ -16,12 +16,12 @@ import 'package:teta_widgets/src/elements/nodes/node.dart';
 
 class SupabaseUpdateControl extends StatelessWidget {
   const SupabaseUpdateControl({
-    Key? key,
     required this.prj,
     required this.page,
     required this.node,
     required this.action,
     required this.callback,
+    Key? key,
   }) : super(key: key);
 
   final ProjectObject prj;

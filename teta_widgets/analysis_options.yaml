@@ -6,3 +6,8 @@ linter:
     cancel_subscriptions: true
     close_sinks: true
     always_put_required_named_parameters_first: true
+    implementation_imports: false
+    lines_longer_than_80_chars: false
+    prefer_constructors_over_static_methods: false
+    public_member_api_docs: false 
+    library_private_types_in_public_api: false

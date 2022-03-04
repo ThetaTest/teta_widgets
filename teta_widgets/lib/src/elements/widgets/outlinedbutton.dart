@@ -7,16 +7,16 @@ import 'package:teta_widgets/src/elements/index.dart';
 
 class WOutlinedButton extends StatelessWidget {
   /// Returns a OutlinedButton
-  const WOutlinedButton({
-    Key? key,
-    this.child,
+  const WOutlinedButton(
+    Key? key, {
     required this.node,
     required this.forPlay,
-    this.loop,
-    this.action,
     required this.params,
     required this.states,
     required this.dataset,
+    this.loop,
+    this.action,
+    this.child,
   }) : super(key: key);
 
   final CNode node;
@@ -47,6 +47,7 @@ class WOutlinedButton extends StatelessWidget {
           forPlay: forPlay,
         ),
         child: ChildConditionBuilder(
+          ValueKey('${node.nid} $loop'),
           name: node.intrinsicState.displayName,
           child: child,
           params: params,

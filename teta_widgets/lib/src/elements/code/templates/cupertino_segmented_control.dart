@@ -20,18 +20,26 @@ String cupertinoSegmentedControlCodeTemplate(
     map.write('$i: ${children[i].toCode(context)}');
   }
   map.write('}');
-  final selectedColor =
-      FFill.toCode(body.attributes[DBKeys.fill] as FFill, context, true)
-          ?.replaceFirst('color:', 'selectedColor:');
-  final unselectedColor =
-      FFill.toCode(body.attributes[DBKeys.bgFill] as FFill, context, true)
-          ?.replaceFirst('color:', 'unselectedColor:');
-  final pressedColor =
-      FFill.toCode(body.attributes[DBKeys.textFill] as FFill, context, true)
-          ?.replaceFirst('color:', 'pressedColor:');
-  final borderColor =
-      FFill.toCode(body.attributes[DBKeys.activeFill] as FFill, context, true)
-          ?.replaceFirst('color:', 'borderColor:');
+  final selectedColor = FFill.toCode(
+    body.attributes[DBKeys.fill] as FFill,
+    context,
+    flagConst: true,
+  )?.replaceFirst('color:', 'selectedColor:');
+  final unselectedColor = FFill.toCode(
+    body.attributes[DBKeys.bgFill] as FFill,
+    context,
+    flagConst: true,
+  )?.replaceFirst('color:', 'unselectedColor:');
+  final pressedColor = FFill.toCode(
+    body.attributes[DBKeys.textFill] as FFill,
+    context,
+    flagConst: true,
+  )?.replaceFirst('color:', 'pressedColor:');
+  final borderColor = FFill.toCode(
+    body.attributes[DBKeys.activeFill] as FFill,
+    context,
+    flagConst: true,
+  )?.replaceFirst('color:', 'borderColor:');
   return '''
     CupertinoSegmentedControl<int>(
       children: map,

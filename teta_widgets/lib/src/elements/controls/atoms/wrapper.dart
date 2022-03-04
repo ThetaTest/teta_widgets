@@ -4,8 +4,11 @@
 import 'package:flutter/material.dart';
 
 class Wrapper extends StatelessWidget {
-  const Wrapper({Key? key, required this.control, required this.divider})
-      : super(key: key);
+  const Wrapper({
+    required this.control,
+    required this.divider,
+    Key? key,
+  }) : super(key: key);
 
   final Widget control;
   final bool divider;

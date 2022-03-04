@@ -15,10 +15,10 @@ import 'package:teta_widgets/src/elements/nodes/node.dart';
 
 class FontStyleControls extends StatefulWidget {
   const FontStyleControls({
-    Key? key,
     required this.node,
     required this.callBack,
     required this.textStyle,
+    Key? key,
   }) : super(key: key);
 
   final CNode node;

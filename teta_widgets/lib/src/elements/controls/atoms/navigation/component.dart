@@ -20,12 +20,12 @@ import 'package:teta_widgets/src/elements/nodes/node.dart';
 
 class ComponentControl extends StatefulWidget {
   const ComponentControl({
-    Key? key,
     required this.prj,
     required this.page,
     required this.node,
     required this.callBack,
     required this.callBackParameters,
+    Key? key,
   }) : super(key: key);
 
   final ProjectObject prj;
@@ -172,11 +172,11 @@ class ComponentControlState extends State<ComponentControl> {
 
 class Element extends StatefulWidget {
   const Element({
-    Key? key,
     required this.variable,
     required this.page,
     required this.map,
     required this.callBackParameters,
+    Key? key,
   }) : super(key: key);
 
   final VariableObject variable;

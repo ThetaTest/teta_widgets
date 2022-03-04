@@ -12,8 +12,8 @@ import 'package:teta_widgets/src/elements/index.dart';
 
 class WSupabaseFutureBuilder extends StatefulWidget {
   /// Construct
-  const WSupabaseFutureBuilder({
-    Key? key,
+  const WSupabaseFutureBuilder(
+    Key? key, {
     required this.node,
     required this.from,
     required this.select,

@@ -75,7 +75,7 @@ class FClip {
         return 'Clip.antiAliasWithSaveLayer';
       case Clip.none:
         return 'Clip.none';
-      default:
+      case Clip.hardEdge:
         return 'Clip.hardEdge';
     }
   }

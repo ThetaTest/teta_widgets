@@ -7,34 +7,28 @@ import 'package:teta_core/teta_core.dart';
 import 'package:teta_widgets/src/elements/index.dart';
 
 class WPlasmaBackground extends StatefulWidget {
-  const WPlasmaBackground({
-    Key? key,
+  const WPlasmaBackground(
+    Key? key, {
     required this.node,
-    this.child,
     required this.width,
     required this.height,
     required this.firstColor,
     required this.secondColor,
-    this.nid,
     required this.forPlay,
-    this.index,
-    this.component,
-    this.loop,
     required this.params,
     required this.states,
     required this.dataset,
+    this.child,
+    this.loop,
   }) : super(key: key);
 
   final CNode node;
-  final String? nid;
   final CNode? child;
   final FSize width;
   final FSize height;
   final FFill firstColor;
   final FFill secondColor;
   final bool forPlay;
-  final double? index;
-  final String? component;
   final int? loop;
 
   final List<VariableObject> params;

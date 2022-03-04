@@ -16,7 +16,6 @@ import 'package:teta_widgets/src/elements/nodes/node.dart';
 
 class SizeControl extends StatefulWidget {
   const SizeControl({
-    Key? key,
     required this.keyAttr,
     required this.node,
     required this.size,
@@ -24,6 +23,7 @@ class SizeControl extends StatefulWidget {
     required this.title,
     required this.callBack,
     required this.isFromSizesPrefab,
+    Key? key,
   }) : super(key: key);
 
   final String keyAttr;

@@ -7,23 +7,21 @@ import 'package:teta_widgets/src/elements/index.dart';
 
 class WColumn extends StatelessWidget {
   /// Returns [Column] widget in Teta
-  const WColumn({
-    Key? key,
-    this.nid,
+  const WColumn(
+    Key? key, {
     required this.children,
     required this.node,
     required this.forPlay,
     required this.mainAxisAlignment,
     required this.crossAxisAlignment,
     required this.mainAxisSize,
-    this.loop,
     required this.params,
     required this.states,
     required this.dataset,
+    this.loop,
   }) : super(key: key);
 
   final CNode node;
-  final String? nid;
   final List<CNode> children;
   final bool forPlay;
   final FMainAxisAlignment mainAxisAlignment;

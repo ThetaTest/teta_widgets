@@ -7,20 +7,18 @@ import 'package:teta_widgets/src/elements/index.dart';
 
 class WWrap extends StatelessWidget {
   /// Returns a Wrap widget in Teta
-  const WWrap({
-    Key? key,
-    this.nid,
+  const WWrap(
+    Key? key, {
     required this.children,
     required this.node,
     required this.forPlay,
-    this.loop,
     required this.params,
     required this.states,
     required this.dataset,
+    this.loop,
   }) : super(key: key);
 
   final CNode node;
-  final String? nid;
   final List<CNode> children;
   final bool forPlay;
   final int? loop;

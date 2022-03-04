@@ -10,8 +10,8 @@ import 'package:teta_widgets/src/elements/index.dart';
 
 class WFirebaseFutureBuilder extends StatefulWidget {
   /// Construct
-  const WFirebaseFutureBuilder({
-    Key? key,
+  const WFirebaseFutureBuilder(
+    Key? key, {
     required this.node,
     required this.path,
     required this.forPlay,

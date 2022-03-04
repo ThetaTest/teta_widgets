@@ -10,8 +10,8 @@ import 'package:teta_widgets/src/elements/index.dart';
 
 class WSupabaseStreamBuilder extends StatefulWidget {
   /// Construct
-  const WSupabaseStreamBuilder({
-    Key? key,
+  const WSupabaseStreamBuilder(
+    Key? key, {
     required this.node,
     required this.from,
     required this.order,

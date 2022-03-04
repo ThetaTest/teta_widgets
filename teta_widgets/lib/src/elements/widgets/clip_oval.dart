@@ -6,8 +6,8 @@ import 'package:teta_widgets/src/elements/index.dart';
 
 class WClipOval extends StatelessWidget {
   /// Returns a [Center] widget in Teta
-  const WClipOval({
-    Key? key,
+  const WClipOval(
+    Key? key, {
     required this.node,
     required this.forPlay,
     required this.params,
@@ -33,6 +33,7 @@ class WClipOval extends StatelessWidget {
       forPlay: forPlay,
       child: ClipOval(
         child: ChildConditionBuilder(
+          ValueKey('${node.nid} $loop'),
           name: node.intrinsicState.displayName,
           child: child,
           params: params,

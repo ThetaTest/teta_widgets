@@ -9,32 +9,26 @@ import 'package:teta_core/teta_core.dart';
 import 'package:teta_widgets/src/elements/index.dart';
 
 class WLottie extends StatelessWidget {
-  const WLottie({
-    Key? key,
+  const WLottie(
+    Key? key, {
     required this.image,
     required this.node,
     required this.width,
     required this.height,
     required this.boxFit,
-    this.nid,
     required this.forPlay,
-    this.index,
-    this.component,
-    this.loop,
     required this.params,
     required this.states,
     required this.dataset,
+    this.loop,
   }) : super(key: key);
 
   final CNode node;
-  final String? nid;
   final FSize width;
   final FSize height;
   final FTextTypeInput image;
   final FBoxFit boxFit;
   final bool forPlay;
-  final double? index;
-  final String? component;
   final int? loop;
 
   final List<VariableObject> params;

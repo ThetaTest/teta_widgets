@@ -48,7 +48,6 @@ import 'package:uuid/uuid.dart';
 class ActionElementControl extends StatefulWidget {
   /// Returns a widget to control a single action
   const ActionElementControl({
-    Key? key,
     required this.name,
     required this.element,
     required this.prj,
@@ -56,6 +55,7 @@ class ActionElementControl extends StatefulWidget {
     required this.node,
     required this.callBack,
     required this.callBackToDelete,
+    Key? key,
   }) : super(key: key);
 
   /// Name of action
@@ -1141,12 +1141,12 @@ class ActionElementControlState extends State<ActionElementControl> {
 
 class Element extends StatefulWidget {
   const Element({
-    Key? key,
     required this.variable,
     required this.page,
     required this.map,
     required this.element,
     required this.callBack,
+    Key? key,
   }) : super(key: key);
 
   final VariableObject variable;

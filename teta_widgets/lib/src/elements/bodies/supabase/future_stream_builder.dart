@@ -84,9 +84,9 @@ class SupabaseStreamBuilderBody extends NodeBody {
     required List<VariableObject> params,
     required List<VariableObject> states,
     required List<DatasetObject> dataset,
-    int? loop,
     required bool forPlay,
     required CNode node,
+    int? loop,
     CNode? child,
     List<CNode>? children,
   }) {
@@ -104,7 +104,7 @@ class SupabaseStreamBuilderBody extends NodeBody {
         '${(attributes[DBKeys.supabaseFromRange] as FTextTypeInput).value}',
       );
     return WSupabaseStreamBuilder(
-      key: ValueKey(str.toString()),
+      ValueKey(str.toString()),
       node: node,
       children: children ?? [],
       from: attributes[DBKeys.supabaseFrom] as FTextTypeInput,

@@ -7,8 +7,8 @@ import 'package:teta_widgets/src/elements/index.dart';
 
 class WMaterialBottomBar extends StatelessWidget {
   /// Returns a MaterialAppBar widget in Teta
-  const WMaterialBottomBar({
-    Key? key,
+  const WMaterialBottomBar(
+    Key? key, {
     required this.node,
     required this.fill,
     required this.forPlay,

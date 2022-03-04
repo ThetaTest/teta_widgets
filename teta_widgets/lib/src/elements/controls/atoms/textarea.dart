@@ -9,8 +9,11 @@ import 'package:teta_core/src/design_system/textfield/textfield.dart';
 import 'package:teta_widgets/src/elements/features/text_type_input.dart';
 
 class TextAreaControl extends StatefulWidget {
-  const TextAreaControl({Key? key, required this.value, required this.callBack})
-      : super(key: key);
+  const TextAreaControl({
+    required this.value,
+    required this.callBack,
+    Key? key,
+  }) : super(key: key);
 
   final FTextTypeInput value;
   final Function(FTextTypeInput, FTextTypeInput) callBack;

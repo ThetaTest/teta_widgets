@@ -9,8 +9,8 @@ import 'package:teta_widgets/src/elements/index.dart';
 class WFirebaseStreamBuilder extends StatefulWidget {
   /// Returns a real time query from Firestore
   /// Needs a [FFirestorePath] to connect to the coll / doc
-  const WFirebaseStreamBuilder({
-    Key? key,
+  const WFirebaseStreamBuilder(
+    Key? key, {
     required this.node,
     required this.path,
     required this.forPlay,

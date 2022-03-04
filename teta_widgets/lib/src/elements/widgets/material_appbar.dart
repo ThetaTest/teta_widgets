@@ -8,8 +8,8 @@ import 'package:teta_widgets/src/elements/index.dart';
 
 class WMaterialAppBar extends StatelessWidget {
   /// Returns a MaterialAppBar widget in Teta
-  const WMaterialAppBar({
-    Key? key,
+  const WMaterialAppBar(
+    Key? key, {
     required this.node,
     required this.fill,
     required this.forPlay,

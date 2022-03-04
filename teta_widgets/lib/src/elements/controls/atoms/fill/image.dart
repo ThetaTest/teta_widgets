@@ -14,12 +14,12 @@ import 'package:teta_widgets/src/elements/nodes/node.dart';
 class ImageFillControl extends StatefulWidget {
   /// Constructor
   const ImageFillControl({
-    Key? key,
     required this.title,
     required this.fill,
     required this.node,
     required this.isStyled,
     required this.callBack,
+    Key? key,
   }) : super(key: key);
 
   final FFill fill;

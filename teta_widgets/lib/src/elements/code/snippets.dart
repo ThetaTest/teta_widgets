@@ -209,10 +209,11 @@ class CS {
     String keyFill,
   ) {
     final flagConst = CS.borderRadius(context, body) != '';
-    final fill =
-        FFill.toCode(body.attributes[DBKeys.fill] as FFill, context, flagConst);
-    final borderFill =
-        (body.attributes[DBKeys.fill] as FFill).getHexColor(context);
+    final fill = FFill.toCode(
+      body.attributes[DBKeys.fill] as FFill,
+      context,
+      flagConst: flagConst,
+    );
     return '''
       decoration: ${flagConst ? '' : 'const'} BoxDecoration(
         ${fill ?? ''}
@@ -430,8 +431,11 @@ class CS {
     required bool isStream,
   }) {
     final value = body.attributes[DBKeys.firestorePath] != null
-        ? (body.attributes[DBKeys.firestorePath] as FFirestorePath)
-            .toCode(context, isStream, null)
+        ? (body.attributes[DBKeys.firestorePath] as FFirestorePath).toCode(
+            context,
+            null,
+            isStream: isStream,
+          )
         : null;
     // FirebaseFirestore.instance.doc('').get()
     return value ?? '';

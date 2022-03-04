@@ -7,8 +7,8 @@ import 'package:teta_widgets/src/elements/index.dart';
 
 class WPositioned extends StatelessWidget {
   /// Returns a Positioned widget in Teta
-  const WPositioned({
-    Key? key,
+  const WPositioned(
+    Key? key, {
     required CNode node,
     required FMargins margins,
     required bool left,
@@ -66,6 +66,7 @@ class WPositioned extends StatelessWidget {
       left: _left ? pos.left : null,
       right: _right ? pos.right : null,
       child: ChildConditionBuilder(
+        ValueKey('${_node.nid} $_loop'),
         name: _node.intrinsicState.displayName,
         child: _child,
         params: _params,

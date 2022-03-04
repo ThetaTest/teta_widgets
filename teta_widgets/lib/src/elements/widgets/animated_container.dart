@@ -9,8 +9,8 @@ import 'package:teta_widgets/src/elements/index.dart';
 ///
 class WAnimatedContainer extends StatelessWidget {
   /// Returns a Container widget
-  const WAnimatedContainer({
-    Key? key,
+  const WAnimatedContainer(
+    Key? key, {
     required this.node,
     required this.width,
     required this.height,
@@ -68,6 +68,7 @@ class WAnimatedContainer extends StatelessWidget {
           shadow: shadows,
         ),
         child: ChildConditionBuilder(
+          ValueKey('${node.nid} $loop'),
           name: node.intrinsicState.displayName,
           child: child,
           params: params,

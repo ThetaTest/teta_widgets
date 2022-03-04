@@ -9,8 +9,8 @@ import 'package:teta_widgets/src/elements/index.dart';
 
 class WCamera extends StatefulWidget {
   /// Returns a Camera widget in Teta
-  const WCamera({
-    Key? key,
+  const WCamera(
+    Key? key, {
     required this.node,
     required this.controller,
     required this.forPlay,

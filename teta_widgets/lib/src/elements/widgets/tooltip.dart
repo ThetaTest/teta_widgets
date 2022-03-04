@@ -7,8 +7,8 @@ import 'package:teta_widgets/src/elements/index.dart';
 
 class WTooltip extends StatelessWidget {
   /// Returns a tooltip widget in Teta
-  const WTooltip({
-    Key? key,
+  const WTooltip(
+    Key? key, {
     required this.node,
     required this.value,
     required this.forPlay,
@@ -37,6 +37,7 @@ class WTooltip extends StatelessWidget {
       child: Tooltip(
         message: value.get(params, states, dataset, forPlay, loop),
         child: ChildConditionBuilder(
+          ValueKey('${node.nid} $loop'),
           name: NodeType.name(NType.tooltip),
           child: child,
           params: params,

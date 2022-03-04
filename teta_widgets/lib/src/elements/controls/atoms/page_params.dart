@@ -19,10 +19,10 @@ import 'package:uuid/uuid.dart';
 
 class PageParamsControl extends StatefulWidget {
   const PageParamsControl({
-    Key? key,
     required this.node,
     required this.page,
     required this.callBack,
+    Key? key,
   }) : super(key: key);
 
   final CNode node;

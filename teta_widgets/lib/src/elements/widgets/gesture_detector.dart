@@ -8,16 +8,16 @@ import 'package:teta_widgets/src/elements/index.dart';
 
 class WGestureDetector extends StatelessWidget {
   /// Returns a Gesture Detector
-  const WGestureDetector({
-    Key? key,
-    this.child,
+  const WGestureDetector(
+    Key? key, {
     required this.node,
     required this.forPlay,
-    this.loop,
-    this.action,
     required this.params,
     required this.states,
     required this.dataset,
+    this.loop,
+    this.child,
+    this.action,
   }) : super(key: key);
 
   final CNode node;
@@ -72,6 +72,7 @@ class WGestureDetector extends StatelessWidget {
         forPlay: forPlay,
       ),
       child: ChildConditionBuilder(
+        ValueKey('${node.nid} $loop'),
         name: node.intrinsicState.displayName,
         child: child,
         params: params,

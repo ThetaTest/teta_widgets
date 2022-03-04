@@ -78,14 +78,14 @@ class MapBuilderBody extends NodeBody {
     required List<VariableObject> params,
     required List<VariableObject> states,
     required List<DatasetObject> dataset,
-    int? loop,
     required bool forPlay,
     required CNode node,
+    int? loop,
     CNode? child,
     List<CNode>? children,
   }) =>
       WMapBuilder(
-        key: ValueKey(
+        ValueKey(
           '''
       ${node.nid}
       $loop

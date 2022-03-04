@@ -7,20 +7,20 @@ import 'package:teta_widgets/src/elements/index.dart';
 
 class WMarker extends StatelessWidget {
   /// Returns a Icon widget in Teta
-  const WMarker({
-    Key? key,
-    this.child,
+  const WMarker(
+    Key? key, {
     required this.icon,
     required this.node,
     required this.width,
     required this.fill,
     required this.forPlay,
-    this.loop,
     required this.params,
     required this.states,
     required this.dataset,
     required this.latitude,
     required this.longitude,
+    this.child,
+    this.loop,
   }) : super(key: key);
 
   final CNode node;
@@ -41,6 +41,7 @@ class WMarker extends StatelessWidget {
   Widget build(BuildContext context) {
     return GestureDetector(
       child: ChildConditionBuilder(
+        ValueKey('${node.nid} $loop'),
         name: node.intrinsicState.displayName,
         child: child,
         params: params,

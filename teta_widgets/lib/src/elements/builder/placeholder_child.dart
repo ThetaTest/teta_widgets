@@ -8,8 +8,10 @@ import 'package:teta_core/src/design_system/text.dart';
 /// /builder/child_condition.dart
 class PlaceholderChildBuilder extends StatelessWidget {
   /// Constructor
-  const PlaceholderChildBuilder({Key? key, required this.name})
-      : super(key: key);
+  const PlaceholderChildBuilder({
+    required this.name,
+    Key? key,
+  }) : super(key: key);
 
   /// Name of the node
   final String name;

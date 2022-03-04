@@ -20,12 +20,12 @@ import 'package:teta_widgets/src/elements/nodes/node_body.dart';
 abstract class CNode extends Equatable {
   /// Constructor
   CNode({
+    required this.childrenIds,
     this.name,
     this.parent,
     this.nid = 0,
     this.child,
     this.children,
-    required this.childrenIds,
   });
 
   /// Type of the node
@@ -75,8 +75,8 @@ abstract class CNode extends Equatable {
     required List<VariableObject> params,
     required List<VariableObject> states,
     required List<DatasetObject> dataset,
-    int? loop,
     required bool forPlay,
+    int? loop,
   }) =>
       const SizedBox();
 

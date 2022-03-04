@@ -9,8 +9,8 @@ import 'package:teta_widgets/src/elements/nodes/node.dart';
 /// Builder
 class ChildConditionBuilder extends StatelessWidget {
   /// Returns the [child] widget or a placeholder with the name of the widget
-  const ChildConditionBuilder({
-    Key? key,
+  const ChildConditionBuilder(
+    Key? key, {
     required this.name,
     required this.child,
     required this.params,

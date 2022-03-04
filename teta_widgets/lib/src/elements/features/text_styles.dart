@@ -18,12 +18,12 @@ class TetaTextStyles {
   static TextStyle get({
     required BuildContext context,
     required FFill fill,
-    TextStyleModel? model,
     required String fontFamily,
     required FFontSize fontSize,
     required FFontWeight fontWeight,
     required FTextDecoration textDecoration,
     required FFontStyle fontStyle,
+    TextStyleModel? model,
   }) {
     return GoogleFonts.getFont(
       (model != null) ? model.fontFamily! : fontFamily,

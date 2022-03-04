@@ -10,19 +10,19 @@ import 'package:teta_widgets/src/elements/index.dart';
 
 class WTCard extends StatefulWidget {
   /// Returns a PageViewwidget
-  const WTCard({
-    Key? key,
+  const WTCard(
+    Key? key, {
     required this.children,
     required this.lockYAxis,
     required this.slideSpeed,
     required this.delaySlideFor,
     required this.node,
-    this.loop,
     required this.forPlay,
     required this.params,
     required this.states,
     required this.dataset,
     required this.action,
+    this.loop,
   }) : super(key: key);
 
   final CNode node;

@@ -1,6 +1,5 @@
 // Flutter imports:
 import 'package:flutter/material.dart';
-import 'package:teta_core/src/design_system/hex_color.dart';
 // Project imports:
 import 'package:teta_core/teta_core.dart';
 import 'package:teta_widgets/src/elements/index.dart';
@@ -8,16 +7,16 @@ import 'package:teta_widgets/src/elements/index.dart';
 
 class WCard extends StatelessWidget {
   /// Returns a [Center] widget in Teta
-  const WCard({
-    Key? key,
+  const WCard(
+    Key? key, {
     required this.node,
     required this.forPlay,
     required this.params,
     required this.states,
     required this.dataset,
-    this.child,
     required this.elevation,
     required this.color,
+    this.child,
     this.loop,
   }) : super(key: key);
 
@@ -41,6 +40,7 @@ class WCard extends StatelessWidget {
         color: HexColor(color.getHexColor(context)),
         elevation: double.tryParse(val) != null ? double.parse(val) : 1,
         child: ChildConditionBuilder(
+          ValueKey('${node.nid} $loop'),
           name: node.intrinsicState.displayName,
           child: child,
           params: params,

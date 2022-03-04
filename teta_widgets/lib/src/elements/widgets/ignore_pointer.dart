@@ -8,23 +8,19 @@ import 'package:teta_widgets/src/elements/index.dart';
 
 class WIgnorePointer extends StatelessWidget {
   /// Returns a IgnorePointer
-  const WIgnorePointer({
-    Key? key,
-    this.child,
+  const WIgnorePointer(
+    Key? key, {
     required this.node,
     required this.flag,
-    this.nid,
-    this.parent,
     required this.forPlay,
-    this.loop,
     required this.params,
     required this.states,
     required this.dataset,
+    this.child,
+    this.loop,
   }) : super(key: key);
 
   final CNode node;
-  final String? nid;
-  final String? parent;
   final CNode? child;
   final bool flag;
   final bool forPlay;
@@ -42,6 +38,7 @@ class WIgnorePointer extends StatelessWidget {
       child: IgnorePointer(
         ignoring: flag,
         child: ChildConditionBuilder(
+          ValueKey('${node.nid} $loop'),
           name: node.intrinsicState.displayName,
           child: child,
           params: params,

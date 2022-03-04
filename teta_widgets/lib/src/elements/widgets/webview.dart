@@ -10,9 +10,9 @@ import 'package:webviewx/webviewx.dart';
 // ignore_for_file: public_member_api_docs
 
 class WWebViewXPage extends StatefulWidget {
-  /// Returns a [Map] widget in Teta
-  const WWebViewXPage({
-    Key? key,
+  /// Returns a WebView widget in Teta
+  const WWebViewXPage(
+    Key? key, {
     required this.node,
     required this.forPlay,
     required this.params,

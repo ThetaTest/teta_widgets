@@ -26,12 +26,12 @@ import 'package:teta_widgets/src/elements/nodes/node.dart';
 
 class SrcImageControl extends StatefulWidget {
   const SrcImageControl({
-    Key? key,
     required this.node,
     required this.page,
     required this.title,
     required this.image,
     required this.callBack,
+    Key? key,
   }) : super(key: key);
 
   final CNode node;

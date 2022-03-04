@@ -1,5 +1,5 @@
 // Flutter imports:
-// ignore_for_file: public_member_api_docs
+// ignore_for_file: public_member_api_docs, library_private_types_in_public_api
 
 import 'package:flutter/material.dart';
 // Package imports:
@@ -9,8 +9,8 @@ import 'package:teta_widgets/src/elements/index.dart';
 
 class WTextField extends StatefulWidget {
   /// Returns a TextField widget in Teta
-  const WTextField({
-    Key? key,
+  const WTextField(
+    Key? key, {
     required this.node,
     required this.width,
     required this.value,
@@ -31,10 +31,10 @@ class WTextField extends StatefulWidget {
     required this.obscureText,
     required this.borderRadius,
     required this.action,
-    this.loop,
     required this.params,
     required this.states,
     required this.dataset,
+    this.loop,
   }) : super(key: key);
 
   final CNode node;

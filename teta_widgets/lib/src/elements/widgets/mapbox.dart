@@ -11,8 +11,8 @@ import 'package:teta_widgets/src/elements/index.dart';
 
 class WMapBox extends StatefulWidget {
   /// Returns a [Map] widget in Teta
-  const WMapBox({
-    Key? key,
+  const WMapBox(
+    Key? key, {
     required this.node,
     required this.forPlay,
     required this.params,

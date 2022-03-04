@@ -9,8 +9,8 @@ import 'package:teta_widgets/src/elements/index.dart';
 
 class WAudioPlayer extends StatefulWidget {
   /// Returns a [WAudioPlayer] widget in Teta
-  const WAudioPlayer({
-    Key? key,
+  const WAudioPlayer(
+    Key? key, {
     required this.node,
     required this.controller,
     required this.url,
@@ -102,6 +102,7 @@ class _WAudioPlayerState extends State<WAudioPlayer> {
           final datasets = addDataset(context, widget.dataset, _map);
 
           return ChildConditionBuilder(
+            ValueKey('${widget.node.nid} ${widget.loop}'),
             name: widget.node.intrinsicState.displayName,
             child: widget.child,
             params: widget.params,

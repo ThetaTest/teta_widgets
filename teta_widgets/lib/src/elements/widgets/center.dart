@@ -7,8 +7,8 @@ import 'package:teta_widgets/src/elements/index.dart';
 
 class WCenter extends StatelessWidget {
   /// Returns a [Center] widget in Teta
-  const WCenter({
-    Key? key,
+  const WCenter(
+    Key? key, {
     required this.node,
     required this.forPlay,
     required this.params,
@@ -34,6 +34,7 @@ class WCenter extends StatelessWidget {
       forPlay: forPlay,
       child: Center(
         child: ChildConditionBuilder(
+          ValueKey('${node.nid} $loop'),
           name: node.intrinsicState.displayName,
           child: child,
           params: params,

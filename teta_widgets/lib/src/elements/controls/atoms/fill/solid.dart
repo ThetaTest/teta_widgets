@@ -15,13 +15,13 @@ import 'package:teta_widgets/src/elements/nodes/node.dart';
 
 class SolidFillControl extends StatefulWidget {
   const SolidFillControl({
-    Key? key,
     required this.title,
     required this.fill,
-    this.color,
     required this.node,
     required this.isStyled,
     required this.callBack,
+    this.color,
+    Key? key,
   }) : super(key: key);
 
   final FFill? fill;

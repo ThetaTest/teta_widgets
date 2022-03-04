@@ -67,9 +67,9 @@ class HTTPRequestFutureBuilderBody extends NodeBody {
     required List<VariableObject> params,
     required List<VariableObject> states,
     required List<DatasetObject> dataset,
-    int? loop,
     required bool forPlay,
     required CNode node,
+    int? loop,
     CNode? child,
     List<CNode>? children,
   }) {
@@ -84,7 +84,7 @@ class HTTPRequestFutureBuilderBody extends NodeBody {
         ),
       );
     return WHTTPRequestFutureBuilder(
-      key: ValueKey(str.toString()),
+      ValueKey(str.toString()),
       node: node,
       children: children ?? [],
       from: attributes[DBKeys.supabaseFrom] as FTextTypeInput,

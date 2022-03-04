@@ -9,32 +9,26 @@ import 'package:teta_widgets/src/elements/index.dart';
 //ignore: must_be_immutable
 class WCondition extends StatelessWidget {
   /// Returns a if condition widget
-  const WCondition({
-    Key? key,
-    this.nid,
+  const WCondition(
+    Key? key, {
     required this.children,
     required this.node,
     required this.value,
     required this.valueOfCond,
     required this.conditionType,
     required this.forPlay,
-    this.index,
-    this.component,
-    this.loop,
     required this.params,
     required this.states,
     required this.dataset,
+    this.loop,
   }) : super(key: key);
 
   final CNode node;
-  final String? nid;
   final List<CNode> children;
-  final double? index;
   final bool forPlay;
   final FTextTypeInput value;
   final FTextTypeInput valueOfCond;
   final ConditionType conditionType;
-  final String? component;
   final int? loop;
 
   final List<VariableObject> params;

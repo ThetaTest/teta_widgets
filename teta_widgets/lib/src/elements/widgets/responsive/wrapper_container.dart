@@ -11,16 +11,16 @@ import 'package:teta_widgets/src/elements/index.dart';
 //ignore: must_be_immutable
 class WWrapperContainer extends StatelessWidget {
   const WWrapperContainer({
-    Key? key,
-    this.child,
     required this.node,
     required this.forPlay,
-    this.index,
-    this.component,
-    this.loop,
     required this.params,
     required this.states,
     required this.dataset,
+    Key? key,
+    this.child,
+    this.index,
+    this.component,
+    this.loop,
   }) : super(key: key);
 
   final CNode node;
@@ -47,6 +47,7 @@ class WWrapperContainer extends StatelessWidget {
               child: ConstrainedBox(
                 constraints: const BoxConstraints(maxWidth: 1200),
                 child: ChildConditionBuilder(
+                  ValueKey('${node.nid} $loop desktop'),
                   name: node.intrinsicState.displayName,
                   child: child,
                   params: params,
@@ -62,6 +63,7 @@ class WWrapperContainer extends StatelessWidget {
             return Padding(
               padding: const EdgeInsets.symmetric(horizontal: 100),
               child: ChildConditionBuilder(
+                ValueKey('${node.nid} $loop tablet'),
                 name: node.intrinsicState.displayName,
                 child: child,
                 params: params,
@@ -75,6 +77,7 @@ class WWrapperContainer extends StatelessWidget {
           return Padding(
             padding: const EdgeInsets.symmetric(horizontal: 16),
             child: ChildConditionBuilder(
+              ValueKey('${node.nid} $loop mobile'),
               name: node.intrinsicState.displayName,
               child: child,
               params: params,

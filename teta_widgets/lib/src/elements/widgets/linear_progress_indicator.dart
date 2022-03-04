@@ -7,8 +7,8 @@ import 'package:teta_widgets/src/elements/index.dart';
 
 class WLinearProgressIndicator extends StatelessWidget {
   /// Returns a [Center] widget in Teta
-  const WLinearProgressIndicator({
-    Key? key,
+  const WLinearProgressIndicator(
+    Key? key, {
     required this.node,
     required this.forPlay,
     required this.params,

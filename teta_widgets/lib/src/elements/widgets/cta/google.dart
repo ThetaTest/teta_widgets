@@ -10,18 +10,18 @@ import 'package:teta_widgets/src/elements/index.dart';
 
 class WLoginWithGoogle extends StatelessWidget {
   /// Returns a Google SignIn button
-  const WLoginWithGoogle({
-    Key? key,
-    this.child,
+  const WLoginWithGoogle(
+    Key? key, {
     required this.node,
     required this.forPlay,
-    this.loop,
-    this.action,
     required this.width,
     required this.height,
     required this.params,
     required this.states,
     required this.dataset,
+    this.child,
+    this.loop,
+    this.action,
   }) : super(key: key);
 
   final CNode node;

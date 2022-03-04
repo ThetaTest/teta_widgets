@@ -7,17 +7,17 @@ import 'package:teta_widgets/src/elements/index.dart';
 
 class WRow extends StatelessWidget {
   /// Constructor
-  const WRow({
-    Key? key,
+  const WRow(
+    Key? key, {
     required List<CNode> children,
     required CNode node,
     required bool forPlay,
     required FMainAxisAlignment mainAxisAlignment,
     required FCrossAxisAlignment crossAxisAlignment,
-    int? loop,
     required List<VariableObject> params,
     required List<VariableObject> states,
     required List<DatasetObject> dataset,
+    int? loop,
   })  : _children = children,
         _node = node,
         _forPlay = forPlay,

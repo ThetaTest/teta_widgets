@@ -15,10 +15,10 @@ import 'package:teta_widgets/src/elements/nodes/node.dart';
 
 class TextDecorationControl extends StatelessWidget {
   const TextDecorationControl({
-    Key? key,
     required this.node,
     required this.textStyle,
     required this.callBack,
+    Key? key,
   }) : super(key: key);
 
   final CNode node;

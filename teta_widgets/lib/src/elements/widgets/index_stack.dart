@@ -7,21 +7,19 @@ import 'package:teta_widgets/src/elements/index.dart';
 
 class WIndexedStack extends StatelessWidget {
   /// Returns [Column] widget in Teta
-  const WIndexedStack({
-    Key? key,
-    this.nid,
+  const WIndexedStack(
+    Key? key, {
     required this.children,
     required this.node,
     required this.forPlay,
     required this.index,
-    this.loop,
     required this.params,
     required this.states,
     required this.dataset,
+    this.loop,
   }) : super(key: key);
 
   final CNode node;
-  final String? nid;
   final List<CNode> children;
   final bool forPlay;
   final FTextTypeInput index;

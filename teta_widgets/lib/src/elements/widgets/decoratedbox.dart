@@ -8,8 +8,8 @@ import 'package:teta_widgets/src/elements/index.dart';
 
 class WDecoratedBox extends StatelessWidget {
   /// Returns a DecoratedBox widget
-  const WDecoratedBox({
-    Key? key,
+  const WDecoratedBox(
+    Key? key, {
     required this.node,
     required this.fill,
     required this.borderRadius,
@@ -48,6 +48,7 @@ class WDecoratedBox extends StatelessWidget {
           shadow: shadows,
         ),
         child: ChildConditionBuilder(
+          ValueKey('${node.nid} $loop'),
           name: node.intrinsicState.displayName,
           child: child,
           params: params,

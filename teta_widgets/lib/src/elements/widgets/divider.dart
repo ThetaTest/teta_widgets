@@ -8,32 +8,24 @@ import 'package:teta_widgets/src/elements/index.dart';
 
 class WDivider extends StatelessWidget {
   /// Returns a Divider widget
-  const WDivider({
-    Key? key,
-    this.child,
+  const WDivider(
+    Key? key, {
     required this.node,
     required this.height,
     required this.fill,
-    this.nid,
-    this.parent,
     required this.forPlay,
-    this.index,
-    this.component,
-    this.loop,
     required this.params,
     required this.states,
     required this.dataset,
+    this.child,
+    this.loop,
   }) : super(key: key);
 
   final CNode node;
-  final String? nid;
-  final String? parent;
   final CNode? child;
   final FSize height;
   final FFill fill;
   final bool forPlay;
-  final double? index;
-  final String? component;
   final int? loop;
 
   final List<VariableObject> params;

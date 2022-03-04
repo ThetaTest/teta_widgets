@@ -7,10 +7,10 @@ import 'package:teta_widgets/src/elements/features/text_type_input.dart';
 class FCondition {
   static String toCode(
     BuildContext context,
-    bool withCondition,
     FTextTypeInput? condition,
-    FTextTypeInput? valueOfCondition,
-  ) {
+    FTextTypeInput? valueOfCondition, {
+    required bool withCondition,
+  }) {
     if (withCondition != true) return '';
     if (condition == null || valueOfCondition == null) return '';
     var condStr = condition.toCode(0);

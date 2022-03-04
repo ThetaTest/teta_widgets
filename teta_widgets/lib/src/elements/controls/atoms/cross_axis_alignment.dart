@@ -14,10 +14,10 @@ import 'package:teta_widgets/src/elements/nodes/node.dart';
 
 class CrossAxisAlignmentControls extends StatefulWidget {
   const CrossAxisAlignmentControls({
-    Key? key,
     required this.node,
     required this.crossAxisAlignment,
     required this.callBack,
+    Key? key,
   }) : super(key: key);
 
   final CNode node;

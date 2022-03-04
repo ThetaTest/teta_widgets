@@ -3,7 +3,6 @@ import 'package:flutter/material.dart';
 // Project imports:
 import 'package:teta_widgets/src/elements/code/snippets.dart';
 import 'package:teta_widgets/src/elements/controls/key_constants.dart';
-import 'package:teta_widgets/src/elements/features/text_type_input.dart';
 import 'package:teta_widgets/src/elements/nodes/node.dart';
 import 'package:teta_widgets/src/elements/nodes/node_body.dart';
 
@@ -14,8 +13,6 @@ String dotsIndicatorCodeTemplate(
   CNode? child,
   int? loop,
 ) {
-  final abstract = body.attributes[DBKeys.value] as FTextTypeInput;
-  final dotsCount = abstract.toCode(loop);
   return '''
   Row(
     mainAxisSize: MainAxisSize.min,

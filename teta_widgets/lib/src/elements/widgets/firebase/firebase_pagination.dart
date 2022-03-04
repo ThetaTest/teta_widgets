@@ -15,17 +15,17 @@ class WFirestorePagination extends StatefulWidget {
   ///
   /// Requires a path to connect to the right collection / doc
   /// and a orderBy filter to correctly sort the results.
-  const WFirestorePagination({
-    Key? key,
-    this.child,
+  const WFirestorePagination(
+    Key? key, {
     required this.node,
     required this.path,
     required this.orderBy,
     required this.forPlay,
-    this.loop,
     required this.params,
     required this.states,
     required this.dataset,
+    this.child,
+    this.loop,
   }) : super(key: key);
 
   /// The original CNode

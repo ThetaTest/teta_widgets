@@ -21,12 +21,12 @@ import 'package:teta_widgets/src/elements/nodes/node.dart';
 
 class TextControl extends StatefulWidget {
   const TextControl({
-    Key? key,
     required this.node,
     required this.value,
     required this.page,
     required this.title,
     required this.callBack,
+    Key? key,
   }) : super(key: key);
 
   final CNode node;

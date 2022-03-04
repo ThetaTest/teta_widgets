@@ -17,10 +17,10 @@ import 'package:teta_widgets/src/elements/nodes/node.dart';
 
 class IconControl extends StatefulWidget {
   const IconControl({
-    Key? key,
     required this.node,
     required this.icon,
     required this.callBack,
+    Key? key,
   }) : super(key: key);
 
   final CNode node;
@@ -91,7 +91,7 @@ class IconControlState extends State<IconControl> {
     showDialog<void>(
       context: context,
       builder: (context) {
-        final icons = iconMap.keys.map((key) => IconDefinition(key)).toList();
+        final icons = iconMap.keys.map(IconDefinition.new).toList();
         final editingController = TextEditingController();
         var filteredIcons = icons.sublist(0, 64);
         var after = 0;

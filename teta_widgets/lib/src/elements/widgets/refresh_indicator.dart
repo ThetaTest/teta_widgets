@@ -8,8 +8,8 @@ import 'package:teta_widgets/src/elements/index.dart';
 
 class WRefreshIndicator extends StatelessWidget {
   /// Returns a [Center] widget in Teta
-  const WRefreshIndicator({
-    Key? key,
+  const WRefreshIndicator(
+    Key? key, {
     required this.node,
     required this.forPlay,
     required this.params,
@@ -18,8 +18,8 @@ class WRefreshIndicator extends StatelessWidget {
     required this.children,
     required this.height,
     required this.duration,
-    this.action,
     required this.actionValue,
+    this.action,
     this.loop,
   }) : super(key: key);
 

@@ -19,8 +19,8 @@ class DateCalendarObject {
 
 class WCalendar extends StatefulWidget {
   /// Returns a [Align] widget in Teta
-  const WCalendar({
-    Key? key,
+  const WCalendar(
+    Key? key, {
     required this.node,
     required this.value,
     required this.action,

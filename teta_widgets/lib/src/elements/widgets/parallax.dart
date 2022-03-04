@@ -8,23 +8,19 @@ import 'package:teta_widgets/src/elements/index.dart';
 
 class WParallax extends StatelessWidget {
   /// Returns a SizedBox widget in Teta
-  const WParallax({
-    Key? key,
-    this.child,
+  const WParallax(
+    Key? key, {
     required this.node,
     required this.height,
-    this.nid,
-    this.parent,
     required this.forPlay,
-    this.loop,
     required this.params,
     required this.states,
     required this.dataset,
+    this.child,
+    this.loop,
   }) : super(key: key);
 
   final CNode node;
-  final String? nid;
-  final String? parent;
   final CNode? child;
   final FSize height;
   final bool forPlay;
@@ -42,6 +38,7 @@ class WParallax extends StatelessWidget {
       child: Parallax.inside(
         mainAxisExtent: height.get(context: context, isWidth: false),
         child: ChildConditionBuilder(
+          ValueKey('${node.nid} $loop'),
           name: node.intrinsicState.displayName,
           child: child,
           params: params,

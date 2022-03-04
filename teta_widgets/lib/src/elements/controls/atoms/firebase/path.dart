@@ -13,12 +13,12 @@ import 'package:teta_widgets/src/elements/features/text_type_input.dart';
 
 class FirestorePathControl extends StatefulWidget {
   const FirestorePathControl({
-    Key? key,
     required this.prj,
     required this.page,
     required this.path,
     required this.isForAddData,
     required this.callBack,
+    Key? key,
   }) : super(key: key);
 
   final ProjectObject prj;

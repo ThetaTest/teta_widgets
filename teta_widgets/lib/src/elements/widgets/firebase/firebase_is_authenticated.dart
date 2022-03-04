@@ -15,8 +15,8 @@ const keyAttr = 'value';
 
 class WFirebaseIsAuthenticatedBuilder extends StatefulWidget {
   /// Constructor
-  const WFirebaseIsAuthenticatedBuilder({
-    Key? key,
+  const WFirebaseIsAuthenticatedBuilder(
+    Key? key, {
     required this.node,
     required this.forPlay,
     required this.params,
@@ -82,6 +82,7 @@ class WFirebaseIsAuthenticatedBuilderState
 
                     final list = addDataset(context, widget.dataset, _map);
                     ChildConditionBuilder(
+                      ValueKey('${widget.node.nid} ${widget.loop}'),
                       name: widget.node.intrinsicState.displayName,
                       child: widget.child,
                       params: widget.params,
@@ -95,6 +96,7 @@ class WFirebaseIsAuthenticatedBuilderState
                 },
               )
             : ChildConditionBuilder(
+                ValueKey('${widget.node.nid} ${widget.loop}'),
                 name: widget.node.intrinsicState.displayName,
                 child: widget.child,
                 params: widget.params,

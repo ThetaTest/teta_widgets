@@ -18,8 +18,10 @@ const globalName = 'Null';
 // ignore: must_be_immutable
 class NNull extends CNode {
   /// construct
-  NNull({this.nid = 0, required this.context})
-      : super(childrenIds: FChildrenIds());
+  NNull({
+    required this.context,
+    this.nid = 0,
+  }) : super(childrenIds: FChildrenIds());
 
   ///
   final String type = globalType;
@@ -29,7 +31,6 @@ class NNull extends CNode {
   @override
   int nid;
 
-  @override
   BuildContext? context;
 
   /// fromJson
@@ -44,8 +45,8 @@ class NNull extends CNode {
     required List<VariableObject> params,
     required List<VariableObject> states,
     required List<DatasetObject> dataset,
-    int? loop,
     required bool forPlay,
+    int? loop,
   }) =>
       const SizedBox();
 

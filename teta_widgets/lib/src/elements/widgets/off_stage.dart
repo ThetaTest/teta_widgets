@@ -7,8 +7,8 @@ import 'package:teta_widgets/src/elements/index.dart';
 
 class WOffStage extends StatelessWidget {
   /// Returns a Container widget
-  const WOffStage({
-    Key? key,
+  const WOffStage(
+    Key? key, {
     required this.node,
     required this.forPlay,
     required this.params,
@@ -37,6 +37,7 @@ class WOffStage extends StatelessWidget {
       child: Offstage(
         offstage: offStage,
         child: ChildConditionBuilder(
+          ValueKey('${node.nid} $loop'),
           name: node.intrinsicState.displayName,
           child: child,
           params: params,

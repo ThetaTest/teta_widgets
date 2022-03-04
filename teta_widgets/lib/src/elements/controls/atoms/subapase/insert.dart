@@ -15,12 +15,12 @@ import 'package:teta_widgets/src/elements/nodes/node.dart';
 
 class SupabaseInsertControl extends StatelessWidget {
   const SupabaseInsertControl({
-    Key? key,
     required this.prj,
     required this.page,
     required this.node,
     required this.action,
     required this.callback,
+    Key? key,
   }) : super(key: key);
 
   final ProjectObject prj;

@@ -7,30 +7,22 @@ import 'package:teta_widgets/src/elements/index.dart';
 
 class WOpacity extends StatelessWidget {
   /// Returns a Opacity widget
-  const WOpacity({
-    Key? key,
-    this.child,
+  const WOpacity(
+    Key? key, {
     required this.node,
     required this.value,
-    this.nid,
-    this.parent,
     required this.forPlay,
-    this.index,
-    this.component,
-    this.loop,
     required this.params,
     required this.states,
     required this.dataset,
+    this.child,
+    this.loop,
   }) : super(key: key);
 
   final CNode node;
-  final String? nid;
-  final String? parent;
   final CNode? child;
   final FTextTypeInput value;
   final bool forPlay;
-  final double? index;
-  final String? component;
   final int? loop;
 
   final List<VariableObject> params;
@@ -53,6 +45,7 @@ class WOpacity extends StatelessWidget {
           ? double.parse(opacityString)
           : 1,
       child: ChildConditionBuilder(
+        ValueKey('${node.nid} $loop'),
         name: node.intrinsicState.displayName,
         child: child,
         params: params,

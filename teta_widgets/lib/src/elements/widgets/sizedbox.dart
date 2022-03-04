@@ -7,24 +7,20 @@ import 'package:teta_widgets/src/elements/index.dart';
 
 class WSizedBox extends StatelessWidget {
   /// Returns a SizedBox widget in Teta
-  const WSizedBox({
-    Key? key,
-    this.child,
+  const WSizedBox(
+    Key? key, {
     required this.node,
     required this.width,
     required this.height,
-    this.nid,
-    this.parent,
     required this.forPlay,
-    this.loop,
     required this.params,
     required this.states,
     required this.dataset,
+    this.child,
+    this.loop,
   }) : super(key: key);
 
   final CNode node;
-  final String? nid;
-  final String? parent;
   final CNode? child;
   final FSize width;
   final FSize height;
@@ -44,6 +40,7 @@ class WSizedBox extends StatelessWidget {
         width: width.get(context: context, isWidth: true),
         height: height.get(context: context, isWidth: false),
         child: ChildConditionBuilder(
+          ValueKey('${node.nid} $loop'),
           name: node.intrinsicState.displayName,
           child: child,
           params: params,

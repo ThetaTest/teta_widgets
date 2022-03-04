@@ -7,16 +7,16 @@ import 'package:teta_widgets/src/elements/index.dart';
 
 class WCupertinoSwitch extends StatefulWidget {
   /// Returns a Gesture Detector
-  const WCupertinoSwitch({
-    Key? key,
-    this.child,
+  const WCupertinoSwitch(
+    Key? key, {
     required this.node,
     required this.forPlay,
-    this.loop,
     required this.action,
     required this.params,
     required this.states,
     required this.dataset,
+    this.child,
+    this.loop,
   }) : super(key: key);
 
   final CNode node;
