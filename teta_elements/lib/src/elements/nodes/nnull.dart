@@ -1,0 +1,57 @@
+// Flutter imports:
+// ignore_for_file: overridden_fields
+
+import 'package:flutter/material.dart';
+import 'package:teta_core/src/models/dataset.dart';
+import 'package:teta_core/src/models/variable.dart';
+// Project imports:
+import 'package:teta_elements/src/elements/features/children_ids.dart';
+import 'package:teta_elements/src/elements/nodes/node.dart';
+
+/// constant type
+const globalType = 'Null';
+
+/// constant name
+const globalName = 'Null';
+
+///
+// ignore: must_be_immutable
+class NNull extends CNode {
+  /// construct
+  NNull({this.nid = 0, required this.context})
+      : super(childrenIds: FChildrenIds());
+
+  ///
+  final String type = globalType;
+
+  @override
+  int? parent;
+  @override
+  int nid;
+
+  @override
+  BuildContext? context;
+
+  /// fromJson
+  static NNull fromJson(Map<String, dynamic> doc, BuildContext context) =>
+      NNull(context: context);
+
+  @override
+  Map<String, dynamic> toJson() => <String, dynamic>{};
+
+  @override
+  Widget toWidget({
+    required List<VariableObject> params,
+    required List<VariableObject> states,
+    required List<DatasetObject> dataset,
+    int? loop,
+    required bool forPlay,
+  }) =>
+      const SizedBox();
+
+  @override
+  String toString() => 'NNull { nid: $nid }';
+
+  @override
+  String toCode(BuildContext context) => 'const SizedBox(),';
+}

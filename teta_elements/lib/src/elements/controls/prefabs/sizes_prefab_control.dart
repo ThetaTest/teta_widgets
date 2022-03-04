@@ -1,0 +1,85 @@
+// Flutter imports:
+// ignore_for_file: public_member_api_docs
+
+import 'package:flutter/material.dart';
+// Project imports:
+import 'package:teta_core/src/design_system/palette.dart';
+import 'package:teta_core/src/design_system/text.dart';
+import 'package:teta_core/src/models/page.dart';
+import 'package:teta_core/src/models/project.dart';
+import 'package:teta_elements/src/elements/controls/atoms/size.dart';
+import 'package:teta_elements/src/elements/controls/key_constants.dart';
+import 'package:teta_elements/src/elements/controls/type.dart';
+import 'package:teta_elements/src/elements/features/sizes.dart';
+import 'package:teta_elements/src/elements/nodes/node.dart';
+
+class SizesPrefabControl extends StatelessWidget {
+  const SizesPrefabControl({
+    Key? key,
+    required this.prj,
+    required this.page,
+    required this.node,
+    required this.values,
+  }) : super(key: key);
+
+  final ProjectObject prj;
+  final PageObject page;
+  final CNode node;
+  final List<FSize> values;
+
+  @override
+  Widget build(BuildContext context) {
+    return Padding(
+      padding: const EdgeInsets.only(left: 4),
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          const Padding(
+            padding: EdgeInsets.only(top: 16, bottom: 8),
+            child: CText(
+              'Sizes',
+              color: Palette.white,
+              weight: FontWeight.bold,
+            ),
+          ),
+          SizeControl(
+            node: node,
+            size: values.first,
+            isWidth: true,
+            title: 'Width',
+            keyAttr: DBKeys.width,
+            isFromSizesPrefab: true,
+            callBack: (value, old) {
+              ControlBuilder.toDB(
+                prj,
+                page,
+                node,
+                context,
+                DBKeys.width,
+                value,
+                old,
+              );
+            },
+          ),
+          SizeControl(
+            node: node,
+            size: values.last,
+            isWidth: false,
+            title: 'Height',
+            keyAttr: DBKeys.height,
+            isFromSizesPrefab: true,
+            callBack: (value, old) => ControlBuilder.toDB(
+              prj,
+              page,
+              node,
+              context,
+              DBKeys.height,
+              value,
+              old,
+            ),
+          ),
+        ],
+      ),
+    );
+  }
+}

@@ -1,0 +1,244 @@
+// Dart imports:
+// ignore_for_file: public_member_api_docs
+
+import 'dart:async';
+
+// Flutter imports:
+import 'package:flutter/material.dart';
+// Package imports:
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:hovering/hovering.dart';
+// Project imports:
+import 'package:teta_core/src/blocs/focus/bloc.dart';
+import 'package:teta_core/src/design_system/palette.dart';
+import 'package:teta_core/src/design_system/text.dart';
+import 'package:teta_core/src/design_system/textfield/minitextfield.dart';
+import 'package:teta_elements/src/elements/features/margins.dart';
+import 'package:teta_elements/src/elements/nodes/node.dart';
+
+class Margins extends StatefulWidget {
+  const Margins({
+    Key? key,
+    required this.node,
+    required this.title,
+    required this.value,
+    required this.callBack,
+  }) : super(key: key);
+
+  final CNode node;
+  final String title;
+  final FMargins value;
+  final Function(List<String>, List<String>) callBack;
+
+  @override
+  MarginsState createState() => MarginsState();
+}
+
+class MarginsState extends State<Margins> {
+  int? nodeId;
+  bool? isUpdated;
+  List<String>? margins;
+  List<TextEditingController> controllers = [];
+  bool isLinked = true;
+  Timer? searchOnStoppedTyping;
+
+  @override
+  void initState() {
+    nodeId = widget.node.nid;
+    margins = widget.value.getList(context);
+    for (var i = 0; i < 4; i++) {
+      controllers.add(TextEditingController());
+    }
+    for (var i = 0; i < 4; i++) {
+      controllers[i].text = margins![i];
+    }
+    var flag = false;
+    var lastValue = '';
+    for (final element in margins ?? const <String>[]) {
+      if (lastValue == '') lastValue = element;
+      if (element != lastValue) {
+        flag = true;
+      }
+    }
+    isLinked = !flag;
+    super.initState();
+  }
+
+  void onChangeHandler(FMargins value, FMargins old) {
+    /*const duration = Duration(milliseconds: 100);
+    if (searchOnStoppedTyping != null) {
+      setState(() => searchOnStoppedTyping!.cancel());
+    }
+    setState(
+      () => searchOnStoppedTyping = Timer(
+        duration,
+        () => setValue(value, old),
+      ),
+    );*/
+    setValue(value, old);
+  }
+
+  void setValue(FMargins value, FMargins old) {
+    final clone = [...margins!];
+    final temp =
+        FMargins.fromJson(value.update(value: clone, context: context));
+    widget.callBack(
+      temp.toJson(),
+      old.toJson(),
+    );
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    return BlocBuilder<FocusBloc, List<CNode>>(
+      builder: (context, state) {
+        if (state.isNotEmpty) {
+          if (state.first.nid != nodeId) {
+            if (mounted) {
+              nodeId = state.first.nid;
+              margins = widget.value.getList(context);
+              for (var i = 0; i < 4; i++) {
+                controllers[i].text = margins![i];
+              }
+              var flag = false;
+              var lastValue = '';
+              for (final element in margins ?? const <String>[]) {
+                if (lastValue == '') lastValue = element;
+                if (element != lastValue) {
+                  flag = true;
+                }
+              }
+              isLinked = !flag;
+            }
+          }
+        }
+        return Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            Padding(
+              padding: const EdgeInsets.only(bottom: 12, left: 4),
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: [
+                  CText(widget.title, color: Palette.white),
+                  GestureDetector(
+                    onTap: () {
+                      setState(() {
+                        isLinked = !isLinked;
+                      });
+                    },
+                    child: HoverWidget(
+                      hoverChild: Container(
+                        padding: const EdgeInsets.all(4),
+                        decoration: BoxDecoration(
+                          border: Border.all(
+                            color: Colors.white,
+                          ),
+                        ),
+                        child: Icon(
+                          isLinked ? Icons.link : Icons.link_off,
+                          size: 24,
+                          color: Colors.white,
+                        ),
+                      ),
+                      onHover: (e) {},
+                      child: Container(
+                        padding: const EdgeInsets.all(4),
+                        decoration: BoxDecoration(
+                          border: Border.all(
+                            color: Colors.transparent,
+                          ),
+                        ),
+                        child: Icon(
+                          isLinked ? Icons.link : Icons.link_off,
+                          size: 24,
+                          color: Colors.white,
+                        ),
+                      ),
+                    ),
+                  ),
+                ],
+              ),
+            ),
+            Row(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                Expanded(
+                  child: CMiniTextField(
+                    title: (!isLinked) ? 'LEFT' : 'ALL',
+                    controller: controllers[0],
+                    text: widget.value.getList(context)[0],
+                    hpadding: 4,
+                    withSwipe: true,
+                    callBack: (text) {
+                      margins![0] = text;
+                      if (isLinked) {
+                        margins![1] = text;
+                        controllers[1].text = text;
+                        margins![2] = text;
+                        controllers[2].text = text;
+                        margins![3] = text;
+                        controllers[3].text = text;
+                      }
+                      final old = FMargins.fromJson(widget.value.toJson());
+                      final temp = FMargins.fromJson(widget.value.toJson());
+                      onChangeHandler(temp, old);
+                    },
+                  ),
+                ),
+                if (!isLinked)
+                  Expanded(
+                    child: CMiniTextField(
+                      title: 'TOP',
+                      controller: controllers[1],
+                      text: widget.value.getList(context)[1],
+                      hpadding: 4,
+                      withSwipe: true,
+                      callBack: (text) {
+                        margins![1] = text;
+                        final old = FMargins.fromJson(widget.value.toJson());
+                        final temp = FMargins.fromJson(widget.value.toJson());
+                        onChangeHandler(temp, old);
+                      },
+                    ),
+                  ),
+                if (!isLinked)
+                  Expanded(
+                    child: CMiniTextField(
+                      title: 'RIGHT',
+                      controller: controllers[2],
+                      text: widget.value.getList(context)[2],
+                      hpadding: 4,
+                      withSwipe: true,
+                      callBack: (text) {
+                        margins![2] = text;
+                        final old = FMargins.fromJson(widget.value.toJson());
+                        final temp = FMargins.fromJson(widget.value.toJson());
+                        onChangeHandler(temp, old);
+                      },
+                    ),
+                  ),
+                if (!isLinked)
+                  Expanded(
+                    child: CMiniTextField(
+                      title: 'BOTTOM',
+                      controller: controllers[3],
+                      text: widget.value.getList(context)[3],
+                      hpadding: 4,
+                      withSwipe: true,
+                      callBack: (text) {
+                        margins![3] = text;
+                        final old = FMargins.fromJson(widget.value.toJson());
+                        final temp = FMargins.fromJson(widget.value.toJson());
+                        onChangeHandler(temp, old);
+                      },
+                    ),
+                  ),
+              ],
+            ),
+          ],
+        );
+      },
+    );
+  }
+}
