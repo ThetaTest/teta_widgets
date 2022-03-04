@@ -3,6 +3,7 @@
 
 import 'package:flutter/material.dart';
 import 'package:teta_core/teta_core.dart';
+import 'package:teta_widgets/src/elements/index.dart';
 
 class WSpacer extends StatelessWidget {
   /// Returns a Spacer widget

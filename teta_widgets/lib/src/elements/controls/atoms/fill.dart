@@ -10,13 +10,13 @@ import 'package:teta_core/src/design_system/dropdowns/dropdown_for_type.dart';
 import 'package:teta_core/src/design_system/palette.dart';
 import 'package:teta_core/src/design_system/text.dart';
 import 'package:teta_core/src/models/palette.dart';
-import 'package:teta_elements/src/elements/controls/atoms/fill/image.dart';
-import 'package:teta_elements/src/elements/controls/atoms/fill/linear.dart';
-import 'package:teta_elements/src/elements/controls/atoms/fill/radial.dart';
-import 'package:teta_elements/src/elements/controls/atoms/fill/solid.dart';
-import 'package:teta_elements/src/elements/controls/atoms/fill/style.dart';
-import 'package:teta_elements/src/elements/features/features.dart';
-import 'package:teta_elements/src/elements/nodes/node.dart';
+import 'package:teta_widgets/src/elements/controls/atoms/fill/image.dart';
+import 'package:teta_widgets/src/elements/controls/atoms/fill/linear.dart';
+import 'package:teta_widgets/src/elements/controls/atoms/fill/radial.dart';
+import 'package:teta_widgets/src/elements/controls/atoms/fill/solid.dart';
+import 'package:teta_widgets/src/elements/controls/atoms/fill/style.dart';
+import 'package:teta_widgets/src/elements/features/features.dart';
+import 'package:teta_widgets/src/elements/nodes/node.dart';
 
 enum FillTypeControlType {
   onlySolid,

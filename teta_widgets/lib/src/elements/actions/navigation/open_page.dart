@@ -14,9 +14,9 @@ import 'package:teta_core/src/models/page.dart';
 import 'package:teta_core/src/models/variable.dart';
 import 'package:teta_core/src/rendering/nodes_original.dart';
 import 'package:teta_core/src/repositories/queries/node.dart';
-import 'package:teta_elements/src/elements/controls/key_constants.dart';
-import 'package:teta_elements/src/elements/features/page_transition.dart';
-import 'package:teta_elements/src/elements/nodes/node.dart';
+import 'package:teta_widgets/src/elements/controls/key_constants.dart';
+import 'package:teta_widgets/src/elements/features/page_transition.dart';
+import 'package:teta_widgets/src/elements/nodes/node.dart';
 // ignore: library_prefixes
 import 'package:transition/transition.dart' as T;
 

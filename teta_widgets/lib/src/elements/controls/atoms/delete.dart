@@ -15,9 +15,9 @@ import 'package:teta_core/src/design_system/palette.dart';
 import 'package:teta_core/src/design_system/text.dart';
 import 'package:teta_core/src/rendering/find.dart';
 import 'package:teta_core/src/repositories/actions/remove_node_between_nodes.dart';
-import 'package:teta_elements/src/elements/nodes/children_enum.dart';
-import 'package:teta_elements/src/elements/nodes/dynamic.dart';
-import 'package:teta_elements/src/elements/nodes/node.dart';
+import 'package:teta_widgets/src/elements/nodes/children_enum.dart';
+import 'package:teta_widgets/src/elements/nodes/dynamic.dart';
+import 'package:teta_widgets/src/elements/nodes/node.dart';
 
 class DeleteControl extends StatefulWidget {
   const DeleteControl({Key? key, required this.node, required this.callBack})

@@ -7,9 +7,9 @@ import 'package:teta_core/src/design_system/palette.dart';
 import 'package:teta_core/src/design_system/text.dart';
 import 'package:teta_core/src/models/page.dart';
 import 'package:teta_core/src/models/project.dart';
-import 'package:teta_elements/src/elements/controls/atoms/firebase/parameter.dart';
-import 'package:teta_elements/src/elements/features/firestore_path.dart';
-import 'package:teta_elements/src/elements/features/text_type_input.dart';
+import 'package:teta_widgets/src/elements/controls/atoms/firebase/parameter.dart';
+import 'package:teta_widgets/src/elements/features/firestore_path.dart';
+import 'package:teta_widgets/src/elements/features/text_type_input.dart';
 
 class FirestorePathControl extends StatefulWidget {
   const FirestorePathControl({

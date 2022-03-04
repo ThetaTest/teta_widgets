@@ -4,6 +4,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_parallax/flutter_parallax.dart';
 import 'package:teta_core/teta_core.dart';
+import 'package:teta_widgets/src/elements/index.dart';
 
 class WParallax extends StatelessWidget {
   /// Returns a SizedBox widget in Teta

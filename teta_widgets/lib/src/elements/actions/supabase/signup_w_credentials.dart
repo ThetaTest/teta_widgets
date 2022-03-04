@@ -8,12 +8,12 @@ import 'package:hive/hive.dart';
 import 'package:teta_core/src/blocs/focus_page/index.dart';
 // Project imports:
 import 'package:teta_core/src/cubits/supabase.dart';
-import 'package:teta_core/src/elements/actions/navigation/open_page.dart';
-import 'package:teta_core/src/elements/actions/snippets/change_state.dart';
-import 'package:teta_core/src/elements/actions/snippets/take_state_from.dart';
-import 'package:teta_core/src/elements/nodes/node.dart';
 import 'package:teta_core/src/models/dataset.dart';
 import 'package:teta_core/src/models/variable.dart';
+import 'package:teta_widgets/src/elements/actions/navigation/open_page.dart';
+import 'package:teta_widgets/src/elements/actions/snippets/change_state.dart';
+import 'package:teta_widgets/src/elements/actions/snippets/take_state_from.dart';
+import 'package:teta_widgets/src/elements/nodes/node.dart';
 
 class FASupabaseSignUp {
   static Future action(

@@ -2,8 +2,8 @@
 // ignore_for_file: lines_longer_than_80_chars
 
 import 'package:flutter/material.dart';
-import 'package:teta_core/src/elements/nodes/node.dart';
-import 'package:teta_core/src/elements/nodes/node_body.dart';
+import 'package:teta_widgets/src/elements/nodes/node.dart';
+import 'package:teta_widgets/src/elements/nodes/node_body.dart';
 
 /// Generates the code for Padding widget
 String revenueCatProductsListCodeTemplate(

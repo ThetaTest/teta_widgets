@@ -8,7 +8,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:teta_core/src/blocs/palette/index.dart';
 import 'package:teta_core/src/models/asset_file.dart';
 import 'package:teta_core/src/models/palette.dart';
-import 'package:teta_elements/src/elements/features/box_fit.dart';
+import 'package:teta_widgets/src/elements/features/box_fit.dart';
 
 /// Types of a FFill
 enum FFillType {

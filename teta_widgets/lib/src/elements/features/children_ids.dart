@@ -1,5 +1,5 @@
 // Project imports:
-import 'package:teta_elements/src/elements/controls/key_constants.dart';
+import 'package:teta_widgets/src/elements/controls/key_constants.dart';
 
 /// [FChildrenIds] is a set of functions to save children' ids
 class FChildrenIds {

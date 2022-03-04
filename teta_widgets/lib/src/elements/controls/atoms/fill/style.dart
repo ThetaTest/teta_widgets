@@ -9,8 +9,8 @@ import 'package:teta_core/src/blocs/focus/bloc.dart';
 import 'package:teta_core/src/blocs/palette/index.dart';
 import 'package:teta_core/src/design_system/dropdowns/dropdown.dart';
 import 'package:teta_core/src/models/palette.dart';
-import 'package:teta_elements/src/elements/features/features.dart';
-import 'package:teta_elements/src/elements/nodes/node.dart';
+import 'package:teta_widgets/src/elements/features/features.dart';
+import 'package:teta_widgets/src/elements/nodes/node.dart';
 
 //ignore: must_be_immutable
 class StyleFillControl extends StatefulWidget {

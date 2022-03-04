@@ -5,6 +5,7 @@ import 'package:flutter/material.dart';
 import 'package:liquid_swipe/liquid_swipe.dart';
 // Project imports:
 import 'package:teta_core/teta_core.dart';
+import 'package:teta_widgets/src/elements/index.dart';
 
 class WLiquidSwipe extends StatelessWidget {
   /// Returns a LiquidSwipe widget

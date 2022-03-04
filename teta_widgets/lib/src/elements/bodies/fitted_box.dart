@@ -4,16 +4,16 @@ import 'package:flutter/material.dart';
 import 'package:teta_core/gen/assets.gen.dart';
 import 'package:teta_core/src/models/dataset.dart';
 import 'package:teta_core/src/models/variable.dart';
-import 'package:teta_elements/src/elements/code/templates/fitted_box.dart';
-import 'package:teta_elements/src/elements/controls/control_model.dart';
-import 'package:teta_elements/src/elements/features/box_fit.dart';
-import 'package:teta_elements/src/elements/intrinsic_states/class.dart';
-import 'package:teta_elements/src/elements/nodes/categories.dart';
-import 'package:teta_elements/src/elements/nodes/children_enum.dart';
-import 'package:teta_elements/src/elements/nodes/enum.dart';
-import 'package:teta_elements/src/elements/nodes/node.dart';
-import 'package:teta_elements/src/elements/nodes/node_body.dart';
-import 'package:teta_widgets/src/widgets/fitted_box.dart';
+import 'package:teta_widgets/src/elements/code/templates/fitted_box.dart';
+import 'package:teta_widgets/src/elements/controls/control_model.dart';
+import 'package:teta_widgets/src/elements/features/box_fit.dart';
+import 'package:teta_widgets/src/elements/intrinsic_states/class.dart';
+import 'package:teta_widgets/src/elements/nodes/categories.dart';
+import 'package:teta_widgets/src/elements/nodes/children_enum.dart';
+import 'package:teta_widgets/src/elements/nodes/enum.dart';
+import 'package:teta_widgets/src/elements/nodes/node.dart';
+import 'package:teta_widgets/src/elements/nodes/node_body.dart';
+import 'package:teta_widgets/src/elements/widgets/fitted_box.dart';
 
 const _globalType = NType.fittedBox;
 

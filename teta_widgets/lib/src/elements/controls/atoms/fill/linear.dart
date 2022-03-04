@@ -11,8 +11,8 @@ import 'package:teta_core/src/design_system/buttons/button.dart';
 import 'package:teta_core/src/design_system/dialogs/color_picker.dart';
 import 'package:teta_core/src/design_system/hex_color.dart';
 import 'package:teta_core/src/design_system/textfield/textfield.dart';
-import 'package:teta_elements/src/elements/features/features.dart';
-import 'package:teta_elements/src/elements/nodes/node.dart';
+import 'package:teta_widgets/src/elements/features/features.dart';
+import 'package:teta_widgets/src/elements/nodes/node.dart';
 
 class LinearFillControl extends StatefulWidget {
   /// Constructor

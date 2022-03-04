@@ -6,9 +6,9 @@ import 'package:flutter/material.dart';
 import 'package:teta_core/src/models/dataset.dart';
 import 'package:teta_core/src/models/variable.dart';
 // Project imports:
-import 'package:teta_elements/src/elements/features/children_ids.dart';
-import 'package:teta_elements/src/elements/nodes/node.dart';
-import 'package:teta_elements/src/elements/templates/template.dart';
+import 'package:teta_widgets/src/elements/features/children_ids.dart';
+import 'package:teta_widgets/src/elements/nodes/node.dart';
+import 'package:teta_widgets/src/elements/templates/template.dart';
 
 const _globalType = 'Null';
 

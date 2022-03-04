@@ -1,11 +1,11 @@
 // Flutter imports:
 import 'package:flutter/material.dart';
-import 'package:teta_core/src/elements/code/snippets.dart';
-import 'package:teta_core/src/elements/controls/key_constants.dart';
-import 'package:teta_core/src/elements/features/actions/enums/index.dart';
-import 'package:teta_core/src/elements/features/dataset.dart';
-import 'package:teta_core/src/elements/features/text_type_input.dart';
-import 'package:teta_core/src/elements/nodes/node.dart';
+import 'package:teta_widgets/src/elements/code/snippets.dart';
+import 'package:teta_widgets/src/elements/controls/key_constants.dart';
+import 'package:teta_widgets/src/elements/features/actions/enums/index.dart';
+import 'package:teta_widgets/src/elements/features/dataset.dart';
+import 'package:teta_widgets/src/elements/features/text_type_input.dart';
+import 'package:teta_widgets/src/elements/nodes/node.dart';
 
 /// Generates the code for ListView widget
 ///

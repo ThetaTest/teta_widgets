@@ -14,7 +14,7 @@ import 'package:teta_core/src/design_system/textfield/minitextfield.dart';
 import 'package:teta_core/src/design_system/textfield/multi_line_textfield.dart';
 import 'package:teta_core/src/models/page.dart';
 import 'package:teta_core/src/models/variable.dart';
-import 'package:teta_elements/src/elements/nodes/node.dart';
+import 'package:teta_widgets/src/elements/nodes/node.dart';
 import 'package:uuid/uuid.dart';
 
 class PageParamsControl extends StatefulWidget {

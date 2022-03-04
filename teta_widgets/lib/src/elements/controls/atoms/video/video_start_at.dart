@@ -6,7 +6,7 @@ import 'package:flutter/material.dart';
 import 'package:teta_core/src/design_system/palette.dart';
 import 'package:teta_core/src/design_system/text.dart';
 import 'package:teta_core/src/design_system/textfield/textfield.dart';
-import 'package:teta_elements/src/elements/nodes/node.dart';
+import 'package:teta_widgets/src/elements/nodes/node.dart';
 
 class VideoStartAtControl extends StatefulWidget {
   const VideoStartAtControl({

@@ -10,19 +10,19 @@ import 'package:teta_core/src/models/palette.dart';
 import 'package:teta_core/src/models/project.dart';
 import 'package:teta_core/src/repositories/project.dart';
 import 'package:teta_core/src/repositories/queries/color_style.dart';
-import 'package:teta_elements/src/elements/controls/atoms/fill.dart';
-import 'package:teta_elements/src/elements/controls/atoms/font_family.dart';
-import 'package:teta_elements/src/elements/controls/atoms/font_size.dart';
-import 'package:teta_elements/src/elements/controls/atoms/font_style.dart';
-import 'package:teta_elements/src/elements/controls/atoms/font_weight.dart';
-import 'package:teta_elements/src/elements/controls/atoms/text_align.dart';
-import 'package:teta_elements/src/elements/controls/atoms/text_decoration.dart';
-import 'package:teta_elements/src/elements/controls/atoms/text_styles.dart';
-import 'package:teta_elements/src/elements/controls/type.dart';
-import 'package:teta_elements/src/elements/features/fill.dart';
-import 'package:teta_elements/src/elements/features/text_style.dart';
-import 'package:teta_elements/src/elements/nodes/enum.dart';
-import 'package:teta_elements/src/elements/nodes/node.dart';
+import 'package:teta_widgets/src/elements/controls/atoms/fill.dart';
+import 'package:teta_widgets/src/elements/controls/atoms/font_family.dart';
+import 'package:teta_widgets/src/elements/controls/atoms/font_size.dart';
+import 'package:teta_widgets/src/elements/controls/atoms/font_style.dart';
+import 'package:teta_widgets/src/elements/controls/atoms/font_weight.dart';
+import 'package:teta_widgets/src/elements/controls/atoms/text_align.dart';
+import 'package:teta_widgets/src/elements/controls/atoms/text_decoration.dart';
+import 'package:teta_widgets/src/elements/controls/atoms/text_styles.dart';
+import 'package:teta_widgets/src/elements/controls/type.dart';
+import 'package:teta_widgets/src/elements/features/fill.dart';
+import 'package:teta_widgets/src/elements/features/text_style.dart';
+import 'package:teta_widgets/src/elements/nodes/enum.dart';
+import 'package:teta_widgets/src/elements/nodes/node.dart';
 
 class TextPrefabControl extends StatelessWidget {
   const TextPrefabControl({

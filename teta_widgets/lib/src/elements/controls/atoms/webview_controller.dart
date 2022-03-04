@@ -12,8 +12,8 @@ import 'package:teta_core/src/design_system/palette.dart';
 import 'package:teta_core/src/design_system/text.dart';
 import 'package:teta_core/src/models/page.dart';
 import 'package:teta_core/src/models/variable.dart';
-import 'package:teta_elements/src/elements/features/text_type_input.dart';
-import 'package:teta_elements/src/elements/nodes/node.dart';
+import 'package:teta_widgets/src/elements/features/text_type_input.dart';
+import 'package:teta_widgets/src/elements/nodes/node.dart';
 
 class WebViewControllerControl extends StatefulWidget {
   const WebViewControllerControl({

@@ -6,10 +6,10 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:recase/recase.dart';
 import 'package:teta_core/src/blocs/focus_project/index.dart';
-import 'package:teta_core/src/elements/controls/key_constants.dart';
-import 'package:teta_core/src/elements/nodes/node.dart';
-import 'package:teta_core/src/elements/nodes/node_body.dart';
 import 'package:teta_core/src/models/page.dart';
+import 'package:teta_widgets/src/elements/controls/key_constants.dart';
+import 'package:teta_widgets/src/elements/nodes/node.dart';
+import 'package:teta_widgets/src/elements/nodes/node_body.dart';
 
 /// Component Template
 String componentCodeTemplate(

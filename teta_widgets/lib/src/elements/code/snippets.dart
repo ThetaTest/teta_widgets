@@ -1,24 +1,24 @@
 // Flutter imports:
 import 'package:flutter/material.dart';
 // Project imports:
-import 'package:teta_core/src/elements/controls/key_constants.dart';
-import 'package:teta_core/src/elements/features/action.dart';
-import 'package:teta_core/src/elements/features/actions/enums/gestures.dart';
-import 'package:teta_core/src/elements/features/align.dart';
-import 'package:teta_core/src/elements/features/border.dart';
-import 'package:teta_core/src/elements/features/border_radius.dart';
-import 'package:teta_core/src/elements/features/box_fit.dart';
-import 'package:teta_core/src/elements/features/cross_axis_alignment.dart';
-import 'package:teta_core/src/elements/features/fill.dart';
-import 'package:teta_core/src/elements/features/firestore_path.dart';
-import 'package:teta_core/src/elements/features/main_axis_alignment.dart';
-import 'package:teta_core/src/elements/features/main_axis_size.dart';
-import 'package:teta_core/src/elements/features/margins.dart';
-import 'package:teta_core/src/elements/features/sizes.dart';
-import 'package:teta_core/src/elements/features/text_style.dart';
-import 'package:teta_core/src/elements/features/wrap_alignment.dart';
-import 'package:teta_core/src/elements/nodes/node.dart';
-import 'package:teta_core/src/elements/nodes/node_body.dart';
+import 'package:teta_widgets/src/elements/controls/key_constants.dart';
+import 'package:teta_widgets/src/elements/features/action.dart';
+import 'package:teta_widgets/src/elements/features/actions/enums/gestures.dart';
+import 'package:teta_widgets/src/elements/features/align.dart';
+import 'package:teta_widgets/src/elements/features/border.dart';
+import 'package:teta_widgets/src/elements/features/border_radius.dart';
+import 'package:teta_widgets/src/elements/features/box_fit.dart';
+import 'package:teta_widgets/src/elements/features/cross_axis_alignment.dart';
+import 'package:teta_widgets/src/elements/features/fill.dart';
+import 'package:teta_widgets/src/elements/features/firestore_path.dart';
+import 'package:teta_widgets/src/elements/features/main_axis_alignment.dart';
+import 'package:teta_widgets/src/elements/features/main_axis_size.dart';
+import 'package:teta_widgets/src/elements/features/margins.dart';
+import 'package:teta_widgets/src/elements/features/sizes.dart';
+import 'package:teta_widgets/src/elements/features/text_style.dart';
+import 'package:teta_widgets/src/elements/features/wrap_alignment.dart';
+import 'package:teta_widgets/src/elements/nodes/node.dart';
+import 'package:teta_widgets/src/elements/nodes/node_body.dart';
 
 /// Code Snippets. Set of funcs to generate properties' code string.
 ///

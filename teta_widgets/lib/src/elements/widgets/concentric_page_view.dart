@@ -4,6 +4,7 @@
 import 'package:concentric_transition/concentric_transition.dart';
 import 'package:flutter/material.dart';
 import 'package:teta_core/teta_core.dart';
+import 'package:teta_widgets/src/elements/index.dart';
 
 class WConcentricPageView extends StatefulWidget {
   /// Returns a PageViewwidget

@@ -12,3 +12,4 @@ export './builder/text.dart';
 export './features/index.dart';
 export './nodes/enum.dart';
 export './nodes/node.dart';
+export './widgets/index.dart';

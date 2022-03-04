@@ -10,9 +10,9 @@ import 'package:teta_core/src/models/dataset.dart';
 import 'package:teta_core/src/models/palette.dart';
 import 'package:teta_core/src/models/text_style.dart';
 import 'package:teta_core/src/models/variable.dart';
-import 'package:teta_elements/src/elements/features/fill.dart';
-import 'package:teta_elements/src/elements/features/text_style.dart';
-import 'package:teta_elements/src/elements/features/text_type_input.dart';
+import 'package:teta_widgets/src/elements/features/fill.dart';
+import 'package:teta_widgets/src/elements/features/text_style.dart';
+import 'package:teta_widgets/src/elements/features/text_type_input.dart';
 
 /// Returns a [Text] widget with all the properties
 class TextBuilder extends StatelessWidget {

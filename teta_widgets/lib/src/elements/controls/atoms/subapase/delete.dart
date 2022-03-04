@@ -7,11 +7,11 @@ import 'package:teta_core/src/design_system/text.dart';
 import 'package:teta_core/src/models/page.dart';
 import 'package:teta_core/src/models/project.dart';
 import 'package:teta_core/src/models/supabase_map_element.dart';
-import 'package:teta_elements/src/elements/controls/atoms/supabase_element.dart';
-import 'package:teta_elements/src/elements/controls/atoms/text.dart';
-import 'package:teta_elements/src/elements/features/actions/element.dart';
-import 'package:teta_elements/src/elements/features/text_type_input.dart';
-import 'package:teta_elements/src/elements/nodes/node.dart';
+import 'package:teta_widgets/src/elements/controls/atoms/supabase_element.dart';
+import 'package:teta_widgets/src/elements/controls/atoms/text.dart';
+import 'package:teta_widgets/src/elements/features/actions/element.dart';
+import 'package:teta_widgets/src/elements/features/text_type_input.dart';
+import 'package:teta_widgets/src/elements/nodes/node.dart';
 
 class SupabaseDeleteControl extends StatelessWidget {
   const SupabaseDeleteControl({

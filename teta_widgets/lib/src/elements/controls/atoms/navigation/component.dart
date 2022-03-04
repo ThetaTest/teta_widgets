@@ -15,8 +15,8 @@ import 'package:teta_core/src/models/dataset.dart';
 import 'package:teta_core/src/models/page.dart';
 import 'package:teta_core/src/models/project.dart';
 import 'package:teta_core/src/models/variable.dart';
-import 'package:teta_elements/src/elements/controls/key_constants.dart';
-import 'package:teta_elements/src/elements/nodes/node.dart';
+import 'package:teta_widgets/src/elements/controls/key_constants.dart';
+import 'package:teta_widgets/src/elements/nodes/node.dart';
 
 class ComponentControl extends StatefulWidget {
   const ComponentControl({

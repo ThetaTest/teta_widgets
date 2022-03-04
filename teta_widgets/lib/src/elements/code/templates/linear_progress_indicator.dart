@@ -1,8 +1,8 @@
 // Flutter imports:
 import 'package:flutter/material.dart';
-import 'package:teta_core/src/elements/controls/key_constants.dart';
-import 'package:teta_core/src/elements/features/fill.dart';
-import 'package:teta_core/src/elements/nodes/node_body.dart';
+import 'package:teta_widgets/src/elements/controls/key_constants.dart';
+import 'package:teta_widgets/src/elements/features/fill.dart';
+import 'package:teta_widgets/src/elements/nodes/node_body.dart';
 
 /// LinearProgressIndicator Template
 String linearProgressIndicatorCodeTemplate(

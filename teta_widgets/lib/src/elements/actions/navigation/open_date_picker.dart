@@ -8,7 +8,7 @@ import 'package:recase/recase.dart';
 import 'package:teta_core/src/blocs/focus_project/index.dart';
 import 'package:teta_core/src/models/page.dart';
 import 'package:teta_core/src/models/variable.dart';
-import 'package:teta_elements/src/elements/actions/snippets/update.dart';
+import 'package:teta_widgets/src/elements/actions/snippets/update.dart';
 
 class FActionNavigationOpenDatePicker {
   static Future action(

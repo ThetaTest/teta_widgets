@@ -10,20 +10,11 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:latlng/latlng.dart';
 import 'package:map/map.dart';
-import 'package:teta_core/src/blocs/focus_page/index.dart';
-import 'package:teta_core/src/blocs/focus_project/index.dart';
-import 'package:teta_core/src/design_system/image/index.dart';
-import 'package:teta_core/src/design_system/text.dart';
+import 'package:teta_core/teta_core.dart';
+import 'package:teta_widgets/src/elements/controls/key_constants.dart';
 // Project imports:
-import 'package:teta_core/src/elements/builder/node_selection_builder.dart';
-import 'package:teta_core/src/elements/controls/key_constants.dart';
-import 'package:teta_core/src/elements/features/action.dart';
-import 'package:teta_core/src/elements/features/text_type_input.dart';
-import 'package:teta_core/src/elements/nodes/dynamic.dart';
-import 'package:teta_core/src/elements/nodes/enum.dart';
-import 'package:teta_core/src/elements/nodes/node.dart';
-import 'package:teta_core/src/models/dataset.dart';
-import 'package:teta_core/src/models/variable.dart';
+import 'package:teta_widgets/src/elements/index.dart';
+import 'package:teta_widgets/src/elements/nodes/dynamic.dart';
 
 // ignore_for_file: public_member_api_docs
 

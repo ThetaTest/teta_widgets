@@ -2,11 +2,11 @@
 // ignore_for_file: public_member_api_docs
 
 import 'package:teta_core/gen/assets.gen.dart';
-import 'package:teta_elements/src/elements/control_center.dart';
-import 'package:teta_elements/src/elements/features/actions/enums/gestures.dart';
-import 'package:teta_elements/src/elements/nodes/categories.dart';
-import 'package:teta_elements/src/elements/nodes/children_enum.dart';
-import 'package:teta_elements/src/elements/nodes/enum.dart';
+import 'package:teta_widgets/src/elements/control_center.dart';
+import 'package:teta_widgets/src/elements/features/actions/enums/gestures.dart';
+import 'package:teta_widgets/src/elements/nodes/categories.dart';
+import 'package:teta_widgets/src/elements/nodes/children_enum.dart';
+import 'package:teta_widgets/src/elements/nodes/enum.dart';
 
 class IntrinsicStates {
   IntrinsicStates({

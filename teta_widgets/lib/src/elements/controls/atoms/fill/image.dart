@@ -7,9 +7,9 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 // Project imports:
 import 'package:teta_core/src/blocs/focus/bloc.dart';
 import 'package:teta_core/src/design_system/textfield/minitextfield.dart';
-import 'package:teta_elements/src/elements/controls/atoms/box_fit.dart';
-import 'package:teta_elements/src/elements/features/features.dart';
-import 'package:teta_elements/src/elements/nodes/node.dart';
+import 'package:teta_widgets/src/elements/controls/atoms/box_fit.dart';
+import 'package:teta_widgets/src/elements/features/features.dart';
+import 'package:teta_widgets/src/elements/nodes/node.dart';
 
 class ImageFillControl extends StatefulWidget {
   /// Constructor

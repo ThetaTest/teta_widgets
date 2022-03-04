@@ -7,11 +7,11 @@ import 'package:teta_core/src/design_system/palette.dart';
 import 'package:teta_core/src/design_system/text.dart';
 import 'package:teta_core/src/models/page.dart';
 import 'package:teta_core/src/models/project.dart';
-import 'package:teta_elements/src/elements/controls/atoms/size.dart';
-import 'package:teta_elements/src/elements/controls/key_constants.dart';
-import 'package:teta_elements/src/elements/controls/type.dart';
-import 'package:teta_elements/src/elements/features/sizes.dart';
-import 'package:teta_elements/src/elements/nodes/node.dart';
+import 'package:teta_widgets/src/elements/controls/atoms/size.dart';
+import 'package:teta_widgets/src/elements/controls/key_constants.dart';
+import 'package:teta_widgets/src/elements/controls/type.dart';
+import 'package:teta_widgets/src/elements/features/sizes.dart';
+import 'package:teta_widgets/src/elements/nodes/node.dart';
 
 class SizesPrefabControl extends StatelessWidget {
   const SizesPrefabControl({

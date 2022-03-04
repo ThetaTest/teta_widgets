@@ -2,10 +2,10 @@
 import 'package:flutter/material.dart';
 // Project imports:
 import 'package:teta_core/src/design_system/hex_color.dart';
-import 'package:teta_elements/src/elements/controls/key_constants.dart';
-import 'package:teta_elements/src/elements/features/border_style.dart';
-import 'package:teta_elements/src/elements/features/fill.dart';
-import 'package:teta_elements/src/elements/features/margins.dart';
+import 'package:teta_widgets/src/elements/controls/key_constants.dart';
+import 'package:teta_widgets/src/elements/features/border_style.dart';
+import 'package:teta_widgets/src/elements/features/fill.dart';
+import 'package:teta_widgets/src/elements/features/margins.dart';
 
 /// Example
 Widget toWidget() {

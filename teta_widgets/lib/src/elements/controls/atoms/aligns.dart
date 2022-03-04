@@ -6,8 +6,8 @@ import 'package:flutter/material.dart';
 import 'package:teta_core/src/design_system/dropdowns/dropdown.dart';
 import 'package:teta_core/src/design_system/palette.dart';
 import 'package:teta_core/src/design_system/text.dart';
-import 'package:teta_elements/src/elements/features/align.dart';
-import 'package:teta_elements/src/elements/nodes/node.dart';
+import 'package:teta_widgets/src/elements/features/align.dart';
+import 'package:teta_widgets/src/elements/nodes/node.dart';
 
 class AlignsControl extends StatefulWidget {
   const AlignsControl({

@@ -2,17 +2,11 @@
 // ignore_for_file: unused_element, avoid_redundant_argument_values, lines_longer_than_80_chars
 
 import 'package:flutter/material.dart';
-//import 'package:mapbox_gl/mapbox_gl.dart';
-// Project imports:
-import 'package:teta_core/src/elements/builder/node_selection_builder.dart';
-import 'package:teta_core/src/elements/features/action.dart';
-import 'package:teta_core/src/elements/features/box_fit.dart';
-import 'package:teta_core/src/elements/features/fill.dart';
-import 'package:teta_core/src/elements/features/sizes.dart';
-import 'package:teta_core/src/elements/features/text_type_input.dart';
-import 'package:teta_core/src/elements/nodes/node.dart';
 import 'package:teta_core/src/models/dataset.dart';
 import 'package:teta_core/src/models/variable.dart';
+//import 'package:mapbox_gl/mapbox_gl.dart';
+// Project imports:
+import 'package:teta_widgets/src/elements/index.dart';
 // ignore_for_file: public_member_api_docs
 
 class WMapBox extends StatefulWidget {

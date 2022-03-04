@@ -3,28 +3,28 @@
 
 import 'package:flutter/foundation.dart';
 import 'package:teta_core/src/models/variable.dart';
-import 'package:teta_elements/src/elements/features/action.dart';
-import 'package:teta_elements/src/elements/features/align.dart';
-import 'package:teta_elements/src/elements/features/border.dart';
-import 'package:teta_elements/src/elements/features/border_radius.dart';
-import 'package:teta_elements/src/elements/features/box_fit.dart';
-import 'package:teta_elements/src/elements/features/cross_axis_alignment.dart';
-import 'package:teta_elements/src/elements/features/dataset.dart';
-import 'package:teta_elements/src/elements/features/fill.dart';
-import 'package:teta_elements/src/elements/features/firestore_path.dart';
-import 'package:teta_elements/src/elements/features/font_size.dart';
-import 'package:teta_elements/src/elements/features/font_style.dart';
-import 'package:teta_elements/src/elements/features/font_weight.dart';
-import 'package:teta_elements/src/elements/features/main_axis_alignment.dart';
-import 'package:teta_elements/src/elements/features/main_axis_size.dart';
-import 'package:teta_elements/src/elements/features/margins.dart';
-import 'package:teta_elements/src/elements/features/page_transition.dart';
-import 'package:teta_elements/src/elements/features/shadow.dart';
-import 'package:teta_elements/src/elements/features/sizes.dart';
-import 'package:teta_elements/src/elements/features/text_align.dart';
-import 'package:teta_elements/src/elements/features/text_decoration.dart';
-import 'package:teta_elements/src/elements/features/text_style.dart';
-import 'package:teta_elements/src/elements/features/text_type_input.dart';
+import 'package:teta_widgets/src/elements/features/action.dart';
+import 'package:teta_widgets/src/elements/features/align.dart';
+import 'package:teta_widgets/src/elements/features/border.dart';
+import 'package:teta_widgets/src/elements/features/border_radius.dart';
+import 'package:teta_widgets/src/elements/features/box_fit.dart';
+import 'package:teta_widgets/src/elements/features/cross_axis_alignment.dart';
+import 'package:teta_widgets/src/elements/features/dataset.dart';
+import 'package:teta_widgets/src/elements/features/fill.dart';
+import 'package:teta_widgets/src/elements/features/firestore_path.dart';
+import 'package:teta_widgets/src/elements/features/font_size.dart';
+import 'package:teta_widgets/src/elements/features/font_style.dart';
+import 'package:teta_widgets/src/elements/features/font_weight.dart';
+import 'package:teta_widgets/src/elements/features/main_axis_alignment.dart';
+import 'package:teta_widgets/src/elements/features/main_axis_size.dart';
+import 'package:teta_widgets/src/elements/features/margins.dart';
+import 'package:teta_widgets/src/elements/features/page_transition.dart';
+import 'package:teta_widgets/src/elements/features/shadow.dart';
+import 'package:teta_widgets/src/elements/features/sizes.dart';
+import 'package:teta_widgets/src/elements/features/text_align.dart';
+import 'package:teta_widgets/src/elements/features/text_decoration.dart';
+import 'package:teta_widgets/src/elements/features/text_style.dart';
+import 'package:teta_widgets/src/elements/features/text_type_input.dart';
 
 class DBKeys {
   // DB param keys

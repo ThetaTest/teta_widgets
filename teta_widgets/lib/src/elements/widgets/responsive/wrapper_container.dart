@@ -6,6 +6,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:teta_core/src/utils/frame/device_frame.dart';
 // Project imports:
 import 'package:teta_core/teta_core.dart';
+import 'package:teta_widgets/src/elements/index.dart';
 
 //ignore: must_be_immutable
 class WWrapperContainer extends StatelessWidget {

@@ -3,8 +3,8 @@ import 'package:flutter/material.dart';
 import 'package:teta_core/src/models/dataset.dart';
 import 'package:teta_core/src/models/variable.dart';
 // Project imports:
-import 'package:teta_elements/src/elements/builder/placeholder_child.dart';
-import 'package:teta_elements/src/elements/nodes/node.dart';
+import 'package:teta_widgets/src/elements/builder/placeholder_child.dart';
+import 'package:teta_widgets/src/elements/nodes/node.dart';
 
 /// Builder
 class ChildConditionBuilder extends StatelessWidget {

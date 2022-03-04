@@ -8,7 +8,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:recase/recase.dart';
 import 'package:teta_core/src/blocs/focus_page/index.dart';
 import 'package:teta_core/src/models/variable.dart';
-import 'package:teta_elements/src/elements/actions/snippets/take_state_from.dart';
+import 'package:teta_widgets/src/elements/actions/snippets/take_state_from.dart';
 
 class FActionWebViewForward {
   static Future action(

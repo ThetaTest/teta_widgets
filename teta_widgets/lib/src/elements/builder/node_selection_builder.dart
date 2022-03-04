@@ -1,8 +1,8 @@
 // Flutter imports:
 import 'package:flutter/material.dart';
 // Project imports:
-import 'package:teta_elements/src/elements/builder/node_selection.dart';
-import 'package:teta_elements/src/elements/nodes/node.dart';
+import 'package:teta_widgets/src/elements/builder/node_selection.dart';
+import 'package:teta_widgets/src/elements/nodes/node.dart';
 
 /// Builder
 class NodeSelectionBuilder extends StatelessWidget {

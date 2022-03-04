@@ -7,6 +7,7 @@ import 'package:cross_file/cross_file.dart';
 import 'package:flutter/material.dart';
 // Project imports:
 import 'package:teta_core/teta_core.dart';
+import 'package:teta_widgets/src/elements/index.dart';
 
 class WImage extends StatefulWidget {
   /// Returns a Image

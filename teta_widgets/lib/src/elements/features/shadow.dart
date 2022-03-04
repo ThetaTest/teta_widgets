@@ -1,9 +1,9 @@
 // Project imports:
 // ignore_for_file: public_member_api_docs
 
-import 'package:teta_elements/src/elements/features/fill.dart';
-import 'package:teta_elements/src/elements/features/sizes.dart';
-import 'package:teta_elements/src/elements/features/text_type_input.dart';
+import 'package:teta_widgets/src/elements/features/fill.dart';
+import 'package:teta_widgets/src/elements/features/sizes.dart';
+import 'package:teta_widgets/src/elements/features/text_type_input.dart';
 
 class FShadow {
   /// Set of funcs to use Shadow property in Teta

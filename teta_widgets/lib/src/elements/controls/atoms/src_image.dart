@@ -21,8 +21,8 @@ import 'package:teta_core/src/models/asset_file.dart';
 import 'package:teta_core/src/models/dataset.dart';
 import 'package:teta_core/src/models/page.dart';
 import 'package:teta_core/src/models/project.dart';
-import 'package:teta_elements/src/elements/features/text_type_input.dart';
-import 'package:teta_elements/src/elements/nodes/node.dart';
+import 'package:teta_widgets/src/elements/features/text_type_input.dart';
+import 'package:teta_widgets/src/elements/nodes/node.dart';
 
 class SrcImageControl extends StatefulWidget {
   const SrcImageControl({

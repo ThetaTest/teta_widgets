@@ -4,6 +4,7 @@
 import 'package:flutter/material.dart';
 // Project imports:
 import 'package:teta_core/teta_core.dart';
+import 'package:teta_widgets/src/elements/index.dart';
 
 /// This widget doesn't work correctly.
 /// Try to instantiate a Row and then as its children 2 Expanded.

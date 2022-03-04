@@ -12,6 +12,7 @@ import 'package:teta_core/src/rendering/nodes_original.dart';
 import 'package:teta_core/src/repositories/queries/node.dart';
 // Project imports:
 import 'package:teta_core/teta_core.dart';
+import 'package:teta_widgets/src/elements/index.dart';
 import 'package:webviewx/webviewx.dart';
 
 class WComponent extends StatefulWidget {

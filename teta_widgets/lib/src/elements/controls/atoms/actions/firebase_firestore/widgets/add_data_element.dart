@@ -7,7 +7,7 @@ import 'package:teta_core/src/design_system/dropdowns/dropdown.dart';
 import 'package:teta_core/src/design_system/dropdowns/dropdown_for_type.dart';
 import 'package:teta_core/src/design_system/textfield/textfield.dart';
 import 'package:teta_core/src/models/page.dart';
-import 'package:teta_elements/src/elements/features/text_type_input.dart';
+import 'package:teta_widgets/src/elements/features/text_type_input.dart';
 
 class AddDataElement extends StatefulWidget {
   const AddDataElement({

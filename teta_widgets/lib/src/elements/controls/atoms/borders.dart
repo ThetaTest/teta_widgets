@@ -10,13 +10,13 @@ import 'package:hovering/hovering.dart';
 import 'package:teta_core/src/blocs/focus/bloc.dart';
 import 'package:teta_core/src/design_system/palette.dart';
 import 'package:teta_core/src/design_system/text.dart';
-import 'package:teta_elements/src/elements/controls/atoms/fill.dart';
-import 'package:teta_elements/src/elements/controls/atoms/margins.dart';
-import 'package:teta_elements/src/elements/features/border.dart';
-import 'package:teta_elements/src/elements/features/border_style.dart';
-import 'package:teta_elements/src/elements/features/fill.dart';
-import 'package:teta_elements/src/elements/features/margins.dart';
-import 'package:teta_elements/src/elements/nodes/node.dart';
+import 'package:teta_widgets/src/elements/controls/atoms/fill.dart';
+import 'package:teta_widgets/src/elements/controls/atoms/margins.dart';
+import 'package:teta_widgets/src/elements/features/border.dart';
+import 'package:teta_widgets/src/elements/features/border_style.dart';
+import 'package:teta_widgets/src/elements/features/fill.dart';
+import 'package:teta_widgets/src/elements/features/margins.dart';
+import 'package:teta_widgets/src/elements/nodes/node.dart';
 
 class BordersControl extends StatefulWidget {
   const BordersControl({

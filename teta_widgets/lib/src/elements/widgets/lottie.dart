@@ -6,6 +6,7 @@ import 'package:flutter/material.dart';
 import 'package:lottie/lottie.dart';
 // Project imports:
 import 'package:teta_core/teta_core.dart';
+import 'package:teta_widgets/src/elements/index.dart';
 
 class WLottie extends StatelessWidget {
   const WLottie({

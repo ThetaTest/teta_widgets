@@ -4,6 +4,7 @@
 import 'package:flutter/material.dart';
 // Project imports:
 import 'package:teta_core/teta_core.dart';
+import 'package:teta_widgets/src/elements/index.dart';
 
 //ignore: must_be_immutable
 class WCondition extends StatelessWidget {

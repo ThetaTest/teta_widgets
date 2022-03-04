@@ -2,10 +2,10 @@
 import 'package:flutter/material.dart';
 // Project imports:
 import 'package:teta_core/src/design_system/hex_color.dart';
-import 'package:teta_elements/src/elements/features/border.dart';
-import 'package:teta_elements/src/elements/features/border_radius.dart';
-import 'package:teta_elements/src/elements/features/fill.dart';
-import 'package:teta_elements/src/elements/features/shadow.dart';
+import 'package:teta_widgets/src/elements/features/border.dart';
+import 'package:teta_widgets/src/elements/features/border_radius.dart';
+import 'package:teta_widgets/src/elements/features/fill.dart';
+import 'package:teta_widgets/src/elements/features/shadow.dart';
 
 /// Class made to facilitate the creation of BoxDecoration for widgets
 class TetaBoxDecoration {

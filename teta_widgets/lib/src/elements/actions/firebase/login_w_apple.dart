@@ -13,7 +13,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:teta_core/src/cubits/zoomable/cubit.dart';
 import 'package:teta_core/src/models/dataset.dart';
 import 'package:teta_core/src/models/variable.dart';
-import 'package:teta_elements/src/elements/nodes/node.dart';
+import 'package:teta_widgets/src/elements/nodes/node.dart';
 //import 'package:sign_in_with_apple/sign_in_with_apple.dart';
 
 String generateNonce([int length = 32]) {

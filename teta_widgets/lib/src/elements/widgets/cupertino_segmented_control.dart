@@ -5,6 +5,7 @@
 // Flutter imports:
 import 'package:flutter/cupertino.dart';
 import 'package:teta_core/teta_core.dart';
+import 'package:teta_widgets/src/elements/index.dart';
 
 class WCupertinoSegmentedControl extends StatefulWidget {
   /// Returns a Gesture Detector

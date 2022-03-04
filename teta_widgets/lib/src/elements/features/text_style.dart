@@ -7,14 +7,14 @@ import 'package:recase/recase.dart';
 import 'package:teta_core/src/blocs/text_styles/index.dart';
 import 'package:teta_core/src/models/text_style.dart';
 // Project imports:
-import 'package:teta_elements/src/elements/controls/key_constants.dart';
-import 'package:teta_elements/src/elements/features/fill.dart';
-import 'package:teta_elements/src/elements/features/font_size.dart';
-import 'package:teta_elements/src/elements/features/font_style.dart';
-import 'package:teta_elements/src/elements/features/font_weight.dart';
-import 'package:teta_elements/src/elements/features/text_align.dart';
-import 'package:teta_elements/src/elements/features/text_decoration.dart';
-import 'package:teta_elements/src/elements/features/text_styles.dart';
+import 'package:teta_widgets/src/elements/controls/key_constants.dart';
+import 'package:teta_widgets/src/elements/features/fill.dart';
+import 'package:teta_widgets/src/elements/features/font_size.dart';
+import 'package:teta_widgets/src/elements/features/font_style.dart';
+import 'package:teta_widgets/src/elements/features/font_weight.dart';
+import 'package:teta_widgets/src/elements/features/text_align.dart';
+import 'package:teta_widgets/src/elements/features/text_decoration.dart';
+import 'package:teta_widgets/src/elements/features/text_styles.dart';
 
 class FTextStyle {
   /// Set of funcs to use TextStyle in Teta's widgets

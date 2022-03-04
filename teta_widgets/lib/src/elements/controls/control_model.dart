@@ -3,11 +3,11 @@
 
 import 'package:equatable/equatable.dart';
 // Project imports:
-import 'package:teta_elements/src/elements/controls/type.dart';
-import 'package:teta_elements/src/elements/features/box_fit.dart';
-import 'package:teta_elements/src/elements/features/fill.dart';
-import 'package:teta_elements/src/elements/features/firestore_path.dart';
-import 'package:teta_elements/src/elements/features/sizes.dart';
+import 'package:teta_widgets/src/elements/controls/type.dart';
+import 'package:teta_widgets/src/elements/features/box_fit.dart';
+import 'package:teta_widgets/src/elements/features/fill.dart';
+import 'package:teta_widgets/src/elements/features/firestore_path.dart';
+import 'package:teta_widgets/src/elements/features/sizes.dart';
 
 abstract class ControlModel extends Equatable {
   const ControlModel();

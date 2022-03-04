@@ -14,7 +14,7 @@ import 'package:teta_core/src/models/page.dart';
 import 'package:teta_core/src/models/variable.dart';
 import 'package:teta_core/src/rendering/nodes_original.dart';
 import 'package:teta_core/src/repositories/queries/node.dart';
-import 'package:teta_elements/src/elements/nodes/node.dart';
+import 'package:teta_widgets/src/elements/nodes/node.dart';
 
 class FActionNavigationOpenBottomSheet {
   static Future action(
