@@ -1,12 +1,17 @@
 // Flutter imports:
 // ignore_for_file: avoid_dynamic_calls
 
-import 'package:diacritic/diacritic.dart';
+// Flutter imports:
 import 'package:flutter/material.dart';
+
+// Package imports:
+import 'package:diacritic/diacritic.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:recase/recase.dart';
 import 'package:teta_core/src/blocs/focus_project/index.dart';
 import 'package:teta_core/src/models/page.dart';
+
+// Project imports:
 import 'package:teta_widgets/src/elements/controls/key_constants.dart';
 import 'package:teta_widgets/src/elements/nodes/node.dart';
 import 'package:teta_widgets/src/elements/nodes/node_body.dart';

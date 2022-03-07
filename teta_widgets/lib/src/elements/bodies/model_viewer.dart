@@ -6,9 +6,6 @@ import 'package:flutter/material.dart';
 // Package imports:
 import 'package:firebase/firebase.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:uuid/uuid.dart';
-
-// Project imports:
 import 'package:mobile_editor/src/blocs/hover/index.dart';
 import 'package:mobile_editor/src/elements/features/box_fit.dart';
 import 'package:mobile_editor/src/elements/features/features.dart';
@@ -17,6 +14,7 @@ import 'package:mobile_editor/src/elements/nodes/node.dart';
 import 'package:mobile_editor/src/elements/widgets/model-viewer.dart';
 import 'package:mobile_editor/src/models/dataset.dart';
 import 'package:mobile_editor/src/models/variable.dart';
+import 'package:uuid/uuid.dart';
 
 const globalType = "ModelViewer";
 const global_name = "Model Viewer";

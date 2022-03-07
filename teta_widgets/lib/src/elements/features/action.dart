@@ -2,7 +2,10 @@
 // Package imports:
 // ignore_for_file: public_member_api_docs, must_be_immutable
 
+// Package imports:
 import 'package:equatable/equatable.dart';
+
+// Project imports:
 import 'package:teta_widgets/src/elements/features/actions/element.dart';
 
 class FAction extends Equatable {

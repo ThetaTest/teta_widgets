@@ -1,16 +1,23 @@
 // ignore_for_file: public_member_api_docs, must_be_immutable, avoid_bool_literals_in_conditional_expressions
 
+// Dart imports:
 import 'dart:async';
 
-import 'package:enum_to_string/enum_to_string.dart';
-import 'package:equatable/equatable.dart';
+// Flutter imports:
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
+
+// Package imports:
+import 'package:enum_to_string/enum_to_string.dart';
+import 'package:equatable/equatable.dart';
 import 'package:teta_core/src/models/dataset.dart';
 import 'package:teta_core/src/models/page.dart';
 import 'package:teta_core/src/models/project.dart';
 import 'package:teta_core/src/models/supabase_map_element.dart';
 import 'package:teta_core/src/models/variable.dart';
+import 'package:uuid/uuid.dart';
+
+// Project imports:
 import 'package:teta_widgets/src/elements/actions/audio_player/loop_all.dart';
 import 'package:teta_widgets/src/elements/actions/audio_player/loop_off.dart';
 import 'package:teta_widgets/src/elements/actions/audio_player/loop_one.dart';
@@ -63,7 +70,6 @@ import 'package:teta_widgets/src/elements/features/text_type_input.dart';
 import 'package:teta_widgets/src/elements/nodes/dynamic.dart';
 import 'package:teta_widgets/src/elements/nodes/enum.dart';
 import 'package:teta_widgets/src/elements/nodes/node.dart';
-import 'package:uuid/uuid.dart';
 
 class FActionElement extends Equatable {
   FActionElement({

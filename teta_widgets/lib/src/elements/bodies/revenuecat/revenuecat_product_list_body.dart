@@ -1,11 +1,15 @@
 // Flutter imports:
 // ignore_for_file: lines_longer_than_80_chars
 
+// Flutter imports:
 import 'package:flutter/material.dart';
-// Project imports:
+
+// Package imports:
 import 'package:teta_core/gen/assets.gen.dart';
 import 'package:teta_core/src/models/dataset.dart';
 import 'package:teta_core/src/models/variable.dart';
+
+// Project imports:
 import 'package:teta_widgets/src/elements/code/templates/revenuecat_products_list.dart';
 import 'package:teta_widgets/src/elements/intrinsic_states/class.dart';
 import 'package:teta_widgets/src/elements/nodes/categories.dart';

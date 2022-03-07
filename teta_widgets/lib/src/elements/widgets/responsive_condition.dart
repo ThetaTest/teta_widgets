@@ -1,11 +1,15 @@
 // Flutter imports:
 // ignore_for_file: public_member_api_docs
 
+// Flutter imports:
 import 'package:flutter/material.dart';
+
 // Package imports:
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:teta_core/src/utils/frame/device_frame.dart';
 import 'package:teta_core/teta_core.dart';
+
+// Project imports:
 import 'package:teta_widgets/src/elements/index.dart';
 
 class WResponsiveCondition extends StatelessWidget {

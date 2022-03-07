@@ -6,9 +6,6 @@ import 'package:flutter/material.dart';
 // Package imports:
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:hovering/hovering.dart';
-import 'package:nil/nil.dart';
-
-// Project imports:
 import 'package:mobile_editor/src/blocs/text_styles/index.dart';
 import 'package:mobile_editor/src/cubits/device_mode/cubit.dart';
 import 'package:mobile_editor/src/design_system/palette.dart';
@@ -18,6 +15,7 @@ import 'package:mobile_editor/src/elements/nodes/node.dart';
 import 'package:mobile_editor/src/models/page.dart';
 import 'package:mobile_editor/src/models/project.dart';
 import 'package:mobile_editor/src/repositories/project.dart';
+import 'package:nil/nil.dart';
 
 class ComponentControl extends StatefulWidget {
   final ProjectObject prj;

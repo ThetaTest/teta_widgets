@@ -5,7 +5,7 @@
 // Flutter imports:
 import 'package:flutter/material.dart';
 
-// Project imports:
+// Package imports:
 import 'package:mobile_editor/src/elements/nodes/node.dart';
 import 'package:mobile_editor/src/models/dataset.dart';
 import 'package:mobile_editor/src/models/variable.dart';

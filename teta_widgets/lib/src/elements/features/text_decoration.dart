@@ -1,6 +1,7 @@
 // Flutter imports:
 // ignore_for_file: public_member_api_docs, lines_longer_than_80_chars
 
+// Flutter imports:
 import 'package:flutter/material.dart';
 
 class FTextDecoration {

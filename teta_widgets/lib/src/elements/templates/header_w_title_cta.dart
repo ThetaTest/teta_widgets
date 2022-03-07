@@ -1,9 +1,6 @@
 /*import 'package:flutter/material.dart';
 
 // Package imports:
-import 'package:nanoid/nanoid.dart';
-
-// Project imports:
 import 'package:mobile_editor/src/elements/features/children_ids.dart';
 import 'package:mobile_editor/src/elements/features/cross_axis_alignment.dart';
 import 'package:mobile_editor/src/elements/features/fill.dart';
@@ -17,6 +14,7 @@ import 'package:mobile_editor/src/elements/nodes/column.dart';
 import 'package:mobile_editor/src/elements/nodes/container.dart';
 import 'package:mobile_editor/src/elements/nodes/text.dart';
 import 'package:mobile_editor/src/elements/templates/template.dart';
+import 'package:nanoid/nanoid.dart';
 
 //ignore: must_be_immutable
 class TempHeaderWTitleCTA extends CTemplate {

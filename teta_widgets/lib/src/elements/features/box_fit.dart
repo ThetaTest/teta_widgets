@@ -1,6 +1,7 @@
 // Flutter imports:
 // ignore_for_file: public_member_api_docs
 
+// Flutter imports:
 import 'package:flutter/material.dart';
 
 /// [FBoxFit] is a set of functions to use [BoxFit] in widgets in Teta

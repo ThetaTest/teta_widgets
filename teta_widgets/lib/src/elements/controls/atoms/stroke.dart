@@ -2,8 +2,6 @@
 
 // Package imports:
 import 'package:flutter_bloc/flutter_bloc.dart';
-
-// Project imports:
 import 'package:mobile_editor/src/blocs/focus/bloc.dart';
 import 'package:mobile_editor/src/design_system/text.dart';
 import 'package:mobile_editor/src/design_system/textfield/minitextfield.dart';

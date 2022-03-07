@@ -2,10 +2,14 @@
 // Package imports:
 // ignore_for_file: implementation_imports
 
-import 'package:auth_buttons/auth_buttons.dart';
+// Flutter imports:
 import 'package:flutter/material.dart';
-// Project imports:
+
+// Package imports:
+import 'package:auth_buttons/auth_buttons.dart';
 import 'package:teta_core/teta_core.dart';
+
+// Project imports:
 import 'package:teta_widgets/src/elements/index.dart';
 
 // ignore_for_file: public_member_api_docs

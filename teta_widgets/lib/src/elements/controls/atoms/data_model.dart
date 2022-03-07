@@ -2,15 +2,13 @@
 
 // Package imports:
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:nil/nil.dart';
-
-// Project imports:
 import 'package:mobile_editor/src/blocs/data/index.dart';
 import 'package:mobile_editor/src/design_system/palette.dart';
 import 'package:mobile_editor/src/design_system/text.dart';
 import 'package:mobile_editor/src/elements/features/text_type_input.dart';
 import 'package:mobile_editor/src/elements/nodes/node.dart';
 import 'package:mobile_editor/src/models/data.dart';
+import 'package:nil/nil.dart';
 
 class DataControl extends StatefulWidget {
   final CNode node;

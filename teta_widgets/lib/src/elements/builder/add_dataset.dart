@@ -1,9 +1,9 @@
 // Flutter imports:
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
+
 // Package imports:
 import 'package:flutter_bloc/flutter_bloc.dart';
-// Project imports:
 import 'package:teta_core/src/blocs/focus_page/index.dart';
 import 'package:teta_core/src/blocs/focus_project/index.dart';
 import 'package:teta_core/src/models/dataset.dart';

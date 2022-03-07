@@ -5,9 +5,6 @@ import 'package:flutter/material.dart';
 
 // Package imports:
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:screenshot/screenshot.dart';
-
-// Project imports:
 import 'package:mobile_editor/src/blocs/data/index.dart';
 import 'package:mobile_editor/src/blocs/flat_list/index.dart';
 import 'package:mobile_editor/src/blocs/focus/index.dart';
@@ -24,6 +21,7 @@ import 'package:mobile_editor/src/design_system/palette.dart';
 import 'package:mobile_editor/src/design_system/text.dart';
 import 'package:mobile_editor/src/repositories/assets.dart';
 import 'package:mobile_editor/src/utils/frame/device_frame.dart';
+import 'package:screenshot/screenshot.dart';
 
 class ScreenShotControl extends StatefulWidget {
   ScreenShotControl({Key? key}) : super(key: key);

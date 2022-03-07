@@ -1,10 +1,14 @@
 // Flutter imports:
-import 'package:diacritic/diacritic.dart';
 import 'package:flutter/material.dart';
+
+// Package imports:
+import 'package:diacritic/diacritic.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:recase/recase.dart';
 import 'package:teta_core/src/blocs/focus_project/index.dart';
 import 'package:teta_core/src/models/variable.dart';
+
+// Project imports:
 import 'package:teta_widgets/src/elements/nodes/enum.dart';
 import 'package:teta_widgets/src/elements/nodes/node.dart';
 import 'package:teta_widgets/src/elements/nodes/node_body.dart';

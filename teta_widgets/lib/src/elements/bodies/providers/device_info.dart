@@ -5,9 +5,6 @@ import 'package:flutter/material.dart';
 
 // Package imports:
 import 'package:firebase/firebase.dart';
-import 'package:uuid/uuid.dart';
-
-// Project imports:
 import 'package:mobile_editor/src/elements/builder/stream_connection.dart';
 import 'package:mobile_editor/src/elements/controls/key_constants.dart';
 import 'package:mobile_editor/src/elements/features/children_ids.dart';
@@ -17,6 +14,7 @@ import 'package:mobile_editor/src/elements/nodes/node.dart';
 import 'package:mobile_editor/src/elements/widgets/providers/device_info.dart';
 import 'package:mobile_editor/src/models/dataset.dart';
 import 'package:mobile_editor/src/models/variable.dart';
+import 'package:uuid/uuid.dart';
 
 const globalType = NType;
 

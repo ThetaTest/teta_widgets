@@ -1,14 +1,12 @@
 /*import 'package:flutter/material.dart';
 
 // Package imports:
-import 'package:mouse_parallax/mouse_parallax.dart';
-
-// Project imports:
 import 'package:mobile_editor/src/elements/builder/child_condition.dart';
 import 'package:mobile_editor/src/elements/builder/node_selection_builder.dart';
 import 'package:mobile_editor/src/elements/nodes/node.dart';
 import 'package:mobile_editor/src/models/dataset.dart';
 import 'package:mobile_editor/src/models/variable.dart';
+import 'package:mouse_parallax/mouse_parallax.dart';
 
 class WParallaxLayer extends StatelessWidget {
   const WParallaxLayer({

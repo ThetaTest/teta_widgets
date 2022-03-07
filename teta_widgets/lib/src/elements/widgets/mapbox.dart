@@ -1,12 +1,17 @@
 // Flutter imports:
 // ignore_for_file: unused_element, avoid_redundant_argument_values, lines_longer_than_80_chars
 
+// Flutter imports:
 import 'package:flutter/material.dart';
+
+// Package imports:
 import 'package:teta_core/src/models/dataset.dart';
 import 'package:teta_core/src/models/variable.dart';
-//import 'package:mapbox_gl/mapbox_gl.dart';
+
 // Project imports:
 import 'package:teta_widgets/src/elements/index.dart';
+
+//import 'package:mapbox_gl/mapbox_gl.dart';
 // ignore_for_file: public_member_api_docs
 
 class WMapBox extends StatefulWidget {

@@ -2,6 +2,7 @@
 // Project imports:
 // ignore_for_file: public_member_api_docs, lines_longer_than_80_chars
 
+// Package imports:
 import 'package:collection/collection.dart';
 import 'package:recase/recase.dart';
 import 'package:teta_core/src/models/asset_file.dart';

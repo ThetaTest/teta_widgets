@@ -119,6 +119,8 @@ dependencies:
 dev_dependencies:
   flutter_test:
     sdk: flutter
+  
+  import_sorter: ^4.6.0
 
 dependency_overrides:
   teta_core:

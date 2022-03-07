@@ -1,8 +1,13 @@
 // Project imports:
 // ignore_for_file: public_member_api_docs, avoid_dynamic_calls
 
+// Flutter imports:
 import 'package:flutter/foundation.dart';
+
+// Package imports:
 import 'package:teta_core/src/models/variable.dart';
+
+// Project imports:
 import 'package:teta_widgets/src/elements/features/action.dart';
 import 'package:teta_widgets/src/elements/features/align.dart';
 import 'package:teta_widgets/src/elements/features/border.dart';

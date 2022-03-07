@@ -1,6 +1,6 @@
 /*import 'package:flutter/material.dart';
 
-// Project imports:
+// Package imports:
 import 'package:mobile_editor/src/design_system/palette.dart';
 import 'package:mobile_editor/src/design_system/text.dart';
 import 'package:mobile_editor/src/elements/builder/node_selection.dart';

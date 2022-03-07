@@ -1,11 +1,16 @@
 // Flutter imports:
 // ignore_for_file: lines_longer_than_80_chars
 
-import 'package:diacritic/diacritic.dart';
+// Flutter imports:
 import 'package:flutter/material.dart';
+
+// Package imports:
+import 'package:diacritic/diacritic.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:recase/recase.dart';
 import 'package:teta_core/src/blocs/focus_project/index.dart';
+
+// Project imports:
 import 'package:teta_widgets/src/elements/controls/key_constants.dart';
 import 'package:teta_widgets/src/elements/features/fill.dart';
 import 'package:teta_widgets/src/elements/nodes/enum.dart';

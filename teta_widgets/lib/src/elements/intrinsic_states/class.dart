@@ -1,7 +1,10 @@
 // Project imports:
 // ignore_for_file: public_member_api_docs
 
+// Package imports:
 import 'package:teta_core/gen/assets.gen.dart';
+
+// Project imports:
 import 'package:teta_widgets/src/elements/control_center.dart';
 import 'package:teta_widgets/src/elements/features/actions/enums/gestures.dart';
 import 'package:teta_widgets/src/elements/nodes/categories.dart';

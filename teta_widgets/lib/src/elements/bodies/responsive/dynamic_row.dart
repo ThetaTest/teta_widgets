@@ -6,9 +6,6 @@ import 'package:flutter/material.dart';
 // Package imports:
 import 'package:firebase/firebase.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:uuid/uuid.dart';
-
-// Project imports:
 import 'package:mobile_editor/src/blocs/hover/index.dart';
 import 'package:mobile_editor/src/elements/controls/key_constants.dart';
 import 'package:mobile_editor/src/elements/features/children_ids.dart';
@@ -18,6 +15,7 @@ import 'package:mobile_editor/src/elements/widgets/responsive/dynamic_row.dart';
 import 'package:mobile_editor/src/models/dataset.dart';
 import 'package:mobile_editor/src/models/variable.dart';
 import 'package:mobile_editor/src/types/dynamic_row_responsive_enum.dart';
+import 'package:uuid/uuid.dart';
 
 const globalType = "DynamicRow";
 const global_name = "Dynamic Row";

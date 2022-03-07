@@ -2,11 +2,9 @@
 /*import 'package:flutter/material.dart';
 
 // Package imports:
-import 'package:url_launcher/url_launcher.dart';
-
-// Project imports:
 import 'package:mobile_editor/src/utils/shopify/models/models.dart';
 import 'package:mobile_editor/src/utils/shopify/shopify/shopify.dart';
+import 'package:url_launcher/url_launcher.dart';
 
 class FActionShopifyCheckOutFromCart {
   void makeAction(BuildContext context) async {

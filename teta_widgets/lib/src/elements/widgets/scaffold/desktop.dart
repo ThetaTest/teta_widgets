@@ -4,10 +4,6 @@
 
 // Package imports:
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:nil/nil.dart';
-import 'package:tinycolor/tinycolor.dart';
-
-// Project imports:
 import 'package:mobile_editor/src/blocs/focus/index.dart';
 import 'package:mobile_editor/src/cubits/zoomable/cubit.dart';
 import 'package:mobile_editor/src/design_system/hex_color.dart';
@@ -20,6 +16,8 @@ import 'package:mobile_editor/src/elements/nodes/navigation/bottombar.dart';
 import 'package:mobile_editor/src/elements/nodes/node.dart';
 import 'package:mobile_editor/src/models/dataset.dart';
 import 'package:mobile_editor/src/models/variable.dart';
+import 'package:nil/nil.dart';
+import 'package:tinycolor/tinycolor.dart';
 
 //ignore: must_be_immutable
 class ScaffoldDesktop extends StatelessWidget {

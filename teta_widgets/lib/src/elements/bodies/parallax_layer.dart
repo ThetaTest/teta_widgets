@@ -5,9 +5,6 @@ import 'package:flutter/material.dart';
 
 // Package imports:
 import 'package:firebase/firebase.dart';
-import 'package:uuid/uuid.dart';
-
-// Project imports:
 import 'package:mobile_editor/src/elements/builder/stream_connection.dart';
 import 'package:mobile_editor/src/elements/controls/control_model.dart';
 import 'package:mobile_editor/src/elements/controls/key_constants.dart';
@@ -20,6 +17,7 @@ import 'package:mobile_editor/src/elements/nodes/row.dart';
 import 'package:mobile_editor/src/elements/widgets/parallax_layer.dart';
 import 'package:mobile_editor/src/models/dataset.dart';
 import 'package:mobile_editor/src/models/variable.dart';
+import 'package:uuid/uuid.dart';
 
 const globalType = "PLayer";
 const global_name = "Parallax Layer";

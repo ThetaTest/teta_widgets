@@ -3,9 +3,9 @@
 
 // Flutter imports:
 import 'package:flutter/material.dart';
+
 // Package imports:
 import 'package:flutter_bloc/flutter_bloc.dart';
-// Project imports:
 import 'package:teta_core/src/blocs/flat_list/index.dart';
 import 'package:teta_core/src/blocs/focus_page/index.dart';
 import 'package:teta_core/src/blocs/focus_project/index.dart';
@@ -15,6 +15,8 @@ import 'package:teta_core/src/design_system/palette.dart';
 import 'package:teta_core/src/design_system/text.dart';
 import 'package:teta_core/src/rendering/find.dart';
 import 'package:teta_core/src/repositories/actions/remove_node_between_nodes.dart';
+
+// Project imports:
 import 'package:teta_widgets/src/elements/nodes/children_enum.dart';
 import 'package:teta_widgets/src/elements/nodes/dynamic.dart';
 import 'package:teta_widgets/src/elements/nodes/node.dart';

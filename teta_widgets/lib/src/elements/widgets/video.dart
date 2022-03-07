@@ -1,13 +1,17 @@
 // Flutter imports:
 // ignore_for_file: public_member_api_docs
 
-import 'package:fluentui_system_icons/fluentui_system_icons.dart';
+// Flutter imports:
 import 'package:flutter/material.dart';
-import 'package:teta_core/teta_core.dart';
-import 'package:teta_widgets/src/elements/index.dart';
-import 'package:universal_platform/universal_platform.dart';
+
 // Package imports:
+import 'package:fluentui_system_icons/fluentui_system_icons.dart';
+import 'package:teta_core/teta_core.dart';
+import 'package:universal_platform/universal_platform.dart';
 import 'package:youtube_player_iframe/youtube_player_iframe.dart';
+
+// Project imports:
+import 'package:teta_widgets/src/elements/index.dart';
 
 class WVideo extends StatelessWidget {
   /// Returns a Video widget in Teta

@@ -1,6 +1,7 @@
 // Flutter imports:
 import 'package:flutter/material.dart';
-// Project imports:
+
+// Package imports:
 import 'package:teta_core/src/design_system/text.dart';
 
 /// It displays the name of a CNode

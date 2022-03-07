@@ -1,12 +1,17 @@
 // Flutter imports:
 // ignore_for_file: public_member_api_docs
 
+// Flutter imports:
 import 'package:flutter/material.dart';
+
+// Package imports:
 import 'package:teta_core/gen/assets.gen.dart';
 import 'package:teta_core/src/design_system/text.dart';
 import 'package:teta_core/src/models/page.dart';
 import 'package:teta_core/src/models/project.dart';
 import 'package:teta_core/src/models/supabase_map_element.dart';
+
+// Project imports:
 import 'package:teta_widgets/src/elements/controls/atoms/supabase_element.dart';
 import 'package:teta_widgets/src/elements/controls/atoms/text.dart';
 import 'package:teta_widgets/src/elements/features/actions/element.dart';

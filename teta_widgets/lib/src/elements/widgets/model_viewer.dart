@@ -3,7 +3,7 @@
 // Flutter imports:
 import 'package:flutter/material.dart';
 
-// Project imports:
+// Package imports:
 import 'package:mobile_editor/src/elements/draggable.dart';
 import 'package:mobile_editor/src/elements/features/box_fit.dart';
 import 'package:mobile_editor/src/elements/features/features.dart';

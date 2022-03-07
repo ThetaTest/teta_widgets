@@ -1,12 +1,15 @@
 // Flutter imports:
 // ignore_for_file: import_of_legacy_library_into_null_safe, public_member_api_docs, lines_longer_than_80_chars
 
+// Flutter imports:
 import 'package:flutter/material.dart';
-import 'package:flutter_bloc/flutter_bloc.dart';
+
 // Package imports:
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:material_design_icons_flutter/material_design_icons_flutter.dart';
-// Project imports:
 import 'package:teta_core/teta_core.dart';
+
+// Project imports:
 import 'package:teta_widgets/src/elements/index.dart';
 
 class WBottomBarItem extends StatelessWidget {

@@ -5,8 +5,6 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:hovering/hovering.dart';
 import 'package:material_design_icons_flutter/icon_map.dart';
 import 'package:material_design_icons_flutter/material_design_icons_flutter.dart';
-
-// Project imports:
 import 'package:mobile_editor/src/cubits/google_fonts/cubit.dart';
 import 'package:mobile_editor/src/design_system/palette.dart';
 import 'package:mobile_editor/src/design_system/text.dart';

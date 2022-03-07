@@ -1,12 +1,16 @@
 // Flutter imports:
 // ignore_for_file: public_member_api_docs, lines_longer_than_80_chars
 
+// Flutter imports:
 import 'package:flutter/material.dart';
+
 // Package imports:
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:recase/recase.dart';
 import 'package:teta_core/src/blocs/focus_page/index.dart';
 import 'package:teta_core/src/models/variable.dart';
+
+// Project imports:
 import 'package:teta_widgets/src/elements/actions/snippets/take_param_from.dart';
 import 'package:teta_widgets/src/elements/actions/snippets/take_state_from.dart';
 import 'package:teta_widgets/src/elements/actions/snippets/update.dart';

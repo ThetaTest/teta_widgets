@@ -1,7 +1,11 @@
 // Flutter imports:
 import 'package:flutter/material.dart';
+
+// Package imports:
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:teta_core/teta_core.dart';
+
+// Project imports:
 import 'package:teta_widgets/src/elements/index.dart';
 
 // ignore_for_file: public_member_api_docs

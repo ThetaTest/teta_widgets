@@ -1,10 +1,14 @@
 // Flutter imports:
 // ignore_for_file: public_member_api_docs
 
-import 'package:bouncing_widget/bouncing_widget.dart';
+// Flutter imports:
 import 'package:flutter/material.dart';
-// Project imports:
+
+// Package imports:
+import 'package:bouncing_widget/bouncing_widget.dart';
 import 'package:teta_core/teta_core.dart';
+
+// Project imports:
 import 'package:teta_widgets/src/elements/index.dart';
 
 class WBouncingWidget extends StatelessWidget {

@@ -1,15 +1,19 @@
 // Flutter imports:
 // ignore_for_file: public_member_api_docs
 
-import 'package:collection/collection.dart';
+// Flutter imports:
 import 'package:flutter/material.dart';
+
 // Package imports:
+import 'package:collection/collection.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:teta_core/src/blocs/flat_list/index.dart';
 import 'package:teta_core/src/blocs/focus/index.dart';
 import 'package:teta_core/src/blocs/hover/index.dart';
 import 'package:teta_core/src/design_system/palette.dart';
 import 'package:teta_core/src/rendering/find.dart';
+
+// Project imports:
 import 'package:teta_widgets/src/elements/nodes/node.dart';
 
 /// Node Selection

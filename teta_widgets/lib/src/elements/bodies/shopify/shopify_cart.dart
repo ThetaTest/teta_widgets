@@ -6,9 +6,6 @@ import 'package:flutter/material.dart';
 // Package imports:
 import 'package:firebase/firebase.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:uuid/uuid.dart';
-
-// Project imports:
 import 'package:mobile_editor/src/blocs/hover/index.dart';
 import 'package:mobile_editor/src/elements/controls/key_constants.dart';
 import 'package:mobile_editor/src/elements/features/children_ids.dart';
@@ -18,6 +15,7 @@ import 'package:mobile_editor/src/elements/nodes/node.dart';
 import 'package:mobile_editor/src/elements/widgets/shopify/shopify_cart.dart';
 import 'package:mobile_editor/src/models/dataset.dart';
 import 'package:mobile_editor/src/models/variable.dart';
+import 'package:uuid/uuid.dart';
 
 const globalType = "ShpCart";
 const global_name = "Shopify Cart";

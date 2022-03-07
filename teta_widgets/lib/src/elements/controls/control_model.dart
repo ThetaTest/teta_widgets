@@ -1,7 +1,9 @@
 // Package imports:
 // ignore_for_file: public_member_api_docs
 
+// Package imports:
 import 'package:equatable/equatable.dart';
+
 // Project imports:
 import 'package:teta_widgets/src/elements/controls/type.dart';
 import 'package:teta_widgets/src/elements/features/box_fit.dart';

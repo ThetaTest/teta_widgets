@@ -1,14 +1,12 @@
 /*import 'package:flutter/material.dart';
 
 // Package imports:
-import 'package:nil/nil.dart';
-
-// Project imports:
 import 'package:mobile_editor/src/design_system/palette.dart';
 import 'package:mobile_editor/src/design_system/text.dart';
 import 'package:mobile_editor/src/elements/nodes/node.dart';
 import 'package:mobile_editor/src/models/page.dart';
 import 'package:mobile_editor/src/models/project.dart';
+import 'package:nil/nil.dart';
 
 class ShpOnlyNavigationControl extends StatefulWidget {
   final ProjectObject prj;

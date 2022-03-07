@@ -1,7 +1,10 @@
 // Flutter imports:
 // ignore_for_file: public_member_api_docs
 
+// Flutter imports:
 import 'package:flutter/material.dart';
+
+// Project imports:
 import 'package:teta_widgets/src/elements/features/text_type_input.dart';
 
 class FCondition {

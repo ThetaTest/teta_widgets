@@ -1,6 +1,6 @@
 /*import 'package:flutter/material.dart';
 
-// Project imports:
+// Package imports:
 import 'package:mobile_editor/src/elements/nodes/node.dart';
 
 class DraggableNode extends StatefulWidget {

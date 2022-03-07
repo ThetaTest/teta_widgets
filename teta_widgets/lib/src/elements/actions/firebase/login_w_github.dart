@@ -3,11 +3,14 @@
 // ignore_for_file: lines_longer_than_80_chars
 
 /*import 'package:firebase_auth/firebase_auth.dart';
-import 'package:firebase_core/firebase_core.dart';
+
+// Flutter imports:
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
+
+// Package imports:
+import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-// Project imports:
 import 'package:mobile_editor/src/blocs/focus_project/index.dart';
 import 'package:mobile_editor/src/cubits/zoomable/cubit.dart';
 import 'package:mobile_editor/src/elements/nodes/node.dart';

@@ -1,17 +1,20 @@
 // Flutter imports:
 // ignore_for_file: public_member_api_docs
 
+// Flutter imports:
 import 'package:flutter/material.dart';
+
 // Package imports:
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:hovering/hovering.dart';
-// Project imports:
 import 'package:teta_core/src/blocs/focus/bloc.dart';
 import 'package:teta_core/src/design_system/buttons/button.dart';
 import 'package:teta_core/src/design_system/dialogs/color_picker.dart';
 import 'package:teta_core/src/design_system/hex_color.dart';
 import 'package:teta_core/src/design_system/textfield/minitextfield.dart';
 import 'package:teta_core/src/design_system/textfield/textfield.dart';
+
+// Project imports:
 import 'package:teta_widgets/src/elements/features/features.dart';
 import 'package:teta_widgets/src/elements/nodes/node.dart';
 

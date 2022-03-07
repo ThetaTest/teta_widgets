@@ -4,9 +4,6 @@
 
 // Package imports:
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:uuid/uuid.dart';
-
-// Project imports:
 import 'package:mobile_editor/src/cubits/device_mode/cubit.dart';
 import 'package:mobile_editor/src/design_system/palette.dart';
 import 'package:mobile_editor/src/design_system/text.dart';
@@ -20,6 +17,7 @@ import 'package:mobile_editor/src/models/dataset.dart';
 import 'package:mobile_editor/src/models/variable.dart';
 import 'package:mobile_editor/src/types/dynamic_row_responsive_enum.dart';
 import 'package:mobile_editor/src/utils/responsive_system/enum/devices.dart';
+import 'package:uuid/uuid.dart';
 
 //ignore: must_be_immutable
 class WDynamicRow extends StatelessWidget {

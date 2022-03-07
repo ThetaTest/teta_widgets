@@ -1,9 +1,11 @@
 // Flutter imports:
 // ignore_for_file: public_member_api_docs
 
+// Flutter imports:
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-// Project imports:
+
+// Package imports:
 import 'package:teta_core/src/design_system/palette.dart';
 import 'package:teta_core/src/design_system/text.dart';
 

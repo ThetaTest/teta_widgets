@@ -5,9 +5,6 @@ import 'package:flutter/material.dart';
 
 // Package imports:
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:nil/nil.dart';
-
-// Project imports:
 import 'package:mobile_editor/src/blocs/flat_list/index.dart';
 import 'package:mobile_editor/src/blocs/focus_page/bloc.dart';
 import 'package:mobile_editor/src/blocs/focus_project/index.dart';
@@ -15,6 +12,7 @@ import 'package:mobile_editor/src/elements/nodes/node.dart';
 import 'package:mobile_editor/src/models/page.dart';
 import 'package:mobile_editor/src/rendering/find.dart';
 import 'package:mobile_editor/src/repositories/node.dart';
+import 'package:nil/nil.dart';
 
 class InsideDragTargetWidget extends StatefulWidget {
   final CNode node;

@@ -1,13 +1,16 @@
 // Flutter imports:
 // ignore_for_file: public_member_api_docs, unrelated_type_equality_checks, lines_longer_than_80_chars
 
+// Flutter imports:
 import 'package:flutter/material.dart';
+
 // Package imports:
 import 'package:flutter_bloc/flutter_bloc.dart';
-// Project imports:
 import 'package:teta_core/src/blocs/palette/index.dart';
 import 'package:teta_core/src/models/asset_file.dart';
 import 'package:teta_core/src/models/palette.dart';
+
+// Project imports:
 import 'package:teta_widgets/src/elements/features/box_fit.dart';
 
 /// Types of a FFill

@@ -1,6 +1,7 @@
 // Package imports:
 // ignore_for_file: public_member_api_docs
 
+// Package imports:
 import 'package:enum_to_string/enum_to_string.dart';
 
 enum NType {

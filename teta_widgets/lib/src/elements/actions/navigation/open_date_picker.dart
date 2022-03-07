@@ -1,13 +1,17 @@
 // Flutter imports:
 // ignore_for_file: public_member_api_docs
+
+// Flutter imports:
 import 'package:flutter/material.dart';
+
 // Package imports:
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:recase/recase.dart';
-// Project imports:
 import 'package:teta_core/src/blocs/focus_project/index.dart';
 import 'package:teta_core/src/models/page.dart';
 import 'package:teta_core/src/models/variable.dart';
+
+// Project imports:
 import 'package:teta_widgets/src/elements/actions/snippets/update.dart';
 
 class FActionNavigationOpenDatePicker {

@@ -1,19 +1,24 @@
 // Dart imports:
 // ignore_for_file: public_member_api_docs
 
+// Dart imports:
 import 'dart:convert';
 import 'dart:math';
 
-// Package imports:
-import 'package:crypto/crypto.dart';
 // Flutter imports:
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
+
+// Package imports:
+import 'package:crypto/crypto.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:teta_core/src/cubits/zoomable/cubit.dart';
 import 'package:teta_core/src/models/dataset.dart';
 import 'package:teta_core/src/models/variable.dart';
+
+// Project imports:
 import 'package:teta_widgets/src/elements/nodes/node.dart';
+
 //import 'package:sign_in_with_apple/sign_in_with_apple.dart';
 
 String generateNonce([int length = 32]) {

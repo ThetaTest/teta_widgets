@@ -3,9 +3,6 @@
 // Package imports:
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:google_fonts/google_fonts.dart';
-import 'package:nil/nil.dart';
-
-// Project imports:
 import 'package:mobile_editor/src/blocs/focus_project/index.dart';
 import 'package:mobile_editor/src/blocs/palette/index.dart';
 import 'package:mobile_editor/src/blocs/text_styles/index.dart';
@@ -36,6 +33,7 @@ import 'package:mobile_editor/src/models/text_style.dart';
 import 'package:mobile_editor/src/models/variable.dart';
 import 'package:mobile_editor/src/utils/shopify/flutter_simple_shopify.dart';
 import 'package:mobile_editor/src/utils/shopify/models/models.dart';
+import 'package:nil/nil.dart';
 
 class WShopifyLogin extends StatefulWidget {
   final CNode node;

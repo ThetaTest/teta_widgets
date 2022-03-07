@@ -2,15 +2,19 @@
 // Package imports:
 // ignore_for_file: public_member_api_docs
 
+// Flutter imports:
 import 'package:flutter/material.dart';
+
+// Package imports:
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:teta_core/src/blocs/focus_page/index.dart';
-// Project imports:
 import 'package:teta_core/src/cubits/supabase.dart';
 import 'package:teta_core/src/models/dataset.dart';
 import 'package:teta_core/src/models/variable.dart';
 import 'package:teta_core/src/services/user_social_login/enums/login_provider.dart';
 import 'package:teta_core/src/services/user_social_login/services/social_login_service/index.dart';
+
+// Project imports:
 import 'package:teta_widgets/src/elements/actions/navigation/open_page.dart';
 import 'package:teta_widgets/src/elements/actions/snippets/change_state.dart';
 import 'package:teta_widgets/src/elements/actions/snippets/take_state_from.dart';

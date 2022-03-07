@@ -4,9 +4,6 @@
 
 // Package imports:
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:nil/nil.dart';
-
-// Project imports:
 import 'package:mobile_editor/src/blocs/data/index.dart';
 import 'package:mobile_editor/src/blocs/focus_page/index.dart';
 import 'package:mobile_editor/src/blocs/focus_project/index.dart';
@@ -18,6 +15,7 @@ import 'package:mobile_editor/src/elements/nodes/node.dart';
 import 'package:mobile_editor/src/models/data.dart';
 import 'package:mobile_editor/src/models/dataset.dart';
 import 'package:mobile_editor/src/models/variable.dart';
+import 'package:nil/nil.dart';
 
 class WCollection extends StatefulWidget {
   final CNode node;

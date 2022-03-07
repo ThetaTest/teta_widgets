@@ -1,18 +1,23 @@
 // Flutter imports:
 // ignore_for_file: unused_element, use_late_for_private_fields_and_variables
 
+// Dart imports:
 import 'dart:async';
 import 'dart:math';
 
-import 'package:collection/collection.dart';
+// Flutter imports:
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
+
+// Package imports:
+import 'package:collection/collection.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:latlng/latlng.dart';
 import 'package:map/map.dart';
 import 'package:teta_core/teta_core.dart';
-import 'package:teta_widgets/src/elements/controls/key_constants.dart';
+
 // Project imports:
+import 'package:teta_widgets/src/elements/controls/key_constants.dart';
 import 'package:teta_widgets/src/elements/index.dart';
 import 'package:teta_widgets/src/elements/nodes/dynamic.dart';
 

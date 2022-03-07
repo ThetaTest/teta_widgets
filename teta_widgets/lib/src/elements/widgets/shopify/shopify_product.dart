@@ -7,8 +7,6 @@ import 'package:flutter/material.dart';
 
 // Package imports:
 import 'package:flutter_bloc/flutter_bloc.dart';
-
-// Project imports:
 import 'package:mobile_editor/src/blocs/focus_page/index.dart';
 import 'package:mobile_editor/src/blocs/focus_project/index.dart';
 import 'package:mobile_editor/src/design_system/palette.dart';

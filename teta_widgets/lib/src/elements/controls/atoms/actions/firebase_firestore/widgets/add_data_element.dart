@@ -1,12 +1,16 @@
 // Flutter imports:
 // ignore_for_file: public_member_api_docs
 
+// Flutter imports:
 import 'package:flutter/material.dart';
-// Project imports:
+
+// Package imports:
 import 'package:teta_core/src/design_system/dropdowns/dropdown.dart';
 import 'package:teta_core/src/design_system/dropdowns/dropdown_for_type.dart';
 import 'package:teta_core/src/design_system/textfield/textfield.dart';
 import 'package:teta_core/src/models/page.dart';
+
+// Project imports:
 import 'package:teta_widgets/src/elements/features/text_type_input.dart';
 
 class AddDataElement extends StatefulWidget {

@@ -4,7 +4,11 @@
 
 // Flutter imports:
 import 'package:flutter/cupertino.dart';
+
+// Package imports:
 import 'package:teta_core/teta_core.dart';
+
+// Project imports:
 import 'package:teta_widgets/src/elements/index.dart';
 
 class WCupertinoSegmentedControl extends StatefulWidget {

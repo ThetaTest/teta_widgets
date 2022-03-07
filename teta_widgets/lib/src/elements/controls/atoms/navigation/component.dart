@@ -2,10 +2,12 @@
 // Package imports:
 // ignore_for_file: import_of_legacy_library_into_null_safe, public_member_api_docs, lines_longer_than_80_chars, avoid_dynamic_calls
 
+// Flutter imports:
 import 'package:flutter/material.dart';
+
+// Package imports:
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_feather_icons/flutter_feather_icons.dart';
-// Project imports:
 import 'package:teta_core/src/blocs/focus/index.dart';
 import 'package:teta_core/src/design_system/dropdowns/dropdown.dart';
 import 'package:teta_core/src/design_system/palette.dart';
@@ -15,6 +17,8 @@ import 'package:teta_core/src/models/dataset.dart';
 import 'package:teta_core/src/models/page.dart';
 import 'package:teta_core/src/models/project.dart';
 import 'package:teta_core/src/models/variable.dart';
+
+// Project imports:
 import 'package:teta_widgets/src/elements/controls/key_constants.dart';
 import 'package:teta_widgets/src/elements/nodes/node.dart';
 

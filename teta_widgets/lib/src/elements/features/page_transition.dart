@@ -1,7 +1,9 @@
 // Flutter imports:
 // ignore_for_file: public_member_api_docs, library_prefixes
 
+// Flutter imports:
 import 'package:flutter/material.dart';
+
 // Package imports:
 import 'package:transition/transition.dart' as T;
 

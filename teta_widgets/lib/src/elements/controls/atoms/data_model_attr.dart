@@ -2,8 +2,6 @@
 
 // Package imports:
 import 'package:flutter_bloc/flutter_bloc.dart';
-
-// Project imports:
 import 'package:mobile_editor/src/blocs/data/index.dart';
 import 'package:mobile_editor/src/design_system/palette.dart';
 import 'package:mobile_editor/src/design_system/text.dart';
