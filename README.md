@@ -13,6 +13,9 @@ You can contribute to help us to support new widgets and add new functionalities
 [Teta](https://teta.so) is an online cooperative app builder. You can use Teta to build apps visually in few days.<br>
 You can use Teta from any web browser, mobile ones included.<br>
 In order to allow people to build amazing apps, we are the first app builder to include [Supabase](https://supabase.com) as back-end integration.
+<br>
+### Follow us on<br>
+[Discord](http://discord.gg/z9MjHSMaSX), [TikTok](https://www.tiktok.com/@teta.so), [Instagram](https://www.instagram.com/teta.so/), [Twitter](https://twitter.com/tetabuilder), [Youtube](https://www.youtube.com/channel/UCuj5yqb6kx_gXTHXlTGNF0Q)
 <br><br>
 
 ## Our philosophy is the open startup
