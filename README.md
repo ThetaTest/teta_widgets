@@ -15,7 +15,7 @@ You can use Teta from any web browser, mobile ones included.<br>
 In order to allow people to build amazing apps, we are the first app builder to include [Supabase](https://supabase.com) as back-end integration.
 <br><br>
 
-## Our philosophy is open startup
+## Our philosophy is the open startup
 [Teta](https://teta.so) is an open startup. We are proud to share our weekly statistics with all of you. <br>
 Now Teta is becoming open source too. We are starting with this repository, but we want to open more in the future.<br>
 Read our stats 👉 [Open Metrics](https://teta.so/metrics).
