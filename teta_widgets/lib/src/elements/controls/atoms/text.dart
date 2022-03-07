@@ -70,7 +70,7 @@ class PaddingsState extends State<TextControl> {
     final index = widget.page.datasets
         .indexWhere((element) => element.getName == widget.value.datasetName);
     final dataset =
-        index != -1 ? widget.page.datasets[index] : DatasetObject.empty;
+        index != -1 ? widget.page.datasets[index] : DatasetObject.empty();
     return BlocBuilder<FocusBloc, List<CNode>>(
       builder: (context, state) {
         if (state.isNotEmpty) {

@@ -73,7 +73,7 @@ class SrcImageControlState extends State<SrcImageControl> {
               .firstWhere(
                 (element) => element.getName == widget.image.datasetName,
                 orElse: () {
-                  return DatasetObject.empty;
+                  return DatasetObject.empty();
                 },
               )
               .getMap

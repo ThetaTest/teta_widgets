@@ -38,7 +38,7 @@ class WListViewBuilder extends StatefulWidget {
 }
 
 class WListViewBuilderState extends State<WListViewBuilder> {
-  DatasetObject map = DatasetObject.empty;
+  DatasetObject map = DatasetObject.empty();
   bool isLoading = true;
 
   @override
@@ -57,7 +57,7 @@ class WListViewBuilderState extends State<WListViewBuilder> {
             (element) => element.getName == widget.value.datasetName,
           )
         : -1;
-    final db = index != -1 ? widget.dataset[index] : DatasetObject.empty;
+    final db = index != -1 ? widget.dataset[index] : DatasetObject.empty();
     return ListView.builder(
       addAutomaticKeepAlives: false,
       addRepaintBoundaries: false,
@@ -82,7 +82,7 @@ class WListViewBuilderState extends State<WListViewBuilder> {
     try {
       final index = widget.dataset
           .indexWhere((element) => element.getName == widget.value.datasetName);
-      final db = index != -1 ? widget.dataset[index] : DatasetObject.empty;
+      final db = index != -1 ? widget.dataset[index] : DatasetObject.empty();
       if (mounted) {
         if (db.getName != '') {
           setState(() {

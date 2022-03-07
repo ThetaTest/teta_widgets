@@ -59,7 +59,7 @@ class WMapBuilder extends StatefulWidget {
 
 class _WMapBuilderState extends State<WMapBuilder> {
   VariableObject? variable;
-  DatasetObject map = DatasetObject.empty;
+  DatasetObject map = DatasetObject.empty();
   bool isInitialized = false;
 
   @override
@@ -174,7 +174,7 @@ class _WMapBuilderState extends State<WMapBuilder> {
             (element) => element.getName == widget.datasetInput.datasetName,
           )
         : -1;
-    final db = index != -1 ? widget.dataset[index] : DatasetObject.empty;
+    final db = index != -1 ? widget.dataset[index] : DatasetObject.empty();
 
     return NodeSelectionBuilder(
       node: widget.node,
@@ -315,7 +315,7 @@ class _WMapBuilderState extends State<WMapBuilder> {
       final index = widget.dataset.indexWhere(
         (element) => element.getName == widget.datasetInput.datasetName,
       );
-      final db = index != -1 ? widget.dataset[index] : DatasetObject.empty;
+      final db = index != -1 ? widget.dataset[index] : DatasetObject.empty();
       if (mounted) {
         if (db.getName != '') {
           setState(() {

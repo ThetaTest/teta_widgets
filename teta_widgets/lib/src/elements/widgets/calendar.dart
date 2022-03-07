@@ -64,7 +64,7 @@ class WCalendar extends StatefulWidget {
 }
 
 class _WCalendarState extends State<WCalendar> {
-  DatasetObject map = DatasetObject.empty;
+  DatasetObject map = DatasetObject.empty();
   DatasetObject? dataset;
   bool isLoading = true;
   List<DateCalendarObject> list = <DateCalendarObject>[];
@@ -182,7 +182,7 @@ class _WCalendarState extends State<WCalendar> {
     try {
       final index = widget.dataset
           .indexWhere((element) => element.getName == widget.value.datasetName);
-      final db = index != -1 ? widget.dataset[index] : DatasetObject.empty;
+      final db = index != -1 ? widget.dataset[index] : DatasetObject.empty();
       if (mounted) {
         if (db.getName != '') {
           setState(() {

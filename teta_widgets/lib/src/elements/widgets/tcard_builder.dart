@@ -44,7 +44,7 @@ class WTCardBuilder extends StatefulWidget {
 }
 
 class _WTCardState extends State<WTCardBuilder> {
-  DatasetObject map = DatasetObject.empty;
+  DatasetObject map = DatasetObject.empty();
   final _controller = TCardController();
   List<Widget> list = <Widget>[
     const Center(child: CircularProgressIndicator())
@@ -141,7 +141,7 @@ class _WTCardState extends State<WTCardBuilder> {
             (element) => element.getName == widget.value.datasetName,
           )
         : -1;
-    final db = index != -1 ? widget.dataset[index] : DatasetObject.empty;
+    final db = index != -1 ? widget.dataset[index] : DatasetObject.empty();
     if (mounted) {
       final temp = <Widget>[];
       for (var i = 0; i < db.getMap.length; i++) {
@@ -166,7 +166,7 @@ class _WTCardState extends State<WTCardBuilder> {
     try {
       final index = widget.dataset
           .indexWhere((element) => element.getName == widget.value.datasetName);
-      final db = index != -1 ? widget.dataset[index] : DatasetObject.empty;
+      final db = index != -1 ? widget.dataset[index] : DatasetObject.empty();
       if (mounted) {
         if (db.getName != '') {
           setState(() {

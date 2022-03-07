@@ -51,7 +51,7 @@ class WGridViewBuilder extends StatefulWidget {
 }
 
 class _WGridViewState extends State<WGridViewBuilder> {
-  DatasetObject map = DatasetObject.empty;
+  DatasetObject map = DatasetObject.empty();
   bool isLoading = true;
 
   @override
@@ -100,7 +100,7 @@ class _WGridViewState extends State<WGridViewBuilder> {
             (element) => element.getName == widget.value.datasetName,
           )
         : -1;
-    final db = index != -1 ? widget.dataset[index] : DatasetObject.empty;
+    final db = index != -1 ? widget.dataset[index] : DatasetObject.empty();
     return MouseRegion(
       onEnter: (v) {
         BlocProvider.of<ZoomableCubit>(context)
@@ -151,7 +151,7 @@ class _WGridViewState extends State<WGridViewBuilder> {
     try {
       final index = widget.dataset
           .indexWhere((element) => element.getName == widget.value.datasetName);
-      final db = index != -1 ? widget.dataset[index] : DatasetObject.empty;
+      final db = index != -1 ? widget.dataset[index] : DatasetObject.empty();
       if (mounted) {
         if (db.getName != '') {
           setState(() {
