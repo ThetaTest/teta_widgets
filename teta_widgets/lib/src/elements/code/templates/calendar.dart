@@ -17,9 +17,10 @@ String calendarCodeTemplate(
   final CNode? child,
 ) {
   final dataset = node.body.attributes[DBKeys.datasetInput] as FDataset;
-  final firstDecoration = CS
+  var firstDecoration = CS
       .boxDecoration(context, node.body, DBKeys.bgFill)
       .replaceFirst('decoration:', '');
+  firstDecoration = firstDecoration.substring(0, firstDecoration.length - 6);
   return '''
   Builder(builder: (context) {
     return PagedVerticalCalendar(
