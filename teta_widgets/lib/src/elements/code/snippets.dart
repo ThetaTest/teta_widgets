@@ -219,7 +219,7 @@ class CS {
   ) {
     final flagConst = CS.borderRadius(context, body) != '';
     final fill = FFill.toCode(
-      body.attributes[DBKeys.fill] as FFill,
+      body.attributes[keyFill] as FFill,
       context,
       flagConst: flagConst,
     );
