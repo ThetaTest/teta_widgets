@@ -16,8 +16,8 @@ String cupertinoSwitchCodeTemplate(
 ) {
   return '''
     CupertinoSwitch(
-      ${CS.action(context, node, ActionGesture.onTap, 'onPressed: () async', null, isRequired: true)}
-      ${CS.child(context, child, comma: true)}
+      value: false,
+      ${CS.action(context, node, ActionGesture.onChange, 'onChanged: (value) async', 'false', isRequired: true)}
     )
   ''';
 }

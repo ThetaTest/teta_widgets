@@ -8,7 +8,7 @@ import 'package:flutter/material.dart';
 import 'package:teta_widgets/src/elements/nodes/node.dart';
 import 'package:teta_widgets/src/elements/nodes/node_body.dart';
 
-/// Generates the code for Padding widget
+/// Generates the code for RevenueCat product list widget, unclassified for now
 String revenueCatProductsListCodeTemplate(
   BuildContext context,
   NodeBody body,

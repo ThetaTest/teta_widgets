@@ -52,10 +52,10 @@ final cupertinoSwitchIntrinsicStates = IntrinsicStates(
   type: _globalType,
   category: NodeCategories.input,
   maxChildren: 1,
-  canHave: ChildrenEnum.child,
+  canHave: ChildrenEnum.none,
   addChildLabels: [],
   gestures: [
-    ActionGesture.onTap,
+    ActionGesture.onChange,
   ],
 );
 

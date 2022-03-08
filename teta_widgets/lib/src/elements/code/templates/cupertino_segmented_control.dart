@@ -16,11 +16,39 @@ String cupertinoSegmentedControlCodeTemplate(
   CNode node,
   List<CNode> children,
 ) {
-  final map = StringBuffer()..write('{');
-  for (var i = 0; i < children.length; i++) {
-    map.write('$i: ${children[i].toCode(context)}');
+  StringBuffer map;
+  if (children.isNotEmpty) {
+    //here all the children are passed from tree view and setted
+    map = StringBuffer()..write('{');
+    for (var i = 0; i < children.length; i++) {
+      map.write('$i: ${children[i].toCode(context)},');
+    }
+    map.write('},');
+  } else {
+    //here we use the default ones
+    map = StringBuffer()
+      ..write(
+      '''
+      {
+        0: Container(
+           padding: const EdgeInsets.symmetric(vertical: 8, horizontal: 16),
+           child: const Center(
+              child: Text('Option 1'),
+        ),
+       ),
+      ''',
+      )
+      ..write(
+      '''
+      1: Container(
+        padding: const EdgeInsets.symmetric(vertical: 8, horizontal: 16),
+        child: const Center(
+            child: Text('Option 2'),
+        ),
+       ),
+      },
+      ''',);
   }
-  map.write('}');
   final selectedColor = FFill.toCode(
     body.attributes[DBKeys.fill] as FFill,
     context,
@@ -41,9 +69,10 @@ String cupertinoSegmentedControlCodeTemplate(
     context,
     flagConst: true,
   )?.replaceFirst('color:', 'borderColor:');
+
   return '''
     CupertinoSegmentedControl<int>(
-      children: map,
+      children: $map
       ${CS.action(context, node, ActionGesture.onTap, 'onValueChanged: (value) async', 'value', isRequired: true)}
       $selectedColor
       $unselectedColor

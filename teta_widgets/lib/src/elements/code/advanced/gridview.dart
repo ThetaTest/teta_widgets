@@ -8,14 +8,22 @@ import 'package:teta_widgets/src/elements/features/text_type_input.dart';
 import 'package:teta_widgets/src/elements/nodes/node.dart';
 import 'package:teta_widgets/src/elements/nodes/node_body.dart';
 
-/// Generates the code for ListView widget
+/// Generates the code for GridView widget
 ///
 /// Returns:
 /// ```dart
-/// ListView(
-///   scrollDirection: Axis.horizontal, // isVertical (vertical is dedundant)
-///   children: [], // node's children
-/// );
+/// GridView(
+///       gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
+///         mainAxisSpacing: 2,
+///         crossAxisCount: 2,
+///         crossAxisSpacing: 2,
+///         childAspectRatio: 1, 
+///      ),
+///       shrinkWrap: false,
+///       primary: false,
+///       <$_scrollDirection>
+///       <${CS.children(context, children)}>
+//     )
 /// ```
 String gridViewCodeTemplate(
   BuildContext context,
@@ -60,14 +68,4 @@ String gridViewCodeTemplate(
       ${CS.children(context, children)}
     )
   ''';
-}
-
-// ignore: unused_element
-Widget _example() {
-  return ListView(
-    // ignore: avoid_redundant_argument_values
-    scrollDirection: Axis.vertical, // isVertical (vertical is dedundant!)
-    // ignore: prefer_const_literals_to_create_immutables
-    children: [], // All children.toCode
-  );
 }

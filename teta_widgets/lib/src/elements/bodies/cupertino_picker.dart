@@ -100,7 +100,7 @@ class CupertinoPickerBody extends NodeBody {
           '''
       ${node.nid}
       $loop
-            ${child ?? children}
+      ${child ?? children}
       ${attributes[DBKeys.flag] as bool}
       ${(attributes[DBKeys.height] as FSize).toJson()}
       ${(attributes[DBKeys.action] as FAction).toJson()}
@@ -127,5 +127,5 @@ class CupertinoPickerBody extends NodeBody {
     int pageId,
     int? loop,
   ) =>
-      cupertinoPickerCodeTemplate(context, this, node, child);
+      cupertinoPickerCodeTemplate(context, this, node, children ?? []);
 }

@@ -9,7 +9,7 @@ import 'package:teta_widgets/src/elements/features/text_type_input.dart';
 import 'package:teta_widgets/src/elements/nodes/node.dart';
 import 'package:teta_widgets/src/elements/nodes/node_body.dart';
 
-/// Generates the code for Padding widget
+/// Generates the code for Button widget
 String buttonCodeTemplate(
   BuildContext context,
   NodeBody body,
@@ -20,7 +20,7 @@ String buttonCodeTemplate(
   final abstract = body.attributes[DBKeys.value] as FTextTypeInput;
   final value = abstract.toCode(loop);
 
-  return """
+  return '''
     GestureDetector(
       ${CS.action(context, node, ActionGesture.onTap, 'onTap: () async', null, isRequired: false)}
       ${CS.action(context, node, ActionGesture.onLongPress, 'onLongPress: () async', null, isRequired: false)}
@@ -29,10 +29,10 @@ String buttonCodeTemplate(
         ${CS.size(context, body, isWidth: false)}
         ${CS.boxDecoration(context, body, DBKeys.fill)}
         child: Text(
-          '''$value''',
+          '$value',
           ${CS.textStyle(context, body, DBKeys.textStyle)}
-        )
-      )
+        ),
+      ),
     )
-  """;
+  ''';
 }

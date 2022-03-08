@@ -8,7 +8,7 @@ import 'package:teta_widgets/src/elements/features/text_type_input.dart';
 import 'package:teta_widgets/src/elements/nodes/node.dart';
 import 'package:teta_widgets/src/elements/nodes/node_body.dart';
 
-/// Generates the code for Padding widget
+/// Generates the code for Hero widget
 String heroCodeTemplate(
   BuildContext context,
   NodeBody body,
@@ -17,10 +17,10 @@ String heroCodeTemplate(
 ) {
   final abstract = body.attributes[DBKeys.value] as FTextTypeInput;
   final value = abstract.toCode(loop);
-  return """
+  return '''
   Hero(
-    tag: '''$value''',
+    tag: '$value',
     ${CS.child(context, child, comma: true)}
   )
-  """;
+  ''';
 }

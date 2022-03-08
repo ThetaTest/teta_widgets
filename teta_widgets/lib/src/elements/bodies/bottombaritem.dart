@@ -41,7 +41,7 @@ final bottombaritemIntrinsicStates = IntrinsicStates(
     NodeType.name(NType.image),
   ],
   blockedTypes: [],
-  synonymous: ['icon', 'menu', 'text', 'bottom'],
+  synonymous: ['bottom','bottom bar','bottombar','bottombaritem'],
   advicedChildrenCanHaveAtLeastAChild: [],
   displayName: NodeType.name(_globalType),
   type: _globalType,

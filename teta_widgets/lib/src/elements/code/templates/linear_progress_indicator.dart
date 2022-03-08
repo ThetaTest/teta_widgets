@@ -12,14 +12,14 @@ String linearProgressIndicatorCodeTemplate(
   NodeBody body,
   int? loop,
 ) {
-  final fill = (body.attributes[DBKeys.fill] as FFill).getHexColor(context);
-  final bgFill = (body.attributes[DBKeys.bgFill] as FFill).getHexColor(context);
+  final colorFill = (body.attributes[DBKeys.fill] as FFill).getHexColor(context);
+  final colorBgFill = (body.attributes[DBKeys.bgFill] as FFill).getHexColor(context);
 
   return '''
     LinearProgressIndicator(
-      backgroundColor: Color(0xFF$bgFill), 
+      backgroundColor: Color(0xFF$colorBgFill), 
       valueColor: AlwaysStoppedAnimation<Color>(
-              Color(0xFF$fill)),
+              Color(0xFF$colorFill)),
     )
   ''';
 }

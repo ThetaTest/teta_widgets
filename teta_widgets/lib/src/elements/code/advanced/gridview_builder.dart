@@ -6,14 +6,27 @@ import 'package:teta_widgets/src/elements/controls/key_constants.dart';
 import 'package:teta_widgets/src/elements/index.dart';
 import 'package:teta_widgets/src/elements/nodes/node_body.dart';
 
-/// Generates the code for ListView widget
+/// Generates the code for GridView.builder widget
 ///
 /// Returns:
 /// ```dart
-/// ListView(
-///   scrollDirection: Axis.horizontal, // isVertical (vertical is dedundant)
-///   children: [], // node's children
-/// );
+/// GridView.builder(
+///      shrinkWrap: $shrinkWrap,
+///      primary: $primary,
+///      $_scrollDirection
+///      gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
+///        mainAxisSpacing: $mainAxisSpacing,
+///        crossAxisCount: $crossAxisCount,
+///        crossAxisSpacing: $crossAxisSpacing,
+///       childAspectRatio: $childAspectRatio,
+///      ),
+///      itemCount: ${dataset != null ? '''
+///          datasets.keys.contains('$dataset') ? (datasets['$dataset'] as List<dynamic>).length : 0
+///         ''' : '0'},
+///     itemBuilder: (context, index) {
+///           return $childString;
+///         },
+///   )
 /// ```
 String gridViewBuilderCodeTemplate(
   BuildContext context,
@@ -22,6 +35,7 @@ String gridViewBuilderCodeTemplate(
   int? loop,
 ) {
   final primary = body.attributes[DBKeys.isPrimary] as bool;
+
   final _scrollDirection =
       !(body.attributes[DBKeys.isVertical] as bool? ?? false)
           ? 'scrollDirection: Axis.horizontal,'
@@ -56,7 +70,8 @@ String gridViewBuilderCodeTemplate(
       ? double.parse(valueChildAspectRatio)
       : 1;
 
-  final childString = child != null ? child.toCode(context) : '';
+  final childString =
+      child != null ? child.toCode(context) : 'const SizedBox()';
   final dataset =
       (body.attributes[DBKeys.datasetInput] as FDataset).datasetName;
 
@@ -64,16 +79,16 @@ String gridViewBuilderCodeTemplate(
     GridView.builder(
       shrinkWrap: $shrinkWrap,
       primary: $primary,
-       $_scrollDirection
+      $_scrollDirection
       gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
         mainAxisSpacing: $mainAxisSpacing,
         crossAxisCount: $crossAxisCount,
         crossAxisSpacing: $crossAxisSpacing,
         childAspectRatio: $childAspectRatio,
       ),
-      itemCount: ${dataset != null ? """
+      itemCount: ${dataset != null ? '''
           datasets.keys.contains('$dataset') ? (datasets['$dataset'] as List<dynamic>).length : 0
-          """ : "0"},
+          ''' : '0'},
       itemBuilder: (context, index) {
             return $childString;
           },

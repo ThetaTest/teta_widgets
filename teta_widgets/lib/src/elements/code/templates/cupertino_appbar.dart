@@ -6,7 +6,7 @@ import 'package:teta_widgets/src/elements/controls/key_constants.dart';
 import 'package:teta_widgets/src/elements/features/fill.dart';
 import 'package:teta_widgets/src/elements/nodes/node_body.dart';
 
-/// Cupertino AppBar Template
+/// Cupertino AppBar Template. unclassified for now
 String cupertinoAppBarCodeTemplate(
   BuildContext context,
   NodeBody body,

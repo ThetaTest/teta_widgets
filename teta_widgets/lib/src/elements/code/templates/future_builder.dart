@@ -53,12 +53,12 @@ String supabaseFutureBuilderCodeTemplate(
   const index = 0;
   ''';
 
-  return """
+  return '''
   FutureBuilder(
     future: Supabase.instance.client
-    .from('''$from''')
-    .select('''$select''')
-    .order('''$order''')
+    .from('$from')
+    .select('$select')
+    .order('$order')
     .range(($numberPage * $rangeFrom) - 1, $numberPage * $rangeTo)
     .execute(),
     builder: (context, snapshot) {
@@ -69,5 +69,5 @@ String supabaseFutureBuilderCodeTemplate(
       return $child;
     }
   )
-  """;
+  ''';
 }

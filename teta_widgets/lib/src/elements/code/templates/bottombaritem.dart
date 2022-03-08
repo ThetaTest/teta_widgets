@@ -10,7 +10,7 @@ import 'package:teta_widgets/src/elements/features/text_type_input.dart';
 import 'package:teta_widgets/src/elements/nodes/node.dart';
 import 'package:teta_widgets/src/elements/nodes/node_body.dart';
 
-/// Generates the code for Padding widget
+/// Generates the code for BottomBarItem widget
 String bottomBarItemCodeTemplate(
   BuildContext context,
   NodeBody body,

@@ -33,12 +33,12 @@ String streamBuilderCodeTemplate(
   if (children.length >= 2) {
     loader = CS.child(context, children[1], comma: true).replaceAll(',', '');
   }
-  return """
+  return '''
     StreamBuilder(
       stream: client
-      .from('''$from''')
-      .order('''$order''')
-      .limit('''$rangeTo''')
+      .from('$from')
+      .order('$order')
+      .limit('$rangeTo')
       .execute(),
       builder: (context, snapshot) {
         if (!snapshot.hasData) {
@@ -47,5 +47,5 @@ String streamBuilderCodeTemplate(
         return $child;
       });
     )
-  """;
+  ''';
 }

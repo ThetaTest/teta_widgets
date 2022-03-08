@@ -6,7 +6,7 @@ import 'package:teta_widgets/src/elements/code/snippets.dart';
 import 'package:teta_widgets/src/elements/nodes/node.dart';
 import 'package:teta_widgets/src/elements/nodes/node_body.dart';
 
-/// Generates the code for Padding widget
+/// Generates the code for Align widget
 String alignCodeTemplate(BuildContext context, NodeBody body, CNode? child) {
   return '''
     Align(

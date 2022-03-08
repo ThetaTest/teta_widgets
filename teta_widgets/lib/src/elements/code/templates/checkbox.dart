@@ -8,7 +8,7 @@ import 'package:teta_widgets/src/elements/features/actions/enums/gestures.dart';
 import 'package:teta_widgets/src/elements/nodes/node.dart';
 import 'package:teta_widgets/src/elements/nodes/node_body.dart';
 
-/// Generates the code for Padding widget
+/// Generates the code for Checkbox widget
 String checkBoxCodeTemplate(
   BuildContext context,
   NodeBody body,

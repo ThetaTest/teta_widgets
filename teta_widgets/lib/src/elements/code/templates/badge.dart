@@ -9,7 +9,7 @@ import 'package:teta_widgets/src/elements/features/text_type_input.dart';
 import 'package:teta_widgets/src/elements/nodes/node.dart';
 import 'package:teta_widgets/src/elements/nodes/node_body.dart';
 
-/// Generates the code for Padding widget
+/// Generates the code for badge widget
 String badgeCodeTemplate(
   BuildContext context,
   NodeBody body,
@@ -19,14 +19,14 @@ String badgeCodeTemplate(
   final abstract = body.attributes[DBKeys.value] as FTextTypeInput;
   final value = abstract.toCode(loop);
   final fill = (body.attributes[DBKeys.fill] as FFill).getHexColor(context);
-  return """
+  return '''
     Badge(
       badgeContent: Text( 
-        '''$value''',
+        '$value',
         ${CS.textStyle(context, body, DBKeys.textStyle)}
         ),
       badgeColor:Color(0xFF$fill),
       ${CS.child(context, child, comma: true)}
     )
-  """;
+  ''';
 }

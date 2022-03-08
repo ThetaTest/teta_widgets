@@ -18,7 +18,6 @@ String dotsIndicatorCodeTemplate(
   Row(
     mainAxisSize: MainAxisSize.min,
     children: [
-      
       Container(
         ${CS.margin(context, body, isMargin: true)}
         ${CS.margin(context, body, isMargin: false)}

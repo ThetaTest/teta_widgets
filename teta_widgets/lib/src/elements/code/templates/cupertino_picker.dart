@@ -13,22 +13,20 @@ String cupertinoPickerCodeTemplate(
   BuildContext context,
   NodeBody body,
   CNode node,
-  CNode? child,
+  List<CNode> children,
 ) {
   final flag = body.attributes[DBKeys.flag] as bool;
   final itemExtent = CS
       .size(context, body, isWidth: false)
       .replaceFirst('height:', 'itemExtent:');
+
   return '''
     CupertinoPicker(
-
-      ${CS.action(context, node, ActionGesture.onTap, 'onPressed: () async', null, isRequired: true)}
       looping: $flag,
       $itemExtent
-
-      ${CS.action(context, node, ActionGesture.onTap, 'onPressed: () async', null, isRequired: true)}
-
-      ${CS.child(context, child, comma: true)}
+      ${CS.action(context, node, ActionGesture.onChange, 'onSelectedItemChanged: (int) async', 'false', isRequired: true)}
+      ${CS.children(context, children,)}
     )
   ''';
+
 }
