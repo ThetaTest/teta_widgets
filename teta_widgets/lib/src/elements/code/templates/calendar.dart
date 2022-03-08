@@ -44,7 +44,7 @@ String calendarCodeTemplate(BuildContext context, CNode node, CNode? child) {
         );
       },
       monthBuilder: (context, month, year) {
-        final monthValue = DateFormat('MMMM').format(DateTime(0, month));
+        final monthValue = DateFormat.MMMM().format(DateTime(0, month));
         return SizedBox(
           width: double.maxFinite,
           child: Text(

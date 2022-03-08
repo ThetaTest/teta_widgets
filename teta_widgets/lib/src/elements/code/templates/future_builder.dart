@@ -49,7 +49,7 @@ String supabaseFutureBuilderCodeTemplate(
   if (doc == null) return const SizedBox();
   
   final datasets = this.datasets;
-  datasets['Supabase Query'] = doc.data as List<dynamic>? ?? <dynamic>[];
+  datasets['Supabase future builder'] = doc.data as List<dynamic>? ?? <dynamic>[];
   const index = 0;
   ''';
 

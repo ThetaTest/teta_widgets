@@ -131,6 +131,7 @@ String pageComponentCodeTemplate(
     import 'package:supabase/supabase.dart';
     import 'package:supabase_flutter/supabase_flutter.dart';
     import 'package:google_fonts/google_fonts.dart';
+    import 'package:intl/intl.dart';
     $authSocialButtonsImport
     $lottieImport
     $iconImport
@@ -139,6 +140,7 @@ String pageComponentCodeTemplate(
     import 'package:map/map.dart';
     import 'package:latlng/latlng.dart';
     import 'package:paged_vertical_calendar/paged_vertical_calendar.dart';
+    import 'package:collection/collection.dart';
     $componentImport
     $badgeImport
 
