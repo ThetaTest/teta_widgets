@@ -46,3 +46,8 @@ GitHub Issues<br>
 <img src="https://media2.giphy.com/media/YOvOkaS5ZKfimDIgwJ/giphy.gif?cid=ecf05e472ipczxdp8km6z40b4fb7q2vin64hh9xqswqyq0gb&rid=giphy.gif&ct=g" />
 
 Made with love in Italy 🇮🇹🇪🇺
+<br><br>
+[![style: very good analysis](https://img.shields.io/badge/style-very_good_analysis-B22C89.svg)](https://pub.dev/packages/very_good_analysis)
+<a href="https://github.com/felangel/bloc"><img src="https://tinyurl.com/bloc-library" alt="Bloc Library"></a>
+
+
