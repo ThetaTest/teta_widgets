@@ -17,10 +17,9 @@ String calendarCodeTemplate(
   final CNode? child,
 ) {
   final dataset = node.body.attributes[DBKeys.datasetInput] as FDataset;
-  var firstDecoration = CS
+  final firstDecoration = CS
       .boxDecoration(context, node.body, DBKeys.bgFill)
       .replaceFirst('decoration:', '');
-  firstDecoration = firstDecoration.substring(0, firstDecoration.length - 6);
   return '''
   Builder(builder: (context) {
     return PagedVerticalCalendar(
@@ -29,7 +28,15 @@ String calendarCodeTemplate(
       ${CS.action(context, node, ActionGesture.onMonthLoaded, 'onMonthLoaded: (year, month) async', '\$month', isRequired: false)}
       dayBuilder: (context, date) {
         final dataset = datasets['${dataset.datasetName}'];
-        final element = (dataset as List<dynamic> ?? <dynamic>[]).firstWhereOrNull((e) => e['${dataset.datasetAttrName}']);
+         final element =
+                            (dataset as List<dynamic>).firstWhereOrNull(
+                          (e) {
+                            final d = DateTime.tryParse(e['${dataset.datasetAttrName}']);
+                            return d?.year == date.year &&
+                                d?.month == date.month &&
+                                d?.day == date.day;
+                          },
+                        );
         return Container(
           ${CS.margin(context, node.body, isMargin: true)}
           ${CS.margin(context, node.body, isMargin: false)}
