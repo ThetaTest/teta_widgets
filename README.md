@@ -4,7 +4,7 @@
 ### Build an app in a weekend
 <br><br>
 
-# Hey! <br> Welcome to Teta's widgets repository! ⚡️
+# Hey! Ciao! ¡Hola! !أهلا नमस्ते!<br> Welcome to Teta's widgets repository! ⚡️
 This is the public repo for all the widgets of [Teta](https://teta.so).
 You can contribute to help us to support new widgets and add new functionalities to the existing one.
 <br><br>
