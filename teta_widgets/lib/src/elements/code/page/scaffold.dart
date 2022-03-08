@@ -172,6 +172,8 @@ String pageCodeTemplate(
     ${page.isAuthenticatedRequired ? "import 'package:myapp/auth/auth_required_state.dart';" : "import 'package:myapp/auth/auth_state.dart';"}
     $authSocialButtonsImport
     $iconImport
+    import 'package:intl/intl.dart';
+    import 'package:collection/collection.dart';
     import 'package:myapp/src/pages/index.dart';
     import 'package:google_fonts/google_fonts.dart';
     import 'package:url_launcher/url_launcher.dart';
