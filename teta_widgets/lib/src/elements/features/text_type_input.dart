@@ -35,21 +35,21 @@ class FTextTypeInput {
 
   /// Returns value for texts
   String get(
-    List<VariableObject> params,
-    List<VariableObject> states,
-    List<DatasetObject> dataset,
-    bool forPlay,
-    int? loop,
+    final List<VariableObject> params,
+    final List<VariableObject> states,
+    final List<DatasetObject> dataset,
+    final bool forPlay,
+    final int? loop,
   ) =>
       '${calc(params, states, dataset, forPlay, loop, datasetAttr ?? '')}';
 
   /// Returns value for images
   dynamic getForImages(
-    List<VariableObject> params,
-    List<VariableObject> states,
-    List<DatasetObject> dataset,
-    int? loop, {
-    required bool forPlay,
+    final List<VariableObject> params,
+    final List<VariableObject> states,
+    final List<DatasetObject> dataset,
+    final int? loop, {
+    required final bool forPlay,
   }) =>
       calc(
         params,
@@ -65,14 +65,14 @@ class FTextTypeInput {
     final List<VariableObject> params,
     final List<VariableObject> states,
     final List<DatasetObject> dataset,
-    bool forPlay,
-    int? loop,
-    String placeholder,
+    final bool forPlay,
+    final int? loop,
+    final String placeholder,
   ) {
     if (type == FTextTypeEnum.param) {
       try {
-        final param =
-            params.firstWhereOrNull((element) => element.name == paramName);
+        final param = params
+            .firstWhereOrNull((final element) => element.name == paramName);
         if (param?.type == VariableType.file) {
           return param?.file;
         }
@@ -81,7 +81,7 @@ class FTextTypeInput {
     }
     if (type == FTextTypeEnum.state) {
       final state =
-          states.firstWhereOrNull((element) => element.name == stateName);
+          states.firstWhereOrNull((final element) => element.name == stateName);
       if (state?.type == VariableType.file) {
         return state?.file;
       }
@@ -89,7 +89,7 @@ class FTextTypeInput {
     }
     if (type == FTextTypeEnum.dataset) {
       final db = dataset
-          .firstWhereOrNull((element) => element.getName == datasetName)
+          .firstWhereOrNull((final element) => element.getName == datasetName)
           ?.getMap[loop ?? 0];
       if (db != null) {
         return '${db[datasetAttr]}';
@@ -103,7 +103,7 @@ class FTextTypeInput {
     return value ?? '';
   }
 
-  static FTextTypeInput fromJson(Map<String, dynamic>? json) {
+  static FTextTypeInput fromJson(final Map<String, dynamic>? json) {
     try {
       return FTextTypeInput(
         type: json?['t'] == 'text'
@@ -153,7 +153,7 @@ class FTextTypeInput {
         'dA': datasetAttr,
         'mK': mapKey,
         if (file != null) 'f': file!.toJson(),
-      }..removeWhere((String key, dynamic value) => value == null);
+      }..removeWhere((final String key, final dynamic value) => value == null);
 
   /*String toCode(
           BuildContext context,
@@ -165,7 +165,7 @@ class FTextTypeInput {
       calc(params, states, dataset, forPlay, loop, '');*/
 
   String toCode(
-    int? loop,
+    final int? loop,
   ) {
     if (type == FTextTypeEnum.param) {
       final param = ReCase(paramName ?? '');

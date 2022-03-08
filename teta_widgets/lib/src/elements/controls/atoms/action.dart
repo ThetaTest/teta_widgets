@@ -3,20 +3,18 @@
 
 // Flutter imports:
 import 'package:flutter/material.dart';
-
 // Package imports:
 import 'package:hovering/hovering.dart';
 import 'package:teta_core/src/design_system/palette.dart';
 import 'package:teta_core/src/design_system/text.dart';
 import 'package:teta_core/src/models/page.dart';
 import 'package:teta_core/src/models/project.dart';
-import 'package:uuid/uuid.dart';
-
 // Project imports:
 import 'package:teta_widgets/src/elements/controls/atoms/action_element.dart';
 import 'package:teta_widgets/src/elements/features/action.dart';
 import 'package:teta_widgets/src/elements/features/actions/element.dart';
 import 'package:teta_widgets/src/elements/nodes/node.dart';
+import 'package:uuid/uuid.dart';
 
 class ActionControl extends StatefulWidget {
   const ActionControl({
@@ -25,7 +23,7 @@ class ActionControl extends StatefulWidget {
     required this.node,
     required this.action,
     required this.callBack,
-    Key? key,
+    final Key? key,
   }) : super(key: key);
 
   final ProjectObject prj;
@@ -51,7 +49,7 @@ class ActionControlState extends State<ActionControl> {
   }
 
   @override
-  Widget build(BuildContext context) {
+  Widget build(final BuildContext context) {
     return DecoratedBox(
       decoration: BoxDecoration(
         color: Colors.black,
@@ -98,7 +96,7 @@ class ActionControlState extends State<ActionControl> {
                             color: Colors.white,
                           ),
                         ),
-                        onHover: (e) {},
+                        onHover: (final e) {},
                         child: Container(
                           padding: const EdgeInsets.all(4),
                           decoration: BoxDecoration(
@@ -122,13 +120,13 @@ class ActionControlState extends State<ActionControl> {
           Column(
             children: widget.action.actions!
                 .map(
-                  (e) => ActionElementControl(
+                  (final e) => ActionElementControl(
                     name: 'Action ${widget.action.actions!.indexOf(e)}',
                     element: e,
                     prj: widget.prj,
                     page: widget.page,
                     node: widget.node,
-                    callBack: (value, old) {
+                    callBack: (final value, final old) {
                       final old = widget.action;
                       final index = widget.action.actions!.indexOf(e);
                       widget.action.actions![index] = value;

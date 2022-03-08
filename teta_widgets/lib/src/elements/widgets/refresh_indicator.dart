@@ -1,10 +1,8 @@
 // Flutter imports:
-import 'package:flutter/material.dart';
-
 // Package imports:
 import 'package:custom_refresh_indicator/custom_refresh_indicator.dart';
+import 'package:flutter/material.dart';
 import 'package:teta_core/teta_core.dart';
-
 // Project imports:
 import 'package:teta_widgets/src/elements/index.dart';
 
@@ -13,7 +11,7 @@ import 'package:teta_widgets/src/elements/index.dart';
 class WRefreshIndicator extends StatelessWidget {
   /// Returns a [Center] widget in Teta
   const WRefreshIndicator(
-    Key? key, {
+    final Key? key, {
     required this.node,
     required this.forPlay,
     required this.params,
@@ -42,7 +40,7 @@ class WRefreshIndicator extends StatelessWidget {
   final List<DatasetObject> dataset;
 
   @override
-  Widget build(BuildContext context) {
+  Widget build(final BuildContext context) {
     final val = height.get(context: context, isWidth: false) ?? 150;
     return NodeSelectionBuilder(
       node: node,
@@ -60,15 +58,15 @@ class WRefreshIndicator extends StatelessWidget {
 
         /// Custom indicator builder function
         builder: (
-          BuildContext context,
-          Widget child,
-          IndicatorController controller,
+          final BuildContext context,
+          final Widget child,
+          final IndicatorController controller,
         ) {
           return Stack(
             children: <Widget>[
               AnimatedBuilder(
                 animation: controller,
-                builder: (BuildContext context, _) {
+                builder: (final BuildContext context, final _) {
                   /// This part will be rebuild on every controller change
                   return children.length >= 2
                       ? children[1].toWidget(
@@ -81,7 +79,7 @@ class WRefreshIndicator extends StatelessWidget {
                 },
               ),
               AnimatedBuilder(
-                builder: (context, _) {
+                builder: (final context, final _) {
                   return Transform.translate(
                     offset: Offset(0, controller.value * val),
                     child: child,

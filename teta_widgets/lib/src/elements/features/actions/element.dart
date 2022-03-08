@@ -3,20 +3,17 @@
 // Dart imports:
 import 'dart:async';
 
-// Flutter imports:
-import 'package:flutter/foundation.dart';
-import 'package:flutter/material.dart';
-
 // Package imports:
 import 'package:enum_to_string/enum_to_string.dart';
 import 'package:equatable/equatable.dart';
+// Flutter imports:
+import 'package:flutter/foundation.dart';
+import 'package:flutter/material.dart';
 import 'package:teta_core/src/models/dataset.dart';
 import 'package:teta_core/src/models/page.dart';
 import 'package:teta_core/src/models/project.dart';
 import 'package:teta_core/src/models/supabase_map_element.dart';
 import 'package:teta_core/src/models/variable.dart';
-import 'package:uuid/uuid.dart';
-
 // Project imports:
 import 'package:teta_widgets/src/elements/actions/audio_player/loop_all.dart';
 import 'package:teta_widgets/src/elements/actions/audio_player/loop_off.dart';
@@ -70,6 +67,7 @@ import 'package:teta_widgets/src/elements/features/text_type_input.dart';
 import 'package:teta_widgets/src/elements/nodes/dynamic.dart';
 import 'package:teta_widgets/src/elements/nodes/enum.dart';
 import 'package:teta_widgets/src/elements/nodes/node.dart';
+import 'package:uuid/uuid.dart';
 
 class FActionElement extends Equatable {
   FActionElement({
@@ -108,7 +106,7 @@ class FActionElement extends Equatable {
     valueOfCondition ??= FTextTypeInput(value: '0');
   }
 
-  FActionElement.fromJson(Map<String, dynamic> doc) {
+  FActionElement.fromJson(final Map<String, dynamic> doc) {
     id = doc['id'] as String?;
     actionType = convertDropdownToValue(ActionType.values, doc['aT'] as String?)
         as ActionType?;
@@ -147,7 +145,7 @@ class FActionElement extends Equatable {
         FTextTypeInput.fromJson(doc['sFrom'] as Map<String, dynamic>?);
     supabaseData = (doc['sData'] as List<dynamic>? ?? <dynamic>[])
         .map(
-          (dynamic e) => SupabaseMapElement.fromJson(
+          (final dynamic e) => SupabaseMapElement.fromJson(
             e as Map<String, dynamic>,
           ),
         )
@@ -230,7 +228,7 @@ class FActionElement extends Equatable {
       ];
 
   /// Get avaiable action types for drop down list
-  List<String> getTypes(ProjectConfig? config, PageObject page) {
+  List<String> getTypes(final ProjectConfig? config, final PageObject page) {
     if (config != null) {
       try {
         return [
@@ -240,22 +238,23 @@ class FActionElement extends Equatable {
           if (config.supabaseEnabled ?? false) 'Supabase database',
           if (config.isRevenueCatEnabled) 'RevenueCat',
           if ((page.flatList ?? <CNode>[]).indexWhere(
-                (element) => element.intrinsicState.type == NType.camera,
+                (final element) => element.intrinsicState.type == NType.camera,
               ) !=
               -1)
             'Camera',
           if ((page.flatList ?? <CNode>[]).indexWhere(
-                (element) => element.intrinsicState.type == NType.audioPlayer,
+                (final element) =>
+                    element.intrinsicState.type == NType.audioPlayer,
               ) !=
               -1)
             'Audio player',
           if ((page.flatList ?? <CNode>[]).indexWhere(
-                (element) => element.intrinsicState.type == NType.webview,
+                (final element) => element.intrinsicState.type == NType.webview,
               ) !=
               -1)
             'Webview',
           if ((page.flatList ?? <CNode>[]).indexWhere(
-                (element) =>
+                (final element) =>
                     element.intrinsicState.type == NType.map ||
                     element.intrinsicState.type == NType.mapBuilder,
               ) !=
@@ -275,12 +274,12 @@ class FActionElement extends Equatable {
     ];
   }
 
-  static List<String> enumsToListString(List<dynamic> values) {
+  static List<String> enumsToListString(final List<dynamic> values) {
     return EnumToString.toList<dynamic>(values, camelCase: true);
   }
 
   /// Returns list of avaiable gestures for dropdown
-  static List<String> getGestures(NDynamic node) {
+  static List<String> getGestures(final NDynamic node) {
     return enumsToListString(node.intrinsicState.gestures);
   }
 
@@ -292,7 +291,7 @@ class FActionElement extends Equatable {
     return enumsToListString(ActionState.values);
   }
 
-  static List<String> getRevenueCat(ProjectConfig? config) {
+  static List<String> getRevenueCat(final ProjectConfig? config) {
     if (config != null) {
       if (config.isRevenueCatEnabled) {
         return enumsToListString(ActionRevenueCat.values);
@@ -301,7 +300,7 @@ class FActionElement extends Equatable {
     return [];
   }
 
-  static List<String> getSupabaseAuth(ProjectConfig? config) {
+  static List<String> getSupabaseAuth(final ProjectConfig? config) {
     if (config != null) {
       if (config.supabaseEnabled ?? false) {
         return enumsToListString(ActionSupabaseAuth.values);
@@ -310,7 +309,7 @@ class FActionElement extends Equatable {
     return [];
   }
 
-  static List<String> getSupabaseDB(ProjectConfig? config) {
+  static List<String> getSupabaseDB(final ProjectConfig? config) {
     if (config != null) {
       if (config.supabaseEnabled ?? false) {
         return enumsToListString(ActionSupabaseDB.values);
@@ -331,7 +330,7 @@ class FActionElement extends Equatable {
     return enumsToListString(ActionAudioPlayer.values);
   }
 
-  static String? convertValueToDropdown(dynamic type) {
+  static String? convertValueToDropdown(final dynamic type) {
     if (type == ActionType.revenueCat) {
       return 'RevenueCat';
     }
@@ -341,7 +340,10 @@ class FActionElement extends Equatable {
     return null;
   }
 
-  static dynamic convertDropdownToValue(List<dynamic> list, String? value) {
+  static dynamic convertDropdownToValue(
+    final List<dynamic> list,
+    final String? value,
+  ) {
     if (value == 'RevenueCat') {
       return ActionType.revenueCat;
     }
@@ -377,7 +379,7 @@ class FActionElement extends Equatable {
         'v': value,
         'sFrom': supabaseFrom != null ? supabaseFrom!.toJson() : null,
         'sData': supabaseData != null
-            ? supabaseData!.map((e) => e.toJson()).toList()
+            ? supabaseData!.map((final e) => e.toJson()).toList()
             : null,
         'sEq': supabaseEq != null ? supabaseEq!.toJson() : null,
         'delay': delay != null ? delay!.toJson() : null,
@@ -387,7 +389,7 @@ class FActionElement extends Equatable {
         'wLoop': withLoop,
         'evrMll':
             everyMilliseconds != null ? everyMilliseconds!.toJson() : null,
-      }..removeWhere((String key, dynamic value) => value == null);
+      }..removeWhere((final String key, final dynamic value) => value == null);
 
   Future getAction(
     final BuildContext context,
@@ -1306,9 +1308,9 @@ class FActionElement extends Equatable {
   }
 
   String toCode(
-    String? value,
-    BuildContext context,
-    CNode body,
+    final String? value,
+    final BuildContext context,
+    final CNode body,
   ) {
     switch (actionType) {
       case ActionType.revenueCat:

@@ -1,12 +1,10 @@
 // Flutter imports:
 
-// Flutter imports:
-import 'package:flutter/material.dart';
-
 // Package imports:
 import 'package:device_info_plus/device_info_plus.dart';
+// Flutter imports:
+import 'package:flutter/material.dart';
 import 'package:teta_core/teta_core.dart';
-
 // Project imports:
 import 'package:teta_widgets/src/elements/index.dart';
 
@@ -16,7 +14,7 @@ class WDeviceInfo extends StatefulWidget {
   /// Returns a DeviceInfo Repository,
   /// which provides info for the actual device.
   const WDeviceInfo(
-    Key? key, {
+    final Key? key, {
     required this.node,
     required this.forPlay,
     required this.params,
@@ -61,7 +59,7 @@ class _WDeviceInfoState extends State<WDeviceInfo> {
   );
 
   @override
-  Widget build(BuildContext context) {
+  Widget build(final BuildContext context) {
     return NodeSelectionBuilder(
       node: widget.node,
       forPlay: widget.forPlay,
@@ -69,7 +67,7 @@ class _WDeviceInfoState extends State<WDeviceInfo> {
     );
   }
 
-  Widget body(BuildContext context) {
+  Widget body(final BuildContext context) {
     final list = addDataset(context, widget.dataset, _map);
     return ChildConditionBuilder(
       ValueKey('${widget.node.nid} ${widget.loop}'),

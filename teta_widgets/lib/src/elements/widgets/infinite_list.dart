@@ -3,18 +3,16 @@
 
 // Flutter imports:
 import 'package:flutter/material.dart';
-
 // Package imports:
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:teta_core/teta_core.dart';
-
 // Project imports:
 import 'package:teta_widgets/src/elements/index.dart';
 
 class WInfiniteListView extends StatefulWidget {
   /// Returns a ListView in Teta
   const WInfiniteListView(
-    Key? key, {
+    final Key? key, {
     required this.children,
     required this.node,
     required this.forPlay,
@@ -53,7 +51,7 @@ class _WInfiniteListViewState extends State<WInfiniteListView> {
   Future<void> _fetch() async {}
 
   @override
-  Widget build(BuildContext context) {
+  Widget build(final BuildContext context) {
     return NodeSelectionBuilder(
       node: widget.node,
       forPlay: widget.forPlay,
@@ -61,20 +59,20 @@ class _WInfiniteListViewState extends State<WInfiniteListView> {
     );
   }
 
-  Widget _body(BuildContext context) {
+  Widget _body(final BuildContext context) {
     return MouseRegion(
-      onEnter: (v) {
+      onEnter: (final v) {
         BlocProvider.of<ZoomableCubit>(context)
             .changeZoomableFlag(value: false);
       },
-      onExit: (v) {
+      onExit: (final v) {
         BlocProvider.of<ZoomableCubit>(context).changeZoomableFlag(value: true);
       },
       child: _getBody(context),
     );
   }
 
-  Widget _getBody(BuildContext context) {
+  Widget _getBody(final BuildContext context) {
     if (_array.isEmpty) {
       if (_loading) {
         return widget.children.length > 2
@@ -103,7 +101,7 @@ class _WInfiniteListViewState extends State<WInfiniteListView> {
         addRepaintBoundaries: false,
         scrollDirection: widget.isVertical ? Axis.vertical : Axis.horizontal,
         itemCount: _array.length + (_hasMore ? 0 : 1),
-        itemBuilder: (context, index) {
+        itemBuilder: (final context, final index) {
           if (index == _array.length - _nextPageThreshold) {
             _fetch();
           }

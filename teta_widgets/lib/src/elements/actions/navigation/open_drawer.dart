@@ -5,7 +5,7 @@
 import 'package:flutter/material.dart';
 
 class FActionNavigationOpenDrawer {
-  static Future action(BuildContext context) async {
+  static Future action(final BuildContext context) async {
     if (!Scaffold.of(context).isDrawerOpen) Scaffold.of(context).openDrawer();
   }
 

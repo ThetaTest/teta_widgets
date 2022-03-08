@@ -3,7 +3,6 @@
 
 // Flutter imports:
 import 'package:flutter/material.dart';
-
 // Package imports:
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:hovering/hovering.dart';
@@ -12,7 +11,6 @@ import 'package:teta_core/src/design_system/palette.dart';
 import 'package:teta_core/src/design_system/switch.dart';
 import 'package:teta_core/src/design_system/text.dart';
 import 'package:teta_core/src/design_system/textfield/minitextfield.dart';
-
 // Project imports:
 import 'package:teta_widgets/src/elements/features/features.dart';
 import 'package:teta_widgets/src/elements/nodes/node.dart';
@@ -26,7 +24,7 @@ class SizeControl extends StatefulWidget {
     required this.title,
     required this.callBack,
     required this.isFromSizesPrefab,
-    Key? key,
+    final Key? key,
   }) : super(key: key);
 
   final String keyAttr;
@@ -57,9 +55,9 @@ class SizeControlsState extends State<SizeControl> {
   }
 
   @override
-  Widget build(BuildContext context) {
+  Widget build(final BuildContext context) {
     return BlocBuilder<FocusBloc, List<CNode>>(
-      builder: (context, state) {
+      builder: (final context, final state) {
         if (state.isNotEmpty) {
           if (state.first.nid != nodeId) {
             if (mounted) {
@@ -98,7 +96,7 @@ class SizeControlsState extends State<SizeControl> {
                     mainAxisSize: MainAxisSize.min,
                     children: [
                       CSwitch(
-                        callback: (v) {
+                        callback: (final v) {
                           final value = v
                               ? widget.isWidth
                                   ? 'max'
@@ -204,7 +202,7 @@ class SizeControlsState extends State<SizeControl> {
                                 controller: controller,
                                 text: widget.size.size,
                                 hpadding: 0,
-                                callBack: (value) {
+                                callBack: (final value) {
                                   final szs = widget.size;
                                   final old =
                                       FSize.fromJson(widget.size.toJson());
@@ -268,7 +266,7 @@ class SizeControlsState extends State<SizeControl> {
     );
   }
 
-  Widget maxIcon({SizeUnit? unit}) {
+  Widget maxIcon({final SizeUnit? unit}) {
     return Container(
       width: 32,
       decoration: BoxDecoration(
@@ -289,7 +287,7 @@ class SizeControlsState extends State<SizeControl> {
     );
   }
 
-  Widget unitIcon({SizeUnit? unit, SizeUnit? unitFromNode}) {
+  Widget unitIcon({final SizeUnit? unit, final SizeUnit? unitFromNode}) {
     return HoverWidget(
       hoverChild: Container(
         width: 32,
@@ -310,7 +308,7 @@ class SizeControlsState extends State<SizeControl> {
           ),
         ),
       ),
-      onHover: (event) {},
+      onHover: (final event) {},
       child: Container(
         width: 32,
         height: 32,

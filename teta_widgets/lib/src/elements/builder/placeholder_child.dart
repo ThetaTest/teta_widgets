@@ -1,6 +1,5 @@
 // Flutter imports:
 import 'package:flutter/material.dart';
-
 // Package imports:
 import 'package:teta_core/src/design_system/text.dart';
 
@@ -11,14 +10,14 @@ class PlaceholderChildBuilder extends StatelessWidget {
   /// Constructor
   const PlaceholderChildBuilder({
     required this.name,
-    Key? key,
+    final Key? key,
   }) : super(key: key);
 
   /// Name of the node
   final String name;
 
   @override
-  Widget build(BuildContext context) {
+  Widget build(final BuildContext context) {
     return Padding(
       padding: const EdgeInsets.all(16),
       child: CText(

@@ -3,19 +3,17 @@
 
 // Flutter imports:
 import 'package:flutter/material.dart';
-
 // Package imports:
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:material_design_icons_flutter/material_design_icons_flutter.dart';
 import 'package:teta_core/teta_core.dart';
-
 // Project imports:
 import 'package:teta_widgets/src/elements/index.dart';
 
 class WBottomBarItem extends StatelessWidget {
   /// Returns a Icon widget in Teta
   const WBottomBarItem(
-    Key? key, {
+    final Key? key, {
     required this.icon,
     required this.node,
     required this.width,
@@ -47,9 +45,9 @@ class WBottomBarItem extends StatelessWidget {
   final List<DatasetObject> dataset;
 
   @override
-  Widget build(BuildContext context) {
+  Widget build(final BuildContext context) {
     return BlocBuilder<PaletteBloc, List<PaletteModel>>(
-      builder: (context, state) {
+      builder: (final context, final state) {
         FFill? finalFill;
         if (state.isNotEmpty) {
           for (final e in state) {

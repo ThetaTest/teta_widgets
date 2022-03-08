@@ -3,14 +3,12 @@
 
 // Flutter imports:
 import 'package:flutter/material.dart';
-
 // Package imports:
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:teta_core/src/blocs/focus/bloc.dart';
 import 'package:teta_core/src/blocs/palette/index.dart';
 import 'package:teta_core/src/design_system/dropdowns/dropdown.dart';
 import 'package:teta_core/src/models/palette.dart';
-
 // Project imports:
 import 'package:teta_widgets/src/elements/features/features.dart';
 import 'package:teta_widgets/src/elements/nodes/node.dart';
@@ -23,7 +21,7 @@ class StyleFillControl extends StatefulWidget {
     required this.model,
     required this.fill,
     required this.callBack,
-    Key? key,
+    final Key? key,
   }) : super(key: key);
 
   final bool onlySolid;
@@ -38,12 +36,12 @@ class StyleFillControl extends StatefulWidget {
 
 class StyleFillControlState extends State<StyleFillControl> {
   @override
-  Widget build(BuildContext context) {
+  Widget build(final BuildContext context) {
     return BlocBuilder<FocusBloc, List<CNode>>(
-      builder: (context, state) {
+      builder: (final context, final state) {
         //updateState(state);
         return BlocBuilder<PaletteBloc, List<PaletteModel>>(
-          builder: (context, paletteStyles) {
+          builder: (final context, final paletteStyles) {
             //updateState(state);
             return Row(
               children: [
@@ -52,19 +50,19 @@ class StyleFillControlState extends State<StyleFillControl> {
                     value: widget.model.name,
                     items: paletteStyles
                         .where(
-                          (element) =>
+                          (final element) =>
                               (widget.onlySolid &&
                                   (element.fill!.type == FFillType.solid ||
                                       element.fill!.type == FFillType.none)) ||
                               !widget.onlySolid,
                         )
-                        .map((e) => e.name!)
+                        .map((final e) => e.name!)
                         .toList(),
-                    onChange: (value) {
+                    onChange: (final value) {
                       PaletteModel? model;
                       BlocProvider.of<PaletteBloc>(context)
                           .state
-                          .forEach((element) {
+                          .forEach((final element) {
                         if (element.name == value) model = element;
                       });
                       final old = FFill().fromJson(widget.fill.toJson());

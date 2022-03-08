@@ -3,13 +3,12 @@
 
 // Flutter imports:
 import 'package:flutter/material.dart';
-
 // Package imports:
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:teta_core/src/cubits/local_shopify_cart/cubit.dart';
 
 class FActionShopifyRemoveFromCart {
-  Future makeAction(BuildContext context, String value) async {
+  Future makeAction(final BuildContext context, final String value) async {
     try {
       BlocProvider.of<LocalShopifyCart>(context).remove(value);
     } catch (e) {

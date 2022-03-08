@@ -3,19 +3,18 @@
 
 // Flutter imports:
 import 'package:flutter/material.dart';
-
 // Package imports:
 import 'package:teta_core/src/models/variable.dart';
 
 class FActionRevenueCatBuy {
   static Future action(
-    BuildContext context,
-    List<VariableObject> states,
-    String? stateName,
+    final BuildContext context,
+    final List<VariableObject> states,
+    final String? stateName,
   ) async {
     await showDialog<void>(
       context: context,
-      builder: (context) {
+      builder: (final context) {
         return const AlertDialog(
           title: Text('RevenueCat'),
           titleTextStyle: TextStyle(
@@ -42,7 +41,7 @@ class FActionRevenueCatBuy {
     );
   }
 
-  static String toCode(BuildContext context, String? stateName) {
+  static String toCode(final BuildContext context, final String? stateName) {
     return '''
     try {
       PurchaserInfo purchaserInfo = await Purchases.purchaseProduct('$stateName');

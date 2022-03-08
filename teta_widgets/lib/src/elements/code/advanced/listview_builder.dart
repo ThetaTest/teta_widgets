@@ -1,6 +1,5 @@
 // Flutter imports:
 import 'package:flutter/material.dart';
-
 // Project imports:
 import 'package:teta_widgets/src/elements/controls/key_constants.dart';
 import 'package:teta_widgets/src/elements/features/dataset.dart';
@@ -25,9 +24,9 @@ import 'package:teta_widgets/src/elements/nodes/node_body.dart';
 /// );
 /// ```
 String listViewBuilderCodeTemplate(
-  BuildContext context,
-  NodeBody body,
-  CNode? child,
+  final BuildContext context,
+  final NodeBody body,
+  final CNode? child,
 ) {
   final _scrollDirection =
       !(body.attributes[DBKeys.isVertical] as bool? ?? false)
@@ -58,11 +57,11 @@ String listViewBuilderCodeTemplate(
 // ignore: unused_element
 Widget _example() {
   return Builder(
-    builder: (context) {
+    builder: (final context) {
       final children = <Widget>[];
       return ListView.builder(
         itemCount: children.length,
-        itemBuilder: (context, index) {
+        itemBuilder: (final context, final index) {
           return children[index];
         },
       );

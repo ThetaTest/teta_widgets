@@ -3,26 +3,24 @@
 
 // Flutter imports:
 import 'package:flutter/material.dart';
-
 // Package imports:
 import 'package:teta_core/teta_core.dart';
-
 // Project imports:
 import 'package:teta_widgets/src/elements/index.dart';
 
 class WRow extends StatelessWidget {
   /// Constructor
   const WRow(
-    Key? key, {
-    required List<CNode> children,
-    required CNode node,
-    required bool forPlay,
-    required FMainAxisAlignment mainAxisAlignment,
-    required FCrossAxisAlignment crossAxisAlignment,
-    required List<VariableObject> params,
-    required List<VariableObject> states,
-    required List<DatasetObject> dataset,
-    int? loop,
+    final Key? key, {
+    required final List<CNode> children,
+    required final CNode node,
+    required final bool forPlay,
+    required final FMainAxisAlignment mainAxisAlignment,
+    required final FCrossAxisAlignment crossAxisAlignment,
+    required final List<VariableObject> params,
+    required final List<VariableObject> states,
+    required final List<DatasetObject> dataset,
+    final int? loop,
   })  : _children = children,
         _node = node,
         _forPlay = forPlay,
@@ -45,7 +43,7 @@ class WRow extends StatelessWidget {
   final List<DatasetObject> _dataset;
 
   @override
-  Widget build(BuildContext context) {
+  Widget build(final BuildContext context) {
     return NodeSelectionBuilder(
       node: _node,
       forPlay: _forPlay,
@@ -56,7 +54,7 @@ class WRow extends StatelessWidget {
         children: _children.isNotEmpty
             ? _children
                 .map(
-                  (e) => e.toWidget(
+                  (final e) => e.toWidget(
                     loop: _loop,
                     forPlay: _forPlay,
                     params: _params,

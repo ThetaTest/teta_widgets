@@ -2,13 +2,11 @@
 
 // Flutter imports:
 import 'package:flutter/material.dart';
-
 // Package imports:
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:hive/hive.dart';
 import 'package:supabase/supabase.dart';
 import 'package:teta_core/teta_core.dart';
-
 // Project imports:
 import 'package:teta_widgets/src/elements/index.dart';
 
@@ -17,7 +15,7 @@ import 'package:teta_widgets/src/elements/index.dart';
 class WSupabaseLoggedUser extends StatefulWidget {
   /// Construct
   const WSupabaseLoggedUser(
-    Key? key, {
+    final Key? key, {
     required this.node,
     required this.forPlay,
     required this.params,
@@ -77,7 +75,7 @@ class _WSupabaseLoggedUserState extends State<WSupabaseLoggedUser> {
   }
 
   @override
-  Widget build(BuildContext context) {
+  Widget build(final BuildContext context) {
     client = BlocProvider.of<SupabaseCubit>(context).state;
     if (client == null) {
       return const Center(
@@ -89,7 +87,7 @@ class _WSupabaseLoggedUserState extends State<WSupabaseLoggedUser> {
     }
     return FutureBuilder(
       future: load(),
-      builder: (context, snapshot) {
+      builder: (final context, final snapshot) {
         if (!snapshot.hasData) {
           return const SizedBox();
         }

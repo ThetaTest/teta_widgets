@@ -3,10 +3,8 @@
 
 // Flutter imports:
 import 'package:flutter/foundation.dart';
-
 // Package imports:
 import 'package:teta_core/src/models/variable.dart';
-
 // Project imports:
 import 'package:teta_widgets/src/elements/features/action.dart';
 import 'package:teta_widgets/src/elements/features/align.dart';
@@ -176,7 +174,7 @@ class DBKeys {
 
 class DynamicAttributes {
   ///[value] == [doc[key]]
-  static dynamic fromJson(String key, dynamic value) {
+  static dynamic fromJson(final String key, final dynamic value) {
     try {
       switch (key) {
         case DBKeys.action:
@@ -396,7 +394,7 @@ class DynamicAttributes {
     }
   }
 
-  static dynamic toJson(String key, dynamic value) {
+  static dynamic toJson(final String key, final dynamic value) {
     switch (key) {
       case DBKeys.action:
         return value != null ? value.toJson() : FAction().toJson();
@@ -518,11 +516,15 @@ class DynamicAttributes {
         return value;
       case 'params':
         return (value != null)
-            ? (value as List<VariableObject>).map((e) => e.toJson()).toList()
+            ? (value as List<VariableObject>)
+                .map((final e) => e.toJson())
+                .toList()
             : null;
       case 'states':
         return (value != null)
-            ? (value as List<VariableObject>).map((e) => e.toJson()).toList()
+            ? (value as List<VariableObject>)
+                .map((final e) => e.toJson())
+                .toList()
             : null;
       case DBKeys.supabaseFrom:
         return value != null ? value.toJson() : FTextTypeInput().toJson();

@@ -1,13 +1,12 @@
 // Flutter imports:
 // ignore_for_file: public_member_api_docs, avoid_dynamic_calls
 
-// Flutter imports:
-import 'package:flutter/foundation.dart';
-import 'package:flutter/material.dart';
-
 // Package imports:
 import 'package:camera/camera.dart';
 import 'package:collection/collection.dart';
+// Flutter imports:
+import 'package:flutter/foundation.dart';
+import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:recase/recase.dart';
 import 'package:teta_core/src/blocs/focus_page/index.dart';
@@ -17,16 +16,15 @@ import 'package:teta_core/src/models/page.dart';
 import 'package:teta_core/src/models/variable.dart';
 import 'package:teta_core/src/rendering/nodes_original.dart';
 import 'package:teta_core/src/repositories/queries/node.dart';
-import 'package:transition/transition.dart' as T;
-
 // Project imports:
 import 'package:teta_widgets/src/elements/controls/key_constants.dart';
 import 'package:teta_widgets/src/elements/features/page_transition.dart';
 import 'package:teta_widgets/src/elements/nodes/node.dart';
+import 'package:transition/transition.dart' as T;
 
 // ignore: library_prefixes
 
-void goTo(CNode node, BuildContext context, Widget child) {
+void goTo(final CNode node, final BuildContext context, final Widget child) {
   if (node.body.attributes[DBKeys.pageTransition] != null) {
     Navigator.push<void>(
       context,
@@ -41,7 +39,7 @@ void goTo(CNode node, BuildContext context, Widget child) {
     Navigator.push<void>(
       context,
       MaterialPageRoute(
-        builder: (context) => child,
+        builder: (final context) => child,
       ),
     );
   }
@@ -64,7 +62,7 @@ class FActionNavigationOpenPage {
       final currentPage = BlocProvider.of<FocusPageBloc>(context).state;
       PageObject? page;
       page = prj.prj.pages!
-          .firstWhereOrNull((element) => element.name == nameOfPage);
+          .firstWhereOrNull((final element) => element.name == nameOfPage);
       if (page != null) {
         final list = await NodeQueries.fetchNodesByPage(page.id);
         final nodes = <CNode>[];
@@ -81,9 +79,9 @@ class FActionNavigationOpenPage {
         await Navigator.push<void>(
           context,
           MaterialPageRoute(
-            builder: (context) => page!.scaffold!.toWidget(
+            builder: (final context) => page!.scaffold!.toWidget(
               forPlay: true,
-              params: page.params.map((e) {
+              params: page.params.map((final e) {
                 if (paramsToSend?[e.id] != null) {
                   if (paramsToSend?[e.id]['dataset'] == 'Text') {
                     e.value = paramsToSend?[e.id]['label'];
@@ -92,13 +90,13 @@ class FActionNavigationOpenPage {
                       DatasetObject(
                         name: 'Parameters',
                         map: currentPage.params
-                            .map((e) => <String, dynamic>{e.name: e.get})
+                            .map((final e) => <String, dynamic>{e.name: e.get})
                             .toList(),
                       ),
                       DatasetObject(
                         name: 'States',
                         map: currentPage.states
-                            .map((e) => <String, dynamic>{e.name: e.get})
+                            .map((final e) => <String, dynamic>{e.name: e.get})
                             .toList(),
                       ),
                       ...dataset,
@@ -193,10 +191,10 @@ class FActionNavigationOpenPage {
         BlocProvider.of<FocusProjectBloc>(context).state as ProjectLoaded;
     if (nameOfPage == null ||
         (prj.prj.pages ?? <PageObject>[])
-                .indexWhere((element) => element.name == nameOfPage) ==
+                .indexWhere((final element) => element.name == nameOfPage) ==
             -1) return '';
-    final page =
-        prj.prj.pages!.firstWhere((element) => element.name == nameOfPage);
+    final page = prj.prj.pages!
+        .firstWhere((final element) => element.name == nameOfPage);
     final realPageName = "Page${nameOfPage.replaceAll(RegExp(' '), "")}";
 
     final stringParamsToSend = StringBuffer()..write('');

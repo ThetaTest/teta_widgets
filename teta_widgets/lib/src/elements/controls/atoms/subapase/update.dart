@@ -3,14 +3,12 @@
 
 // Flutter imports:
 import 'package:flutter/material.dart';
-
 // Package imports:
 import 'package:teta_core/gen/assets.gen.dart';
 import 'package:teta_core/src/design_system/text.dart';
 import 'package:teta_core/src/models/page.dart';
 import 'package:teta_core/src/models/project.dart';
 import 'package:teta_core/src/models/supabase_map_element.dart';
-
 // Project imports:
 import 'package:teta_widgets/src/elements/controls/atoms/supabase_element.dart';
 import 'package:teta_widgets/src/elements/controls/atoms/supabase_map.dart';
@@ -26,7 +24,7 @@ class SupabaseUpdateControl extends StatelessWidget {
     required this.node,
     required this.action,
     required this.callback,
-    Key? key,
+    final Key? key,
   }) : super(key: key);
 
   final ProjectObject prj;
@@ -36,7 +34,7 @@ class SupabaseUpdateControl extends StatelessWidget {
   final Function() callback;
 
   @override
-  Widget build(BuildContext context) {
+  Widget build(final BuildContext context) {
     return Column(
       mainAxisSize: MainAxisSize.min,
       crossAxisAlignment: CrossAxisAlignment.start,
@@ -63,13 +61,13 @@ class SupabaseUpdateControl extends StatelessWidget {
           value: action.supabaseFrom ?? FTextTypeInput(),
           page: page,
           title: 'From Table',
-          callBack: (value, old) {},
+          callBack: (final value, final old) {},
         ),
         SupabaseMapControl(
           node: node,
           list: action.supabaseData ?? [],
           page: page,
-          callBack: (value, old) {
+          callBack: (final value, final old) {
             action.supabaseData = value;
             callback();
           },
@@ -93,7 +91,7 @@ class SupabaseUpdateControl extends StatelessWidget {
             value: action.supabaseEq ??
                 SupabaseMapElement(key: '', value: FTextTypeInput()),
             page: page,
-            callBack: (value, old) {
+            callBack: (final value, final old) {
               action.supabaseEq = value;
               callback();
             },

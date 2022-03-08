@@ -15,9 +15,9 @@ class FTextDecoration {
   TextDecoration get get => textDecoration;
 
   // ignore: use_setters_to_change_properties
-  void set(TextDecoration decoration) => textDecoration = decoration;
+  void set(final TextDecoration decoration) => textDecoration = decoration;
 
-  static FTextDecoration fromJson(String json) {
+  static FTextDecoration fromJson(final String json) {
     try {
       return FTextDecoration(textDecoration: _convertJsonToValue(json));
     } catch (e) {
@@ -27,7 +27,7 @@ class FTextDecoration {
 
   String toJson() => _convertValueToJson(textDecoration);
 
-  static TextDecoration _convertJsonToValue(String key) {
+  static TextDecoration _convertJsonToValue(final String key) {
     var decoration = TextDecoration.none;
     if (key == 'n') decoration = TextDecoration.none;
     if (key == 'u') decoration = TextDecoration.underline;
@@ -36,7 +36,7 @@ class FTextDecoration {
     return decoration;
   }
 
-  static String _convertValueToJson(TextDecoration value) {
+  static String _convertValueToJson(final TextDecoration value) {
     var decoration = 'n';
     if (value == TextDecoration.none) decoration = 'n';
     if (value == TextDecoration.underline) decoration = 'u';
@@ -45,7 +45,7 @@ class FTextDecoration {
     return decoration;
   }
 
-  static String _convertValueToCode(TextDecoration? value) {
+  static String _convertValueToCode(final TextDecoration? value) {
     var decoration = 'TextDecoration.none';
     if (value == TextDecoration.none) decoration = 'TextDecoration.none';
     if (value == TextDecoration.underline) {

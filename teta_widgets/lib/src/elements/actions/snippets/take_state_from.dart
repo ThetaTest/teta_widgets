@@ -5,8 +5,8 @@ import 'package:collection/collection.dart';
 import 'package:teta_core/src/models/page.dart';
 import 'package:teta_core/src/models/variable.dart';
 
-VariableObject? takeStateFrom(PageObject page, String condition) {
+VariableObject? takeStateFrom(final PageObject page, final String condition) {
   return page.states.firstWhereOrNull(
-    (element) => element.name.toLowerCase() == condition.toLowerCase(),
+    (final element) => element.name.toLowerCase() == condition.toLowerCase(),
   );
 }

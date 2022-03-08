@@ -3,17 +3,15 @@
 
 // Flutter imports:
 import 'package:flutter/material.dart';
-
 // Package imports:
 import 'package:teta_core/teta_core.dart';
-
 // Project imports:
 import 'package:teta_widgets/src/elements/index.dart';
 
 class WAnimatedOpacity extends StatelessWidget {
   /// Returns a Opacity widget
   const WAnimatedOpacity(
-    Key? key, {
+    final Key? key, {
     required this.node,
     required this.value,
     required this.duration,
@@ -37,7 +35,7 @@ class WAnimatedOpacity extends StatelessWidget {
   final List<DatasetObject> dataset;
 
   @override
-  Widget build(BuildContext context) {
+  Widget build(final BuildContext context) {
     return NodeSelectionBuilder(
       node: node,
       forPlay: forPlay,
@@ -45,7 +43,7 @@ class WAnimatedOpacity extends StatelessWidget {
     );
   }
 
-  Widget _body(BuildContext context) {
+  Widget _body(final BuildContext context) {
     final opacityString = value.get(params, states, dataset, forPlay, loop);
     final rawDouble = double.tryParse(opacityString.replaceAll('-', '')) != null
         ? double.parse(opacityString.replaceAll('-', ''))

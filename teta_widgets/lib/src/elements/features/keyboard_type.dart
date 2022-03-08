@@ -7,7 +7,7 @@ import 'package:flutter/material.dart';
 class FKeyboardType {
   /// Set of funcs to use [TextInputType] in Teta
   FKeyboardType({
-    TextInputType type = TextInputType.text,
+    final TextInputType type = TextInputType.text,
   }) : _type = type;
 
   /// Value of [FKeyboardType]
@@ -17,12 +17,12 @@ class FKeyboardType {
   TextInputType get get => _type;
 
   /// Set new value to [_type]
-  void set(String value) {
+  void set(final String value) {
     _type = _convertDropDownToValue(value);
   }
 
   /// Instantiate [FKeyboardType] from Json
-  static FKeyboardType fromJson(String json) {
+  static FKeyboardType fromJson(final String json) {
     try {
       return FKeyboardType(
         type: _convertJsonToValue(json),
@@ -37,7 +37,7 @@ class FKeyboardType {
     return _convertValueToJson(_type);
   }
 
-  static TextInputType _convertJsonToValue(String key) {
+  static TextInputType _convertJsonToValue(final String key) {
     if (key == 't') return TextInputType.text;
     if (key == 'n') return TextInputType.name;
     if (key == 'e') return TextInputType.emailAddress;
@@ -49,7 +49,7 @@ class FKeyboardType {
     return TextInputType.text;
   }
 
-  static TextInputType _convertDropDownToValue(String key) {
+  static TextInputType _convertDropDownToValue(final String key) {
     if (key == 'Text') {
       return TextInputType.text;
     } else if (key == 'Name') {
@@ -70,7 +70,7 @@ class FKeyboardType {
     return TextInputType.text;
   }
 
-  static String _convertValueToJson(TextInputType value) {
+  static String _convertValueToJson(final TextInputType value) {
     if (value == TextInputType.text) {
       return 't';
     } else if (value == TextInputType.name) {
@@ -91,7 +91,7 @@ class FKeyboardType {
     return 't';
   }
 
-  static String _convertValueToCode(TextInputType value) {
+  static String _convertValueToCode(final TextInputType value) {
     if (value == TextInputType.text) {
       return 'TextInputType.text';
     } else if (value == TextInputType.name) {

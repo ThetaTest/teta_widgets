@@ -3,18 +3,16 @@
 
 // Flutter imports:
 import 'package:flutter/material.dart';
-
 // Package imports:
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:teta_core/teta_core.dart';
-
 // Project imports:
 import 'package:teta_widgets/src/elements/index.dart';
 
 class WGridViewBuilder extends StatefulWidget {
   /// Returns a StaggeredGridView (children: [ ]) in Teta
   const WGridViewBuilder(
-    Key? key, {
+    final Key? key, {
     required this.node,
     required this.forPlay,
     required this.value,
@@ -58,7 +56,7 @@ class _WGridViewState extends State<WGridViewBuilder> {
   bool isLoading = true;
 
   @override
-  Widget build(BuildContext context) {
+  Widget build(final BuildContext context) {
     return NodeSelectionBuilder(
       node: widget.node,
       forPlay: widget.forPlay,
@@ -68,7 +66,7 @@ class _WGridViewState extends State<WGridViewBuilder> {
 
   /// Returns a MouseRegion to disable the zoom on editor screen
   /// and provides a StaggeredGridView
-  Widget _body(BuildContext context) {
+  Widget _body(final BuildContext context) {
     final crossAxisCountString = widget.crossAxisCount.get(
       widget.params,
       widget.states,
@@ -100,16 +98,16 @@ class _WGridViewState extends State<WGridViewBuilder> {
     _setDataset();
     final index = widget.value.datasetName != null
         ? widget.dataset.indexWhere(
-            (element) => element.getName == widget.value.datasetName,
+            (final element) => element.getName == widget.value.datasetName,
           )
         : -1;
     final db = index != -1 ? widget.dataset[index] : DatasetObject.empty();
     return MouseRegion(
-      onEnter: (v) {
+      onEnter: (final v) {
         BlocProvider.of<ZoomableCubit>(context)
             .changeZoomableFlag(value: false);
       },
-      onExit: (v) {
+      onExit: (final v) {
         BlocProvider.of<ZoomableCubit>(context).changeZoomableFlag(value: true);
       },
       child: GridView.builder(
@@ -135,7 +133,7 @@ class _WGridViewState extends State<WGridViewBuilder> {
               : 1,
         ),
         itemCount: db.getMap.length,
-        itemBuilder: (context, index) => widget.child != null
+        itemBuilder: (final context, final index) => widget.child != null
             ? widget.child!.toWidget(
                 forPlay: widget.forPlay,
                 params: [...widget.params, ...widget.params],
@@ -152,8 +150,9 @@ class _WGridViewState extends State<WGridViewBuilder> {
 
   void _setDataset() {
     try {
-      final index = widget.dataset
-          .indexWhere((element) => element.getName == widget.value.datasetName);
+      final index = widget.dataset.indexWhere(
+        (final element) => element.getName == widget.value.datasetName,
+      );
       final db = index != -1 ? widget.dataset[index] : DatasetObject.empty();
       if (mounted) {
         if (db.getName != '') {

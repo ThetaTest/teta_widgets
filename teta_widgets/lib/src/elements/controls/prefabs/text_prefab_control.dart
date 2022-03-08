@@ -3,7 +3,6 @@
 
 // Flutter imports:
 import 'package:flutter/material.dart';
-
 // Package imports:
 import 'package:teta_core/src/design_system/palette.dart';
 import 'package:teta_core/src/design_system/text.dart';
@@ -12,7 +11,6 @@ import 'package:teta_core/src/models/palette.dart';
 import 'package:teta_core/src/models/project.dart';
 import 'package:teta_core/src/repositories/project.dart';
 import 'package:teta_core/src/repositories/queries/color_style.dart';
-
 // Project imports:
 import 'package:teta_widgets/src/elements/controls/atoms/fill.dart';
 import 'package:teta_widgets/src/elements/controls/atoms/font_family.dart';
@@ -35,7 +33,7 @@ class TextPrefabControl extends StatelessWidget {
     required this.node,
     required this.textStyle,
     required this.keyValue,
-    Key? key,
+    final Key? key,
     this.title,
   }) : super(key: key);
 
@@ -47,13 +45,13 @@ class TextPrefabControl extends StatelessWidget {
   final String keyValue;
 
   @override
-  Widget build(BuildContext context) {
+  Widget build(final BuildContext context) {
     return Column(
       children: [
         TextStylesControl(
           node: node,
           textStyle: textStyle,
-          callBack: (textStyleModel, flag, old) {
+          callBack: (final textStyleModel, final flag, final old) {
             if (flag) {
               ProjectRepository.addTextStyle(
                 prjId: prj.id,
@@ -104,7 +102,7 @@ class TextPrefabControl extends StatelessWidget {
                         child: FontSizeControl(
                           node: node,
                           textStyle: textStyle,
-                          callBack: (value, old) {
+                          callBack: (final value, final old) {
                             ControlBuilder.toDB(
                               prj,
                               page,
@@ -124,7 +122,8 @@ class TextPrefabControl extends StatelessWidget {
                         child: FontFamilyControl(
                           node: node,
                           textStyle: textStyle,
-                          callBack: (value, old) => ControlBuilder.toDB(
+                          callBack: (final value, final old) =>
+                              ControlBuilder.toDB(
                             prj,
                             page,
                             node,
@@ -144,7 +143,7 @@ class TextPrefabControl extends StatelessWidget {
                 child: FontWeightControl(
                   node: node,
                   textStyle: textStyle,
-                  callBack: (value, old) => ControlBuilder.toDB(
+                  callBack: (final value, final old) => ControlBuilder.toDB(
                     prj,
                     page,
                     node,
@@ -163,7 +162,8 @@ class TextPrefabControl extends StatelessWidget {
                       child: FontStyleControls(
                         node: node,
                         textStyle: textStyle,
-                        callBack: (value, old) => ControlBuilder.toDB(
+                        callBack: (final value, final old) =>
+                            ControlBuilder.toDB(
                           prj,
                           page,
                           node,
@@ -189,7 +189,7 @@ class TextPrefabControl extends StatelessWidget {
                 child: TextAlignControls(
                   node: node,
                   textStyle: textStyle,
-                  callBack: (value, old) => ControlBuilder.toDB(
+                  callBack: (final value, final old) => ControlBuilder.toDB(
                     prj,
                     page,
                     node,
@@ -205,7 +205,7 @@ class TextPrefabControl extends StatelessWidget {
                 child: TextDecorationControl(
                   node: node,
                   textStyle: textStyle,
-                  callBack: (value, old) => ControlBuilder.toDB(
+                  callBack: (final value, final old) => ControlBuilder.toDB(
                     prj,
                     page,
                     node,
@@ -230,7 +230,7 @@ class TextPrefabControl extends StatelessWidget {
           isImageEnabled: false,
           isNoneEnabled: false,
           type: FillTypeControlType.onlySolid,
-          callBack: (color, isStyled, old) {
+          callBack: (final color, final isStyled, final old) {
             if (!isStyled) {
               final old = FTextStyle.fromJson(textStyle.toJson());
               textStyle.fill = color;

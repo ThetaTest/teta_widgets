@@ -3,7 +3,6 @@
 
 // Flutter imports:
 import 'package:flutter/material.dart';
-
 // Package imports:
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:teta_core/src/blocs/focus/index.dart';
@@ -11,7 +10,6 @@ import 'package:teta_core/src/design_system/palette.dart';
 import 'package:teta_core/src/design_system/text.dart';
 import 'package:teta_core/src/design_system/textfield/textfield.dart';
 import 'package:teta_core/src/models/page.dart';
-
 // Project imports:
 import 'package:teta_widgets/src/elements/features/text_type_input.dart';
 import 'package:teta_widgets/src/elements/nodes/node.dart';
@@ -24,7 +22,7 @@ class ValueOfConditionControl extends StatefulWidget {
     required this.title,
     required this.valueOfCond,
     required this.callBack,
-    Key? key,
+    final Key? key,
   }) : super(key: key);
 
   final CNode node;
@@ -60,10 +58,10 @@ class ValueOfConditionControlState extends State<ValueOfConditionControl> {
   }
 
   @override
-  Widget build(BuildContext context) {
+  Widget build(final BuildContext context) {
     //controller.text = widget.node.valueOfCond!.value ?? '';
     return BlocListener<FocusBloc, List<CNode>>(
-      listener: (context, state) {
+      listener: (final context, final state) {
         if (state.first.nid != nodeId) {
           setState(() {
             isUpdated = true;
@@ -95,8 +93,8 @@ class ValueOfConditionControlState extends State<ValueOfConditionControl> {
                           : widget.valueOfCond.type == FTextTypeEnum.param
                               ? 'param'
                               : 'text',
-                  items:
-                      ['text', 'param', 'state', 'dataset'].map((String value) {
+                  items: ['text', 'param', 'state', 'dataset']
+                      .map((final String value) {
                     return DropdownMenuItem<String>(
                       value: value,
                       child: CText(
@@ -105,7 +103,7 @@ class ValueOfConditionControlState extends State<ValueOfConditionControl> {
                       ),
                     );
                   }).toList(),
-                  onChanged: (value) {
+                  onChanged: (final value) {
                     var typeOfInput = FTextTypeEnum.text;
                     if (value == 'text') {
                       typeOfInput = FTextTypeEnum.text;
@@ -131,7 +129,7 @@ class ValueOfConditionControlState extends State<ValueOfConditionControl> {
             CTextField(
               //text: text,
               controller: controller,
-              callBack: (value) {
+              callBack: (final value) {
                 final old = widget.valueOfCond;
                 widget.valueOfCond.value = value;
                 widget.callBack(widget.valueOfCond, old);
@@ -149,7 +147,7 @@ class ValueOfConditionControlState extends State<ValueOfConditionControl> {
                 value: widget.valueOfCond.paramName,
                 icon: const Icon(Icons.arrow_drop_down),
                 underline: const SizedBox(),
-                onChanged: (String? newValue) {
+                onChanged: (final String? newValue) {
                   final old = widget.valueOfCond;
                   widget.valueOfCond.paramName = newValue;
                   widget.callBack(widget.valueOfCond, old);
@@ -157,8 +155,8 @@ class ValueOfConditionControlState extends State<ValueOfConditionControl> {
                 isDense: true,
                 isExpanded: true,
                 items: widget.page.params
-                    .map((e) => e.name)
-                    .map<DropdownMenuItem<String>>((value) {
+                    .map((final e) => e.name)
+                    .map<DropdownMenuItem<String>>((final value) {
                   return DropdownMenuItem<String>(
                     value: value,
                     child: CText(value, size: 16),
@@ -178,7 +176,7 @@ class ValueOfConditionControlState extends State<ValueOfConditionControl> {
                 value: widget.valueOfCond.stateName,
                 icon: const Icon(Icons.arrow_drop_down),
                 underline: const SizedBox(),
-                onChanged: (String? newValue) {
+                onChanged: (final String? newValue) {
                   final old = widget.valueOfCond;
                   widget.valueOfCond.stateName = newValue;
                   widget.callBack(widget.valueOfCond, old);
@@ -186,8 +184,8 @@ class ValueOfConditionControlState extends State<ValueOfConditionControl> {
                 isDense: true,
                 isExpanded: true,
                 items: widget.page.states
-                    .map((e) => e.name)
-                    .map<DropdownMenuItem<String>>((value) {
+                    .map((final e) => e.name)
+                    .map<DropdownMenuItem<String>>((final value) {
                   return DropdownMenuItem<String>(
                     value: value,
                     child: CText(value, size: 16),
@@ -207,7 +205,7 @@ class ValueOfConditionControlState extends State<ValueOfConditionControl> {
                 value: widget.valueOfCond.datasetName,
                 icon: const Icon(Icons.arrow_drop_down),
                 underline: const SizedBox(),
-                onChanged: (String? newValue) {
+                onChanged: (final String? newValue) {
                   setState(() {
                     databaseName = newValue!;
                   });
@@ -218,9 +216,9 @@ class ValueOfConditionControlState extends State<ValueOfConditionControl> {
                 isDense: true,
                 isExpanded: true,
                 items: widget.page.datasets
-                    .map((e) => e.getName)
-                    .where((element) => element != 'null')
-                    .map<DropdownMenuItem<String>>((String value) {
+                    .map((final e) => e.getName)
+                    .where((final element) => element != 'null')
+                    .map<DropdownMenuItem<String>>((final String value) {
                   return DropdownMenuItem<String>(
                     value: value,
                     child: CText(value, size: 16),
@@ -242,7 +240,7 @@ class ValueOfConditionControlState extends State<ValueOfConditionControl> {
                 value: widget.valueOfCond.datasetAttr,
                 icon: const Icon(Icons.arrow_drop_down),
                 underline: const SizedBox(),
-                onChanged: (String? newValue) {
+                onChanged: (final String? newValue) {
                   setState(() {
                     databaseAttribute = newValue!;
                   });
@@ -254,15 +252,15 @@ class ValueOfConditionControlState extends State<ValueOfConditionControl> {
                 isExpanded: true,
                 items: widget.page.datasets
                     .firstWhere(
-                      (element) =>
+                      (final element) =>
                           element.getName == widget.valueOfCond.datasetName,
                     )
                     .getMap
                     .first
                     .keys
-                    .map((key) => key)
+                    .map((final key) => key)
                     .toSet()
-                    .map<DropdownMenuItem<String>>((String value) {
+                    .map<DropdownMenuItem<String>>((final String value) {
                   return DropdownMenuItem<String>(
                     value: value,
                     child: CText(value, size: 16),

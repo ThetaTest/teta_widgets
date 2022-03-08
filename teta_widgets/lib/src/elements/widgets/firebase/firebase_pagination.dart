@@ -2,10 +2,8 @@
 
 // Flutter imports:
 import 'package:flutter/material.dart';
-
 // Package imports:
 import 'package:teta_core/teta_core.dart';
-
 // Project imports:
 import 'package:teta_widgets/src/elements/index.dart';
 
@@ -21,7 +19,7 @@ class WFirestorePagination extends StatefulWidget {
   /// Requires a path to connect to the right collection / doc
   /// and a orderBy filter to correctly sort the results.
   const WFirestorePagination(
-    Key? key, {
+    final Key? key, {
     required this.node,
     required this.path,
     required this.orderBy,
@@ -68,7 +66,7 @@ class WFirestorePagination extends StatefulWidget {
 
 class WFirestorePaginationState extends State<WFirestorePagination> {
   @override
-  Widget build(BuildContext context) {
+  Widget build(final BuildContext context) {
     return NodeSelectionBuilder(
       node: widget.node,
       forPlay: widget.forPlay,
@@ -76,7 +74,7 @@ class WFirestorePaginationState extends State<WFirestorePagination> {
     );
   }
 
-  Widget body(BuildContext context) {
+  Widget body(final BuildContext context) {
     return const SizedBox(); /*PaginateFirestore(
       itemBuilder: (index, context, documentSnapshot) {
         final data = documentSnapshot.data() as Map<String, dynamic>?;

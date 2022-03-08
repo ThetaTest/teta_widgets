@@ -4,12 +4,10 @@
 
 // Flutter imports:
 import 'package:flutter/material.dart';
-
 // Package imports:
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:supabase/supabase.dart';
 import 'package:teta_core/teta_core.dart';
-
 // Project imports:
 import 'package:teta_widgets/src/elements/index.dart';
 
@@ -18,7 +16,7 @@ import 'package:teta_widgets/src/elements/index.dart';
 class WSupabaseFutureBuilder extends StatefulWidget {
   /// Construct
   const WSupabaseFutureBuilder(
-    Key? key, {
+    final Key? key, {
     required this.node,
     required this.from,
     required this.select,
@@ -210,7 +208,7 @@ class _WSupabaseFutureBuilderState extends State<WSupabaseFutureBuilder> {
   }
 
   @override
-  Widget build(BuildContext context) {
+  Widget build(final BuildContext context) {
     if (client == null) {
       return const Center(
         child: CText(
@@ -225,7 +223,7 @@ class _WSupabaseFutureBuilderState extends State<WSupabaseFutureBuilder> {
       forPlay: widget.forPlay,
       child: FutureBuilder(
         future: _future,
-        builder: (context, snapshot) {
+        builder: (final context, final snapshot) {
           if (!snapshot.hasData) {
             if (widget.children.isNotEmpty) {
               return widget.children.last.toWidget(
@@ -252,7 +250,7 @@ class _WSupabaseFutureBuilderState extends State<WSupabaseFutureBuilder> {
           _map = _map.copyWith(
             name: widget.node.name ?? widget.node.intrinsicState.displayName,
             map: (list ?? const <dynamic>[])
-                .map((dynamic e) => e as Map<String, dynamic>)
+                .map((final dynamic e) => e as Map<String, dynamic>)
                 .toList(),
           );
           final datasets = addDataset(context, widget.dataset, _map);

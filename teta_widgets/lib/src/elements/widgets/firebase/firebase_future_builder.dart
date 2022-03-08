@@ -4,10 +4,8 @@
 
 // Flutter imports:
 import 'package:flutter/material.dart';
-
 // Package imports:
 import 'package:teta_core/teta_core.dart';
-
 // Project imports:
 import 'package:teta_widgets/src/elements/index.dart';
 
@@ -16,7 +14,7 @@ import 'package:teta_widgets/src/elements/index.dart';
 class WFirebaseFutureBuilder extends StatefulWidget {
   /// Construct
   const WFirebaseFutureBuilder(
-    Key? key, {
+    final Key? key, {
     required this.node,
     required this.path,
     required this.forPlay,
@@ -59,7 +57,7 @@ class WFirebaseFutureBuilder extends StatefulWidget {
 
 class WFirebaseFutureBuilderState extends State<WFirebaseFutureBuilder> {
   @override
-  Widget build(BuildContext context) {
+  Widget build(final BuildContext context) {
     return NodeSelectionBuilder(
       node: widget.node,
       forPlay: widget.forPlay,
@@ -67,7 +65,7 @@ class WFirebaseFutureBuilderState extends State<WFirebaseFutureBuilder> {
     );
   }
 
-  Widget body(BuildContext context) {
+  Widget body(final BuildContext context) {
     return const Center(
       child: CText(
         'Firebase is not initialized yet',

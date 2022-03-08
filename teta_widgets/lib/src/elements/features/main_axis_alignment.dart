@@ -5,7 +5,7 @@ import 'package:flutter/material.dart';
 class FMainAxisAlignment {
   /// Constructor
   FMainAxisAlignment({
-    MainAxisAlignment align = MainAxisAlignment.start,
+    final MainAxisAlignment align = MainAxisAlignment.start,
   }) : _align = align;
 
   MainAxisAlignment _align;
@@ -18,10 +18,10 @@ class FMainAxisAlignment {
 
   /// Sets a new value for [_align]
   /// Requires a String value
-  void set(String text) => _align = _convertDropDownToValue(text);
+  void set(final String text) => _align = _convertDropDownToValue(text);
 
   /// Instantiate [FMainAxisAlignment] from Json
-  FMainAxisAlignment fromJson(String json) {
+  FMainAxisAlignment fromJson(final String json) {
     try {
       return FMainAxisAlignment(
         align: _convertJsonToValue(json),
@@ -36,7 +36,7 @@ class FMainAxisAlignment {
     return _convertValueToJson(_align);
   }
 
-  static MainAxisAlignment _convertJsonToValue(String key) {
+  static MainAxisAlignment _convertJsonToValue(final String key) {
     if (key == 'e') return MainAxisAlignment.end;
     if (key == 'c') return MainAxisAlignment.center;
     if (key == 'sB') return MainAxisAlignment.spaceBetween;
@@ -45,7 +45,7 @@ class FMainAxisAlignment {
     return MainAxisAlignment.start;
   }
 
-  static String _convertValueToJson(MainAxisAlignment value) {
+  static String _convertValueToJson(final MainAxisAlignment value) {
     if (value == MainAxisAlignment.end) return 'e';
     if (value == MainAxisAlignment.center) return 'c';
     if (value == MainAxisAlignment.spaceBetween) return 'sB';
@@ -54,7 +54,7 @@ class FMainAxisAlignment {
     return 's';
   }
 
-  static String _convertValueToDropDown(MainAxisAlignment value) {
+  static String _convertValueToDropDown(final MainAxisAlignment value) {
     if (value == MainAxisAlignment.end) return 'End';
     if (value == MainAxisAlignment.center) return 'Center';
     if (value == MainAxisAlignment.spaceBetween) return 'Space Between';
@@ -63,7 +63,7 @@ class FMainAxisAlignment {
     return 'Start';
   }
 
-  static MainAxisAlignment _convertDropDownToValue(String value) {
+  static MainAxisAlignment _convertDropDownToValue(final String value) {
     if (value == 'End') return MainAxisAlignment.end;
     if (value == 'Center') return MainAxisAlignment.center;
     if (value == 'Space Between') return MainAxisAlignment.spaceBetween;
@@ -72,7 +72,7 @@ class FMainAxisAlignment {
     return MainAxisAlignment.start;
   }
 
-  static String _convertValueToCode(MainAxisAlignment? value) {
+  static String _convertValueToCode(final MainAxisAlignment? value) {
     if (value == MainAxisAlignment.end) return 'MainAxisAlignment.end';
     if (value == MainAxisAlignment.center) return 'MainAxisAlignment.center';
     if (value == MainAxisAlignment.spaceBetween) {

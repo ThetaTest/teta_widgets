@@ -4,7 +4,6 @@
 
 // Package imports:
 import 'package:equatable/equatable.dart';
-
 // Project imports:
 import 'package:teta_widgets/src/elements/features/actions/element.dart';
 
@@ -15,7 +14,7 @@ class FAction extends Equatable {
   }
 
   /// Instantiate [FAction] object from json
-  FAction.fromJson(Map<String, dynamic> doc) {
+  FAction.fromJson(final Map<String, dynamic> doc) {
     final actions = <FActionElement>[];
     if (doc['acts'] != null) {
       for (final e in doc['acts'] as List<dynamic>) {
@@ -36,7 +35,7 @@ class FAction extends Equatable {
     }
     return <String, dynamic>{
       'acts': actionsMap,
-    }..removeWhere((String key, dynamic value) => value == null);
+    }..removeWhere((final String key, final dynamic value) => value == null);
   }
 
   @override

@@ -5,17 +5,15 @@
 import 'dart:async';
 import 'dart:math';
 
+// Package imports:
+import 'package:collection/collection.dart';
 // Flutter imports:
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
-
-// Package imports:
-import 'package:collection/collection.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:latlng/latlng.dart';
 import 'package:map/map.dart';
 import 'package:teta_core/teta_core.dart';
-
 // Project imports:
 import 'package:teta_widgets/src/elements/builder/node_selection_builder.dart';
 import 'package:teta_widgets/src/elements/controls/key_constants.dart';
@@ -31,7 +29,7 @@ import 'package:teta_widgets/src/elements/nodes/node.dart';
 class WMapBuilder extends StatefulWidget {
   /// Returns a [Map] widget in Teta
   const WMapBuilder(
-    Key? key, {
+    final Key? key, {
     required this.node,
     required this.controller,
     required this.forPlay,
@@ -69,7 +67,7 @@ class _WMapBuilderState extends State<WMapBuilder> {
 
   @override
   void initState() {
-    Timer.periodic(const Duration(seconds: 1), (dynamic t) {
+    Timer.periodic(const Duration(seconds: 1), (final dynamic t) {
       if (mounted) {
         setState(() {});
       }
@@ -82,10 +80,10 @@ class _WMapBuilderState extends State<WMapBuilder> {
     final page = BlocProvider.of<FocusPageBloc>(context).state;
     if (widget.controller.type == FTextTypeEnum.param) {
       variable = page.params
-          .firstWhereOrNull((e) => e.name == widget.controller.paramName);
+          .firstWhereOrNull((final e) => e.name == widget.controller.paramName);
     } else {
       variable = page.states
-          .firstWhereOrNull((e) => e.name == widget.controller.stateName);
+          .firstWhereOrNull((final e) => e.name == widget.controller.stateName);
     }
     variable?.mapController ??= MapController(
       location: LatLng(41.52, 12.30),
@@ -106,12 +104,12 @@ class _WMapBuilderState extends State<WMapBuilder> {
 
   Offset? _dragStart;
   double _scaleStart = 1;
-  void _onScaleStart(ScaleStartDetails details) {
+  void _onScaleStart(final ScaleStartDetails details) {
     _dragStart = details.focalPoint;
     _scaleStart = 1.0;
   }
 
-  void _onScaleUpdate(ScaleUpdateDetails details) {
+  void _onScaleUpdate(final ScaleUpdateDetails details) {
     final scaleDiff = details.scale - _scaleStart;
     _scaleStart = details.scale;
 
@@ -131,9 +129,9 @@ class _WMapBuilderState extends State<WMapBuilder> {
   }
 
   Widget _buildMarkerWidget(
-    Offset pos,
-    Color color, [
-    IconData icon = Icons.location_on,
+    final Offset pos,
+    final Color color, [
+    final IconData icon = Icons.location_on,
   ]) {
     return Positioned(
       left: pos.dx - 24,
@@ -149,7 +147,7 @@ class _WMapBuilderState extends State<WMapBuilder> {
   }
 
   @override
-  Widget build(BuildContext context) {
+  Widget build(final BuildContext context) {
     /*controller = MapController(
       location: LatLng(lat, lng),
       zoom: 4,
@@ -176,7 +174,8 @@ class _WMapBuilderState extends State<WMapBuilder> {
     _setDataset();
     final index = widget.datasetInput.datasetName != null
         ? widget.dataset.indexWhere(
-            (element) => element.getName == widget.datasetInput.datasetName,
+            (final element) =>
+                element.getName == widget.datasetInput.datasetName,
           )
         : -1;
     final db = index != -1 ? widget.dataset[index] : DatasetObject.empty();
@@ -200,7 +199,7 @@ class _WMapBuilderState extends State<WMapBuilder> {
             )
           : MapLayoutBuilder(
               controller: variable!.mapController!,
-              builder: (context, transformer) {
+              builder: (final context, final transformer) {
                 final markers = <LatLng>[];
 
                 for (var i = 0; i < db.getMap.length; i++) {
@@ -240,14 +239,15 @@ class _WMapBuilderState extends State<WMapBuilder> {
                 final markersWidgets = <Widget>[];
                 final normalWidgets = db.getMap
                     .map(
-                      (e) => widget.child!.intrinsicState.type != NType.marker
-                          ? widget.child!.toWidget(
-                              params: widget.params,
-                              states: widget.states,
-                              dataset: widget.dataset,
-                              forPlay: widget.forPlay,
-                            )
-                          : const SizedBox(),
+                      (final e) =>
+                          widget.child!.intrinsicState.type != NType.marker
+                              ? widget.child!.toWidget(
+                                  params: widget.params,
+                                  states: widget.states,
+                                  dataset: widget.dataset,
+                                  forPlay: widget.forPlay,
+                                )
+                              : const SizedBox(),
                     )
                     .toList();
 
@@ -276,7 +276,7 @@ class _WMapBuilderState extends State<WMapBuilder> {
                   onScaleUpdate: _onScaleUpdate,
                   child: Listener(
                     behavior: HitTestBehavior.opaque,
-                    onPointerSignal: (event) {
+                    onPointerSignal: (final event) {
                       if (event is PointerScrollEvent) {
                         final delta = event.scrollDelta;
 
@@ -289,7 +289,8 @@ class _WMapBuilderState extends State<WMapBuilder> {
                         if (variable != null && variable?.mapController != null)
                           Map(
                             controller: variable!.mapController!,
-                            builder: (context, x, y, z) {
+                            builder:
+                                (final context, final x, final y, final z) {
                               final url =
                                   'https://api.mapbox.com/styles/v1/mapbox/streets-v11/tiles/$z/$x/$y?access_token=${(BlocProvider.of<FocusProjectBloc>(context).state as ProjectLoaded).prj.config?.mapboxKey}';
                               final darkUrl =
@@ -318,7 +319,7 @@ class _WMapBuilderState extends State<WMapBuilder> {
   void _setDataset() {
     try {
       final index = widget.dataset.indexWhere(
-        (element) => element.getName == widget.datasetInput.datasetName,
+        (final element) => element.getName == widget.datasetInput.datasetName,
       );
       final db = index != -1 ? widget.dataset[index] : DatasetObject.empty();
       if (mounted) {
@@ -333,7 +334,10 @@ class _WMapBuilderState extends State<WMapBuilder> {
 }
 
 class DayNightCalculator {
-  static DayNightBorder calculate(DateTime time, [int resolution = 2]) {
+  static DayNightBorder calculate(
+    final DateTime time, [
+    final int resolution = 2,
+  ]) {
     final julianDay = _julian(time.millisecondsSinceEpoch);
     final gst = _gmst(julianDay);
     final latLng = <LatLng>[];
@@ -354,12 +358,12 @@ class DayNightCalculator {
 const double _r2d = 180 / pi;
 const double d2r = pi / 180;
 
-void setTime(DateTime date) {
+void setTime(final DateTime date) {
   //var latLng = _compute(date);
   //setLatLngs(latLng);
 }
 
-_LambdaRadius _sunEclipticPosition(double julianDay) {
+_LambdaRadius _sunEclipticPosition(final double julianDay) {
   /* Compute the position of the Sun in ecliptic coordinates at
 			 julianDay.  Following
 			 http://en.wikipedia.org/wiki/Position_of_the_Sun */
@@ -378,7 +382,7 @@ _LambdaRadius _sunEclipticPosition(double julianDay) {
   return _LambdaRadius(lambda: lambda, r: R);
 }
 
-double _eclipticObliquity(double julianDay) {
+double _eclipticObliquity(final double julianDay) {
   // Following the short term expression in
   // http://en.wikipedia.org/wiki/Axial_tilt#Obliquity_of_the_ecliptic_.28Earth.27s_axial_tilt.29
   final n = julianDay - 2451545.0;
@@ -395,7 +399,10 @@ double _eclipticObliquity(double julianDay) {
   return epsilon;
 }
 
-_AlphaDelta _sunEquatorialPosition(double sunEclLng, double eclObliq) {
+_AlphaDelta _sunEquatorialPosition(
+  final double sunEclLng,
+  final double eclObliq,
+) {
   /* Compute the Sun's equatorial position from its ecliptic
 		 * position. Inputs are expected in degrees. Outputs are in
 		 * degrees as well. */
@@ -409,28 +416,32 @@ _AlphaDelta _sunEquatorialPosition(double sunEclLng, double eclObliq) {
   return _AlphaDelta(alpha: alpha, delta: delta);
 }
 
-double _hourAngle(double lng, _AlphaDelta sunPos, double gst) {
+double _hourAngle(
+  final double lng,
+  final _AlphaDelta sunPos,
+  final double gst,
+) {
   /* Compute the hour angle of the sun for a longitude on
 		 * Earth. Return the hour angle in degrees. */
   final lst = gst + lng / 15;
   return lst * 15 - sunPos.alpha;
 }
 
-double _latitude(double ha, _AlphaDelta sunPos) {
+double _latitude(final double ha, final _AlphaDelta sunPos) {
   /* For a given hour angle and sun position, compute the
 		 * latitude of the terminator in degrees. */
   final lat = atan(-cos(ha * d2r) / tan(sunPos.delta * d2r)) * _r2d;
   return lat;
 }
 
-double _julian(int date) {
+double _julian(final int date) {
   /* Calculate the present UTC Julian Date. Function is valid after
 	 * the beginning of the UNIX epoch 1970-01-01 and ignores leap
 	 * seconds. */
   return (date / 86400000.0) + 2440587.5;
 }
 
-double _gmst(double julianDay) {
+double _gmst(final double julianDay) {
   /* Calculate Greenwich Mean Sidereal Time according to 
 		 http://aa.usno.navy.mil/faq/docs/GAST.php */
   final d = julianDay - 2451545.0;

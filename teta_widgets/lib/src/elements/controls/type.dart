@@ -4,7 +4,6 @@
 // Flutter imports:
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
-
 // Package imports:
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:teta_core/src/blocs/auth/index.dart';
@@ -17,7 +16,6 @@ import 'package:teta_core/src/repositories/queries/color_style.dart';
 import 'package:teta_core/src/repositories/queries/page.dart';
 import 'package:teta_core/src/repositories/queries/project.dart';
 import 'package:teta_core/src/repositories/queries/user.dart';
-
 // Project imports:
 import 'package:teta_widgets/src/elements/controls/atoms/action.dart';
 import 'package:teta_widgets/src/elements/controls/atoms/aligns.dart';
@@ -160,13 +158,13 @@ enum ControlType {
 class ControlBuilder {
   /// It makes a call to NodeRepository.change.
   static void toDB(
-    ProjectObject prj,
-    PageObject page,
-    CNode node,
-    BuildContext context,
-    String key,
-    dynamic value,
-    dynamic old,
+    final ProjectObject prj,
+    final PageObject page,
+    final CNode node,
+    final BuildContext context,
+    final String key,
+    final dynamic value,
+    final dynamic old,
   ) {
     try {
       NodeRepository.change(
@@ -192,11 +190,11 @@ class ControlBuilder {
 
   /// Returns a control widget based of [control] value.
   static Widget builder({
-    required ProjectObject prj,
-    required PageObject page,
-    required CNode node,
-    required BuildContext context,
-    required ControlModel control,
+    required final ProjectObject prj,
+    required final PageObject page,
+    required final CNode node,
+    required final BuildContext context,
+    required final ControlModel control,
   }) {
     if (control is ControlObject) {
       return ControlBuilder.genericControlBuilder(
@@ -260,11 +258,11 @@ class ControlBuilder {
 
   /// Returns a control widget based on control.type.
   static Widget genericControlBuilder({
-    required ProjectObject prj,
-    required PageObject page,
-    required CNode node,
-    required BuildContext context,
-    required ControlObject control,
+    required final ProjectObject prj,
+    required final PageObject page,
+    required final CNode node,
+    required final BuildContext context,
+    required final ControlObject control,
   }) {
     if (control.type == ControlType.audioController) {
       return descriptionControlWidget(
@@ -275,7 +273,7 @@ class ControlBuilder {
           page: page,
           title: control.title ?? 'Audio Controller',
           value: control.value as FTextTypeInput,
-          callBack: (value, old) => ControlBuilder.toDB(
+          callBack: (final value, final old) => ControlBuilder.toDB(
             prj,
             page,
             node,
@@ -296,7 +294,7 @@ class ControlBuilder {
           page: page,
           title: control.title ?? 'Map Controller',
           value: control.value as FTextTypeInput,
-          callBack: (value, old) => ControlBuilder.toDB(
+          callBack: (final value, final old) => ControlBuilder.toDB(
             prj,
             page,
             node,
@@ -317,7 +315,7 @@ class ControlBuilder {
           page: page,
           title: control.title ?? 'Camera Controller',
           value: control.value as FTextTypeInput,
-          callBack: (value, old) => ControlBuilder.toDB(
+          callBack: (final value, final old) => ControlBuilder.toDB(
             prj,
             page,
             node,
@@ -338,7 +336,7 @@ class ControlBuilder {
           page: page,
           title: control.title ?? 'WebView Controller',
           value: control.value as FTextTypeInput,
-          callBack: (value, old) => ControlBuilder.toDB(
+          callBack: (final value, final old) => ControlBuilder.toDB(
             prj,
             page,
             node,
@@ -359,7 +357,7 @@ class ControlBuilder {
           page: page,
           node: node,
           action: control.value as FAction,
-          callBack: (value, old) => ControlBuilder.toDB(
+          callBack: (final value, final old) => ControlBuilder.toDB(
             prj,
             page,
             node,
@@ -378,7 +376,7 @@ class ControlBuilder {
           key: ValueKey('${node.nid}'),
           node: node,
           align: control.value as FAlign,
-          callBack: (value, old) => ControlBuilder.toDB(
+          callBack: (final value, final old) => ControlBuilder.toDB(
             prj,
             page,
             node,
@@ -397,7 +395,7 @@ class ControlBuilder {
           key: ValueKey('${node.nid}'),
           node: node,
           borderRadius: control.value as FBorderRadius,
-          callBack: (value, old) => ControlBuilder.toDB(
+          callBack: (final value, final old) => ControlBuilder.toDB(
             prj,
             page,
             node,
@@ -416,7 +414,7 @@ class ControlBuilder {
           key: ValueKey('${node.nid}'),
           node: node,
           borders: control.value as FBorder,
-          callBack: (value, old) => ControlBuilder.toDB(
+          callBack: (final value, final old) => ControlBuilder.toDB(
             prj,
             page,
             node,
@@ -434,7 +432,7 @@ class ControlBuilder {
         prj: prj,
         page: page,
         node: node,
-        callBack: (value, old) => ControlBuilder.toDB(
+        callBack: (final value, final old) => ControlBuilder.toDB(
           prj,
           page,
           node,
@@ -443,7 +441,7 @@ class ControlBuilder {
           value,
           old,
         ),
-        callBackParameters: (value) => ControlBuilder.toDB(
+        callBackParameters: (final value) => ControlBuilder.toDB(
           prj,
           page,
           node,
@@ -462,7 +460,7 @@ class ControlBuilder {
           key: ValueKey('${node.nid}'),
           node: node,
           crossAxisAlignment: control.value as FCrossAxisAlignment,
-          callBack: (value, old) => ControlBuilder.toDB(
+          callBack: (final value, final old) => ControlBuilder.toDB(
             prj,
             page,
             node,
@@ -483,7 +481,7 @@ class ControlBuilder {
           node: node,
           page: page,
           image: control.value as FTextTypeInput,
-          callBack: (value, old) => ControlBuilder.toDB(
+          callBack: (final value, final old) => ControlBuilder.toDB(
             prj,
             page,
             node,
@@ -503,7 +501,7 @@ class ControlBuilder {
           key: ValueKey('${node.nid}'),
           node: node,
           icon: control.value as String,
-          callBack: (value, old) {
+          callBack: (final value, final old) {
             node.body.attributes[DBKeys.icon] = value;
             ControlBuilder.toDB(
               prj,
@@ -525,7 +523,7 @@ class ControlBuilder {
           key: ValueKey('${node.nid}'),
           node: node,
           mainAxisAlignment: control.value as FMainAxisAlignment,
-          callBack: (value, old) => ControlBuilder.toDB(
+          callBack: (final value, final old) => ControlBuilder.toDB(
             prj,
             page,
             node,
@@ -546,7 +544,7 @@ class ControlBuilder {
           node: node,
           title: 'Margins',
           value: control.value as FMargins,
-          callBack: (value, old) => ControlBuilder.toDB(
+          callBack: (final value, final old) => ControlBuilder.toDB(
             prj,
             page,
             node,
@@ -566,7 +564,7 @@ class ControlBuilder {
           node: node,
           title: 'Padding',
           value: control.value as FMargins,
-          callBack: (value, old) => ControlBuilder.toDB(
+          callBack: (final value, final old) => ControlBuilder.toDB(
             prj,
             page,
             node,
@@ -588,7 +586,7 @@ class ControlBuilder {
           page: page,
           title: control.title ?? 'Value',
           value: control.value as FTextTypeInput,
-          callBack: (value, old) => ControlBuilder.toDB(
+          callBack: (final value, final old) => ControlBuilder.toDB(
             prj,
             page,
             node,
@@ -610,7 +608,7 @@ class ControlBuilder {
           title: control.title ?? 'From',
           value: control.value as FDataset,
           isAttrRequired: control.flag,
-          callBack: (value, old) => ControlBuilder.toDB(
+          callBack: (final value, final old) => ControlBuilder.toDB(
             prj,
             page,
             node,
@@ -640,7 +638,7 @@ class ControlBuilder {
           key: ValueKey('${node.nid}'),
           node: node,
           page: page,
-          callBack: (list) => PageQueries.update(page),
+          callBack: (final list) => PageQueries.update(page),
         ),
       );
     }
@@ -651,7 +649,7 @@ class ControlBuilder {
           key: ValueKey('${node.nid}'),
           node: node,
           page: page,
-          callBack: (list) => PageQueries.update(page),
+          callBack: (final list) => PageQueries.update(page),
         ),
       );
     }
@@ -669,7 +667,7 @@ class ControlBuilder {
     return BoxFitControl(
       key: ValueKey('${node.nid}'),
       boxFit: control.value,
-      callBack: (value, old) => ControlBuilder.toDB(
+      callBack: (final value, final old) => ControlBuilder.toDB(
         prj,
         page,
         node,
@@ -695,7 +693,7 @@ class ControlBuilder {
         key: ValueKey('${node.nid}'),
         title: control.title,
         value: control.value as bool,
-        callBack: (value, old) => ControlBuilder.toDB(
+        callBack: (final value, final old) => ControlBuilder.toDB(
           prj,
           page,
           node,
@@ -728,7 +726,7 @@ class ControlBuilder {
       type:
           isOnlySolid ? FillTypeControlType.onlySolid : FillTypeControlType.all,
       fill: control.value,
-      callBack: (value, styled, old) {
+      callBack: (final value, final styled, final old) {
         node.body.attributes[control.key] = value;
         if (!styled) {
           ControlBuilder.toDB(
@@ -763,7 +761,7 @@ class ControlBuilder {
       page: page,
       path: control.value,
       isForAddData: true,
-      callBack: (value, old) => ControlBuilder.toDB(
+      callBack: (final value, final old) => ControlBuilder.toDB(
         prj,
         page,
         node,
@@ -793,7 +791,7 @@ class ControlBuilder {
       size: control.value,
       isFromSizesPrefab: false,
       keyAttr: control.key,
-      callBack: (value, old) => ControlBuilder.toDB(
+      callBack: (final value, final old) => ControlBuilder.toDB(
         prj,
         page,
         node,

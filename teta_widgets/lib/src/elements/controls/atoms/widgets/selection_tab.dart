@@ -3,7 +3,6 @@
 
 // Flutter imports:
 import 'package:flutter/material.dart';
-
 // Package imports:
 import 'package:hovering/hovering.dart';
 import 'package:teta_core/src/design_system/palette.dart';
@@ -13,7 +12,7 @@ class SelectionTab extends StatelessWidget {
     required this.isSelected,
     required this.onTap,
     required this.icon,
-    Key? key,
+    final Key? key,
   }) : super(key: key);
 
   final bool isSelected;
@@ -21,20 +20,20 @@ class SelectionTab extends StatelessWidget {
   final IconData icon;
 
   @override
-  Widget build(BuildContext context) {
+  Widget build(final BuildContext context) {
     return Expanded(
       child: GestureDetector(
         onTap: onTap,
         child: HoverWidget(
           hoverChild: body(isHovered: !isSelected),
-          onHover: (e) {},
+          onHover: (final e) {},
           child: body(isHovered: false),
         ),
       ),
     );
   }
 
-  Widget body({required bool isHovered}) => Container(
+  Widget body({required final bool isHovered}) => Container(
         margin: const EdgeInsets.only(right: 4),
         height: 40,
         decoration: BoxDecoration(

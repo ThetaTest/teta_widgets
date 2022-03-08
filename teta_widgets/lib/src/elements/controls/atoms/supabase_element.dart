@@ -3,7 +3,6 @@
 
 // Flutter imports:
 import 'package:flutter/material.dart';
-
 // Package imports:
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:teta_core/src/blocs/focus/index.dart';
@@ -12,7 +11,6 @@ import 'package:teta_core/src/design_system/text.dart';
 import 'package:teta_core/src/design_system/textfield/textfield.dart';
 import 'package:teta_core/src/models/page.dart';
 import 'package:teta_core/src/models/supabase_map_element.dart';
-
 // Project imports:
 import 'package:teta_widgets/src/elements/controls/atoms/text.dart';
 import 'package:teta_widgets/src/elements/nodes/node.dart';
@@ -23,7 +21,7 @@ class SupabaseMapElementControl extends StatefulWidget {
     required this.value,
     required this.page,
     required this.callBack,
-    Key? key,
+    final Key? key,
   }) : super(key: key);
 
   final CNode node;
@@ -49,9 +47,9 @@ class SupabaseMapElementControlState extends State<SupabaseMapElementControl> {
   }
 
   @override
-  Widget build(BuildContext context) {
+  Widget build(final BuildContext context) {
     return BlocListener<FocusBloc, List<CNode>>(
-      listener: (context, state) {
+      listener: (final context, final state) {
         if (state.isNotEmpty) {
           if (state.first.nid != nodeId) {
             setState(() {
@@ -77,7 +75,7 @@ class SupabaseMapElementControlState extends State<SupabaseMapElementControl> {
           CTextField(
             //text: text,
             controller: controller,
-            callBack: (value) {
+            callBack: (final value) {
               final old = widget.value;
               final newValue = widget.value.copyWith(key: value);
               widget.callBack(newValue, old);
@@ -88,7 +86,7 @@ class SupabaseMapElementControlState extends State<SupabaseMapElementControl> {
             value: widget.value.value,
             page: widget.page,
             title: 'Value',
-            callBack: (value, old) {
+            callBack: (final value, final old) {
               final newValue = widget.value.copyWith(value: value);
               widget.callBack(newValue, widget.value);
             },

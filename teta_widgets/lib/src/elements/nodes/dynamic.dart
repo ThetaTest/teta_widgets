@@ -2,14 +2,12 @@
 // Package imports:
 // ignore_for_file: public_member_api_docs, annotate_overrides, overridden_fields, lines_longer_than_80_chars
 
-// Flutter imports:
-import 'package:flutter/material.dart';
-
 // Package imports:
 import 'package:enum_to_string/enum_to_string.dart';
+// Flutter imports:
+import 'package:flutter/material.dart';
 import 'package:teta_core/src/models/dataset.dart';
 import 'package:teta_core/src/models/variable.dart';
-
 // Project imports:
 import 'package:teta_widgets/src/elements/controls/control_model.dart';
 import 'package:teta_widgets/src/elements/controls/key_constants.dart';
@@ -87,7 +85,7 @@ class NDynamic extends CNode {
   String? description;
 
   /// Get intrinsic states by node type
-  static IntrinsicStates getIntrinsicStates(NType globalType) {
+  static IntrinsicStates getIntrinsicStates(final NType globalType) {
     return types.putIfAbsent(
       EnumToString.convertToString(globalType),
       () => IntrinsicStates.get(globalType),
@@ -95,7 +93,7 @@ class NDynamic extends CNode {
   }
 
   /// Get node body by type
-  static NodeBody getBody(NType type) => NodeBody.get(type);
+  static NodeBody getBody(final NType type) => NodeBody.get(type);
 
   @override
   List<Object?> get props => [
@@ -117,8 +115,8 @@ class NDynamic extends CNode {
 
   /// Instantiate a node from json
   static NDynamic fromJson(
-    Map<String, dynamic> doc,
-    int pageId,
+    final Map<String, dynamic> doc,
+    final int pageId,
   ) {
     final globalType = NodeType.fromString(doc[DBKeys.type] as String);
 
@@ -169,7 +167,7 @@ class NDynamic extends CNode {
 
   /// Update members with incoming json
   void mergeJson(
-    Map<String, dynamic> map,
+    final Map<String, dynamic> map,
   ) {
     body.mergeJson(map);
     for (final key in map.keys) {
@@ -196,11 +194,11 @@ class NDynamic extends CNode {
 
   @override
   Widget toWidget({
-    required List<VariableObject> params,
-    required List<VariableObject> states,
-    required List<DatasetObject> dataset,
-    required bool forPlay,
-    int? loop,
+    required final List<VariableObject> params,
+    required final List<VariableObject> states,
+    required final List<DatasetObject> dataset,
+    required final bool forPlay,
+    final int? loop,
   }) {
     return body.toWidget(
       params: params,
@@ -215,7 +213,7 @@ class NDynamic extends CNode {
   }
 
   @override
-  String toCode(BuildContext context) => '''
+  String toCode(final BuildContext context) => '''
       ${description != '' && description != null ? '// $description' : ''}
       ${body.toCode(context, this, child, children, pageId!, null)}
       ''';
@@ -247,14 +245,14 @@ class NDynamic extends CNode {
 
   /// Instantiate a new node (deep copy) with optional parameters
   NDynamic copyWith({
-    int? nid,
-    int? parent,
-    String? name,
-    int? index,
-    FChildrenIds? childrenIds,
-    int? pageId,
-    BuildContext? context,
-    bool? inSpawned,
+    final int? nid,
+    final int? parent,
+    final String? name,
+    final int? index,
+    final FChildrenIds? childrenIds,
+    final int? pageId,
+    final BuildContext? context,
+    final bool? inSpawned,
   }) =>
       NDynamic(
         nid: nid ?? this.nid,

@@ -10,10 +10,10 @@ import 'package:teta_widgets/src/elements/nodes/node_body.dart';
 
 /// PageView Template
 String concentricPageViewCodeTemplate(
-  BuildContext context,
-  NodeBody body,
-  CNode node,
-  List<CNode> children,
+  final BuildContext context,
+  final NodeBody body,
+  final CNode node,
+  final List<CNode> children,
 ) {
   final fill = (body.attributes[DBKeys.fill] as FFill).getHexColor(context);
 

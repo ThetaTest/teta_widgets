@@ -3,7 +3,6 @@
 
 // Flutter imports:
 import 'package:flutter/material.dart';
-
 // Package imports:
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:hovering/hovering.dart';
@@ -11,7 +10,6 @@ import 'package:teta_core/src/blocs/focus/bloc.dart';
 import 'package:teta_core/src/design_system/palette.dart';
 import 'package:teta_core/src/design_system/text.dart';
 import 'package:teta_core/src/design_system/textfield/minitextfield.dart';
-
 // Project imports:
 import 'package:teta_widgets/src/elements/features/border_radius.dart';
 import 'package:teta_widgets/src/elements/nodes/node.dart';
@@ -21,7 +19,7 @@ class BorderRadiusControl extends StatefulWidget {
     required this.node,
     required this.borderRadius,
     required this.callBack,
-    Key? key,
+    final Key? key,
   }) : super(key: key);
 
   final CNode node;
@@ -53,9 +51,9 @@ class BorderRadiusControlState extends State<BorderRadiusControl> {
   }
 
   @override
-  Widget build(BuildContext context) {
+  Widget build(final BuildContext context) {
     return BlocListener<FocusBloc, List<CNode>>(
-      listener: (context, state) {
+      listener: (final context, final state) {
         if (state.isNotEmpty) {
           if (state.first.nid != nodeId) {
             setState(() {
@@ -70,7 +68,7 @@ class BorderRadiusControlState extends State<BorderRadiusControl> {
         }
       },
       child: BlocBuilder<FocusBloc, List<CNode>>(
-        builder: (context, state) {
+        builder: (final context, final state) {
           return Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
@@ -100,7 +98,7 @@ class BorderRadiusControlState extends State<BorderRadiusControl> {
                             color: Colors.white,
                           ),
                         ),
-                        onHover: (e) {},
+                        onHover: (final e) {},
                         child: Container(
                           padding: const EdgeInsets.all(4),
                           decoration: BoxDecoration(
@@ -128,7 +126,7 @@ class BorderRadiusControlState extends State<BorderRadiusControl> {
                       text: widget.borderRadius.radius![0].toString(),
                       hpadding: 4,
                       withSwipe: true,
-                      callBack: (text) {
+                      callBack: (final text) {
                         radius![0] = double.parse(text);
                         if (isLinked) {
                           radius![1] = double.parse(text);
@@ -157,7 +155,7 @@ class BorderRadiusControlState extends State<BorderRadiusControl> {
                         text: widget.borderRadius.radius![1].toString(),
                         hpadding: 4,
                         withSwipe: true,
-                        callBack: (text) {
+                        callBack: (final text) {
                           radius![1] = double.parse(text);
                           if (isLinked) {
                             radius![0] = double.parse(text);
@@ -186,7 +184,7 @@ class BorderRadiusControlState extends State<BorderRadiusControl> {
                         text: widget.borderRadius.radius![2].toString(),
                         hpadding: 4,
                         withSwipe: true,
-                        callBack: (text) {
+                        callBack: (final text) {
                           radius![2] = double.parse(text);
                           if (isLinked) {
                             radius![0] = double.parse(text);
@@ -215,7 +213,7 @@ class BorderRadiusControlState extends State<BorderRadiusControl> {
                         text: widget.borderRadius.radius![3].toString(),
                         hpadding: 4,
                         withSwipe: true,
-                        callBack: (text) {
+                        callBack: (final text) {
                           radius![3] = double.parse(text);
                           if (isLinked) {
                             radius![0] = double.parse(text);

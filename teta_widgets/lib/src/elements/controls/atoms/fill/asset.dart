@@ -4,7 +4,6 @@
 // Flutter imports:
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
-
 // Package imports:
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:supabase/supabase.dart';
@@ -17,7 +16,6 @@ import 'package:teta_core/src/design_system/text.dart';
 import 'package:teta_core/src/models/asset_file.dart';
 import 'package:teta_core/src/models/palette.dart';
 import 'package:teta_core/src/models/project.dart';
-
 // Project imports:
 import 'package:teta_widgets/src/elements/features/features.dart';
 import 'package:teta_widgets/src/elements/nodes/node.dart';
@@ -27,7 +25,7 @@ class AssetFillControl extends StatefulWidget {
     required this.node,
     required this.fill,
     required this.callBack,
-    Key? key,
+    final Key? key,
   }) : super(key: key);
 
   final CNode node;
@@ -40,18 +38,18 @@ class AssetFillControl extends StatefulWidget {
 
 class AssetFillControlState extends State<AssetFillControl> {
   @override
-  Widget build(BuildContext context) {
+  Widget build(final BuildContext context) {
     return BlocBuilder<FocusProjectBloc, FocusProjectState>(
-      builder: (context, prjState) => prjState is ProjectLoaded
+      builder: (final context, final prjState) => prjState is ProjectLoaded
           ? BlocBuilder<FocusBloc, List<CNode>>(
-              builder: (context, state) {
+              builder: (final context, final state) {
                 //updateState(state);
                 return BlocBuilder<SupabaseCubit, SupabaseClient?>(
-                  builder: (context, client) {
+                  builder: (final context, final client) {
                     if (client == null) return const SizedBox();
                     return FutureBuilder(
                       future: getList(client, prjState.prj),
-                      builder: (context, snapshot) {
+                      builder: (final context, final snapshot) {
                         if (!snapshot.hasData) {
                           return const Center(
                             child: CircularProgressIndicator(),
@@ -77,11 +75,11 @@ class AssetFillControlState extends State<AssetFillControl> {
                                   child: CDropdownImageAssets(
                                     value: widget.fill.file,
                                     items: list,
-                                    onChange: (value) {
+                                    onChange: (final value) {
                                       PaletteModel? model;
                                       BlocProvider.of<PaletteBloc>(context)
                                           .state
-                                          .forEach((element) {
+                                          .forEach((final element) {
                                         if (element.name == value.name) {
                                           model = element;
                                         }
@@ -112,8 +110,8 @@ class AssetFillControlState extends State<AssetFillControl> {
   }
 
   Future<List<AssetFile>> getList(
-    SupabaseClient client,
-    ProjectObject prj,
+    final SupabaseClient client,
+    final ProjectObject prj,
   ) async {
     final files =
         await client.storage.from('public').list(path: '${prj.name}/assets');

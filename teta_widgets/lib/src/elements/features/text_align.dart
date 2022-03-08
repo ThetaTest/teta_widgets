@@ -8,7 +8,7 @@ import 'package:flutter/material.dart';
 class FTextAlign {
   /// Set of funcs to use TextAlign to Teta
   FTextAlign({
-    TextAlign align = TextAlign.left,
+    final TextAlign align = TextAlign.left,
   }) : _align = align;
 
   TextAlign _align;
@@ -16,7 +16,7 @@ class FTextAlign {
   /// Get actual value
   TextAlign get get => _align;
 
-  static FTextAlign fromJson(String? json) {
+  static FTextAlign fromJson(final String? json) {
     if (json != null) {
       return FTextAlign(
         align: _convertJsonToValue(json),
@@ -28,22 +28,25 @@ class FTextAlign {
 
   String toJson() => _convertValueToJson(_align);
 
-  static TextAlign _convertJsonToValue(String key) {
+  static TextAlign _convertJsonToValue(final String key) {
     if (key == 'c') return TextAlign.center;
     if (key == 'r') return TextAlign.right;
     return TextAlign.left;
   }
 
-  static String _convertValueToJson(TextAlign value) {
+  static String _convertValueToJson(final TextAlign value) {
     if (value == TextAlign.center) return 'c';
     if (value == TextAlign.right) return 'r';
     return 'l';
   }
 
-  void update({required String value, required BuildContext context}) =>
+  void update({
+    required final String value,
+    required final BuildContext context,
+  }) =>
       _align = _convertJsonToValue(value);
 
-  static String _convertValueToCode(TextAlign? value) {
+  static String _convertValueToCode(final TextAlign? value) {
     var result = 'TextAlign.left';
     if (value == TextAlign.center) result = 'TextAlign.center';
     if (value == TextAlign.right) result = 'TextAlign.right';

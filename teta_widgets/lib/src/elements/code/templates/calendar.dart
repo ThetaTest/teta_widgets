@@ -3,7 +3,6 @@
 
 // Flutter imports:
 import 'package:flutter/material.dart';
-
 // Project imports:
 import 'package:teta_widgets/src/elements/code/snippets.dart';
 import 'package:teta_widgets/src/elements/controls/key_constants.dart';
@@ -12,7 +11,11 @@ import 'package:teta_widgets/src/elements/features/dataset.dart';
 import 'package:teta_widgets/src/elements/nodes/node.dart';
 
 /// Generates the code for Padding widget
-String calendarCodeTemplate(BuildContext context, CNode node, CNode? child) {
+String calendarCodeTemplate(
+  final BuildContext context,
+  final CNode node,
+  final CNode? child,
+) {
   final dataset = node.body.attributes[DBKeys.datasetInput] as FDataset;
   var firstDecoration = CS
       .boxDecoration(context, node.body, DBKeys.bgFill)

@@ -1,13 +1,11 @@
 // Flutter imports:
-import 'package:flutter/material.dart';
-
 // Package imports:
 import 'package:diacritic/diacritic.dart';
+import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:recase/recase.dart';
 import 'package:teta_core/src/blocs/focus_project/index.dart';
 import 'package:teta_core/src/models/variable.dart';
-
 // Project imports:
 import 'package:teta_widgets/src/elements/nodes/enum.dart';
 import 'package:teta_widgets/src/elements/nodes/node.dart';
@@ -15,16 +13,16 @@ import 'package:teta_widgets/src/elements/nodes/node_body.dart';
 
 /// Generates the code for a page
 String pageComponentCodeTemplate(
-  BuildContext context,
-  NodeBody body,
-  List<CNode> children,
-  int pageId,
+  final BuildContext context,
+  final NodeBody body,
+  final List<CNode> children,
+  final int pageId,
 ) {
   final page =
       (BlocProvider.of<FocusProjectBloc>(context).state as ProjectLoaded)
           .prj
           .pages!
-          .firstWhere((element) => element.id == pageId);
+          .firstWhere((final element) => element.id == pageId);
 
   final temp = removeDiacritics(
     page.name
@@ -97,7 +95,7 @@ String pageComponentCodeTemplate(
 
   final authSocialButtonsImport = (page.flatList ?? <CNode>[])
           .where(
-            (element) =>
+            (final element) =>
                 element.intrinsicState.type == NType.loginWithGoogle ||
                 element.intrinsicState.type == NType.loginWithApple ||
                 element.intrinsicState.type == NType.loginWithFacebook ||
@@ -109,19 +107,19 @@ String pageComponentCodeTemplate(
       : '';
 
   final iconImport = (page.flatList ?? <CNode>[])
-          .where((element) => element.intrinsicState.type == NType.icon)
+          .where((final element) => element.intrinsicState.type == NType.icon)
           .isNotEmpty
       ? "import 'package:material_design_icons_flutter/material_design_icons_flutter.dart';"
       : '';
 
   final lottieImport = (page.flatList ?? <CNode>[])
-          .where((element) => element.intrinsicState.type == NType.lottie)
+          .where((final element) => element.intrinsicState.type == NType.lottie)
           .isNotEmpty
       ? "import 'package:lottie/lottie.dart';"
       : '';
 
   final badgeImport = (page.flatList ?? <CNode>[])
-          .where((element) => element.intrinsicState.type == NType.badge)
+          .where((final element) => element.intrinsicState.type == NType.badge)
           .isNotEmpty
       ? "import 'package:badges/badges.dart';"
       : '';

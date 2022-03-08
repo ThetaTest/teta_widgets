@@ -4,14 +4,12 @@
 // Flutter imports:
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
-
 // Package imports:
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:teta_core/teta_core.dart';
-import 'package:tinycolor/tinycolor.dart';
-
 // Project imports:
 import 'package:teta_widgets/src/elements/index.dart';
+import 'package:tinycolor/tinycolor.dart';
 
 // ignore: import_of_legacy_library_into_null_safe
 
@@ -33,7 +31,7 @@ class ScaffoldMobile extends StatelessWidget {
     required this.params,
     required this.states,
     required this.dataset,
-    Key? key,
+    final Key? key,
     this.index,
     this.appBar,
     this.bottomBar,
@@ -62,10 +60,11 @@ class ScaffoldMobile extends StatelessWidget {
   final List<DatasetObject> dataset;
 
   @override
-  Widget build(BuildContext context) {
+  Widget build(final BuildContext context) {
     final isPage = BlocProvider.of<FocusPageBloc>(context).state.isPage;
     if (!isPage ||
-        children.indexWhere((element) => element.globalType == NType.appBar) ==
+        children.indexWhere(
+                (final element) => element.globalType == NType.appBar) ==
             -1) {
       return forPlay
           ? SizedBox(
@@ -82,11 +81,11 @@ class ScaffoldMobile extends StatelessWidget {
     return _scaffold(context);
   }
 
-  Widget _scaffold(BuildContext context) {
+  Widget _scaffold(final BuildContext context) {
     CNode? drawerNode;
     try {
       drawerNode = children.firstWhere(
-        (element) => element.globalType == NType.drawer,
+        (final element) => element.globalType == NType.drawer,
         // ignore: null_closures
         orElse: null,
       );
@@ -120,11 +119,11 @@ class ScaffoldMobile extends StatelessWidget {
   /// Returns the body of Scaffold,
   /// which consists in a [Stack] with [appBar] and [bottomBar].
   /// Eventualy, if !forPlay, also [drawer]
-  Widget stack(BuildContext context) {
+  Widget stack(final BuildContext context) {
     CNode? appBar;
     try {
       appBar = children.firstWhere(
-        (element) => element.globalType == NType.appBar,
+        (final element) => element.globalType == NType.appBar,
         // ignore: null_closures
         orElse: null,
       );
@@ -139,7 +138,7 @@ class ScaffoldMobile extends StatelessWidget {
     CNode? bottomBar;
     try {
       bottomBar = children.firstWhere(
-        (element) => element.globalType == NType.bottomBar,
+        (final element) => element.globalType == NType.bottomBar,
         // ignore: null_closures
         orElse: null,
       );
@@ -154,7 +153,7 @@ class ScaffoldMobile extends StatelessWidget {
     CNode? drawerNode;
     try {
       drawerNode = children.firstWhere(
-        (element) => element.globalType == NType.drawer,
+        (final element) => element.globalType == NType.drawer,
         // ignore: null_closures
         orElse: null,
       );
@@ -242,10 +241,10 @@ class ScaffoldMobile extends StatelessWidget {
   }
 
   List<Widget> childrenWidgets(
-    BuildContext context, {
-    required bool withNewSectionButton,
+    final BuildContext context, {
+    required final bool withNewSectionButton,
   }) {
-    return children.map((e) {
+    return children.map((final e) {
       return e.intrinsicState.type != NType.bottomBar &&
               e.intrinsicState.type != NType.appBar &&
               e.intrinsicState.type != NType.drawer
@@ -259,16 +258,16 @@ class ScaffoldMobile extends StatelessWidget {
     }).toList();
   }
 
-  Widget childWids(BuildContext context) {
+  Widget childWids(final BuildContext context) {
     final widgets = children
         .where(
-          (e) =>
+          (final e) =>
               e.intrinsicState.type != NType.bottomBar &&
               e.intrinsicState.type != NType.appBar &&
               e.intrinsicState.type != NType.drawer,
         )
         .map(
-          (e) => e.toWidget(
+          (final e) => e.toWidget(
             forPlay: forPlay,
             params: params,
             states: states,
@@ -279,7 +278,7 @@ class ScaffoldMobile extends StatelessWidget {
     return widgets.isNotEmpty ? widgets.first : placeholder(context);
   }
 
-  Widget placeholder(BuildContext context) {
+  Widget placeholder(final BuildContext context) {
     return Center(
       child: Column(
         mainAxisAlignment: MainAxisAlignment.center,

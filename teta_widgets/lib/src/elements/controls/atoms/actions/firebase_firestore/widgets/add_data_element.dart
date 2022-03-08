@@ -3,13 +3,11 @@
 
 // Flutter imports:
 import 'package:flutter/material.dart';
-
 // Package imports:
 import 'package:teta_core/src/design_system/dropdowns/dropdown.dart';
 import 'package:teta_core/src/design_system/dropdowns/dropdown_for_type.dart';
 import 'package:teta_core/src/design_system/textfield/textfield.dart';
 import 'package:teta_core/src/models/page.dart';
-
 // Project imports:
 import 'package:teta_widgets/src/elements/features/text_type_input.dart';
 
@@ -19,7 +17,7 @@ class AddDataElement extends StatefulWidget {
     required this.value,
     required this.page,
     required this.callback,
-    Key? key,
+    final Key? key,
   }) : super(key: key);
 
   final String name;
@@ -47,7 +45,7 @@ class AddDataElementState extends State<AddDataElement> {
   }
 
   @override
-  Widget build(BuildContext context) {
+  Widget build(final BuildContext context) {
     return Container(
       padding: const EdgeInsets.all(8),
       margin: const EdgeInsets.only(top: 8),
@@ -57,7 +55,7 @@ class AddDataElementState extends State<AddDataElement> {
           CTextField(
             hpadding: 0,
             controller: nameController,
-            callBack: (v) {
+            callBack: (final v) {
               final old = widget.value;
               value.value = v;
               widget.callback(widget.value, old);
@@ -75,7 +73,7 @@ class AddDataElementState extends State<AddDataElement> {
                             ? 'param'
                             : 'text',
                 items: const ['text', 'param', 'state', 'dataset'],
-                onChange: (v) {
+                onChange: (final v) {
                   var typeOfInput = FTextTypeEnum.text;
                   if (v == 'text') {
                     typeOfInput = FTextTypeEnum.text;
@@ -101,7 +99,7 @@ class AddDataElementState extends State<AddDataElement> {
               hpadding: 0,
               //text: text,
               controller: valueController,
-              callBack: (v) {
+              callBack: (final v) {
                 final old = value;
                 value.value = v;
                 widget.callback(value.toJson(), old.toJson());
@@ -110,12 +108,13 @@ class AddDataElementState extends State<AddDataElement> {
           if (value.type == FTextTypeEnum.param)
             CDropdown(
               value: widget.page.params
-                      .map((e) => e.name)
+                      .map((final e) => e.name)
                       .contains(value.paramName)
                   ? value.paramName
                   : null,
-              items: widget.page.params.map((e) => e.get as String).toList(),
-              onChange: (newValue) {
+              items:
+                  widget.page.params.map((final e) => e.get as String).toList(),
+              onChange: (final newValue) {
                 final old = value;
                 value.paramName = newValue;
                 widget.callback(value.toJson(), old.toJson());
@@ -124,12 +123,12 @@ class AddDataElementState extends State<AddDataElement> {
           if (value.type == FTextTypeEnum.state)
             CDropdown(
               value: widget.page.states
-                      .map((e) => e.name)
+                      .map((final e) => e.name)
                       .contains(value.stateName)
                   ? value.stateName
                   : null,
-              items: widget.page.states.map((e) => e.name).toList(),
-              onChange: (newValue) {
+              items: widget.page.states.map((final e) => e.name).toList(),
+              onChange: (final newValue) {
                 final old = value;
                 value.stateName = newValue;
                 widget.callback(value.toJson(), old.toJson());
@@ -138,16 +137,16 @@ class AddDataElementState extends State<AddDataElement> {
           if (value.type == FTextTypeEnum.dataset)
             CDropdown(
               value: widget.page.datasets
-                      .map((e) => e.getName)
-                      .where((element) => element != 'null')
+                      .map((final e) => e.getName)
+                      .where((final element) => element != 'null')
                       .contains(value.datasetName)
                   ? value.datasetName
                   : null,
               items: widget.page.datasets
-                  .map((e) => e.getName)
-                  .where((element) => element != 'null')
+                  .map((final e) => e.getName)
+                  .where((final element) => element != 'null')
                   .toList(),
-              onChange: (newValue) {
+              onChange: (final newValue) {
                 setState(() {
                   databaseName = newValue!;
                 });
@@ -160,7 +159,7 @@ class AddDataElementState extends State<AddDataElement> {
             CDropdown(
               value: widget.page.datasets
                       .firstWhere(
-                        (element) => element.getName == value.datasetName,
+                        (final element) => element.getName == value.datasetName,
                       )
                       .getMap
                       .first
@@ -170,13 +169,15 @@ class AddDataElementState extends State<AddDataElement> {
                   ? value.datasetAttr
                   : null,
               items: widget.page.datasets
-                  .firstWhere((element) => element.getName == value.datasetName)
+                  .firstWhere(
+                    (final element) => element.getName == value.datasetName,
+                  )
                   .getMap
                   .first
                   .keys
                   .toSet()
                   .toList(),
-              onChange: (newValue) {
+              onChange: (final newValue) {
                 setState(() {
                   databaseAttribute = newValue!;
                 });

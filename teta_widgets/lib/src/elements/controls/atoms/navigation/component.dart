@@ -4,7 +4,6 @@
 
 // Flutter imports:
 import 'package:flutter/material.dart';
-
 // Package imports:
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_feather_icons/flutter_feather_icons.dart';
@@ -17,7 +16,6 @@ import 'package:teta_core/src/models/dataset.dart';
 import 'package:teta_core/src/models/page.dart';
 import 'package:teta_core/src/models/project.dart';
 import 'package:teta_core/src/models/variable.dart';
-
 // Project imports:
 import 'package:teta_widgets/src/elements/controls/key_constants.dart';
 import 'package:teta_widgets/src/elements/nodes/node.dart';
@@ -29,7 +27,7 @@ class ComponentControl extends StatefulWidget {
     required this.node,
     required this.callBack,
     required this.callBackParameters,
-    Key? key,
+    final Key? key,
   }) : super(key: key);
 
   final ProjectObject prj;
@@ -55,10 +53,12 @@ class ComponentControlState extends State<ComponentControl> {
     nodeId = widget.node.nid;
     name = widget.node.body.attributes[DBKeys.componentName] as String? ?? '';
     final components =
-        widget.prj.pages!.where((element) => !element.isPage).toList();
+        widget.prj.pages!.where((final element) => !element.isPage).toList();
     try {
-      if (components.indexWhere((element) => element.name == name) != -1) {
-        pageObject = components.firstWhere((element) => element.name == name);
+      if (components.indexWhere((final element) => element.name == name) !=
+          -1) {
+        pageObject =
+            components.firstWhere((final element) => element.name == name);
         dropdown = pageObject?.name;
         if (widget.node.body.attributes[DBKeys.paramsToSend] != null) {
           map = widget.node.body.attributes[DBKeys.paramsToSend]
@@ -68,16 +68,16 @@ class ComponentControlState extends State<ComponentControl> {
       }
     } catch (e) {
       if (components.isNotEmpty) {
-        pageObject = components.where((element) => !element.isPage).first;
+        pageObject = components.where((final element) => !element.isPage).first;
         dropdown = pageObject?.name;
       }
     }
   }
 
   @override
-  Widget build(BuildContext context) {
+  Widget build(final BuildContext context) {
     final components = (widget.prj.pages ?? <PageObject>[])
-        .where((element) => !element.isPage);
+        .where((final element) => !element.isPage);
     return DecoratedBox(
       decoration: BoxDecoration(
         color: Colors.black,
@@ -95,13 +95,13 @@ class ComponentControlState extends State<ComponentControl> {
           ),
           CDropdown(
             value: dropdown,
-            items: components.map((e) => e.name).toList(),
-            onChange: (String? newValue) {
+            items: components.map((final e) => e.name).toList(),
+            onChange: (final String? newValue) {
               if (newValue != null) {
                 final old =
                     widget.node.body.attributes[DBKeys.componentName] as String;
                 pageObject = components
-                    .firstWhere((element) => element.name == newValue);
+                    .firstWhere((final element) => element.name == newValue);
                 setState(() {
                   dropdown = newValue;
                   name = '${pageObject!.id}';
@@ -130,7 +130,7 @@ class ComponentControlState extends State<ComponentControl> {
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: pageObject!.params
                           .map(
-                            (variable) => Element(
+                            (final variable) => Element(
                               variable: variable,
                               page: widget.page,
                               map: map,
@@ -180,7 +180,7 @@ class Element extends StatefulWidget {
     required this.page,
     required this.map,
     required this.callBackParameters,
-    Key? key,
+    final Key? key,
   }) : super(key: key);
 
   final VariableObject variable;
@@ -211,7 +211,7 @@ class ElementState extends State<Element> {
         DatasetObject(
           name: 'Parameters',
           map: widget.page.params
-              .map((e) => <String, dynamic>{e.name: e.get})
+              .map((final e) => <String, dynamic>{e.name: e.get})
               .toList(),
         ),
       );
@@ -221,7 +221,7 @@ class ElementState extends State<Element> {
         DatasetObject(
           name: 'States',
           map: widget.page.states
-              .map((e) => <String, dynamic>{e.name: e.get})
+              .map((final e) => <String, dynamic>{e.name: e.get})
               .toList(),
         ),
       );
@@ -237,14 +237,16 @@ class ElementState extends State<Element> {
   }
 
   @override
-  Widget build(BuildContext context) {
+  Widget build(final BuildContext context) {
     return StatefulBuilder(
-      builder: (context, setState) {
+      builder: (final context, final setState) {
         var listSecondDropwdown = <Map<String, dynamic>>[];
         if (dropdownDataset != null) {
           try {
             listSecondDropwdown = listDataset
-                .firstWhere((element) => element.getName == dropdownDataset)
+                .firstWhere(
+                  (final element) => element.getName == dropdownDataset,
+                )
                 .getMap;
           } catch (_) {}
         }
@@ -265,14 +267,14 @@ class ElementState extends State<Element> {
                 value: dropdownDataset,
                 items: listDataset
                     .where(
-                      (element) =>
+                      (final element) =>
                           element.getMap.isNotEmpty ||
                           element.getName == 'Text',
                     )
-                    .map((e) => e.getName)
+                    .map((final e) => e.getName)
                     .toSet()
                     .toList(),
-                onChange: (String? newValue) {
+                onChange: (final String? newValue) {
                   setState(() {
                     dropdownDataset = newValue;
                   });
@@ -280,7 +282,7 @@ class ElementState extends State<Element> {
               ),
               if (dropdownDataset != null && dropdownDataset == 'Text')
                 BlocBuilder<FocusBloc, List<CNode>>(
-                  builder: (context, state) {
+                  builder: (final context, final state) {
                     if (state.isNotEmpty) {
                       if (controller == null || nodeId != state.first.nid) {
                         nodeId = state.first.nid;
@@ -297,7 +299,7 @@ class ElementState extends State<Element> {
                       //text: text,
                       controller: controller!,
                       placeholder: 'Write here',
-                      callBack: (value) {
+                      callBack: (final value) {
                         widget.map[widget.variable.id ?? ''] = {
                           'dataset': dropdownDataset,
                           'label': value,
@@ -310,12 +312,12 @@ class ElementState extends State<Element> {
               if (dropdownDataset != null && dropdownDataset != 'Text')
                 CDropdown(
                   value: listSecondDropwdown.first.keys
-                              .map((key) => key)
+                              .map((final key) => key)
                               .toSet()
                               .toList()
                               .contains(dropdown ?? '') ||
                           listSecondDropwdown
-                              .map((map) => map.keys.first)
+                              .map((final map) => map.keys.first)
                               .toSet()
                               .toList()
                               .contains(dropdown ?? '')
@@ -324,14 +326,14 @@ class ElementState extends State<Element> {
                   items:
                       dropdownDataset == 'States' || dropdownDataset == 'Params'
                           ? listSecondDropwdown
-                              .map((map) => map.keys.first)
+                              .map((final map) => map.keys.first)
                               .toSet()
                               .toList()
                           : listSecondDropwdown.first.keys
-                              .map((key) => key)
+                              .map((final key) => key)
                               .toSet()
                               .toList(),
-                  onChange: (String? newValue) {
+                  onChange: (final String? newValue) {
                     if (newValue != null) {
                       setState(() {
                         dropdown = newValue;

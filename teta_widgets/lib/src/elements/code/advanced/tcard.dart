@@ -1,6 +1,5 @@
 // Flutter imports:
 import 'package:flutter/material.dart';
-
 // Project imports:
 import 'package:teta_widgets/src/elements/code/snippets.dart';
 import 'package:teta_widgets/src/elements/controls/key_constants.dart';
@@ -18,10 +17,10 @@ import 'package:teta_widgets/src/elements/nodes/node.dart';
 /// );
 /// ```
 String tCardCodeTemplate(
-  BuildContext context,
-  CNode node,
-  List<CNode> children,
-  int? loop,
+  final BuildContext context,
+  final CNode node,
+  final List<CNode> children,
+  final int? loop,
 ) {
   final slideSpeed = double.tryParse(
         (node.body.attributes[DBKeys.value] as FTextTypeInput).toCode(loop),

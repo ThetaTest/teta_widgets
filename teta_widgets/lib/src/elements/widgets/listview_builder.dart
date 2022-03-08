@@ -3,17 +3,15 @@
 
 // Flutter imports:
 import 'package:flutter/material.dart';
-
 // Package imports:
 import 'package:teta_core/teta_core.dart';
-
 // Project imports:
 import 'package:teta_widgets/src/elements/index.dart';
 
 class WListViewBuilder extends StatefulWidget {
   /// Returns a ListView.builder in Teta
   const WListViewBuilder(
-    Key? key, {
+    final Key? key, {
     required this.child,
     required this.node,
     required this.forPlay,
@@ -47,7 +45,7 @@ class WListViewBuilderState extends State<WListViewBuilder> {
   bool isLoading = true;
 
   @override
-  Widget build(BuildContext context) {
+  Widget build(final BuildContext context) {
     return NodeSelectionBuilder(
       node: widget.node,
       forPlay: widget.forPlay,
@@ -55,11 +53,11 @@ class WListViewBuilderState extends State<WListViewBuilder> {
     );
   }
 
-  Widget _body(BuildContext context) {
+  Widget _body(final BuildContext context) {
     _setDataset();
     final index = widget.value.datasetName != null
         ? widget.dataset.indexWhere(
-            (element) => element.getName == widget.value.datasetName,
+            (final element) => element.getName == widget.value.datasetName,
           )
         : -1;
     final db = index != -1 ? widget.dataset[index] : DatasetObject.empty();
@@ -69,7 +67,7 @@ class WListViewBuilderState extends State<WListViewBuilder> {
       shrinkWrap: widget.shrinkWrap,
       scrollDirection: widget.isVertical ? Axis.vertical : Axis.horizontal,
       itemCount: db.getMap.length,
-      itemBuilder: (context, index) => widget.child != null
+      itemBuilder: (final context, final index) => widget.child != null
           ? widget.child!.toWidget(
               forPlay: widget.forPlay,
               params: widget.params,
@@ -85,8 +83,9 @@ class WListViewBuilderState extends State<WListViewBuilder> {
 
   void _setDataset() {
     try {
-      final index = widget.dataset
-          .indexWhere((element) => element.getName == widget.value.datasetName);
+      final index = widget.dataset.indexWhere(
+        (final element) => element.getName == widget.value.datasetName,
+      );
       final db = index != -1 ? widget.dataset[index] : DatasetObject.empty();
       if (mounted) {
         if (db.getName != '') {

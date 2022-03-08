@@ -1,26 +1,24 @@
 // Flutter imports:
 // ignore_for_file: public_member_api_docs, lines_longer_than_80_chars, avoid_dynamic_calls
 
-// Flutter imports:
-import 'package:flutter/material.dart';
-
 // Package imports:
 import 'package:camera/camera.dart';
 import 'package:collection/collection.dart';
+// Flutter imports:
+import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:recase/recase.dart';
 import 'package:teta_core/src/rendering/nodes_original.dart';
 import 'package:teta_core/src/repositories/queries/node.dart';
 import 'package:teta_core/teta_core.dart';
-import 'package:webviewx/webviewx.dart';
-
 // Project imports:
 import 'package:teta_widgets/src/elements/index.dart';
+import 'package:webviewx/webviewx.dart';
 
 class WComponent extends StatefulWidget {
   /// Returns a Component
   const WComponent(
-    Key? key, {
+    final Key? key, {
     required this.node,
     required this.forPlay,
     required this.params,
@@ -67,7 +65,7 @@ class _WComponentState extends State<WComponent> {
   }
 
   @override
-  Widget build(BuildContext context) {
+  Widget build(final BuildContext context) {
     if (!isLoaded && component == null) {
       return const SizedBox();
     }
@@ -78,7 +76,10 @@ class _WComponentState extends State<WComponent> {
     }
   }
 
-  Future<List<CNode>> fetch(PageObject page, BuildContext context) async {
+  Future<List<CNode>> fetch(
+    final PageObject page,
+    final BuildContext context,
+  ) async {
     debugPrint('fetching');
     final list = await NodeQueries.fetchNodesByPage(page.id);
     final nodes = <CNode>[];
@@ -97,13 +98,14 @@ class _WComponentState extends State<WComponent> {
     final prjState =
         BlocProvider.of<FocusProjectBloc>(context).state as ProjectLoaded;
     PageObject? _component;
-    _component = prjState.prj.pages!
-        .firstWhereOrNull((element) => element.name == widget.componentName);
+    _component = prjState.prj.pages!.firstWhereOrNull(
+      (final element) => element.name == widget.componentName,
+    );
     if (_component != null) {
       _component = _component.copyWith(
         states: [
           ..._component.states
-              .map((e) => e.toJson())
+              .map((final e) => e.toJson())
               .map(VariableObject.fromJson)
               .toList()
         ],
@@ -132,10 +134,10 @@ class _WComponentState extends State<WComponent> {
     }
   }
 
-  Widget body(BuildContext context) {
+  Widget body(final BuildContext context) {
     return component != null
         ? BlocProvider<FocusPageBloc>(
-            create: (context) => FocusPageBloc()
+            create: (final context) => FocusPageBloc()
               ..add(
                 OnFocusPage(
                   prj: prjState!.prj,
@@ -146,7 +148,7 @@ class _WComponentState extends State<WComponent> {
                 ),
               ),
             child: BlocBuilder<FocusPageBloc, PageObject>(
-              builder: (context, page) {
+              builder: (final context, final page) {
                 return (page.scaffold == null)
                     ? const SizedBox()
                     : page.scaffold!.toWidget(
@@ -164,7 +166,9 @@ class _WComponentState extends State<WComponent> {
         : PlaceholderChildBuilder(name: widget.node.intrinsicState.displayName);
   }
 
-  String initializeParamsForUri(List<VariableObject> listVariableObjectParams) {
+  String initializeParamsForUri(
+    final List<VariableObject> listVariableObjectParams,
+  ) {
     var parametersString = '';
     for (final element in listVariableObjectParams) {
       final rc = ReCase(element.name);
@@ -185,8 +189,8 @@ class _WComponentState extends State<WComponent> {
     return parametersString;
   }
 
-  List<VariableObject> getVariableObjectsFromParams(PageObject page) {
-    return page.params.map((e) {
+  List<VariableObject> getVariableObjectsFromParams(final PageObject page) {
+    return page.params.map((final e) {
       if (widget.paramsToSend?[e.id] != null) {
         if (widget.paramsToSend?[e.id]['dataset'] == 'Text') {
           e.value = widget.paramsToSend?[e.id]['label'];
@@ -195,13 +199,13 @@ class _WComponentState extends State<WComponent> {
             DatasetObject(
               name: 'Parameters',
               map: widget.params
-                  .map((e) => <String, dynamic>{e.name: e.get})
+                  .map((final e) => <String, dynamic>{e.name: e.get})
                   .toList(),
             ),
             DatasetObject(
               name: 'States',
               map: widget.states
-                  .map((e) => <String, dynamic>{e.name: e.get})
+                  .map((final e) => <String, dynamic>{e.name: e.get})
                   .toList(),
             ),
             ...widget.dataset,
@@ -274,7 +278,7 @@ class _WComponentState extends State<WComponent> {
     }).toList();
   }
 
-  Widget hardCoded(PageObject page) {
+  Widget hardCoded(final PageObject page) {
     final _paramsString =
         initializeParamsForUri(getVariableObjectsFromParams(page));
     debugPrint(
@@ -283,7 +287,7 @@ class _WComponentState extends State<WComponent> {
     return WebViewX(
       width: double.maxFinite,
       height: double.maxFinite,
-      onWebViewCreated: (controller) {
+      onWebViewCreated: (final controller) {
         webViewController = controller;
         if (component?.runUrl != null) {
           webViewController?.loadContent(

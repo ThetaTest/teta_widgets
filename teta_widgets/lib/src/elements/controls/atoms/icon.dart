@@ -4,7 +4,6 @@
 
 // Flutter imports:
 import 'package:flutter/material.dart';
-
 // Package imports:
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:material_design_icons_flutter/icon_map.dart';
@@ -13,7 +12,6 @@ import 'package:teta_core/src/cubits/google_fonts/cubit.dart';
 import 'package:teta_core/src/design_system/palette.dart';
 import 'package:teta_core/src/design_system/text.dart';
 import 'package:teta_core/src/design_system/textfield/minitextfield.dart';
-
 // Project imports:
 import 'package:teta_widgets/src/elements/nodes/node.dart';
 
@@ -22,7 +20,7 @@ class IconControl extends StatefulWidget {
     required this.node,
     required this.icon,
     required this.callBack,
-    Key? key,
+    final Key? key,
   }) : super(key: key);
 
   final CNode node;
@@ -45,7 +43,7 @@ class IconControlState extends State<IconControl> {
   }
 
   @override
-  Widget build(BuildContext context) {
+  Widget build(final BuildContext context) {
     height = MediaQuery.of(context).size.height;
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
@@ -78,7 +76,7 @@ class IconControlState extends State<IconControl> {
     );
   }
 
-  void updateFont(MapEntry style) {
+  void updateFont(final MapEntry style) {
     widget.callBack(
       style.key as String,
       widget.icon,
@@ -92,7 +90,7 @@ class IconControlState extends State<IconControl> {
   void showPicker() {
     showDialog<void>(
       context: context,
-      builder: (context) {
+      builder: (final context) {
         final icons = iconMap.keys.map(IconDefinition.new).toList();
         final editingController = TextEditingController();
         var filteredIcons = icons.sublist(0, 64);
@@ -102,14 +100,15 @@ class IconControlState extends State<IconControl> {
 
         final cubit = GoogleFontsCubit()..updateTextToFind('');
         return StatefulBuilder(
-          builder: (context, setState) => BlocProvider<GoogleFontsCubit>(
-            create: (context) => cubit,
+          builder: (final context, final setState) =>
+              BlocProvider<GoogleFontsCubit>(
+            create: (final context) => cubit,
             child: AlertDialog(
               backgroundColor: const Color(0xFF222222),
               title: const CText('Change Icon', color: Palette.white),
               content: BlocBuilder<GoogleFontsCubit, String>(
                 bloc: cubit,
-                builder: (context, state) {
+                builder: (final context, final state) {
                   scrollController.addListener(() {
                     if (scrollController.position.atEdge) {
                       if (scrollController.position.pixels == 0) {
@@ -139,7 +138,7 @@ class IconControlState extends State<IconControl> {
                           controller: editingController,
                           placeholder: 'Write here',
                           color: Colors.white,
-                          callBack: (text) {
+                          callBack: (final text) {
                             cubit.updateTextToFind(text);
                             setState(() {
                               query = text;
@@ -166,7 +165,7 @@ class IconControlState extends State<IconControl> {
                                 const SliverGridDelegateWithFixedCrossAxisCount(
                               crossAxisCount: 8,
                             ),
-                            itemBuilder: (context, index) {
+                            itemBuilder: (final context, final index) {
                               final icon = filteredIcons[index];
                               return GestureDetector(
                                 onTap: () {
@@ -216,13 +215,17 @@ class IconControlState extends State<IconControl> {
 }
 
 List<IconDefinition> loadIcons(
-  String query,
-  int limit,
-  int after,
-  Iterable<IconDefinition> icons,
+  final String query,
+  final int limit,
+  final int after,
+  final Iterable<IconDefinition> icons,
 ) {
   var list = icons
-      .where((icon) => icon.title!.toLowerCase().contains(query.toLowerCase()))
+      .where(
+        (final icon) => icon.title!.toLowerCase().contains(
+              query.toLowerCase(),
+            ),
+      )
       .skip(after)
       .toList();
 
@@ -233,7 +236,7 @@ List<IconDefinition> loadIcons(
 final _iconLib = MdiIcons();
 
 class IconDefinition implements Comparable<IconDefinition> {
-  IconDefinition(String key) {
+  IconDefinition(final String key) {
     iconData = _iconLib[key];
     title = toKebabCase(key);
   }
@@ -241,16 +244,16 @@ class IconDefinition implements Comparable<IconDefinition> {
   IconData? iconData;
   String? title;
 
-  String toKebabCase(String str) {
+  String toKebabCase(final String str) {
     return str
         .replaceAllMapped(
           RegExp(
             r'[A-Z]{2,}(?=[A-Z][a-z]+[0-9]*|\b)|[A-Z]?[a-z]+[0-9]*|[A-Z]|[0-9]+',
           ),
-          (Match m) => '${m[0]!.toLowerCase()}_',
+          (final Match m) => '${m[0]!.toLowerCase()}_',
         )
         .split(RegExp(r'(_|\s)+'))
-        .takeWhile((value) => value != '')
+        .takeWhile((final value) => value != '')
         .join('-');
   }
 
@@ -258,7 +261,7 @@ class IconDefinition implements Comparable<IconDefinition> {
   String toString() => 'IconDefinition{iconData: $iconData, title: $title}';
 
   @override
-  bool operator ==(Object other) =>
+  bool operator ==(final Object other) =>
       identical(this, other) ||
       other is IconDefinition &&
           runtimeType == other.runtimeType &&
@@ -269,5 +272,6 @@ class IconDefinition implements Comparable<IconDefinition> {
   int get hashCode => iconData.hashCode ^ title.hashCode;
 
   @override
-  int compareTo(IconDefinition other) => title!.compareTo(other.title ?? '');
+  int compareTo(final IconDefinition other) =>
+      title!.compareTo(other.title ?? '');
 }

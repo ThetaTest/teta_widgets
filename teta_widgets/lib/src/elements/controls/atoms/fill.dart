@@ -3,7 +3,6 @@
 
 // Flutter imports:
 import 'package:flutter/material.dart';
-
 // Package imports:
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:teta_core/src/blocs/palette/index.dart';
@@ -11,7 +10,6 @@ import 'package:teta_core/src/design_system/dropdowns/dropdown_for_type.dart';
 import 'package:teta_core/src/design_system/palette.dart';
 import 'package:teta_core/src/design_system/text.dart';
 import 'package:teta_core/src/models/palette.dart';
-
 // Project imports:
 import 'package:teta_widgets/src/elements/controls/atoms/fill/image.dart';
 import 'package:teta_widgets/src/elements/controls/atoms/fill/linear.dart';
@@ -36,7 +34,7 @@ class FillControl extends StatefulWidget {
     this.title,
     this.color,
     this.type,
-    Key? key,
+    final Key? key,
   }) : super(key: key);
 
   final CNode node;
@@ -56,11 +54,11 @@ class FillControlState extends State<FillControl> {
   List<String> list = [];
 
   @override
-  Widget build(BuildContext context) {
+  Widget build(final BuildContext context) {
     return Padding(
       padding: const EdgeInsets.only(left: 4),
       child: BlocBuilder<PaletteBloc, List<PaletteModel>>(
-        builder: (context, state) {
+        builder: (final context, final state) {
           list = BlocProvider.of<PaletteBloc>(context).state.isNotEmpty
               ? widget.isImageEnabled
                   ? widget.isNoneEnabled
@@ -116,7 +114,7 @@ class FillControlState extends State<FillControl> {
                                             ? 'solid'
                                             : 'none',
                     items: list,
-                    onChange: (value) {
+                    onChange: (final value) {
                       if (value == 'solid') {
                         widget.callBack(
                           FFill().ready(FFillType.solid),
@@ -176,12 +174,12 @@ class FillControlState extends State<FillControl> {
     );
   }
 
-  Widget control(BuildContext context) {
+  Widget control(final BuildContext context) {
     return BlocBuilder<PaletteBloc, List<PaletteModel>>(
-      builder: (context, state) {
+      builder: (final context, final state) {
         PaletteModel? model;
         if (widget.fill.paletteStyle != null) {
-          BlocProvider.of<PaletteBloc>(context).state.forEach((element) {
+          BlocProvider.of<PaletteBloc>(context).state.forEach((final element) {
             if (element.id == widget.fill.paletteStyle) model = element;
           });
         }

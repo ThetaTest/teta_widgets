@@ -1,11 +1,10 @@
 // Flutter imports:
 // ignore_for_file: public_member_api_docs
 
-// Flutter imports:
-import 'package:flutter/material.dart';
-
 // Package imports:
 import 'package:enum_to_string/enum_to_string.dart';
+// Flutter imports:
+import 'package:flutter/material.dart';
 import 'package:flutter_feather_icons/flutter_feather_icons.dart';
 import 'package:hovering/hovering.dart';
 import 'package:teta_core/src/design_system/buttons/button.dart';
@@ -15,17 +14,16 @@ import 'package:teta_core/src/design_system/textfield/minitextfield.dart';
 import 'package:teta_core/src/design_system/textfield/multi_line_textfield.dart';
 import 'package:teta_core/src/models/page.dart';
 import 'package:teta_core/src/models/variable.dart';
-import 'package:uuid/uuid.dart';
-
 // Project imports:
 import 'package:teta_widgets/src/elements/nodes/node.dart';
+import 'package:uuid/uuid.dart';
 
 class StatesControl extends StatefulWidget {
   const StatesControl({
     required this.node,
     required this.page,
     required this.callBack,
-    Key? key,
+    final Key? key,
   }) : super(key: key);
 
   final CNode node;
@@ -38,7 +36,7 @@ class StatesControl extends StatefulWidget {
 
 class StatesControlState extends State<StatesControl> {
   @override
-  Widget build(BuildContext context) {
+  Widget build(final BuildContext context) {
     return Column(
       children: [
         Row(
@@ -58,8 +56,9 @@ class StatesControlState extends State<StatesControl> {
                 do {
                   index++;
                   pageName = '$pagePrefix $index';
-                } while (widget.page.states
-                        .indexWhere((element) => element.name == pageName) !=
+                } while (widget.page.states.indexWhere(
+                      (final element) => element.name == pageName,
+                    ) !=
                     -1);
                 widget.page.states.add(
                   VariableObject(
@@ -87,7 +86,7 @@ class StatesControlState extends State<StatesControl> {
                     ),
                   ),
                 ),
-                onHover: (e) {},
+                onHover: (final e) {},
                 child: Padding(
                   padding: const EdgeInsets.all(4),
                   child: DecoratedBox(
@@ -110,12 +109,12 @@ class StatesControlState extends State<StatesControl> {
         Column(
           children: widget.page.states
               .map(
-                (variable) => Row(
+                (final variable) => Row(
                   children: [
                     Expanded(
                       child: HoverWidget(
                         hoverChild: item(variable, onHover: true),
-                        onHover: (e) {},
+                        onHover: (final e) {},
                         child: item(variable, onHover: false),
                       ),
                     ),
@@ -138,7 +137,7 @@ class StatesControlState extends State<StatesControl> {
                               color: Colors.red,
                               size: 20,
                             ),
-                            onHover: (e) {},
+                            onHover: (final e) {},
                             child: const Icon(
                               FeatherIcons.x,
                               color: Colors.white,
@@ -158,8 +157,8 @@ class StatesControlState extends State<StatesControl> {
   }
 
   Widget item(
-    VariableObject variable, {
-    required bool onHover,
+    final VariableObject variable, {
+    required final bool onHover,
   }) {
     return GestureDetector(
       onTap: () {
@@ -216,9 +215,9 @@ class StatesControlState extends State<StatesControl> {
   }
 
   void showAlert(
-    BuildContext context,
-    PageObject page,
-    VariableObject variable,
+    final BuildContext context,
+    final PageObject page,
+    final VariableObject variable,
   ) {
     final nameController = TextEditingController()..text = variable.name;
     final defaultValueController = TextEditingController()
@@ -227,11 +226,11 @@ class StatesControlState extends State<StatesControl> {
       ..text = variable.doc ?? '';
     showDialog<void>(
       context: context,
-      builder: (context) {
+      builder: (final context) {
         var isNameUnique = true;
         var type = EnumToString.convertToString(variable.type, camelCase: true);
         return StatefulBuilder(
-          builder: (context, setState) {
+          builder: (final context, final setState) {
             return AlertDialog(
               backgroundColor: const Color(0xFF222222),
               title: Row(
@@ -263,7 +262,7 @@ class StatesControlState extends State<StatesControl> {
                             size: 20,
                             color: Colors.white,
                           ),
-                          onHover: (e) {},
+                          onHover: (final e) {},
                         ),
                       ),
                     ),
@@ -288,9 +287,9 @@ class StatesControlState extends State<StatesControl> {
                           placeholder: 'Name',
                           color: Colors.white,
                           text: variable.name,
-                          callBack: (text) {
+                          callBack: (final text) {
                             if (page.states.indexWhere(
-                                  (element) =>
+                                  (final element) =>
                                       element.name.toLowerCase() ==
                                       text.toLowerCase(),
                                 ) !=
@@ -352,7 +351,7 @@ class StatesControlState extends State<StatesControl> {
                             value: type,
                             icon: const Icon(Icons.arrow_drop_down),
                             underline: const SizedBox(),
-                            onChanged: (String? newValue) {
+                            onChanged: (final String? newValue) {
                               if (newValue != null) {
                                 final tempType = EnumToString.fromString(
                                   VariableType.values,
@@ -370,7 +369,8 @@ class StatesControlState extends State<StatesControl> {
                             items: EnumToString.toList(
                               VariableType.values,
                               camelCase: true,
-                            ).map<DropdownMenuItem<String>>((String value) {
+                            ).map<DropdownMenuItem<String>>(
+                                (final String value) {
                               return DropdownMenuItem<String>(
                                 value: value,
                                 child: CText(
@@ -395,7 +395,7 @@ class StatesControlState extends State<StatesControl> {
                           placeholder: 'Default Value',
                           text: variable.defaultValue,
                           color: Colors.white,
-                          callBack: (text) {
+                          callBack: (final text) {
                             if (variable.type ==
                                 VariableType.cameraController) {
                               if (int.tryParse(text) != null) {
@@ -418,7 +418,7 @@ class StatesControlState extends State<StatesControl> {
                           placeholder: 'Description',
                           text: variable.doc,
                           color: Colors.white,
-                          callBack: (text) {
+                          callBack: (final text) {
                             variable.doc = text;
                           },
                         ),

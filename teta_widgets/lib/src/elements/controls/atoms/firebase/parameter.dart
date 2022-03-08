@@ -3,7 +3,6 @@
 
 // Flutter imports:
 import 'package:flutter/material.dart';
-
 // Package imports:
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:teta_core/src/blocs/focus/index.dart';
@@ -13,7 +12,6 @@ import 'package:teta_core/src/design_system/palette.dart';
 import 'package:teta_core/src/design_system/text.dart';
 import 'package:teta_core/src/design_system/textfield/textfield.dart';
 import 'package:teta_core/src/models/page.dart';
-
 // Project imports:
 import 'package:teta_widgets/src/elements/features/text_type_input.dart';
 import 'package:teta_widgets/src/elements/nodes/node.dart';
@@ -24,7 +22,7 @@ class FirestoreParameterControl extends StatefulWidget {
     required this.title,
     required this.value,
     required this.callBack,
-    Key? key,
+    final Key? key,
     this.node,
   }) : super(key: key);
 
@@ -61,10 +59,10 @@ class ParameterState extends State<FirestoreParameterControl> {
   }
 
   @override
-  Widget build(BuildContext context) {
+  Widget build(final BuildContext context) {
     //controller.text = widget.value!.value ?? '';
     return BlocListener<FocusBloc, List<CNode>>(
-      listener: (context, state) {
+      listener: (final context, final state) {
         if (state.isNotEmpty) {
           if (state.first.nid != nodeId) {
             setState(() {
@@ -101,7 +99,7 @@ class ParameterState extends State<FirestoreParameterControl> {
                               ? 'param'
                               : 'text',
                   items: const ['text', 'param', 'state', 'dataset'],
-                  onChange: (value) {
+                  onChange: (final value) {
                     var typeOfInput = FTextTypeEnum.text;
                     if (value == 'text') {
                       typeOfInput = FTextTypeEnum.text;
@@ -127,7 +125,7 @@ class ParameterState extends State<FirestoreParameterControl> {
                 hpadding: 0,
                 //text: text,
                 controller: controller,
-                callBack: (value) {
+                callBack: (final value) {
                   final old = widget.value;
                   widget.value.value = value;
                   widget.callBack(widget.value, old);
@@ -136,12 +134,14 @@ class ParameterState extends State<FirestoreParameterControl> {
             if (widget.value.type == FTextTypeEnum.param)
               CDropdown(
                 value: widget.page.params
-                        .map((e) => e.name)
+                        .map((final e) => e.name)
                         .contains(widget.value.paramName)
                     ? widget.value.paramName
                     : null,
-                items: widget.page.params.map((e) => e.get as String).toList(),
-                onChange: (newValue) {
+                items: widget.page.params
+                    .map((final e) => e.get as String)
+                    .toList(),
+                onChange: (final newValue) {
                   final old = widget.value;
                   widget.value.paramName = newValue;
                   widget.callBack(widget.value, old);
@@ -150,12 +150,14 @@ class ParameterState extends State<FirestoreParameterControl> {
             if (widget.value.type == FTextTypeEnum.state)
               CDropdown(
                 value: widget.page.states
-                        .map((e) => e.name)
+                        .map((final e) => e.name)
                         .contains(widget.value.stateName)
                     ? widget.value.stateName
                     : null,
-                items: widget.page.states.map((e) => e.get as String).toList(),
-                onChange: (newValue) {
+                items: widget.page.states
+                    .map((final e) => e.get as String)
+                    .toList(),
+                onChange: (final newValue) {
                   final old = widget.value;
                   widget.value.stateName = newValue;
                   widget.callBack(widget.value, old);
@@ -164,16 +166,16 @@ class ParameterState extends State<FirestoreParameterControl> {
             if (widget.value.type == FTextTypeEnum.dataset)
               CDropdown(
                 value: widget.page.datasets
-                        .map((e) => e.getName)
-                        .where((element) => element != 'null')
+                        .map((final e) => e.getName)
+                        .where((final element) => element != 'null')
                         .contains(widget.value.datasetName)
                     ? widget.value.datasetName
                     : null,
                 items: widget.page.datasets
-                    .map((e) => e.getName)
-                    .where((element) => element != 'null')
+                    .map((final e) => e.getName)
+                    .where((final element) => element != 'null')
                     .toList(),
-                onChange: (newValue) {
+                onChange: (final newValue) {
                   setState(() {
                     databaseName = newValue!;
                   });
@@ -187,28 +189,29 @@ class ParameterState extends State<FirestoreParameterControl> {
               CDropdown(
                 value: widget.page.datasets
                         .firstWhere(
-                          (element) =>
+                          (final element) =>
                               element.getName == widget.value.datasetName,
                         )
                         .getMap
                         .first
                         .keys
-                        .map((key) => key)
+                        .map((final key) => key)
                         .toSet()
                         .contains(widget.value.datasetAttr)
                     ? widget.value.datasetAttr
                     : null,
                 items: widget.page.datasets
                     .firstWhere(
-                      (element) => element.getName == widget.value.datasetName,
+                      (final element) =>
+                          element.getName == widget.value.datasetName,
                     )
                     .getMap
                     .first
                     .keys
-                    .map((key) => key)
+                    .map((final key) => key)
                     .toSet()
                     .toList(),
-                onChange: (newValue) {
+                onChange: (final newValue) {
                   setState(() {
                     databaseAttribute = newValue!;
                   });

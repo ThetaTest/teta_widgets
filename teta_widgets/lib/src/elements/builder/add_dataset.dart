@@ -1,7 +1,6 @@
 // Flutter imports:
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
-
 // Package imports:
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:teta_core/src/blocs/focus_page/index.dart';
@@ -10,9 +9,9 @@ import 'package:teta_core/src/models/dataset.dart';
 
 /// Function to add a new dataset to scaffold and widgets' tree
 List<DatasetObject> addDataset(
-  BuildContext context,
-  List<DatasetObject> dataset,
-  DatasetObject map,
+  final BuildContext context,
+  final List<DatasetObject> dataset,
+  final DatasetObject map,
 ) {
   final list = <DatasetObject>[...dataset, map];
   final prjState = BlocProvider.of<FocusProjectBloc>(context).state;

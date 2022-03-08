@@ -36,7 +36,7 @@ class FBoxFit {
   String get getCSS => _convertValueToCSS(fit);
 
   /// Instantiate a [FBoxFit] from Json
-  static FBoxFit fromJson(String json) {
+  static FBoxFit fromJson(final String json) {
     try {
       return FBoxFit(
         fit: convertJsonToValue(json),
@@ -53,9 +53,9 @@ class FBoxFit {
   FBoxFit clone() => FBoxFit(fit: fit);
 
   /// Clone [FBoxFit] (deep copy) with optional [fit] attribute
-  FBoxFit copyWith({BoxFit? fit}) => FBoxFit(fit: fit ?? this.fit);
+  FBoxFit copyWith({final BoxFit? fit}) => FBoxFit(fit: fit ?? this.fit);
 
-  static BoxFit convertDropdownToValue(String key) {
+  static BoxFit convertDropdownToValue(final String key) {
     switch (key) {
       case 'contain':
         return BoxFit.contain;
@@ -76,7 +76,7 @@ class FBoxFit {
   /// ```dart
   /// if (key == 'cn') fit = BoxFit.contain;
   /// ```
-  static BoxFit convertJsonToValue(String key) {
+  static BoxFit convertJsonToValue(final String key) {
     switch (key) {
       case 'cn':
         return BoxFit.contain;
@@ -93,7 +93,7 @@ class FBoxFit {
     }
   }
 
-  static String _convertValueToJson(BoxFit value) {
+  static String _convertValueToJson(final BoxFit value) {
     switch (value) {
       case BoxFit.contain:
         return 'cn';
@@ -112,7 +112,7 @@ class FBoxFit {
     }
   }
 
-  static String _convertValueToDropDown(BoxFit value) {
+  static String _convertValueToDropDown(final BoxFit value) {
     switch (value) {
       case BoxFit.contain:
         return 'contain';
@@ -131,7 +131,7 @@ class FBoxFit {
     }
   }
 
-  static String _convertValueToCSS(BoxFit value) {
+  static String _convertValueToCSS(final BoxFit value) {
     switch (value) {
       case BoxFit.cover:
         return 'cover';
@@ -150,7 +150,7 @@ class FBoxFit {
     }
   }
 
-  static BoxFit convertCSSToValue(String? value) {
+  static BoxFit convertCSSToValue(final String? value) {
     switch (value) {
       case 'cover':
         return BoxFit.cover;
@@ -165,7 +165,7 @@ class FBoxFit {
     }
   }
 
-  static String _convertValueToCode(BoxFit value) {
+  static String _convertValueToCode(final BoxFit value) {
     switch (value) {
       case BoxFit.contain:
         return 'BoxFit.contain';

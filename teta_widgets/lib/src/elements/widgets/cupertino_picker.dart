@@ -3,17 +3,15 @@
 
 // Flutter imports:
 import 'package:flutter/cupertino.dart';
-
 // Package imports:
 import 'package:teta_core/teta_core.dart';
-
 // Project imports:
 import 'package:teta_widgets/src/elements/index.dart';
 
 class WCupertinoPicker extends StatefulWidget {
   /// Returns a Gesture Detector
   const WCupertinoPicker(
-    Key? key, {
+    final Key? key, {
     required this.children,
     required this.node,
     required this.height,
@@ -45,13 +43,13 @@ class _WCupertinoPickerState extends State<WCupertinoPicker> {
   bool flag = false;
 
   @override
-  Widget build(BuildContext context) {
+  Widget build(final BuildContext context) {
     return NodeSelectionBuilder(
       node: widget.node,
       forPlay: widget.forPlay,
       child: CupertinoPicker(
         itemExtent: widget.height.get(context: context, isWidth: false) ?? 44,
-        onSelectedItemChanged: (index) {
+        onSelectedItemChanged: (final index) {
           GestureBuilder.get(
             context: context,
             node: widget.node,
@@ -67,7 +65,7 @@ class _WCupertinoPickerState extends State<WCupertinoPicker> {
         looping: flag,
         children: widget.children
             .map(
-              (e) => e.toWidget(
+              (final e) => e.toWidget(
                 params: widget.params,
                 states: widget.states,
                 dataset: widget.dataset,

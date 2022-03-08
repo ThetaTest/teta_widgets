@@ -20,11 +20,11 @@ class FClip {
 
   String getStringForDropDown() => _convertValueToDropDown(get);
 
-  FClip setFromString(String value) {
+  FClip setFromString(final String value) {
     return copyWith(clip: _convertDropDownToValue(value));
   }
 
-  FClip fromJson(String json) {
+  FClip fromJson(final String json) {
     try {
       return FClip(
         clip: _convertJsonToValue(json),
@@ -38,37 +38,37 @@ class FClip {
 
   FClip clone() => FClip(clip: clip);
 
-  FClip copyWith({Clip? clip}) => FClip(clip: clip ?? this.clip);
+  FClip copyWith({final Clip? clip}) => FClip(clip: clip ?? this.clip);
 
-  Clip _convertJsonToValue(String key) {
+  Clip _convertJsonToValue(final String key) {
     if (key == 'a') return Clip.antiAlias;
     if (key == 'b') return Clip.antiAliasWithSaveLayer;
     if (key == 'n') return Clip.none;
     return Clip.hardEdge;
   }
 
-  Clip _convertDropDownToValue(String key) {
+  Clip _convertDropDownToValue(final String key) {
     if (key == 'Anti Alias') return Clip.antiAlias;
     if (key == 'Anti Alias With Save Layer') return Clip.antiAliasWithSaveLayer;
     if (key == 'None') return Clip.none;
     return Clip.hardEdge;
   }
 
-  String _convertValueToDropDown(Clip key) {
+  String _convertValueToDropDown(final Clip key) {
     if (key == Clip.antiAlias) return 'Anti Alias';
     if (key == Clip.antiAliasWithSaveLayer) return 'Anti Alias With Save Layer';
     if (key == Clip.none) return 'None';
     return 'Hard Edge';
   }
 
-  String _convertValueToJson(Clip value) {
+  String _convertValueToJson(final Clip value) {
     if (value == Clip.antiAlias) return 'a';
     if (value == Clip.antiAliasWithSaveLayer) return 'b';
     if (value == Clip.none) return 'n';
     return 'h';
   }
 
-  String _convertValueToCode(Clip value) {
+  String _convertValueToCode(final Clip value) {
     switch (value) {
       case Clip.antiAlias:
         return 'Clip.antiAlias';

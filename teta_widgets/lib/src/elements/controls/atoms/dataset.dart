@@ -3,7 +3,6 @@
 
 // Flutter imports:
 import 'package:flutter/material.dart';
-
 // Package imports:
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:teta_core/src/blocs/focus/index.dart';
@@ -11,7 +10,6 @@ import 'package:teta_core/src/design_system/dropdowns/dropdown.dart';
 import 'package:teta_core/src/design_system/palette.dart';
 import 'package:teta_core/src/design_system/text.dart';
 import 'package:teta_core/src/models/page.dart';
-
 // Project imports:
 import 'package:teta_widgets/src/elements/features/dataset.dart';
 import 'package:teta_widgets/src/elements/nodes/node.dart';
@@ -23,8 +21,7 @@ class DatasetControl extends StatefulWidget {
     required this.page,
     required this.title,
     required this.callBack,
-    Key? key,
-    
+    final Key? key,
     this.isAttrRequired,
   }) : super(key: key);
 
@@ -56,9 +53,9 @@ class DatasetControlState extends State<DatasetControl> {
   }
 
   @override
-  Widget build(BuildContext context) {
+  Widget build(final BuildContext context) {
     return BlocListener<FocusBloc, List<CNode>>(
-      listener: (context, state) {
+      listener: (final context, final state) {
         if (state.isNotEmpty) {
           if (state.first.nid != nodeId) {
             setState(() {
@@ -83,16 +80,16 @@ class DatasetControlState extends State<DatasetControl> {
           ),
           CDropdown(
             value: widget.page.datasets
-                    .map((e) => e.getName)
-                    .where((element) => element != 'null')
+                    .map((final e) => e.getName)
+                    .where((final element) => element != 'null')
                     .contains(widget.value.datasetName)
                 ? widget.value.datasetName
                 : null,
             items: widget.page.datasets
-                .map((e) => e.getName)
-                .where((element) => element != 'null')
+                .map((final e) => e.getName)
+                .where((final element) => element != 'null')
                 .toList(),
-            onChange: (newValue) {
+            onChange: (final newValue) {
               setState(() {
                 databaseName = newValue!;
               });
@@ -105,14 +102,16 @@ class DatasetControlState extends State<DatasetControl> {
             CDropdown(
               value: (widget.page.datasets
                               .where(
-                                (element) => element.getName == databaseName,
+                                (final element) =>
+                                    element.getName == databaseName,
                               )
                               .first
                               .getMap
                               .isNotEmpty
                           ? widget.page.datasets
                               .where(
-                                (element) => element.getName == databaseName,
+                                (final element) =>
+                                    element.getName == databaseName,
                               )
                               .first
                               .getMap
@@ -124,12 +123,16 @@ class DatasetControlState extends State<DatasetControl> {
                   ? widget.value.datasetAttrName
                   : null,
               items: ((widget.page.datasets
-                          .where((element) => element.getName == databaseName)
+                          .where(
+                            (final element) => element.getName == databaseName,
+                          )
                           .first
                           .getMap
                           .isNotEmpty)
                       ? widget.page.datasets
-                          .where((element) => element.getName == databaseName)
+                          .where(
+                            (final element) => element.getName == databaseName,
+                          )
                           .first
                           .getMap
                           .first
@@ -137,7 +140,7 @@ class DatasetControlState extends State<DatasetControl> {
                   .keys
                   .toSet()
                   .toList(),
-              onChange: (newValue) {
+              onChange: (final newValue) {
                 setState(() {
                   databaseAttribute = newValue;
                 });

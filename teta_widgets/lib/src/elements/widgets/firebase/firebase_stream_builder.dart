@@ -2,10 +2,8 @@
 
 // Flutter imports:
 import 'package:flutter/material.dart';
-
 // Package imports:
 import 'package:teta_core/teta_core.dart';
-
 // Project imports:
 import 'package:teta_widgets/src/elements/index.dart';
 
@@ -15,7 +13,7 @@ class WFirebaseStreamBuilder extends StatefulWidget {
   /// Returns a real time query from Firestore
   /// Needs a [FFirestorePath] to connect to the coll / doc
   const WFirebaseStreamBuilder(
-    Key? key, {
+    final Key? key, {
     required this.node,
     required this.path,
     required this.forPlay,
@@ -44,7 +42,7 @@ class WFirebaseStreamBuilder extends StatefulWidget {
 
 class WFirebaseStreamBuilderState extends State<WFirebaseStreamBuilder> {
   @override
-  Widget build(BuildContext context) {
+  Widget build(final BuildContext context) {
     return NodeSelectionBuilder(
       node: widget.node,
       forPlay: widget.forPlay,
@@ -52,7 +50,7 @@ class WFirebaseStreamBuilderState extends State<WFirebaseStreamBuilder> {
     );
   }
 
-  Widget body(BuildContext context) {
+  Widget body(final BuildContext context) {
     return const SizedBox();
 
     /*StreamBuilder(

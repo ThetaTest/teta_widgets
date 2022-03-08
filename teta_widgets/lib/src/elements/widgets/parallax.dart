@@ -3,18 +3,16 @@
 
 // Flutter imports:
 import 'package:flutter/material.dart';
-
 // Package imports:
 import 'package:flutter_parallax/flutter_parallax.dart';
 import 'package:teta_core/teta_core.dart';
-
 // Project imports:
 import 'package:teta_widgets/src/elements/index.dart';
 
 class WParallax extends StatelessWidget {
   /// Returns a SizedBox widget in Teta
   const WParallax(
-    Key? key, {
+    final Key? key, {
     required this.node,
     required this.height,
     required this.forPlay,
@@ -36,7 +34,7 @@ class WParallax extends StatelessWidget {
   final List<DatasetObject> dataset;
 
   @override
-  Widget build(BuildContext context) {
+  Widget build(final BuildContext context) {
     return NodeSelectionBuilder(
       node: node,
       forPlay: forPlay,

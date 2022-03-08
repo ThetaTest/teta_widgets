@@ -1,16 +1,14 @@
 // Flutter imports:
 // ignore_for_file: avoid_dynamic_calls
 
-// Flutter imports:
-import 'package:flutter/material.dart';
-
 // Package imports:
 import 'package:diacritic/diacritic.dart';
+// Flutter imports:
+import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:recase/recase.dart';
 import 'package:teta_core/src/blocs/focus_project/index.dart';
 import 'package:teta_core/src/models/page.dart';
-
 // Project imports:
 import 'package:teta_widgets/src/elements/controls/key_constants.dart';
 import 'package:teta_widgets/src/elements/nodes/node.dart';
@@ -18,18 +16,19 @@ import 'package:teta_widgets/src/elements/nodes/node_body.dart';
 
 /// Component Template
 String componentCodeTemplate(
-  BuildContext context,
-  NodeBody body,
-  List<CNode> children,
+  final BuildContext context,
+  final NodeBody body,
+  final List<CNode> children,
 ) {
   final prj = BlocProvider.of<FocusProjectBloc>(context).state as ProjectLoaded;
   if (body.attributes[DBKeys.componentName] == null ||
       (prj.prj.pages ?? <PageObject>[]).indexWhere(
-            (element) => element.name == body.attributes[DBKeys.componentName],
+            (final element) =>
+                element.name == body.attributes[DBKeys.componentName],
           ) ==
           -1) return '';
   final page = prj.prj.pages!.firstWhere(
-    (element) => element.name == body.attributes[DBKeys.componentName],
+    (final element) => element.name == body.attributes[DBKeys.componentName],
   );
   final temp = removeDiacritics(
     page.name

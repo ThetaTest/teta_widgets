@@ -23,10 +23,10 @@ class FBorderRadius {
       );
 
   /// Instantiate [FBorderRadius] from Json
-  static FBorderRadius fromJson(List<dynamic> json) {
+  static FBorderRadius fromJson(final List<dynamic> json) {
     try {
       return FBorderRadius(
-        radius: json.map((dynamic e) => double.parse('$e')).toList(),
+        radius: json.map((final dynamic e) => double.parse('$e')).toList(),
       );
     } catch (e) {
       return FBorderRadius();
@@ -40,7 +40,7 @@ class FBorderRadius {
 
   /// Change the value of [value] (List<double>)
   List<double> update({
-    required List<double> value,
+    required final List<double> value,
   }) {
     return value;
   }

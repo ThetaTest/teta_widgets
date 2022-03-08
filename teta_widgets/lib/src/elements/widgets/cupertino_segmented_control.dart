@@ -4,17 +4,15 @@
 
 // Flutter imports:
 import 'package:flutter/cupertino.dart';
-
 // Package imports:
 import 'package:teta_core/teta_core.dart';
-
 // Project imports:
 import 'package:teta_widgets/src/elements/index.dart';
 
 class WCupertinoSegmentedControl extends StatefulWidget {
   /// Returns a Gesture Detector
   const WCupertinoSegmentedControl(
-    Key? key, {
+    final Key? key, {
     required this.children,
     required this.node,
     required this.forPlay,
@@ -51,7 +49,7 @@ class _WCupertinoSegmentedControlState
     extends State<WCupertinoSegmentedControl> {
   int value = 0;
   @override
-  Widget build(BuildContext context) {
+  Widget build(final BuildContext context) {
     final map = <int, Widget>{};
     for (var i = 0; i < widget.children.length; i++) {
       map[i] = widget.children[i].toWidget(
@@ -88,7 +86,7 @@ class _WCupertinoSegmentedControlState
           unselectedColor:
               HexColor(widget.unselectedColor.getHexColor(context)),
           borderColor: HexColor(widget.borderColor.getHexColor(context)),
-          onValueChanged: (v) {
+          onValueChanged: (final v) {
             GestureBuilder.get(
               context: context,
               node: widget.node,

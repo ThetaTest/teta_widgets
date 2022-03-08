@@ -1,6 +1,5 @@
 // Flutter imports:
 import 'package:flutter/material.dart';
-
 // Project imports:
 import 'package:teta_widgets/src/elements/code/snippets.dart';
 import 'package:teta_widgets/src/elements/controls/key_constants.dart';
@@ -10,10 +9,10 @@ import 'package:teta_widgets/src/elements/nodes/node_body.dart';
 
 /// AspectRatio Template
 String aspectRatioCodeTemplate(
-  BuildContext context,
-  NodeBody body,
-  CNode? child,
-  int? loop,
+  final BuildContext context,
+  final NodeBody body,
+  final CNode? child,
+  final int? loop,
 ) {
   final abstract = body.attributes[DBKeys.value] as FTextTypeInput;
   final value = abstract.toCode(loop);

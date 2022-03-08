@@ -1,6 +1,5 @@
 // Flutter imports:
 import 'package:flutter/material.dart';
-
 // Project imports:
 import 'package:teta_widgets/src/elements/controls/key_constants.dart';
 import 'package:teta_widgets/src/elements/features/action.dart';
@@ -33,9 +32,9 @@ class CS {
   ///
   /// Returns a empty string if [value] == [defaultValue]
   static String avoidRedundantValue(
-    dynamic value,
-    String nameOfAttribute,
-    String defaultValue,
+    final dynamic value,
+    final String nameOfAttribute,
+    final String defaultValue,
   ) {
     return value != defaultValue ? '$nameOfAttribute: $value,' : '';
   }
@@ -48,9 +47,9 @@ class CS {
   /// child: Center(),
   /// ```
   static String child(
-    BuildContext context,
-    CNode? child, {
-    bool? comma,
+    final BuildContext context,
+    final CNode? child, {
+    final bool? comma,
   }) {
     var strChild = '';
     if (child != null) strChild = child.toCode(context);
@@ -68,7 +67,10 @@ class CS {
   ///   Spacer(),
   /// ],
   /// ```
-  static String children(BuildContext context, List<CNode> children) {
+  static String children(
+    final BuildContext context,
+    final List<CNode> children,
+  ) {
     final strChildren = StringBuffer()..write('');
     if (children.isNotEmpty) {
       for (final child in children) {
@@ -102,7 +104,10 @@ class CS {
   /// Center(),
   /// Spacer(),
   /// ```
-  static String flatChildren(BuildContext context, List<CNode> children) {
+  static String flatChildren(
+    final BuildContext context,
+    final List<CNode> children,
+  ) {
     final strChildren = StringBuffer()..write('');
     if (children.isNotEmpty) {
       for (final child in children) {
@@ -126,7 +131,7 @@ class CS {
   ///   Spacer(),
   /// ],
   /// ```
-  static String pages(BuildContext context, List<CNode> children) {
+  static String pages(final BuildContext context, final List<CNode> children) {
     final strChildren = StringBuffer()..write('');
     if (children.isNotEmpty) {
       for (final child in children) {
@@ -160,10 +165,13 @@ class CS {
   /// height: 52 * 13,
   /// ```
   static String size(
-    BuildContext context,
-    NodeBody body, {
-    required bool isWidth,
+    final BuildContext context,
+    final NodeBody body, {
+    required final bool isWidth,
   }) {
+    if (body.attributes[isWidth ? DBKeys.width : DBKeys.height] == null) {
+      return '';
+    }
     final value =
         (body.attributes[isWidth ? DBKeys.width : DBKeys.height] as FSize)
             .toCode(context: context, isWidth: isWidth);
@@ -185,9 +193,9 @@ class CS {
   /// )
   /// ```
   static String margin(
-    BuildContext context,
-    NodeBody body, {
-    required bool isMargin,
+    final BuildContext context,
+    final NodeBody body, {
+    required final bool isMargin,
   }) {
     final value = (body.attributes[isMargin ? DBKeys.margins : DBKeys.padding]
             as FMargins)
@@ -205,9 +213,9 @@ class CS {
   /// )
   /// ```
   static String boxDecoration(
-    BuildContext context,
-    NodeBody body,
-    String keyFill,
+    final BuildContext context,
+    final NodeBody body,
+    final String keyFill,
   ) {
     final flagConst = CS.borderRadius(context, body) != '';
     final fill = FFill.toCode(
@@ -234,7 +242,7 @@ class CS {
   ///   bottomLeft: Radius.circular(value),
   /// )
   /// ```
-  static String borderRadius(BuildContext context, NodeBody body) {
+  static String borderRadius(final BuildContext context, final NodeBody body) {
     final value = body.attributes[DBKeys.borderRadius] != null
         ? (body.attributes[DBKeys.borderRadius] as FBorderRadius).toCode()
         : null;
@@ -251,7 +259,7 @@ class CS {
   ///   bottom: Radius.circular(value),
   /// )
   /// ```
-  static String border(BuildContext context, NodeBody body) {
+  static String border(final BuildContext context, final NodeBody body) {
     final value = body.attributes[DBKeys.borders] != null
         ? (body.attributes[DBKeys.borders] as FBorder).toCode(context)
         : null;
@@ -263,7 +271,7 @@ class CS {
   /// ```dart
   /// BoxFit.cover
   /// ```
-  static String boxFit(BuildContext context, NodeBody body) {
+  static String boxFit(final BuildContext context, final NodeBody body) {
     final value = body.attributes[DBKeys.boxFit] != null
         ? (body.attributes[DBKeys.boxFit] as FBoxFit).toCode()
         : null;
@@ -283,7 +291,11 @@ class CS {
   /// ),
   /// textAlign: TextAlign.center,
   /// ```
-  static String textStyle(BuildContext context, NodeBody body, String key) {
+  static String textStyle(
+    final BuildContext context,
+    final NodeBody body,
+    final String key,
+  ) {
     final value = body.attributes[key] != null
         ? (body.attributes[key] as FTextStyle).toCode(context)
         : null;
@@ -305,12 +317,12 @@ class CS {
   /// }
   /// ```
   static String action(
-    BuildContext context,
-    CNode node,
-    ActionGesture gesture,
-    String func,
-    String? value, {
-    required bool isRequired,
+    final BuildContext context,
+    final CNode node,
+    final ActionGesture gesture,
+    final String func,
+    final String? value, {
+    required final bool isRequired,
   }) {
     final code = StringBuffer()..write('');
     if (node.body.attributes[DBKeys.action] == null) return '';
@@ -340,7 +352,7 @@ class CS {
   /// ```
   ///
   /// It returns a empty screen in value is Alignment.center (redundant)
-  static String align(BuildContext context, NodeBody body) {
+  static String align(final BuildContext context, final NodeBody body) {
     final value = body.attributes[DBKeys.align] != null
         ? (body.attributes[DBKeys.align] as FAlign).toCode()
         : null;
@@ -354,7 +366,10 @@ class CS {
   /// ```
   ///
   /// It returns a empty screen in value is MainAxisAlignment.start (redundant)
-  static String mainAxisAlignment(BuildContext context, NodeBody body) {
+  static String mainAxisAlignment(
+    final BuildContext context,
+    final NodeBody body,
+  ) {
     final value = body.attributes[DBKeys.mainAxisAlignment] != null
         ? (body.attributes[DBKeys.mainAxisAlignment] as FMainAxisAlignment)
             .toCode()
@@ -373,7 +388,7 @@ class CS {
   /// ```
   ///
   /// It returns a empty screen in value is MainAxisSize.max (redundant)
-  static String mainAxisSize(BuildContext context, NodeBody body) {
+  static String mainAxisSize(final BuildContext context, final NodeBody body) {
     final value = body.attributes[DBKeys.mainAxisSize] != null
         ? (body.attributes[DBKeys.mainAxisSize] as FMainAxisSize).toCode()
         : null;
@@ -388,7 +403,10 @@ class CS {
   ///
   /// It returns a empty screen in value
   /// is CrossAxisAlignment.center (redundant)
-  static String crossAxisAlignment(BuildContext context, NodeBody body) {
+  static String crossAxisAlignment(
+    final BuildContext context,
+    final NodeBody body,
+  ) {
     final value = body.attributes[DBKeys.crossAxisAlignment] != null
         ? (body.attributes[DBKeys.crossAxisAlignment] as FCrossAxisAlignment)
             .toCode()
@@ -407,7 +425,7 @@ class CS {
   /// ```
   ///
   /// It returns a empty screen in value is WrapAlignment.start (redundant)
-  static String wrapAlignment(BuildContext context, NodeBody body) {
+  static String wrapAlignment(final BuildContext context, final NodeBody body) {
     final value = body.attributes[DBKeys.wrapAlignment] != null
         ? (body.attributes[DBKeys.wrapAlignment] as FWrapAlignment).toCode()
         : null;
@@ -427,9 +445,9 @@ class CS {
   /// FirebaseFirestore.instance.collection('').get()
   /// ```
   static String firestorePath(
-    BuildContext context,
-    NodeBody body, {
-    required bool isStream,
+    final BuildContext context,
+    final NodeBody body, {
+    required final bool isStream,
   }) {
     final value = body.attributes[DBKeys.firestorePath] != null
         ? (body.attributes[DBKeys.firestorePath] as FFirestorePath).toCode(

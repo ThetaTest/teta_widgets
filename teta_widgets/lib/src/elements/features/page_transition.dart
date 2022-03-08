@@ -3,7 +3,6 @@
 
 // Flutter imports:
 import 'package:flutter/material.dart';
-
 // Package imports:
 import 'package:transition/transition.dart' as T;
 
@@ -16,11 +15,11 @@ class FPageTransition {
 
   T.TransitionEffect? transitionEffect;
 
-  T.TransitionEffect get(BuildContext context) {
+  T.TransitionEffect get(final BuildContext context) {
     return transitionEffect!;
   }
 
-  static FPageTransition fromJson(String json) {
+  static FPageTransition fromJson(final String json) {
     try {
       var transitionEffect = T.TransitionEffect.RIGHT_TO_LEFT;
       if (json == 'lTR') transitionEffect = T.TransitionEffect.LEFT_TO_RIGHT;
@@ -38,7 +37,7 @@ class FPageTransition {
     return convertValueToJson(transitionEffect!);
   }
 
-  static String convertValueToJson(T.TransitionEffect value) {
+  static String convertValueToJson(final T.TransitionEffect value) {
     var result = 'rTL';
     if (value == T.TransitionEffect.LEFT_TO_RIGHT) result = 'lTR';
     if (value == T.TransitionEffect.TOP_TO_BOTTOM) result = 'tTB';
@@ -48,7 +47,7 @@ class FPageTransition {
     return result;
   }
 
-  static String convertValueToCode(T.TransitionEffect? value) {
+  static String convertValueToCode(final T.TransitionEffect? value) {
     var result = 'RIGHT_TO_LEFT';
     if (value == T.TransitionEffect.LEFT_TO_RIGHT) result = 'LEFT_TO_RIGHT';
     if (value == T.TransitionEffect.TOP_TO_BOTTOM) result = 'TOP_TO_BOTTOM';

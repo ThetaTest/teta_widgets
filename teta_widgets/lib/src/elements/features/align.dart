@@ -23,15 +23,15 @@ class FAlign {
         'Bottom Right'
       ];
 
-  Alignment get(BuildContext context) {
+  Alignment get(final BuildContext context) {
     return align!;
   }
 
-  String getStringForDropDown(BuildContext context) {
+  String getStringForDropDown(final BuildContext context) {
     return convertValueToDropDown(align!);
   }
 
-  static FAlign fromJson(String json) {
+  static FAlign fromJson(final String json) {
     try {
       return FAlign(
         align: convertJsonToValue(json),
@@ -47,9 +47,10 @@ class FAlign {
 
   FAlign clone() => FAlign(align: align);
 
-  FAlign copyWith({Alignment? align}) => FAlign(align: align ?? this.align);
+  FAlign copyWith({final Alignment? align}) =>
+      FAlign(align: align ?? this.align);
 
-  static Alignment convertJsonToValue(String key) {
+  static Alignment convertJsonToValue(final String key) {
     var align = Alignment.topLeft;
     if (key == 'tL') align = Alignment.topLeft;
     if (key == 'tC') align = Alignment.topCenter;
@@ -63,7 +64,7 @@ class FAlign {
     return align;
   }
 
-  static Alignment convertDropDownToValue(String key) {
+  static Alignment convertDropDownToValue(final String key) {
     var align = Alignment.topLeft;
     if (key == 'Top Center') align = Alignment.topCenter;
     if (key == 'Top Right') align = Alignment.topRight;
@@ -76,7 +77,7 @@ class FAlign {
     return align;
   }
 
-  static String convertValueToDropDown(Alignment key) {
+  static String convertValueToDropDown(final Alignment key) {
     var align = 'Top Left';
     if (key == Alignment.topCenter) align = 'Top Center';
     if (key == Alignment.topRight) align = 'Top Right';
@@ -89,7 +90,7 @@ class FAlign {
     return align;
   }
 
-  static String convertValueToJson(Alignment value) {
+  static String convertValueToJson(final Alignment value) {
     var result = 'tL';
     if (value == Alignment.topCenter) result = 'tC';
     if (value == Alignment.topRight) result = 'tR';
@@ -102,7 +103,7 @@ class FAlign {
     return result;
   }
 
-  static String convertValueToCode(Alignment? value) {
+  static String convertValueToCode(final Alignment? value) {
     var result = 'Alignment.topLeft';
     if (value == Alignment.topCenter) result = 'Alignment.topCenter';
     if (value == Alignment.topRight) result = 'Alignment.topRight';

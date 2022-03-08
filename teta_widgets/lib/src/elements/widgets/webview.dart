@@ -1,23 +1,21 @@
 // Flutter imports:
 
-// Flutter imports:
-import 'package:flutter/material.dart';
-
 // Package imports:
 import 'package:collection/collection.dart';
+// Flutter imports:
+import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:teta_core/teta_core.dart';
-import 'package:webviewx/webviewx.dart';
-
 // Project imports:
 import 'package:teta_widgets/src/elements/index.dart';
+import 'package:webviewx/webviewx.dart';
 
 // ignore_for_file: public_member_api_docs
 
 class WWebViewXPage extends StatefulWidget {
   /// Returns a WebView widget in Teta
   const WWebViewXPage(
-    Key? key, {
+    final Key? key, {
     required this.node,
     required this.forPlay,
     required this.params,
@@ -52,10 +50,10 @@ class _WWebViewXPageState extends State<WWebViewXPage> {
 
     if (widget.controller.type == FTextTypeEnum.param) {
       variable = page.params
-          .firstWhereOrNull((e) => e.name == widget.controller.paramName);
+          .firstWhereOrNull((final e) => e.name == widget.controller.paramName);
     } else {
       variable = page.states
-          .firstWhereOrNull((e) => e.name == widget.controller.stateName);
+          .firstWhereOrNull((final e) => e.name == widget.controller.stateName);
     }
 
     super.initState();
@@ -68,10 +66,10 @@ class _WWebViewXPageState extends State<WWebViewXPage> {
   }
 
   @override
-  Widget build(BuildContext context) {
+  Widget build(final BuildContext context) {
     return WebViewX(
       key: const ValueKey('webviewx'),
-      onWebViewCreated: (controller) {
+      onWebViewCreated: (final controller) {
         variable?.webViewController = controller;
         _setUrl();
       },

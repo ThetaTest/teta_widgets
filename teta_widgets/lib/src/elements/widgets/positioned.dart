@@ -3,29 +3,27 @@
 
 // Flutter imports:
 import 'package:flutter/material.dart';
-
 // Package imports:
 import 'package:teta_core/teta_core.dart';
-
 // Project imports:
 import 'package:teta_widgets/src/elements/index.dart';
 
 class WPositioned extends StatelessWidget {
   /// Returns a Positioned widget in Teta
   const WPositioned(
-    Key? key, {
-    required CNode node,
-    required FMargins margins,
-    required bool left,
-    required bool top,
-    required bool right,
-    required bool bottom,
-    required bool forPlay,
-    required List<VariableObject> params,
-    required List<VariableObject> states,
-    required List<DatasetObject> dataset,
-    CNode? child,
-    int? loop,
+    final Key? key, {
+    required final CNode node,
+    required final FMargins margins,
+    required final bool left,
+    required final bool top,
+    required final bool right,
+    required final bool bottom,
+    required final bool forPlay,
+    required final List<VariableObject> params,
+    required final List<VariableObject> states,
+    required final List<DatasetObject> dataset,
+    final CNode? child,
+    final int? loop,
   })  : _child = child,
         _node = node,
         _margins = margins,
@@ -55,7 +53,7 @@ class WPositioned extends StatelessWidget {
   final List<DatasetObject> _dataset;
 
   @override
-  Widget build(BuildContext context) {
+  Widget build(final BuildContext context) {
     return NodeSelectionBuilder(
       node: _node,
       forPlay: _forPlay,
@@ -63,7 +61,7 @@ class WPositioned extends StatelessWidget {
     );
   }
 
-  Widget _body(BuildContext context) {
+  Widget _body(final BuildContext context) {
     final pos = _margins.get(context);
     return Positioned(
       top: _top ? pos.top : null,

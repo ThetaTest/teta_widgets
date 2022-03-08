@@ -3,16 +3,15 @@
 
 // Flutter imports:
 import 'package:flutter/material.dart';
-
 // Project imports:
 import 'package:teta_widgets/src/elements/features/text_type_input.dart';
 
 class FCondition {
   static String toCode(
-    BuildContext context,
-    FTextTypeInput? condition,
-    FTextTypeInput? valueOfCondition, {
-    required bool withCondition,
+    final BuildContext context,
+    final FTextTypeInput? condition,
+    final FTextTypeInput? valueOfCondition, {
+    required final bool withCondition,
   }) {
     if (withCondition != true) return '';
     if (condition == null || valueOfCondition == null) return '';

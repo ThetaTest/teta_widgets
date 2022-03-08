@@ -3,25 +3,24 @@
 
 // Flutter imports:
 import 'package:flutter/material.dart';
-
 // Package imports:
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:recase/recase.dart';
 import 'package:teta_core/src/blocs/focus_project/index.dart';
 import 'package:teta_core/src/models/page.dart';
 import 'package:teta_core/src/models/variable.dart';
-
 // Project imports:
 import 'package:teta_widgets/src/elements/actions/snippets/update.dart';
 
 class FActionNavigationOpenDatePicker {
   static Future action(
-    BuildContext context,
-    List<VariableObject> states,
-    String? stateName,
-    int? loop,
+    final BuildContext context,
+    final List<VariableObject> states,
+    final String? stateName,
+    final int? loop,
   ) async {
-    final index = states.indexWhere((element) => element.name == stateName);
+    final index =
+        states.indexWhere((final element) => element.name == stateName);
     final picked = await showDatePicker(
       context: context,
       initialDate: DateTime.now(),
@@ -33,19 +32,19 @@ class FActionNavigationOpenDatePicker {
   }
 
   static String toCode(
-    BuildContext context,
-    String? nameOfPage,
-    Map<String, dynamic>? paramsToSend,
+    final BuildContext context,
+    final String? nameOfPage,
+    final Map<String, dynamic>? paramsToSend,
   ) {
     try {
       final prj =
           BlocProvider.of<FocusProjectBloc>(context).state as ProjectLoaded;
       if (nameOfPage == null ||
           (prj.prj.pages ?? <PageObject>[])
-                  .indexWhere((element) => element.name == nameOfPage) ==
+                  .indexWhere((final element) => element.name == nameOfPage) ==
               -1) return '';
-      final page =
-          prj.prj.pages!.firstWhere((element) => element.name == nameOfPage);
+      final page = prj.prj.pages!
+          .firstWhere((final element) => element.name == nameOfPage);
       final realPageName = "Page${nameOfPage.replaceAll(' ', "")}";
 
       final stringParamsToSend = StringBuffer()..write('');

@@ -13,7 +13,7 @@ class FWrapAlignment {
     this.align = WrapAlignment.start,
   });
 
-  FWrapAlignment.fromJson(String? json)
+  FWrapAlignment.fromJson(final String? json)
       : align = _convertJsonToValue(json ?? '');
 
   WrapAlignment align;
@@ -22,11 +22,11 @@ class FWrapAlignment {
 
   String get getString => _convertValueToDropDown(align);
 
-  void set(String text) => align = _convertJsonToValue(text);
+  void set(final String text) => align = _convertJsonToValue(text);
 
   String toJson() => _convertValueToJson(align);
 
-  static WrapAlignment _convertJsonToValue(String key) {
+  static WrapAlignment _convertJsonToValue(final String key) {
     if (key == 'e') return WrapAlignment.end;
     if (key == 'c') return WrapAlignment.center;
     if (key == 'sA') return WrapAlignment.spaceAround;
@@ -35,7 +35,7 @@ class FWrapAlignment {
     return WrapAlignment.start;
   }
 
-  static String _convertValueToJson(WrapAlignment value) {
+  static String _convertValueToJson(final WrapAlignment value) {
     if (value == WrapAlignment.end) return 'e';
     if (value == WrapAlignment.center) return 'c';
     if (value == WrapAlignment.spaceAround) return 'sA';
@@ -44,7 +44,7 @@ class FWrapAlignment {
     return 's';
   }
 
-  static String _convertValueToDropDown(WrapAlignment value) {
+  static String _convertValueToDropDown(final WrapAlignment value) {
     if (value == WrapAlignment.end) return 'End';
     if (value == WrapAlignment.center) return 'Center';
     if (value == WrapAlignment.spaceAround) return 'Space Around';
@@ -53,7 +53,7 @@ class FWrapAlignment {
     return 'Start';
   }
 
-  static String _convertValueToCode(WrapAlignment? value) {
+  static String _convertValueToCode(final WrapAlignment? value) {
     if (value == WrapAlignment.end) return 'end';
     if (value == WrapAlignment.center) return 'center';
     if (value == WrapAlignment.spaceAround) return 'spaceAround';

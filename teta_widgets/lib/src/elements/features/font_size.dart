@@ -13,7 +13,7 @@ class FFontSize {
   double get get => size;
 
   /// Instantiates [FFontSize] from Json
-  FFontSize fromJson(dynamic json) {
+  FFontSize fromJson(final dynamic json) {
     try {
       return FFontSize(
         size: double.tryParse('$json') != null ? double.parse('$json') : 16,

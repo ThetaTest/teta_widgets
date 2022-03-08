@@ -3,7 +3,6 @@
 
 // Flutter imports:
 import 'package:flutter/material.dart';
-
 // Package imports:
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:hovering/hovering.dart';
@@ -13,7 +12,6 @@ import 'package:teta_core/src/design_system/dialogs/color_picker.dart';
 import 'package:teta_core/src/design_system/hex_color.dart';
 import 'package:teta_core/src/design_system/textfield/minitextfield.dart';
 import 'package:teta_core/src/design_system/textfield/textfield.dart';
-
 // Project imports:
 import 'package:teta_widgets/src/elements/features/features.dart';
 import 'package:teta_widgets/src/elements/nodes/node.dart';
@@ -25,7 +23,7 @@ class RadialFillControl extends StatefulWidget {
     required this.node,
     required this.isStyled,
     required this.callBack,
-    Key? key,
+    final Key? key,
   }) : super(key: key);
 
   final FFill fill;
@@ -56,9 +54,9 @@ class ColorControlState extends State<RadialFillControl> {
   }
 
   @override
-  Widget build(BuildContext context) {
+  Widget build(final BuildContext context) {
     return BlocBuilder<FocusBloc, List<CNode>>(
-      builder: (context, state) {
+      builder: (final context, final state) {
         //updateState(state);
         return Column(
           crossAxisAlignment: CrossAxisAlignment.start,
@@ -70,9 +68,9 @@ class ColorControlState extends State<RadialFillControl> {
               decoration: BoxDecoration(
                 gradient: RadialGradient(
                   colors: widget.fill.levels!
-                      .map((e) => HexColor(e.color))
+                      .map((final e) => HexColor(e.color))
                       .toList(),
-                  stops: widget.fill.levels!.map((e) => e.stop).toList(),
+                  stops: widget.fill.levels!.map((final e) => e.stop).toList(),
                   center: widget.fill.center!,
                   radius: widget.fill.radius!,
                 ),
@@ -177,7 +175,7 @@ class ColorControlState extends State<RadialFillControl> {
                     controller: controller,
                     placeholder: '${widget.fill.radius}',
                     hpadding: 4,
-                    callBack: (radius) {
+                    callBack: (final radius) {
                       if (double.tryParse(radius) != null) {
                         final old = FFill().fromJson(widget.fill.toJson());
                         widget.fill.radius = double.parse(radius);
@@ -191,18 +189,18 @@ class ColorControlState extends State<RadialFillControl> {
             Column(
               children: widget.fill.levels!
                   .map(
-                    (e) => FillElement(
+                    (final e) => FillElement(
                       element: e,
                       fill: widget.fill,
                       index: widget.fill.levels!.indexOf(e),
                       node: widget.node,
-                      callBackIndex: (index) {
+                      callBackIndex: (final index) {
                         setState(() {
                           selectedElementIndex = index;
                         });
                         showPicker();
                       },
-                      callBack: (fill, old) {
+                      callBack: (final fill, final old) {
                         widget.callBack(fill, false, old);
                       },
                     ),
@@ -231,7 +229,7 @@ class ColorControlState extends State<RadialFillControl> {
     );
   }
 
-  Future updateState(CNode node) async {
+  Future updateState(final CNode node) async {
     await Future<void>.delayed(const Duration(milliseconds: 100));
     if (mounted) {
       setState(() {
@@ -242,7 +240,7 @@ class ColorControlState extends State<RadialFillControl> {
     }
   }
 
-  void updateColor(Color color) {
+  void updateColor(final Color color) {
     final old = FFill().fromJson(widget.fill.toJson());
     setState(() {
       widget.fill.levels![selectedElementIndex].color =
@@ -253,7 +251,7 @@ class ColorControlState extends State<RadialFillControl> {
     widget.callBack(widget.fill, false, old);
   }
 
-  void updatedPosition(Alignment align, String name) {
+  void updatedPosition(final Alignment align, final String name) {
     final old = FFill().fromJson(widget.fill.toJson());
     if (name == 'center') widget.fill.center = align;
     widget.callBack(widget.fill, false, old);
@@ -263,7 +261,7 @@ class ColorControlState extends State<RadialFillControl> {
   void showPicker() {
     showDialog<void>(
       context: context,
-      builder: (context) {
+      builder: (final context) {
         return ColorPickerDialog(
           context: context,
           color: tempColor!,
@@ -274,12 +272,12 @@ class ColorControlState extends State<RadialFillControl> {
   }
 
   void showPickerAlign(
-    Alignment align,
-    String name,
+    final Alignment align,
+    final String name,
   ) {
     showDialog<void>(
       context: context,
-      builder: (context) {
+      builder: (final context) {
         return AlertDialog(
           backgroundColor: const Color(0xFF333333),
           title: const Text(''),
@@ -288,11 +286,12 @@ class ColorControlState extends State<RadialFillControl> {
             height: 300,
             decoration: BoxDecoration(
               gradient: RadialGradient(
-                colors:
-                    widget.fill.levels!.map((e) => HexColor(e.color)).toList(),
+                colors: widget.fill.levels!
+                    .map((final e) => HexColor(e.color))
+                    .toList(),
                 center: widget.fill.center!,
                 radius: widget.fill.radius!,
-                stops: widget.fill.levels!.map((e) => e.stop).toList(),
+                stops: widget.fill.levels!.map((final e) => e.stop).toList(),
               ),
               borderRadius: BorderRadius.circular(16),
             ),
@@ -389,10 +388,10 @@ class ColorControlState extends State<RadialFillControl> {
   }
 
   Widget alignPositionIcon(
-    Alignment alignNode,
-    Alignment alignTarget,
-    String name, {
-    required bool isPreview,
+    final Alignment alignNode,
+    final Alignment alignTarget,
+    final String name, {
+    required final bool isPreview,
   }) {
     return GestureDetector(
       onTap: () {
@@ -422,7 +421,7 @@ class FillElement extends StatefulWidget {
     required this.node,
     required this.callBackIndex,
     required this.callBack,
-    Key? key,
+    final Key? key,
   }) : super(key: key);
 
   final FFill fill;
@@ -451,9 +450,9 @@ class FillElementState extends State<FillElement> {
   }
 
   @override
-  Widget build(BuildContext context) {
+  Widget build(final BuildContext context) {
     return BlocListener<FocusBloc, List<CNode>>(
-      listener: (context, state) {
+      listener: (final context, final state) {
         if (state.isNotEmpty) {
           if (state.first.nid != nodeId) {
             setState(() {
@@ -488,7 +487,7 @@ class FillElementState extends State<FillElement> {
                       ),
                     ),
                   ),
-                  onHover: (e) {},
+                  onHover: (final e) {},
                   child: Container(
                     width: 48,
                     height: 48,
@@ -506,7 +505,7 @@ class FillElementState extends State<FillElement> {
                 controller: editingController,
                 placeholder: widget.element.color,
                 hpadding: 4,
-                onSubmitted: (text) {
+                onSubmitted: (final text) {
                   final hexCode = text.replaceAll('#', '');
                   if (hexCode.length == 3) {
                     final hexColor =
@@ -527,7 +526,7 @@ class FillElementState extends State<FillElement> {
                     }
                   }
                 },
-                callBack: (text) {
+                callBack: (final text) {
                   final hexCode = text.replaceAll('#', '');
                   if (hexCode.length == 3) {
                     final hexColor =
@@ -555,7 +554,7 @@ class FillElementState extends State<FillElement> {
                 controller: stopController,
                 placeholder: '${widget.element.stop}',
                 hpadding: 4,
-                callBack: (text) {
+                callBack: (final text) {
                   if (double.tryParse(text) != null) {
                     final old = FFill().fromJson(widget.fill.toJson());
                     widget.element.stop = double.parse(text);
@@ -592,7 +591,7 @@ class FillElementState extends State<FillElement> {
                     ),
                   ),
                 ),
-                onHover: (e) {},
+                onHover: (final e) {},
                 child: Container(
                   width: 48,
                   height: 48,

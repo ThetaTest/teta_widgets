@@ -2,13 +2,11 @@
 // Package imports:
 // ignore_for_file: implementation_imports
 
-// Flutter imports:
-import 'package:flutter/material.dart';
-
 // Package imports:
 import 'package:auth_buttons/auth_buttons.dart';
+// Flutter imports:
+import 'package:flutter/material.dart';
 import 'package:teta_core/teta_core.dart';
-
 // Project imports:
 import 'package:teta_widgets/src/elements/index.dart';
 
@@ -17,7 +15,7 @@ import 'package:teta_widgets/src/elements/index.dart';
 class WLoginWithApple extends StatelessWidget {
   /// Returns a Apple SignIn button
   const WLoginWithApple(
-    Key? key, {
+    final Key? key, {
     required this.node,
     required this.forPlay,
     required this.width,
@@ -43,7 +41,7 @@ class WLoginWithApple extends StatelessWidget {
   final List<DatasetObject> dataset;
 
   @override
-  Widget build(BuildContext context) {
+  Widget build(final BuildContext context) {
     return NodeSelectionBuilder(
       node: node,
       forPlay: forPlay,
@@ -52,7 +50,7 @@ class WLoginWithApple extends StatelessWidget {
   }
 
   /// Returns the button itself
-  Widget btn(BuildContext context) {
+  Widget btn(final BuildContext context) {
     return AppleAuthButton(
       onPressed: () => GestureBuilder.get(
         context: context,

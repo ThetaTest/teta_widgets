@@ -3,11 +3,9 @@
 
 // Flutter imports:
 import 'package:flutter/material.dart';
-
 // Package imports:
 import 'package:teta_core/src/models/dataset.dart';
 import 'package:teta_core/src/models/variable.dart';
-
 // Project imports:
 import 'package:teta_widgets/src/elements/index.dart';
 
@@ -17,7 +15,7 @@ import 'package:teta_widgets/src/elements/index.dart';
 class WMapBox extends StatefulWidget {
   /// Returns a [Map] widget in Teta
   const WMapBox(
-    Key? key, {
+    final Key? key, {
     required this.node,
     required this.forPlay,
     required this.params,
@@ -58,9 +56,9 @@ class _WMapBoxState extends State<WMapBox> {
   //late MapboxMapController controllerOne;
 
   Widget _buildMarkerWidget(
-    Offset pos,
-    Color color, [
-    IconData icon = Icons.location_on,
+    final Offset pos,
+    final Color color, [
+    final IconData icon = Icons.location_on,
   ]) {
     return Positioned(
       left: pos.dx - 24,
@@ -76,7 +74,7 @@ class _WMapBoxState extends State<WMapBox> {
   }
 
   @override
-  Widget build(BuildContext context) {
+  Widget build(final BuildContext context) {
     return NodeSelectionBuilder(
       node: widget.node,
       forPlay: widget.forPlay,

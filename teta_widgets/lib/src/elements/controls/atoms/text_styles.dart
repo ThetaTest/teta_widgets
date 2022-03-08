@@ -3,7 +3,6 @@
 
 // Flutter imports:
 import 'package:flutter/material.dart';
-
 // Package imports:
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:google_fonts/google_fonts.dart';
@@ -16,7 +15,6 @@ import 'package:teta_core/src/design_system/palette.dart';
 import 'package:teta_core/src/design_system/text.dart';
 import 'package:teta_core/src/design_system/textfield/minitextfield.dart';
 import 'package:teta_core/src/models/text_style.dart';
-
 // Project imports:
 import 'package:teta_widgets/src/elements/features/text_style.dart';
 import 'package:teta_widgets/src/elements/nodes/node.dart';
@@ -26,7 +24,7 @@ class TextStylesControl extends StatefulWidget {
     required this.node,
     required this.textStyle,
     required this.callBack,
-    Key? key,
+    final Key? key,
   }) : super(key: key);
 
   final CNode node;
@@ -49,7 +47,7 @@ class TextStylesControlState extends State<TextStylesControl> {
   }
 
   @override
-  Widget build(BuildContext context) {
+  Widget build(final BuildContext context) {
     height = MediaQuery.of(context).size.height;
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
@@ -85,7 +83,7 @@ class TextStylesControlState extends State<TextStylesControl> {
                           color: Colors.white,
                         ),
                       ),
-                      onHover: (e) {},
+                      onHover: (final e) {},
                       child: Container(
                         padding: const EdgeInsets.all(4),
                         decoration: BoxDecoration(
@@ -131,7 +129,7 @@ class TextStylesControlState extends State<TextStylesControl> {
                         color: Colors.white,
                       ),
                     ),
-                    onHover: (e) {},
+                    onHover: (final e) {},
                     child: Container(
                       padding: const EdgeInsets.all(4),
                       decoration: BoxDecoration(
@@ -165,8 +163,8 @@ class TextStylesControlState extends State<TextStylesControl> {
   }
 
   void updateTextStyleModel(
-    String name, {
-    required bool flag,
+    final String name, {
+    required final bool flag,
   }) {
     final old = widget.textStyle.textStyleModel;
     widget.callBack(name, flag, old);
@@ -176,16 +174,20 @@ class TextStylesControlState extends State<TextStylesControl> {
     });
   }
 
-  void showPicker(BuildContext context, TextStylesBloc textStylesBloc) {
+  void showPicker(
+    final BuildContext context,
+    final TextStylesBloc textStylesBloc,
+  ) {
     final editingController = TextEditingController();
 
     showDialog<void>(
       context: context,
-      builder: (context) {
+      builder: (final context) {
         var searchedText = '';
         return StatefulBuilder(
-          builder: (context, setState) => BlocProvider<DeviceModeCubit>(
-            create: (BuildContext context) => DeviceModeCubit(),
+          builder: (final context, final setState) =>
+              BlocProvider<DeviceModeCubit>(
+            create: (final BuildContext context) => DeviceModeCubit(),
             child: AlertDialog(
               backgroundColor: const Color(0xFF222222),
               title: const CText(
@@ -203,7 +205,7 @@ class TextStylesControlState extends State<TextStylesControl> {
                       controller: editingController,
                       placeholder: 'write here',
                       color: Colors.white,
-                      callBack: (text) => setState(() {
+                      callBack: (final text) => setState(() {
                         searchedText = text;
                       }),
                     ),
@@ -211,10 +213,10 @@ class TextStylesControlState extends State<TextStylesControl> {
                       height: 326,
                       child: BlocBuilder<TextStylesBloc, List<TextStyleModel>>(
                         bloc: textStylesBloc,
-                        builder: (context, state) {
+                        builder: (final context, final state) {
                           return ListView(
                             shrinkWrap: true,
-                            children: state.map((entry) {
+                            children: state.map((final entry) {
                               if (entry.name!.contains(searchedText)) {
                                 return GestureDetector(
                                   onTap: () {
@@ -267,14 +269,17 @@ class TextStylesControlState extends State<TextStylesControl> {
     );
   }
 
-  void newTextStylePicker(BuildContext context, TextStylesBloc textStylesBloc) {
+  void newTextStylePicker(
+    final BuildContext context,
+    final TextStylesBloc textStylesBloc,
+  ) {
     final editingController = TextEditingController();
     var title = '';
     showDialog<void>(
       context: context,
-      builder: (context) {
+      builder: (final context) {
         return BlocProvider<DeviceModeCubit>(
-          create: (BuildContext context) => DeviceModeCubit(),
+          create: (final BuildContext context) => DeviceModeCubit(),
           child: AlertDialog(
             title: const CText('Create new text style', size: 16),
             content: SizedBox(
@@ -286,7 +291,7 @@ class TextStylesControlState extends State<TextStylesControl> {
                     controller: editingController,
                     placeholder: 'Text Style',
                     color: Colors.black,
-                    callBack: (text) => title = text,
+                    callBack: (final text) => title = text,
                   ),
                 ],
               ),
@@ -320,14 +325,18 @@ class TextStylesControlState extends State<TextStylesControl> {
     );
   }
 
-  void editTextStylePicker(BuildContext context, CNode node, String name) {
+  void editTextStylePicker(
+    final BuildContext context,
+    final CNode node,
+    final String name,
+  ) {
     final editingController = TextEditingController();
     var title = '';
     showDialog<void>(
       context: context,
-      builder: (context) {
+      builder: (final context) {
         return BlocProvider<DeviceModeCubit>(
-          create: (BuildContext context) => DeviceModeCubit(),
+          create: (final BuildContext context) => DeviceModeCubit(),
           child: AlertDialog(
             title: CText('Edit $name', size: 16),
             content: SizedBox(
@@ -339,7 +348,7 @@ class TextStylesControlState extends State<TextStylesControl> {
                     controller: editingController,
                     placeholder: 'Text Style',
                     color: Colors.black,
-                    callBack: (text) => title = text,
+                    callBack: (final text) => title = text,
                   ),
                 ],
               ),

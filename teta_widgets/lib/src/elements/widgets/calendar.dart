@@ -1,12 +1,10 @@
 // Flutter imports:
-import 'package:flutter/material.dart';
-
 // Package imports:
 import 'package:collection/collection.dart';
+import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 import 'package:paged_vertical_calendar/paged_vertical_calendar.dart';
 import 'package:teta_core/teta_core.dart';
-
 // Project imports:
 import 'package:teta_widgets/src/elements/index.dart';
 
@@ -25,7 +23,7 @@ class DateCalendarObject {
 class WCalendar extends StatefulWidget {
   /// Returns a [Align] widget in Teta
   const WCalendar(
-    Key? key, {
+    final Key? key, {
     required this.node,
     required this.value,
     required this.action,
@@ -82,23 +80,24 @@ class _WCalendarState extends State<WCalendar> {
   }
 
   @override
-  Widget build(BuildContext context) {
+  Widget build(final BuildContext context) {
     return PagedVerticalCalendar(
       startDate: DateTime.now(),
       addAutomaticKeepAlives: true,
-      dayBuilder: (context, date) {
+      dayBuilder: (final context, final date) {
         var eventExists = false;
         final dayFlag = list.firstWhereOrNull(
-          (e) =>
+          (final e) =>
               e.date.year == date.year &&
               e.date.month == date.month &&
               e.date.day == date.day,
         );
         if (dayFlag == null) {
-          dataset ??= widget.dataset
-              .firstWhereOrNull((e) => e.getName == widget.value.datasetName);
+          dataset ??= widget.dataset.firstWhereOrNull(
+            (final e) => e.getName == widget.value.datasetName,
+          );
           if (dataset != null && widget.value.datasetAttrName != null) {
-            final element = dataset!.getMap.firstWhereOrNull((element) {
+            final element = dataset!.getMap.firstWhereOrNull((final element) {
               final a = DateTime.tryParse(
                 element[widget.value.datasetAttrName] as String? ?? '',
               );
@@ -142,7 +141,7 @@ class _WCalendarState extends State<WCalendar> {
           ),
         );
       },
-      monthBuilder: (context, month, year) {
+      monthBuilder: (final context, final month, final year) {
         final monthValue = DateFormat('MMMM').format(DateTime(0, month));
         return SizedBox(
           width: double.maxFinite,
@@ -158,7 +157,7 @@ class _WCalendarState extends State<WCalendar> {
           ),
         );
       },
-      onDayPressed: (date) => GestureBuilder.get(
+      onDayPressed: (final date) => GestureBuilder.get(
         context: context,
         node: widget.node,
         gesture: ActionGesture.onDayPressed,
@@ -169,7 +168,7 @@ class _WCalendarState extends State<WCalendar> {
         dataset: widget.dataset,
         forPlay: widget.forPlay,
       ),
-      onMonthLoaded: (year, month) => GestureBuilder.get(
+      onMonthLoaded: (final year, final month) => GestureBuilder.get(
         context: context,
         node: widget.node,
         gesture: ActionGesture.onMonthLoaded,
@@ -185,8 +184,9 @@ class _WCalendarState extends State<WCalendar> {
 
   void _setDataset() {
     try {
-      final index = widget.dataset
-          .indexWhere((element) => element.getName == widget.value.datasetName);
+      final index = widget.dataset.indexWhere(
+        (final element) => element.getName == widget.value.datasetName,
+      );
       final db = index != -1 ? widget.dataset[index] : DatasetObject.empty();
       if (mounted) {
         if (db.getName != '') {

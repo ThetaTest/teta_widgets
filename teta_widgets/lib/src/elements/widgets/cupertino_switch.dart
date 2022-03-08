@@ -3,17 +3,15 @@
 
 // Flutter imports:
 import 'package:flutter/cupertino.dart';
-
 // Package imports:
 import 'package:teta_core/teta_core.dart';
-
 // Project imports:
 import 'package:teta_widgets/src/elements/index.dart';
 
 class WCupertinoSwitch extends StatefulWidget {
   /// Returns a Gesture Detector
   const WCupertinoSwitch(
-    Key? key, {
+    final Key? key, {
     required this.node,
     required this.forPlay,
     required this.action,
@@ -41,12 +39,12 @@ class _WCupertinoSwitchState extends State<WCupertinoSwitch> {
   bool flag = false;
 
   @override
-  Widget build(BuildContext context) {
+  Widget build(final BuildContext context) {
     return NodeSelectionBuilder(
       node: widget.node,
       forPlay: widget.forPlay,
       child: CupertinoSwitch(
-        onChanged: (value) {
+        onChanged: (final value) {
           GestureBuilder.get(
             context: context,
             node: widget.node,

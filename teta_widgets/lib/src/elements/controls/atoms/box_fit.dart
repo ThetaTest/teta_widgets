@@ -3,10 +3,8 @@
 
 // Flutter imports:
 import 'package:flutter/material.dart';
-
 // Package imports:
 import 'package:teta_core/src/design_system/dropdowns/dropdown.dart';
-
 // Project imports:
 import 'package:teta_widgets/src/elements/features/box_fit.dart';
 
@@ -14,7 +12,7 @@ class BoxFitControl extends StatefulWidget {
   const BoxFitControl({
     required this.boxFit,
     required this.callBack,
-    Key? key,
+    final Key? key,
   }) : super(key: key);
 
   final FBoxFit boxFit;
@@ -34,11 +32,11 @@ class BoxFitControlState extends State<BoxFitControl> {
   }
 
   @override
-  Widget build(BuildContext context) {
+  Widget build(final BuildContext context) {
     return CDropdown(
       value: dropdown,
       items: FBoxFit.dropdownList,
-      onChange: (newValue) {
+      onChange: (final newValue) {
         if (newValue != null) {
           setState(() {
             dropdown = newValue;

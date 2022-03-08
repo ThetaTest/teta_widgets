@@ -4,7 +4,6 @@
 // Flutter imports:
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-
 // Package imports:
 import 'package:teta_core/src/design_system/palette.dart';
 import 'package:teta_core/src/design_system/switch.dart';
@@ -15,7 +14,7 @@ class FlagControl extends StatefulWidget {
     required this.title,
     required this.value,
     required this.callBack,
-    Key? key,
+    final Key? key,
   }) : super(key: key);
 
   final String title;
@@ -35,7 +34,7 @@ class FlagControlState extends State<FlagControl> {
     switchOn = widget.value;
   }
 
-  void _onSwitchChanged(bool value) {
+  void _onSwitchChanged(final bool value) {
     setState(() {
       switchOn = value;
     });
@@ -43,7 +42,7 @@ class FlagControlState extends State<FlagControl> {
   }
 
   @override
-  Widget build(BuildContext context) {
+  Widget build(final BuildContext context) {
     return Row(
       mainAxisAlignment: MainAxisAlignment.spaceBetween,
       children: [

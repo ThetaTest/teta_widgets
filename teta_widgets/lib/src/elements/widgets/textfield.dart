@@ -3,18 +3,16 @@
 
 // Flutter imports:
 import 'package:flutter/material.dart';
-
 // Package imports:
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:teta_core/teta_core.dart';
-
 // Project imports:
 import 'package:teta_widgets/src/elements/index.dart';
 
 class WTextField extends StatefulWidget {
   /// Returns a TextField widget in Teta
   const WTextField(
-    Key? key, {
+    final Key? key, {
     required this.node,
     required this.width,
     required this.value,
@@ -81,7 +79,7 @@ class _WTextFieldState extends State<WTextField> {
   }
 
   @override
-  Widget build(BuildContext context) {
+  Widget build(final BuildContext context) {
     return NodeSelectionBuilder(
       node: widget.node,
       forPlay: widget.forPlay,
@@ -106,7 +104,7 @@ class _WTextFieldState extends State<WTextField> {
     final borderRadius = widget.borderRadius.get;
     TextStyleModel? model;
     if (widget.textStyle.textStyleModel != null) {
-      BlocProvider.of<TextStylesBloc>(context).state.forEach((element) {
+      BlocProvider.of<TextStylesBloc>(context).state.forEach((final element) {
         if (element.name == widget.textStyle.textStyleModel) model = element;
       });
     }
@@ -165,7 +163,7 @@ class _WTextFieldState extends State<WTextField> {
           widget.loop,
         ),
       ),
-      onChanged: (text) => GestureBuilder.get(
+      onChanged: (final text) => GestureBuilder.get(
         context: context,
         node: widget.node,
         gesture: ActionGesture.onChange,
@@ -177,7 +175,7 @@ class _WTextFieldState extends State<WTextField> {
         forPlay: widget.forPlay,
         loop: widget.loop,
       ),
-      onSubmitted: (text) => GestureBuilder.get(
+      onSubmitted: (final text) => GestureBuilder.get(
         context: context,
         node: widget.node,
         gesture: ActionGesture.onSubmitted,

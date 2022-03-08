@@ -7,7 +7,7 @@ import 'package:flutter/material.dart';
 class FFontStyle {
   /// Set of funcs to use FontStyle in Teta
   FFontStyle({
-    FontStyle style = FontStyle.normal,
+    final FontStyle style = FontStyle.normal,
   }) : _style = style;
 
   FontStyle _style;
@@ -15,9 +15,9 @@ class FFontStyle {
   FontStyle get get => _style;
 
   // ignore: use_setters_to_change_properties
-  void set(FontStyle value) => _style = value;
+  void set(final FontStyle value) => _style = value;
 
-  FFontStyle fromJson(String json) {
+  FFontStyle fromJson(final String json) {
     if (json == 'n') {
       return FFontStyle();
     } else {
@@ -27,7 +27,7 @@ class FFontStyle {
 
   String toJson() => (_style == FontStyle.normal) ? 'n' : 'i';
 
-  static String _convertValueToJson(FontStyle? style) =>
+  static String _convertValueToJson(final FontStyle? style) =>
       (style == FontStyle.normal) ? 'FontStyle.normal' : 'FontStyle.italic';
 
   String toCode() => _convertValueToJson(_style);

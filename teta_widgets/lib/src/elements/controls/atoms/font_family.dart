@@ -6,7 +6,6 @@ import 'dart:ui';
 
 // Flutter imports:
 import 'package:flutter/material.dart';
-
 // Package imports:
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:google_fonts/google_fonts.dart';
@@ -15,7 +14,6 @@ import 'package:teta_core/src/design_system/buttons/button.dart';
 import 'package:teta_core/src/design_system/palette.dart';
 import 'package:teta_core/src/design_system/text.dart';
 import 'package:teta_core/src/design_system/textfield/minitextfield.dart';
-
 // Project imports:
 import 'package:teta_widgets/src/elements/features/text_style.dart';
 import 'package:teta_widgets/src/elements/nodes/node.dart';
@@ -25,7 +23,7 @@ class FontFamilyControl extends StatefulWidget {
     required this.node,
     required this.textStyle,
     required this.callBack,
-    Key? key,
+    final Key? key,
   }) : super(key: key);
 
   final CNode node;
@@ -46,7 +44,7 @@ class FontFamilyState extends State<FontFamilyControl> {
   }
 
   @override
-  Widget build(BuildContext context) {
+  Widget build(final BuildContext context) {
     height = MediaQuery.of(context).size.height;
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
@@ -68,7 +66,7 @@ class FontFamilyState extends State<FontFamilyControl> {
     );
   }
 
-  void updateFont(MapEntry style) {
+  void updateFont(final MapEntry style) {
     final old = FTextStyle.fromJson(widget.textStyle.toJson());
     widget.textStyle.fontFamily = style.key as String;
     widget.callBack(
@@ -81,7 +79,7 @@ class FontFamilyState extends State<FontFamilyControl> {
   void showPicker() {
     showDialog<void>(
       context: context,
-      builder: (context) {
+      builder: (final context) {
         final editingController = TextEditingController();
         final list = GoogleFonts.asMap().entries.toList();
         var filteredFontFamily = list.sublist(0, 8);
@@ -90,8 +88,9 @@ class FontFamilyState extends State<FontFamilyControl> {
         final scrollController = ScrollController();
         final cubit = GoogleFontsCubit();
         return StatefulBuilder(
-          builder: (context, setState) => BlocProvider<GoogleFontsCubit>(
-            create: (context) => cubit,
+          builder: (final context, final setState) =>
+              BlocProvider<GoogleFontsCubit>(
+            create: (final context) => cubit,
             child: AlertDialog(
               backgroundColor: const Color(0xFF333333),
               title: const CText(
@@ -100,7 +99,7 @@ class FontFamilyState extends State<FontFamilyControl> {
               ),
               content: BlocBuilder<GoogleFontsCubit, String>(
                 bloc: cubit,
-                builder: (context, state) {
+                builder: (final context, final state) {
                   scrollController.addListener(() {
                     if (scrollController.position.atEdge) {
                       if (scrollController.position.pixels == 0) {
@@ -132,7 +131,7 @@ class FontFamilyState extends State<FontFamilyControl> {
                             controller: editingController,
                             placeholder: widget.textStyle.fontFamily,
                             color: Colors.white,
-                            callBack: (text) {
+                            callBack: (final text) {
                               cubit.updateTextToFind(text);
                               setState(() {
                                 query = text;
@@ -155,13 +154,13 @@ class FontFamilyState extends State<FontFamilyControl> {
                           height: 326,
                           child: BlocBuilder<GoogleFontsCubit, String>(
                             bloc: cubit,
-                            builder: (context, state) {
+                            builder: (final context, final state) {
                               return ListView.builder(
                                 addAutomaticKeepAlives: false,
                                 addRepaintBoundaries: false,
                                 controller: scrollController,
                                 itemCount: filteredFontFamily.length,
-                                itemBuilder: (context, index) {
+                                itemBuilder: (final context, final index) {
                                   return GestureDetector(
                                     onTap: () {
                                       updateFont(filteredFontFamily[index]);
@@ -259,10 +258,10 @@ List<
   TextStyle? textStyle,
   double? wordSpacing,
 })>> loadIcons(
-  String query,
-  int limit,
-  int after,
-  List<
+  final String query,
+  final int limit,
+  final int after,
+  final List<
           MapEntry<
               String,
               TextStyle Function({
@@ -290,7 +289,7 @@ List<
 ) {
   var list = listFonFamily
       .where(
-        (fontFamily) => fontFamily.key.toLowerCase().contains(
+        (final fontFamily) => fontFamily.key.toLowerCase().contains(
               query.toLowerCase(),
             ),
       )

@@ -4,7 +4,6 @@
 // Flutter imports:
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-
 // Package imports:
 import 'package:teta_core/src/design_system/palette.dart';
 import 'package:teta_core/src/design_system/text.dart';
@@ -15,7 +14,7 @@ class SliderControls extends StatelessWidget {
     required this.value,
     required this.maxAndMin,
     required this.callBack,
-    Key? key,
+    final Key? key,
   }) : super(key: key);
 
   final String title;
@@ -24,7 +23,7 @@ class SliderControls extends StatelessWidget {
   final Function(double, bool, double) callBack;
 
   @override
-  Widget build(BuildContext context) {
+  Widget build(final BuildContext context) {
     return SizedBox(
       width: double.maxFinite,
       child: Column(
@@ -40,10 +39,10 @@ class SliderControls extends StatelessWidget {
                 value: value,
                 max: maxAndMin[0],
                 min: maxAndMin[1],
-                onChanged: (val) {
+                onChanged: (final val) {
                   callBack(val, false, value);
                 },
-                onChangeEnd: (val) {
+                onChangeEnd: (final val) {
                   callBack(val, true, value);
                 },
               ),
@@ -67,11 +66,11 @@ class SliderControls extends StatelessWidget {
 class CustomTrackShape extends RoundedRectSliderTrackShape {
   @override
   Rect getPreferredRect({
-    required RenderBox parentBox,
-    required SliderThemeData sliderTheme,
-    Offset offset = Offset.zero,
-    bool isEnabled = false,
-    bool isDiscrete = false,
+    required final RenderBox parentBox,
+    required final SliderThemeData sliderTheme,
+    final Offset offset = Offset.zero,
+    final bool isEnabled = false,
+    final bool isDiscrete = false,
   }) {
     final trackHeight = sliderTheme.trackHeight!;
     const trackLeft = 0.0;

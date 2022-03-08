@@ -1,14 +1,12 @@
 // Flutter imports:
 // Package imports:
 
-// Flutter imports:
-import 'package:flutter/material.dart';
-
 // Package imports:
 import 'package:equatable/equatable.dart';
+// Flutter imports:
+import 'package:flutter/material.dart';
 import 'package:teta_core/src/models/dataset.dart';
 import 'package:teta_core/src/models/variable.dart';
-
 // Project imports:
 import 'package:teta_widgets/src/elements/controls/control_model.dart';
 import 'package:teta_widgets/src/elements/features/children_ids.dart';
@@ -76,11 +74,11 @@ abstract class CNode extends Equatable {
 
   /// Render a Widget from node
   Widget toWidget({
-    required List<VariableObject> params,
-    required List<VariableObject> states,
-    required List<DatasetObject> dataset,
-    required bool forPlay,
-    int? loop,
+    required final List<VariableObject> params,
+    required final List<VariableObject> states,
+    required final List<DatasetObject> dataset,
+    required final bool forPlay,
+    final int? loop,
   }) =>
       const SizedBox();
 
@@ -99,8 +97,8 @@ abstract class CNode extends Equatable {
 
   /// Transform json to node
   static CNode fromJson(
-    Map<String, dynamic> doc,
-    int pageId,
+    final Map<String, dynamic> doc,
+    final int pageId,
   ) {
     return NDynamic.fromJson(doc, pageId);
   }
@@ -119,7 +117,7 @@ abstract class CNode extends Equatable {
   Map<String, dynamic> attributesToJson() => body.toJson();
 
   /// Render node to code string
-  String toCode(BuildContext context) {
+  String toCode(final BuildContext context) {
     return NDynamic(
       globalType: intrinsicState.type,
       body: NDynamic.getBody(intrinsicState.type),
@@ -129,7 +127,10 @@ abstract class CNode extends Equatable {
   }
 
   /// Instantiate new node by display name
-  static CNode toNodeFromName(String displayName, BuildContext context) {
+  static CNode toNodeFromName(
+    final String displayName,
+    final BuildContext context,
+  ) {
     final enumType = NodeType.fromStringCamelCase(displayName);
     return NDynamic(
       globalType: enumType,

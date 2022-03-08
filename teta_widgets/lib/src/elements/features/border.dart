@@ -1,9 +1,7 @@
 // Flutter imports:
 import 'package:flutter/material.dart';
-
 // Package imports:
 import 'package:teta_core/src/design_system/hex_color.dart';
-
 // Project imports:
 import 'package:teta_widgets/src/elements/controls/key_constants.dart';
 import 'package:teta_widgets/src/elements/features/border_style.dart';
@@ -50,7 +48,7 @@ class FBorder {
   FBorderStyle? style;
 
   /// Get [Border] from actual values
-  Border get(BuildContext context, {required bool forPlay}) {
+  Border get(final BuildContext context, {required final bool forPlay}) {
     final values = width!.getList(context);
     return Border(
       left: BorderSide(
@@ -77,7 +75,7 @@ class FBorder {
   }
 
   /// Instantiate [FBorder] from Json
-  static FBorder fromJson(Map<String, dynamic> doc) {
+  static FBorder fromJson(final Map<String, dynamic> doc) {
     try {
       return FBorder(
         style: FBorderStyle.fromJson(doc[DBKeys.borderStyle] as String),
@@ -98,7 +96,7 @@ class FBorder {
       };
 
   /// Export code String
-  String toCode(BuildContext context) {
+  String toCode(final BuildContext context) {
     final values = width!.margins!;
     final color = fill!.getHexColor(context);
     return '''

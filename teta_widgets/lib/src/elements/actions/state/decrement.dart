@@ -4,25 +4,24 @@
 // Flutter imports:
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
-
 // Package imports:
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:recase/recase.dart';
 import 'package:teta_core/src/blocs/focus_page/index.dart';
 import 'package:teta_core/src/models/variable.dart';
-
 // Project imports:
 import 'package:teta_widgets/src/elements/actions/snippets/take_state_from.dart';
 import 'package:teta_widgets/src/elements/actions/snippets/update.dart';
 
 class FActionStateDecrement {
   static Future action(
-    BuildContext context,
-    List<VariableObject> states,
-    String? stateName,
+    final BuildContext context,
+    final List<VariableObject> states,
+    final String? stateName,
   ) async {
     try {
-      final index = states.indexWhere((element) => element.name == stateName);
+      final index =
+          states.indexWhere((final element) => element.name == stateName);
       if (double.tryParse('${states[index].get}') != null) {
         final value = double.parse('${states[index].get}');
         states[index].value = '${value - 1}';
@@ -36,7 +35,7 @@ class FActionStateDecrement {
     }
   }
 
-  static String toCode(BuildContext context, String? stateName) {
+  static String toCode(final BuildContext context, final String? stateName) {
     final page = BlocProvider.of<FocusPageBloc>(context).state;
     final variable = takeStateFrom(page, '$stateName');
     if (variable == null || stateName == null) return '';

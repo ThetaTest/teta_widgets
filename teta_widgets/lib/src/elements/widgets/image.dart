@@ -4,20 +4,18 @@
 // Dart imports:
 import 'dart:typed_data';
 
-// Flutter imports:
-import 'package:flutter/material.dart';
-
 // Package imports:
 import 'package:cross_file/cross_file.dart';
+// Flutter imports:
+import 'package:flutter/material.dart';
 import 'package:teta_core/teta_core.dart';
-
 // Project imports:
 import 'package:teta_widgets/src/elements/index.dart';
 
 class WImage extends StatefulWidget {
   /// Returns a Image
   const WImage(
-    Key? key, {
+    final Key? key, {
     required this.image,
     required this.node,
     required this.width,
@@ -79,7 +77,7 @@ class _WImageState extends State<WImage> {
   }
 
   @override
-  Widget build(BuildContext context) {
+  Widget build(final BuildContext context) {
     return NodeSelectionBuilder(
       node: widget.node,
       forPlay: widget.forPlay,

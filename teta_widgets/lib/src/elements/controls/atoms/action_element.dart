@@ -3,13 +3,12 @@
 
 // ignore_for_file: public_member_api_docs, lines_longer_than_80_chars, avoid_dynamic_calls
 
-// Flutter imports:
-import 'package:flutter/foundation.dart';
-import 'package:flutter/material.dart';
-
 // Package imports:
 import 'package:collection/collection.dart';
 import 'package:expandable/expandable.dart';
+// Flutter imports:
+import 'package:flutter/foundation.dart';
+import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_feather_icons/flutter_feather_icons.dart';
 import 'package:hovering/hovering.dart';
@@ -24,8 +23,6 @@ import 'package:teta_core/src/models/page.dart';
 import 'package:teta_core/src/models/project.dart';
 import 'package:teta_core/src/models/variable.dart';
 import 'package:teta_core/src/repositories/node.dart';
-import 'package:uuid/uuid.dart';
-
 // Project imports:
 import 'package:teta_widgets/src/elements/controls/atoms/flag.dart';
 import 'package:teta_widgets/src/elements/controls/atoms/subapase/delete.dart';
@@ -47,6 +44,7 @@ import 'package:teta_widgets/src/elements/features/text_type_input.dart';
 import 'package:teta_widgets/src/elements/nodes/dynamic.dart';
 import 'package:teta_widgets/src/elements/nodes/enum.dart';
 import 'package:teta_widgets/src/elements/nodes/node.dart';
+import 'package:uuid/uuid.dart';
 
 /// Widget to control a single action
 class ActionElementControl extends StatefulWidget {
@@ -59,7 +57,7 @@ class ActionElementControl extends StatefulWidget {
     required this.node,
     required this.callBack,
     required this.callBackToDelete,
-    Key? key,
+    final Key? key,
   }) : super(key: key);
 
   /// Name of action
@@ -101,7 +99,7 @@ class ActionElementControlState extends State<ActionElementControl> {
   void initState() {
     try {
       pageObject = widget.prj.pages!.firstWhereOrNull(
-        (element) => element.name == widget.element.nameOfPage,
+        (final element) => element.name == widget.element.nameOfPage,
       );
       if (pageObject != null) {
         dropdownLinkPage = pageObject!.name;
@@ -118,7 +116,7 @@ class ActionElementControlState extends State<ActionElementControl> {
   }
 
   @override
-  Widget build(BuildContext context) {
+  Widget build(final BuildContext context) {
     return Container(
       margin: const EdgeInsets.only(bottom: 8),
       decoration: BoxDecoration(
@@ -142,7 +140,7 @@ class ActionElementControlState extends State<ActionElementControl> {
                     size: 24,
                     color: Colors.white,
                   ),
-                  onHover: (e) {},
+                  onHover: (final e) {},
                   child: const Icon(
                     Icons.delete,
                     size: 24,
@@ -176,7 +174,7 @@ class ActionElementControlState extends State<ActionElementControl> {
                     .getTypes(widget.prj.config, widget.page)
                     .toSet()
                     .toList(),
-                onChange: (newValue) {
+                onChange: (final newValue) {
                   if (newValue != null) {
                     final old = widget.element;
                     widget.element.actionType =
@@ -202,7 +200,7 @@ class ActionElementControlState extends State<ActionElementControl> {
                   widget.element.actionGesture,
                 ),
                 items: FActionElement.getGestures(widget.node as NDynamic),
-                onChange: (newValue) {
+                onChange: (final newValue) {
                   if (newValue != null) {
                     final old = widget.element;
                     widget.element.actionGesture =
@@ -231,7 +229,7 @@ class ActionElementControlState extends State<ActionElementControl> {
                 child: SizedBox(
                   width: double.maxFinite,
                   child: BlocListener<FocusBloc, List<CNode>>(
-                    listener: (context, state) {
+                    listener: (final context, final state) {
                       if (state.isNotEmpty) {
                         if (state.first.nid != nodeId) {
                           setState(() {
@@ -244,7 +242,7 @@ class ActionElementControlState extends State<ActionElementControl> {
                     },
                     child: CMiniTextField(
                       controller: delayController,
-                      callBack: (text) {
+                      callBack: (final text) {
                         if (int.tryParse(text) != null) {
                           final old = widget.element;
                           widget.element.delay!.value = text;
@@ -262,7 +260,7 @@ class ActionElementControlState extends State<ActionElementControl> {
               FlagControl(
                 title: 'Is loop',
                 value: widget.element.withLoop ?? false,
-                callBack: (flag, old) {
+                callBack: (final flag, final old) {
                   final old = widget.element;
                   widget.element.withLoop = flag;
                   widget.callBack(widget.element, old);
@@ -287,7 +285,7 @@ class ActionElementControlState extends State<ActionElementControl> {
                       child: SizedBox(
                         width: double.maxFinite,
                         child: BlocListener<FocusBloc, List<CNode>>(
-                          listener: (context, state) {
+                          listener: (final context, final state) {
                             if (state.isNotEmpty) {
                               if (state.first.nid != nodeId) {
                                 setState(() {
@@ -301,7 +299,7 @@ class ActionElementControlState extends State<ActionElementControl> {
                           },
                           child: CMiniTextField(
                             controller: loopController,
-                            callBack: (text) {
+                            callBack: (final text) {
                               if (int.tryParse(text) != null) {
                                 final old = widget.element;
                                 widget.element.everyMilliseconds!.value = text;
@@ -321,7 +319,7 @@ class ActionElementControlState extends State<ActionElementControl> {
               FlagControl(
                 title: 'By condition',
                 value: widget.element.withCondition ?? false,
-                callBack: (flag, old) {
+                callBack: (final flag, final old) {
                   final old = widget.element;
                   widget.element.withCondition = flag;
                   widget.callBack(widget.element, old);
@@ -333,7 +331,7 @@ class ActionElementControlState extends State<ActionElementControl> {
                   value: widget.element.condition ?? FTextTypeInput(),
                   page: widget.page,
                   title: 'Condition',
-                  callBack: (value, old) {
+                  callBack: (final value, final old) {
                     final old = widget.element;
                     widget.element.condition = value;
                     widget.callBack(widget.element, old);
@@ -348,7 +346,7 @@ class ActionElementControlState extends State<ActionElementControl> {
                     value: widget.element.valueOfCondition ?? FTextTypeInput(),
                     page: widget.page,
                     title: 'Value',
-                    callBack: (value, old) {
+                    callBack: (final value, final old) {
                       final old = widget.element;
                       widget.element.valueOfCondition = value;
                       widget.callBack(widget.element, old);
@@ -369,7 +367,7 @@ class ActionElementControlState extends State<ActionElementControl> {
                         widget.element.actionCamera,
                       ),
                       items: FActionElement.getCamera(),
-                      onChange: (newValue) {
+                      onChange: (final newValue) {
                         if (newValue != null) {
                           final old = widget.element;
                           widget.element.actionCamera =
@@ -383,24 +381,24 @@ class ActionElementControlState extends State<ActionElementControl> {
                     ),
                     CDropdown(
                       value: widget.page.states
-                                  .map((e) => e.name)
-                                  .where((element) => element != 'null')
+                                  .map((final e) => e.name)
+                                  .where((final element) => element != 'null')
                                   .toList()
                                   .indexWhere(
-                                    (e) => e == widget.element.stateName,
+                                    (final e) => e == widget.element.stateName,
                                   ) !=
                               -1
                           ? widget.element.stateName
                           : null,
                       items: widget.page.states
                           .where(
-                            (element) =>
+                            (final element) =>
                                 element.type == VariableType.cameraController,
                           )
-                          .map((e) => e.name)
-                          .where((element) => element != 'null')
+                          .map((final e) => e.name)
+                          .where((final element) => element != 'null')
                           .toList(),
-                      onChange: (newValue) {
+                      onChange: (final newValue) {
                         if (newValue != null) {
                           final old = widget.element;
                           widget.element.stateName = newValue;
@@ -418,7 +416,7 @@ class ActionElementControlState extends State<ActionElementControl> {
                         widget.element.actionAudioPlayer,
                       ),
                       items: FActionElement.getAudioPlayer(),
-                      onChange: (newValue) {
+                      onChange: (final newValue) {
                         if (newValue != null) {
                           final old = widget.element;
                           widget.element.actionAudioPlayer =
@@ -433,28 +431,28 @@ class ActionElementControlState extends State<ActionElementControl> {
                     CDropdown(
                       value: widget.page.states
                                   .where(
-                                    (element) =>
+                                    (final element) =>
                                         element.type ==
                                         VariableType.audioController,
                                   )
-                                  .map((e) => e.name)
-                                  .where((element) => element != 'null')
+                                  .map((final e) => e.name)
+                                  .where((final element) => element != 'null')
                                   .toList()
                                   .indexWhere(
-                                    (e) => e == widget.element.stateName,
+                                    (final e) => e == widget.element.stateName,
                                   ) !=
                               -1
                           ? widget.element.stateName
                           : null,
                       items: widget.page.states
                           .where(
-                            (element) =>
+                            (final element) =>
                                 element.type == VariableType.audioController,
                           )
-                          .map((e) => e.name)
-                          .where((element) => element != 'null')
+                          .map((final e) => e.name)
+                          .where((final element) => element != 'null')
                           .toList(),
-                      onChange: (newValue) {
+                      onChange: (final newValue) {
                         if (newValue != null) {
                           final old = widget.element;
                           widget.element.stateName = newValue;
@@ -472,7 +470,7 @@ class ActionElementControlState extends State<ActionElementControl> {
                         widget.element.actionWebView,
                       ),
                       items: FActionElement.getWebView(),
-                      onChange: (newValue) {
+                      onChange: (final newValue) {
                         if (newValue != null) {
                           final old = widget.element;
                           widget.element.actionWebView =
@@ -487,28 +485,28 @@ class ActionElementControlState extends State<ActionElementControl> {
                     CDropdown(
                       value: widget.page.states
                                   .where(
-                                    (element) =>
+                                    (final element) =>
                                         element.type ==
                                         VariableType.webViewController,
                                   )
-                                  .map((e) => e.name)
-                                  .where((element) => element != 'null')
+                                  .map((final e) => e.name)
+                                  .where((final element) => element != 'null')
                                   .toList()
                                   .indexWhere(
-                                    (e) => e == widget.element.stateName,
+                                    (final e) => e == widget.element.stateName,
                                   ) !=
                               -1
                           ? widget.element.stateName
                           : null,
                       items: widget.page.states
                           .where(
-                            (element) =>
+                            (final element) =>
                                 element.type == VariableType.webViewController,
                           )
-                          .map((e) => e.name)
-                          .where((element) => element != 'null')
+                          .map((final e) => e.name)
+                          .where((final element) => element != 'null')
                           .toList(),
-                      onChange: (newValue) {
+                      onChange: (final newValue) {
                         if (newValue != null) {
                           final old = widget.element;
                           widget.element.stateName = newValue;
@@ -524,7 +522,7 @@ class ActionElementControlState extends State<ActionElementControl> {
                     widget.element.actionState,
                   ),
                   items: FActionElement.getState(),
-                  onChange: (newValue) {
+                  onChange: (final newValue) {
                     if (newValue != null) {
                       final old = widget.element;
                       widget.element.actionState =
@@ -540,20 +538,20 @@ class ActionElementControlState extends State<ActionElementControl> {
                   widget.element.actionState == ActionState.changeWith)
                 CDropdown(
                   value: widget.page.states
-                              .map((e) => e.name)
-                              .where((element) => element != 'null')
+                              .map((final e) => e.name)
+                              .where((final element) => element != 'null')
                               .toList()
                               .indexWhere(
-                                (e) => e == widget.element.stateName,
+                                (final e) => e == widget.element.stateName,
                               ) !=
                           -1
                       ? widget.element.stateName
                       : null,
                   items: widget.page.states
-                      .map((e) => e.name)
-                      .where((element) => element != 'null')
+                      .map((final e) => e.name)
+                      .where((final element) => element != 'null')
                       .toList(),
-                  onChange: (newValue) {
+                  onChange: (final newValue) {
                     if (newValue != null) {
                       final old = widget.element;
                       widget.element.stateName = newValue;
@@ -569,25 +567,25 @@ class ActionElementControlState extends State<ActionElementControl> {
                   children: [
                     CDropdown(
                       value: widget.page.states
-                                  .map((e) => e.name)
-                                  .where((element) => element != 'null')
+                                  .map((final e) => e.name)
+                                  .where((final element) => element != 'null')
                                   .toList()
                                   .indexWhere(
-                                    (e) => e == widget.element.stateName,
+                                    (final e) => e == widget.element.stateName,
                                   ) !=
                               -1
                           ? widget.element.stateName
                           : null,
                       items: widget.page.states
                           .where(
-                            (element) =>
+                            (final element) =>
                                 element.type == VariableType.int ||
                                 element.type == VariableType.double,
                           )
-                          .map((e) => e.name)
-                          .where((element) => element != 'null')
+                          .map((final e) => e.name)
+                          .where((final element) => element != 'null')
                           .toList(),
-                      onChange: (newValue) {
+                      onChange: (final newValue) {
                         if (newValue != null) {
                           final old = widget.element;
                           widget.element.stateName = newValue;
@@ -620,20 +618,20 @@ class ActionElementControlState extends State<ActionElementControl> {
                     ),
                     CDropdown(
                       value: widget.page.states
-                                  .map((e) => e.name)
-                                  .where((element) => element != 'null')
+                                  .map((final e) => e.name)
+                                  .where((final element) => element != 'null')
                                   .toList()
                                   .indexWhere(
-                                    (e) => e == widget.element.stateName,
+                                    (final e) => e == widget.element.stateName,
                                   ) !=
                               -1
                           ? widget.element.stateName
                           : null,
                       items: widget.page.states
-                          .map((e) => e.name)
-                          .where((element) => element != 'null')
+                          .map((final e) => e.name)
+                          .where((final element) => element != 'null')
                           .toList(),
-                      onChange: (newValue) {
+                      onChange: (final newValue) {
                         if (newValue != null) {
                           final old = widget.element;
                           widget.element.stateName = newValue;
@@ -651,20 +649,20 @@ class ActionElementControlState extends State<ActionElementControl> {
                     ),
                     CDropdown(
                       value: widget.page.params
-                                  .map((e) => e.name)
-                                  .where((element) => element != 'null')
+                                  .map((final e) => e.name)
+                                  .where((final element) => element != 'null')
                                   .toList()
                                   .indexWhere(
-                                    (e) => e == widget.element.value,
+                                    (final e) => e == widget.element.value,
                                   ) !=
                               -1
                           ? widget.element.value
                           : null,
                       items: widget.page.params
-                          .map((e) => e.name)
-                          .where((element) => element != 'null')
+                          .map((final e) => e.name)
+                          .where((final element) => element != 'null')
                           .toList(),
-                      onChange: (newValue) {
+                      onChange: (final newValue) {
                         if (newValue != null) {
                           final old = widget.element;
                           widget.element.value = newValue;
@@ -682,7 +680,7 @@ class ActionElementControlState extends State<ActionElementControl> {
                   items: FActionElement.getRevenueCat(widget.prj.config)
                       .toSet()
                       .toList(),
-                  onChange: (newValue) {
+                  onChange: (final newValue) {
                     if (newValue != null) {
                       final old = widget.element;
                       widget.element.actionRevenueCat =
@@ -700,7 +698,7 @@ class ActionElementControlState extends State<ActionElementControl> {
                     widget.element.actionNavigation,
                   ),
                   items: FActionElement.getNavigation().toSet().toList(),
-                  onChange: (newValue) {
+                  onChange: (final newValue) {
                     if (newValue != null) {
                       final old = widget.element;
                       widget.element.actionNavigation =
@@ -718,7 +716,7 @@ class ActionElementControlState extends State<ActionElementControl> {
                     widget.element.actionSupabaseAuth,
                   ),
                   items: FActionElement.getSupabaseAuth(widget.prj.config),
-                  onChange: (newValue) {
+                  onChange: (final newValue) {
                     if (newValue != null) {
                       final old = widget.element;
                       widget.element.actionSupabaseAuth =
@@ -738,7 +736,7 @@ class ActionElementControlState extends State<ActionElementControl> {
                   items: FActionElement.getSupabaseDB(widget.prj.config)
                       .toSet()
                       .toList(),
-                  onChange: (newValue) {
+                  onChange: (final newValue) {
                     if (newValue != null) {
                       final old = widget.element;
                       widget.element.actionSupabaseDB =
@@ -767,7 +765,7 @@ class ActionElementControlState extends State<ActionElementControl> {
                   child: SizedBox(
                     width: double.maxFinite,
                     child: BlocListener<FocusBloc, List<CNode>>(
-                      listener: (context, state) {
+                      listener: (final context, final state) {
                         if (state.isNotEmpty) {
                           if (state.first.nid != nodeId) {
                             setState(() {
@@ -779,7 +777,7 @@ class ActionElementControlState extends State<ActionElementControl> {
                       },
                       child: CMiniTextField(
                         controller: controller,
-                        callBack: (text) {
+                        callBack: (final text) {
                           final old = widget.element;
                           widget.element.value = text;
                           widget.callBack(widget.element, old);
@@ -817,7 +815,7 @@ class ActionElementControlState extends State<ActionElementControl> {
                     ),
                     CDropdown(
                       value: widget.prj.pages!
-                              .where((element) {
+                              .where((final element) {
                                 if (widget.element.actionNavigation ==
                                         ActionNavigation.openBottomSheet ||
                                     widget.element.actionNavigation ==
@@ -832,7 +830,7 @@ class ActionElementControlState extends State<ActionElementControl> {
                           ? dropdownLinkPage
                           : null,
                       items: widget.prj.pages!
-                          .where((element) {
+                          .where((final element) {
                             if (widget.element.actionNavigation ==
                                     ActionNavigation.openBottomSheet ||
                                 widget.element.actionNavigation ==
@@ -842,14 +840,14 @@ class ActionElementControlState extends State<ActionElementControl> {
                               return element.isPage;
                             }
                           })
-                          .map((e) => e.name)
+                          .map((final e) => e.name)
                           .toSet()
                           .toList(),
-                      onChange: (newValue) {
+                      onChange: (final newValue) {
                         if (newValue != null) {
                           final old = widget.element;
                           pageObject = widget.prj.pages!.firstWhere(
-                            (element) => element.name == newValue,
+                            (final element) => element.name == newValue,
                           );
                           widget.element.nameOfPage = newValue;
                           setState(() {
@@ -885,7 +883,7 @@ class ActionElementControlState extends State<ActionElementControl> {
                                           CrossAxisAlignment.start,
                                       children: pageObject!.params
                                           .map(
-                                            (e) => Element(
+                                            (final e) => Element(
                                               variable: e,
                                               page: widget.page,
                                               map: map,
@@ -942,22 +940,22 @@ class ActionElementControlState extends State<ActionElementControl> {
                             widget.element.actionSupabaseAuth ==
                                 ActionSupabaseAuth.signInWithCredential) &&
                         (widget.page.states.indexWhere(
-                                  (element) =>
+                                  (final element) =>
                                       element.name.toLowerCase() == 'email',
                                 ) ==
                                 -1 ||
                             widget.page.states.indexWhere(
-                                  (element) =>
+                                  (final element) =>
                                       element.name.toLowerCase() == 'password',
                                 ) ==
                                 -1 ||
                             widget.page.states.indexWhere(
-                                  (element) =>
+                                  (final element) =>
                                       element.name.toLowerCase() == 'status',
                                 ) ==
                                 -1 ||
                             widget.page.states.indexWhere(
-                                  (element) =>
+                                  (final element) =>
                                       element.name.toLowerCase() == 'status',
                                 ) ==
                                 -1))
@@ -996,7 +994,7 @@ class ActionElementControlState extends State<ActionElementControl> {
                               onPressed: () {
                                 var flag = false;
                                 if (widget.page.states.indexWhere(
-                                      (element) =>
+                                      (final element) =>
                                           element.name.toLowerCase() == 'email',
                                     ) ==
                                     -1) {
@@ -1011,7 +1009,7 @@ class ActionElementControlState extends State<ActionElementControl> {
                                   flag = true;
                                 }
                                 if (widget.page.states.indexWhere(
-                                      (element) =>
+                                      (final element) =>
                                           element.name.toLowerCase() ==
                                           'password',
                                     ) ==
@@ -1027,7 +1025,7 @@ class ActionElementControlState extends State<ActionElementControl> {
                                   flag = true;
                                 }
                                 if (widget.page.states.indexWhere(
-                                      (element) =>
+                                      (final element) =>
                                           element.name.toLowerCase() ==
                                           'status',
                                     ) ==
@@ -1049,7 +1047,7 @@ class ActionElementControlState extends State<ActionElementControl> {
                                     pageId: widget.page.id,
                                     key: 'states',
                                     value: widget.page.states
-                                        .map((e) => e.toJson())
+                                        .map((final e) => e.toJson())
                                         .toList(),
                                     old: null,
                                   );
@@ -1150,7 +1148,7 @@ class Element extends StatefulWidget {
     required this.map,
     required this.element,
     required this.callBack,
-    Key? key,
+    final Key? key,
   }) : super(key: key);
 
   final VariableObject variable;
@@ -1201,12 +1199,12 @@ class _ElementState extends State<Element> {
   }
 
   @override
-  Widget build(BuildContext context) {
+  Widget build(final BuildContext context) {
     if (dropdownDataset != null) {
       try {
         listSecondDropwdown.addAll(
           listDataset
-              .firstWhere((element) => element.getName == dropdownDataset)
+              .firstWhere((final element) => element.getName == dropdownDataset)
               .getMap,
         );
       } catch (e) {
@@ -1230,21 +1228,21 @@ class _ElementState extends State<Element> {
             ),
           ),
           if (listDataset
-              .where((element) => element.getMap.isNotEmpty)
+              .where((final element) => element.getMap.isNotEmpty)
               .isNotEmpty)
             CDropdown(
               value: listDataset
-                      .where((element) => element.getMap.isNotEmpty)
-                      .map((e) => e.getName)
+                      .where((final element) => element.getMap.isNotEmpty)
+                      .map((final e) => e.getName)
                       .contains(dropdownDataset)
                   ? dropdownDataset
                   : null,
               items: listDataset
-                  .where((element) => element.getMap.isNotEmpty)
-                  .map((e) => e.getName)
+                  .where((final element) => element.getMap.isNotEmpty)
+                  .map((final e) => e.getName)
                   .toSet()
                   .toList(),
-              onChange: (newValue) {
+              onChange: (final newValue) {
                 setState(() {
                   dropdownDataset = newValue;
                 });
@@ -1253,15 +1251,15 @@ class _ElementState extends State<Element> {
           if (dropdownDataset != null && listSecondDropwdown.isNotEmpty)
             CDropdown(
               value: listSecondDropwdown.first.keys
-                      .map((key) => key)
+                      .map((final key) => key)
                       .contains(dropdown)
                   ? dropdown
                   : null,
               items: listSecondDropwdown.first.keys
-                  .map((key) => key)
+                  .map((final key) => key)
                   .toSet()
                   .toList(),
-              onChange: (newValue) {
+              onChange: (final newValue) {
                 if (newValue != null) {
                   setState(() {
                     dropdown = newValue;

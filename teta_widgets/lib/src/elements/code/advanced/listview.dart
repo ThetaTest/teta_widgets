@@ -17,9 +17,9 @@ import 'package:teta_widgets/src/elements/nodes/node_body.dart';
 /// );
 /// ```
 String listViewCodeTemplate(
-  BuildContext context,
-  NodeBody body,
-  List<CNode> children,
+  final BuildContext context,
+  final NodeBody body,
+  final List<CNode> children,
 ) {
   final primary = body.attributes[DBKeys.isPrimary] as bool;
   final _scrollDirection =

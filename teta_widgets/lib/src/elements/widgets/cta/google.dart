@@ -1,12 +1,10 @@
 // Flutter imports:
 
-// Flutter imports:
-import 'package:flutter/material.dart';
-
 // Package imports:
 import 'package:auth_buttons/auth_buttons.dart';
+// Flutter imports:
+import 'package:flutter/material.dart';
 import 'package:teta_core/teta_core.dart';
-
 // Project imports:
 import 'package:teta_widgets/src/elements/index.dart';
 
@@ -15,7 +13,7 @@ import 'package:teta_widgets/src/elements/index.dart';
 class WLoginWithGoogle extends StatelessWidget {
   /// Returns a Google SignIn button
   const WLoginWithGoogle(
-    Key? key, {
+    final Key? key, {
     required this.node,
     required this.forPlay,
     required this.width,
@@ -41,7 +39,7 @@ class WLoginWithGoogle extends StatelessWidget {
   final List<DatasetObject> dataset;
 
   @override
-  Widget build(BuildContext context) {
+  Widget build(final BuildContext context) {
     return NodeSelectionBuilder(
       node: node,
       forPlay: forPlay,
@@ -50,7 +48,7 @@ class WLoginWithGoogle extends StatelessWidget {
   }
 
   /// Returns the button itself
-  Widget btn(BuildContext context) {
+  Widget btn(final BuildContext context) {
     return GoogleAuthButton(
       onPressed: () => GestureBuilder.get(
         context: context,

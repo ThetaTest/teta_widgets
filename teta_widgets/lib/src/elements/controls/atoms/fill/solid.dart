@@ -3,7 +3,6 @@
 
 // Flutter imports:
 import 'package:flutter/material.dart';
-
 // Package imports:
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:hovering/hovering.dart';
@@ -11,7 +10,6 @@ import 'package:teta_core/src/blocs/focus/bloc.dart';
 import 'package:teta_core/src/design_system/dialogs/color_picker.dart';
 import 'package:teta_core/src/design_system/hex_color.dart';
 import 'package:teta_core/src/design_system/textfield/minitextfield.dart';
-
 // Project imports:
 import 'package:teta_widgets/src/elements/features/features.dart';
 import 'package:teta_widgets/src/elements/nodes/node.dart';
@@ -24,7 +22,7 @@ class SolidFillControl extends StatefulWidget {
     required this.isStyled,
     required this.callBack,
     this.color,
-    Key? key,
+    final Key? key,
   }) : super(key: key);
 
   final FFill? fill;
@@ -63,7 +61,7 @@ class SolidFillControlState extends State<SolidFillControl> {
   }
 
   @override
-  Widget build(BuildContext context) {
+  Widget build(final BuildContext context) {
     /*if (tempColor != widget.color) {
       controller.text = widget.color;
       tempFill = widget.fill;
@@ -73,7 +71,7 @@ class SolidFillControlState extends State<SolidFillControl> {
       isUpdated = false;
     }*/
     return BlocListener<FocusBloc, List<CNode>>(
-      listener: (context, state) {
+      listener: (final context, final state) {
         if (state.isNotEmpty) {
           if (state.first.nid != nodeId) {
             setState(() {
@@ -91,7 +89,7 @@ class SolidFillControlState extends State<SolidFillControl> {
         }
       },
       child: BlocBuilder<FocusBloc, List<CNode>>(
-        builder: (context, state) {
+        builder: (final context, final state) {
           return Row(
             children: [
               Padding(
@@ -114,7 +112,7 @@ class SolidFillControlState extends State<SolidFillControl> {
                         border: Border.all(color: Colors.white),
                       ),
                     ),
-                    onHover: (e) {},
+                    onHover: (final e) {},
                     child: Container(
                       width: 48,
                       height: 48,
@@ -136,7 +134,7 @@ class SolidFillControlState extends State<SolidFillControl> {
                   controller: controller,
                   placeholder: tempColor,
                   hpadding: 4,
-                  onSubmitted: (text) {
+                  onSubmitted: (final text) {
                     final hexCode = text.replaceAll('#', '');
                     if (hexCode.length == 3) {
                       final hexColor =
@@ -157,7 +155,7 @@ class SolidFillControlState extends State<SolidFillControl> {
                       }
                     }
                   },
-                  callBack: (text) {
+                  callBack: (final text) {
                     final hexCode = text.replaceAll('#', '');
                     if (hexCode.length == 3) {
                       final hexColor =
@@ -187,7 +185,7 @@ class SolidFillControlState extends State<SolidFillControl> {
     );
   }
 
-  Future updateState(CNode node) async {
+  Future updateState(final CNode node) async {
     await Future<void>.delayed(const Duration(milliseconds: 100));
     if (mounted) {
       setState(() {
@@ -198,7 +196,7 @@ class SolidFillControlState extends State<SolidFillControl> {
     }
   }
 
-  void updateColor(Color color) {
+  void updateColor(final Color color) {
     final old = FFill().fromJson(widget.fill!.toJson());
     setState(() {
       tempColor = color.value.toRadixString(16).substring(2, 8);
@@ -210,10 +208,10 @@ class SolidFillControlState extends State<SolidFillControl> {
     widget.callBack(widget.fill!, widget.isStyled, old);
   }
 
-  void showPicker(BuildContext context) {
+  void showPicker(final BuildContext context) {
     showDialog<void>(
       context: context,
-      builder: (context) {
+      builder: (final context) {
         return ColorPickerDialog(
           context: context,
           color: tempColor!,

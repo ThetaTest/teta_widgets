@@ -1,21 +1,19 @@
 // Flutter imports:
 // ignore_for_file: public_member_api_docs
 
-// Flutter imports:
-import 'package:flutter/material.dart';
-
 // Package imports:
 import 'package:collection/collection.dart';
+// Flutter imports:
+import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:teta_core/teta_core.dart';
-
 // Project imports:
 import 'package:teta_widgets/src/elements/index.dart';
 
 class WScaffold extends StatefulWidget {
   /// Returns a Scaffold
   const WScaffold(
-    Key? key, {
+    final Key? key, {
     required this.children,
     required this.node,
     required this.fill,
@@ -85,7 +83,7 @@ class _WScaffoldState extends State<WScaffold> {
   }
 
   @override
-  Widget build(BuildContext context) {
+  Widget build(final BuildContext context) {
     final isPage = BlocProvider.of<FocusPageBloc>(context).state.isPage;
     if (!isPage && !widget.forPlay) {
       return SizedBox(
@@ -104,15 +102,16 @@ class _WScaffoldState extends State<WScaffold> {
     }
   }
 
-  Widget _scaffold(BuildContext context) {
+  Widget _scaffold(final BuildContext context) {
     CNode? drawerNode;
     drawerNode = widget.children.firstWhereOrNull(
-      (element) => element.globalType == NType.drawer,
+      (final element) => element.globalType == NType.drawer,
     );
 
     CNode? appBar;
-    appBar = widget.children
-        .firstWhereOrNull((element) => element.globalType == NType.appBar);
+    appBar = widget.children.firstWhereOrNull(
+      (final element) => element.globalType == NType.appBar,
+    );
 
     return widget.forPlay
         ? Scaffold(
@@ -169,14 +168,16 @@ class _WScaffoldState extends State<WScaffold> {
   /// Returns the body of Scaffold,
   /// which consists in a Stack with widget.appBar and widget.bottomBar.
   /// Eventualy, if !forPlay, also widget.drawer
-  Widget _stack(BuildContext context) {
+  Widget _stack(final BuildContext context) {
     CNode? bottomBar;
-    bottomBar = widget.children
-        .firstWhereOrNull((element) => element.globalType == NType.bottomBar);
+    bottomBar = widget.children.firstWhereOrNull(
+      (final element) => element.globalType == NType.bottomBar,
+    );
 
     CNode? drawerNode;
-    drawerNode = widget.children
-        .firstWhereOrNull((element) => element.globalType == NType.drawer);
+    drawerNode = widget.children.firstWhereOrNull(
+      (final element) => element.globalType == NType.drawer,
+    );
 
     final isPage = BlocProvider.of<FocusPageBloc>(context).state.isPage;
     if (!isPage) return _childWids(context);
@@ -246,16 +247,16 @@ class _WScaffoldState extends State<WScaffold> {
     );
   }
 
-  Widget _childWids(BuildContext context) {
+  Widget _childWids(final BuildContext context) {
     final widgets = widget.children
         .where(
-          (e) =>
+          (final e) =>
               e.intrinsicState.type != NType.bottomBar &&
               e.intrinsicState.type != NType.appBar &&
               e.intrinsicState.type != NType.drawer,
         )
         .map(
-          (e) => e.toWidget(
+          (final e) => e.toWidget(
             forPlay: widget.forPlay,
             params: widget.params,
             states: widget.states,
@@ -267,7 +268,7 @@ class _WScaffoldState extends State<WScaffold> {
     return widgets.isNotEmpty ? widgets.first : _placeholder(context);
   }
 
-  Widget _placeholder(BuildContext context) {
+  Widget _placeholder(final BuildContext context) {
     return Center(
       child: Column(
         mainAxisAlignment: MainAxisAlignment.center,

@@ -3,13 +3,11 @@
 
 // Flutter imports:
 import 'package:flutter/material.dart';
-
 // Package imports:
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:teta_core/src/blocs/palette/index.dart';
 import 'package:teta_core/src/models/asset_file.dart';
 import 'package:teta_core/src/models/palette.dart';
-
 // Project imports:
 import 'package:teta_widgets/src/elements/features/box_fit.dart';
 
@@ -37,7 +35,7 @@ class FFillElement {
   /// [int] value for gradients
   double stop;
 
-  static FFillElement fromJson({required Map<String, dynamic> json}) {
+  static FFillElement fromJson({required final Map<String, dynamic> json}) {
     return FFillElement(
       color: json['color'] as String,
       stop: double.tryParse('${json['stop']}') ?? 0,
@@ -77,7 +75,7 @@ class FFill {
   int? paletteStyle;
   AssetFile? file;
 
-  FFill get(BuildContext context) {
+  FFill get(final BuildContext context) {
     if (paletteStyle == null) {
       return FFill(
         levels: levels,
@@ -91,7 +89,7 @@ class FFill {
       );
     } else {
       PaletteModel? model;
-      BlocProvider.of<PaletteBloc>(context).state.forEach((element) {
+      BlocProvider.of<PaletteBloc>(context).state.forEach((final element) {
         if (element.id == paletteStyle) model = element;
       });
       return (model != null) ? model!.fill! : FFill().ready(FFillType.solid);
@@ -101,7 +99,7 @@ class FFill {
   /// Get Hex String value.
   /// Includes PaletteStyle checks.
   /// String is uppercased.
-  String getHexColor(BuildContext context) {
+  String getHexColor(final BuildContext context) {
     FFill fill;
     if (paletteStyle == null) {
       fill = FFill(
@@ -115,7 +113,7 @@ class FFill {
       );
     } else {
       PaletteModel? model;
-      BlocProvider.of<PaletteBloc>(context).state.forEach((element) {
+      BlocProvider.of<PaletteBloc>(context).state.forEach((final element) {
         if (element.name == paletteStyle) model = element;
       });
       fill = (model != null) ? model!.fill! : FFill().ready(FFillType.solid);
@@ -124,7 +122,7 @@ class FFill {
   }
 
   /// Set of FFill ready to be used
-  FFill ready(FFillType type) {
+  FFill ready(final FFillType type) {
     if (type == FFillType.none) {
       return FFill(
         levels: [
@@ -191,7 +189,7 @@ class FFill {
     }
   }
 
-  FFill fromJson(Map<String, dynamic> json) {
+  FFill fromJson(final Map<String, dynamic> json) {
     if (json['pltt'] == null) {
       final levels = <FFillElement>[];
       var type = FFillType.solid;
@@ -250,7 +248,7 @@ class FFill {
         'r': radius,
         'pltt': paletteStyle,
         'bF': (boxFit != null) ? boxFit!.toJson() : FBoxFit().toJson(),
-      }..removeWhere((String key, dynamic value) => value == null);
+      }..removeWhere((final String key, final dynamic value) => value == null);
     } else {
       return <String, dynamic>{
         'pltt': paletteStyle,
@@ -258,7 +256,7 @@ class FFill {
     }
   }
 
-  Alignment? alignFromJson(Map<String, dynamic> json, String key) {
+  Alignment? alignFromJson(final Map<String, dynamic> json, final String key) {
     if (json[key] == 'bC') return Alignment.bottomCenter;
     if (json[key] == 'bL') return Alignment.bottomLeft;
     if (json[key] == 'bR') return Alignment.bottomRight;
@@ -271,7 +269,7 @@ class FFill {
     return null;
   }
 
-  String? alignToJson(Alignment? value) {
+  String? alignToJson(final Alignment? value) {
     if (value == Alignment.bottomCenter) return 'bC';
     if (value == Alignment.bottomLeft) return 'bL';
     if (value == Alignment.bottomRight) return 'bR';
@@ -284,7 +282,7 @@ class FFill {
     return null;
   }
 
-  String alignToCode(Alignment? value) {
+  String alignToCode(final Alignment? value) {
     if (value == Alignment.bottomCenter) return 'Alignment.bottomCenter';
     if (value == Alignment.bottomLeft) return 'Alignment.bottomLeft';
     if (value == Alignment.bottomRight) return 'Alignment.bottomRight';
@@ -297,7 +295,7 @@ class FFill {
     return 'null';
   }
 
-  String typeToCode(FFillType? type) {
+  String typeToCode(final FFillType? type) {
     if (type == FFillType.solid) return 'FFillType.solid';
     if (type == FFillType.linearGradient) return 'FFillType.linearGradient';
     if (type == FFillType.radialGradient) return 'FFillType.radialGradient';
@@ -306,7 +304,11 @@ class FFill {
     return 'null';
   }
 
-  static String? toCode(FFill fill, BuildContext context, {bool? flagConst}) {
+  static String? toCode(
+    final FFill fill,
+    final BuildContext context, {
+    final bool? flagConst,
+  }) {
     final state = BlocProvider.of<PaletteBloc>(context).state;
     FFill? finalFill;
     if (state.isNotEmpty) {
@@ -325,8 +327,8 @@ class FFill {
       gradient: LinearGradient(
         begin: ${fill.begin},
         end: ${fill.end},
-        colors: <Color>${fill.levels!.map((e) => 'Color(0xFF${e.color.toUpperCase()})').toList()},
-        stops: ${fill.levels!.map((e) => e.stop).toList()},
+        colors: <Color>${fill.levels!.map((final e) => 'Color(0xFF${e.color.toUpperCase()})').toList()},
+        stops: ${fill.levels!.map((final e) => e.stop).toList()},
       ),''';
     }
     if (fill.type == FFillType.radialGradient) {
@@ -334,8 +336,8 @@ class FFill {
       gradient: RadialGradient(
         center: ${fill.center},
         radius: ${fill.radius},
-        colors: <Color>${fill.levels!.map((e) => 'Color(0xFF${e.color.toUpperCase()})').toList()},
-        stops: ${fill.levels!.map((e) => e.stop).toList()},
+        colors: <Color>${fill.levels!.map((final e) => 'Color(0xFF${e.color.toUpperCase()})').toList()},
+        stops: ${fill.levels!.map((final e) => e.stop).toList()},
       ),''';
     }
     if (fill.type == FFillType.image) {

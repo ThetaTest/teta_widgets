@@ -13,17 +13,17 @@ class FChildrenIds {
   List<int> get get => ids;
 
   /// Add new element in the beginning of the list [ids] (position 0)
-  void addAt0(int newNid) {
+  void addAt0(final int newNid) {
     ids = [newNid, ...ids];
   }
 
   /// Add new element [newNid]
-  void add(int newNid) {
+  void add(final int newNid) {
     ids = <int>[...ids, newNid];
   }
 
   /// Replace a [targetNid] with [newNid]
-  void replace(int newNid, int targetNid) {
+  void replace(final int newNid, final int targetNid) {
     final index = ids.indexOf(targetNid);
     if (index != -1) {
       ids.insert(index + 1, newNid);
@@ -31,12 +31,12 @@ class FChildrenIds {
   }
 
   /// Remove [nid] from [ids] list
-  void remove(int? nid) {
+  void remove(final int? nid) {
     ids.remove(nid);
   }
 
   /// Instantiate [FChildrenIds] from Json
-  static FChildrenIds fromJson(Map<String, dynamic>? json) {
+  static FChildrenIds fromJson(final Map<String, dynamic>? json) {
     if (json == null) return FChildrenIds();
     try {
       return FChildrenIds(
@@ -57,5 +57,6 @@ class FChildrenIds {
   FChildrenIds clone() => FChildrenIds(ids: ids);
 
   /// Clone [FChildrenIds] (deep copy) with optional [ids] attribute
-  FChildrenIds copyWith({List<int>? ids}) => FChildrenIds(ids: ids ?? this.ids);
+  FChildrenIds copyWith({final List<int>? ids}) =>
+      FChildrenIds(ids: ids ?? this.ids);
 }

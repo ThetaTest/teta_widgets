@@ -210,7 +210,7 @@ final stateTypes = <IntrinsicStates>[
 ];
 
 /// Method to return any body
-NodeBody getBody(NType type) {
+NodeBody getBody(final NType type) {
   switch (type) {
     case NType.align:
       return AlignBody();

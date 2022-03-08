@@ -3,13 +3,11 @@
 
 // Flutter imports:
 import 'package:flutter/material.dart';
-
 // Package imports:
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:teta_core/src/blocs/focus/bloc.dart';
 import 'package:teta_core/src/design_system/palette.dart';
 import 'package:teta_core/src/design_system/text.dart';
-
 // Project imports:
 import 'package:teta_widgets/src/elements/controls/atoms/widgets/selection_tab.dart';
 import 'package:teta_widgets/src/elements/features/text_decoration.dart';
@@ -21,7 +19,7 @@ class TextDecorationControl extends StatelessWidget {
     required this.node,
     required this.textStyle,
     required this.callBack,
-    Key? key,
+    final Key? key,
   }) : super(key: key);
 
   final CNode node;
@@ -29,9 +27,9 @@ class TextDecorationControl extends StatelessWidget {
   final Function(Map<String, dynamic>, Map<String, dynamic>) callBack;
 
   @override
-  Widget build(BuildContext context) {
+  Widget build(final BuildContext context) {
     return BlocBuilder<FocusBloc, List<CNode>>(
-      builder: (context, state) {
+      builder: (final context, final state) {
         return Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [

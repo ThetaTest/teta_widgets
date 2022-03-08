@@ -3,7 +3,6 @@
 
 // Flutter imports:
 import 'package:flutter/material.dart';
-
 // Package imports:
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:hovering/hovering.dart';
@@ -12,7 +11,6 @@ import 'package:teta_core/src/design_system/buttons/button.dart';
 import 'package:teta_core/src/design_system/dialogs/color_picker.dart';
 import 'package:teta_core/src/design_system/hex_color.dart';
 import 'package:teta_core/src/design_system/textfield/textfield.dart';
-
 // Project imports:
 import 'package:teta_widgets/src/elements/features/features.dart';
 import 'package:teta_widgets/src/elements/nodes/node.dart';
@@ -25,7 +23,7 @@ class LinearFillControl extends StatefulWidget {
     required this.node,
     required this.isStyled,
     required this.callBack,
-    Key? key,
+    final Key? key,
   }) : super(key: key);
 
   final FFill fill;
@@ -56,9 +54,9 @@ class ColorControlState extends State<LinearFillControl> {
   }
 
   @override
-  Widget build(BuildContext context) {
+  Widget build(final BuildContext context) {
     return BlocBuilder<FocusBloc, List<CNode>>(
-      builder: (context, state) {
+      builder: (final context, final state) {
         //updateState(state);
         return Column(
           crossAxisAlignment: CrossAxisAlignment.start,
@@ -70,9 +68,9 @@ class ColorControlState extends State<LinearFillControl> {
               decoration: BoxDecoration(
                 gradient: LinearGradient(
                   colors: widget.fill.levels!
-                      .map((e) => HexColor(e.color))
+                      .map((final e) => HexColor(e.color))
                       .toList(),
-                  stops: widget.fill.levels!.map((e) => e.stop).toList(),
+                  stops: widget.fill.levels!.map((final e) => e.stop).toList(),
                   begin: widget.fill.begin!,
                   end: widget.fill.end!,
                 ),
@@ -266,18 +264,18 @@ class ColorControlState extends State<LinearFillControl> {
             Column(
               children: (widget.fill.levels ?? <FFillElement>[])
                   .map(
-                    (e) => FillElement(
+                    (final e) => FillElement(
                       element: e,
                       fill: widget.fill,
                       index: widget.fill.levels?.indexOf(e) ?? 0,
                       node: widget.node,
-                      callBackIndex: (index) {
+                      callBackIndex: (final index) {
                         setState(() {
                           selectedElementIndex = index;
                         });
                         _showPicker();
                       },
-                      callBack: (fill, old) {
+                      callBack: (final fill, final old) {
                         widget.callBack(fill, false, old);
                       },
                     ),
@@ -306,7 +304,7 @@ class ColorControlState extends State<LinearFillControl> {
     );
   }
 
-  void _updateColor(Color color) {
+  void _updateColor(final Color color) {
     final old = FFill().fromJson(widget.fill.toJson());
     setState(() {
       widget.fill.levels![selectedElementIndex].color =
@@ -317,7 +315,7 @@ class ColorControlState extends State<LinearFillControl> {
     widget.callBack(widget.fill, false, old);
   }
 
-  void _updatedPosition(Alignment align, String name) {
+  void _updatedPosition(final Alignment align, final String name) {
     final old = FFill().fromJson(widget.fill.toJson());
     if (name == 'begin') widget.fill.begin = align;
     if (name == 'end') widget.fill.end = align;
@@ -328,7 +326,7 @@ class ColorControlState extends State<LinearFillControl> {
   void _showPicker() {
     showDialog<void>(
       context: context,
-      builder: (context) {
+      builder: (final context) {
         return ColorPickerDialog(
           context: context,
           color: tempColor!,
@@ -339,12 +337,12 @@ class ColorControlState extends State<LinearFillControl> {
   }
 
   void _showPickerAlign(
-    Alignment align,
-    String name,
+    final Alignment align,
+    final String name,
   ) {
     showDialog<void>(
       context: context,
-      builder: (context) {
+      builder: (final context) {
         return AlertDialog(
           backgroundColor: const Color(0xFF333333),
           title: const Text(''),
@@ -353,11 +351,12 @@ class ColorControlState extends State<LinearFillControl> {
             height: 300,
             decoration: BoxDecoration(
               gradient: LinearGradient(
-                colors:
-                    widget.fill.levels!.map((e) => HexColor(e.color)).toList(),
+                colors: widget.fill.levels!
+                    .map((final e) => HexColor(e.color))
+                    .toList(),
                 begin: widget.fill.begin!,
                 end: widget.fill.end!,
-                stops: widget.fill.levels!.map((e) => e.stop).toList(),
+                stops: widget.fill.levels!.map((final e) => e.stop).toList(),
               ),
               borderRadius: BorderRadius.circular(16),
             ),
@@ -444,10 +443,10 @@ class ColorControlState extends State<LinearFillControl> {
   }
 
   Widget _alignPositionIcon(
-    Alignment alignNode,
-    Alignment alignTarget,
-    String name,
-    bool isPreview,
+    final Alignment alignNode,
+    final Alignment alignTarget,
+    final String name,
+    final bool isPreview,
   ) {
     return GestureDetector(
       onTap: () {
@@ -478,7 +477,7 @@ class FillElement extends StatefulWidget {
     required this.node,
     required this.callBackIndex,
     required this.callBack,
-    Key? key,
+    final Key? key,
   }) : super(key: key);
 
   final FFill fill;
@@ -507,9 +506,9 @@ class FillElementState extends State<FillElement> {
   }
 
   @override
-  Widget build(BuildContext context) {
+  Widget build(final BuildContext context) {
     return BlocListener<FocusBloc, List<CNode>>(
-      listener: (context, state) {
+      listener: (final context, final state) {
         if (state.isNotEmpty) {
           if (state.first.nid != nodeId) {
             setState(() {
@@ -544,7 +543,7 @@ class FillElementState extends State<FillElement> {
                       ),
                     ),
                   ),
-                  onHover: (e) {},
+                  onHover: (final e) {},
                   child: Container(
                     width: 48,
                     height: 48,
@@ -561,7 +560,7 @@ class FillElementState extends State<FillElement> {
               child: CTextField(
                 controller: editingController,
                 hpadding: 4,
-                onSubmitted: (text) {
+                onSubmitted: (final text) {
                   final hexCode = text.replaceAll('#', '');
                   if (hexCode.length == 3) {
                     final hexColor =
@@ -582,7 +581,7 @@ class FillElementState extends State<FillElement> {
                     }
                   }
                 },
-                callBack: (text) {
+                callBack: (final text) {
                   final hexCode = text.replaceAll('#', '');
                   if (hexCode.length == 3) {
                     final hexColor =
@@ -610,7 +609,7 @@ class FillElementState extends State<FillElement> {
                 controller: stopController,
                 placeholder: '${widget.element.stop}',
                 hpadding: 4,
-                callBack: (text) {
+                callBack: (final text) {
                   if (double.tryParse(text) != null) {
                     final old = FFill().fromJson(widget.fill.toJson());
                     widget.element.stop = double.parse(text);
@@ -647,7 +646,7 @@ class FillElementState extends State<FillElement> {
                     ),
                   ),
                 ),
-                onHover: (e) {},
+                onHover: (final e) {},
                 child: Container(
                   width: 48,
                   height: 48,

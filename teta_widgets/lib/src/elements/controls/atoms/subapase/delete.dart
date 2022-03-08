@@ -3,14 +3,12 @@
 
 // Flutter imports:
 import 'package:flutter/material.dart';
-
 // Package imports:
 import 'package:teta_core/gen/assets.gen.dart';
 import 'package:teta_core/src/design_system/text.dart';
 import 'package:teta_core/src/models/page.dart';
 import 'package:teta_core/src/models/project.dart';
 import 'package:teta_core/src/models/supabase_map_element.dart';
-
 // Project imports:
 import 'package:teta_widgets/src/elements/controls/atoms/supabase_element.dart';
 import 'package:teta_widgets/src/elements/controls/atoms/text.dart';
@@ -25,7 +23,7 @@ class SupabaseDeleteControl extends StatelessWidget {
     required this.node,
     required this.action,
     required this.callback,
-    Key? key,
+    final Key? key,
   }) : super(key: key);
 
   final ProjectObject prj;
@@ -35,7 +33,7 @@ class SupabaseDeleteControl extends StatelessWidget {
   final Function() callback;
 
   @override
-  Widget build(BuildContext context) {
+  Widget build(final BuildContext context) {
     return Column(
       mainAxisSize: MainAxisSize.min,
       crossAxisAlignment: CrossAxisAlignment.start,
@@ -62,7 +60,7 @@ class SupabaseDeleteControl extends StatelessWidget {
           value: action.supabaseFrom ?? FTextTypeInput(),
           page: page,
           title: 'From Table',
-          callBack: (value, old) {},
+          callBack: (final value, final old) {},
         ),
         const Padding(
           padding: EdgeInsets.only(top: 16),
@@ -86,7 +84,7 @@ class SupabaseDeleteControl extends StatelessWidget {
             value: action.supabaseEq ??
                 SupabaseMapElement(key: '', value: FTextTypeInput()),
             page: page,
-            callBack: (value, old) {
+            callBack: (final value, final old) {
               action.supabaseEq = value;
               callback();
             },

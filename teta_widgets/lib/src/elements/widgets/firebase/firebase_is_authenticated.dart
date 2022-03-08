@@ -1,10 +1,8 @@
 // Flutter imports:
 import 'package:flutter/material.dart';
-
 // Package imports:
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:teta_core/teta_core.dart';
-
 // Project imports:
 import 'package:teta_widgets/src/elements/index.dart';
 
@@ -20,7 +18,7 @@ const keyAttr = 'value';
 class WFirebaseIsAuthenticatedBuilder extends StatefulWidget {
   /// Constructor
   const WFirebaseIsAuthenticatedBuilder(
-    Key? key, {
+    final Key? key, {
     required this.node,
     required this.forPlay,
     required this.params,
@@ -68,15 +66,15 @@ class WFirebaseIsAuthenticatedBuilderState
   );
 
   @override
-  Widget build(BuildContext context) {
+  Widget build(final BuildContext context) {
     return NodeSelectionBuilder(
       node: widget.node,
       forPlay: widget.forPlay,
       child: BlocBuilder<FirebaseCubit, bool>(
-        builder: (context, state) => state
+        builder: (final context, final state) => state
             ? FutureBuilder(
                 future: isUserLogged(),
-                builder: (context, snapshot) {
+                builder: (final context, final snapshot) {
                   if (snapshot.hasData) {
                     _map = _map.copyWith(
                       map: [

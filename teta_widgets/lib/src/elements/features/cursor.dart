@@ -16,7 +16,7 @@ class FCursor {
     return (cursor != null) ? cursor! : MouseCursor.defer;
   }
 
-  MouseCursor fromJson(String j) {
+  MouseCursor fromJson(final String j) {
     switch (j) {
       case 'c':
         return SystemMouseCursors.click;
@@ -111,7 +111,7 @@ class FCursor {
     }
   }
 
-  String convertValueToCode(MouseCursor? cursor) {
+  String convertValueToCode(final MouseCursor? cursor) {
     if (cursor == SystemMouseCursors.click) {
       return 'SystemMouseCursors.click';
     } else if (cursor == SystemMouseCursors.alias) {

@@ -1,20 +1,18 @@
 // Flutter imports:
 // ignore_for_file: public_member_api_docs
 
-// Flutter imports:
-import 'package:flutter/material.dart';
-
 // Package imports:
 import 'package:bouncing_widget/bouncing_widget.dart';
+// Flutter imports:
+import 'package:flutter/material.dart';
 import 'package:teta_core/teta_core.dart';
-
 // Project imports:
 import 'package:teta_widgets/src/elements/index.dart';
 
 class WBouncingWidget extends StatelessWidget {
   /// Returns a Container widget
   const WBouncingWidget(
-    Key? key, {
+    final Key? key, {
     required this.node,
     required this.action,
     required this.value,
@@ -40,7 +38,7 @@ class WBouncingWidget extends StatelessWidget {
   final List<DatasetObject> dataset;
 
   @override
-  Widget build(BuildContext context) {
+  Widget build(final BuildContext context) {
     final val = value.get(params, states, dataset, forPlay, loop);
     final scale = valueOfCondition.get(params, states, dataset, forPlay, loop);
     return NodeSelectionBuilder(

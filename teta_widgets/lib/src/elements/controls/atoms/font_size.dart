@@ -6,14 +6,12 @@ import 'dart:async';
 
 // Flutter imports:
 import 'package:flutter/material.dart';
-
 // Package imports:
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:teta_core/src/blocs/focus/index.dart';
 import 'package:teta_core/src/design_system/palette.dart';
 import 'package:teta_core/src/design_system/text.dart';
 import 'package:teta_core/src/design_system/textfield/textfield.dart';
-
 // Project imports:
 import 'package:teta_widgets/src/elements/features/text_style.dart';
 import 'package:teta_widgets/src/elements/nodes/node.dart';
@@ -23,7 +21,7 @@ class FontSizeControl extends StatefulWidget {
     required this.node,
     required this.textStyle,
     required this.callBack,
-    Key? key,
+    final Key? key,
   }) : super(key: key);
 
   final CNode node;
@@ -47,7 +45,7 @@ class FontSizeState extends State<FontSizeControl> {
     super.initState();
   }
 
-  void onChangeHandler(FTextStyle value, FTextStyle old) {
+  void onChangeHandler(final FTextStyle value, final FTextStyle old) {
     const duration = Duration(milliseconds: 400);
     if (searchOnStoppedTyping != null) {
       setState(() => searchOnStoppedTyping!.cancel());
@@ -60,7 +58,7 @@ class FontSizeState extends State<FontSizeControl> {
     );
   }
 
-  void setValue(FTextStyle value, FTextStyle old) {
+  void setValue(final FTextStyle value, final FTextStyle old) {
     widget.callBack(
       value.toJson(),
       old.toJson(),
@@ -68,9 +66,9 @@ class FontSizeState extends State<FontSizeControl> {
   }
 
   @override
-  Widget build(BuildContext context) {
+  Widget build(final BuildContext context) {
     return BlocListener<FocusBloc, List<CNode>>(
-      listener: (context, state) {
+      listener: (final context, final state) {
         if (state.isNotEmpty) {
           if (state.first.nid != nodeId) {
             setState(() {
@@ -96,7 +94,7 @@ class FontSizeState extends State<FontSizeControl> {
           CTextField(
             controller: controller,
             text: '${widget.textStyle.fontSize?.get}',
-            callBack: (value) {
+            callBack: (final value) {
               final old = widget.textStyle;
               widget.textStyle.fontSize!.size = double.parse(value);
               onChangeHandler(widget.textStyle, old);

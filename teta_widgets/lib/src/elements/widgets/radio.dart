@@ -1,9 +1,7 @@
 // Flutter imports:
 import 'package:flutter/material.dart';
-
 // Package imports:
 import 'package:teta_core/teta_core.dart';
-
 // Project imports:
 import 'package:teta_widgets/src/elements/index.dart';
 
@@ -12,7 +10,7 @@ import 'package:teta_widgets/src/elements/index.dart';
 class WRadio extends StatefulWidget {
   /// Returns a Radio widget in Teta
   const WRadio(
-    Key? key, {
+    final Key? key, {
     required this.node,
     required this.forPlay,
     required this.action,
@@ -42,7 +40,7 @@ class WRadio extends StatefulWidget {
 class _WRadioState extends State<WRadio> {
   bool val = false;
   @override
-  Widget build(BuildContext context) {
+  Widget build(final BuildContext context) {
     return NodeSelectionBuilder(
       node: widget.node,
       forPlay: widget.forPlay,
@@ -61,7 +59,7 @@ class _WRadioState extends State<WRadio> {
           widget.forPlay,
           widget.loop,
         ),
-        onChanged: (value) {
+        onChanged: (final value) {
           GestureBuilder.get(
             context: context,
             node: widget.node,

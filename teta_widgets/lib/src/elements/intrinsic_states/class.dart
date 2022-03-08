@@ -3,7 +3,6 @@
 
 // Package imports:
 import 'package:teta_core/gen/assets.gen.dart';
-
 // Project imports:
 import 'package:teta_widgets/src/elements/control_center.dart';
 import 'package:teta_widgets/src/elements/features/actions/enums/gestures.dart';
@@ -90,7 +89,7 @@ class IntrinsicStates {
         gestures: <ActionGesture>[],
       );
 
-  static IntrinsicStates get(NType type) {
+  static IntrinsicStates get(final NType type) {
     var result = IntrinsicStates.basic;
     for (final element in stateTypes) {
       if (element.type == type) {

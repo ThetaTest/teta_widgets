@@ -2,12 +2,10 @@
 
 // Flutter imports:
 import 'package:flutter/material.dart';
-
 // Package imports:
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:supabase/supabase.dart';
 import 'package:teta_core/teta_core.dart';
-
 // Project imports:
 import 'package:teta_widgets/src/elements/index.dart';
 
@@ -16,7 +14,7 @@ import 'package:teta_widgets/src/elements/index.dart';
 class WSupabaseStreamBuilder extends StatefulWidget {
   /// Construct
   const WSupabaseStreamBuilder(
-    Key? key, {
+    final Key? key, {
     required this.node,
     required this.from,
     required this.order,
@@ -119,7 +117,7 @@ class _WSupabaseStreamBuilderState extends State<WSupabaseStreamBuilder> {
   }
 
   @override
-  Widget build(BuildContext context) {
+  Widget build(final BuildContext context) {
     return NodeSelectionBuilder(
       node: widget.node,
       forPlay: widget.forPlay,
@@ -127,7 +125,7 @@ class _WSupabaseStreamBuilderState extends State<WSupabaseStreamBuilder> {
     );
   }
 
-  Widget body(BuildContext context) {
+  Widget body(final BuildContext context) {
     final client = BlocProvider.of<SupabaseCubit>(context).state;
 
     if (client == null) {
@@ -141,7 +139,7 @@ class _WSupabaseStreamBuilderState extends State<WSupabaseStreamBuilder> {
 
     return StreamBuilder(
       stream: _stream,
-      builder: (context, snapshot) {
+      builder: (final context, final snapshot) {
         if (!snapshot.hasData) {
           // snapshot has no data yet
           if (widget.children.isNotEmpty) {
@@ -164,7 +162,7 @@ class _WSupabaseStreamBuilderState extends State<WSupabaseStreamBuilder> {
         }
         _map = _map.copyWith(
           name: widget.node.name ?? widget.node.intrinsicState.displayName,
-          map: response?.map((Map<String, dynamic> e) => e).toList(),
+          map: response?.map((final Map<String, dynamic> e) => e).toList(),
         );
         final datasets = addDataset(context, widget.dataset, _map);
 

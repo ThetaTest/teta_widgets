@@ -8,8 +8,8 @@ import 'package:teta_widgets/src/elements/nodes/node_body.dart';
 
 /// Cupertino AppBar Template. unclassified for now
 String cupertinoAppBarCodeTemplate(
-  BuildContext context,
-  NodeBody body,
+  final BuildContext context,
+  final NodeBody body,
 ) {
   final fill = (body.attributes[DBKeys.fill] as FFill).getHexColor(context);
 

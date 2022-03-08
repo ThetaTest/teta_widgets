@@ -6,7 +6,6 @@ import 'dart:async';
 
 // Flutter imports:
 import 'package:flutter/material.dart';
-
 // Package imports:
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:hovering/hovering.dart';
@@ -14,7 +13,6 @@ import 'package:teta_core/src/blocs/focus/bloc.dart';
 import 'package:teta_core/src/design_system/palette.dart';
 import 'package:teta_core/src/design_system/text.dart';
 import 'package:teta_core/src/design_system/textfield/minitextfield.dart';
-
 // Project imports:
 import 'package:teta_widgets/src/elements/features/margins.dart';
 import 'package:teta_widgets/src/elements/nodes/node.dart';
@@ -25,7 +23,7 @@ class Margins extends StatefulWidget {
     required this.title,
     required this.value,
     required this.callBack,
-    Key? key,
+    final Key? key,
   }) : super(key: key);
 
   final CNode node;
@@ -67,7 +65,7 @@ class MarginsState extends State<Margins> {
     super.initState();
   }
 
-  void onChangeHandler(FMargins value, FMargins old) {
+  void onChangeHandler(final FMargins value, final FMargins old) {
     /*const duration = Duration(milliseconds: 100);
     if (searchOnStoppedTyping != null) {
       setState(() => searchOnStoppedTyping!.cancel());
@@ -81,7 +79,7 @@ class MarginsState extends State<Margins> {
     setValue(value, old);
   }
 
-  void setValue(FMargins value, FMargins old) {
+  void setValue(final FMargins value, final FMargins old) {
     final clone = [...margins!];
     final temp =
         FMargins.fromJson(value.update(value: clone, context: context));
@@ -92,9 +90,9 @@ class MarginsState extends State<Margins> {
   }
 
   @override
-  Widget build(BuildContext context) {
+  Widget build(final BuildContext context) {
     return BlocBuilder<FocusBloc, List<CNode>>(
-      builder: (context, state) {
+      builder: (final context, final state) {
         if (state.isNotEmpty) {
           if (state.first.nid != nodeId) {
             if (mounted) {
@@ -144,7 +142,7 @@ class MarginsState extends State<Margins> {
                           color: Colors.white,
                         ),
                       ),
-                      onHover: (e) {},
+                      onHover: (final e) {},
                       child: Container(
                         padding: const EdgeInsets.all(4),
                         decoration: BoxDecoration(
@@ -173,7 +171,7 @@ class MarginsState extends State<Margins> {
                     text: widget.value.getList(context)[0],
                     hpadding: 4,
                     withSwipe: true,
-                    callBack: (text) {
+                    callBack: (final text) {
                       margins![0] = text;
                       if (isLinked) {
                         margins![1] = text;
@@ -197,7 +195,7 @@ class MarginsState extends State<Margins> {
                       text: widget.value.getList(context)[1],
                       hpadding: 4,
                       withSwipe: true,
-                      callBack: (text) {
+                      callBack: (final text) {
                         margins![1] = text;
                         final old = FMargins.fromJson(widget.value.toJson());
                         final temp = FMargins.fromJson(widget.value.toJson());
@@ -213,7 +211,7 @@ class MarginsState extends State<Margins> {
                       text: widget.value.getList(context)[2],
                       hpadding: 4,
                       withSwipe: true,
-                      callBack: (text) {
+                      callBack: (final text) {
                         margins![2] = text;
                         final old = FMargins.fromJson(widget.value.toJson());
                         final temp = FMargins.fromJson(widget.value.toJson());
@@ -229,7 +227,7 @@ class MarginsState extends State<Margins> {
                       text: widget.value.getList(context)[3],
                       hpadding: 4,
                       withSwipe: true,
-                      callBack: (text) {
+                      callBack: (final text) {
                         margins![3] = text;
                         final old = FMargins.fromJson(widget.value.toJson());
                         final temp = FMargins.fromJson(widget.value.toJson());

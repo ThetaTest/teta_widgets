@@ -3,12 +3,10 @@
 
 // Flutter imports:
 import 'package:flutter/material.dart';
-
 // Package imports:
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:teta_core/src/blocs/focus/bloc.dart';
 import 'package:teta_core/src/design_system/textfield/minitextfield.dart';
-
 // Project imports:
 import 'package:teta_widgets/src/elements/controls/atoms/box_fit.dart';
 import 'package:teta_widgets/src/elements/features/features.dart';
@@ -22,7 +20,7 @@ class ImageFillControl extends StatefulWidget {
     required this.node,
     required this.isStyled,
     required this.callBack,
-    Key? key,
+    final Key? key,
   }) : super(key: key);
 
   final FFill fill;
@@ -50,9 +48,9 @@ class ImageFillControlState extends State<ImageFillControl> {
   }
 
   @override
-  Widget build(BuildContext context) {
+  Widget build(final BuildContext context) {
     return BlocListener<FocusBloc, List<CNode>>(
-      listener: (context, state) {
+      listener: (final context, final state) {
         if (state.isNotEmpty) {
           if (state.first.nid != nodeId) {
             setState(() {
@@ -64,7 +62,7 @@ class ImageFillControlState extends State<ImageFillControl> {
         }
       },
       child: BlocBuilder<FocusBloc, List<CNode>>(
-        builder: (context, state) {
+        builder: (final context, final state) {
           //updateState(state);
           return Column(
             children: [
@@ -91,7 +89,7 @@ class ImageFillControlState extends State<ImageFillControl> {
                         controller: controller,
                         title: 'IMAGE URL',
                         hpadding: 0,
-                        callBack: (text) {
+                        callBack: (final text) {
                           final old = FFill().fromJson(widget.fill.toJson());
                           widget.fill.get(context).levels!.first.color = text;
                           widget.callBack(widget.fill, false, old);
@@ -103,7 +101,7 @@ class ImageFillControlState extends State<ImageFillControl> {
               ),
               BoxFitControl(
                 boxFit: widget.fill.boxFit!,
-                callBack: (fit, old) {
+                callBack: (final fit, final old) {
                   final old = FFill().fromJson(widget.fill.toJson());
                   widget.fill.boxFit = fit;
                   widget.callBack(widget.fill, false, old);

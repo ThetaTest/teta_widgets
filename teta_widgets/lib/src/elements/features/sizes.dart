@@ -4,7 +4,6 @@
 // Flutter imports:
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
-
 // Package imports:
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:teta_core/src/cubits/device_mode/cubit.dart';
@@ -26,7 +25,10 @@ class FSize {
 
   static FSize ready() => FSize(size: '0', unit: SizeUnit.pixel);
 
-  double? get({required BuildContext context, required bool isWidth}) {
+  double? get({
+    required final BuildContext context,
+    required final bool isWidth,
+  }) {
     double? value = 0;
     if (size != null) {
       if (unit == SizeUnit.pixel &&
@@ -56,7 +58,7 @@ class FSize {
     return value;
   }
 
-  static FSize fromJson(Map<String, dynamic> json) {
+  static FSize fromJson(final Map<String, dynamic> json) {
     try {
       return FSize(
         size: json['s'] as String?,
@@ -74,18 +76,21 @@ class FSize {
   Map<String, dynamic> toJson() => <String, dynamic>{
         's': size,
         'u': unit == SizeUnit.percent ? 'e' : 'i',
-      }..removeWhere((String key, dynamic value) => value == null);
+      }..removeWhere((final String key, final dynamic value) => value == null);
 
-  static String convertListToCode(String? value) {
+  static String convertListToCode(final String? value) {
     return value ?? '';
   }
 
-  static String convertTypeToCode(SizeUnit? unit) {
+  static String convertTypeToCode(final SizeUnit? unit) {
     if (unit == SizeUnit.pixel) return 'SizeUnit.pixel';
     return 'SizeUnit.percent';
   }
 
-  String? toCode({required BuildContext context, required bool isWidth}) {
+  String? toCode({
+    required final BuildContext context,
+    required final bool isWidth,
+  }) {
     String? value;
     if (size != null) {
       if (unit == SizeUnit.pixel &&

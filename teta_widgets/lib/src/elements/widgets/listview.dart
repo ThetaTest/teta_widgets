@@ -3,17 +3,15 @@
 
 // Flutter imports:
 import 'package:flutter/material.dart';
-
 // Package imports:
 import 'package:teta_core/teta_core.dart';
-
 // Project imports:
 import 'package:teta_widgets/src/elements/index.dart';
 
 class WListView extends StatelessWidget {
   /// Returns a ListView in Teta
   const WListView(
-    Key? key, {
+    final Key? key, {
     required this.children,
     required this.node,
     required this.forPlay,
@@ -43,7 +41,7 @@ class WListView extends StatelessWidget {
   final List<DatasetObject> dataset;
 
   @override
-  Widget build(BuildContext context) {
+  Widget build(final BuildContext context) {
     return NodeSelectionBuilder(
       node: node,
       forPlay: forPlay,
@@ -51,13 +49,13 @@ class WListView extends StatelessWidget {
     );
   }
 
-  Widget _body(BuildContext context) {
+  Widget _body(final BuildContext context) {
     return ListView.builder(
       addAutomaticKeepAlives: false,
       addRepaintBoundaries: false,
       scrollDirection: isVertical ? Axis.vertical : Axis.horizontal,
       itemCount: children.isEmpty ? 1 : children.length,
-      itemBuilder: (context, index) {
+      itemBuilder: (final context, final index) {
         return children.isNotEmpty
             ? children[index].toWidget(
                 loop: loop,

@@ -2,11 +2,10 @@
 // Package imports:
 // ignore_for_file: public_member_api_docs
 
-// Flutter imports:
-import 'package:flutter/material.dart';
-
 // Package imports:
 import 'package:enum_to_string/enum_to_string.dart';
+// Flutter imports:
+import 'package:flutter/material.dart';
 
 const nameAttr = 'BlendMode';
 
@@ -18,18 +17,23 @@ class FBlendMode {
   final BlendMode? mode;
 
   static List<String> get dropdownList => BlendMode.values
-      .map((element) => EnumToString.convertToString(element, camelCase: true))
+      .map(
+        (final element) => EnumToString.convertToString(
+          element,
+          camelCase: true,
+        ),
+      )
       .toList();
 
   BlendMode get() {
     return mode!;
   }
 
-  String getStringForDropDown(BuildContext context) {
+  String getStringForDropDown(final BuildContext context) {
     return convertValueToDropDown(mode!);
   }
 
-  static FBlendMode fromJson(String json) {
+  static FBlendMode fromJson(final String json) {
     try {
       return FBlendMode(
         mode: convertJsonToValue(json),
@@ -45,9 +49,10 @@ class FBlendMode {
 
   FBlendMode clone() => FBlendMode(mode: mode);
 
-  FBlendMode copyWith({BlendMode? mode}) => FBlendMode(mode: mode ?? this.mode);
+  FBlendMode copyWith({final BlendMode? mode}) =>
+      FBlendMode(mode: mode ?? this.mode);
 
-  static BlendMode convertJsonToValue(String key) {
+  static BlendMode convertJsonToValue(final String key) {
     return EnumToString.fromString(
           BlendMode.values,
           key,
@@ -55,17 +60,17 @@ class FBlendMode {
         BlendMode.clear;
   }
 
-  static BlendMode convertDropDownToValue(String key) =>
+  static BlendMode convertDropDownToValue(final String key) =>
       EnumToString.fromString(BlendMode.values, key, camelCase: true) ??
       BlendMode.clear;
 
-  static String convertValueToDropDown(BlendMode key) =>
+  static String convertValueToDropDown(final BlendMode key) =>
       EnumToString.convertToString(key, camelCase: true);
 
-  static String convertValueToJson(BlendMode value) =>
+  static String convertValueToJson(final BlendMode value) =>
       EnumToString.convertToString(value);
 
-  static String convertValueToCode(BlendMode? value) =>
+  static String convertValueToCode(final BlendMode? value) =>
       EnumToString.convertToString(value);
 
   String toCode() => 'FBlendMode(mode: BlendMode.${convertValueToCode(mode)})';

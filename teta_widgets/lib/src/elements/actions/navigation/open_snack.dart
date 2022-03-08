@@ -3,7 +3,6 @@
 
 // Flutter imports:
 import 'package:flutter/material.dart';
-
 // Package imports:
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:recase/recase.dart';
@@ -14,20 +13,20 @@ import 'package:teta_core/src/models/variable.dart';
 
 class FActionNavigationOpenSnackBar {
   static Future action(
-    BuildContext context,
-    String? nameOfPage,
-    Map<String, dynamic>? paramsToSend,
-    List<VariableObject> params,
-    List<VariableObject> states,
-    List<DatasetObject> dataset,
-    int? loop,
+    final BuildContext context,
+    final String? nameOfPage,
+    final Map<String, dynamic>? paramsToSend,
+    final List<VariableObject> params,
+    final List<VariableObject> states,
+    final List<DatasetObject> dataset,
+    final int? loop,
   ) async {
     try {
       if (nameOfPage != null) {
         final prj =
             BlocProvider.of<FocusProjectBloc>(context).state as ProjectLoaded;
-        final page =
-            prj.prj.pages!.firstWhere((element) => element.name == nameOfPage);
+        final page = prj.prj.pages!
+            .firstWhere((final element) => element.name == nameOfPage);
         final snackBar = SnackBar(
           content: page.scaffold!.toWidget(
             forPlay: true,
@@ -44,19 +43,19 @@ class FActionNavigationOpenSnackBar {
   }
 
   static String toCode(
-    BuildContext context,
-    String? nameOfPage,
-    Map<String, dynamic>? paramsToSend,
+    final BuildContext context,
+    final String? nameOfPage,
+    final Map<String, dynamic>? paramsToSend,
   ) {
     try {
       final prj =
           BlocProvider.of<FocusProjectBloc>(context).state as ProjectLoaded;
       if (nameOfPage == null ||
           (prj.prj.pages ?? <PageObject>[])
-                  .indexWhere((element) => element.name == nameOfPage) ==
+                  .indexWhere((final element) => element.name == nameOfPage) ==
               -1) return '';
-      final page =
-          prj.prj.pages!.firstWhere((element) => element.name == nameOfPage);
+      final page = prj.prj.pages!
+          .firstWhere((final element) => element.name == nameOfPage);
       final realPageName = "Page${nameOfPage.replaceAll(RegExp(' '), "")}";
 
       final stringParamsToSend = StringBuffer()..write('');

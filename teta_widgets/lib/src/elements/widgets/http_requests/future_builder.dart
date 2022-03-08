@@ -5,11 +5,9 @@ import 'dart:convert';
 
 // Flutter imports:
 import 'package:flutter/material.dart';
-
 // Package imports:
 import 'package:http/http.dart' as http;
 import 'package:teta_core/teta_core.dart';
-
 // Project imports:
 import 'package:teta_widgets/src/elements/index.dart';
 
@@ -18,7 +16,7 @@ import 'package:teta_widgets/src/elements/index.dart';
 class WHTTPRequestFutureBuilder extends StatefulWidget {
   /// Construct
   const WHTTPRequestFutureBuilder(
-    Key? key, {
+    final Key? key, {
     required this.node,
     required this.from,
     required this.forPlay,
@@ -95,13 +93,13 @@ class _WHTTPRequestFutureBuilderState extends State<WHTTPRequestFutureBuilder> {
   }
 
   @override
-  Widget build(BuildContext context) {
+  Widget build(final BuildContext context) {
     return NodeSelectionBuilder(
       node: widget.node,
       forPlay: widget.forPlay,
       child: FutureBuilder(
         future: _future,
-        builder: (context, snapshot) {
+        builder: (final context, final snapshot) {
           if (!snapshot.hasData) {
             if (widget.children.isNotEmpty) {
               return widget.children.last.toWidget(
@@ -136,7 +134,7 @@ class _WHTTPRequestFutureBuilderState extends State<WHTTPRequestFutureBuilder> {
     );
   }
 
-  Future<DatasetObject?> posts(String url) async {
+  Future<DatasetObject?> posts(final String url) async {
     final response = await http.get(Uri.parse(url));
     final json = jsonDecode(response.body) as List<dynamic>;
     jsonMap = [];
@@ -175,7 +173,7 @@ class _WHTTPRequestFutureBuilderState extends State<WHTTPRequestFutureBuilder> {
     );
   }
 
-  Future postsFromJson(List<dynamic> json) async {
+  Future postsFromJson(final List<dynamic> json) async {
     for (final element in json) {
       final keys = element as Map;
       getValues('', data, keys, 0, loop);
@@ -185,13 +183,13 @@ class _WHTTPRequestFutureBuilderState extends State<WHTTPRequestFutureBuilder> {
   }
 
   void getValues(
-    String prefix,
-    TreeObject parent,
-    Map<dynamic, dynamic> map,
-    double level,
-    int loop,
+    final String prefix,
+    final TreeObject parent,
+    final Map<dynamic, dynamic> map,
+    final double level,
+    final int loop,
   ) {
-    map.forEach((dynamic key, dynamic value) {
+    map.forEach((final dynamic key, final dynamic value) {
       try {
         if (value is String ||
             value is int ||

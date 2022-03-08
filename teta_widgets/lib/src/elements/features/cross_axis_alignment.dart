@@ -17,13 +17,13 @@ class FCrossAxisAlignment {
   /// Includes optionality checks
   CrossAxisAlignment get get => value ?? CrossAxisAlignment.start;
 
-  String getString(BuildContext context) => _convertValueToDropDown(get);
+  String getString(final BuildContext context) => _convertValueToDropDown(get);
 
-  void set(String value) => _convertDropDownToValue(value);
+  void set(final String value) => _convertDropDownToValue(value);
 
   //FCrossAxisAlignment set(BuildContext context, String text) => copyWith(value: )
 
-  FCrossAxisAlignment fromJson(String? json) {
+  FCrossAxisAlignment fromJson(final String? json) {
     if (json != null) {
       return FCrossAxisAlignment(
         value: _convertJsonToValue(json),
@@ -37,10 +37,10 @@ class FCrossAxisAlignment {
 
   FCrossAxisAlignment clone() => FCrossAxisAlignment(value: value);
 
-  FCrossAxisAlignment copyWith({CrossAxisAlignment? value}) =>
+  FCrossAxisAlignment copyWith({final CrossAxisAlignment? value}) =>
       FCrossAxisAlignment(value: value ?? this.value);
 
-  CrossAxisAlignment _convertJsonToValue(String key) {
+  CrossAxisAlignment _convertJsonToValue(final String key) {
     switch (key) {
       case 'e':
         return CrossAxisAlignment.end;
@@ -55,7 +55,7 @@ class FCrossAxisAlignment {
     }
   }
 
-  String _convertValueToJson(CrossAxisAlignment value) {
+  String _convertValueToJson(final CrossAxisAlignment value) {
     switch (value) {
       case CrossAxisAlignment.end:
         return 'e';
@@ -70,7 +70,7 @@ class FCrossAxisAlignment {
     }
   }
 
-  String _convertValueToDropDown(CrossAxisAlignment value) {
+  String _convertValueToDropDown(final CrossAxisAlignment value) {
     switch (value) {
       case CrossAxisAlignment.end:
         return 'End';
@@ -85,7 +85,7 @@ class FCrossAxisAlignment {
     }
   }
 
-  void _convertDropDownToValue(String newValue) {
+  void _convertDropDownToValue(final String newValue) {
     switch (newValue) {
       case 'Start':
         value = CrossAxisAlignment.start;
@@ -108,7 +108,7 @@ class FCrossAxisAlignment {
     }
   }
 
-  String _convertValueToCode(CrossAxisAlignment? value) {
+  String _convertValueToCode(final CrossAxisAlignment? value) {
     switch (value) {
       case CrossAxisAlignment.end:
         return 'CrossAxisAlignment.end';

@@ -1,6 +1,5 @@
 // Flutter imports:
 import 'package:flutter/material.dart';
-
 // Project imports:
 import 'package:teta_widgets/src/elements/code/snippets.dart';
 import 'package:teta_widgets/src/elements/controls/key_constants.dart';
@@ -17,7 +16,7 @@ import 'package:teta_widgets/src/elements/nodes/node_body.dart';
 ///         mainAxisSpacing: 2,
 ///         crossAxisCount: 2,
 ///         crossAxisSpacing: 2,
-///         childAspectRatio: 1, 
+///         childAspectRatio: 1,
 ///      ),
 ///       shrinkWrap: false,
 ///       primary: false,
@@ -26,10 +25,10 @@ import 'package:teta_widgets/src/elements/nodes/node_body.dart';
 //     )
 /// ```
 String gridViewCodeTemplate(
-  BuildContext context,
-  NodeBody body,
-  List<CNode> children,
-  int? loop,
+  final BuildContext context,
+  final NodeBody body,
+  final List<CNode> children,
+  final int? loop,
 ) {
   final primary = body.attributes[DBKeys.isPrimary] as bool;
   final _scrollDirection =

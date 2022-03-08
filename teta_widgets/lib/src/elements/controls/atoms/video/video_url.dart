@@ -3,26 +3,24 @@
 
 // Flutter imports:
 import 'package:flutter/material.dart';
-
 // Package imports:
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:teta_core/src/blocs/focus_page/index.dart';
 import 'package:teta_core/src/design_system/palette.dart';
 import 'package:teta_core/src/design_system/text.dart';
 import 'package:teta_core/src/design_system/textfield/textfield.dart';
-import 'package:youtube_player_iframe/youtube_player_iframe.dart';
-
 // Project imports:
 import 'package:teta_widgets/src/elements/controls/key_constants.dart';
 import 'package:teta_widgets/src/elements/features/text_type_input.dart';
 import 'package:teta_widgets/src/elements/nodes/node.dart';
+import 'package:youtube_player_iframe/youtube_player_iframe.dart';
 
 class VideoUrlControl extends StatefulWidget {
   const VideoUrlControl({
     required this.node,
     required this.value,
     required this.callBack,
-    Key? key,
+    final Key? key,
   }) : super(key: key);
 
   final CNode node;
@@ -72,7 +70,7 @@ class PaddingsState extends State<VideoUrlControl> {
   }
 
   @override
-  Widget build(BuildContext context) {
+  Widget build(final BuildContext context) {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
@@ -91,7 +89,7 @@ class PaddingsState extends State<VideoUrlControl> {
           text: text,
           controller: controller,
           placeholder: 'insert the link',
-          callBack: (value) {
+          callBack: (final value) {
             if (tempUrl == null) {
               tempUrl = value;
             } else if (value != tempUrl) {

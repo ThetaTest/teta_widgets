@@ -3,18 +3,16 @@
 
 // Flutter imports:
 import 'package:flutter/material.dart';
-
 // Package imports:
 import 'package:liquid_swipe/liquid_swipe.dart';
 import 'package:teta_core/teta_core.dart';
-
 // Project imports:
 import 'package:teta_widgets/src/elements/index.dart';
 
 class WLiquidSwipe extends StatelessWidget {
   /// Returns a LiquidSwipe widget
   const WLiquidSwipe(
-    Key? key, {
+    final Key? key, {
     required this.children,
     required this.node,
     required this.forPlay,
@@ -33,7 +31,7 @@ class WLiquidSwipe extends StatelessWidget {
   final List<DatasetObject> dataset;
 
   @override
-  Widget build(BuildContext context) {
+  Widget build(final BuildContext context) {
     return NodeSelectionBuilder(
       node: node,
       forPlay: forPlay,
@@ -41,10 +39,10 @@ class WLiquidSwipe extends StatelessWidget {
     );
   }
 
-  Widget _body(BuildContext context) {
+  Widget _body(final BuildContext context) {
     return LiquidSwipe.builder(
       itemCount: children.isNotEmpty ? children.length : 3,
-      itemBuilder: (context, index) {
+      itemBuilder: (final context, final index) {
         if (children.isEmpty) {
           return PlaceholderChildBuilder(name: node.intrinsicState.displayName);
         }

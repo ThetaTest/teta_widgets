@@ -1,9 +1,7 @@
 // Flutter imports:
 import 'package:flutter/material.dart';
-
 // Package imports:
 import 'package:teta_core/teta_core.dart';
-
 // Project imports:
 import 'package:teta_widgets/src/elements/index.dart';
 
@@ -12,7 +10,7 @@ import 'package:teta_widgets/src/elements/index.dart';
 class WCheckBox extends StatefulWidget {
   /// Returns a CheckBox widget in Teta
   const WCheckBox(
-    Key? key, {
+    final Key? key, {
     required this.node,
     required this.forPlay,
     required this.action,
@@ -38,14 +36,14 @@ class WCheckBox extends StatefulWidget {
 class _WCheckBoxState extends State<WCheckBox> {
   bool flag = false;
   @override
-  Widget build(BuildContext context) {
+  Widget build(final BuildContext context) {
     return NodeSelectionBuilder(
       node: widget.node,
       forPlay: widget.forPlay,
       child: IgnorePointer(
         ignoring: !widget.forPlay,
         child: Checkbox(
-          onChanged: (value) {
+          onChanged: (final value) {
             if (widget.forPlay) {
               setState(() {
                 flag = value ?? false;
@@ -67,7 +65,7 @@ class _WCheckBoxState extends State<WCheckBox> {
           value: flag,
           mouseCursor: const FCursor().get(),
           fillColor:
-              MaterialStateProperty.resolveWith((states) => Colors.black),
+              MaterialStateProperty.resolveWith((final states) => Colors.black),
           //shape:
         ),
       ),

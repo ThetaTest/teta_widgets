@@ -4,7 +4,6 @@
 // Flutter imports:
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
-
 // Package imports:
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:supabase/supabase.dart';
@@ -22,7 +21,6 @@ import 'package:teta_core/src/models/asset_file.dart';
 import 'package:teta_core/src/models/dataset.dart';
 import 'package:teta_core/src/models/page.dart';
 import 'package:teta_core/src/models/project.dart';
-
 // Project imports:
 import 'package:teta_widgets/src/elements/features/text_type_input.dart';
 import 'package:teta_widgets/src/elements/nodes/node.dart';
@@ -34,7 +32,7 @@ class SrcImageControl extends StatefulWidget {
     required this.title,
     required this.image,
     required this.callBack,
-    Key? key,
+    final Key? key,
   }) : super(key: key);
 
   final CNode node;
@@ -69,12 +67,12 @@ class SrcImageControlState extends State<SrcImageControl> {
     } catch (_) {}
     try {
       list = (widget.page.datasets.indexWhere(
-                (element) => element.getName == widget.image.datasetName,
+                (final element) => element.getName == widget.image.datasetName,
               ) !=
               -1)
           ? widget.page.datasets
               .firstWhere(
-                (element) => element.getName == widget.image.datasetName,
+                (final element) => element.getName == widget.image.datasetName,
                 orElse: () {
                   return DatasetObject.empty();
                 },
@@ -92,11 +90,11 @@ class SrcImageControlState extends State<SrcImageControl> {
   }
 
   @override
-  Widget build(BuildContext context) {
+  Widget build(final BuildContext context) {
     return BlocBuilder<FocusProjectBloc, FocusProjectState>(
-      builder: (context, prjState) => prjState is ProjectLoaded
+      builder: (final context, final prjState) => prjState is ProjectLoaded
           ? BlocListener<FocusBloc, List<CNode>>(
-              listener: (context, state) {
+              listener: (final context, final state) {
                 if (state.isNotEmpty) {
                   if (state.first.nid != nodeId) {
                     setState(() {
@@ -134,7 +132,7 @@ class SrcImageControlState extends State<SrcImageControl> {
                           'dataset',
                           'asset'
                         ],
-                        onChange: (value) {
+                        onChange: (final value) {
                           var typeOfInput = FTextTypeEnum.text;
                           if (value == 'text') {
                             typeOfInput = FTextTypeEnum.text;
@@ -162,13 +160,13 @@ class SrcImageControlState extends State<SrcImageControl> {
                     CTextField(
                       text: widget.image.value,
                       controller: controller,
-                      callBack: (value) {
+                      callBack: (final value) {
                         value.replaceAll(r'\', r'\\');
                         final old = widget.image;
                         widget.image.value = value;
                         widget.callBack(widget.image, old);
                       },
-                      onSubmitted: (value) {
+                      onSubmitted: (final value) {
                         value.replaceAll(r'\', r'\\');
                         final old = widget.image;
                         widget.image.value = value;
@@ -178,17 +176,17 @@ class SrcImageControlState extends State<SrcImageControl> {
                   if (widget.image.type == FTextTypeEnum.param)
                     CDropdown(
                       value: widget.page.params
-                              .map((e) => e.name)
+                              .map((final e) => e.name)
                               .toSet()
                               .toList()
                               .contains(widget.image.paramName)
                           ? widget.image.paramName
                           : null,
                       items: widget.page.params
-                          .map((e) => e.name)
+                          .map((final e) => e.name)
                           .toSet()
                           .toList(),
-                      onChange: (newValue) {
+                      onChange: (final newValue) {
                         final old = widget.image;
                         widget.image.paramName = newValue;
                         widget.callBack(widget.image, old);
@@ -197,17 +195,17 @@ class SrcImageControlState extends State<SrcImageControl> {
                   if (widget.image.type == FTextTypeEnum.state)
                     CDropdown(
                       value: widget.page.states
-                              .map((e) => e.name)
+                              .map((final e) => e.name)
                               .toSet()
                               .toList()
                               .contains(widget.image.stateName)
                           ? widget.image.stateName
                           : null,
                       items: widget.page.states
-                          .map((e) => e.name)
+                          .map((final e) => e.name)
                           .toSet()
                           .toList(),
-                      onChange: (newValue) {
+                      onChange: (final newValue) {
                         final old = widget.image;
                         widget.image.stateName = newValue;
                         widget.callBack(widget.image, old);
@@ -216,18 +214,18 @@ class SrcImageControlState extends State<SrcImageControl> {
                   if (widget.image.type == FTextTypeEnum.dataset)
                     CDropdown(
                       value: widget.page.datasets
-                              .map((e) => e.getName)
-                              .where((element) => element != 'null')
+                              .map((final e) => e.getName)
+                              .where((final element) => element != 'null')
                               .toSet()
                               .contains(widget.image.datasetName)
                           ? widget.image.datasetName
                           : null,
                       items: widget.page.datasets
-                          .map((e) => e.getName)
-                          .where((element) => element != 'null')
+                          .map((final e) => e.getName)
+                          .where((final element) => element != 'null')
                           .toSet()
                           .toList(),
-                      onChange: (newValue) {
+                      onChange: (final newValue) {
                         setState(() {
                           databaseName = newValue!;
                         });
@@ -240,14 +238,14 @@ class SrcImageControlState extends State<SrcImageControl> {
                       widget.image.datasetName != null)
                     CDropdown(
                       value: widget.page.datasets.indexWhere(
-                                (element) =>
+                                (final element) =>
                                     element.getName == widget.image.datasetName,
                               ) !=
                               -1
                           ? widget.image.datasetAttr
                           : null,
                       items: list,
-                      onChange: (newValue) {
+                      onChange: (final newValue) {
                         setState(() {
                           databaseAttribute = newValue!;
                         });
@@ -258,11 +256,11 @@ class SrcImageControlState extends State<SrcImageControl> {
                     ),
                   if (widget.image.type == FTextTypeEnum.asset)
                     BlocBuilder<SupabaseCubit, SupabaseClient?>(
-                      builder: (context, client) {
+                      builder: (final context, final client) {
                         if (client == null) return const SizedBox();
                         return FutureBuilder(
                           future: getList(client, prjState.prj),
-                          builder: (context, snapshot) {
+                          builder: (final context, final snapshot) {
                             if (!snapshot.hasData) {
                               return const Center(
                                 child: CircularProgressIndicator(),
@@ -279,7 +277,7 @@ class SrcImageControlState extends State<SrcImageControl> {
                                       child: CDropdownImageAssets(
                                         value: widget.image.file,
                                         items: list,
-                                        onChange: (value) {
+                                        onChange: (final value) {
                                           final old = widget.image;
                                           widget.image.file = value;
                                           widget.callBack(widget.image, old);
@@ -324,8 +322,8 @@ class SrcImageControlState extends State<SrcImageControl> {
   }
 
   Future<List<AssetFile>> getList(
-    SupabaseClient client,
-    ProjectObject prj,
+    final SupabaseClient client,
+    final ProjectObject prj,
   ) async {
     final files =
         await client.storage.from('public').list(path: '${prj.name}/assets');

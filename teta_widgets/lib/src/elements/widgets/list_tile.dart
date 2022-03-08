@@ -1,9 +1,7 @@
 // Flutter imports:
 import 'package:flutter/material.dart';
-
 // Package imports:
 import 'package:teta_core/teta_core.dart';
-
 // Project imports:
 import 'package:teta_widgets/src/elements/index.dart';
 
@@ -12,7 +10,7 @@ import 'package:teta_widgets/src/elements/index.dart';
 class WListTile extends StatelessWidget {
   /// Returns a MaterialAppBar widget in Teta
   const WListTile(
-    Key? key, {
+    final Key? key, {
     required this.node,
     required this.value,
     required this.isThreeLine,
@@ -36,7 +34,7 @@ class WListTile extends StatelessWidget {
   final List<DatasetObject> dataset;
 
   @override
-  Widget build(BuildContext context) {
+  Widget build(final BuildContext context) {
     return NodeSelectionBuilder(
       node: node,
       forPlay: forPlay,

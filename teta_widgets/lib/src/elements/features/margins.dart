@@ -3,7 +3,6 @@
 
 // Flutter imports:
 import 'package:flutter/material.dart';
-
 // Package imports:
 import 'package:teta_core/src/utils/expression/expression.dart';
 
@@ -16,7 +15,7 @@ class FMargins {
 
   List<String>? margins;
 
-  EdgeInsets get(BuildContext context) {
+  EdgeInsets get(final BuildContext context) {
     final left =
         MathExpression.parse(context: context, expression: margins![0]);
     final top = MathExpression.parse(context: context, expression: margins![1]);
@@ -32,11 +31,11 @@ class FMargins {
     );
   }
 
-  List<String> getList(BuildContext context) {
+  List<String> getList(final BuildContext context) {
     return margins!;
   }
 
-  static FMargins fromJson(List<dynamic> json) {
+  static FMargins fromJson(final List<dynamic> json) {
     try {
       return FMargins(
         margins: json.cast<String>(),
@@ -51,17 +50,17 @@ class FMargins {
   }
 
   List<String> update({
-    required List<String> value,
-    required BuildContext context,
+    required final List<String> value,
+    required final BuildContext context,
   }) {
     return value;
   }
 
-  static String convertToCode(List<String>? list) {
+  static String convertToCode(final List<String>? list) {
     return '["${list?[0]}","${list?[1]}","${list?[2]}","${list?[3]}"]';
   }
 
-  String toCode(BuildContext context) {
+  String toCode(final BuildContext context) {
     final left =
         MathExpression.parse(context: context, expression: margins![0]);
     final top = MathExpression.parse(context: context, expression: margins![1]);

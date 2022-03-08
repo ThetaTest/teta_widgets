@@ -9,12 +9,12 @@ import 'package:teta_widgets/src/elements/features/text_type_input.dart';
 class FShadow {
   /// Set of funcs to use Shadow property in Teta
   FShadow({
-    FTextTypeInput? x,
-    FTextTypeInput? y,
-    FTextTypeInput? spread,
-    FTextTypeInput? blur,
-    FFill? fill,
-    FSize? opacity,
+    final FTextTypeInput? x,
+    final FTextTypeInput? y,
+    final FTextTypeInput? spread,
+    final FTextTypeInput? blur,
+    final FFill? fill,
+    final FSize? opacity,
   })  : _x = x,
         _y = y,
         _spread = spread,
@@ -43,7 +43,7 @@ class FShadow {
         opacity: FSize(size: '0'),
       );
 
-  static FShadow fromJson(Map<String, dynamic> json) {
+  static FShadow fromJson(final Map<String, dynamic> json) {
     try {
       return FShadow(
         x: FTextTypeInput.fromJson(json['x'] as Map<String, dynamic>?),
@@ -65,5 +65,5 @@ class FShadow {
         'b': _blur != null ? _blur!.toJson() : FSize().toJson(),
         'f': _fill != null ? _fill!.toJson() : FFill().toJson(),
         'o': _opacity != null ? _opacity!.toJson() : FSize().toJson(),
-      }..removeWhere((String key, dynamic value) => value == null);
+      }..removeWhere((final String key, final dynamic value) => value == null);
 }

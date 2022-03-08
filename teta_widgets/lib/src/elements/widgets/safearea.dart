@@ -3,28 +3,26 @@
 
 // Flutter imports:
 import 'package:flutter/material.dart';
-
 // Package imports:
 import 'package:teta_core/teta_core.dart';
-
 // Project imports:
 import 'package:teta_widgets/src/elements/index.dart';
 
 class WSafeArea extends StatelessWidget {
   /// Constructor
   const WSafeArea(
-    Key? key, {
-    required CNode node,
-    required bool left,
-    required bool top,
-    required bool right,
-    required bool bottom,
-    required bool forPlay,
-    required List<VariableObject> params,
-    required List<VariableObject> states,
-    required List<DatasetObject> dataset,
-    CNode? child,
-    int? loop,
+    final Key? key, {
+    required final CNode node,
+    required final bool left,
+    required final bool top,
+    required final bool right,
+    required final bool bottom,
+    required final bool forPlay,
+    required final List<VariableObject> params,
+    required final List<VariableObject> states,
+    required final List<DatasetObject> dataset,
+    final CNode? child,
+    final int? loop,
   })  : _child = child,
         _node = node,
         _left = left,
@@ -52,7 +50,7 @@ class WSafeArea extends StatelessWidget {
   final List<DatasetObject> _dataset;
 
   @override
-  Widget build(BuildContext context) {
+  Widget build(final BuildContext context) {
     return NodeSelectionBuilder(
       node: _node,
       forPlay: _forPlay,

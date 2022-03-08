@@ -3,18 +3,16 @@
 
 // Flutter imports:
 import 'package:flutter/material.dart';
-
 // Package imports:
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:teta_core/teta_core.dart';
-
 // Project imports:
 import 'package:teta_widgets/src/elements/index.dart';
 
 class WGridView extends StatelessWidget {
   /// Returns a StaggeredGridView (children: [ ]) in Teta
   const WGridView(
-    Key? key, {
+    final Key? key, {
     required this.children,
     required this.node,
     required this.forPlay,
@@ -49,7 +47,7 @@ class WGridView extends StatelessWidget {
   final List<DatasetObject> dataset;
 
   @override
-  Widget build(BuildContext context) {
+  Widget build(final BuildContext context) {
     return NodeSelectionBuilder(
       node: node,
       forPlay: forPlay,
@@ -59,7 +57,7 @@ class WGridView extends StatelessWidget {
 
   /// Returns a MouseRegion to disable the zoom on editor screen
   /// and provides a StaggeredGridView
-  Widget _body(BuildContext context) {
+  Widget _body(final BuildContext context) {
     final crossAxisCountString =
         crossAxisCount.get(params, states, dataset, forPlay, loop);
     final mainAxisSpacingString =
@@ -69,11 +67,11 @@ class WGridView extends StatelessWidget {
     final childAspectRatioString =
         childAspectRatio.get(params, states, dataset, forPlay, loop);
     return MouseRegion(
-      onEnter: (v) {
+      onEnter: (final v) {
         BlocProvider.of<ZoomableCubit>(context)
             .changeZoomableFlag(value: false);
       },
-      onExit: (v) {
+      onExit: (final v) {
         BlocProvider.of<ZoomableCubit>(context).changeZoomableFlag(value: true);
       },
       child: GridView.builder(
@@ -99,7 +97,7 @@ class WGridView extends StatelessWidget {
         primary: isPrimary,
         scrollDirection: isVertical ? Axis.vertical : Axis.horizontal,
         itemCount: children.isEmpty ? 1 : children.length,
-        itemBuilder: (context, index) => children.isNotEmpty
+        itemBuilder: (final context, final index) => children.isNotEmpty
             ? children[index].toWidget(
                 loop: index,
                 forPlay: forPlay,

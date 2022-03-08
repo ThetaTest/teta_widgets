@@ -3,17 +3,15 @@
 
 // Flutter imports:
 import 'package:flutter/material.dart';
-
 // Package imports:
 import 'package:teta_core/teta_core.dart';
-
 // Project imports:
 import 'package:teta_widgets/src/elements/index.dart';
 
 class WDecoratedBox extends StatelessWidget {
   /// Returns a DecoratedBox widget
   const WDecoratedBox(
-    Key? key, {
+    final Key? key, {
     required this.node,
     required this.fill,
     required this.borderRadius,
@@ -40,7 +38,7 @@ class WDecoratedBox extends StatelessWidget {
   final List<DatasetObject> dataset;
 
   @override
-  Widget build(BuildContext context) {
+  Widget build(final BuildContext context) {
     return NodeSelectionBuilder(
       node: node,
       forPlay: forPlay,

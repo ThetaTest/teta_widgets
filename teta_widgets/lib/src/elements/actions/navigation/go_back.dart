@@ -5,7 +5,7 @@
 import 'package:flutter/material.dart';
 
 class FActionNavigationGoBack {
-  static Future action(BuildContext context) async {
+  static Future action(final BuildContext context) async {
     Navigator.of(context, rootNavigator: true).pop(null);
   }
 

@@ -3,7 +3,6 @@
 
 // Flutter imports:
 import 'package:flutter/material.dart';
-
 // Package imports:
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:hovering/hovering.dart';
@@ -12,7 +11,6 @@ import 'package:teta_core/src/design_system/palette.dart';
 import 'package:teta_core/src/design_system/text.dart';
 import 'package:teta_core/src/models/page.dart';
 import 'package:teta_core/src/models/supabase_map_element.dart';
-
 // Project imports:
 import 'package:teta_widgets/src/elements/controls/atoms/supabase_element.dart';
 import 'package:teta_widgets/src/elements/features/text_type_input.dart';
@@ -24,7 +22,7 @@ class SupabaseMapControl extends StatefulWidget {
     required this.list,
     required this.page,
     required this.callBack,
-    Key? key,
+    final Key? key,
   }) : super(key: key);
 
   final CNode node;
@@ -48,9 +46,9 @@ class SupabaseMapControlState extends State<SupabaseMapControl> {
   }
 
   @override
-  Widget build(BuildContext context) {
+  Widget build(final BuildContext context) {
     return BlocListener<FocusBloc, List<CNode>>(
-      listener: (context, state) {
+      listener: (final context, final state) {
         if (state.isNotEmpty) {
           if (state.first.nid != nodeId) {
             setState(() {
@@ -103,7 +101,7 @@ class SupabaseMapControlState extends State<SupabaseMapControl> {
                               color: Colors.white,
                             ),
                           ),
-                          onHover: (e) {},
+                          onHover: (final e) {},
                           child: Container(
                             padding: const EdgeInsets.all(4),
                             decoration: BoxDecoration(
@@ -130,7 +128,7 @@ class SupabaseMapControlState extends State<SupabaseMapControl> {
                 mainAxisSize: MainAxisSize.min,
                 children: widget.list
                     .map(
-                      (e) => Container(
+                      (final e) => Container(
                         margin: const EdgeInsets.only(bottom: 8),
                         padding: const EdgeInsets.all(16),
                         decoration: BoxDecoration(
@@ -141,7 +139,7 @@ class SupabaseMapControlState extends State<SupabaseMapControl> {
                           node: widget.node,
                           value: e,
                           page: widget.page,
-                          callBack: (value, old) {
+                          callBack: (final value, final old) {
                             final old = widget.list;
                             final index = widget.list.indexOf(e);
                             widget.list[index] = value;

@@ -3,13 +3,11 @@
 
 // Flutter imports:
 import 'package:flutter/material.dart';
-
 // Package imports:
 import 'package:teta_core/src/design_system/palette.dart';
 import 'package:teta_core/src/design_system/text.dart';
 import 'package:teta_core/src/models/page.dart';
 import 'package:teta_core/src/models/project.dart';
-
 // Project imports:
 import 'package:teta_widgets/src/elements/controls/atoms/firebase/parameter.dart';
 import 'package:teta_widgets/src/elements/features/firestore_path.dart';
@@ -22,7 +20,7 @@ class FirestorePathControl extends StatefulWidget {
     required this.path,
     required this.isForAddData,
     required this.callBack,
-    Key? key,
+    final Key? key,
   }) : super(key: key);
 
   final ProjectObject prj;
@@ -37,7 +35,7 @@ class FirestorePathControl extends StatefulWidget {
 
 class FirestorePathControlState extends State<FirestorePathControl> {
   @override
-  Widget build(BuildContext context) {
+  Widget build(final BuildContext context) {
     return Container(
       margin: EdgeInsets.only(top: !widget.isForAddData ? 0 : 16),
       decoration: BoxDecoration(
@@ -61,13 +59,13 @@ class FirestorePathControlState extends State<FirestorePathControl> {
           Column(
             children: widget.path.values!
                 .map(
-                  (e) => FirestoreParameterControl(
+                  (final e) => FirestoreParameterControl(
                     page: widget.page,
                     title: widget.path.values!.indexOf(e).isEven
                         ? 'Collection'
                         : 'Doc',
                     value: e,
-                    callBack: (value, old) {
+                    callBack: (final value, final old) {
                       final old = widget.path;
                       widget.path.values![widget.path.values!.indexOf(e)] =
                           value;

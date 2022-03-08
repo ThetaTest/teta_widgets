@@ -8,10 +8,10 @@ import 'package:teta_widgets/src/elements/nodes/node_body.dart';
 
 /// FittedBox Template
 String fittedBoxCodeTemplate(
-  BuildContext context,
-  NodeBody body,
-  CNode? child,
-  int? loop,
+  final BuildContext context,
+  final NodeBody body,
+  final CNode? child,
+  final int? loop,
 ) {
   return '''
     FittedBox(

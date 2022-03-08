@@ -1,17 +1,15 @@
 // Flutter imports:
 // ignore_for_file: lines_longer_than_80_chars
 
-// Flutter imports:
-import 'package:flutter/material.dart';
-
 // Package imports:
 import 'package:collection/collection.dart';
+// Flutter imports:
+import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:teta_core/gen/assets.gen.dart';
 import 'package:teta_core/src/blocs/focus_page/bloc.dart';
 import 'package:teta_core/src/models/dataset.dart';
 import 'package:teta_core/src/models/variable.dart';
-
 // Project imports:
 import 'package:teta_widgets/src/elements/code/page/component.dart';
 import 'package:teta_widgets/src/elements/code/page/scaffold.dart';
@@ -149,14 +147,14 @@ class ScaffoldBody extends NodeBody {
 
   @override
   Widget toWidget({
-    required List<VariableObject> params,
-    required List<VariableObject> states,
-    required List<DatasetObject> dataset,
-    required bool forPlay,
-    required CNode node,
-    int? loop,
-    CNode? child,
-    List<CNode>? children,
+    required final List<VariableObject> params,
+    required final List<VariableObject> states,
+    required final List<DatasetObject> dataset,
+    required final bool forPlay,
+    required final CNode node,
+    final int? loop,
+    final CNode? child,
+    final List<CNode>? children,
   }) =>
       WScaffold(
         ValueKey(
@@ -189,11 +187,11 @@ class ScaffoldBody extends NodeBody {
         isScrollable: false,
         isClipped: false,
         bodyExtended: false,
-        params: params.map((e) {
+        params: params.map((final e) {
           if (forPlay) {
             try {
-              final par =
-                  params.firstWhereOrNull((element) => element.id == e.id);
+              final par = params
+                  .firstWhereOrNull((final element) => element.id == e.id);
 
               e.value = par?.value ?? par?.defaultValue;
             } catch (e) {
@@ -208,7 +206,7 @@ class ScaffoldBody extends NodeBody {
       );
 
   /// To Body
-  String toBody(BuildContext context, List<CNode>? children) {
+  String toBody(final BuildContext context, final List<CNode>? children) {
     final strChildren = StringBuffer()..write('');
     var componentImport = '';
     if (children != null) {
@@ -281,12 +279,12 @@ class ScaffoldBody extends NodeBody {
 
   @override
   String toCode(
-    BuildContext context,
-    CNode node,
-    CNode? child,
-    List<CNode>? children,
-    int pageId,
-    int? loop,
+    final BuildContext context,
+    final CNode node,
+    final CNode? child,
+    final List<CNode>? children,
+    final int pageId,
+    final int? loop,
   ) {
     final isPage = BlocProvider.of<FocusPageBloc>(context).state.isPage;
     if (isPage) {

@@ -1,12 +1,10 @@
 // Flutter imports:
-import 'package:flutter/material.dart';
-
 // Package imports:
 import 'package:collection/collection.dart';
+import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:just_audio/just_audio.dart';
 import 'package:teta_core/teta_core.dart';
-
 // Project imports:
 import 'package:teta_widgets/src/elements/index.dart';
 
@@ -15,7 +13,7 @@ import 'package:teta_widgets/src/elements/index.dart';
 class WAudioPlayer extends StatefulWidget {
   /// Returns a [WAudioPlayer] widget in Teta
   const WAudioPlayer(
-    Key? key, {
+    final Key? key, {
     required this.node,
     required this.controller,
     required this.url,
@@ -64,10 +62,10 @@ class _WAudioPlayerState extends State<WAudioPlayer> {
     final page = BlocProvider.of<FocusPageBloc>(context).state;
     if (widget.controller.type == FTextTypeEnum.param) {
       variable = page.params
-          .firstWhereOrNull((e) => e.name == widget.controller.paramName);
+          .firstWhereOrNull((final e) => e.name == widget.controller.paramName);
     } else {
       variable = page.states
-          .firstWhereOrNull((e) => e.name == widget.controller.stateName);
+          .firstWhereOrNull((final e) => e.name == widget.controller.stateName);
     }
     variable?.audioController ??= AudioPlayer();
     if (variable?.audioController != null) {
@@ -76,11 +74,11 @@ class _WAudioPlayerState extends State<WAudioPlayer> {
   }
 
   @override
-  Widget build(BuildContext context) {
+  Widget build(final BuildContext context) {
     if (isInitialized) {
       return StreamBuilder(
         stream: variable?.audioController?.positionStream,
-        builder: (context, snapshot) {
+        builder: (final context, final snapshot) {
           if (!snapshot.hasData) {
             // has data is negative
             _map = _map.copyWith(

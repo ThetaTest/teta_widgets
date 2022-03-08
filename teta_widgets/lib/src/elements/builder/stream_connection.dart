@@ -12,9 +12,9 @@ class StreamConnection {
   /// It take from DB also the old version of map, which must be used
   /// for undo / redo system.
   static void connect(
-    int nodeId,
-    Function(Map<String, dynamic>) mergeJson,
-    BuildContext? context,
+    final int nodeId,
+    final Function(Map<String, dynamic>) mergeJson,
+    final BuildContext? context,
   ) {
     if (context == null) return;
 

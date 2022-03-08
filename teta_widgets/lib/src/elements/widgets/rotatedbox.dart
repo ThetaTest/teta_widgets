@@ -1,9 +1,7 @@
 // Flutter imports:
 import 'package:flutter/material.dart';
-
 // Package imports:
 import 'package:teta_core/teta_core.dart';
-
 // Project imports:
 import 'package:teta_widgets/src/elements/index.dart';
 
@@ -12,7 +10,7 @@ import 'package:teta_widgets/src/elements/index.dart';
 class WRotatedBox extends StatelessWidget {
   /// Returns a [Center] widget in Teta
   const WRotatedBox(
-    Key? key, {
+    final Key? key, {
     required this.node,
     required this.forPlay,
     required this.params,
@@ -34,7 +32,7 @@ class WRotatedBox extends StatelessWidget {
   final List<DatasetObject> dataset;
 
   @override
-  Widget build(BuildContext context) {
+  Widget build(final BuildContext context) {
     final val = quarterTurns.get(params, states, dataset, forPlay, loop);
     return NodeSelectionBuilder(
       node: node,

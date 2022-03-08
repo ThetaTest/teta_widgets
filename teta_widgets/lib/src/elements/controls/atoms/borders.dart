@@ -3,7 +3,6 @@
 
 // Flutter imports:
 import 'package:flutter/material.dart';
-
 // Package imports:
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_feather_icons/flutter_feather_icons.dart';
@@ -11,7 +10,6 @@ import 'package:hovering/hovering.dart';
 import 'package:teta_core/src/blocs/focus/bloc.dart';
 import 'package:teta_core/src/design_system/palette.dart';
 import 'package:teta_core/src/design_system/text.dart';
-
 // Project imports:
 import 'package:teta_widgets/src/elements/controls/atoms/fill.dart';
 import 'package:teta_widgets/src/elements/controls/atoms/margins.dart';
@@ -26,7 +24,7 @@ class BordersControl extends StatefulWidget {
     required this.node,
     required this.borders,
     required this.callBack,
-    Key? key,
+    final Key? key,
   }) : super(key: key);
 
   final CNode node;
@@ -50,9 +48,9 @@ class BordersControlState extends State<BordersControl> {
   }
 
   @override
-  Widget build(BuildContext context) {
+  Widget build(final BuildContext context) {
     return BlocListener<FocusBloc, List<CNode>>(
-      listener: (context, state) {
+      listener: (final context, final state) {
         if (state.isNotEmpty) {
           if (state.first.nid != nodeId) {
             setState(() {
@@ -63,7 +61,7 @@ class BordersControlState extends State<BordersControl> {
         }
       },
       child: BlocBuilder<FocusBloc, List<CNode>>(
-        builder: (context, state) {
+        builder: (final context, final state) {
           return Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
@@ -102,7 +100,7 @@ class BordersControlState extends State<BordersControl> {
                             color: Colors.white,
                           ),
                         ),
-                        onHover: (e) {},
+                        onHover: (final e) {},
                         child: Container(
                           padding: const EdgeInsets.all(4),
                           decoration: BoxDecoration(
@@ -125,7 +123,7 @@ class BordersControlState extends State<BordersControl> {
                 node: widget.node,
                 title: 'Width',
                 value: widget.borders.width ?? FMargins(),
-                callBack: (width, old) {
+                callBack: (final width, final old) {
                   final old = widget.borders.toJson();
                   widget.borders.width ??= FMargins();
                   widget.borders.width!.margins = width;
@@ -134,7 +132,7 @@ class BordersControlState extends State<BordersControl> {
               ),
               FillControl(
                 node: widget.node,
-                callBack: (fill, isStyled, old) {
+                callBack: (final fill, final isStyled, final old) {
                   final old = widget.borders.toJson();
                   widget.borders.fill = fill;
                   widget.callBack(widget.borders.toJson(), old);

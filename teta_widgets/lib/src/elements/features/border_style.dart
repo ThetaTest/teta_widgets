@@ -19,12 +19,12 @@ class FBorderStyle {
   BorderStyle get get => style ?? BorderStyle.solid;
 
   /// Convert actual [style] to String
-  String getString(BuildContext context) {
+  String getString(final BuildContext context) {
     return _convertValueToDropDown(style!);
   }
 
   /// Instantiate [FBorderStyle] from Json
-  static FBorderStyle fromJson(String json) {
+  static FBorderStyle fromJson(final String json) {
     try {
       return FBorderStyle(
         style: _convertJsonToValue(json),
@@ -39,22 +39,22 @@ class FBorderStyle {
     return _convertValueToJson(style!);
   }
 
-  static BorderStyle _convertJsonToValue(String key) {
+  static BorderStyle _convertJsonToValue(final String key) {
     if (key == 'n') return BorderStyle.none;
     return BorderStyle.solid;
   }
 
-  static String _convertValueToJson(BorderStyle value) {
+  static String _convertValueToJson(final BorderStyle value) {
     if (value == BorderStyle.none) return 'n';
     return 's';
   }
 
-  static String _convertValueToDropDown(BorderStyle value) {
+  static String _convertValueToDropDown(final BorderStyle value) {
     if (value == BorderStyle.none) return 'None';
     return 'Solid';
   }
 
-  static String _convertValueToCode(BorderStyle? value) {
+  static String _convertValueToCode(final BorderStyle? value) {
     if (value == BorderStyle.none) return 'BorderStyle.none';
     return 'BorderStyle.solid';
   }

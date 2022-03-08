@@ -3,17 +3,15 @@
 
 // Flutter imports:
 import 'package:flutter/material.dart';
-
 // Package imports:
 import 'package:teta_core/teta_core.dart';
-
 // Project imports:
 import 'package:teta_widgets/src/elements/index.dart';
 
 class WPadding extends StatelessWidget {
   /// Returns a Padding widget
   const WPadding(
-    Key? key, {
+    final Key? key, {
     required this.node,
     required this.padding,
     required this.forPlay,
@@ -35,7 +33,7 @@ class WPadding extends StatelessWidget {
   final List<DatasetObject> dataset;
 
   @override
-  Widget build(BuildContext context) {
+  Widget build(final BuildContext context) {
     return NodeSelectionBuilder(
       node: node,
       forPlay: forPlay,

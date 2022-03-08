@@ -3,17 +3,15 @@
 
 // Flutter imports:
 import 'package:flutter/material.dart';
-
 // Package imports:
 import 'package:sa3_liquid/liquid/plasma/plasma.dart';
 import 'package:teta_core/teta_core.dart';
-
 // Project imports:
 import 'package:teta_widgets/src/elements/index.dart';
 
 class WPlasmaBackground extends StatefulWidget {
   const WPlasmaBackground(
-    Key? key, {
+    final Key? key, {
     required this.node,
     required this.width,
     required this.height,
@@ -46,7 +44,7 @@ class WPlasmaBackground extends StatefulWidget {
 
 class WPlasmaBackgroundState extends State<WPlasmaBackground> {
   @override
-  Widget build(BuildContext context) {
+  Widget build(final BuildContext context) {
     return NodeSelectionBuilder(
       node: widget.node,
       forPlay: widget.forPlay,
@@ -59,7 +57,7 @@ class WPlasmaBackgroundState extends State<WPlasmaBackground> {
     );
   }
 
-  Widget body(BuildContext context) {
+  Widget body(final BuildContext context) {
     return PlasmaRenderer(
       fps: 50,
       color: HexColor(widget.firstColor.levels!.first.color),

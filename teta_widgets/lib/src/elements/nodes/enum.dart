@@ -120,16 +120,16 @@ enum NType {
 
 extension NodeType on NType {
   ///Get node's type from NType enum value
-  static String type(NType type) => EnumToString.convertToString(type);
+  static String type(final NType type) => EnumToString.convertToString(type);
 
   ///Get node's display name from NType enum value
-  static String name(NType type) =>
+  static String name(final NType type) =>
       EnumToString.convertToString(type, camelCase: true);
 
   ///Get NType enum value from string
-  static NType fromString(String x) =>
+  static NType fromString(final String x) =>
       EnumToString.fromString(NType.values, x) ?? NType.nil;
 
-  static NType fromStringCamelCase(String x) =>
+  static NType fromStringCamelCase(final String x) =>
       EnumToString.fromString(NType.values, x, camelCase: true) ?? NType.nil;
 }

@@ -1,12 +1,10 @@
 // Flutter imports:
 
-// Flutter imports:
-import 'package:flutter/material.dart';
-
 // Package imports:
 import 'package:badges/badges.dart';
+// Flutter imports:
+import 'package:flutter/material.dart';
 import 'package:teta_core/teta_core.dart';
-
 // Project imports:
 import 'package:teta_widgets/src/elements/index.dart';
 
@@ -15,7 +13,7 @@ import 'package:teta_widgets/src/elements/index.dart';
 class WBadge extends StatelessWidget {
   /// Returns a [Badge] widget in Teta
   const WBadge(
-    Key? key, {
+    final Key? key, {
     required this.value,
     required this.node,
     required this.textStyle,
@@ -41,7 +39,7 @@ class WBadge extends StatelessWidget {
   final List<DatasetObject> dataset;
 
   @override
-  Widget build(BuildContext context) {
+  Widget build(final BuildContext context) {
     return NodeSelectionBuilder(
       node: node,
       forPlay: forPlay,

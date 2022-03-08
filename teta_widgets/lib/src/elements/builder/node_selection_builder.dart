@@ -1,6 +1,5 @@
 // Flutter imports:
 import 'package:flutter/material.dart';
-
 // Project imports:
 import 'package:teta_widgets/src/elements/builder/node_selection.dart';
 import 'package:teta_widgets/src/elements/nodes/node.dart';
@@ -9,10 +8,10 @@ import 'package:teta_widgets/src/elements/nodes/node.dart';
 class NodeSelectionBuilder extends StatelessWidget {
   /// Constructor
   const NodeSelectionBuilder({
-    required Widget child,
-    required CNode node,
-    required bool forPlay,
-    Key? key,
+    required final Widget child,
+    required final CNode node,
+    required final bool forPlay,
+    final Key? key,
   })  : _child = child,
         _node = node,
         _forPlay = forPlay,
@@ -23,7 +22,7 @@ class NodeSelectionBuilder extends StatelessWidget {
   final bool _forPlay;
 
   @override
-  Widget build(BuildContext context) {
+  Widget build(final BuildContext context) {
     return !_forPlay
         ? NodeSelection(
             node: _node,

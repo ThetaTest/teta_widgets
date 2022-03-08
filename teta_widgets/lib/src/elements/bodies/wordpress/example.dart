@@ -66,25 +66,25 @@ class WPExampleBody extends NodeBody {
 
   @override
   Widget toWidget({
-    required List<VariableObject> params,
-    required List<VariableObject> states,
-    required List<DatasetObject> dataset,
-    required bool forPlay,
-    required CNode node,
-    int? loop,
-    CNode? child,
-    List<CNode>? children,
+    required final List<VariableObject> params,
+    required final List<VariableObject> states,
+    required final List<DatasetObject> dataset,
+    required final bool forPlay,
+    required final CNode node,
+    final int? loop,
+    final CNode? child,
+    final List<CNode>? children,
   }) =>
       const SizedBox();
 
   @override
   String toCode(
-    BuildContext context,
-    CNode node,
-    CNode? child,
-    List<CNode>? children,
-    int pageId,
-    int? loop,
+    final BuildContext context,
+    final CNode node,
+    final CNode? child,
+    final List<CNode>? children,
+    final int pageId,
+    final int? loop,
   ) =>
       '''
     Align(

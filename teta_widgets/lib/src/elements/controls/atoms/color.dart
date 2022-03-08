@@ -3,7 +3,6 @@
 
 // Flutter imports:
 import 'package:flutter/material.dart';
-
 // Package imports:
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:hovering/hovering.dart';
@@ -11,7 +10,6 @@ import 'package:teta_core/src/blocs/focus/bloc.dart';
 import 'package:teta_core/src/design_system/dialogs/color_picker.dart';
 import 'package:teta_core/src/design_system/hex_color.dart';
 import 'package:teta_core/src/design_system/textfield/minitextfield.dart';
-
 // Project imports:
 import 'package:teta_widgets/src/elements/features/features.dart';
 import 'package:teta_widgets/src/elements/nodes/node.dart';
@@ -23,7 +21,7 @@ class SingleColorControl extends StatefulWidget {
     required this.color,
     required this.node,
     required this.callBack,
-    Key? key,
+    final Key? key,
   }) : super(key: key);
 
   final String title;
@@ -53,7 +51,7 @@ class SingleColorControlState extends State<SingleColorControl> {
   }
 
   @override
-  Widget build(BuildContext context) {
+  Widget build(final BuildContext context) {
     /*if (tempColor != widget.color) {
       controller.text = widget.color;
       tempFill = widget.fill;
@@ -63,7 +61,7 @@ class SingleColorControlState extends State<SingleColorControl> {
       isUpdated = false;
     }*/
     return BlocListener<FocusBloc, List<CNode>>(
-      listener: (context, state) {
+      listener: (final context, final state) {
         if (state.isNotEmpty) {
           if (state.first.nid != nodeId) {
             setState(() {
@@ -75,7 +73,7 @@ class SingleColorControlState extends State<SingleColorControl> {
         }
       },
       child: BlocBuilder<FocusBloc, List<CNode>>(
-        builder: (context, state) {
+        builder: (final context, final state) {
           //updateState(state);
           return Row(
             children: [
@@ -95,7 +93,7 @@ class SingleColorControlState extends State<SingleColorControl> {
                         border: Border.all(color: Colors.white),
                       ),
                     ),
-                    onHover: (e) {},
+                    onHover: (final e) {},
                     child: Container(
                       width: 48,
                       height: 48,
@@ -113,7 +111,7 @@ class SingleColorControlState extends State<SingleColorControl> {
                   controller: controller,
                   placeholder: tempColor,
                   hpadding: 4,
-                  callBack: (text) {
+                  callBack: (final text) {
                     final hexCode = text.replaceAll('#', '');
                     if (hexCode.length == 3) {
                       final hexColor =
@@ -168,7 +166,7 @@ class SingleColorControlState extends State<SingleColorControl> {
     );
   }
 
-  Future updateState(CNode node) async {
+  Future updateState(final CNode node) async {
     await Future<void>.delayed(const Duration(milliseconds: 100));
     if (mounted) {
       setState(() {
@@ -179,7 +177,7 @@ class SingleColorControlState extends State<SingleColorControl> {
     }
   }
 
-  void updateColor(Color color) {
+  void updateColor(final Color color) {
     final old = widget.color;
     setState(() {
       tempColor = color.value.toRadixString(16).substring(2, 8);
@@ -190,10 +188,10 @@ class SingleColorControlState extends State<SingleColorControl> {
     widget.callBack(valueColor, old);
   }
 
-  void showPicker(BuildContext context) {
+  void showPicker(final BuildContext context) {
     showDialog<void>(
       context: context,
-      builder: (context) {
+      builder: (final context) {
         return ColorPickerDialog(
           context: context,
           color: tempColor!,

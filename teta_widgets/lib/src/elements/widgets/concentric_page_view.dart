@@ -1,20 +1,18 @@
 // Flutter imports:
 // ignore_for_file: public_member_api_docs
 
-// Flutter imports:
-import 'package:flutter/material.dart';
-
 // Package imports:
 import 'package:concentric_transition/concentric_transition.dart';
+// Flutter imports:
+import 'package:flutter/material.dart';
 import 'package:teta_core/teta_core.dart';
-
 // Project imports:
 import 'package:teta_widgets/src/elements/index.dart';
 
 class WConcentricPageView extends StatefulWidget {
   /// Returns a PageViewwidget
   const WConcentricPageView(
-    Key? key, {
+    final Key? key, {
     required this.children,
     required this.fill,
     required this.node,
@@ -48,7 +46,7 @@ class _WConcentricPageViewState extends State<WConcentricPageView> {
   }
 
   @override
-  Widget build(BuildContext context) {
+  Widget build(final BuildContext context) {
     return NodeSelectionBuilder(
       node: widget.node,
       forPlay: widget.forPlay,
@@ -56,7 +54,7 @@ class _WConcentricPageViewState extends State<WConcentricPageView> {
         colors: widget.children.length >= 2
             ? widget.children
                 .map(
-                  (e) => HexColor(widget.fill.getHexColor(context)),
+                  (final e) => HexColor(widget.fill.getHexColor(context)),
                 )
                 .toList()
             : [
@@ -64,7 +62,7 @@ class _WConcentricPageViewState extends State<WConcentricPageView> {
                 HexColor(widget.fill.getHexColor(context))
               ],
         itemCount: widget.children.length,
-        itemBuilder: (int index, double value) {
+        itemBuilder: (final int index, final double value) {
           return widget.children[index].toWidget(
             params: widget.params,
             states: widget.states,

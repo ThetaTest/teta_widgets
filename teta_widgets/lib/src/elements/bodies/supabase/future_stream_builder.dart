@@ -1,11 +1,9 @@
 // Flutter imports:
 import 'package:flutter/material.dart';
-
 // Package imports:
 import 'package:teta_core/gen/assets.gen.dart';
 import 'package:teta_core/src/models/dataset.dart';
 import 'package:teta_core/src/models/variable.dart';
-
 // Project imports:
 import 'package:teta_widgets/src/elements/code/templates/stream_builder.dart';
 import 'package:teta_widgets/src/elements/controls/control_model.dart';
@@ -84,14 +82,14 @@ class SupabaseStreamBuilderBody extends NodeBody {
 
   @override
   Widget toWidget({
-    required List<VariableObject> params,
-    required List<VariableObject> states,
-    required List<DatasetObject> dataset,
-    required bool forPlay,
-    required CNode node,
-    int? loop,
-    CNode? child,
-    List<CNode>? children,
+    required final List<VariableObject> params,
+    required final List<VariableObject> states,
+    required final List<DatasetObject> dataset,
+    required final bool forPlay,
+    required final CNode node,
+    final int? loop,
+    final CNode? child,
+    final List<CNode>? children,
   }) {
     final str = StringBuffer()
       ..write(
@@ -122,12 +120,12 @@ class SupabaseStreamBuilderBody extends NodeBody {
 
   @override
   String toCode(
-    BuildContext context,
-    CNode node,
-    CNode? child,
-    List<CNode>? children,
-    int pageId,
-    int? loop,
+    final BuildContext context,
+    final CNode node,
+    final CNode? child,
+    final List<CNode>? children,
+    final int pageId,
+    final int? loop,
   ) =>
       streamBuilderCodeTemplate(context, this, children ?? [], loop);
 }

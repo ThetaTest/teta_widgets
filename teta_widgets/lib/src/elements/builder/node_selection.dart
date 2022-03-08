@@ -1,18 +1,16 @@
 // Flutter imports:
 // ignore_for_file: public_member_api_docs
 
-// Flutter imports:
-import 'package:flutter/material.dart';
-
 // Package imports:
 import 'package:collection/collection.dart';
+// Flutter imports:
+import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:teta_core/src/blocs/flat_list/index.dart';
 import 'package:teta_core/src/blocs/focus/index.dart';
 import 'package:teta_core/src/blocs/hover/index.dart';
 import 'package:teta_core/src/design_system/palette.dart';
 import 'package:teta_core/src/rendering/find.dart';
-
 // Project imports:
 import 'package:teta_widgets/src/elements/nodes/node.dart';
 
@@ -24,7 +22,7 @@ class NodeSelection extends StatefulWidget {
     required this.child,
     required this.forPlay,
     required this.nid,
-    Key? key,
+    final Key? key,
   }) : super(key: key);
 
   final CNode node;
@@ -52,12 +50,12 @@ class NodeSelectionState extends State<NodeSelection> {
   }
 
   @override
-  Widget build(BuildContext context) {
+  Widget build(final BuildContext context) {
     return MouseRegion(
-      onEnter: (e) {
+      onEnter: (final e) {
         BlocProvider.of<HoverBloc>(context).add(OnHover(node: widget.node));
       },
-      onExit: (e) {
+      onExit: (final e) {
         if (parent != null) {
           BlocProvider.of<HoverBloc>(context).add(OnHover(node: parent!));
         }
@@ -164,16 +162,16 @@ class NodeSelectionState extends State<NodeSelection> {
 
   Widget body() {
     return BlocBuilder<FocusBloc, List<CNode>>(
-      buildWhen: (previous, current) => current != previous,
-      builder: (context, onFocusNodes) {
+      buildWhen: (final previous, final current) => current != previous,
+      builder: (final context, final onFocusNodes) {
         return BlocBuilder<HoverBloc, CNode>(
-          buildWhen: (previous, current) => current != previous,
-          builder: (context, onHover) {
+          buildWhen: (final previous, final current) => current != previous,
+          builder: (final context, final onHover) {
             return DecoratedBox(
               decoration: BoxDecoration(
                 border: Border.all(
                   color: onFocusNodes.firstWhereOrNull(
-                            (element) =>
+                            (final element) =>
                                 element.nid == widget.node.nid ||
                                 onHover.nid == widget.node.nid,
                           ) !=
@@ -183,7 +181,7 @@ class NodeSelectionState extends State<NodeSelection> {
                   style:
                       (widget.forPlay) ? BorderStyle.none : BorderStyle.solid,
                   width: onFocusNodes.firstWhereOrNull(
-                            (element) => element.nid == widget.node.nid,
+                            (final element) => element.nid == widget.node.nid,
                           ) !=
                           null
                       ? 1

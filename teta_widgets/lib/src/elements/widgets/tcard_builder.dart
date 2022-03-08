@@ -6,18 +6,16 @@ import 'dart:async';
 
 // Flutter imports:
 import 'package:flutter/material.dart';
-
 // Package imports:
 import 'package:tcard/tcard.dart';
 import 'package:teta_core/teta_core.dart';
-
 // Project imports:
 import 'package:teta_widgets/src/elements/index.dart';
 
 class WTCardBuilder extends StatefulWidget {
   /// Returns a PageViewwidget
   const WTCardBuilder(
-    Key? key, {
+    final Key? key, {
     required this.value,
     required this.lockYAxis,
     required this.slideSpeed,
@@ -61,7 +59,7 @@ class _WTCardState extends State<WTCardBuilder> {
   void initState() {
     super.initState();
     _fetch();
-    Timer.periodic(const Duration(seconds: 1), (timer) {
+    Timer.periodic(const Duration(seconds: 1), (final timer) {
       _fetch();
       if (!isLoaded) {
         _controller.reset(cards: list);
@@ -76,7 +74,7 @@ class _WTCardState extends State<WTCardBuilder> {
   }
 
   @override
-  Widget build(BuildContext context) {
+  Widget build(final BuildContext context) {
     final slideSpeedStr = widget.slideSpeed.get(
       widget.params,
       widget.states,
@@ -100,7 +98,7 @@ class _WTCardState extends State<WTCardBuilder> {
         ignoring: !widget.forPlay,
         child: TCard(
           controller: _controller,
-          onForward: (index, info) {
+          onForward: (final index, final info) {
             if (info.direction == SwipDirection.Right) {
               // like
               GestureBuilder.get(
@@ -144,7 +142,7 @@ class _WTCardState extends State<WTCardBuilder> {
     _setDataset();
     final index = widget.value.datasetName != null
         ? widget.dataset.indexWhere(
-            (element) => element.getName == widget.value.datasetName,
+            (final element) => element.getName == widget.value.datasetName,
           )
         : -1;
     final db = index != -1 ? widget.dataset[index] : DatasetObject.empty();
@@ -170,8 +168,9 @@ class _WTCardState extends State<WTCardBuilder> {
 
   void _setDataset() {
     try {
-      final index = widget.dataset
-          .indexWhere((element) => element.getName == widget.value.datasetName);
+      final index = widget.dataset.indexWhere(
+        (final element) => element.getName == widget.value.datasetName,
+      );
       final db = index != -1 ? widget.dataset[index] : DatasetObject.empty();
       if (mounted) {
         if (db.getName != '') {

@@ -9,10 +9,10 @@ import 'package:teta_widgets/src/elements/nodes/node_body.dart';
 
 /// Generates the code for Padding widget
 String supabaseFutureBuilderCodeTemplate(
-  BuildContext context,
-  NodeBody body,
-  List<CNode> children,
-  int? loop,
+  final BuildContext context,
+  final NodeBody body,
+  final List<CNode> children,
+  final int? loop,
 ) {
   final from =
       (body.attributes[DBKeys.supabaseFrom] as FTextTypeInput).toCode(loop);

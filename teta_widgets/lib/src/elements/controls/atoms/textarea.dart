@@ -3,12 +3,10 @@
 
 // Flutter imports:
 import 'package:flutter/material.dart';
-
 // Package imports:
 import 'package:teta_core/src/design_system/palette.dart';
 import 'package:teta_core/src/design_system/text.dart';
 import 'package:teta_core/src/design_system/textfield/textfield.dart';
-
 // Project imports:
 import 'package:teta_widgets/src/elements/features/text_type_input.dart';
 
@@ -16,7 +14,7 @@ class TextAreaControl extends StatefulWidget {
   const TextAreaControl({
     required this.value,
     required this.callBack,
-    Key? key,
+    final Key? key,
   }) : super(key: key);
 
   final FTextTypeInput value;
@@ -37,7 +35,7 @@ class PaddingsState extends State<TextAreaControl> {
   }
 
   @override
-  Widget build(BuildContext context) {
+  Widget build(final BuildContext context) {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
@@ -50,7 +48,7 @@ class PaddingsState extends State<TextAreaControl> {
           text: widget.value.value,
           controller: controller,
           maxLines: 10,
-          callBack: (value) {
+          callBack: (final value) {
             final old = widget.value;
             widget.value.value = value;
             widget.callBack(widget.value, old);

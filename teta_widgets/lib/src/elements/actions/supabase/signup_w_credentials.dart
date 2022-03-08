@@ -4,7 +4,6 @@
 
 // Flutter imports:
 import 'package:flutter/material.dart';
-
 // Package imports:
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:hive/hive.dart';
@@ -12,7 +11,6 @@ import 'package:teta_core/src/blocs/focus_page/index.dart';
 import 'package:teta_core/src/cubits/supabase.dart';
 import 'package:teta_core/src/models/dataset.dart';
 import 'package:teta_core/src/models/variable.dart';
-
 // Project imports:
 import 'package:teta_widgets/src/elements/actions/navigation/open_page.dart';
 import 'package:teta_widgets/src/elements/actions/snippets/change_state.dart';
@@ -21,16 +19,16 @@ import 'package:teta_widgets/src/elements/nodes/node.dart';
 
 class FASupabaseSignUp {
   static Future action(
-    BuildContext context,
-    String value,
-    CNode scaffold,
-    CNode node,
-    String? nameOfPage,
-    Map<String, dynamic>? paramsToSend,
-    List<VariableObject> params,
-    List<VariableObject> states,
-    List<DatasetObject> dataset,
-    int? loop,
+    final BuildContext context,
+    final String value,
+    final CNode scaffold,
+    final CNode node,
+    final String? nameOfPage,
+    final Map<String, dynamic>? paramsToSend,
+    final List<VariableObject> params,
+    final List<VariableObject> states,
+    final List<DatasetObject> dataset,
+    final int? loop,
   ) async {
     final page = BlocProvider.of<FocusPageBloc>(context).state;
 
@@ -71,9 +69,9 @@ class FASupabaseSignUp {
   }
 
   static String toCode(
-    BuildContext context,
-    String? nameOfPage,
-    Map<String, dynamic>? paramsToSend,
+    final BuildContext context,
+    final String? nameOfPage,
+    final Map<String, dynamic>? paramsToSend,
   ) {
     final page = BlocProvider.of<FocusPageBloc>(context).state;
     final status = takeStateFrom(page, 'status');

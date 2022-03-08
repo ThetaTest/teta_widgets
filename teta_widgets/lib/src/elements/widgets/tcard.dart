@@ -6,18 +6,16 @@ import 'dart:async';
 
 // Flutter imports:
 import 'package:flutter/material.dart';
-
 // Package imports:
 import 'package:tcard/tcard.dart';
 import 'package:teta_core/teta_core.dart';
-
 // Project imports:
 import 'package:teta_widgets/src/elements/index.dart';
 
 class WTCard extends StatefulWidget {
   /// Returns a PageViewwidget
   const WTCard(
-    Key? key, {
+    final Key? key, {
     required this.children,
     required this.lockYAxis,
     required this.slideSpeed,
@@ -56,7 +54,7 @@ class _WTCardState extends State<WTCard> {
     super.initState();
     list = widget.children
         .map(
-          (e) => e.toWidget(
+          (final e) => e.toWidget(
             loop: widget.children.indexOf(e),
             forPlay: widget.forPlay,
             params: widget.params,
@@ -66,10 +64,10 @@ class _WTCardState extends State<WTCard> {
         )
         .toList();
     if (!widget.forPlay) {
-      Timer.periodic(const Duration(seconds: 1), (timer) {
+      Timer.periodic(const Duration(seconds: 1), (final timer) {
         list = widget.children
             .map(
-              (e) => e.toWidget(
+              (final e) => e.toWidget(
                 loop: widget.children.indexOf(e),
                 forPlay: widget.forPlay,
                 params: widget.params,
@@ -92,7 +90,7 @@ class _WTCardState extends State<WTCard> {
   }
 
   @override
-  Widget build(BuildContext context) {
+  Widget build(final BuildContext context) {
     final slideSpeedStr = widget.slideSpeed.get(
       widget.params,
       widget.states,
@@ -116,7 +114,7 @@ class _WTCardState extends State<WTCard> {
         ignoring: !widget.forPlay,
         child: TCard(
           controller: _controller,
-          onForward: (index, info) {
+          onForward: (final index, final info) {
             if (info.direction == SwipDirection.Right) {
               // like
               GestureBuilder.get(

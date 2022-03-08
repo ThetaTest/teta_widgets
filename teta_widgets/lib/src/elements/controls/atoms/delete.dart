@@ -3,7 +3,6 @@
 
 // Flutter imports:
 import 'package:flutter/material.dart';
-
 // Package imports:
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:teta_core/src/blocs/flat_list/index.dart';
@@ -15,7 +14,6 @@ import 'package:teta_core/src/design_system/palette.dart';
 import 'package:teta_core/src/design_system/text.dart';
 import 'package:teta_core/src/rendering/find.dart';
 import 'package:teta_core/src/repositories/actions/remove_node_between_nodes.dart';
-
 // Project imports:
 import 'package:teta_widgets/src/elements/nodes/children_enum.dart';
 import 'package:teta_widgets/src/elements/nodes/dynamic.dart';
@@ -25,7 +23,7 @@ class DeleteControl extends StatefulWidget {
   const DeleteControl({
     required this.node,
     required this.callBack,
-    Key? key,
+    final Key? key,
   }) : super(key: key);
 
   final CNode node;
@@ -40,7 +38,7 @@ class DeleteControlState extends State<DeleteControl> {
   double? flag;
 
   @override
-  Widget build(BuildContext context) {
+  Widget build(final BuildContext context) {
     height = MediaQuery.of(context).size.height;
     final parentOfNode = FindNodeRendering.findParentByChildrenIds(
       flatList: BlocProvider.of<FlatListBloc>(context).state,
@@ -128,10 +126,10 @@ class DeleteControlState extends State<DeleteControl> {
   void showPicker() {
     showDialog<void>(
       context: context,
-      builder: (context) {
+      builder: (final context) {
         final cubit = GoogleFontsCubit();
         return BlocProvider<GoogleFontsCubit>(
-          create: (context) => cubit,
+          create: (final context) => cubit,
           child: AlertDialog(
             backgroundColor: const Color(0xFF222222),
             title: const CText(

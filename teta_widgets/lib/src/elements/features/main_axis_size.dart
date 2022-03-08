@@ -8,16 +8,16 @@ import 'package:flutter/material.dart';
 class FMainAxisSize {
   /// Set of funcs for use [MainAxisSize] property in Teta
   FMainAxisSize({
-    MainAxisSize align = MainAxisSize.max,
+    final MainAxisSize align = MainAxisSize.max,
   }) : _align = align;
 
   MainAxisSize _align;
 
   MainAxisSize get get => _align;
 
-  void set(String key) => _align = _convertJsonToValue(key);
+  void set(final String key) => _align = _convertJsonToValue(key);
 
-  static FMainAxisSize fromJson(String? json) {
+  static FMainAxisSize fromJson(final String? json) {
     if (json != null) {
       return FMainAxisSize(
         align: _convertJsonToValue(json),
@@ -29,7 +29,7 @@ class FMainAxisSize {
 
   String toJson() => _convertValueToJson(_align);
 
-  static MainAxisSize _convertJsonToValue(String key) {
+  static MainAxisSize _convertJsonToValue(final String key) {
     if (key == 'Min') {
       return MainAxisSize.min;
     } else {
@@ -37,7 +37,7 @@ class FMainAxisSize {
     }
   }
 
-  static String _convertValueToJson(MainAxisSize value) {
+  static String _convertValueToJson(final MainAxisSize value) {
     if (value == MainAxisSize.min) {
       return 'Min';
     } else {
@@ -45,7 +45,7 @@ class FMainAxisSize {
     }
   }
 
-  static String _convertValueToCode(MainAxisSize? value) {
+  static String _convertValueToCode(final MainAxisSize? value) {
     if (value == MainAxisSize.min) return 'MainAxisSize.min';
     return 'MainAxisSize.max';
   }

@@ -3,16 +3,15 @@
 
 // Flutter imports:
 import 'package:flutter/material.dart';
-
 // Package imports:
 import 'package:teta_core/src/models/variable.dart';
 import 'package:teta_core/src/utils/stripe/html/stripe_checkout.dart';
 
 class FActionStripe {
   Future makeAction(
-    BuildContext context,
-    List<VariableObject> states,
-    String? stateName,
+    final BuildContext context,
+    final List<VariableObject> states,
+    final String? stateName,
   ) async {
     const apiKey =
         // ignore: lines_longer_than_80_chars
@@ -32,7 +31,7 @@ class FActionStripe {
     );
   }
 
-  String toCode(BuildContext context, String? stateName) {
+  String toCode(final BuildContext context, final String? stateName) {
     return '''
     try {
       final index = states.indexWhere((element) => element.name == "$stateName");

@@ -3,13 +3,11 @@
 
 // Flutter imports:
 import 'package:flutter/material.dart';
-
 // Package imports:
 import 'package:teta_core/src/design_system/palette.dart';
 import 'package:teta_core/src/design_system/text.dart';
 import 'package:teta_core/src/design_system/textfield/textfield.dart';
 import 'package:teta_core/src/models/page.dart';
-
 // Project imports:
 import 'package:teta_widgets/src/elements/features/text_type_input.dart';
 import 'package:teta_widgets/src/elements/nodes/node.dart';
@@ -21,7 +19,7 @@ class ActionvalueControl extends StatefulWidget {
     required this.title,
     required this.actionValue,
     required this.callBack,
-    Key? key,
+    final Key? key,
   }) : super(key: key);
 
   final CNode node;
@@ -56,7 +54,7 @@ class PaddingsState extends State<ActionvalueControl> {
   }
 
   @override
-  Widget build(BuildContext context) {
+  Widget build(final BuildContext context) {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
@@ -80,8 +78,8 @@ class PaddingsState extends State<ActionvalueControl> {
                         : widget.actionValue.type == FTextTypeEnum.param
                             ? 'param'
                             : 'text',
-                items:
-                    ['text', 'param', 'state', 'dataset'].map((String value) {
+                items: ['text', 'param', 'state', 'dataset']
+                    .map((final String value) {
                   return DropdownMenuItem<String>(
                     value: value,
                     child: CText(
@@ -90,7 +88,7 @@ class PaddingsState extends State<ActionvalueControl> {
                     ),
                   );
                 }).toList(),
-                onChanged: (value) {
+                onChanged: (final value) {
                   var typeOfInput = FTextTypeEnum.text;
                   if (value == 'text') {
                     typeOfInput = FTextTypeEnum.text;
@@ -116,7 +114,7 @@ class PaddingsState extends State<ActionvalueControl> {
           CTextField(
             text: text,
             controller: controller,
-            callBack: (value) {
+            callBack: (final value) {
               final old = widget.actionValue;
               widget.actionValue.value = value;
               widget.callBack(widget.actionValue, old);
@@ -132,18 +130,18 @@ class PaddingsState extends State<ActionvalueControl> {
             ),
             child: DropdownButton<String>(
               value: widget.page.states
-                      .map((e) => e.name)
+                      .map((final e) => e.name)
                       .contains(widget.actionValue.paramName)
                   ? widget.actionValue.stateName
                   : null,
               icon: const Icon(Icons.arrow_drop_down),
               underline: const SizedBox(),
-              onChanged: (String? newValue) {},
+              onChanged: (final String? newValue) {},
               isDense: true,
               isExpanded: true,
               items: widget.page.params
-                  .map((e) => e.name)
-                  .map<DropdownMenuItem<String>>((String value) {
+                  .map((final e) => e.name)
+                  .map<DropdownMenuItem<String>>((final String value) {
                 return DropdownMenuItem<String>(
                   value: value,
                   child: CText(value, size: 16),
@@ -161,18 +159,18 @@ class PaddingsState extends State<ActionvalueControl> {
             ),
             child: DropdownButton<String>(
               value: widget.page.states
-                      .map((e) => e.name)
+                      .map((final e) => e.name)
                       .contains(widget.actionValue.stateName)
                   ? widget.actionValue.stateName
                   : null,
               icon: const Icon(Icons.arrow_drop_down),
               underline: const SizedBox(),
-              onChanged: (String? newValue) {},
+              onChanged: (final String? newValue) {},
               isDense: true,
               isExpanded: true,
               items: widget.page.states
-                  .map((e) => e.name)
-                  .map<DropdownMenuItem<String>>((String value) {
+                  .map((final e) => e.name)
+                  .map<DropdownMenuItem<String>>((final String value) {
                 return DropdownMenuItem<String>(
                   value: value,
                   child: CText(value, size: 16),
@@ -190,14 +188,14 @@ class PaddingsState extends State<ActionvalueControl> {
             ),
             child: DropdownButton<String>(
               value: widget.page.datasets
-                      .map((e) => e.getName)
-                      .where((element) => element != 'null')
+                      .map((final e) => e.getName)
+                      .where((final element) => element != 'null')
                       .contains(widget.actionValue.datasetName)
                   ? widget.actionValue.datasetName
                   : null,
               icon: const Icon(Icons.arrow_drop_down),
               underline: const SizedBox(),
-              onChanged: (String? newValue) {
+              onChanged: (final String? newValue) {
                 if (newValue != null) {
                   setState(() {
                     databaseName = newValue;
@@ -210,9 +208,9 @@ class PaddingsState extends State<ActionvalueControl> {
               isDense: true,
               isExpanded: true,
               items: widget.page.datasets
-                  .map((e) => e.getName)
-                  .where((element) => element != 'null')
-                  .map<DropdownMenuItem<String>>((String value) {
+                  .map((final e) => e.getName)
+                  .where((final element) => element != 'null')
+                  .map<DropdownMenuItem<String>>((final String value) {
                 return DropdownMenuItem<String>(
                   value: value,
                   child: CText(value, size: 16),
@@ -233,7 +231,7 @@ class PaddingsState extends State<ActionvalueControl> {
             child: DropdownButton<String>(
               value: widget.page.datasets
                       .firstWhere(
-                        (element) =>
+                        (final element) =>
                             element.getName == widget.actionValue.datasetName,
                       )
                       .getMap
@@ -244,7 +242,7 @@ class PaddingsState extends State<ActionvalueControl> {
                   : null,
               icon: const Icon(Icons.arrow_drop_down),
               underline: const SizedBox(),
-              onChanged: (String? newValue) {
+              onChanged: (final String? newValue) {
                 if (newValue != null) {
                   setState(() {
                     databaseAttribute = newValue;
@@ -258,13 +256,13 @@ class PaddingsState extends State<ActionvalueControl> {
               isExpanded: true,
               items: widget.page.datasets
                   .firstWhere(
-                    (element) =>
+                    (final element) =>
                         element.getName == widget.actionValue.datasetName,
                   )
                   .getMap
                   .first
                   .keys
-                  .map<DropdownMenuItem<String>>((String value) {
+                  .map<DropdownMenuItem<String>>((final String value) {
                 return DropdownMenuItem<String>(
                   value: value,
                   child: CText(value, size: 16),

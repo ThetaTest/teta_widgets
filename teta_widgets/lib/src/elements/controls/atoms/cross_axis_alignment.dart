@@ -3,14 +3,12 @@
 
 // Flutter imports:
 import 'package:flutter/material.dart';
-
 // Package imports:
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:teta_core/src/blocs/focus/bloc.dart';
 import 'package:teta_core/src/design_system/dropdowns/dropdown.dart';
 import 'package:teta_core/src/design_system/palette.dart';
 import 'package:teta_core/src/design_system/text.dart';
-
 // Project imports:
 import 'package:teta_widgets/src/elements/features/cross_axis_alignment.dart';
 import 'package:teta_widgets/src/elements/nodes/node.dart';
@@ -20,7 +18,7 @@ class CrossAxisAlignmentControls extends StatefulWidget {
     required this.node,
     required this.crossAxisAlignment,
     required this.callBack,
-    Key? key,
+    final Key? key,
   }) : super(key: key);
 
   final CNode node;
@@ -46,9 +44,9 @@ class CrossAxisAlignmentControlsState
   }
 
   @override
-  Widget build(BuildContext context) {
+  Widget build(final BuildContext context) {
     return BlocListener<FocusBloc, List<CNode>>(
-      listener: (context, state) {
+      listener: (final context, final state) {
         if (state.isNotEmpty) {
           if (state.first.nid != nodeId) {
             setState(() {
@@ -60,7 +58,7 @@ class CrossAxisAlignmentControlsState
         }
       },
       child: BlocBuilder<FocusBloc, List<CNode>>(
-        builder: (context, state) {
+        builder: (final context, final state) {
           return Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
@@ -79,7 +77,7 @@ class CrossAxisAlignmentControlsState
                   'Stretch',
                   'Baseline',
                 ],
-                onChange: (newValue) {
+                onChange: (final newValue) {
                   if (newValue != null) {
                     setState(() {
                       dropdown = newValue;

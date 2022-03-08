@@ -19,12 +19,12 @@ class FFontWeight {
   /// Returns a String based on [weight] value
   String get getString => _convertValueToDropDown(weight);
 
-  void set(String value) {
+  void set(final String value) {
     weight = _convertDropDownToValue(value);
   }
 
   /// Returns a [FFontWeight] from Json
-  FFontWeight fromJson(String json) {
+  FFontWeight fromJson(final String json) {
     try {
       return FFontWeight(
         weight: _convertJsonToValue(json),
@@ -51,7 +51,7 @@ class FFontWeight {
         '900 - Black',
       ];
 
-  static FontWeight _convertDropDownToValue(String key) {
+  static FontWeight _convertDropDownToValue(final String key) {
     switch (key) {
       case '100 - Thin':
         return FontWeight.w100;
@@ -76,7 +76,7 @@ class FFontWeight {
     }
   }
 
-  static String _convertValueToDropDown(FontWeight key) {
+  static String _convertValueToDropDown(final FontWeight key) {
     // ignore: exhaustive_cases
     switch (key) {
       case FontWeight.w100:
@@ -101,7 +101,7 @@ class FFontWeight {
     return '400 - Regular';
   }
 
-  static String _convertValueToJson(FontWeight value) {
+  static String _convertValueToJson(final FontWeight value) {
     // ignore: exhaustive_cases
     switch (value) {
       case FontWeight.w100:
@@ -126,7 +126,7 @@ class FFontWeight {
     return '4';
   }
 
-  static FontWeight _convertJsonToValue(String key) {
+  static FontWeight _convertJsonToValue(final String key) {
     switch (key) {
       case '1':
         return FontWeight.w100;
@@ -151,7 +151,7 @@ class FFontWeight {
     }
   }
 
-  static String _convertValueToCode(FontWeight? value) {
+  static String _convertValueToCode(final FontWeight? value) {
     if (value == FontWeight.w100) return 'FontWeight.w100';
     if (value == FontWeight.w200) return 'FontWeight.w200';
     if (value == FontWeight.w300) return 'FontWeight.w300';

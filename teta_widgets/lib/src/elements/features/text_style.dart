@@ -3,13 +3,11 @@
 
 // Flutter imports:
 import 'package:flutter/material.dart';
-
 // Package imports:
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:recase/recase.dart';
 import 'package:teta_core/src/blocs/text_styles/index.dart';
 import 'package:teta_core/src/models/text_style.dart';
-
 // Project imports:
 import 'package:teta_widgets/src/elements/controls/key_constants.dart';
 import 'package:teta_widgets/src/elements/features/fill.dart';
@@ -55,7 +53,10 @@ class FTextStyle {
   FFontStyle? fontStyle;
   String? textStyleModel;
 
-  TextStyle get(BuildContext context, TextStyleModel? model) {
+  TextStyle get(
+    final BuildContext context,
+    final TextStyleModel? model,
+  ) {
     return TetaTextStyles.get(
       context: context,
       model: model,
@@ -72,7 +73,7 @@ class FTextStyle {
     );
   }
 
-  static FTextStyle fromJson(Map<String, dynamic> doc) {
+  static FTextStyle fromJson(final Map<String, dynamic> doc) {
     try {
       return FTextStyle(
         fill: doc[DBKeys.fill] != null
@@ -150,10 +151,10 @@ class FTextStyle {
   /// ),
   /// textAlign: TextAlign.center,
   /// ```
-  String toCode(BuildContext context) {
+  String toCode(final BuildContext context) {
     TextStyleModel? model;
     if (textStyleModel != null) {
-      BlocProvider.of<TextStylesBloc>(context).state.forEach((element) {
+      BlocProvider.of<TextStylesBloc>(context).state.forEach((final element) {
         if (element.name == textStyleModel) model = element;
       });
     }
