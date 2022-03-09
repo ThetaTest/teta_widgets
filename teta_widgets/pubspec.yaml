@@ -1,6 +1,6 @@
 name: teta_widgets
 description: Official package of Teta
-version: 0.0.3
+version: 0.0.4
 homepage:
 publish_to: builder.teta.so:8888
 
@@ -99,7 +99,7 @@ dependencies:
   just_audio: ^0.9.18
   location: ^4.3.0
   image: ^3.1.0
-  flutter_parallax: ^0.1.2
+  #flutter_parallax: ^0.1.2
   sa3_liquid: ^1.0.1
   dart_airtable: ^1.1.0
   fluentui_system_icons: ^1.1.158

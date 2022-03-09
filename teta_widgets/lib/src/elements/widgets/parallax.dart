@@ -4,7 +4,6 @@
 // Flutter imports:
 import 'package:flutter/material.dart';
 // Package imports:
-import 'package:flutter_parallax/flutter_parallax.dart';
 import 'package:teta_core/teta_core.dart';
 // Project imports:
 import 'package:teta_widgets/src/elements/index.dart';
@@ -38,7 +37,13 @@ class WParallax extends StatelessWidget {
     return NodeSelectionBuilder(
       node: node,
       forPlay: forPlay,
-      child: Parallax.inside(
+      child: const Center(
+        child: CText(
+          'Sorry, Parallax widget is deprecated',
+          customColor: Colors.white,
+        ),
+      ),
+    ); /*Parallax.inside(
         mainAxisExtent: height.get(context: context, isWidth: false),
         child: ChildConditionBuilder(
           ValueKey('${node.nid} $loop'),
@@ -51,6 +56,6 @@ class WParallax extends StatelessWidget {
           loop: loop,
         ),
       ),
-    );
+    );*/
   }
 }
