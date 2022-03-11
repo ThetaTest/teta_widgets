@@ -37,6 +37,7 @@ import 'package:teta_widgets/src/elements/features/actions/enums/gestures.dart';
 import 'package:teta_widgets/src/elements/features/actions/enums/navigation.dart';
 import 'package:teta_widgets/src/elements/features/actions/enums/revenue_cat.dart';
 import 'package:teta_widgets/src/elements/features/actions/enums/state.dart';
+import 'package:teta_widgets/src/elements/features/actions/enums/stripe.dart';
 import 'package:teta_widgets/src/elements/features/actions/enums/supabase.dart';
 import 'package:teta_widgets/src/elements/features/actions/enums/type.dart';
 import 'package:teta_widgets/src/elements/features/actions/enums/webview.dart';
@@ -692,6 +693,28 @@ class ActionElementControlState extends State<ActionElementControl> {
                     }
                   },
                 ),
+
+              if (widget.element.actionType == ActionType.stripe)
+                CDropdown(
+                  value: FActionElement.convertValueToDropdown(
+                    widget.element.actionStripe,
+                  ),
+                  items: FActionElement.getStripe(widget.prj.config)
+                      .toSet()
+                      .toList(),
+                  onChange: (final newValue) {
+                    if (newValue != null) {
+                      final old = widget.element;
+                      widget.element.actionStripe =
+                          FActionElement.convertDropdownToValue(
+                        ActionStripe.values,
+                        newValue,
+                      ) as ActionStripe?;
+                      widget.callBack(widget.element, old);
+                    }
+                  },
+                ),
+
               if (widget.element.actionType == ActionType.navigation)
                 CDropdown(
                   value: FActionElement.convertValueToDropdown(

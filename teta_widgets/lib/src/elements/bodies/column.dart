@@ -46,6 +46,7 @@ final columnIntrinsicStates = IntrinsicStates(
 
 /// Set of funcs to use Column widget
 class ColumnBody extends NodeBody {
+  
   @override
   // ignore: overridden_fields
   Map<String, dynamic> attributes = <String, dynamic>{

@@ -43,7 +43,7 @@ final revenueCatProductsListIntrinsicStates = IntrinsicStates(
   advicedChildrenCanHaveAtLeastAChild: [],
   displayName: NodeType.name(_globalType),
   type: _globalType,
-  category: NodeCategories.unclassified,
+  category: NodeCategories.basic,
   maxChildren: 2,
   canHave: ChildrenEnum.children,
   addChildLabels: [],
