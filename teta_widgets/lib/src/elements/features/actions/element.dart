@@ -43,6 +43,7 @@ import 'package:teta_widgets/src/elements/actions/state/change_with.dart';
 import 'package:teta_widgets/src/elements/actions/state/change_with_param.dart';
 import 'package:teta_widgets/src/elements/actions/state/decrement.dart';
 import 'package:teta_widgets/src/elements/actions/state/increment.dart';
+import 'package:teta_widgets/src/elements/actions/stripe/buy.dart';
 import 'package:teta_widgets/src/elements/actions/supabase/delete.dart';
 import 'package:teta_widgets/src/elements/actions/supabase/insert.dart';
 import 'package:teta_widgets/src/elements/actions/supabase/on_all.dart';
@@ -62,6 +63,7 @@ import 'package:teta_widgets/src/elements/features/actions/enums/audio_player.da
 import 'package:teta_widgets/src/elements/features/actions/enums/camera.dart';
 import 'package:teta_widgets/src/elements/features/actions/enums/index.dart';
 import 'package:teta_widgets/src/elements/features/actions/enums/revenue_cat.dart';
+import 'package:teta_widgets/src/elements/features/actions/enums/stripe.dart';
 import 'package:teta_widgets/src/elements/features/actions/enums/webview.dart';
 import 'package:teta_widgets/src/elements/features/text_type_input.dart';
 import 'package:teta_widgets/src/elements/nodes/dynamic.dart';
@@ -73,6 +75,7 @@ class FActionElement extends Equatable {
   FActionElement({
     this.id,
     this.actionRevenueCat,
+    this.actionStripe,
     this.actionType,
     this.actionGesture,
     this.actionNavigation,
@@ -116,6 +119,9 @@ class FActionElement extends Equatable {
     actionRevenueCat =
         convertDropdownToValue(ActionRevenueCat.values, doc['aRC'] as String?)
             as ActionRevenueCat?;
+    actionStripe =
+        convertDropdownToValue(ActionStripe.values, doc['sPK'] as String?)
+            as ActionStripe?;
     actionState =
         convertDropdownToValue(ActionState.values, doc['aS'] as String?)
             as ActionState?;
@@ -179,6 +185,7 @@ class FActionElement extends Equatable {
   ActionNavigation? actionNavigation;
   ActionState? actionState;
   ActionRevenueCat? actionRevenueCat;
+  ActionStripe? actionStripe;
   ActionSupabaseAuth? actionSupabaseAuth;
   ActionSupabaseDB? actionSupabaseDB;
   ActionCamera? actionCamera;
@@ -237,6 +244,7 @@ class FActionElement extends Equatable {
           if (config.supabaseEnabled ?? false) 'Supabase auth',
           if (config.supabaseEnabled ?? false) 'Supabase database',
           if (config.isRevenueCatEnabled) 'RevenueCat',
+          if (config.isStripeEnabled) 'Stripe',
           if ((page.flatList ?? <CNode>[]).indexWhere(
                 (final element) => element.intrinsicState.type == NType.camera,
               ) !=
@@ -300,6 +308,15 @@ class FActionElement extends Equatable {
     return [];
   }
 
+  static List<String> getStripe(final ProjectConfig? config) {
+    if (config != null) {
+      if (config.isStripeEnabled) {
+        return enumsToListString(ActionStripe.values);
+      }
+    }
+    return [];
+  }
+
   static List<String> getSupabaseAuth(final ProjectConfig? config) {
     if (config != null) {
       if (config.supabaseEnabled ?? false) {
@@ -334,6 +351,9 @@ class FActionElement extends Equatable {
     if (type == ActionType.revenueCat) {
       return 'RevenueCat';
     }
+    if (type == ActionType.stripe) {
+      return 'Stripe';
+    }
     if (type != null) {
       return EnumToString.convertToString(type, camelCase: true);
     }
@@ -346,6 +366,9 @@ class FActionElement extends Equatable {
   ) {
     if (value == 'RevenueCat') {
       return ActionType.revenueCat;
+    }
+     if (value == 'Stripe') {
+      return ActionType.stripe;
     }
     if (value != null) {
       return EnumToString.fromString<dynamic>(list, value, camelCase: true);
@@ -373,6 +396,7 @@ class FActionElement extends Equatable {
         'aW': convertValueToDropdown(actionWebView),
         'aAP': convertValueToDropdown(actionAudioPlayer),
         'aRC': convertValueToDropdown(actionRevenueCat),
+        'sPK':convertValueToDropdown(actionStripe),
         'sN': stateName,
         'pTS': paramsToSend,
         'pN': nameOfPage,
@@ -414,6 +438,27 @@ class FActionElement extends Equatable {
             await FDelay.action(int.tryParse('${delay?.value}') ?? 0);
             FLoop.action(
               () => FActionRevenueCatBuy.action(context, states, stateName),
+              everyMilliseconds,
+              context,
+              withLoop: withLoop ?? false,
+            );
+            break;
+          default:
+            break;
+        }
+        break;
+      case ActionType.stripe:
+        switch (actionStripe) {
+          case ActionStripe.buy:
+            if (withCondition == true) {
+              if (condition?.get(params, states, dataset, true, loop) !=
+                  valueOfCondition?.get(params, states, dataset, true, loop)) {
+                break;
+              }
+            }
+            await FDelay.action(int.tryParse('${delay?.value}') ?? 0);
+            FLoop.action(
+              () => FActionStripeBuy.action(context, states, stateName),
               everyMilliseconds,
               context,
               withLoop: withLoop ?? false,
@@ -1332,6 +1377,26 @@ class FActionElement extends Equatable {
             break;
         }
         break;
+      case ActionType.stripe:
+        switch (actionStripe) {
+          case ActionStripe.buy:
+            return FCondition.toCode(
+                  context,
+                  condition,
+                  valueOfCondition,
+                  withCondition: withCondition ?? false,
+                ) +
+                FDelay.toCode(int.tryParse('${delay?.value}') ?? 0) +
+                FLoop.toCode(
+                  int.tryParse(everyMilliseconds?.value ?? '0') ?? 0,
+                  FActionStripeBuy.toCode(context, stateName),
+                  withLoop: withLoop ?? false,
+                );
+          default:
+            break;
+        }
+        break;
+
       case ActionType.state:
         switch (actionState) {
           case ActionState.increment:

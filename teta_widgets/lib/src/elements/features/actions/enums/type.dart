@@ -6,6 +6,7 @@ enum ActionType {
   state,
   shopify,
   revenueCat,
+  stripe,
   firebase,
   firebaseFirestore,
   firebaseStorage,

@@ -6,7 +6,7 @@ import 'package:flutter/material.dart';
 // Package imports:
 import 'package:teta_core/src/models/variable.dart';
 
-class FActionRevenueCatBuy {
+class FActionStripeBuy {
   static Future action(
     final BuildContext context,
     final List<VariableObject> states,
@@ -16,7 +16,7 @@ class FActionRevenueCatBuy {
       context: context,
       builder: (final context) {
         return const AlertDialog(
-          title: Text('RevenueCat'),
+          title: Text('Stripe'),
           titleTextStyle: TextStyle(
             fontWeight: FontWeight.bold,
             color: Colors.white,
@@ -30,7 +30,7 @@ class FActionRevenueCatBuy {
             width: 400,
             height: 400,
             child: Text(
-              'Revenue cat will be activated in your released app.',
+              'Stripe will be activated in your released app.',
               style: TextStyle(
                 color: Colors.white,
               ),
@@ -43,27 +43,7 @@ class FActionRevenueCatBuy {
 
   static String toCode(final BuildContext context, final String? stateName) {
     return '''
-    try {
-      PurchaserInfo purchaserInfo = await Purchases.purchaseProduct('$stateName');
-      //here we have the purchaseInfo response
-      try{
-        final isPro = purchaserInfo.entitlements.all["my_entitlement_identifier"]!.isActive;
-        if (isPro) {
-           // Unlock that great "pro" content
-         }
-        } catch (e){
-      }
-    } on PlatformException catch (e) {
-      var errorCode = PurchasesErrorHelper.getErrorCode(e);
-      if (errorCode != PurchasesErrorCode.purchaseCancelledError) {
-        await showDialog<void>(
-          context: context,
-          builder: (context) => Text(
-            e.toString(),
-          ),
-        );
-      }
-    }
+   
     ''';
   }
 }
