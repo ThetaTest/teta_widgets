@@ -11,9 +11,9 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:teta_core/src/cubits/google_fonts/cubit.dart';
 import 'package:teta_core/src/design_system/buttons/button.dart';
-import 'package:teta_core/src/design_system/palette.dart';
 import 'package:teta_core/src/design_system/text.dart';
 import 'package:teta_core/src/design_system/textfield/minitextfield.dart';
+import 'package:teta_core/teta_core.dart';
 // Project imports:
 import 'package:teta_widgets/src/elements/features/text_style.dart';
 import 'package:teta_widgets/src/elements/nodes/node.dart';
@@ -51,9 +51,7 @@ class FontFamilyState extends State<FontFamilyControl> {
       children: [
         const CText(
           'Font Family',
-          color: Palette.white,
-          size: 12,
-          weight: FontWeight.w500,
+          typography: CTypo.medium12(),
         ),
         Padding(
           padding: const EdgeInsets.only(top: 8),
@@ -95,7 +93,7 @@ class FontFamilyState extends State<FontFamilyControl> {
               backgroundColor: const Color(0xFF333333),
               title: const CText(
                 'Choose yout font family',
-                customColor: Colors.white,
+                typography: CTypo.extraBold16(),
               ),
               content: BlocBuilder<GoogleFontsCubit, String>(
                 bloc: cubit,

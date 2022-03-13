@@ -8,12 +8,12 @@ import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:hovering/hovering.dart';
 import 'package:teta_core/src/design_system/buttons/button.dart';
-import 'package:teta_core/src/design_system/palette.dart';
 import 'package:teta_core/src/design_system/text.dart';
 import 'package:teta_core/src/design_system/textfield/minitextfield.dart';
 import 'package:teta_core/src/design_system/textfield/multi_line_textfield.dart';
 import 'package:teta_core/src/models/page.dart';
 import 'package:teta_core/src/models/variable.dart';
+import 'package:teta_core/teta_core.dart';
 // Project imports:
 import 'package:teta_widgets/src/elements/nodes/node.dart';
 import 'package:uuid/uuid.dart';
@@ -44,9 +44,7 @@ class PaddingsState extends State<PageParamsControl> {
           children: [
             const CText(
               'Page Params',
-              color: Palette.white,
-              size: 16,
-              weight: FontWeight.w500,
+              typography: CTypo.medium16(),
             ),
             GestureDetector(
               onTap: () {
@@ -150,7 +148,7 @@ class PaddingsState extends State<PageParamsControl> {
           children: [
             CText(
               '${variable.name}: ${variable.defaultValue}',
-              color: Palette.white,
+              typography: const CTypo.extraBold16(),
             ),
             Row(
               crossAxisAlignment: CrossAxisAlignment.start,
@@ -162,17 +160,16 @@ class PaddingsState extends State<PageParamsControl> {
                       variable.type,
                       camelCase: true,
                     ),
-                    customColor: Colors.green,
-                    size: 12,
-                    weight: FontWeight.bold,
+                    color: Colors.green,
+                    typography: const CTypo.extraBold12(),
                   ),
                 ),
                 if (variable.doc != null)
                   Expanded(
                     child: CText(
                       '// ${variable.doc}',
-                      customColor: Colors.white54,
-                      size: 12,
+                      color: Colors.white54,
+                      typography: const CTypo.extraBold12(),
                     ),
                   ),
               ],
@@ -207,8 +204,7 @@ class PaddingsState extends State<PageParamsControl> {
                 children: [
                   const CText(
                     'Edit Parameter',
-                    weight: FontWeight.bold,
-                    customColor: Colors.white,
+                    typography: CTypo.extraBold16(),
                   ),
                   GestureDetector(
                     onTap: () {
@@ -244,7 +240,10 @@ class PaddingsState extends State<PageParamsControl> {
                   child: Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
-                      const CText('Name', size: 14, customColor: Colors.white),
+                      const CText(
+                        'Name',
+                        typography: CTypo.extraBold14(),
+                      ),
                       Padding(
                         padding: const EdgeInsets.only(top: 8, bottom: 16),
                         child: CMiniTextField(
@@ -288,14 +287,12 @@ class PaddingsState extends State<PageParamsControl> {
                           ),
                           child: const CText(
                             'Please provide a unique name',
-                            color: Palette.white,
-                            size: 14,
+                            typography: CTypo.extraBold14(),
                           ),
                         ),
                       const CText(
                         'Type',
-                        size: 14,
-                        customColor: Colors.white,
+                        typography: CTypo.extraBold14(),
                       ),
                       Container(
                         margin: const EdgeInsets.only(top: 8, bottom: 16),
@@ -349,8 +346,7 @@ class PaddingsState extends State<PageParamsControl> {
                                 value: value,
                                 child: CText(
                                   value,
-                                  size: 16,
-                                  customColor: Colors.white,
+                                  typography: const CTypo.extraBold16(),
                                 ),
                               );
                             }).toList(),
@@ -359,8 +355,7 @@ class PaddingsState extends State<PageParamsControl> {
                       ),
                       const CText(
                         'Default Value',
-                        size: 14,
-                        customColor: Colors.white,
+                        typography: CTypo.extraBold14(),
                       ),
                       Padding(
                         padding: const EdgeInsets.only(top: 8, bottom: 16),
@@ -382,8 +377,7 @@ class PaddingsState extends State<PageParamsControl> {
                       ),
                       const CText(
                         'Description',
-                        size: 14,
-                        customColor: Colors.white,
+                        typography: CTypo.extraBold14(),
                       ),
                       Padding(
                         padding: const EdgeInsets.only(top: 8, bottom: 16),

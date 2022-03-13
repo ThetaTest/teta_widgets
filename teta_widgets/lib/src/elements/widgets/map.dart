@@ -139,7 +139,7 @@ class _WMapState extends State<WMap> {
       return const Center(
         child: CText(
           'Implement a Map Controller state',
-          customColor: Colors.white,
+          typography: CTypo.extraBold16(),
         ),
       );
     }
@@ -157,7 +157,7 @@ class _WMapState extends State<WMap> {
               child: Center(
                 child: CText(
                   'Integrate your MapBox key',
-                  customColor: Colors.white,
+                  typography: CTypo.extraBold16(),
                 ),
               ),
             )

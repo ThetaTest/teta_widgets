@@ -8,12 +8,12 @@ import 'package:flutter/material.dart';
 import 'package:flutter_feather_icons/flutter_feather_icons.dart';
 import 'package:hovering/hovering.dart';
 import 'package:teta_core/src/design_system/buttons/button.dart';
-import 'package:teta_core/src/design_system/palette.dart';
 import 'package:teta_core/src/design_system/text.dart';
 import 'package:teta_core/src/design_system/textfield/minitextfield.dart';
 import 'package:teta_core/src/design_system/textfield/multi_line_textfield.dart';
 import 'package:teta_core/src/models/page.dart';
 import 'package:teta_core/src/models/variable.dart';
+import 'package:teta_core/teta_core.dart';
 // Project imports:
 import 'package:teta_widgets/src/elements/nodes/node.dart';
 import 'package:uuid/uuid.dart';
@@ -44,9 +44,7 @@ class StatesControlState extends State<StatesControl> {
           children: [
             const CText(
               'States',
-              color: Palette.white,
-              size: 16,
-              weight: FontWeight.w500,
+              typography: CTypo.extraBold16(),
             ),
             GestureDetector(
               onTap: () {
@@ -181,7 +179,7 @@ class StatesControlState extends State<StatesControl> {
           children: [
             CText(
               '${variable.name}: ${variable.defaultValue}',
-              color: Palette.white,
+              typography: const CTypo.extraBold16(),
             ),
             Row(
               crossAxisAlignment: CrossAxisAlignment.start,
@@ -193,17 +191,16 @@ class StatesControlState extends State<StatesControl> {
                       variable.type,
                       camelCase: true,
                     ),
-                    customColor: Colors.green,
-                    size: 12,
-                    weight: FontWeight.bold,
+                    color: Colors.green,
+                    typography: const CTypo.medium12(),
                   ),
                 ),
                 if (variable.doc != null)
                   Expanded(
                     child: CText(
                       '// ${variable.doc}',
-                      customColor: Colors.white54,
-                      size: 12,
+                      color: Colors.white54,
+                      typography: const CTypo.medium12(),
                     ),
                   ),
               ],
@@ -238,8 +235,8 @@ class StatesControlState extends State<StatesControl> {
                 children: [
                   const CText(
                     'Edit State',
-                    weight: FontWeight.bold,
-                    customColor: Colors.white,
+                    typography: CTypo.extraBold16(),
+                    color: Colors.white,
                   ),
                   GestureDetector(
                     onTap: () {
@@ -277,8 +274,7 @@ class StatesControlState extends State<StatesControl> {
                     children: [
                       const CText(
                         'Name',
-                        size: 14,
-                        customColor: Colors.white,
+                        typography: CTypo.extraBold14(),
                       ),
                       Padding(
                         padding: const EdgeInsets.only(top: 8, bottom: 16),
@@ -323,14 +319,12 @@ class StatesControlState extends State<StatesControl> {
                           ),
                           child: const CText(
                             'Please provide a unique name',
-                            color: Palette.white,
-                            size: 14,
+                            typography: CTypo.extraBold14(),
                           ),
                         ),
                       const CText(
                         'Type',
-                        size: 14,
-                        customColor: Colors.white,
+                        typography: CTypo.extraBold14(),
                       ),
                       Container(
                         margin: const EdgeInsets.only(top: 8, bottom: 16),
@@ -375,8 +369,7 @@ class StatesControlState extends State<StatesControl> {
                                 value: value,
                                 child: CText(
                                   value,
-                                  size: 16,
-                                  customColor: Colors.white,
+                                  typography: const CTypo.extraBold16(),
                                 ),
                               );
                             }).toList(),
@@ -385,8 +378,7 @@ class StatesControlState extends State<StatesControl> {
                       ),
                       const CText(
                         'Default Value',
-                        size: 14,
-                        customColor: Colors.white,
+                        typography: CTypo.extraBold14(),
                       ),
                       Padding(
                         padding: const EdgeInsets.only(top: 8, bottom: 16),
@@ -408,8 +400,7 @@ class StatesControlState extends State<StatesControl> {
                       ),
                       const CText(
                         'Description',
-                        size: 14,
-                        customColor: Colors.white,
+                        typography: CTypo.extraBold14(),
                       ),
                       Padding(
                         padding: const EdgeInsets.only(top: 8, bottom: 16),

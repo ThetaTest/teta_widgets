@@ -16,6 +16,7 @@ import 'package:teta_core/src/design_system/text.dart';
 import 'package:teta_core/src/models/asset_file.dart';
 import 'package:teta_core/src/models/palette.dart';
 import 'package:teta_core/src/models/project.dart';
+import 'package:teta_core/teta_core.dart';
 // Project imports:
 import 'package:teta_widgets/src/elements/features/features.dart';
 import 'package:teta_widgets/src/elements/nodes/node.dart';
@@ -65,8 +66,8 @@ class AssetFillControlState extends State<AssetFillControl> {
                                 padding: const EdgeInsets.only(bottom: 72),
                                 child: CText(
                                   'Your bucket is empty. Upload your first file.',
-                                  customColor: Colors.white.withOpacity(0.5),
-                                  size: 14,
+                                  color: Colors.white.withOpacity(0.5),
+                                  typography: const CTypo.extraBold16(),
                                 ),
                               ),
                             Row(

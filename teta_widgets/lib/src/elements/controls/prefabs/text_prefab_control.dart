@@ -3,14 +3,13 @@
 
 // Flutter imports:
 import 'package:flutter/material.dart';
-// Package imports:
-import 'package:teta_core/src/design_system/palette.dart';
 import 'package:teta_core/src/design_system/text.dart';
 import 'package:teta_core/src/models/page.dart';
 import 'package:teta_core/src/models/palette.dart';
 import 'package:teta_core/src/models/project.dart';
 import 'package:teta_core/src/repositories/project.dart';
 import 'package:teta_core/src/repositories/queries/color_style.dart';
+import 'package:teta_core/teta_core.dart';
 // Project imports:
 import 'package:teta_widgets/src/elements/controls/atoms/fill.dart';
 import 'package:teta_widgets/src/elements/controls/atoms/font_family.dart';
@@ -85,8 +84,7 @@ class TextPrefabControl extends StatelessWidget {
                 padding: const EdgeInsets.only(top: 16),
                 child: CText(
                   title ?? 'Text Properties',
-                  color: Palette.white,
-                  weight: FontWeight.bold,
+                  typography: const CTypo.extraBold16(),
                 ),
               ),
               Padding(

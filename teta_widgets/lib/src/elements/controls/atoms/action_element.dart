@@ -15,7 +15,6 @@ import 'package:hovering/hovering.dart';
 import 'package:teta_core/src/blocs/focus/index.dart';
 import 'package:teta_core/src/cubits/refresh/cubit.dart';
 import 'package:teta_core/src/design_system/dropdowns/dropdown.dart';
-import 'package:teta_core/src/design_system/palette.dart';
 import 'package:teta_core/src/design_system/text.dart';
 import 'package:teta_core/src/design_system/textfield/minitextfield.dart';
 import 'package:teta_core/src/models/dataset.dart';
@@ -23,6 +22,7 @@ import 'package:teta_core/src/models/page.dart';
 import 'package:teta_core/src/models/project.dart';
 import 'package:teta_core/src/models/variable.dart';
 import 'package:teta_core/src/repositories/node.dart';
+import 'package:teta_core/teta_core.dart';
 // Project imports:
 import 'package:teta_widgets/src/elements/controls/atoms/flag.dart';
 import 'package:teta_widgets/src/elements/controls/atoms/subapase/delete.dart';
@@ -131,7 +131,10 @@ class ActionElementControlState extends State<ActionElementControl> {
           child: Row(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
-              CText(widget.name, size: 16, color: Palette.white),
+              CText(
+                widget.name,
+                typography: const CTypo.extraBold16(),
+              ),
               GestureDetector(
                 onTap: widget.callBackToDelete,
                 child: HoverWidget(
@@ -162,8 +165,7 @@ class ActionElementControlState extends State<ActionElementControl> {
                 padding: EdgeInsets.only(top: 2, bottom: 4),
                 child: CText(
                   'Action Type',
-                  size: 14,
-                  customColor: Colors.white,
+                  typography: CTypo.extraBold14(),
                 ),
               ),
               CDropdown(
@@ -191,8 +193,7 @@ class ActionElementControlState extends State<ActionElementControl> {
                 padding: EdgeInsets.only(top: 2, bottom: 4),
                 child: CText(
                   'Gesture',
-                  size: 14,
-                  customColor: Colors.white,
+                  typography: CTypo.extraBold14(),
                 ),
               ),
               CDropdown(
@@ -220,8 +221,7 @@ class ActionElementControlState extends State<ActionElementControl> {
                 padding: EdgeInsets.only(top: 2, bottom: 4),
                 child: CText(
                   'Delay (ms)',
-                  size: 14,
-                  customColor: Colors.white,
+                  typography: CTypo.extraBold14(),
                 ),
               ),
               Padding(
@@ -271,8 +271,7 @@ class ActionElementControlState extends State<ActionElementControl> {
                   padding: EdgeInsets.only(top: 2, bottom: 4),
                   child: CText(
                     'Every milliseconds',
-                    size: 14,
-                    customColor: Colors.white,
+                    typography: CTypo.extraBold14(),
                   ),
                 ),
               if (widget.element.withLoop == true)
@@ -597,8 +596,7 @@ class ActionElementControlState extends State<ActionElementControl> {
                       padding: EdgeInsets.only(bottom: 8),
                       child: CText(
                         "It requires 'int' or 'double' variables",
-                        customColor: Colors.white,
-                        size: 12,
+                        typography: CTypo.extraBold12(),
                       ),
                     ),
                   ],
@@ -612,8 +610,7 @@ class ActionElementControlState extends State<ActionElementControl> {
                       padding: EdgeInsets.only(top: 2, bottom: 4),
                       child: CText(
                         'State',
-                        size: 14,
-                        customColor: Colors.white,
+                        typography: CTypo.extraBold14(),
                       ),
                     ),
                     CDropdown(
@@ -643,8 +640,7 @@ class ActionElementControlState extends State<ActionElementControl> {
                       padding: EdgeInsets.only(top: 2, bottom: 4),
                       child: CText(
                         'Parameter',
-                        size: 14,
-                        customColor: Colors.white,
+                        typography: CTypo.extraBold14(),
                       ),
                     ),
                     CDropdown(
@@ -807,8 +803,7 @@ class ActionElementControlState extends State<ActionElementControl> {
                                         ActionNavigation.openSnackBar
                                 ? 'Select component'
                                 : 'Which page?',
-                            customColor: Colors.white,
-                            size: 12,
+                            typography: const CTypo.extraBold12(),
                           ),
                         ],
                       ),
@@ -912,8 +907,7 @@ class ActionElementControlState extends State<ActionElementControl> {
                                           padding: EdgeInsets.only(left: 4),
                                           child: CText(
                                             'Send Params',
-                                            size: 12,
-                                            color: Palette.yellow,
+                                            typography: CTypo.extraBold16(),
                                           ),
                                         )
                                       ],
@@ -928,8 +922,8 @@ class ActionElementControlState extends State<ActionElementControl> {
                                 children: [
                                   CText(
                                     'This page has not params',
-                                    customColor: Colors.white.withOpacity(0.8),
-                                    size: 12,
+                                    color: Colors.white.withOpacity(0.8),
+                                    typography: const CTypo.extraBold12(),
                                   ),
                                 ],
                               ),
@@ -977,17 +971,14 @@ class ActionElementControlState extends State<ActionElementControl> {
                               padding: EdgeInsets.only(top: 12),
                               child: CText(
                                 "This action needs the following state variables: 'Email', 'Password', 'Status'",
-                                customColor: Colors.white,
-                                size: 14,
-                                weight: FontWeight.w700,
+                                typography: CTypo.extraBold14(),
                               ),
                             ),
                             const Padding(
                               padding: EdgeInsets.only(top: 8, bottom: 8),
                               child: CText(
                                 'The names of the variables are not case sensitive',
-                                customColor: Colors.white,
-                                size: 10,
+                                typography: CTypo.extraBold12(),
                               ),
                             ),
                             TextButton(
@@ -1065,8 +1056,7 @@ class ActionElementControlState extends State<ActionElementControl> {
                                 child: const Center(
                                   child: CText(
                                     'Generate',
-                                    customColor: Colors.white,
-                                    size: 14,
+                                    typography: CTypo.extraBold14(),
                                   ),
                                 ),
                               ),
@@ -1223,8 +1213,7 @@ class _ElementState extends State<Element> {
             padding: const EdgeInsets.only(bottom: 8),
             child: CText(
               widget.variable.name,
-              size: 12,
-              color: Palette.textPrimary,
+              typography: const CTypo.extraBold12(),
             ),
           ),
           if (listDataset

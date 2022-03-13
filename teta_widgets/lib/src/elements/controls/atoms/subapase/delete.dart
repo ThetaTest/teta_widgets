@@ -9,6 +9,7 @@ import 'package:teta_core/src/design_system/text.dart';
 import 'package:teta_core/src/models/page.dart';
 import 'package:teta_core/src/models/project.dart';
 import 'package:teta_core/src/models/supabase_map_element.dart';
+import 'package:teta_core/teta_core.dart';
 // Project imports:
 import 'package:teta_widgets/src/elements/controls/atoms/supabase_element.dart';
 import 'package:teta_widgets/src/elements/controls/atoms/text.dart';
@@ -47,9 +48,8 @@ class SupabaseDeleteControl extends StatelessWidget {
                 padding: EdgeInsets.only(left: 8),
                 child: CText(
                   'DELETE DATA',
-                  customColor: Color(0xFFe7e7e7),
-                  weight: FontWeight.bold,
-                  size: 12,
+                  color: Color(0xFFe7e7e7),
+                  typography: CTypo.extraBold12(),
                 ),
               ),
             ],
@@ -68,8 +68,7 @@ class SupabaseDeleteControl extends StatelessWidget {
             padding: EdgeInsets.only(bottom: 8),
             child: CText(
               'Where',
-              customColor: Colors.white,
-              weight: FontWeight.bold,
+              typography: CTypo.extraBold16(),
             ),
           ),
         ),

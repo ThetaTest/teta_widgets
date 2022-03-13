@@ -2,6 +2,7 @@
 import 'package:flutter/material.dart';
 // Package imports:
 import 'package:teta_core/src/design_system/text.dart';
+import 'package:teta_core/teta_core.dart';
 
 /// It displays the name of a CNode
 /// ATTENTION: Use this only inside a ChildConditionBuilder
@@ -22,8 +23,7 @@ class PlaceholderChildBuilder extends StatelessWidget {
       padding: const EdgeInsets.all(16),
       child: CText(
         name,
-        size: 16,
-        customColor: Colors.white,
+        typography: const CTypo.extraBold16(),
       ),
     );
   }

@@ -16,6 +16,7 @@ import 'package:teta_core/src/repositories/queries/color_style.dart';
 import 'package:teta_core/src/repositories/queries/page.dart';
 import 'package:teta_core/src/repositories/queries/project.dart';
 import 'package:teta_core/src/repositories/queries/user.dart';
+import 'package:teta_core/teta_core.dart';
 // Project imports:
 import 'package:teta_widgets/src/elements/controls/atoms/action.dart';
 import 'package:teta_widgets/src/elements/controls/atoms/aligns.dart';
@@ -166,6 +167,7 @@ class ControlBuilder {
     final dynamic value,
     final dynamic old,
   ) {
+    print('$key $value ${page.id}');
     try {
       NodeRepository.change(
         nodeId: node.nid,
@@ -837,9 +839,8 @@ Widget descriptionControlWidget({
               alignment: Alignment.centerLeft,
               child: CText(
                 description,
-                size: 12,
-                weight: FontWeight.normal,
-                customColor: Colors.white70,
+                typography: const CTypo.extraBold12(),
+                color: Colors.white70,
               ),
             ),
           ),

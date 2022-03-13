@@ -62,7 +62,7 @@ class _WCameraState extends State<WCamera> {
           : const Center(
               child: CText(
                 'Camera Controller is not initialized yet',
-                customColor: Colors.white,
+                typography: CTypo.extraBold16(),
               ),
             ),
     );

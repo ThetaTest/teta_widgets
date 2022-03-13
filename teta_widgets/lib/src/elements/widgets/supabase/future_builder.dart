@@ -213,7 +213,7 @@ class _WSupabaseFutureBuilderState extends State<WSupabaseFutureBuilder> {
       return const Center(
         child: CText(
           'Supabase is not initialized yet',
-          customColor: Colors.white,
+          typography: CTypo.extraBold16(),
         ),
       );
     }

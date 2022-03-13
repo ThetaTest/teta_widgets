@@ -93,8 +93,7 @@ class _WPageViewState extends State<WPageView> {
                   child: Center(
                     child: CText(
                       'PageView - Page 1',
-                      size: 16,
-                      color: Palette.white,
+                      typography: CTypo.extraBold16(),
                     ),
                   ),
                 ),
@@ -103,8 +102,7 @@ class _WPageViewState extends State<WPageView> {
                   child: Center(
                     child: CText(
                       'PageView - Page 2',
-                      size: 16,
-                      color: Palette.white,
+                      typography: CTypo.extraBold16(),
                     ),
                   ),
                 ),
@@ -113,8 +111,7 @@ class _WPageViewState extends State<WPageView> {
                   child: Center(
                     child: CText(
                       'PageView - Page 3',
-                      size: 16,
-                      color: Palette.white,
+                      typography: CTypo.extraBold16(),
                     ),
                   ),
                 ),

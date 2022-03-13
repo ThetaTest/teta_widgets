@@ -120,7 +120,7 @@ class _WAudioPlayerState extends State<WAudioPlayer> {
       return const Center(
         child: CText(
           'Audio Controller is not initialized yet',
-          customColor: Colors.white,
+          typography: CTypo.extraBold16(),
         ),
       );
     }

@@ -40,7 +40,7 @@ class WParallax extends StatelessWidget {
       child: const Center(
         child: CText(
           'Sorry, Parallax widget is deprecated',
-          customColor: Colors.white,
+          typography: CTypo.extraBold16(),
         ),
       ),
     ); /*Parallax.inside(

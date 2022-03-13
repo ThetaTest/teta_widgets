@@ -63,13 +63,19 @@ class _WCupertinoSegmentedControlState
       map[0] = Container(
         padding: const EdgeInsets.symmetric(vertical: 8, horizontal: 16),
         child: const Center(
-          child: CText('Option 1'),
+          child: CText(
+            'Option 1',
+            typography: CTypo.extraBold16(),
+          ),
         ),
       );
       map[1] = Container(
         padding: const EdgeInsets.symmetric(vertical: 8, horizontal: 16),
         child: const Center(
-          child: CText('Option 2'),
+          child: CText(
+            'Option 2',
+            typography: CTypo.extraBold16(),
+          ),
         ),
       );
     }

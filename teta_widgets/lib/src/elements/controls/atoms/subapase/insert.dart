@@ -9,6 +9,7 @@ import 'package:teta_core/gen/assets.gen.dart';
 import 'package:teta_core/src/design_system/text.dart';
 import 'package:teta_core/src/models/page.dart';
 import 'package:teta_core/src/models/project.dart';
+import 'package:teta_core/teta_core.dart';
 // Project imports:
 import 'package:teta_widgets/src/elements/controls/atoms/supabase_map.dart';
 import 'package:teta_widgets/src/elements/controls/atoms/text.dart';
@@ -47,9 +48,8 @@ class SupabaseInsertControl extends StatelessWidget {
                 padding: EdgeInsets.only(left: 8),
                 child: CText(
                   'INSERT NEW DATA',
-                  customColor: Color(0xFFe7e7e7),
-                  weight: FontWeight.bold,
-                  size: 12,
+                  color: Color(0xFFe7e7e7),
+                  typography: CTypo.extraBold12(),
                 ),
               ),
             ],

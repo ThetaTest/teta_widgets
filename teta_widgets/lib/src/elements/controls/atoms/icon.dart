@@ -3,15 +3,16 @@
 // ignore_for_file: import_of_legacy_library_into_null_safe, public_member_api_docs, avoid_equals_and_hash_code_on_mutable_classes, lines_longer_than_80_chars
 
 // Flutter imports:
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 // Package imports:
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:material_design_icons_flutter/icon_map.dart';
 import 'package:material_design_icons_flutter/material_design_icons_flutter.dart';
 import 'package:teta_core/src/cubits/google_fonts/cubit.dart';
-import 'package:teta_core/src/design_system/palette.dart';
 import 'package:teta_core/src/design_system/text.dart';
 import 'package:teta_core/src/design_system/textfield/minitextfield.dart';
+import 'package:teta_core/teta_core.dart';
 // Project imports:
 import 'package:teta_widgets/src/elements/nodes/node.dart';
 
@@ -50,9 +51,7 @@ class IconControlState extends State<IconControl> {
       children: [
         const CText(
           'Icon',
-          color: Palette.white,
-          size: 12,
-          weight: FontWeight.w500,
+          typography: CTypo.medium12(),
         ),
         TextButton(
           onPressed: showPicker,
@@ -97,6 +96,7 @@ class IconControlState extends State<IconControl> {
         var after = 0;
         var query = '';
         final scrollController = ScrollController();
+        var index = 0;
 
         final cubit = GoogleFontsCubit()..updateTextToFind('');
         return StatefulBuilder(
@@ -105,7 +105,19 @@ class IconControlState extends State<IconControl> {
             create: (final context) => cubit,
             child: AlertDialog(
               backgroundColor: const Color(0xFF222222),
-              title: const CText('Change Icon', color: Palette.white),
+              title: CupertinoSegmentedControl(
+                children: const <int, Widget>{
+                  0: CText(
+                    'Material',
+                    typography: CTypo.extraBold16(),
+                  ),
+                  1: CText(
+                    'Material',
+                    typography: CTypo.extraBold16(),
+                  ),
+                },
+                onValueChanged: (final i) {},
+              ),
               content: BlocBuilder<GoogleFontsCubit, String>(
                 bloc: cubit,
                 builder: (final context, final state) {
@@ -203,7 +215,10 @@ class IconControlState extends State<IconControl> {
                     //setState(() => fill = pickerColor);
                     Navigator.of(context, rootNavigator: true).pop(null);
                   },
-                  child: const CText('Cancel'),
+                  child: const CText(
+                    'Cancel',
+                    typography: CTypo.extraBold16(),
+                  ),
                 ),
               ],
             ),

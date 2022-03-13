@@ -69,7 +69,7 @@ class WFirebaseFutureBuilderState extends State<WFirebaseFutureBuilder> {
     return const Center(
       child: CText(
         'Firebase is not initialized yet',
-        customColor: Colors.white,
+        typography: CTypo.extraBold16(),
       ),
     );
 

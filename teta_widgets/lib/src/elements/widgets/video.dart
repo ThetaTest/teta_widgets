@@ -65,9 +65,8 @@ class WVideo extends StatelessWidget {
               padding: EdgeInsets.only(top: 8),
               child: CText(
                 'Sorry, this node is not supported on Windows',
-                customColor: Colors.white,
                 isCentered: true,
-                weight: FontWeight.bold,
+                typography: CTypo.extraBold16(),
               ),
             ),
           ],
@@ -101,8 +100,7 @@ class WVideo extends StatelessWidget {
                   ),
                   CText(
                     'Play to watch',
-                    size: 24,
-                    color: Palette.white,
+                    typography: CTypo.extraBold24(),
                   ),
                 ],
               ),
