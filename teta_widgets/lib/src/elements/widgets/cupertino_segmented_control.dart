@@ -65,7 +65,7 @@ class _WCupertinoSegmentedControlState
         child: const Center(
           child: CText(
             'Option 1',
-            typography: CTypo.extraBold16(),
+            typography: Headline3(),
           ),
         ),
       );
@@ -74,7 +74,7 @@ class _WCupertinoSegmentedControlState
         child: const Center(
           child: CText(
             'Option 2',
-            typography: CTypo.extraBold16(),
+            typography: Headline3(),
           ),
         ),
       );

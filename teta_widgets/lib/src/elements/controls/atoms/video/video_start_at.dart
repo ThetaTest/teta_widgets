@@ -45,7 +45,7 @@ class VideoStartAtControlState extends State<VideoStartAtControl> {
           children: const [
             CText(
               'Start at',
-              typography: CTypo.extraBold16(),
+              typography: Headline3(),
             ),
             Icon(
               Icons.help_outline,

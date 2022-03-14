@@ -83,7 +83,7 @@ class PaddingsState extends State<VideoUrlControl> {
           ),
         const CText(
           'URL Video',
-          typography: CTypo.extraBold16(),
+          typography: Headline3(),
         ),
         CTextField(
           text: text,
@@ -117,7 +117,7 @@ class PaddingsState extends State<VideoUrlControl> {
         if (errore)
           const CText(
             'Error: any video founded',
-            typography: CTypo.extraBold12(),
+            typography: DetailLabel(),
           ),
       ],
     );

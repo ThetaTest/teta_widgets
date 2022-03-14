@@ -54,7 +54,7 @@ class NameState extends State<NameControl> {
               padding: const EdgeInsets.only(bottom: 8),
               child: CText(
                 widget.title ?? 'Name',
-                typography: const CTypo.extraBold16(),
+                typography: const Headline3(),
               ),
             ),
             CTextField(

@@ -39,7 +39,7 @@ class SizesPrefabControl extends StatelessWidget {
             padding: EdgeInsets.only(top: 16, bottom: 8),
             child: CText(
               'Sizes',
-              typography: CTypo.extraBold16(),
+              typography: Headline3(),
             ),
           ),
           SizeControl(

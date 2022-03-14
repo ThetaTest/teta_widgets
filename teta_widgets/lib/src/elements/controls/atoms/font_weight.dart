@@ -46,7 +46,7 @@ class FontWeightControlState extends State<FontWeightControl> {
           padding: EdgeInsets.only(bottom: 8),
           child: CText(
             'Font Weight',
-            typography: CTypo.medium12(),
+            typography: Headline3(),
           ),
         ),
         CDropdown(

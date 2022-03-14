@@ -45,7 +45,7 @@ class AlignsControlState extends State<AlignsControl> {
           padding: EdgeInsets.only(bottom: 8),
           child: CText(
             'Align with the parent',
-            typography: CTypo.extraBold16(),
+            typography: Headline3(),
           ),
         ),
         Container(

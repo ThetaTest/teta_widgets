@@ -84,7 +84,7 @@ class TextPrefabControl extends StatelessWidget {
                 padding: const EdgeInsets.only(top: 16),
                 child: CText(
                   title ?? 'Text Properties',
-                  typography: const CTypo.extraBold16(),
+                  typography: const Headline3(),
                 ),
               ),
               Padding(

@@ -51,7 +51,7 @@ class IconControlState extends State<IconControl> {
       children: [
         const CText(
           'Icon',
-          typography: CTypo.medium12(),
+          typography: Headline3(),
         ),
         TextButton(
           onPressed: showPicker,
@@ -109,11 +109,11 @@ class IconControlState extends State<IconControl> {
                 children: const <int, Widget>{
                   0: CText(
                     'Material',
-                    typography: CTypo.extraBold16(),
+                    typography: Headline3(),
                   ),
                   1: CText(
                     'Material',
-                    typography: CTypo.extraBold16(),
+                    typography: Headline3(),
                   ),
                 },
                 onValueChanged: (final i) {},
@@ -217,7 +217,7 @@ class IconControlState extends State<IconControl> {
                   },
                   child: const CText(
                     'Cancel',
-                    typography: CTypo.extraBold16(),
+                    typography: ActionLabel(),
                   ),
                 ),
               ],

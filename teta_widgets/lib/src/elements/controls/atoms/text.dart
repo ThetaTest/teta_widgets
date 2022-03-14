@@ -90,7 +90,7 @@ class PaddingsState extends State<TextControl> {
               children: [
                 CText(
                   widget.title,
-                  typography: const CTypo.extraBold16(),
+                  typography: const Headline3(),
                 ),
                 CDropdownForType(
                   value: widget.value.type == FTextTypeEnum.dataset

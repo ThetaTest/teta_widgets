@@ -51,7 +51,7 @@ class FontFamilyState extends State<FontFamilyControl> {
       children: [
         const CText(
           'Font Family',
-          typography: CTypo.medium12(),
+          typography: Headline3(),
         ),
         Padding(
           padding: const EdgeInsets.only(top: 8),
@@ -93,7 +93,7 @@ class FontFamilyState extends State<FontFamilyControl> {
               backgroundColor: const Color(0xFF333333),
               title: const CText(
                 'Choose yout font family',
-                typography: CTypo.extraBold16(),
+                typography: Headline3(),
               ),
               content: BlocBuilder<GoogleFontsCubit, String>(
                 bloc: cubit,

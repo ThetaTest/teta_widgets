@@ -47,7 +47,7 @@ class FlagControlState extends State<FlagControl> {
       children: [
         CText(
           widget.title,
-          typography: const CTypo.extraBold16(),
+          typography: const Headline3(),
         ),
         CSwitch(
           callback: _onSwitchChanged,

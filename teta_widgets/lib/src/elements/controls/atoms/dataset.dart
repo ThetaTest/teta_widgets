@@ -73,7 +73,7 @@ class DatasetControlState extends State<DatasetControl> {
             children: [
               CText(
                 widget.title,
-                typography: const CTypo.extraBold16(),
+                typography: const Headline3(),
               ),
             ],
           ),

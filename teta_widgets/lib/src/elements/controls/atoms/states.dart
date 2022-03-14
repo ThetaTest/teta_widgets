@@ -44,7 +44,7 @@ class StatesControlState extends State<StatesControl> {
           children: [
             const CText(
               'States',
-              typography: CTypo.extraBold16(),
+              typography: Headline3(),
             ),
             GestureDetector(
               onTap: () {
@@ -179,7 +179,7 @@ class StatesControlState extends State<StatesControl> {
           children: [
             CText(
               '${variable.name}: ${variable.defaultValue}',
-              typography: const CTypo.extraBold16(),
+              typography: const Headline3(),
             ),
             Row(
               crossAxisAlignment: CrossAxisAlignment.start,
@@ -192,7 +192,7 @@ class StatesControlState extends State<StatesControl> {
                       camelCase: true,
                     ),
                     color: Colors.green,
-                    typography: const CTypo.medium12(),
+                    typography: const DetailLabel(),
                   ),
                 ),
                 if (variable.doc != null)
@@ -200,7 +200,7 @@ class StatesControlState extends State<StatesControl> {
                     child: CText(
                       '// ${variable.doc}',
                       color: Colors.white54,
-                      typography: const CTypo.medium12(),
+                      typography: const DetailLabel(),
                     ),
                   ),
               ],
@@ -235,7 +235,7 @@ class StatesControlState extends State<StatesControl> {
                 children: [
                   const CText(
                     'Edit State',
-                    typography: CTypo.extraBold16(),
+                    typography: Headline2(),
                     color: Colors.white,
                   ),
                   GestureDetector(
@@ -274,7 +274,7 @@ class StatesControlState extends State<StatesControl> {
                     children: [
                       const CText(
                         'Name',
-                        typography: CTypo.extraBold14(),
+                        typography: Headline3(),
                       ),
                       Padding(
                         padding: const EdgeInsets.only(top: 8, bottom: 16),
@@ -319,12 +319,12 @@ class StatesControlState extends State<StatesControl> {
                           ),
                           child: const CText(
                             'Please provide a unique name',
-                            typography: CTypo.extraBold14(),
+                            typography: DetailLabel(),
                           ),
                         ),
                       const CText(
                         'Type',
-                        typography: CTypo.extraBold14(),
+                        typography: Headline3(),
                       ),
                       Container(
                         margin: const EdgeInsets.only(top: 8, bottom: 16),
@@ -369,7 +369,7 @@ class StatesControlState extends State<StatesControl> {
                                 value: value,
                                 child: CText(
                                   value,
-                                  typography: const CTypo.extraBold16(),
+                                  typography: const Headline3(),
                                 ),
                               );
                             }).toList(),
@@ -378,7 +378,7 @@ class StatesControlState extends State<StatesControl> {
                       ),
                       const CText(
                         'Default Value',
-                        typography: CTypo.extraBold14(),
+                        typography: Headline3(),
                       ),
                       Padding(
                         padding: const EdgeInsets.only(top: 8, bottom: 16),
@@ -400,7 +400,7 @@ class StatesControlState extends State<StatesControl> {
                       ),
                       const CText(
                         'Description',
-                        typography: CTypo.extraBold14(),
+                        typography: Headline3(),
                       ),
                       Padding(
                         padding: const EdgeInsets.only(top: 8, bottom: 16),

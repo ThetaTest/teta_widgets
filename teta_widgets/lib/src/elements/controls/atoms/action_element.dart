@@ -133,7 +133,7 @@ class ActionElementControlState extends State<ActionElementControl> {
             children: [
               CText(
                 widget.name,
-                typography: const CTypo.extraBold16(),
+                typography: const Headline3(),
               ),
               GestureDetector(
                 onTap: widget.callBackToDelete,
@@ -165,7 +165,7 @@ class ActionElementControlState extends State<ActionElementControl> {
                 padding: EdgeInsets.only(top: 2, bottom: 4),
                 child: CText(
                   'Action Type',
-                  typography: CTypo.extraBold14(),
+                  typography: Headline3(),
                 ),
               ),
               CDropdown(
@@ -193,7 +193,7 @@ class ActionElementControlState extends State<ActionElementControl> {
                 padding: EdgeInsets.only(top: 2, bottom: 4),
                 child: CText(
                   'Gesture',
-                  typography: CTypo.extraBold14(),
+                  typography: Headline3(),
                 ),
               ),
               CDropdown(
@@ -221,7 +221,7 @@ class ActionElementControlState extends State<ActionElementControl> {
                 padding: EdgeInsets.only(top: 2, bottom: 4),
                 child: CText(
                   'Delay (ms)',
-                  typography: CTypo.extraBold14(),
+                  typography: Headline3(),
                 ),
               ),
               Padding(
@@ -271,7 +271,7 @@ class ActionElementControlState extends State<ActionElementControl> {
                   padding: EdgeInsets.only(top: 2, bottom: 4),
                   child: CText(
                     'Every milliseconds',
-                    typography: CTypo.extraBold14(),
+                    typography: Headline3(),
                   ),
                 ),
               if (widget.element.withLoop == true)
@@ -596,7 +596,7 @@ class ActionElementControlState extends State<ActionElementControl> {
                       padding: EdgeInsets.only(bottom: 8),
                       child: CText(
                         "It requires 'int' or 'double' variables",
-                        typography: CTypo.extraBold12(),
+                        typography: DetailLabel(),
                       ),
                     ),
                   ],
@@ -610,7 +610,7 @@ class ActionElementControlState extends State<ActionElementControl> {
                       padding: EdgeInsets.only(top: 2, bottom: 4),
                       child: CText(
                         'State',
-                        typography: CTypo.extraBold14(),
+                        typography: Headline3(),
                       ),
                     ),
                     CDropdown(
@@ -640,7 +640,7 @@ class ActionElementControlState extends State<ActionElementControl> {
                       padding: EdgeInsets.only(top: 2, bottom: 4),
                       child: CText(
                         'Parameter',
-                        typography: CTypo.extraBold14(),
+                        typography: Headline3(),
                       ),
                     ),
                     CDropdown(
@@ -803,7 +803,7 @@ class ActionElementControlState extends State<ActionElementControl> {
                                         ActionNavigation.openSnackBar
                                 ? 'Select component'
                                 : 'Which page?',
-                            typography: const CTypo.extraBold12(),
+                            typography: const Headline3(),
                           ),
                         ],
                       ),
@@ -907,7 +907,7 @@ class ActionElementControlState extends State<ActionElementControl> {
                                           padding: EdgeInsets.only(left: 4),
                                           child: CText(
                                             'Send Params',
-                                            typography: CTypo.extraBold16(),
+                                            typography: ActionLabel(),
                                           ),
                                         )
                                       ],
@@ -923,7 +923,7 @@ class ActionElementControlState extends State<ActionElementControl> {
                                   CText(
                                     'This page has not params',
                                     color: Colors.white.withOpacity(0.8),
-                                    typography: const CTypo.extraBold12(),
+                                    typography: const DetailLabel(),
                                   ),
                                 ],
                               ),
@@ -971,96 +971,99 @@ class ActionElementControlState extends State<ActionElementControl> {
                               padding: EdgeInsets.only(top: 12),
                               child: CText(
                                 "This action needs the following state variables: 'Email', 'Password', 'Status'",
-                                typography: CTypo.extraBold14(),
+                                typography: Paragraph(),
                               ),
                             ),
                             const Padding(
                               padding: EdgeInsets.only(top: 8, bottom: 8),
                               child: CText(
                                 'The names of the variables are not case sensitive',
-                                typography: CTypo.extraBold12(),
+                                typography: Paragraph(),
                               ),
                             ),
-                            TextButton(
-                              onPressed: () {
-                                var flag = false;
-                                if (widget.page.states.indexWhere(
-                                      (final element) =>
-                                          element.name.toLowerCase() == 'email',
-                                    ) ==
-                                    -1) {
-                                  widget.page.states.add(
-                                    VariableObject(
-                                      id: const Uuid().v1(),
-                                      type: VariableType.string,
-                                      name: 'Email',
-                                      defaultValue: '0',
-                                    ),
-                                  );
-                                  flag = true;
-                                }
-                                if (widget.page.states.indexWhere(
-                                      (final element) =>
-                                          element.name.toLowerCase() ==
-                                          'password',
-                                    ) ==
-                                    -1) {
-                                  widget.page.states.add(
-                                    VariableObject(
-                                      id: const Uuid().v1(),
-                                      type: VariableType.string,
-                                      name: 'Password',
-                                      defaultValue: '0',
-                                    ),
-                                  );
-                                  flag = true;
-                                }
-                                if (widget.page.states.indexWhere(
-                                      (final element) =>
-                                          element.name.toLowerCase() ==
-                                          'status',
-                                    ) ==
-                                    -1) {
-                                  widget.page.states.add(
-                                    VariableObject(
-                                      id: const Uuid().v1(),
-                                      type: VariableType.string,
-                                      name: 'Status',
-                                      defaultValue: '0',
-                                    ),
-                                  );
-                                  flag = true;
-                                }
+                            if (kDebugMode)
+                              TextButton(
+                                onPressed: () {
+                                  var flag = false;
+                                  if (widget.page.states.indexWhere(
+                                        (final element) =>
+                                            element.name.toLowerCase() ==
+                                            'email',
+                                      ) ==
+                                      -1) {
+                                    widget.page.states.add(
+                                      VariableObject(
+                                        id: const Uuid().v1(),
+                                        type: VariableType.string,
+                                        name: 'Email',
+                                        defaultValue: '0',
+                                      ),
+                                    );
+                                    flag = true;
+                                  }
+                                  if (widget.page.states.indexWhere(
+                                        (final element) =>
+                                            element.name.toLowerCase() ==
+                                            'password',
+                                      ) ==
+                                      -1) {
+                                    widget.page.states.add(
+                                      VariableObject(
+                                        id: const Uuid().v1(),
+                                        type: VariableType.string,
+                                        name: 'Password',
+                                        defaultValue: '0',
+                                      ),
+                                    );
+                                    flag = true;
+                                  }
+                                  if (widget.page.states.indexWhere(
+                                        (final element) =>
+                                            element.name.toLowerCase() ==
+                                            'status',
+                                      ) ==
+                                      -1) {
+                                    widget.page.states.add(
+                                      VariableObject(
+                                        id: const Uuid().v1(),
+                                        type: VariableType.string,
+                                        name: 'Status',
+                                        defaultValue: '0',
+                                      ),
+                                    );
+                                    flag = true;
+                                  }
 
-                                if (flag) {
-                                  NodeRepository.change(
-                                    nodeId: widget.page.scaffold!.nid,
-                                    pageId: widget.page.id,
-                                    key: 'states',
-                                    value: widget.page.states
-                                        .map((final e) => e.toJson())
-                                        .toList(),
-                                    old: null,
-                                  );
-                                }
-                                BlocProvider.of<FocusBloc>(context)
-                                    .add(OnFocus(node: widget.node));
-                                BlocProvider.of<RefreshCubit>(context).change();
-                              },
-                              child: Container(
-                                padding: const EdgeInsets.all(8),
-                                decoration: BoxDecoration(
-                                  color: Colors.white24,
-                                  borderRadius: BorderRadius.circular(8),
-                                ),
-                                child: const Center(
-                                  child: CText(
-                                    'Generate',
-                                    typography: CTypo.extraBold14(),
+                                  if (flag) {
+                                    NodeRepository.change(
+                                      nodeId: widget.page.scaffold!.nid,
+                                      pageId: widget.page.id,
+                                      key: 'states',
+                                      value: widget.page.states
+                                          .map((final e) => e.toJson())
+                                          .toList(),
+                                      old: null,
+                                    );
+                                  }
+                                  BlocProvider.of<FocusBloc>(context)
+                                      .add(OnFocus(node: widget.node));
+                                  BlocProvider.of<RefreshCubit>(context)
+                                      .change();
+                                },
+                                child: Container(
+                                  padding: const EdgeInsets.all(8),
+                                  decoration: BoxDecoration(
+                                    color: Colors.white24,
+                                    borderRadius: BorderRadius.circular(8),
+                                  ),
+                                  child: const Center(
+                                    child: CText(
+                                      'Generate',
+                                      typography: ActionLabel(),
+                                    ),
                                   ),
                                 ),
                               ),
-                            ),
                           ],
                         ),
                       ),
@@ -1213,7 +1216,7 @@ class _ElementState extends State<Element> {
             padding: const EdgeInsets.only(bottom: 8),
             child: CText(
               widget.variable.name,
-              typography: const CTypo.extraBold12(),
+              typography: const Headline3(),
             ),
           ),
           if (listDataset

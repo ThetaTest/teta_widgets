@@ -49,7 +49,7 @@ class SupabaseDeleteControl extends StatelessWidget {
                 child: CText(
                   'DELETE DATA',
                   color: Color(0xFFe7e7e7),
-                  typography: CTypo.extraBold12(),
+                  typography: Headline3(),
                 ),
               ),
             ],
@@ -68,7 +68,7 @@ class SupabaseDeleteControl extends StatelessWidget {
             padding: EdgeInsets.only(bottom: 8),
             child: CText(
               'Where',
-              typography: CTypo.extraBold16(),
+              typography: Headline3(),
             ),
           ),
         ),

@@ -58,7 +58,7 @@ class TextStylesControlState extends State<TextStylesControl> {
             const CText(
               'Styles',
               color: Colors.white,
-              typography: CTypo.extraBold16(),
+              typography: Headline3(),
             ),
             Row(
               children: [
@@ -191,7 +191,7 @@ class TextStylesControlState extends State<TextStylesControl> {
               backgroundColor: const Color(0xFF222222),
               title: const CText(
                 'Text Styles',
-                typography: CTypo.extraBold16(),
+                typography: Headline3(),
                 color: Colors.white,
               ),
               content: SizedBox(
@@ -281,7 +281,7 @@ class TextStylesControlState extends State<TextStylesControl> {
           child: AlertDialog(
             title: const CText(
               'Create new text style',
-              typography: CTypo.extraBold16(),
+              typography: Headline2(),
             ),
             content: SizedBox(
               height: 100,
@@ -305,7 +305,7 @@ class TextStylesControlState extends State<TextStylesControl> {
                 },
                 child: const CText(
                   'Cancel',
-                  typography: CTypo.medium12(),
+                  typography: ActionLabel(),
                 ),
               ),
               TextButton(
@@ -321,7 +321,7 @@ class TextStylesControlState extends State<TextStylesControl> {
                   ),
                   child: const CText(
                     'Create',
-                    typography: CTypo.medium12(),
+                    typography: ActionLabel(),
                   ),
                 ),
               ),
@@ -347,7 +347,7 @@ class TextStylesControlState extends State<TextStylesControl> {
           child: AlertDialog(
             title: CText(
               'Edit $name',
-              typography: const CTypo.extraBold16(),
+              typography: const Headline2(),
             ),
             content: SizedBox(
               height: 100,
@@ -371,7 +371,7 @@ class TextStylesControlState extends State<TextStylesControl> {
                 },
                 child: const CText(
                   'Cancel',
-                  typography: CTypo.medium12(),
+                  typography: ActionLabel(),
                 ),
               ),
               TextButton(
@@ -387,7 +387,7 @@ class TextStylesControlState extends State<TextStylesControl> {
                   ),
                   child: const CText(
                     'Create',
-                    typography: CTypo.medium12(),
+                    typography: ActionLabel(),
                   ),
                 ),
               ),

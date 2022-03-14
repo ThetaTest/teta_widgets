@@ -62,7 +62,7 @@ class PaddingsState extends State<ActionvalueControl> {
           children: [
             CText(
               widget.title,
-              typography: const CTypo.extraBold16(),
+              typography: const Headline3(),
             ),
             Theme(
               data: Theme.of(context).copyWith(
@@ -83,7 +83,7 @@ class PaddingsState extends State<ActionvalueControl> {
                     value: value,
                     child: CText(
                       value,
-                      typography: const CTypo.extraBold16(),
+                      typography: const Headline3(),
                     ),
                   );
                 }).toList(),
@@ -145,7 +145,7 @@ class PaddingsState extends State<ActionvalueControl> {
                   value: value,
                   child: CText(
                     value,
-                    typography: const CTypo.extraBold16(),
+                    typography: const Headline3(),
                   ),
                 );
               }).toList(),
@@ -177,7 +177,7 @@ class PaddingsState extends State<ActionvalueControl> {
                   value: value,
                   child: CText(
                     value,
-                    typography: const CTypo.extraBold16(),
+                    typography: const Headline3(),
                   ),
                 );
               }).toList(),
@@ -220,7 +220,7 @@ class PaddingsState extends State<ActionvalueControl> {
                   value: value,
                   child: CText(
                     value,
-                    typography: const CTypo.extraBold16(),
+                    typography: const Headline3(),
                   ),
                 );
               }).toList(),
@@ -275,7 +275,7 @@ class PaddingsState extends State<ActionvalueControl> {
                   value: value,
                   child: CText(
                     value,
-                    typography: const CTypo.extraBold16(),
+                    typography: const Headline3(),
                   ),
                 );
               }).toList(),

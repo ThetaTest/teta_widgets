@@ -113,7 +113,7 @@ class SrcImageControlState extends State<SrcImageControl> {
                     children: [
                       CText(
                         widget.title,
-                        typography: const CTypo.extraBold16(),
+                        typography: const Headline3(),
                       ),
                       CDropdownForType(
                         value: widget.image.type == FTextTypeEnum.asset
@@ -302,7 +302,7 @@ class SrcImageControlState extends State<SrcImageControl> {
                                         cursor: SystemMouseCursors.click,
                                         child: CText(
                                           'Your bucket is empty. Upload your first file >',
-                                          typography: CTypo.extraBold14(),
+                                          typography: DetailLabel(),
                                         ),
                                       ),
                                     ),

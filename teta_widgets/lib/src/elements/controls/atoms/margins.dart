@@ -123,7 +123,7 @@ class MarginsState extends State<Margins> {
                 children: [
                   CText(
                     widget.title,
-                    typography: const CTypo.extraBold16(),
+                    typography: const Headline3(),
                   ),
                   GestureDetector(
                     onTap: () {

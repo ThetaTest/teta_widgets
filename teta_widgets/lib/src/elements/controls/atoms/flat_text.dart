@@ -62,7 +62,7 @@ class FlatTextControlState extends State<FlatTextControl> {
         children: [
           const CText(
             'Flat Text',
-            typography: CTypo.extraBold16(),
+            typography: Headline3(),
           ),
           CTextField(
             controller: controller!,

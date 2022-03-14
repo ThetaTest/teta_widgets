@@ -51,7 +51,7 @@ class SliderControls extends StatelessWidget {
             padding: const EdgeInsets.only(left: 8),
             child: CText(
               title,
-              typography: const CTypo.light9(),
+              typography: const DetailLabel(),
             ),
           )
         ],

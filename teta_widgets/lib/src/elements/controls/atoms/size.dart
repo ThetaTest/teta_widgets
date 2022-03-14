@@ -118,7 +118,7 @@ class SizeControlsState extends State<SizeControl> {
                         padding: const EdgeInsets.only(left: 8),
                         child: CText(
                           widget.title,
-                          typography: const CTypo.extraBold14(),
+                          typography: const Headline3(),
                         ),
                       ),
                     ],
@@ -275,7 +275,7 @@ class SizeControlsState extends State<SizeControl> {
       child: const Center(
         child: CText(
           'MAX',
-          typography: CTypo.extraBold9(),
+          typography: DetailLabel(),
         ),
       ),
     );
@@ -296,7 +296,7 @@ class SizeControlsState extends State<SizeControl> {
         child: Center(
           child: CText(
             unit == SizeUnit.pixel ? 'PX' : '%',
-            typography: const CTypo.extraBold9(),
+            typography: const DetailLabel(),
           ),
         ),
       ),
@@ -315,7 +315,7 @@ class SizeControlsState extends State<SizeControl> {
         child: Center(
           child: CText(
             unit == SizeUnit.pixel ? 'PX' : '%',
-            typography: const CTypo.extraBold9(),
+            typography: const DetailLabel(),
           ),
         ),
       ),

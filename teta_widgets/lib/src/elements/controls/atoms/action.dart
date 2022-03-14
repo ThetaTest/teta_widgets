@@ -67,7 +67,7 @@ class ActionControlState extends State<ActionControl> {
               children: [
                 const CText(
                   'Actions',
-                  typography: CTypo.extraBold16(),
+                  typography: Headline3(),
                 ),
                 Row(
                   children: [

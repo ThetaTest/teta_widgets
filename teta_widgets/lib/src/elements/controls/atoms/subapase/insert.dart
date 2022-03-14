@@ -49,7 +49,7 @@ class SupabaseInsertControl extends StatelessWidget {
                 child: CText(
                   'INSERT NEW DATA',
                   color: Color(0xFFe7e7e7),
-                  typography: CTypo.extraBold12(),
+                  typography: Headline3(),
                 ),
               ),
             ],

@@ -92,7 +92,7 @@ class FillControlState extends State<FillControl> {
                 children: [
                   CText(
                     widget.title ?? 'Fill',
-                    typography: const CTypo.extraBold16(),
+                    typography: const Headline3(),
                   ),
                   CDropdownForType(
                     value: (widget.fill.paletteStyle != null)

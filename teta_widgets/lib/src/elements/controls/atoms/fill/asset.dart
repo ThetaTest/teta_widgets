@@ -67,7 +67,7 @@ class AssetFillControlState extends State<AssetFillControl> {
                                 child: CText(
                                   'Your bucket is empty. Upload your first file.',
                                   color: Colors.white.withOpacity(0.5),
-                                  typography: const CTypo.extraBold16(),
+                                  typography: const Headline3(),
                                 ),
                               ),
                             Row(

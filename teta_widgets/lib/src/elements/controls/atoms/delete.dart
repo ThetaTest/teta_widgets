@@ -60,7 +60,7 @@ class DeleteControlState extends State<DeleteControl> {
           children: [
             const CText(
               'Delete',
-              typography: CTypo.extraBold16(),
+              typography: ActionLabel(),
             ),
             Padding(
               padding: const EdgeInsets.only(top: 8),
@@ -101,7 +101,7 @@ class DeleteControlState extends State<DeleteControl> {
         children: [
           const CText(
             'Delete',
-            typography: CTypo.extraBold16(),
+            typography: ActionLabel(),
           ),
           Padding(
             padding: const EdgeInsets.only(top: 8),
@@ -132,7 +132,7 @@ class DeleteControlState extends State<DeleteControl> {
             backgroundColor: const Color(0xFF222222),
             title: const CText(
               'Are you sure you wanna delete me?',
-              typography: CTypo.extraBold16(),
+              typography: Headline2(),
             ),
             actions: <Widget>[
               TextButton(
@@ -140,7 +140,7 @@ class DeleteControlState extends State<DeleteControl> {
                 child: const CText(
                   'Delete',
                   color: Colors.red,
-                  typography: CTypo.extraBold16(),
+                  typography: ActionLabel(),
                 ),
               ),
               TextButton(
@@ -149,7 +149,7 @@ class DeleteControlState extends State<DeleteControl> {
                 },
                 child: const CText(
                   'Cancel',
-                  typography: CTypo.extraBold16(),
+                  typography: ActionLabel(),
                 ),
               ),
             ],

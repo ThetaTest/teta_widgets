@@ -50,7 +50,7 @@ class SupabaseUpdateControl extends StatelessWidget {
                 child: CText(
                   'UPDATE DATA',
                   color: Color(0xFFe7e7e7),
-                  typography: CTypo.extraBold12(),
+                  typography: Headline3(),
                 ),
               ),
             ],
@@ -76,7 +76,7 @@ class SupabaseUpdateControl extends StatelessWidget {
           padding: EdgeInsets.only(bottom: 8),
           child: CText(
             'Where',
-            typography: CTypo.extraBold16(),
+            typography: Headline3(),
           ),
         ),
         Container(

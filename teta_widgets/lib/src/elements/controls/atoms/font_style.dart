@@ -47,7 +47,7 @@ class TextStyleControlsState extends State<FontStyleControls> {
               padding: EdgeInsets.only(bottom: 8),
               child: CText(
                 'Font Style',
-                typography: CTypo.medium12(),
+                typography: Headline3(),
               ),
             ),
             Row(

@@ -44,7 +44,7 @@ class PaddingsState extends State<PageParamsControl> {
           children: [
             const CText(
               'Page Params',
-              typography: CTypo.medium16(),
+              typography: Headline3(),
             ),
             GestureDetector(
               onTap: () {
@@ -148,7 +148,7 @@ class PaddingsState extends State<PageParamsControl> {
           children: [
             CText(
               '${variable.name}: ${variable.defaultValue}',
-              typography: const CTypo.extraBold16(),
+              typography: const Headline3(),
             ),
             Row(
               crossAxisAlignment: CrossAxisAlignment.start,
@@ -161,7 +161,7 @@ class PaddingsState extends State<PageParamsControl> {
                       camelCase: true,
                     ),
                     color: Colors.green,
-                    typography: const CTypo.extraBold12(),
+                    typography: const DetailLabel(),
                   ),
                 ),
                 if (variable.doc != null)
@@ -169,7 +169,7 @@ class PaddingsState extends State<PageParamsControl> {
                     child: CText(
                       '// ${variable.doc}',
                       color: Colors.white54,
-                      typography: const CTypo.extraBold12(),
+                      typography: const DetailLabel(),
                     ),
                   ),
               ],
@@ -204,7 +204,7 @@ class PaddingsState extends State<PageParamsControl> {
                 children: [
                   const CText(
                     'Edit Parameter',
-                    typography: CTypo.extraBold16(),
+                    typography: Headline2(),
                   ),
                   GestureDetector(
                     onTap: () {
@@ -242,7 +242,7 @@ class PaddingsState extends State<PageParamsControl> {
                     children: [
                       const CText(
                         'Name',
-                        typography: CTypo.extraBold14(),
+                        typography: Headline3(),
                       ),
                       Padding(
                         padding: const EdgeInsets.only(top: 8, bottom: 16),
@@ -287,12 +287,12 @@ class PaddingsState extends State<PageParamsControl> {
                           ),
                           child: const CText(
                             'Please provide a unique name',
-                            typography: CTypo.extraBold14(),
+                            typography: DetailLabel(),
                           ),
                         ),
                       const CText(
                         'Type',
-                        typography: CTypo.extraBold14(),
+                        typography: Headline3(),
                       ),
                       Container(
                         margin: const EdgeInsets.only(top: 8, bottom: 16),
@@ -346,7 +346,7 @@ class PaddingsState extends State<PageParamsControl> {
                                 value: value,
                                 child: CText(
                                   value,
-                                  typography: const CTypo.extraBold16(),
+                                  typography: const Headline3(),
                                 ),
                               );
                             }).toList(),
@@ -355,7 +355,7 @@ class PaddingsState extends State<PageParamsControl> {
                       ),
                       const CText(
                         'Default Value',
-                        typography: CTypo.extraBold14(),
+                        typography: Headline3(),
                       ),
                       Padding(
                         padding: const EdgeInsets.only(top: 8, bottom: 16),
@@ -377,7 +377,7 @@ class PaddingsState extends State<PageParamsControl> {
                       ),
                       const CText(
                         'Description',
-                        typography: CTypo.extraBold14(),
+                        typography: Headline3(),
                       ),
                       Padding(
                         padding: const EdgeInsets.only(top: 8, bottom: 16),

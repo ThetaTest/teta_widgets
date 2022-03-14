@@ -81,7 +81,7 @@ class _WSupabaseLoggedUserState extends State<WSupabaseLoggedUser> {
       return const Center(
         child: CText(
           'Supabase is not initialized yet',
-          typography: CTypo.extraBold16(),
+          typography: Headline3(),
         ),
       );
     }

@@ -90,7 +90,7 @@ class ComponentControlState extends State<ComponentControl> {
             padding: EdgeInsets.only(bottom: 8),
             child: CText(
               'Component',
-              typography: CTypo.extraBold16(),
+              typography: Headline3(),
             ),
           ),
           CDropdown(
@@ -158,7 +158,7 @@ class ComponentControlState extends State<ComponentControl> {
                           padding: EdgeInsets.only(left: 4),
                           child: CText(
                             'Params',
-                            typography: CTypo.extraBold12(),
+                            typography: DetailLabel(),
                           ),
                         )
                       ],
@@ -258,7 +258,7 @@ class ElementState extends State<Element> {
                 padding: const EdgeInsets.only(bottom: 8),
                 child: CText(
                   widget.variable.name,
-                  typography: const CTypo.extraBold12(),
+                  typography: const Headline3(),
                 ),
               ),
               CDropdown(

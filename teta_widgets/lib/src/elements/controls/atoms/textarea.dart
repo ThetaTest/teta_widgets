@@ -40,7 +40,7 @@ class PaddingsState extends State<TextAreaControl> {
       children: [
         const CText(
           'Code',
-          typography: CTypo.extraBold12(),
+          typography: Headline3(),
         ),
         CTextField(
           text: widget.value.value,

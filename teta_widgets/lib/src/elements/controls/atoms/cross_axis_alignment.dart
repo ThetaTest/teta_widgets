@@ -68,7 +68,7 @@ class CrossAxisAlignmentControlsState
                 ),
                 child: CText(
                   'Cross Axis Alignment',
-                  typography: CTypo.extraBold16(),
+                  typography: Headline3(),
                 ),
               ),
               CDropdown(

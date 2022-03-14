@@ -66,7 +66,7 @@ class WVideo extends StatelessWidget {
               child: CText(
                 'Sorry, this node is not supported on Windows',
                 isCentered: true,
-                typography: CTypo.extraBold16(),
+                typography: Paragraph(),
               ),
             ),
           ],
@@ -100,7 +100,7 @@ class WVideo extends StatelessWidget {
                   ),
                   CText(
                     'Play to watch',
-                    typography: CTypo.extraBold24(),
+                    typography: Headline2(),
                   ),
                 ],
               ),

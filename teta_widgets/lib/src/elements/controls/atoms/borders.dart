@@ -72,7 +72,7 @@ class BordersControlState extends State<BordersControl> {
                   children: [
                     const CText(
                       'Borders',
-                      typography: CTypo.extraBold16(),
+                      typography: Headline3(),
                     ),
                     GestureDetector(
                       onTap: () {

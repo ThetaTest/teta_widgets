@@ -70,7 +70,7 @@ class SupabaseMapControlState extends State<SupabaseMapControl> {
                 children: [
                   const CText(
                     'Map data',
-                    typography: CTypo.extraBold16(),
+                    typography: Headline3(),
                   ),
                   Row(
                     children: [

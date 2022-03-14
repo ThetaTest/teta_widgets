@@ -52,7 +52,7 @@ class TextAlignControlsState extends State<TextAlignControls> {
               padding: EdgeInsets.only(bottom: 8),
               child: CText(
                 'Text Align',
-                typography: CTypo.medium12(),
+                typography: Headline3(),
               ),
             ),
             Row(

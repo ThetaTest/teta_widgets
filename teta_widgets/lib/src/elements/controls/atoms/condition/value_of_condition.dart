@@ -78,7 +78,7 @@ class ValueOfConditionControlState extends State<ValueOfConditionControl> {
             children: [
               CText(
                 widget.title,
-                typography: const CTypo.extraBold16(),
+                typography: const Headline3(),
               ),
               Theme(
                 data: Theme.of(context).copyWith(
@@ -99,7 +99,7 @@ class ValueOfConditionControlState extends State<ValueOfConditionControl> {
                       value: value,
                       child: CText(
                         value,
-                        typography: const CTypo.extraBold16(),
+                        typography: const Headline3(),
                       ),
                     );
                   }).toList(),
@@ -161,7 +161,7 @@ class ValueOfConditionControlState extends State<ValueOfConditionControl> {
                     value: value,
                     child: CText(
                       value,
-                      typography: const CTypo.extraBold16(),
+                      typography: const Headline3(),
                     ),
                   );
                 }).toList(),
@@ -193,7 +193,7 @@ class ValueOfConditionControlState extends State<ValueOfConditionControl> {
                     value: value,
                     child: CText(
                       value,
-                      typography: const CTypo.extraBold16(),
+                      typography: const Headline3(),
                     ),
                   );
                 }).toList(),
@@ -229,7 +229,7 @@ class ValueOfConditionControlState extends State<ValueOfConditionControl> {
                     value: value,
                     child: CText(
                       value,
-                      typography: const CTypo.extraBold16(),
+                      typography: const Headline3(),
                     ),
                   );
                 }).toList(),
@@ -274,7 +274,7 @@ class ValueOfConditionControlState extends State<ValueOfConditionControl> {
                     value: value,
                     child: CText(
                       value,
-                      typography: const CTypo.extraBold16(),
+                      typography: const Headline3(),
                     ),
                   );
                 }).toList(),

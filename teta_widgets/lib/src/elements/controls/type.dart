@@ -839,7 +839,7 @@ Widget descriptionControlWidget({
               alignment: Alignment.centerLeft,
               child: CText(
                 description,
-                typography: const CTypo.extraBold12(),
+                typography: const DetailLabel(),
                 color: Colors.white70,
               ),
             ),

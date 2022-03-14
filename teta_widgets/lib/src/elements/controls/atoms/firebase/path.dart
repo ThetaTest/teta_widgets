@@ -50,7 +50,7 @@ class FirestorePathControlState extends State<FirestorePathControl> {
               CText(
                 !widget.isForAddData ? 'Query' : 'Path',
                 color: Colors.white,
-                typography: const CTypo.extraBold16(),
+                typography: const Headline3(),
               ),
             ],
           ),
@@ -97,7 +97,7 @@ class FirestorePathControlState extends State<FirestorePathControl> {
                         child: CText(
                           'Add Parameter',
                           color: Colors.white,
-                          typography: CTypo.extraBold16(),
+                          typography: ActionLabel(),
                         ),
                       ),
                     ),

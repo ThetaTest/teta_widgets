@@ -68,7 +68,7 @@ class SupabaseMapElementControlState extends State<SupabaseMapElementControl> {
             padding: EdgeInsets.only(bottom: 8),
             child: CText(
               'Column',
-              typography: CTypo.extraBold16(),
+              typography: Headline3(),
             ),
           ),
           CTextField(

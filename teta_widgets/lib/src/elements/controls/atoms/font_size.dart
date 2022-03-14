@@ -86,7 +86,7 @@ class FontSizeState extends State<FontSizeControl> {
             padding: EdgeInsets.only(bottom: 8),
             child: CText(
               'Font Size',
-              typography: CTypo.medium12(),
+              typography: Headline3(),
             ),
           ),
           CTextField(

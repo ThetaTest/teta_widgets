@@ -69,7 +69,7 @@ class MainAxisAlignmentControlsState extends State<MainAxisAlignmentControls> {
                   children: const [
                     CText(
                       'Main Axis Alignment',
-                      typography: CTypo.extraBold16(),
+                      typography: Headline3(),
                     ),
                   ],
                 ),

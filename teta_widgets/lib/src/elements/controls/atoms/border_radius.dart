@@ -79,7 +79,7 @@ class BorderRadiusControlState extends State<BorderRadiusControl> {
                   children: [
                     const CText(
                       'Border Radius',
-                      typography: CTypo.extraBold16(),
+                      typography: Headline3(),
                     ),
                     GestureDetector(
                       onTap: () {

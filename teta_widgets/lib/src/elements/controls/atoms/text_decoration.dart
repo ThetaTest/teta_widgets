@@ -37,7 +37,7 @@ class TextDecorationControl extends StatelessWidget {
               padding: EdgeInsets.only(bottom: 8),
               child: CText(
                 'Decoration',
-                typography: CTypo.medium12(),
+                typography: Headline3(),
               ),
             ),
             Row(
