@@ -280,7 +280,6 @@ class ColorControlState extends State<RadialFillControl> {
       builder: (final context) {
         return AlertDialog(
           backgroundColor: const Color(0xFF333333),
-          title: const Text(''),
           content: Container(
             width: 300,
             height: 300,

@@ -54,29 +54,26 @@ class WPositioned extends StatelessWidget {
 
   @override
   Widget build(final BuildContext context) {
+    final pos = _margins.get(context);
+
     return NodeSelectionBuilder(
       node: _node,
       forPlay: _forPlay,
-      child: _body(context),
-    );
-  }
-
-  Widget _body(final BuildContext context) {
-    final pos = _margins.get(context);
-    return Positioned(
-      top: _top ? pos.top : null,
-      bottom: _bottom ? pos.bottom : null,
-      left: _left ? pos.left : null,
-      right: _right ? pos.right : null,
-      child: ChildConditionBuilder(
-        ValueKey('${_node.nid} $_loop'),
-        name: _node.intrinsicState.displayName,
-        child: _child,
-        params: _params,
-        states: _states,
-        dataset: _dataset,
-        forPlay: _forPlay,
-        loop: _loop,
+      child: Positioned(
+        top: _top ? pos.top : null,
+        bottom: _bottom ? pos.bottom : null,
+        left: _left ? pos.left : null,
+        right: _right ? pos.right : null,
+        child: ChildConditionBuilder(
+          ValueKey('${_node.nid} $_loop'),
+          name: _node.intrinsicState.displayName,
+          child: _child,
+          params: _params,
+          states: _states,
+          dataset: _dataset,
+          forPlay: _forPlay,
+          loop: _loop,
+        ),
       ),
     );
   }

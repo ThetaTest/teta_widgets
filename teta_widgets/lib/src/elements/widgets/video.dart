@@ -43,14 +43,6 @@ class WVideo extends StatelessWidget {
 
   @override
   Widget build(final BuildContext context) {
-    return NodeSelectionBuilder(
-      node: node,
-      forPlay: forPlay,
-      child: _body(context),
-    );
-  }
-
-  Widget _body(final BuildContext context) {
     if (UniversalPlatform.isWindows) {
       return Center(
         child: Column(
@@ -81,25 +73,29 @@ class WVideo extends StatelessWidget {
         loop: loopVideo,
       ),
     );
-    return forPlay
-        ? YoutubePlayerIFrame(
-            controller: controller,
-          )
-        : AspectRatio(
-            aspectRatio: 16 / 9,
-            child: Column(
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: const [
-                Icon(
-                  Icons.play_arrow,
-                  size: 48,
-                  color: Colors.white,
-                ),
-                THeadline3(
-                  'Play to watch',
-                ),
-              ],
+    return NodeSelectionBuilder(
+      node: node,
+      forPlay: forPlay,
+      child: forPlay
+          ? YoutubePlayerIFrame(
+              controller: controller,
+            )
+          : AspectRatio(
+              aspectRatio: 16 / 9,
+              child: Column(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: const [
+                  Icon(
+                    Icons.play_arrow,
+                    size: 48,
+                    color: Colors.white,
+                  ),
+                  THeadline3(
+                    'Play to watch',
+                  ),
+                ],
+              ),
             ),
-          );
+    );
   }
 }

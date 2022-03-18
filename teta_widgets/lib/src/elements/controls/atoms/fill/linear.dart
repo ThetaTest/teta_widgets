@@ -11,6 +11,7 @@ import 'package:teta_core/src/design_system/buttons/button.dart';
 import 'package:teta_core/src/design_system/dialogs/color_picker.dart';
 import 'package:teta_core/src/design_system/hex_color.dart';
 import 'package:teta_core/src/design_system/textfield/textfield.dart';
+import 'package:teta_core/teta_core.dart';
 // Project imports:
 import 'package:teta_widgets/src/elements/features/features.dart';
 import 'package:teta_widgets/src/elements/nodes/node.dart';
@@ -345,7 +346,6 @@ class ColorControlState extends State<LinearFillControl> {
       builder: (final context) {
         return AlertDialog(
           backgroundColor: const Color(0xFF333333),
-          title: const Text(''),
           content: Container(
             width: 300,
             height: 300,

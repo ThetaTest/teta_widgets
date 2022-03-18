@@ -61,18 +61,16 @@ class WFirebaseFutureBuilderState extends State<WFirebaseFutureBuilder> {
     return NodeSelectionBuilder(
       node: widget.node,
       forPlay: widget.forPlay,
-      child: body(context),
+      child: const Center(
+        child: THeadline3(
+          'Firebase is not initialized yet',
+        ),
+      ),
     );
   }
 
-  Widget body(final BuildContext context) {
-    return const Center(
-      child: THeadline3(
-        'Firebase is not initialized yet',
-      ),
-    );
-
-    /*FutureBuilder(
+  /*Widget body(final BuildContext context) {
+    FutureBuilder(
         future: widget.path.values!.length.isEven
             ? FirebaseFirestore.instanceFor(
                 app: Firebase.app(prj.prj.name),
@@ -119,6 +117,6 @@ class WFirebaseFutureBuilderState extends State<WFirebaseFutureBuilder> {
             }
           }
           return const CircularProgressIndicator();
-        });*/
-  }
+        });
+  }*/
 }

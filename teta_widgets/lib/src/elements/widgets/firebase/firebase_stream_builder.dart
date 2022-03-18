@@ -46,7 +46,7 @@ class WFirebaseStreamBuilderState extends State<WFirebaseStreamBuilder> {
     return NodeSelectionBuilder(
       node: widget.node,
       forPlay: widget.forPlay,
-      child: body(context),
+      child: const SizedBox(),
     );
   }
 

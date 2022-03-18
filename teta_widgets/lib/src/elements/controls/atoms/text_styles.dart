@@ -182,7 +182,7 @@ class TextStylesControlState extends State<TextStylesControl> {
             create: (final BuildContext context) => DeviceModeCubit(),
             child: AlertDialog(
               backgroundColor: const Color(0xFF222222),
-              title: const THeadline3(
+              title: const TAlertTitle(
                 'Text Styles',
                 color: Colors.white,
               ),
@@ -271,7 +271,7 @@ class TextStylesControlState extends State<TextStylesControl> {
         return BlocProvider<DeviceModeCubit>(
           create: (final BuildContext context) => DeviceModeCubit(),
           child: AlertDialog(
-            title: const THeadline2(
+            title: const TAlertTitle(
               'Create new text style',
             ),
             content: SizedBox(
@@ -334,7 +334,7 @@ class TextStylesControlState extends State<TextStylesControl> {
         return BlocProvider<DeviceModeCubit>(
           create: (final BuildContext context) => DeviceModeCubit(),
           child: AlertDialog(
-            title: THeadline2(
+            title: TAlertTitle(
               'Edit $name',
             ),
             content: SizedBox(

@@ -52,33 +52,29 @@ class WPlasmaBackgroundState extends State<WPlasmaBackground> {
         width: widget.width.get(context: context, isWidth: true),
         height: widget.height.get(context: context, isWidth: false),
         color: Colors.black,
-        child: body(context),
-      ),
-    );
-  }
-
-  Widget body(final BuildContext context) {
-    return PlasmaRenderer(
-      fps: 50,
-      color: HexColor(widget.firstColor.levels!.first.color),
-      blur: 0.36,
-      size: 1.33,
-      speed: 5.75,
-      child: PlasmaRenderer(
-        fps: 50,
-        color: HexColor(widget.secondColor.levels!.first.color),
-        blur: 0.79,
-        size: 0.87,
-        offset: 2,
-        blendMode: BlendMode.overlay,
-        child: widget.child != null
-            ? widget.child!.toWidget(
-                forPlay: widget.forPlay,
-                params: widget.params,
-                states: widget.states,
-                dataset: widget.dataset,
-              )
-            : const SizedBox(),
+        child: PlasmaRenderer(
+          fps: 50,
+          color: HexColor(widget.firstColor.levels!.first.color),
+          blur: 0.36,
+          size: 1.33,
+          speed: 5.75,
+          child: PlasmaRenderer(
+            fps: 50,
+            color: HexColor(widget.secondColor.levels!.first.color),
+            blur: 0.79,
+            size: 0.87,
+            offset: 2,
+            blendMode: BlendMode.overlay,
+            child: widget.child != null
+                ? widget.child!.toWidget(
+                    forPlay: widget.forPlay,
+                    params: widget.params,
+                    states: widget.states,
+                    dataset: widget.dataset,
+                  )
+                : const SizedBox(),
+          ),
+        ),
       ),
     );
   }

@@ -194,7 +194,7 @@ class PaddingsState extends State<PageParamsControl> {
               title: Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
-                  const THeadline2(
+                  const TAlertTitle(
                     'Edit Parameter',
                   ),
                   GestureDetector(
