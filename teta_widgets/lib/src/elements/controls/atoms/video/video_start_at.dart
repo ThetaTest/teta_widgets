@@ -3,7 +3,6 @@
 
 // Flutter imports:
 import 'package:flutter/material.dart';
-import 'package:teta_core/src/design_system/text.dart';
 import 'package:teta_core/src/design_system/textfield/textfield.dart';
 import 'package:teta_core/teta_core.dart';
 // Project imports:
@@ -43,9 +42,8 @@ class VideoStartAtControlState extends State<VideoStartAtControl> {
         Row(
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: const [
-            CText(
+            THeadline3(
               'Start at',
-              typography: Headline3(),
             ),
             Icon(
               Icons.help_outline,

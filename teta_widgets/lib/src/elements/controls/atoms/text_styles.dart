@@ -7,13 +7,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:hovering/hovering.dart';
-import 'package:teta_core/src/blocs/panels/index.dart';
-import 'package:teta_core/src/blocs/text_styles/index.dart';
-import 'package:teta_core/src/cubits/device_mode/cubit.dart';
-import 'package:teta_core/src/design_system/buttons/button.dart';
-import 'package:teta_core/src/design_system/text.dart';
 import 'package:teta_core/src/design_system/textfield/minitextfield.dart';
-import 'package:teta_core/src/models/text_style.dart';
 import 'package:teta_core/teta_core.dart';
 // Project imports:
 import 'package:teta_widgets/src/elements/features/text_style.dart';
@@ -55,10 +49,9 @@ class TextStylesControlState extends State<TextStylesControl> {
         Row(
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: [
-            const CText(
+            const THeadline3(
               'Styles',
               color: Colors.white,
-              typography: Headline3(),
             ),
             Row(
               children: [
@@ -189,9 +182,8 @@ class TextStylesControlState extends State<TextStylesControl> {
             create: (final BuildContext context) => DeviceModeCubit(),
             child: AlertDialog(
               backgroundColor: const Color(0xFF222222),
-              title: const CText(
+              title: const THeadline3(
                 'Text Styles',
-                typography: Headline3(),
                 color: Colors.white,
               ),
               content: SizedBox(
@@ -279,9 +271,8 @@ class TextStylesControlState extends State<TextStylesControl> {
         return BlocProvider<DeviceModeCubit>(
           create: (final BuildContext context) => DeviceModeCubit(),
           child: AlertDialog(
-            title: const CText(
+            title: const THeadline2(
               'Create new text style',
-              typography: Headline2(),
             ),
             content: SizedBox(
               height: 100,
@@ -303,9 +294,8 @@ class TextStylesControlState extends State<TextStylesControl> {
                   //setState(() => fill = pickerColor);
                   Navigator.of(context, rootNavigator: true).pop(null);
                 },
-                child: const CText(
+                child: const TActionLabel(
                   'Cancel',
-                  typography: ActionLabel(),
                 ),
               ),
               TextButton(
@@ -319,9 +309,8 @@ class TextStylesControlState extends State<TextStylesControl> {
                     color: const Color(0xFF3285FF),
                     borderRadius: BorderRadius.circular(8),
                   ),
-                  child: const CText(
+                  child: const TActionLabel(
                     'Create',
-                    typography: ActionLabel(),
                   ),
                 ),
               ),
@@ -345,9 +334,8 @@ class TextStylesControlState extends State<TextStylesControl> {
         return BlocProvider<DeviceModeCubit>(
           create: (final BuildContext context) => DeviceModeCubit(),
           child: AlertDialog(
-            title: CText(
+            title: THeadline2(
               'Edit $name',
-              typography: const Headline2(),
             ),
             content: SizedBox(
               height: 100,
@@ -369,9 +357,8 @@ class TextStylesControlState extends State<TextStylesControl> {
                   //setState(() => fill = pickerColor);
                   Navigator.of(context, rootNavigator: true).pop(null);
                 },
-                child: const CText(
+                child: const TActionLabel(
                   'Cancel',
-                  typography: ActionLabel(),
                 ),
               ),
               TextButton(
@@ -385,9 +372,8 @@ class TextStylesControlState extends State<TextStylesControl> {
                     color: const Color(0xFF3285FF),
                     borderRadius: BorderRadius.circular(8),
                   ),
-                  child: const CText(
+                  child: const TActionLabel(
                     'Create',
-                    typography: ActionLabel(),
                   ),
                 ),
               ),

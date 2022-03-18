@@ -5,8 +5,6 @@
 import 'package:flutter/material.dart';
 // Package imports:
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:teta_core/src/blocs/focus/index.dart';
-import 'package:teta_core/src/design_system/text.dart';
 import 'package:teta_core/src/design_system/textfield/textfield.dart';
 import 'package:teta_core/teta_core.dart';
 // Project imports:
@@ -60,9 +58,8 @@ class FlatTextControlState extends State<FlatTextControl> {
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          const CText(
+          const THeadline3(
             'Flat Text',
-            typography: Headline3(),
           ),
           CTextField(
             controller: controller!,

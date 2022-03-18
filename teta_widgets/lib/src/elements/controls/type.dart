@@ -6,11 +6,6 @@ import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 // Package imports:
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:teta_core/src/blocs/auth/index.dart';
-import 'package:teta_core/src/design_system/text.dart';
-import 'package:teta_core/src/models/page.dart';
-import 'package:teta_core/src/models/palette.dart';
-import 'package:teta_core/src/models/project.dart';
 import 'package:teta_core/src/repositories/node.dart';
 import 'package:teta_core/src/repositories/queries/color_style.dart';
 import 'package:teta_core/src/repositories/queries/page.dart';
@@ -167,7 +162,6 @@ class ControlBuilder {
     final dynamic value,
     final dynamic old,
   ) {
-    print('$key $value ${page.id}');
     try {
       NodeRepository.change(
         nodeId: node.nid,
@@ -837,9 +831,8 @@ Widget descriptionControlWidget({
             padding: const EdgeInsets.only(top: 8),
             child: Align(
               alignment: Alignment.centerLeft,
-              child: CText(
+              child: TDetailLabel(
                 description,
-                typography: const DetailLabel(),
                 color: Colors.white70,
               ),
             ),

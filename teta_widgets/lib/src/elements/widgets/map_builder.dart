@@ -155,18 +155,16 @@ class _WMapBuilderState extends State<WMapBuilder> {
 
     if (variable?.mapController == null) {
       return const Center(
-        child: CText(
+        child: THeadline3(
           'Implement a Map Controller state',
-          typography: Headline3(),
         ),
       );
     }
 
     if (widget.child == null) {
       return const Center(
-        child: CText(
+        child: THeadline3(
           'Implement a child',
-          typography: Headline3(),
         ),
       );
     }
@@ -191,9 +189,8 @@ class _WMapBuilderState extends State<WMapBuilder> {
           ? const DecoratedBox(
               decoration: BoxDecoration(color: Colors.black),
               child: Center(
-                child: CText(
+                child: THeadline3(
                   'Integrate your MapBox key',
-                  typography: Headline3(),
                 ),
               ),
             )

@@ -6,9 +6,6 @@ import 'package:flutter/material.dart';
 // Package imports:
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:hovering/hovering.dart';
-import 'package:teta_core/src/blocs/focus/bloc.dart';
-import 'package:teta_core/src/design_system/switch.dart';
-import 'package:teta_core/src/design_system/text.dart';
 import 'package:teta_core/src/design_system/textfield/minitextfield.dart';
 import 'package:teta_core/teta_core.dart';
 // Project imports:
@@ -116,9 +113,8 @@ class SizeControlsState extends State<SizeControl> {
                       ),
                       Padding(
                         padding: const EdgeInsets.only(left: 8),
-                        child: CText(
+                        child: THeadline3(
                           widget.title,
-                          typography: const Headline3(),
                         ),
                       ),
                     ],
@@ -273,9 +269,8 @@ class SizeControlsState extends State<SizeControl> {
         borderRadius: BorderRadius.circular(4),
       ),
       child: const Center(
-        child: CText(
+        child: TDetailLabel(
           'MAX',
-          typography: DetailLabel(),
         ),
       ),
     );
@@ -294,9 +289,8 @@ class SizeControlsState extends State<SizeControl> {
           borderRadius: BorderRadius.circular(4),
         ),
         child: Center(
-          child: CText(
+          child: TDetailLabel(
             unit == SizeUnit.pixel ? 'PX' : '%',
-            typography: const DetailLabel(),
           ),
         ),
       ),
@@ -313,9 +307,8 @@ class SizeControlsState extends State<SizeControl> {
           borderRadius: BorderRadius.circular(4),
         ),
         child: Center(
-          child: CText(
+          child: TDetailLabel(
             unit == SizeUnit.pixel ? 'PX' : '%',
-            typography: const DetailLabel(),
           ),
         ),
       ),

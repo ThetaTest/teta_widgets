@@ -12,15 +12,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_feather_icons/flutter_feather_icons.dart';
 import 'package:hovering/hovering.dart';
-import 'package:teta_core/src/blocs/focus/index.dart';
-import 'package:teta_core/src/cubits/refresh/cubit.dart';
-import 'package:teta_core/src/design_system/dropdowns/dropdown.dart';
-import 'package:teta_core/src/design_system/text.dart';
 import 'package:teta_core/src/design_system/textfield/minitextfield.dart';
-import 'package:teta_core/src/models/dataset.dart';
-import 'package:teta_core/src/models/page.dart';
-import 'package:teta_core/src/models/project.dart';
-import 'package:teta_core/src/models/variable.dart';
 import 'package:teta_core/src/repositories/node.dart';
 import 'package:teta_core/teta_core.dart';
 // Project imports:
@@ -131,9 +123,8 @@ class ActionElementControlState extends State<ActionElementControl> {
           child: Row(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
-              CText(
+              THeadline3(
                 widget.name,
-                typography: const Headline3(),
               ),
               GestureDetector(
                 onTap: widget.callBackToDelete,
@@ -163,9 +154,8 @@ class ActionElementControlState extends State<ActionElementControl> {
               //Action Type Dropdown
               const Padding(
                 padding: EdgeInsets.only(top: 2, bottom: 4),
-                child: CText(
+                child: THeadline3(
                   'Action Type',
-                  typography: Headline3(),
                 ),
               ),
               CDropdown(
@@ -191,9 +181,8 @@ class ActionElementControlState extends State<ActionElementControl> {
               // Gesture Dropdown
               const Padding(
                 padding: EdgeInsets.only(top: 2, bottom: 4),
-                child: CText(
+                child: THeadline3(
                   'Gesture',
-                  typography: Headline3(),
                 ),
               ),
               CDropdown(
@@ -219,9 +208,8 @@ class ActionElementControlState extends State<ActionElementControl> {
               ),
               const Padding(
                 padding: EdgeInsets.only(top: 2, bottom: 4),
-                child: CText(
+                child: THeadline3(
                   'Delay (ms)',
-                  typography: Headline3(),
                 ),
               ),
               Padding(
@@ -269,9 +257,8 @@ class ActionElementControlState extends State<ActionElementControl> {
               if (widget.element.withLoop == true)
                 const Padding(
                   padding: EdgeInsets.only(top: 2, bottom: 4),
-                  child: CText(
+                  child: THeadline3(
                     'Every milliseconds',
-                    typography: Headline3(),
                   ),
                 ),
               if (widget.element.withLoop == true)
@@ -594,9 +581,8 @@ class ActionElementControlState extends State<ActionElementControl> {
                     ),
                     const Padding(
                       padding: EdgeInsets.only(bottom: 8),
-                      child: CText(
+                      child: TDetailLabel(
                         "It requires 'int' or 'double' variables",
-                        typography: DetailLabel(),
                       ),
                     ),
                   ],
@@ -608,9 +594,8 @@ class ActionElementControlState extends State<ActionElementControl> {
                   children: [
                     const Padding(
                       padding: EdgeInsets.only(top: 2, bottom: 4),
-                      child: CText(
+                      child: THeadline3(
                         'State',
-                        typography: Headline3(),
                       ),
                     ),
                     CDropdown(
@@ -638,9 +623,8 @@ class ActionElementControlState extends State<ActionElementControl> {
                     ),
                     const Padding(
                       padding: EdgeInsets.only(top: 2, bottom: 4),
-                      child: CText(
+                      child: THeadline3(
                         'Parameter',
-                        typography: Headline3(),
                       ),
                     ),
                     CDropdown(
@@ -796,14 +780,13 @@ class ActionElementControlState extends State<ActionElementControl> {
                       padding: const EdgeInsets.only(top: 8, bottom: 8),
                       child: Row(
                         children: [
-                          CText(
+                          THeadline3(
                             widget.element.actionNavigation ==
                                         ActionNavigation.openBottomSheet ||
                                     widget.element.actionNavigation ==
                                         ActionNavigation.openSnackBar
                                 ? 'Select component'
                                 : 'Which page?',
-                            typography: const Headline3(),
                           ),
                         ],
                       ),
@@ -905,9 +888,8 @@ class ActionElementControlState extends State<ActionElementControl> {
                                         ),
                                         Padding(
                                           padding: EdgeInsets.only(left: 4),
-                                          child: CText(
+                                          child: TActionLabel(
                                             'Send Params',
-                                            typography: ActionLabel(),
                                           ),
                                         )
                                       ],
@@ -920,10 +902,9 @@ class ActionElementControlState extends State<ActionElementControl> {
                               padding: const EdgeInsets.only(bottom: 8),
                               child: Row(
                                 children: [
-                                  CText(
+                                  TDetailLabel(
                                     'This page has not params',
                                     color: Colors.white.withOpacity(0.8),
-                                    typography: const DetailLabel(),
                                   ),
                                 ],
                               ),
@@ -969,16 +950,14 @@ class ActionElementControlState extends State<ActionElementControl> {
                             ),
                             const Padding(
                               padding: EdgeInsets.only(top: 12),
-                              child: CText(
+                              child: TParagraph(
                                 "This action needs the following state variables: 'Email', 'Password', 'Status'",
-                                typography: Paragraph(),
                               ),
                             ),
                             const Padding(
                               padding: EdgeInsets.only(top: 8, bottom: 8),
-                              child: CText(
+                              child: TParagraph(
                                 'The names of the variables are not case sensitive',
-                                typography: Paragraph(),
                               ),
                             ),
                             if (kDebugMode)
@@ -1057,9 +1036,8 @@ class ActionElementControlState extends State<ActionElementControl> {
                                     borderRadius: BorderRadius.circular(8),
                                   ),
                                   child: const Center(
-                                    child: CText(
+                                    child: TActionLabel(
                                       'Generate',
-                                      typography: ActionLabel(),
                                     ),
                                   ),
                                 ),
@@ -1214,9 +1192,8 @@ class _ElementState extends State<Element> {
         children: [
           Padding(
             padding: const EdgeInsets.only(bottom: 8),
-            child: CText(
+            child: THeadline3(
               widget.variable.name,
-              typography: const Headline3(),
             ),
           ),
           if (listDataset

@@ -6,15 +6,8 @@ import 'package:collection/collection.dart';
 // Flutter imports:
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:teta_core/src/blocs/focus/index.dart';
-import 'package:teta_core/src/design_system/dropdowns/dropdown.dart';
-import 'package:teta_core/src/design_system/dropdowns/dropdown_for_type.dart';
-import 'package:teta_core/src/design_system/text.dart';
 import 'package:teta_core/src/design_system/textfield/minitextfield.dart';
 import 'package:teta_core/src/design_system/textfield/textfield.dart';
-import 'package:teta_core/src/models/dataset.dart';
-import 'package:teta_core/src/models/page.dart';
-import 'package:teta_core/src/models/variable.dart';
 import 'package:teta_core/teta_core.dart';
 // Project imports:
 import 'package:teta_widgets/src/elements/features/text_type_input.dart';
@@ -88,9 +81,8 @@ class PaddingsState extends State<TextControl> {
             Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
-                CText(
+                THeadline3(
                   widget.title,
-                  typography: const Headline3(),
                 ),
                 CDropdownForType(
                   value: widget.value.type == FTextTypeEnum.dataset

@@ -67,9 +67,8 @@ class WFirebaseFutureBuilderState extends State<WFirebaseFutureBuilder> {
 
   Widget body(final BuildContext context) {
     return const Center(
-      child: CText(
+      child: THeadline3(
         'Firebase is not initialized yet',
-        typography: Headline3(),
       ),
     );
 

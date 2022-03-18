@@ -211,9 +211,8 @@ class _WSupabaseFutureBuilderState extends State<WSupabaseFutureBuilder> {
   Widget build(final BuildContext context) {
     if (client == null) {
       return const Center(
-        child: CText(
+        child: THeadline3(
           'Supabase is not initialized yet',
-          typography: Headline3(),
         ),
       );
     }

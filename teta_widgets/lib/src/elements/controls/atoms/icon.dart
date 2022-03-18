@@ -9,8 +9,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:material_design_icons_flutter/icon_map.dart';
 import 'package:material_design_icons_flutter/material_design_icons_flutter.dart';
-import 'package:teta_core/src/cubits/google_fonts/cubit.dart';
-import 'package:teta_core/src/design_system/text.dart';
 import 'package:teta_core/src/design_system/textfield/minitextfield.dart';
 import 'package:teta_core/teta_core.dart';
 // Project imports:
@@ -49,9 +47,8 @@ class IconControlState extends State<IconControl> {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
-        const CText(
+        const THeadline3(
           'Icon',
-          typography: Headline3(),
         ),
         TextButton(
           onPressed: showPicker,
@@ -107,13 +104,11 @@ class IconControlState extends State<IconControl> {
               backgroundColor: const Color(0xFF222222),
               title: CupertinoSegmentedControl(
                 children: const <int, Widget>{
-                  0: CText(
+                  0: THeadline3(
                     'Material',
-                    typography: Headline3(),
                   ),
-                  1: CText(
+                  1: THeadline3(
                     'Material',
-                    typography: Headline3(),
                   ),
                 },
                 onValueChanged: (final i) {},
@@ -215,9 +210,8 @@ class IconControlState extends State<IconControl> {
                     //setState(() => fill = pickerColor);
                     Navigator.of(context, rootNavigator: true).pop(null);
                   },
-                  child: const CText(
+                  child: const TActionLabel(
                     'Cancel',
-                    typography: ActionLabel(),
                   ),
                 ),
               ],

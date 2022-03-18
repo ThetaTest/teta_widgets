@@ -5,10 +5,7 @@
 import 'package:flutter/material.dart';
 // Package imports:
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:teta_core/src/blocs/focus/index.dart';
-import 'package:teta_core/src/design_system/text.dart';
 import 'package:teta_core/src/design_system/textfield/textfield.dart';
-import 'package:teta_core/src/models/page.dart';
 import 'package:teta_core/teta_core.dart';
 // Project imports:
 import 'package:teta_widgets/src/elements/features/text_type_input.dart';
@@ -76,9 +73,8 @@ class ValueOfConditionControlState extends State<ValueOfConditionControl> {
           Row(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
-              CText(
+              THeadline3(
                 widget.title,
-                typography: const Headline3(),
               ),
               Theme(
                 data: Theme.of(context).copyWith(
@@ -97,9 +93,8 @@ class ValueOfConditionControlState extends State<ValueOfConditionControl> {
                       .map((final String value) {
                     return DropdownMenuItem<String>(
                       value: value,
-                      child: CText(
+                      child: THeadline3(
                         value,
-                        typography: const Headline3(),
                       ),
                     );
                   }).toList(),
@@ -159,9 +154,8 @@ class ValueOfConditionControlState extends State<ValueOfConditionControl> {
                     .map<DropdownMenuItem<String>>((final value) {
                   return DropdownMenuItem<String>(
                     value: value,
-                    child: CText(
+                    child: THeadline3(
                       value,
-                      typography: const Headline3(),
                     ),
                   );
                 }).toList(),
@@ -191,9 +185,8 @@ class ValueOfConditionControlState extends State<ValueOfConditionControl> {
                     .map<DropdownMenuItem<String>>((final value) {
                   return DropdownMenuItem<String>(
                     value: value,
-                    child: CText(
+                    child: THeadline3(
                       value,
-                      typography: const Headline3(),
                     ),
                   );
                 }).toList(),
@@ -227,9 +220,8 @@ class ValueOfConditionControlState extends State<ValueOfConditionControl> {
                     .map<DropdownMenuItem<String>>((final String value) {
                   return DropdownMenuItem<String>(
                     value: value,
-                    child: CText(
+                    child: THeadline3(
                       value,
-                      typography: const Headline3(),
                     ),
                   );
                 }).toList(),
@@ -272,9 +264,8 @@ class ValueOfConditionControlState extends State<ValueOfConditionControl> {
                     .map<DropdownMenuItem<String>>((final String value) {
                   return DropdownMenuItem<String>(
                     value: value,
-                    child: CText(
+                    child: THeadline3(
                       value,
-                      typography: const Headline3(),
                     ),
                   );
                 }).toList(),

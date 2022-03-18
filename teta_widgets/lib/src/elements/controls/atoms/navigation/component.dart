@@ -7,14 +7,7 @@ import 'package:flutter/material.dart';
 // Package imports:
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_feather_icons/flutter_feather_icons.dart';
-import 'package:teta_core/src/blocs/focus/index.dart';
-import 'package:teta_core/src/design_system/dropdowns/dropdown.dart';
-import 'package:teta_core/src/design_system/text.dart';
 import 'package:teta_core/src/design_system/textfield/textfield.dart';
-import 'package:teta_core/src/models/dataset.dart';
-import 'package:teta_core/src/models/page.dart';
-import 'package:teta_core/src/models/project.dart';
-import 'package:teta_core/src/models/variable.dart';
 import 'package:teta_core/teta_core.dart';
 // Project imports:
 import 'package:teta_widgets/src/elements/controls/key_constants.dart';
@@ -88,9 +81,8 @@ class ComponentControlState extends State<ComponentControl> {
         children: [
           const Padding(
             padding: EdgeInsets.only(bottom: 8),
-            child: CText(
+            child: THeadline3(
               'Component',
-              typography: Headline3(),
             ),
           ),
           CDropdown(
@@ -156,9 +148,8 @@ class ComponentControlState extends State<ComponentControl> {
                         ),
                         Padding(
                           padding: EdgeInsets.only(left: 4),
-                          child: CText(
+                          child: TDetailLabel(
                             'Params',
-                            typography: DetailLabel(),
                           ),
                         )
                       ],
@@ -256,9 +247,8 @@ class ElementState extends State<Element> {
             children: [
               Padding(
                 padding: const EdgeInsets.only(bottom: 8),
-                child: CText(
+                child: THeadline3(
                   widget.variable.name,
-                  typography: const Headline3(),
                 ),
               ),
               CDropdown(

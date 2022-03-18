@@ -130,9 +130,8 @@ class _WSupabaseStreamBuilderState extends State<WSupabaseStreamBuilder> {
 
     if (client == null) {
       return const Center(
-        child: CText(
+        child: THeadline3(
           'Supabase is not initialized yet',
-          typography: Headline3(),
         ),
       );
     }

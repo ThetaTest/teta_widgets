@@ -5,12 +5,6 @@
 import 'package:flutter/material.dart';
 // Package imports:
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:teta_core/src/blocs/flat_list/index.dart';
-import 'package:teta_core/src/blocs/focus_page/index.dart';
-import 'package:teta_core/src/blocs/focus_project/index.dart';
-import 'package:teta_core/src/cubits/google_fonts/cubit.dart';
-import 'package:teta_core/src/design_system/buttons/dangerous_button.dart';
-import 'package:teta_core/src/design_system/text.dart';
 import 'package:teta_core/src/rendering/find.dart';
 import 'package:teta_core/src/repositories/actions/remove_node_between_nodes.dart';
 import 'package:teta_core/teta_core.dart';
@@ -58,9 +52,8 @@ class DeleteControlState extends State<DeleteControl> {
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            const CText(
+            const TActionLabel(
               'Delete',
-              typography: ActionLabel(),
             ),
             Padding(
               padding: const EdgeInsets.only(top: 8),
@@ -99,9 +92,8 @@ class DeleteControlState extends State<DeleteControl> {
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          const CText(
+          const TActionLabel(
             'Delete',
-            typography: ActionLabel(),
           ),
           Padding(
             padding: const EdgeInsets.only(top: 8),
@@ -130,26 +122,23 @@ class DeleteControlState extends State<DeleteControl> {
           create: (final context) => cubit,
           child: AlertDialog(
             backgroundColor: const Color(0xFF222222),
-            title: const CText(
+            title: const THeadline2(
               'Are you sure you wanna delete me?',
-              typography: Headline2(),
             ),
             actions: <Widget>[
               TextButton(
                 onPressed: delete,
-                child: const CText(
+                child: const TActionLabel(
                   'Delete',
                   color: Colors.red,
-                  typography: ActionLabel(),
                 ),
               ),
               TextButton(
                 onPressed: () {
                   Navigator.of(context, rootNavigator: true).pop(null);
                 },
-                child: const CText(
+                child: const TActionLabel(
                   'Cancel',
-                  typography: ActionLabel(),
                 ),
               ),
             ],

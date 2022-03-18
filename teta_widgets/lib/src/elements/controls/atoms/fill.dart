@@ -5,10 +5,6 @@
 import 'package:flutter/material.dart';
 // Package imports:
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:teta_core/src/blocs/palette/index.dart';
-import 'package:teta_core/src/design_system/dropdowns/dropdown_for_type.dart';
-import 'package:teta_core/src/design_system/text.dart';
-import 'package:teta_core/src/models/palette.dart';
 import 'package:teta_core/teta_core.dart';
 // Project imports:
 import 'package:teta_widgets/src/elements/controls/atoms/fill/image.dart';
@@ -90,9 +86,8 @@ class FillControlState extends State<FillControl> {
               Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
-                  CText(
+                  THeadline3(
                     widget.title ?? 'Fill',
-                    typography: const Headline3(),
                   ),
                   CDropdownForType(
                     value: (widget.fill.paletteStyle != null)

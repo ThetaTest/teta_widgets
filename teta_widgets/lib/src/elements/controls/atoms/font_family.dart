@@ -9,9 +9,6 @@ import 'package:flutter/material.dart';
 // Package imports:
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:google_fonts/google_fonts.dart';
-import 'package:teta_core/src/cubits/google_fonts/cubit.dart';
-import 'package:teta_core/src/design_system/buttons/button.dart';
-import 'package:teta_core/src/design_system/text.dart';
 import 'package:teta_core/src/design_system/textfield/minitextfield.dart';
 import 'package:teta_core/teta_core.dart';
 // Project imports:
@@ -49,9 +46,8 @@ class FontFamilyState extends State<FontFamilyControl> {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
-        const CText(
+        const THeadline3(
           'Font Family',
-          typography: Headline3(),
         ),
         Padding(
           padding: const EdgeInsets.only(top: 8),
@@ -91,9 +87,8 @@ class FontFamilyState extends State<FontFamilyControl> {
             create: (final context) => cubit,
             child: AlertDialog(
               backgroundColor: const Color(0xFF333333),
-              title: const CText(
+              title: const THeadline3(
                 'Choose yout font family',
-                typography: Headline3(),
               ),
               content: BlocBuilder<GoogleFontsCubit, String>(
                 bloc: cubit,

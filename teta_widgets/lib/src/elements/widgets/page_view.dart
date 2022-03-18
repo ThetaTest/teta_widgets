@@ -91,27 +91,24 @@ class _WPageViewState extends State<WPageView> {
                 const Padding(
                   padding: EdgeInsets.all(16),
                   child: Center(
-                    child: CText(
+                    child: THeadline3(
                       'PageView - Page 1',
-                      typography: Headline3(),
                     ),
                   ),
                 ),
                 const Padding(
                   padding: EdgeInsets.all(16),
                   child: Center(
-                    child: CText(
+                    child: THeadline3(
                       'PageView - Page 2',
-                      typography: Headline3(),
                     ),
                   ),
                 ),
                 const Padding(
                   padding: EdgeInsets.all(16),
                   child: Center(
-                    child: CText(
+                    child: THeadline3(
                       'PageView - Page 3',
-                      typography: Headline3(),
                     ),
                   ),
                 ),

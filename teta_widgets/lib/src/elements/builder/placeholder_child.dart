@@ -20,9 +20,8 @@ class PlaceholderChildBuilder extends StatelessWidget {
   Widget build(final BuildContext context) {
     return Padding(
       padding: const EdgeInsets.all(16),
-      child: CText(
+      child: THeadline3(
         name,
-        typography: const Headline3(),
       ),
     );
   }

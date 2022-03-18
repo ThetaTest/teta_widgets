@@ -5,10 +5,6 @@
 import 'package:flutter/material.dart';
 // Package imports:
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:teta_core/src/blocs/focus/index.dart';
-import 'package:teta_core/src/design_system/dropdowns/dropdown.dart';
-import 'package:teta_core/src/design_system/text.dart';
-import 'package:teta_core/src/models/page.dart';
 import 'package:teta_core/teta_core.dart';
 // Project imports:
 import 'package:teta_widgets/src/elements/features/dataset.dart';
@@ -71,9 +67,8 @@ class DatasetControlState extends State<DatasetControl> {
           Row(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
-              CText(
+              THeadline3(
                 widget.title,
-                typography: const Headline3(),
               ),
             ],
           ),

@@ -63,10 +63,9 @@ class WVideo extends StatelessWidget {
             ),
             Padding(
               padding: EdgeInsets.only(top: 8),
-              child: CText(
+              child: TParagraph(
                 'Sorry, this node is not supported on Windows',
                 isCentered: true,
-                typography: Paragraph(),
               ),
             ),
           ],
@@ -88,22 +87,18 @@ class WVideo extends StatelessWidget {
           )
         : AspectRatio(
             aspectRatio: 16 / 9,
-            child: Container(
-              color: Colors.grey,
-              child: Column(
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: const [
-                  Icon(
-                    Icons.play_arrow,
-                    size: 48,
-                    color: Colors.white,
-                  ),
-                  CText(
-                    'Play to watch',
-                    typography: Headline2(),
-                  ),
-                ],
-              ),
+            child: Column(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: const [
+                Icon(
+                  Icons.play_arrow,
+                  size: 48,
+                  color: Colors.white,
+                ),
+                THeadline3(
+                  'Play to watch',
+                ),
+              ],
             ),
           );
   }

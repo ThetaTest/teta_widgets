@@ -5,9 +5,6 @@
 import 'package:flutter/material.dart';
 // Package imports:
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:teta_core/src/blocs/focus/bloc.dart';
-import 'package:teta_core/src/design_system/buttons/button.dart';
-import 'package:teta_core/src/design_system/text.dart';
 import 'package:teta_core/src/design_system/textfield/textfield.dart';
 import 'package:teta_core/teta_core.dart';
 // Project imports:
@@ -52,9 +49,8 @@ class NameState extends State<NameControl> {
           children: [
             Padding(
               padding: const EdgeInsets.only(bottom: 8),
-              child: CText(
+              child: THeadline3(
                 widget.title ?? 'Name',
-                typography: const Headline3(),
               ),
             ),
             CTextField(

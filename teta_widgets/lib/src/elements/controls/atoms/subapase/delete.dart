@@ -4,11 +4,6 @@
 // Flutter imports:
 import 'package:flutter/material.dart';
 // Package imports:
-import 'package:teta_core/gen/assets.gen.dart';
-import 'package:teta_core/src/design_system/text.dart';
-import 'package:teta_core/src/models/page.dart';
-import 'package:teta_core/src/models/project.dart';
-import 'package:teta_core/src/models/supabase_map_element.dart';
 import 'package:teta_core/teta_core.dart';
 // Project imports:
 import 'package:teta_widgets/src/elements/controls/atoms/supabase_element.dart';
@@ -46,10 +41,9 @@ class SupabaseDeleteControl extends StatelessWidget {
               Image.asset(Assets.icons.left.dataset.path, width: 24),
               const Padding(
                 padding: EdgeInsets.only(left: 8),
-                child: CText(
+                child: THeadline3(
                   'DELETE DATA',
                   color: Color(0xFFe7e7e7),
-                  typography: Headline3(),
                 ),
               ),
             ],
@@ -66,9 +60,8 @@ class SupabaseDeleteControl extends StatelessWidget {
           padding: EdgeInsets.only(top: 16),
           child: Padding(
             padding: EdgeInsets.only(bottom: 8),
-            child: CText(
+            child: THeadline3(
               'Where',
-              typography: Headline3(),
             ),
           ),
         ),

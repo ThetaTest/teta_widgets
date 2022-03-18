@@ -7,12 +7,8 @@ import 'package:enum_to_string/enum_to_string.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_feather_icons/flutter_feather_icons.dart';
 import 'package:hovering/hovering.dart';
-import 'package:teta_core/src/design_system/buttons/button.dart';
-import 'package:teta_core/src/design_system/text.dart';
 import 'package:teta_core/src/design_system/textfield/minitextfield.dart';
 import 'package:teta_core/src/design_system/textfield/multi_line_textfield.dart';
-import 'package:teta_core/src/models/page.dart';
-import 'package:teta_core/src/models/variable.dart';
 import 'package:teta_core/teta_core.dart';
 // Project imports:
 import 'package:teta_widgets/src/elements/nodes/node.dart';
@@ -42,9 +38,8 @@ class StatesControlState extends State<StatesControl> {
         Row(
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: [
-            const CText(
+            const THeadline3(
               'States',
-              typography: Headline3(),
             ),
             GestureDetector(
               onTap: () {
@@ -177,30 +172,27 @@ class StatesControlState extends State<StatesControl> {
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            CText(
+            THeadline3(
               '${variable.name}: ${variable.defaultValue}',
-              typography: const Headline3(),
             ),
             Row(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 Padding(
                   padding: const EdgeInsets.only(right: 8),
-                  child: CText(
+                  child: TDetailLabel(
                     EnumToString.convertToString(
                       variable.type,
                       camelCase: true,
                     ),
                     color: Colors.green,
-                    typography: const DetailLabel(),
                   ),
                 ),
                 if (variable.doc != null)
                   Expanded(
-                    child: CText(
+                    child: TDetailLabel(
                       '// ${variable.doc}',
                       color: Colors.white54,
-                      typography: const DetailLabel(),
                     ),
                   ),
               ],
@@ -233,9 +225,8 @@ class StatesControlState extends State<StatesControl> {
               title: Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
-                  const CText(
+                  const THeadline2(
                     'Edit State',
-                    typography: Headline2(),
                     color: Colors.white,
                   ),
                   GestureDetector(
@@ -272,9 +263,8 @@ class StatesControlState extends State<StatesControl> {
                   child: Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
-                      const CText(
+                      const THeadline3(
                         'Name',
-                        typography: Headline3(),
                       ),
                       Padding(
                         padding: const EdgeInsets.only(top: 8, bottom: 16),
@@ -317,14 +307,12 @@ class StatesControlState extends State<StatesControl> {
                             ),
                             borderRadius: BorderRadius.circular(8),
                           ),
-                          child: const CText(
+                          child: const TDetailLabel(
                             'Please provide a unique name',
-                            typography: DetailLabel(),
                           ),
                         ),
-                      const CText(
+                      const THeadline3(
                         'Type',
-                        typography: Headline3(),
                       ),
                       Container(
                         margin: const EdgeInsets.only(top: 8, bottom: 16),
@@ -367,18 +355,16 @@ class StatesControlState extends State<StatesControl> {
                                 (final String value) {
                               return DropdownMenuItem<String>(
                                 value: value,
-                                child: CText(
+                                child: THeadline3(
                                   value,
-                                  typography: const Headline3(),
                                 ),
                               );
                             }).toList(),
                           ),
                         ),
                       ),
-                      const CText(
+                      const THeadline3(
                         'Default Value',
-                        typography: Headline3(),
                       ),
                       Padding(
                         padding: const EdgeInsets.only(top: 8, bottom: 16),
@@ -398,9 +384,8 @@ class StatesControlState extends State<StatesControl> {
                           },
                         ),
                       ),
-                      const CText(
+                      const THeadline3(
                         'Description',
-                        typography: Headline3(),
                       ),
                       Padding(
                         padding: const EdgeInsets.only(top: 8, bottom: 16),

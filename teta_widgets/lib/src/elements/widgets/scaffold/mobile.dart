@@ -296,9 +296,8 @@ class ScaffoldMobile extends StatelessWidget {
               color: Colors.white,
             ),
           ),
-          CText(
+          THeadline3(
             'New section',
-            typography: const Headline3(),
             color: TinyColor(HexColor(fill.levels![0].color)).isLight()
                 ? Colors.black
                 : Colors.white,

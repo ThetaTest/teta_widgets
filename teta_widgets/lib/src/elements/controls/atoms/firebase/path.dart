@@ -3,9 +3,6 @@
 
 // Flutter imports:
 import 'package:flutter/material.dart';
-import 'package:teta_core/src/design_system/text.dart';
-import 'package:teta_core/src/models/page.dart';
-import 'package:teta_core/src/models/project.dart';
 import 'package:teta_core/teta_core.dart';
 // Project imports:
 import 'package:teta_widgets/src/elements/controls/atoms/firebase/parameter.dart';
@@ -47,10 +44,9 @@ class FirestorePathControlState extends State<FirestorePathControl> {
           Row(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
-              CText(
+              THeadline3(
                 !widget.isForAddData ? 'Query' : 'Path',
                 color: Colors.white,
-                typography: const Headline3(),
               ),
             ],
           ),
@@ -94,10 +90,9 @@ class FirestorePathControlState extends State<FirestorePathControl> {
                         borderRadius: BorderRadius.circular(8),
                       ),
                       child: const Center(
-                        child: CText(
+                        child: TActionLabel(
                           'Add Parameter',
                           color: Colors.white,
-                          typography: ActionLabel(),
                         ),
                       ),
                     ),
