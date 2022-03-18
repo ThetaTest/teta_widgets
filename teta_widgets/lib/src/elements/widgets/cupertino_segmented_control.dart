@@ -65,7 +65,7 @@ class _WCupertinoSegmentedControlState
         child: const Center(
           child: THeadline3(
             'Option 1',
-ì          ),
+          ),
         ),
       );
       map[1] = Container(

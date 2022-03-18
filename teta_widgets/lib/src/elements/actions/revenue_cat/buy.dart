@@ -4,7 +4,7 @@
 // Flutter imports:
 import 'package:flutter/material.dart';
 // Package imports:
-import 'package:teta_core/src/models/variable.dart';
+import 'package:teta_core/teta_core.dart';
 
 class FActionRevenueCatBuy {
   static Future action(
@@ -16,7 +16,7 @@ class FActionRevenueCatBuy {
       context: context,
       builder: (final context) {
         return const AlertDialog(
-          title: Text('RevenueCat'),
+          title: TAlertTitle('RevenueCat'),
           titleTextStyle: TextStyle(
             fontWeight: FontWeight.bold,
             color: Colors.white,

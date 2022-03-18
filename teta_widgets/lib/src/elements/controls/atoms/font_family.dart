@@ -87,7 +87,7 @@ class FontFamilyState extends State<FontFamilyControl> {
             create: (final context) => cubit,
             child: AlertDialog(
               backgroundColor: const Color(0xFF333333),
-              title: const THeadline3(
+              title: const TAlertTitle(
                 'Choose yout font family',
               ),
               content: BlocBuilder<GoogleFontsCubit, String>(
