@@ -70,7 +70,7 @@ class WFirestorePaginationState extends State<WFirestorePagination> {
     return NodeSelectionBuilder(
       node: widget.node,
       forPlay: widget.forPlay,
-      child: body(context),
+      child: const SizedBox(),
     );
   }
 

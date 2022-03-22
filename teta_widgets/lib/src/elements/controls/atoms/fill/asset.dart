@@ -7,15 +7,7 @@ import 'package:flutter/material.dart';
 // Package imports:
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:supabase/supabase.dart';
-import 'package:teta_core/src/blocs/focus/bloc.dart';
-import 'package:teta_core/src/blocs/focus_project/index.dart';
-import 'package:teta_core/src/blocs/palette/index.dart';
-import 'package:teta_core/src/cubits/supabase.dart';
-import 'package:teta_core/src/design_system/dropdowns/dropdown_image_assets.dart';
-import 'package:teta_core/src/design_system/text.dart';
-import 'package:teta_core/src/models/asset_file.dart';
-import 'package:teta_core/src/models/palette.dart';
-import 'package:teta_core/src/models/project.dart';
+import 'package:teta_core/teta_core.dart';
 // Project imports:
 import 'package:teta_widgets/src/elements/features/features.dart';
 import 'package:teta_widgets/src/elements/nodes/node.dart';
@@ -63,10 +55,9 @@ class AssetFillControlState extends State<AssetFillControl> {
                             if (list.isEmpty)
                               Padding(
                                 padding: const EdgeInsets.only(bottom: 72),
-                                child: CText(
+                                child: THeadline3(
                                   'Your bucket is empty. Upload your first file.',
-                                  customColor: Colors.white.withOpacity(0.5),
-                                  size: 14,
+                                  color: Colors.white.withOpacity(0.5),
                                 ),
                               ),
                             Row(

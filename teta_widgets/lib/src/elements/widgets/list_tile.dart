@@ -39,7 +39,6 @@ class WListTile extends StatelessWidget {
       node: node,
       forPlay: forPlay,
       child: ListTile(
-        title: const Text(''),
         isThreeLine: isThreeLine,
         leading: children.isNotEmpty
             ? children[0].toWidget(

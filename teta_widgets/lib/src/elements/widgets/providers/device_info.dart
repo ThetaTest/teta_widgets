@@ -60,24 +60,21 @@ class _WDeviceInfoState extends State<WDeviceInfo> {
 
   @override
   Widget build(final BuildContext context) {
+    final list = addDataset(context, widget.dataset, _map);
+
     return NodeSelectionBuilder(
       node: widget.node,
       forPlay: widget.forPlay,
-      child: body(context),
-    );
-  }
-
-  Widget body(final BuildContext context) {
-    final list = addDataset(context, widget.dataset, _map);
-    return ChildConditionBuilder(
-      ValueKey('${widget.node.nid} ${widget.loop}'),
-      name: widget.node.intrinsicState.displayName,
-      child: widget.child,
-      params: widget.params,
-      states: widget.states,
-      dataset: list.isNotEmpty ? list : widget.dataset,
-      forPlay: widget.forPlay,
-      loop: widget.loop,
+      child: ChildConditionBuilder(
+        ValueKey('${widget.node.nid} ${widget.loop}'),
+        name: widget.node.intrinsicState.displayName,
+        child: widget.child,
+        params: widget.params,
+        states: widget.states,
+        dataset: list.isNotEmpty ? list : widget.dataset,
+        forPlay: widget.forPlay,
+        loop: widget.loop,
+      ),
     );
   }
 

@@ -6,16 +6,12 @@ import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 // Package imports:
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:teta_core/src/blocs/auth/index.dart';
-import 'package:teta_core/src/design_system/text.dart';
-import 'package:teta_core/src/models/page.dart';
-import 'package:teta_core/src/models/palette.dart';
-import 'package:teta_core/src/models/project.dart';
 import 'package:teta_core/src/repositories/node.dart';
 import 'package:teta_core/src/repositories/queries/color_style.dart';
 import 'package:teta_core/src/repositories/queries/page.dart';
 import 'package:teta_core/src/repositories/queries/project.dart';
 import 'package:teta_core/src/repositories/queries/user.dart';
+import 'package:teta_core/teta_core.dart';
 // Project imports:
 import 'package:teta_widgets/src/elements/controls/atoms/action.dart';
 import 'package:teta_widgets/src/elements/controls/atoms/aligns.dart';
@@ -835,11 +831,9 @@ Widget descriptionControlWidget({
             padding: const EdgeInsets.only(top: 8),
             child: Align(
               alignment: Alignment.centerLeft,
-              child: CText(
+              child: TDetailLabel(
                 description,
-                size: 12,
-                weight: FontWeight.normal,
-                customColor: Colors.white70,
+                color: Colors.white70,
               ),
             ),
           ),

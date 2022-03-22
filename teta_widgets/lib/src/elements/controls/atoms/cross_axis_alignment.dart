@@ -5,10 +5,7 @@
 import 'package:flutter/material.dart';
 // Package imports:
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:teta_core/src/blocs/focus/bloc.dart';
-import 'package:teta_core/src/design_system/dropdowns/dropdown.dart';
-import 'package:teta_core/src/design_system/palette.dart';
-import 'package:teta_core/src/design_system/text.dart';
+import 'package:teta_core/teta_core.dart';
 // Project imports:
 import 'package:teta_widgets/src/elements/features/cross_axis_alignment.dart';
 import 'package:teta_widgets/src/elements/nodes/node.dart';
@@ -66,7 +63,9 @@ class CrossAxisAlignmentControlsState
                 padding: EdgeInsets.only(
                   bottom: 8,
                 ),
-                child: CText('Cross Axis Alignment', color: Palette.white),
+                child: THeadline3(
+                  'Cross Axis Alignment',
+                ),
               ),
               CDropdown(
                 value: dropdown,

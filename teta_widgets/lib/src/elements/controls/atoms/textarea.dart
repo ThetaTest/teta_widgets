@@ -3,10 +3,8 @@
 
 // Flutter imports:
 import 'package:flutter/material.dart';
-// Package imports:
-import 'package:teta_core/src/design_system/palette.dart';
-import 'package:teta_core/src/design_system/text.dart';
 import 'package:teta_core/src/design_system/textfield/textfield.dart';
+import 'package:teta_core/teta_core.dart';
 // Project imports:
 import 'package:teta_widgets/src/elements/features/text_type_input.dart';
 
@@ -39,10 +37,8 @@ class PaddingsState extends State<TextAreaControl> {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
-        const CText(
+        const THeadline3(
           'Code',
-          color: Palette.white,
-          size: 12,
         ),
         CTextField(
           text: widget.value.value,

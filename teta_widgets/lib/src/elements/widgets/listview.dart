@@ -45,27 +45,23 @@ class WListView extends StatelessWidget {
     return NodeSelectionBuilder(
       node: node,
       forPlay: forPlay,
-      child: _body(context),
-    );
-  }
-
-  Widget _body(final BuildContext context) {
-    return ListView.builder(
-      addAutomaticKeepAlives: false,
-      addRepaintBoundaries: false,
-      scrollDirection: isVertical ? Axis.vertical : Axis.horizontal,
-      itemCount: children.isEmpty ? 1 : children.length,
-      itemBuilder: (final context, final index) {
-        return children.isNotEmpty
-            ? children[index].toWidget(
-                loop: loop,
-                forPlay: forPlay,
-                params: params,
-                states: states,
-                dataset: dataset,
-              )
-            : PlaceholderChildBuilder(name: node.intrinsicState.displayName);
-      },
+      child: ListView.builder(
+        addAutomaticKeepAlives: false,
+        addRepaintBoundaries: false,
+        scrollDirection: isVertical ? Axis.vertical : Axis.horizontal,
+        itemCount: children.isEmpty ? 1 : children.length,
+        itemBuilder: (final context, final index) {
+          return children.isNotEmpty
+              ? children[index].toWidget(
+                  loop: loop,
+                  forPlay: forPlay,
+                  params: params,
+                  states: states,
+                  dataset: dataset,
+                )
+              : PlaceholderChildBuilder(name: node.intrinsicState.displayName);
+        },
+      ),
     );
   }
 }

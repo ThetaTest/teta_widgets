@@ -296,12 +296,11 @@ class ScaffoldMobile extends StatelessWidget {
               color: Colors.white,
             ),
           ),
-          CText(
+          THeadline3(
             'New section',
-            size: 16,
             color: TinyColor(HexColor(fill.levels![0].color)).isLight()
-                ? Palette.black
-                : Palette.white,
+                ? Colors.black
+                : Colors.white,
           ),
         ],
       ),

@@ -4,9 +4,7 @@
 // Flutter imports:
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-// Package imports:
-import 'package:teta_core/src/design_system/palette.dart';
-import 'package:teta_core/src/design_system/text.dart';
+import 'package:teta_core/teta_core.dart';
 
 class SliderControls extends StatelessWidget {
   const SliderControls({
@@ -50,11 +48,8 @@ class SliderControls extends StatelessWidget {
           ),
           Padding(
             padding: const EdgeInsets.only(left: 8),
-            child: CText(
+            child: TDetailLabel(
               title,
-              size: 9,
-              color: Palette.white,
-              weight: FontWeight.w300,
             ),
           )
         ],

@@ -7,13 +7,9 @@ import 'package:enum_to_string/enum_to_string.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_feather_icons/flutter_feather_icons.dart';
 import 'package:hovering/hovering.dart';
-import 'package:teta_core/src/design_system/buttons/button.dart';
-import 'package:teta_core/src/design_system/palette.dart';
-import 'package:teta_core/src/design_system/text.dart';
 import 'package:teta_core/src/design_system/textfield/minitextfield.dart';
 import 'package:teta_core/src/design_system/textfield/multi_line_textfield.dart';
-import 'package:teta_core/src/models/page.dart';
-import 'package:teta_core/src/models/variable.dart';
+import 'package:teta_core/teta_core.dart';
 // Project imports:
 import 'package:teta_widgets/src/elements/nodes/node.dart';
 import 'package:uuid/uuid.dart';
@@ -42,11 +38,8 @@ class StatesControlState extends State<StatesControl> {
         Row(
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: [
-            const CText(
+            const THeadline3(
               'States',
-              color: Palette.white,
-              size: 16,
-              weight: FontWeight.w500,
             ),
             GestureDetector(
               onTap: () {
@@ -179,31 +172,27 @@ class StatesControlState extends State<StatesControl> {
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            CText(
+            THeadline3(
               '${variable.name}: ${variable.defaultValue}',
-              color: Palette.white,
             ),
             Row(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 Padding(
                   padding: const EdgeInsets.only(right: 8),
-                  child: CText(
+                  child: TDetailLabel(
                     EnumToString.convertToString(
                       variable.type,
                       camelCase: true,
                     ),
-                    customColor: Colors.green,
-                    size: 12,
-                    weight: FontWeight.bold,
+                    color: Colors.green,
                   ),
                 ),
                 if (variable.doc != null)
                   Expanded(
-                    child: CText(
+                    child: TDetailLabel(
                       '// ${variable.doc}',
-                      customColor: Colors.white54,
-                      size: 12,
+                      color: Colors.white54,
                     ),
                   ),
               ],
@@ -236,10 +225,9 @@ class StatesControlState extends State<StatesControl> {
               title: Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
-                  const CText(
+                  const THeadline2(
                     'Edit State',
-                    weight: FontWeight.bold,
-                    customColor: Colors.white,
+                    color: Colors.white,
                   ),
                   GestureDetector(
                     onTap: () {
@@ -275,10 +263,8 @@ class StatesControlState extends State<StatesControl> {
                   child: Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
-                      const CText(
+                      const THeadline3(
                         'Name',
-                        size: 14,
-                        customColor: Colors.white,
                       ),
                       Padding(
                         padding: const EdgeInsets.only(top: 8, bottom: 16),
@@ -321,16 +307,12 @@ class StatesControlState extends State<StatesControl> {
                             ),
                             borderRadius: BorderRadius.circular(8),
                           ),
-                          child: const CText(
+                          child: const TDetailLabel(
                             'Please provide a unique name',
-                            color: Palette.white,
-                            size: 14,
                           ),
                         ),
-                      const CText(
+                      const THeadline3(
                         'Type',
-                        size: 14,
-                        customColor: Colors.white,
                       ),
                       Container(
                         margin: const EdgeInsets.only(top: 8, bottom: 16),
@@ -373,20 +355,16 @@ class StatesControlState extends State<StatesControl> {
                                 (final String value) {
                               return DropdownMenuItem<String>(
                                 value: value,
-                                child: CText(
+                                child: THeadline3(
                                   value,
-                                  size: 16,
-                                  customColor: Colors.white,
                                 ),
                               );
                             }).toList(),
                           ),
                         ),
                       ),
-                      const CText(
+                      const THeadline3(
                         'Default Value',
-                        size: 14,
-                        customColor: Colors.white,
                       ),
                       Padding(
                         padding: const EdgeInsets.only(top: 8, bottom: 16),
@@ -406,10 +384,8 @@ class StatesControlState extends State<StatesControl> {
                           },
                         ),
                       ),
-                      const CText(
+                      const THeadline3(
                         'Description',
-                        size: 14,
-                        customColor: Colors.white,
                       ),
                       Padding(
                         padding: const EdgeInsets.only(top: 8, bottom: 16),

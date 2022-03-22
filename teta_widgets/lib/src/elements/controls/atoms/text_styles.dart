@@ -7,14 +7,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:hovering/hovering.dart';
-import 'package:teta_core/src/blocs/panels/index.dart';
-import 'package:teta_core/src/blocs/text_styles/index.dart';
-import 'package:teta_core/src/cubits/device_mode/cubit.dart';
-import 'package:teta_core/src/design_system/buttons/button.dart';
-import 'package:teta_core/src/design_system/palette.dart';
-import 'package:teta_core/src/design_system/text.dart';
 import 'package:teta_core/src/design_system/textfield/minitextfield.dart';
-import 'package:teta_core/src/models/text_style.dart';
+import 'package:teta_core/teta_core.dart';
 // Project imports:
 import 'package:teta_widgets/src/elements/features/text_style.dart';
 import 'package:teta_widgets/src/elements/nodes/node.dart';
@@ -55,11 +49,9 @@ class TextStylesControlState extends State<TextStylesControl> {
         Row(
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: [
-            const CText(
+            const THeadline3(
               'Styles',
-              color: Palette.white,
-              size: 16,
-              weight: FontWeight.bold,
+              color: Colors.white,
             ),
             Row(
               children: [
@@ -190,11 +182,9 @@ class TextStylesControlState extends State<TextStylesControl> {
             create: (final BuildContext context) => DeviceModeCubit(),
             child: AlertDialog(
               backgroundColor: const Color(0xFF222222),
-              title: const CText(
+              title: const TAlertTitle(
                 'Text Styles',
-                size: 16,
-                weight: FontWeight.bold,
-                customColor: Colors.white,
+                color: Colors.white,
               ),
               content: SizedBox(
                 height: 400,
@@ -281,7 +271,9 @@ class TextStylesControlState extends State<TextStylesControl> {
         return BlocProvider<DeviceModeCubit>(
           create: (final BuildContext context) => DeviceModeCubit(),
           child: AlertDialog(
-            title: const CText('Create new text style', size: 16),
+            title: const TAlertTitle(
+              'Create new text style',
+            ),
             content: SizedBox(
               height: 100,
               width: height! - 200,
@@ -302,7 +294,9 @@ class TextStylesControlState extends State<TextStylesControl> {
                   //setState(() => fill = pickerColor);
                   Navigator.of(context, rootNavigator: true).pop(null);
                 },
-                child: const CText('Cancel', size: 12),
+                child: const TActionLabel(
+                  'Cancel',
+                ),
               ),
               TextButton(
                 onPressed: () {
@@ -315,7 +309,9 @@ class TextStylesControlState extends State<TextStylesControl> {
                     color: const Color(0xFF3285FF),
                     borderRadius: BorderRadius.circular(8),
                   ),
-                  child: const CText('Create', color: Palette.white, size: 12),
+                  child: const TActionLabel(
+                    'Create',
+                  ),
                 ),
               ),
             ],
@@ -338,7 +334,9 @@ class TextStylesControlState extends State<TextStylesControl> {
         return BlocProvider<DeviceModeCubit>(
           create: (final BuildContext context) => DeviceModeCubit(),
           child: AlertDialog(
-            title: CText('Edit $name', size: 16),
+            title: TAlertTitle(
+              'Edit $name',
+            ),
             content: SizedBox(
               height: 100,
               width: height! - 200,
@@ -359,7 +357,9 @@ class TextStylesControlState extends State<TextStylesControl> {
                   //setState(() => fill = pickerColor);
                   Navigator.of(context, rootNavigator: true).pop(null);
                 },
-                child: const CText('Cancel', size: 12),
+                child: const TActionLabel(
+                  'Cancel',
+                ),
               ),
               TextButton(
                 onPressed: () {
@@ -372,7 +372,9 @@ class TextStylesControlState extends State<TextStylesControl> {
                     color: const Color(0xFF3285FF),
                     borderRadius: BorderRadius.circular(8),
                   ),
-                  child: const CText('Create', color: Palette.white, size: 12),
+                  child: const TActionLabel(
+                    'Create',
+                  ),
                 ),
               ),
             ],

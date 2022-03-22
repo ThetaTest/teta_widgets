@@ -5,9 +5,7 @@
 import 'package:flutter/material.dart';
 // Package imports:
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:teta_core/src/blocs/focus/bloc.dart';
-import 'package:teta_core/src/design_system/palette.dart';
-import 'package:teta_core/src/design_system/text.dart';
+import 'package:teta_core/teta_core.dart';
 // Project imports:
 import 'package:teta_widgets/src/elements/controls/atoms/widgets/selection_tab.dart';
 import 'package:teta_widgets/src/elements/features/features.dart';
@@ -50,11 +48,8 @@ class TextAlignControlsState extends State<TextAlignControls> {
           children: [
             const Padding(
               padding: EdgeInsets.only(bottom: 8),
-              child: CText(
+              child: THeadline3(
                 'Text Align',
-                color: Palette.white,
-                size: 12,
-                weight: FontWeight.w500,
               ),
             ),
             Row(

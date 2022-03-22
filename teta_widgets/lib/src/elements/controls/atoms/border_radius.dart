@@ -6,10 +6,8 @@ import 'package:flutter/material.dart';
 // Package imports:
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:hovering/hovering.dart';
-import 'package:teta_core/src/blocs/focus/bloc.dart';
-import 'package:teta_core/src/design_system/palette.dart';
-import 'package:teta_core/src/design_system/text.dart';
 import 'package:teta_core/src/design_system/textfield/minitextfield.dart';
+import 'package:teta_core/teta_core.dart';
 // Project imports:
 import 'package:teta_widgets/src/elements/features/border_radius.dart';
 import 'package:teta_widgets/src/elements/nodes/node.dart';
@@ -77,7 +75,9 @@ class BorderRadiusControlState extends State<BorderRadiusControl> {
                 child: Row(
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
-                    const CText('Border Radius', color: Palette.white),
+                    const THeadline3(
+                      'Border Radius',
+                    ),
                     GestureDetector(
                       onTap: () {
                         setState(() {

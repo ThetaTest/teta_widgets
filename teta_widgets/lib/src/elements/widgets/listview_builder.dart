@@ -46,14 +46,6 @@ class WListViewBuilderState extends State<WListViewBuilder> {
 
   @override
   Widget build(final BuildContext context) {
-    return NodeSelectionBuilder(
-      node: widget.node,
-      forPlay: widget.forPlay,
-      child: _body(context),
-    );
-  }
-
-  Widget _body(final BuildContext context) {
     _setDataset();
     final index = widget.value.datasetName != null
         ? widget.dataset.indexWhere(
@@ -61,23 +53,27 @@ class WListViewBuilderState extends State<WListViewBuilder> {
           )
         : -1;
     final db = index != -1 ? widget.dataset[index] : DatasetObject.empty();
-    return ListView.builder(
-      addAutomaticKeepAlives: false,
-      addRepaintBoundaries: false,
-      shrinkWrap: widget.shrinkWrap,
-      scrollDirection: widget.isVertical ? Axis.vertical : Axis.horizontal,
-      itemCount: db.getMap.length,
-      itemBuilder: (final context, final index) => widget.child != null
-          ? widget.child!.toWidget(
-              forPlay: widget.forPlay,
-              params: widget.params,
-              states: widget.states,
-              dataset: widget.dataset,
-              loop: index,
-            )
-          : PlaceholderChildBuilder(
-              name: widget.node.intrinsicState.displayName,
-            ),
+    return NodeSelectionBuilder(
+      node: widget.node,
+      forPlay: widget.forPlay,
+      child: ListView.builder(
+        addAutomaticKeepAlives: false,
+        addRepaintBoundaries: false,
+        shrinkWrap: widget.shrinkWrap,
+        scrollDirection: widget.isVertical ? Axis.vertical : Axis.horizontal,
+        itemCount: db.getMap.length,
+        itemBuilder: (final context, final index) => widget.child != null
+            ? widget.child!.toWidget(
+                forPlay: widget.forPlay,
+                params: widget.params,
+                states: widget.states,
+                dataset: widget.dataset,
+                loop: index,
+              )
+            : PlaceholderChildBuilder(
+                name: widget.node.intrinsicState.displayName,
+              ),
+      ),
     );
   }
 

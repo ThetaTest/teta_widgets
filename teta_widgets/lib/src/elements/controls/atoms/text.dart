@@ -6,16 +6,9 @@ import 'package:collection/collection.dart';
 // Flutter imports:
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:teta_core/src/blocs/focus/index.dart';
-import 'package:teta_core/src/design_system/dropdowns/dropdown.dart';
-import 'package:teta_core/src/design_system/dropdowns/dropdown_for_type.dart';
-import 'package:teta_core/src/design_system/palette.dart';
-import 'package:teta_core/src/design_system/text.dart';
 import 'package:teta_core/src/design_system/textfield/minitextfield.dart';
 import 'package:teta_core/src/design_system/textfield/textfield.dart';
-import 'package:teta_core/src/models/dataset.dart';
-import 'package:teta_core/src/models/page.dart';
-import 'package:teta_core/src/models/variable.dart';
+import 'package:teta_core/teta_core.dart';
 // Project imports:
 import 'package:teta_widgets/src/elements/features/text_type_input.dart';
 import 'package:teta_widgets/src/elements/nodes/node.dart';
@@ -68,8 +61,8 @@ class PaddingsState extends State<TextControl> {
 
   @override
   Widget build(final BuildContext context) {
-    final index = widget.page.datasets
-        .indexWhere((final element) => element.getName == widget.value.datasetName);
+    final index = widget.page.datasets.indexWhere(
+        (final element) => element.getName == widget.value.datasetName);
     final dataset =
         index != -1 ? widget.page.datasets[index] : DatasetObject.empty();
     return BlocBuilder<FocusBloc, List<CNode>>(
@@ -88,10 +81,8 @@ class PaddingsState extends State<TextControl> {
             Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
-                CText(
+                THeadline3(
                   widget.title,
-                  color: Palette.white,
-                  weight: FontWeight.bold,
                 ),
                 CDropdownForType(
                   value: widget.value.type == FTextTypeEnum.dataset
@@ -193,7 +184,8 @@ class PaddingsState extends State<TextControl> {
                   ),
                   if (widget.page.states
                           .firstWhereOrNull(
-                            (final element) => element.name == widget.value.stateName,
+                            (final element) =>
+                                element.name == widget.value.stateName,
                           )
                           ?.type ==
                       VariableType.json)

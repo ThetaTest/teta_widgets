@@ -105,6 +105,7 @@ enum NType {
   parallax,
   dotsIndicator,
   wrapper,
+  fontAwesome,
 
   // Supabase
   supabaseFutureBuilder,

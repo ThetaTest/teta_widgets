@@ -53,72 +53,62 @@ class _WPageViewState extends State<WPageView> {
     return NodeSelectionBuilder(
       node: widget.node,
       forPlay: widget.forPlay,
-      child: body(context),
-    );
-  }
-
-  Widget body(final BuildContext context) {
-    return ConstrainedBox(
-      constraints: const BoxConstraints(maxHeight: 850),
-      child: PageView(
-        controller: controller,
-        scrollDirection: widget.isVertical ? Axis.vertical : Axis.horizontal,
-        onPageChanged: (final i) => GestureBuilder.get(
-          context: context,
-          node: widget.node,
-          gesture: ActionGesture.onChange,
-          action: widget.action,
-          actionValue: FTextTypeInput(value: '$i'),
-          params: widget.params,
-          states: widget.states,
-          dataset: widget.dataset,
-          forPlay: widget.forPlay,
-          loop: widget.loop,
+      child: ConstrainedBox(
+        constraints: const BoxConstraints(maxHeight: 850),
+        child: PageView(
+          controller: controller,
+          scrollDirection: widget.isVertical ? Axis.vertical : Axis.horizontal,
+          onPageChanged: (final i) => GestureBuilder.get(
+            context: context,
+            node: widget.node,
+            gesture: ActionGesture.onChange,
+            action: widget.action,
+            actionValue: FTextTypeInput(value: '$i'),
+            params: widget.params,
+            states: widget.states,
+            dataset: widget.dataset,
+            forPlay: widget.forPlay,
+            loop: widget.loop,
+          ),
+          children: widget.children.isNotEmpty
+              ? widget.children
+                  .map(
+                    (final e) => e.toWidget(
+                      loop: widget.children.indexOf(e),
+                      forPlay: widget.forPlay,
+                      params: widget.params,
+                      states: widget.states,
+                      dataset: widget.dataset,
+                    ),
+                  )
+                  .toList()
+              : [
+                  const Padding(
+                    padding: EdgeInsets.all(16),
+                    child: Center(
+                      child: THeadline3(
+                        'PageView - Page 1',
+                      ),
+                    ),
+                  ),
+                  const Padding(
+                    padding: EdgeInsets.all(16),
+                    child: Center(
+                      child: THeadline3(
+                        'PageView - Page 2',
+                      ),
+                    ),
+                  ),
+                  const Padding(
+                    padding: EdgeInsets.all(16),
+                    child: Center(
+                      child: THeadline3(
+                        'PageView - Page 3',
+                      ),
+                    ),
+                  ),
+                ],
         ),
-        children: widget.children.isNotEmpty
-            ? widget.children
-                .map(
-                  (final e) => e.toWidget(
-                    loop: widget.children.indexOf(e),
-                    forPlay: widget.forPlay,
-                    params: widget.params,
-                    states: widget.states,
-                    dataset: widget.dataset,
-                  ),
-                )
-                .toList()
-            : [
-                const Padding(
-                  padding: EdgeInsets.all(16),
-                  child: Center(
-                    child: CText(
-                      'PageView - Page 1',
-                      size: 16,
-                      color: Palette.white,
-                    ),
-                  ),
-                ),
-                const Padding(
-                  padding: EdgeInsets.all(16),
-                  child: Center(
-                    child: CText(
-                      'PageView - Page 2',
-                      size: 16,
-                      color: Palette.white,
-                    ),
-                  ),
-                ),
-                const Padding(
-                  padding: EdgeInsets.all(16),
-                  child: Center(
-                    child: CText(
-                      'PageView - Page 3',
-                      size: 16,
-                      color: Palette.white,
-                    ),
-                  ),
-                ),
-              ],
       ),
     );
   }

@@ -137,9 +137,8 @@ class _WMapState extends State<WMap> {
   Widget build(final BuildContext context) {
     if (variable?.mapController == null) {
       return const Center(
-        child: CText(
+        child: THeadline3(
           'Implement a Map Controller state',
-          customColor: Colors.white,
         ),
       );
     }
@@ -155,9 +154,8 @@ class _WMapState extends State<WMap> {
           ? const DecoratedBox(
               decoration: BoxDecoration(color: Colors.black),
               child: Center(
-                child: CText(
+                child: THeadline3(
                   'Integrate your MapBox key',
-                  customColor: Colors.white,
                 ),
               ),
             )

@@ -5,10 +5,7 @@
 import 'package:flutter/material.dart';
 // Package imports:
 import 'package:hovering/hovering.dart';
-import 'package:teta_core/src/design_system/palette.dart';
-import 'package:teta_core/src/design_system/text.dart';
-import 'package:teta_core/src/models/page.dart';
-import 'package:teta_core/src/models/project.dart';
+import 'package:teta_core/teta_core.dart';
 // Project imports:
 import 'package:teta_widgets/src/elements/controls/atoms/action_element.dart';
 import 'package:teta_widgets/src/elements/features/action.dart';
@@ -65,11 +62,8 @@ class ActionControlState extends State<ActionControl> {
             child: Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
-                const CText(
+                const THeadline3(
                   'Actions',
-                  color: Palette.white,
-                  size: 16,
-                  weight: FontWeight.bold,
                 ),
                 Row(
                   children: [

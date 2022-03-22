@@ -6,11 +6,8 @@ import 'package:flutter/material.dart';
 // Package imports:
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:hovering/hovering.dart';
-import 'package:teta_core/src/blocs/focus/bloc.dart';
-import 'package:teta_core/src/design_system/palette.dart';
-import 'package:teta_core/src/design_system/switch.dart';
-import 'package:teta_core/src/design_system/text.dart';
 import 'package:teta_core/src/design_system/textfield/minitextfield.dart';
+import 'package:teta_core/teta_core.dart';
 // Project imports:
 import 'package:teta_widgets/src/elements/features/features.dart';
 import 'package:teta_widgets/src/elements/nodes/node.dart';
@@ -116,13 +113,8 @@ class SizeControlsState extends State<SizeControl> {
                       ),
                       Padding(
                         padding: const EdgeInsets.only(left: 8),
-                        child: CText(
+                        child: THeadline3(
                           widget.title,
-                          color: Palette.white,
-                          size: 14,
-                          weight: widget.isFromSizesPrefab
-                              ? FontWeight.normal
-                              : FontWeight.bold,
                         ),
                       ),
                     ],
@@ -277,11 +269,8 @@ class SizeControlsState extends State<SizeControl> {
         borderRadius: BorderRadius.circular(4),
       ),
       child: const Center(
-        child: CText(
+        child: TDetailLabel(
           'MAX',
-          size: 9,
-          weight: FontWeight.bold,
-          color: Palette.white,
         ),
       ),
     );
@@ -300,11 +289,8 @@ class SizeControlsState extends State<SizeControl> {
           borderRadius: BorderRadius.circular(4),
         ),
         child: Center(
-          child: CText(
+          child: TDetailLabel(
             unit == SizeUnit.pixel ? 'PX' : '%',
-            size: 9,
-            weight: FontWeight.bold,
-            color: Palette.white,
           ),
         ),
       ),
@@ -321,11 +307,8 @@ class SizeControlsState extends State<SizeControl> {
           borderRadius: BorderRadius.circular(4),
         ),
         child: Center(
-          child: CText(
+          child: TDetailLabel(
             unit == SizeUnit.pixel ? 'PX' : '%',
-            size: 9,
-            weight: FontWeight.bold,
-            color: Palette.white,
           ),
         ),
       ),

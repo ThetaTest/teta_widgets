@@ -12,17 +12,9 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_feather_icons/flutter_feather_icons.dart';
 import 'package:hovering/hovering.dart';
-import 'package:teta_core/src/blocs/focus/index.dart';
-import 'package:teta_core/src/cubits/refresh/cubit.dart';
-import 'package:teta_core/src/design_system/dropdowns/dropdown.dart';
-import 'package:teta_core/src/design_system/palette.dart';
-import 'package:teta_core/src/design_system/text.dart';
 import 'package:teta_core/src/design_system/textfield/minitextfield.dart';
-import 'package:teta_core/src/models/dataset.dart';
-import 'package:teta_core/src/models/page.dart';
-import 'package:teta_core/src/models/project.dart';
-import 'package:teta_core/src/models/variable.dart';
 import 'package:teta_core/src/repositories/node.dart';
+import 'package:teta_core/teta_core.dart';
 // Project imports:
 import 'package:teta_widgets/src/elements/controls/atoms/flag.dart';
 import 'package:teta_widgets/src/elements/controls/atoms/subapase/delete.dart';
@@ -132,7 +124,9 @@ class ActionElementControlState extends State<ActionElementControl> {
           child: Row(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
-              CText(widget.name, size: 16, color: Palette.white),
+              THeadline3(
+                widget.name,
+              ),
               GestureDetector(
                 onTap: widget.callBackToDelete,
                 child: HoverWidget(
@@ -161,10 +155,8 @@ class ActionElementControlState extends State<ActionElementControl> {
               //Action Type Dropdown
               const Padding(
                 padding: EdgeInsets.only(top: 2, bottom: 4),
-                child: CText(
+                child: THeadline3(
                   'Action Type',
-                  size: 14,
-                  customColor: Colors.white,
                 ),
               ),
               CDropdown(
@@ -190,10 +182,8 @@ class ActionElementControlState extends State<ActionElementControl> {
               // Gesture Dropdown
               const Padding(
                 padding: EdgeInsets.only(top: 2, bottom: 4),
-                child: CText(
+                child: THeadline3(
                   'Gesture',
-                  size: 14,
-                  customColor: Colors.white,
                 ),
               ),
               CDropdown(
@@ -219,10 +209,8 @@ class ActionElementControlState extends State<ActionElementControl> {
               ),
               const Padding(
                 padding: EdgeInsets.only(top: 2, bottom: 4),
-                child: CText(
+                child: THeadline3(
                   'Delay (ms)',
-                  size: 14,
-                  customColor: Colors.white,
                 ),
               ),
               Padding(
@@ -270,10 +258,8 @@ class ActionElementControlState extends State<ActionElementControl> {
               if (widget.element.withLoop == true)
                 const Padding(
                   padding: EdgeInsets.only(top: 2, bottom: 4),
-                  child: CText(
+                  child: THeadline3(
                     'Every milliseconds',
-                    size: 14,
-                    customColor: Colors.white,
                   ),
                 ),
               if (widget.element.withLoop == true)
@@ -596,10 +582,8 @@ class ActionElementControlState extends State<ActionElementControl> {
                     ),
                     const Padding(
                       padding: EdgeInsets.only(bottom: 8),
-                      child: CText(
+                      child: TDetailLabel(
                         "It requires 'int' or 'double' variables",
-                        customColor: Colors.white,
-                        size: 12,
                       ),
                     ),
                   ],
@@ -611,10 +595,8 @@ class ActionElementControlState extends State<ActionElementControl> {
                   children: [
                     const Padding(
                       padding: EdgeInsets.only(top: 2, bottom: 4),
-                      child: CText(
+                      child: THeadline3(
                         'State',
-                        size: 14,
-                        customColor: Colors.white,
                       ),
                     ),
                     CDropdown(
@@ -642,10 +624,8 @@ class ActionElementControlState extends State<ActionElementControl> {
                     ),
                     const Padding(
                       padding: EdgeInsets.only(top: 2, bottom: 4),
-                      child: CText(
+                      child: THeadline3(
                         'Parameter',
-                        size: 14,
-                        customColor: Colors.white,
                       ),
                     ),
                     CDropdown(
@@ -823,15 +803,13 @@ class ActionElementControlState extends State<ActionElementControl> {
                       padding: const EdgeInsets.only(top: 8, bottom: 8),
                       child: Row(
                         children: [
-                          CText(
+                          THeadline3(
                             widget.element.actionNavigation ==
                                         ActionNavigation.openBottomSheet ||
                                     widget.element.actionNavigation ==
                                         ActionNavigation.openSnackBar
                                 ? 'Select component'
                                 : 'Which page?',
-                            customColor: Colors.white,
-                            size: 12,
                           ),
                         ],
                       ),
@@ -933,10 +911,8 @@ class ActionElementControlState extends State<ActionElementControl> {
                                         ),
                                         Padding(
                                           padding: EdgeInsets.only(left: 4),
-                                          child: CText(
+                                          child: TActionLabel(
                                             'Send Params',
-                                            size: 12,
-                                            color: Palette.yellow,
                                           ),
                                         )
                                       ],
@@ -949,10 +925,9 @@ class ActionElementControlState extends State<ActionElementControl> {
                               padding: const EdgeInsets.only(bottom: 8),
                               child: Row(
                                 children: [
-                                  CText(
+                                  TDetailLabel(
                                     'This page has not params',
-                                    customColor: Colors.white.withOpacity(0.8),
-                                    size: 12,
+                                    color: Colors.white.withOpacity(0.8),
                                   ),
                                 ],
                               ),
@@ -998,102 +973,98 @@ class ActionElementControlState extends State<ActionElementControl> {
                             ),
                             const Padding(
                               padding: EdgeInsets.only(top: 12),
-                              child: CText(
+                              child: TParagraph(
                                 "This action needs the following state variables: 'Email', 'Password', 'Status'",
-                                customColor: Colors.white,
-                                size: 14,
-                                weight: FontWeight.w700,
                               ),
                             ),
                             const Padding(
                               padding: EdgeInsets.only(top: 8, bottom: 8),
-                              child: CText(
+                              child: TParagraph(
                                 'The names of the variables are not case sensitive',
-                                customColor: Colors.white,
-                                size: 10,
                               ),
                             ),
-                            TextButton(
-                              onPressed: () {
-                                var flag = false;
-                                if (widget.page.states.indexWhere(
-                                      (final element) =>
-                                          element.name.toLowerCase() == 'email',
-                                    ) ==
-                                    -1) {
-                                  widget.page.states.add(
-                                    VariableObject(
-                                      id: const Uuid().v1(),
-                                      type: VariableType.string,
-                                      name: 'Email',
-                                      defaultValue: '0',
-                                    ),
-                                  );
-                                  flag = true;
-                                }
-                                if (widget.page.states.indexWhere(
-                                      (final element) =>
-                                          element.name.toLowerCase() ==
-                                          'password',
-                                    ) ==
-                                    -1) {
-                                  widget.page.states.add(
-                                    VariableObject(
-                                      id: const Uuid().v1(),
-                                      type: VariableType.string,
-                                      name: 'Password',
-                                      defaultValue: '0',
-                                    ),
-                                  );
-                                  flag = true;
-                                }
-                                if (widget.page.states.indexWhere(
-                                      (final element) =>
-                                          element.name.toLowerCase() ==
-                                          'status',
-                                    ) ==
-                                    -1) {
-                                  widget.page.states.add(
-                                    VariableObject(
-                                      id: const Uuid().v1(),
-                                      type: VariableType.string,
-                                      name: 'Status',
-                                      defaultValue: '0',
-                                    ),
-                                  );
-                                  flag = true;
-                                }
+                            if (kDebugMode)
+                              TextButton(
+                                onPressed: () {
+                                  var flag = false;
+                                  if (widget.page.states.indexWhere(
+                                        (final element) =>
+                                            element.name.toLowerCase() ==
+                                            'email',
+                                      ) ==
+                                      -1) {
+                                    widget.page.states.add(
+                                      VariableObject(
+                                        id: const Uuid().v1(),
+                                        type: VariableType.string,
+                                        name: 'Email',
+                                        defaultValue: '0',
+                                      ),
+                                    );
+                                    flag = true;
+                                  }
+                                  if (widget.page.states.indexWhere(
+                                        (final element) =>
+                                            element.name.toLowerCase() ==
+                                            'password',
+                                      ) ==
+                                      -1) {
+                                    widget.page.states.add(
+                                      VariableObject(
+                                        id: const Uuid().v1(),
+                                        type: VariableType.string,
+                                        name: 'Password',
+                                        defaultValue: '0',
+                                      ),
+                                    );
+                                    flag = true;
+                                  }
+                                  if (widget.page.states.indexWhere(
+                                        (final element) =>
+                                            element.name.toLowerCase() ==
+                                            'status',
+                                      ) ==
+                                      -1) {
+                                    widget.page.states.add(
+                                      VariableObject(
+                                        id: const Uuid().v1(),
+                                        type: VariableType.string,
+                                        name: 'Status',
+                                        defaultValue: '0',
+                                      ),
+                                    );
+                                    flag = true;
+                                  }
 
-                                if (flag) {
-                                  NodeRepository.change(
-                                    nodeId: widget.page.scaffold!.nid,
-                                    pageId: widget.page.id,
-                                    key: 'states',
-                                    value: widget.page.states
-                                        .map((final e) => e.toJson())
-                                        .toList(),
-                                    old: null,
-                                  );
-                                }
-                                BlocProvider.of<FocusBloc>(context)
-                                    .add(OnFocus(node: widget.node));
-                                BlocProvider.of<RefreshCubit>(context).change();
-                              },
-                              child: Container(
-                                padding: const EdgeInsets.all(8),
-                                decoration: BoxDecoration(
-                                  color: Colors.white24,
-                                  borderRadius: BorderRadius.circular(8),
-                                ),
-                                child: const Center(
-                                  child: CText(
-                                    'Generate',
-                                    customColor: Colors.white,
-                                    size: 14,
+                                  if (flag) {
+                                    NodeRepository.change(
+                                      nodeId: widget.page.scaffold!.nid,
+                                      pageId: widget.page.id,
+                                      key: 'states',
+                                      value: widget.page.states
+                                          .map((final e) => e.toJson())
+                                          .toList(),
+                                      old: null,
+                                    );
+                                  }
+                                  BlocProvider.of<FocusBloc>(context)
+                                      .add(OnFocus(node: widget.node));
+                                  BlocProvider.of<RefreshCubit>(context)
+                                      .change();
+                                },
+                                child: Container(
+                                  padding: const EdgeInsets.all(8),
+                                  decoration: BoxDecoration(
+                                    color: Colors.white24,
+                                    borderRadius: BorderRadius.circular(8),
+                                  ),
+                                  child: const Center(
+                                    child: TActionLabel(
+                                      'Generate',
+                                    ),
                                   ),
                                 ),
                               ),
-                            ),
                           ],
                         ),
                       ),
@@ -1244,10 +1215,8 @@ class _ElementState extends State<Element> {
         children: [
           Padding(
             padding: const EdgeInsets.only(bottom: 8),
-            child: CText(
+            child: THeadline3(
               widget.variable.name,
-              size: 12,
-              color: Palette.textPrimary,
             ),
           ),
           if (listDataset

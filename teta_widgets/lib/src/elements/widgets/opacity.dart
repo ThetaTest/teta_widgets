@@ -34,28 +34,24 @@ class WOpacity extends StatelessWidget {
 
   @override
   Widget build(final BuildContext context) {
+    final opacityString = value.get(params, states, dataset, forPlay, loop);
     return NodeSelectionBuilder(
       node: node,
       forPlay: forPlay,
-      child: _body(context),
-    );
-  }
-
-  Widget _body(final BuildContext context) {
-    final opacityString = value.get(params, states, dataset, forPlay, loop);
-    return Opacity(
-      opacity: double.tryParse(opacityString) != null
-          ? double.parse(opacityString)
-          : 1,
-      child: ChildConditionBuilder(
-        ValueKey('${node.nid} $loop'),
-        name: node.intrinsicState.displayName,
-        child: child,
-        params: params,
-        states: states,
-        dataset: dataset,
-        forPlay: forPlay,
-        loop: loop,
+      child: Opacity(
+        opacity: double.tryParse(opacityString) != null
+            ? double.parse(opacityString)
+            : 1,
+        child: ChildConditionBuilder(
+          ValueKey('${node.nid} $loop'),
+          name: node.intrinsicState.displayName,
+          child: child,
+          params: params,
+          states: states,
+          dataset: dataset,
+          forPlay: forPlay,
+          loop: loop,
+        ),
       ),
     );
   }

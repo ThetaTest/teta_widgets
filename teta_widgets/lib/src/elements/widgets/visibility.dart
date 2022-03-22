@@ -34,27 +34,22 @@ class WVisibility extends StatelessWidget {
 
   @override
   Widget build(final BuildContext context) {
+    final val = value.get(params, states, dataset, forPlay, loop);
     return NodeSelectionBuilder(
       node: node,
       forPlay: forPlay,
-      child: _body(context),
-    );
-  }
-
-  Widget _body(final BuildContext context) {
-    final val = value.get(params, states, dataset, forPlay, loop);
-
-    return Visibility(
-      visible: val == 'true',
-      child: ChildConditionBuilder(
-        ValueKey('${node.nid} $loop'),
-        name: node.intrinsicState.displayName,
-        child: child,
-        params: params,
-        states: states,
-        dataset: dataset,
-        forPlay: forPlay,
-        loop: loop,
+      child: Visibility(
+        visible: val == 'true',
+        child: ChildConditionBuilder(
+          ValueKey('${node.nid} $loop'),
+          name: node.intrinsicState.displayName,
+          child: child,
+          params: params,
+          states: states,
+          dataset: dataset,
+          forPlay: forPlay,
+          loop: loop,
+        ),
       ),
     );
   }

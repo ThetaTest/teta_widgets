@@ -5,10 +5,7 @@
 import 'package:flutter/material.dart';
 // Package imports:
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:teta_core/src/blocs/focus/bloc.dart';
-import 'package:teta_core/src/design_system/dropdowns/dropdown.dart';
-import 'package:teta_core/src/design_system/palette.dart';
-import 'package:teta_core/src/design_system/text.dart';
+import 'package:teta_core/teta_core.dart';
 // Project imports:
 import 'package:teta_widgets/src/elements/features/main_axis_alignment.dart';
 import 'package:teta_widgets/src/elements/nodes/node.dart';
@@ -67,7 +64,9 @@ class MainAxisAlignmentControlsState extends State<MainAxisAlignmentControls> {
                 ),
                 child: Row(
                   children: const [
-                    CText('Main Axis Alignment', color: Palette.white),
+                    THeadline3(
+                      'Main Axis Alignment',
+                    ),
                   ],
                 ),
               ),

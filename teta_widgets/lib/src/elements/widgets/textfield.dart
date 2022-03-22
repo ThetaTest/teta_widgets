@@ -80,23 +80,6 @@ class _WTextFieldState extends State<WTextField> {
 
   @override
   Widget build(final BuildContext context) {
-    return NodeSelectionBuilder(
-      node: widget.node,
-      forPlay: widget.forPlay,
-      child: Container(
-        margin: widget.margins.get(context),
-        width: widget.width.get(context: context, isWidth: true),
-        decoration: TetaBoxDecoration.get(
-          context: context,
-          fill: widget.fill.get(context),
-          borderRadius: widget.borderRadius,
-        ),
-        child: childCondition(),
-      ),
-    );
-  }
-
-  Widget childCondition() {
     if (!widget.forPlay) {
       textEditingController.text = widget.value.value!;
     }
@@ -108,84 +91,96 @@ class _WTextFieldState extends State<WTextField> {
         if (element.name == widget.textStyle.textStyleModel) model = element;
       });
     }
-
-    return TextField(
-      controller: textEditingController,
-      decoration: InputDecoration(
-        border: OutlineInputBorder(
-          borderRadius: borderRadius,
+    return NodeSelectionBuilder(
+      node: widget.node,
+      forPlay: widget.forPlay,
+      child: Container(
+        margin: widget.margins.get(context),
+        width: widget.width.get(context: context, isWidth: true),
+        decoration: TetaBoxDecoration.get(
+          context: context,
+          fill: widget.fill.get(context),
+          borderRadius: widget.borderRadius,
         ),
-        enabledBorder: OutlineInputBorder(
-          borderRadius: borderRadius,
-        ),
-        focusedBorder: OutlineInputBorder(
-          borderRadius: borderRadius,
-        ),
-        hintText: widget.labelText.get(
-          widget.params,
-          widget.states,
-          widget.dataset,
-          widget.forPlay,
-          widget.loop,
-        ),
-        contentPadding: widget.paddings.get(context),
-      ),
-      style: widget.textStyle.get(context, model),
-      textAlign: widget.textStyle.textAlign!.get,
-      autocorrect: widget.autoCorrect,
-      obscureText: widget.obscureText,
-      enabled: widget.forPlay,
-      maxLength: int.tryParse(
-        widget.maxLenght.get(
-          widget.params,
-          widget.states,
-          widget.dataset,
-          widget.forPlay,
-          widget.loop,
-        ),
-      ),
-      maxLines: int.tryParse(
-            widget.maxLines.get(
+        child: TextField(
+          controller: textEditingController,
+          decoration: InputDecoration(
+            border: OutlineInputBorder(
+              borderRadius: borderRadius,
+            ),
+            enabledBorder: OutlineInputBorder(
+              borderRadius: borderRadius,
+            ),
+            focusedBorder: OutlineInputBorder(
+              borderRadius: borderRadius,
+            ),
+            hintText: widget.labelText.get(
               widget.params,
               widget.states,
               widget.dataset,
               widget.forPlay,
               widget.loop,
             ),
-          ) ??
-          1,
-      minLines: int.tryParse(
-        widget.minLines.get(
-          widget.params,
-          widget.states,
-          widget.dataset,
-          widget.forPlay,
-          widget.loop,
+            contentPadding: widget.paddings.get(context),
+          ),
+          style: widget.textStyle.get(context, model),
+          textAlign: widget.textStyle.textAlign!.get,
+          autocorrect: widget.autoCorrect,
+          obscureText: widget.obscureText,
+          enabled: widget.forPlay,
+          maxLength: int.tryParse(
+            widget.maxLenght.get(
+              widget.params,
+              widget.states,
+              widget.dataset,
+              widget.forPlay,
+              widget.loop,
+            ),
+          ),
+          maxLines: int.tryParse(
+                widget.maxLines.get(
+                  widget.params,
+                  widget.states,
+                  widget.dataset,
+                  widget.forPlay,
+                  widget.loop,
+                ),
+              ) ??
+              1,
+          minLines: int.tryParse(
+            widget.minLines.get(
+              widget.params,
+              widget.states,
+              widget.dataset,
+              widget.forPlay,
+              widget.loop,
+            ),
+          ),
+          onChanged: (final text) => GestureBuilder.get(
+            context: context,
+            node: widget.node,
+            gesture: ActionGesture.onChange,
+            action: widget.action,
+            actionValue: FTextTypeInput(value: text),
+            params: widget.params,
+            states: widget.states,
+            dataset: widget.dataset,
+            forPlay: widget.forPlay,
+            loop: widget.loop,
+          ),
+          onSubmitted: (final text) => GestureBuilder.get(
+            context: context,
+            node: widget.node,
+            gesture: ActionGesture.onSubmitted,
+            action: widget.action,
+            actionValue: FTextTypeInput(value: text),
+            params: widget.params,
+            states: widget.states,
+            dataset: widget.dataset,
+            forPlay: widget.forPlay,
+            loop: widget.loop,
+          ),
         ),
-      ),
-      onChanged: (final text) => GestureBuilder.get(
-        context: context,
-        node: widget.node,
-        gesture: ActionGesture.onChange,
-        action: widget.action,
-        actionValue: FTextTypeInput(value: text),
-        params: widget.params,
-        states: widget.states,
-        dataset: widget.dataset,
-        forPlay: widget.forPlay,
-        loop: widget.loop,
-      ),
-      onSubmitted: (final text) => GestureBuilder.get(
-        context: context,
-        node: widget.node,
-        gesture: ActionGesture.onSubmitted,
-        action: widget.action,
-        actionValue: FTextTypeInput(value: text),
-        params: widget.params,
-        states: widget.states,
-        dataset: widget.dataset,
-        forPlay: widget.forPlay,
-        loop: widget.loop,
       ),
     );
   }

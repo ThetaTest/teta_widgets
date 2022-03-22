@@ -79,9 +79,8 @@ class _WSupabaseLoggedUserState extends State<WSupabaseLoggedUser> {
     client = BlocProvider.of<SupabaseCubit>(context).state;
     if (client == null) {
       return const Center(
-        child: CText(
+        child: THeadline3(
           'Supabase is not initialized yet',
-          customColor: Colors.white,
         ),
       );
     }

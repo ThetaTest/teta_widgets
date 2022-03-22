@@ -118,66 +118,61 @@ class _WSupabaseStreamBuilderState extends State<WSupabaseStreamBuilder> {
 
   @override
   Widget build(final BuildContext context) {
-    return NodeSelectionBuilder(
-      node: widget.node,
-      forPlay: widget.forPlay,
-      child: body(context),
-    );
-  }
-
-  Widget body(final BuildContext context) {
     final client = BlocProvider.of<SupabaseCubit>(context).state;
 
     if (client == null) {
       return const Center(
-        child: CText(
+        child: THeadline3(
           'Supabase is not initialized yet',
-          customColor: Colors.white,
         ),
       );
     }
 
-    return StreamBuilder(
-      stream: _stream,
-      builder: (final context, final snapshot) {
-        if (!snapshot.hasData) {
-          // snapshot has no data yet
+    return NodeSelectionBuilder(
+      node: widget.node,
+      forPlay: widget.forPlay,
+      child: StreamBuilder(
+        stream: _stream,
+        builder: (final context, final snapshot) {
+          if (!snapshot.hasData) {
+            // snapshot has no data yet
+            if (widget.children.isNotEmpty) {
+              return widget.children.last.toWidget(
+                params: widget.params,
+                states: widget.states,
+                dataset: widget.dataset,
+                forPlay: widget.forPlay,
+              );
+            } else {
+              return const CircularProgressIndicator();
+            }
+          }
+          if (snapshot.error != null) {
+            // TODO: Returns a error widget
+          }
+          final response = snapshot.data as List<Map<String, dynamic>>?;
+          if ((response ?? <Map<String, dynamic>>[]).isEmpty) {
+            // TODO: Returns a error widget
+          }
+          _map = _map.copyWith(
+            name: widget.node.name ?? widget.node.intrinsicState.displayName,
+            map: response?.map((final Map<String, dynamic> e) => e).toList(),
+          );
+          final datasets = addDataset(context, widget.dataset, _map);
+
+          // Returns child
           if (widget.children.isNotEmpty) {
-            return widget.children.last.toWidget(
+            return widget.children.first.toWidget(
               params: widget.params,
               states: widget.states,
-              dataset: widget.dataset,
+              dataset: widget.dataset.isEmpty ? datasets : widget.dataset,
               forPlay: widget.forPlay,
             );
           } else {
-            return const CircularProgressIndicator();
+            return const SizedBox();
           }
-        }
-        if (snapshot.error != null) {
-          // TODO: Returns a error widget
-        }
-        final response = snapshot.data as List<Map<String, dynamic>>?;
-        if ((response ?? <Map<String, dynamic>>[]).isEmpty) {
-          // TODO: Returns a error widget
-        }
-        _map = _map.copyWith(
-          name: widget.node.name ?? widget.node.intrinsicState.displayName,
-          map: response?.map((final Map<String, dynamic> e) => e).toList(),
-        );
-        final datasets = addDataset(context, widget.dataset, _map);
-
-        // Returns child
-        if (widget.children.isNotEmpty) {
-          return widget.children.first.toWidget(
-            params: widget.params,
-            states: widget.states,
-            dataset: widget.dataset.isEmpty ? datasets : widget.dataset,
-            forPlay: widget.forPlay,
-          );
-        } else {
-          return const SizedBox();
-        }
-      },
+        },
+      ),
     );
   }
 }

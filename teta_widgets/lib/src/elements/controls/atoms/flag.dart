@@ -4,10 +4,7 @@
 // Flutter imports:
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-// Package imports:
-import 'package:teta_core/src/design_system/palette.dart';
-import 'package:teta_core/src/design_system/switch.dart';
-import 'package:teta_core/src/design_system/text.dart';
+import 'package:teta_core/teta_core.dart';
 
 class FlagControl extends StatefulWidget {
   const FlagControl({
@@ -46,11 +43,8 @@ class FlagControlState extends State<FlagControl> {
     return Row(
       mainAxisAlignment: MainAxisAlignment.spaceBetween,
       children: [
-        CText(
+        THeadline3(
           widget.title,
-          color: Palette.white,
-          size: 16,
-          weight: FontWeight.bold,
         ),
         CSwitch(
           callback: _onSwitchChanged,
