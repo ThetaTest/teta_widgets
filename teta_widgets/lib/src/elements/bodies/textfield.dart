@@ -127,6 +127,8 @@ class TextFieldBody extends NodeBody {
     DBKeys.autoCorrect: false,
     DBKeys.obscureText: false,
     DBKeys.action: FAction(),
+    DBKeys.cursorColor: FFill(),
+    DBKeys.hintTextColor: FFill(),
   };
 
   @override
