@@ -16,7 +16,7 @@ dependencies:
     git:
       url: git@github.com:andreabuttarelli/Teta.git
       path: teta_core
-      ref: feat/new_design_system
+      ref: develop
 
   # DB & Services
   supabase: ^0.2.14

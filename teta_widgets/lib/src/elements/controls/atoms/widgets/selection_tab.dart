@@ -37,9 +37,7 @@ class SelectionTab extends StatelessWidget {
         margin: const EdgeInsets.only(right: 4),
         height: 40,
         decoration: BoxDecoration(
-          color: isSelected
-              ? DarkPalette().colors['Palette.accent']
-              : Colors.transparent,
+          color: isSelected ? Palette.blue : Colors.transparent,
           borderRadius: BorderRadius.circular(8),
           border: Border.all(
             style: isHovered ? BorderStyle.solid : BorderStyle.none,
