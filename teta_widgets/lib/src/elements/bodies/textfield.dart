@@ -121,6 +121,7 @@ class TextFieldBody extends NodeBody {
     DBKeys.maxLines: FTextTypeInput(value: '1'),
     DBKeys.minLines: FTextTypeInput(value: '1'),
     DBKeys.maxLenght: FTextTypeInput(),
+    DBKeys.keyboardType: FKeyboardType(),
     DBKeys.borderRadius: FBorderRadius(),
     DBKeys.showCursor: true,
     DBKeys.autoCorrect: false,
