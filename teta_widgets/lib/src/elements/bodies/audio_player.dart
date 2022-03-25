@@ -55,7 +55,9 @@ class AudioPlayerBody extends NodeBody {
   // ignore: overridden_fields
   Map<String, dynamic> attributes = <String, dynamic>{
     DBKeys.value: FTextTypeInput(type: FTextTypeEnum.state),
-    DBKeys.valueOfCondition: FTextTypeInput(value: 'https://foo.com/bar.mp3'),
+    DBKeys.valueOfCondition: FTextTypeInput(
+      value: 'https://foo.com/bar.mp3',
+    ),
   };
 
   @override

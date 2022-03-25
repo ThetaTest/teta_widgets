@@ -28,6 +28,7 @@ import 'package:teta_widgets/src/elements/features/text_align.dart';
 import 'package:teta_widgets/src/elements/features/text_decoration.dart';
 import 'package:teta_widgets/src/elements/features/text_style.dart';
 import 'package:teta_widgets/src/elements/features/text_type_input.dart';
+import 'package:teta_widgets/src/elements/index.dart';
 
 class DBKeys {
   // DB param keys
@@ -381,6 +382,8 @@ class DynamicAttributes {
           return value;
         case DBKeys.borderFill:
           return FFill().fromJson(value as Map<String, dynamic>);
+        case DBKeys.keyboardType:
+          return FKeyboardType.fromJson(value as String);
         default:
           return value;
       }
@@ -584,6 +587,8 @@ class DynamicAttributes {
         return value;
       case DBKeys.borderFill:
         return value != null ? value.toJson() : FFill().toJson();
+      case DBKeys.keyboardType:
+        return value != null ? value.toJson() : FKeyboardType().toJson();
       default:
         return <String, dynamic>{};
     }
