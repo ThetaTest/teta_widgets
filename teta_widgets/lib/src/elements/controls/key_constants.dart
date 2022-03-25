@@ -383,7 +383,9 @@ class DynamicAttributes {
         case DBKeys.borderFill:
           return FFill().fromJson(value as Map<String, dynamic>);
         case DBKeys.keyboardType:
-          return FKeyboardType.fromJson(value as String);
+          return value is String
+              ? FKeyboardType.fromJson(value)
+              : FKeyboardType();
         default:
           return value;
       }
