@@ -148,16 +148,16 @@ class SupabaseFutureBuilderBody extends NodeBody {
         ${node.nid}
         $loop
         ${child ?? children}
-        ${(attributes[DBKeys.supabaseFrom] as FTextTypeInput).toJson()}
-        ${(attributes[DBKeys.supabaseSelect] as FTextTypeInput).toJson()}
-        ${(attributes[DBKeys.supabaseOrder] as FTextTypeInput).toJson()}
-        ${(attributes[DBKeys.supabaseFromRange] as FTextTypeInput).toJson()}
-        ${(attributes[DBKeys.supabaseToRange] as FTextTypeInput).toJson()}
-        ${(attributes[DBKeys.supabaseNumberPage] as FTextTypeInput).toJson()}
-        ${(attributes[DBKeys.supabaseSearchName] as FTextTypeInput).toJson()}
-        ${(attributes[DBKeys.supabaseSearchValue] as FTextTypeInput).toJson()}
-        ${(attributes[DBKeys.supabaseEqName] as FTextTypeInput).toJson()}
-        ${(attributes[DBKeys.supabaseEqValue] as FTextTypeInput).toJson()}
+        ${(attributes[DBKeys.supabaseFrom] as FTextTypeInput).get(params, states, dataset, forPlay, loop)}
+        ${(attributes[DBKeys.supabaseSelect] as FTextTypeInput).get(params, states, dataset, forPlay, loop)}
+        ${(attributes[DBKeys.supabaseOrder] as FTextTypeInput).get(params, states, dataset, forPlay, loop)}
+        ${(attributes[DBKeys.supabaseFromRange] as FTextTypeInput).get(params, states, dataset, forPlay, loop)}
+        ${(attributes[DBKeys.supabaseToRange] as FTextTypeInput).get(params, states, dataset, forPlay, loop)}
+        ${(attributes[DBKeys.supabaseNumberPage] as FTextTypeInput).get(params, states, dataset, forPlay, loop)}
+        ${(attributes[DBKeys.supabaseSearchName] as FTextTypeInput).get(params, states, dataset, forPlay, loop)}
+        ${(attributes[DBKeys.supabaseSearchValue] as FTextTypeInput).get(params, states, dataset, forPlay, loop)}
+        ${(attributes[DBKeys.supabaseEqName] as FTextTypeInput).get(params, states, dataset, forPlay, loop)}
+        ${(attributes[DBKeys.supabaseEqValue] as FTextTypeInput).get(params, states, dataset, forPlay, loop)}
       ''',
       ),
       node: node,
