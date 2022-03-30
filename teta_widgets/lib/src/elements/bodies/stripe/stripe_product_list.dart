@@ -95,5 +95,5 @@ class StripeProductListBody extends NodeBody {
     final int pageId,
     final int? loop,
   ) =>
-      'ciao sono il codice del tocode';
+      'coming soon..';
 }
