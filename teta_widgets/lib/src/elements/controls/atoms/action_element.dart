@@ -653,6 +653,7 @@ class ActionElementControlState extends State<ActionElementControl> {
                     ),
                   ],
                 ),
+              //todo: see how it works
               if (widget.element.actionType == ActionType.revenueCat)
                 CDropdown(
                   value: FActionElement.convertValueToDropdown(
