@@ -20,7 +20,7 @@ import 'package:teta_widgets/src/elements/widgets/stripe/stripe_product_list.dar
 const _globalType = NType.stripeProductsList;
 
 /// IS
-final supabaseFutureBuilderIntrinsicStates = IntrinsicStates(
+final stripeProductsList = IntrinsicStates(
   nodeIcon: Assets.wIcons.supabaseLogoIcon,
   nodeVideo: null,
   nodeDescription: null,
