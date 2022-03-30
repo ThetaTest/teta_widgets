@@ -85,7 +85,7 @@ class _WStripeProductsListState extends State<WStripeProductsList> {
     return NodeSelectionBuilder(
       node: widget.node,
       forPlay: widget.forPlay,
-      child: Stack(
+      child: Column(
         children: widget.children.isNotEmpty
             ? widget.children
                 .map(

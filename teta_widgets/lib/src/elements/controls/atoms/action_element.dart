@@ -695,6 +695,10 @@ class ActionElementControlState extends State<ActionElementControl> {
                     }
                   },
                 ),
+                if(widget.element.actionStripe == ActionStripe.buy)
+                  //todo: dropdown with products names
+                  Container(width: 200,height: 200,color: Colors.red,),
+
 
               if (widget.element.actionType == ActionType.navigation)
                 CDropdown(
