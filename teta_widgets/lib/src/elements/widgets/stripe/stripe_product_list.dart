@@ -66,9 +66,10 @@ class _WStripeProductsListState extends State<WStripeProductsList> {
       debugPrint('get body: ${response.body}');
 
       final jsonData = json.decode(response.body) as List<dynamic>;
+      final map = jsonData.map((dynamic e) => e as Map<String, dynamic>).toList();
 
       final datasetObject = DatasetObject(
-          name: 'products', map: jsonData as List<Map<String, dynamic>>,);
+          name: 'products', map: map,);
 
       widget.dataset.clear();
       widget.dataset.add(datasetObject);
