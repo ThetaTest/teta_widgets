@@ -702,6 +702,7 @@ class ActionElementControlState extends State<ActionElementControl> {
                     String currentVal= '';
                     Container(
                       width: double.maxFinite,
+                      height: 100,
                       padding: const EdgeInsets.symmetric(
                         horizontal: 10,
                         vertical: 8,
