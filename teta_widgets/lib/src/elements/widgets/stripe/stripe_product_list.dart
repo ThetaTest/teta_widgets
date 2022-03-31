@@ -74,9 +74,15 @@ class _WStripeProductsListState extends State<WStripeProductsList> {
       widget.dataset.clear();
       widget.dataset.add(datasetObject);
 
+
+
       print(widget.dataset);
 
       debugPrint('getted products from stripe!');
+
+      setState(() {
+        
+      });
     }
   }
 
