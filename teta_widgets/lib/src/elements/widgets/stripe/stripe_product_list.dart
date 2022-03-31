@@ -1,4 +1,5 @@
 // Flutter imports:
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 // Package imports:
@@ -66,21 +67,26 @@ class _WStripeProductsListState extends State<WStripeProductsList> {
       debugPrint('get body: ${response.body}');
 
       final jsonData = json.decode(response.body) as List<dynamic>;
-      final map = jsonData.map((dynamic e) => e as Map<String, dynamic>).toList();
+      final map =
+          jsonData.map((final dynamic e) => e as Map<String, dynamic>).toList();
 
       final datasetObject = DatasetObject(
-          name: 'products', map: map,);
+        name: 'products',
+        map: map,
+      );
 
       widget.dataset.clear();
       widget.dataset.add(datasetObject);
 
-      print(widget.dataset);
+      final productsListCubit = ProductsListCubit()
+        ..setProducts(value: widget.dataset);
 
-      debugPrint('getted products from stripe!');
-
-      setState(() {
-        
-      });
+      if (kDebugMode) {
+        print('dataset: ${widget.dataset}');
+        print('cubit: ${productsListCubit.state}');
+        print('getted products from stripe!');
+      }
+      setState(() {});
     }
   }
 
@@ -104,7 +110,8 @@ class _WStripeProductsListState extends State<WStripeProductsList> {
                 .toList()
             : [
                 PlaceholderChildBuilder(
-                    name: widget.node.intrinsicState.displayName,),
+                  name: widget.node.intrinsicState.displayName,
+                ),
               ],
       ),
     );

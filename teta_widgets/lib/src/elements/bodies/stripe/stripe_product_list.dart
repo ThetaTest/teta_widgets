@@ -74,7 +74,18 @@ class StripeProductListBody extends NodeBody {
     final List<CNode>? children,
   }) {
     return WStripeProductsList(
-      const ValueKey('05f6e5ea-5ebc-41fb-aea6-ed5791909c51'),
+      ValueKey(
+        '''
+          $params
+          $states
+          $dataset
+          $forPlay
+          $node
+          $loop
+          $child
+          $children
+        ''',
+      ),
       node: node,
       children: children ?? [],
       child: child,
