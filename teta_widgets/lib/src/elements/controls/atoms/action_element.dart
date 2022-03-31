@@ -696,12 +696,8 @@ class ActionElementControlState extends State<ActionElementControl> {
                   },
                 ),
               if (widget.element.actionStripe == ActionStripe.buy)
-                BlocListener<ProductsListCubit, List<DatasetObject>>(
-                  listener: (final context, final state) {
-                    print(state);
-                    String currentVal= '';
                     Container(
-                      width: double.maxFinite,
+                      width: 200,
                       height: 100,
                       padding: const EdgeInsets.symmetric(
                         horizontal: 10,
@@ -711,20 +707,19 @@ class ActionElementControlState extends State<ActionElementControl> {
                         color: Colors.white,
                         borderRadius: BorderRadius.circular(8),
                       ),
-                      child: DropdownButton<String>(
+                      child: BlocListener<ProductsListCubit, List<DatasetObject>>(
+                  listener: (final context, final state) { 
+                    DropdownButton<String>(
                         //        value: widget.page.datasets
                         //     .map((final e) => e.getName)
                         //     .where((final element) => element != 'null')
                         //     .contains(widget.actionValue.datasetName)
                         // ? widget.actionValue.datasetName
                         // : null,
-                        value: currentVal,
+                        value: '',
                         icon: const Icon(Icons.arrow_drop_down),
                         underline: const SizedBox(),
                         onChanged: (final String? newValue) {
-                          setState(() {
-                              currentVal = 'cacca';
-                              });
                           //   if (newValue != null) {
                           //     setState(() {
                           //       databaseName = newValue;
@@ -747,11 +742,8 @@ class ActionElementControlState extends State<ActionElementControl> {
                               value,
                             ),
                           );
-                        }).toList(),
-                      ),
-                    );
-                  },
-                ),
+                        }).toList(),);},),),
+                
 
               // if (widget.actionValue.type == FTextTypeEnum.dataset &&
               //     widget.actionValue.datasetName != null)
