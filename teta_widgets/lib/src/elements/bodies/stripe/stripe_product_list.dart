@@ -96,7 +96,7 @@ class StripeProductListBody extends NodeBody {
       loop: loop,
     );
   }
-
+  //todo: concludere questo
   @override
   String toCode(
     final BuildContext context,

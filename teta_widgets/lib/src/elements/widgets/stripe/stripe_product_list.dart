@@ -53,6 +53,7 @@ class _WStripeProductsListState extends State<WStripeProductsList> {
   Future calc() async {
     final prj =
         (BlocProvider.of<FocusProjectBloc>(context).state as ProjectLoaded).prj;
+    debugPrint('prj id: ${prj.id}');
 
     final baseUrl = 'https://builder.teta.so:8402/product/${prj.id}/list';
 
@@ -77,16 +78,8 @@ class _WStripeProductsListState extends State<WStripeProductsList> {
 
       widget.dataset.clear();
       widget.dataset.add(datasetObject);
-
-      final productsListCubit = ProductsListCubit()
-        ..setProducts(value: widget.dataset);
-
-      if (kDebugMode) {
-        print('dataset: ${widget.dataset}');
-        print('cubit: ${productsListCubit.state}');
-        print('getted products from stripe!');
-      }
-      setState(() {});
+    }else{
+      debugPrint('Error in calc WStripeProductsList -> ${response.body.toString()}');
     }
   }
 

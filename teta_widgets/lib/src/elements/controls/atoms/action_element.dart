@@ -88,6 +88,9 @@ class ActionElementControlState extends State<ActionElementControl> {
   TextEditingController loopController = TextEditingController();
   int? nodeId;
 
+  String? stateTest;
+  bool isEmit = false;
+
   @override
   void initState() {
     try {
@@ -674,7 +677,7 @@ class ActionElementControlState extends State<ActionElementControl> {
                     }
                   },
                 ),
-
+                //todo: here stuffs
               if (widget.element.actionType == ActionType.stripe)
                 CDropdown(
                   value: FActionElement.convertValueToDropdown(
@@ -696,112 +699,12 @@ class ActionElementControlState extends State<ActionElementControl> {
                   },
                 ),
               if (widget.element.actionStripe == ActionStripe.buy)
-                    Container(
-                      width: 200,
-                      height: 100,
-                      padding: const EdgeInsets.symmetric(
-                        horizontal: 10,
-                        vertical: 8,
-                      ),
-                      decoration: BoxDecoration(
-                        color: Colors.white,
-                        borderRadius: BorderRadius.circular(8),
-                      ),
-                      child: BlocListener<ProductsListCubit, List<DatasetObject>>(
-                  listener: (final context, final state) { 
-                    DropdownButton<String>(
-                        //        value: widget.page.datasets
-                        //     .map((final e) => e.getName)
-                        //     .where((final element) => element != 'null')
-                        //     .contains(widget.actionValue.datasetName)
-                        // ? widget.actionValue.datasetName
-                        // : null,
-                        value: '',
-                        icon: const Icon(Icons.arrow_drop_down),
-                        underline: const SizedBox(),
-                        onChanged: (final String? newValue) {
-                          //   if (newValue != null) {
-                          //     setState(() {
-                          //       databaseName = newValue;
-                          //     });
-                          //     final old = widget.actionValue;
-                          //     widget.actionValue.datasetName = newValue;
-                          //     widget.callBack(widget.actionValue, old);
-                          //   }
-                        },
-                        isDense: true,
-                        isExpanded: true,
-                        items: widget.page.datasets
-                            .map((final e) => e.getName)
-                            .where((final element) => element != 'null')
-                            .map<DropdownMenuItem<String>>(
-                                (final String value) {
-                          return DropdownMenuItem<String>(
-                            value: value,
-                            child: THeadline3(
-                              value,
-                            ),
-                          );
-                        }).toList(),);},),),
-                
-
-              // if (widget.actionValue.type == FTextTypeEnum.dataset &&
-              //     widget.actionValue.datasetName != null)
-              //   Container(
-              //     margin: const EdgeInsets.only(top: 8),
-              //     width: double.maxFinite,
-              //     padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 8),
-              //     decoration: BoxDecoration(
-              //       color: Colors.white,
-              //       borderRadius: BorderRadius.circular(8),
-              //     ),
-              //     child: DropdownButton<String>(
-              //       value: widget.page.datasets
-              //               .firstWhere(
-              //                 (final element) =>
-              //                     element.getName == widget.actionValue.datasetName,
-              //               )
-              //               .getMap
-              //               .first
-              //               .keys
-              //               .contains(widget.actionValue.datasetAttr)
-              //           ? widget.actionValue.datasetAttr
-              //           : null,
-              //       icon: const Icon(Icons.arrow_drop_down),
-              //       underline: const SizedBox(),
-              //       onChanged: (final String? newValue) {
-              //         if (newValue != null) {
-              //           setState(() {
-              //             databaseAttribute = newValue;
-              //           });
-              //           final old = widget.actionValue;
-              //           widget.actionValue.datasetAttr = newValue;
-              //           widget.callBack(widget.actionValue, old);
-              //         }
-              //       },
-              //       isDense: true,
-              //       isExpanded: true,
-              //       items: widget.page.datasets
-              //           .firstWhere(
-              //             (final element) =>
-              //                 element.getName == widget.actionValue.datasetName,
-              //           )
-              //           .getMap
-              //           .first
-              //           .keys
-              //           .map<DropdownMenuItem<String>>((final String value) {
-              //         return DropdownMenuItem<String>(
-              //           value: value,
-              //           child: THeadline3(
-              //             value,
-              //           ),
-              //         );
-              //       }).toList(),
-              //     ),
-              //   ),
-
-              //-------------------------------------
-
+              //todo: choose the dataset to pass at FStripeBuyAction
+               Container(
+                  width: double.maxFinite,
+                   height: 40,
+                   color: Colors.black54,),
+              
               if (widget.element.actionType == ActionType.navigation)
                 CDropdown(
                   value: FActionElement.convertValueToDropdown(
