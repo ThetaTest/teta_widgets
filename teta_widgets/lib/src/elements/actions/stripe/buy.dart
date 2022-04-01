@@ -17,7 +17,7 @@ class FActionStripeBuy {
   ) async {
     //todo: fare qui il get del nome del dataset dinamico
     final dataset = datasets.firstWhereOrNull((final element) => element.getName == 'products');
-    
+    print('ciao');
     await showDialog<void>(
       context: context,
       builder: (final context) {
