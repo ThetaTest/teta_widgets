@@ -698,12 +698,12 @@ class ActionElementControlState extends State<ActionElementControl> {
                     }
                   },
                 ),
-              if (widget.element.actionStripe == ActionStripe.buy)
               //todo: choose the dataset to pass at FStripeBuyAction
-               Container(
-                  width: double.maxFinite,
-                   height: 40,
-                   color: Colors.black54,),
+              // if (widget.element.actionStripe == ActionStripe.buy)
+              //  Container(
+              //     width: double.maxFinite,
+              //      height: 40,
+              //      color: Colors.black54,),
               
               if (widget.element.actionType == ActionType.navigation)
                 CDropdown(
