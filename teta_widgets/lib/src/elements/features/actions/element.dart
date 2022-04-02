@@ -458,7 +458,7 @@ class FActionElement extends Equatable {
             }
             await FDelay.action(int.tryParse('${delay?.value}') ?? 0);
             FLoop.action(
-              () => FActionStripeBuy.action(context, states, stateName, dataset),
+              () => FActionStripeBuy.action(context, states, stateName, dataset,loop),
               everyMilliseconds,
               context,
               withLoop: withLoop ?? false,

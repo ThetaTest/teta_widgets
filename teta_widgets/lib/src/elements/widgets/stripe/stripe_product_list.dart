@@ -1,13 +1,13 @@
 // Flutter imports:
-import 'package:flutter/foundation.dart';
+import 'dart:convert';
+
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:http/http.dart' as http;
 // Package imports:
 import 'package:teta_core/teta_core.dart';
 // Project imports:
 import 'package:teta_widgets/src/elements/index.dart';
-import 'package:http/http.dart' as http;
-import 'dart:convert';
 
 // Project imports:
 
@@ -79,7 +79,7 @@ class _WStripeProductsListState extends State<WStripeProductsList> {
       widget.dataset.clear();
       widget.dataset.add(datasetObject);
     }else{
-      debugPrint('Error in calc WStripeProductsList -> ${response.body.toString()}');
+      debugPrint('Error in calc WStripeProductsList -> ${response.body}');
     }
   }
 

@@ -63,6 +63,7 @@ class WButton extends StatelessWidget {
           states: states,
           dataset: dataset,
           forPlay: forPlay,
+          loop: loop,
         ),
         onDoubleTap: () => GestureBuilder.get(
           context: context,
@@ -74,6 +75,7 @@ class WButton extends StatelessWidget {
           states: states,
           dataset: dataset,
           forPlay: forPlay,
+          loop: loop,
         ),
         onLongPress: () => GestureBuilder.get(
           context: context,
@@ -85,6 +87,7 @@ class WButton extends StatelessWidget {
           states: states,
           dataset: dataset,
           forPlay: forPlay,
+          loop: loop,
         ),
         child: body(context),
       ),
@@ -111,6 +114,7 @@ class WButton extends StatelessWidget {
               states: states,
               dataset: dataset,
               forPlay: forPlay,
+              loop: loop,
             ),
           ),
         ),

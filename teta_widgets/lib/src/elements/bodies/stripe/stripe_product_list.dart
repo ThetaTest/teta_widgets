@@ -73,6 +73,7 @@ class StripeProductListBody extends NodeBody {
     final CNode? child,
     final List<CNode>? children,
   }) {
+    
     return WStripeProductsList(
       ValueKey(
         '''
@@ -96,6 +97,7 @@ class StripeProductListBody extends NodeBody {
       loop: loop,
     );
   }
+  
   //todo: concludere questo
   @override
   String toCode(
