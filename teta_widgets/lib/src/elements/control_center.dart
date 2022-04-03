@@ -96,6 +96,7 @@ import 'package:teta_widgets/src/elements/bodies/text.dart';
 import 'package:teta_widgets/src/elements/bodies/textbutton.dart';
 import 'package:teta_widgets/src/elements/bodies/textfield.dart';
 import 'package:teta_widgets/src/elements/bodies/tooltip.dart';
+import 'package:teta_widgets/src/elements/bodies/transform.dart';
 import 'package:teta_widgets/src/elements/bodies/video.dart';
 import 'package:teta_widgets/src/elements/bodies/visibility.dart';
 import 'package:teta_widgets/src/elements/bodies/webview.dart';
@@ -209,6 +210,7 @@ final stateTypes = <IntrinsicStates>[
   wrapperIntrinsicStates,
   revenueCatProductsListIntrinsicStates,
   stripeProductsList,
+  transformPerspectiveIntrinsicStates,
 ];
 
 /// Method to return any body
@@ -418,6 +420,8 @@ NodeBody getBody(final NType type) {
       return DotsIndicatorBody();
     case NType.wrapper:
       return WrapperBody();
+    case NType.transformPerspective:
+      return TransformPerspectiveBody();
     case NType.listViewSeparated:
       break;
     case NType.nil:
