@@ -88,6 +88,9 @@ class ActionElementControlState extends State<ActionElementControl> {
   TextEditingController loopController = TextEditingController();
   int? nodeId;
 
+  String? stateTest;
+  bool isEmit = false;
+
   @override
   void initState() {
     try {
@@ -653,6 +656,7 @@ class ActionElementControlState extends State<ActionElementControl> {
                     ),
                   ],
                 ),
+              //todo: see how it works
               if (widget.element.actionType == ActionType.revenueCat)
                 CDropdown(
                   value: FActionElement.convertValueToDropdown(
@@ -673,7 +677,7 @@ class ActionElementControlState extends State<ActionElementControl> {
                     }
                   },
                 ),
-
+                //todo: here stuffs
               if (widget.element.actionType == ActionType.stripe)
                 CDropdown(
                   value: FActionElement.convertValueToDropdown(
@@ -694,7 +698,13 @@ class ActionElementControlState extends State<ActionElementControl> {
                     }
                   },
                 ),
-
+              //todo: choose the dataset to pass at FStripeBuyAction
+              // if (widget.element.actionStripe == ActionStripe.buy)
+              //  Container(
+              //     width: double.maxFinite,
+              //      height: 40,
+              //      color: Colors.black54,),
+              
               if (widget.element.actionType == ActionType.navigation)
                 CDropdown(
                   value: FActionElement.convertValueToDropdown(

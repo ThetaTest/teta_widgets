@@ -86,6 +86,7 @@ import 'package:teta_widgets/src/elements/bodies/scaffold.dart';
 import 'package:teta_widgets/src/elements/bodies/sizedbox.dart';
 import 'package:teta_widgets/src/elements/bodies/spacer.dart';
 import 'package:teta_widgets/src/elements/bodies/stack.dart';
+import 'package:teta_widgets/src/elements/bodies/stripe/stripe_product_list.dart';
 import 'package:teta_widgets/src/elements/bodies/supabase/future_builder.dart';
 import 'package:teta_widgets/src/elements/bodies/supabase/future_stream_builder.dart';
 import 'package:teta_widgets/src/elements/bodies/supabase/logged_user.dart';
@@ -207,6 +208,7 @@ final stateTypes = <IntrinsicStates>[
   mapBuilderIntrinsicStates,
   wrapperIntrinsicStates,
   revenueCatProductsListIntrinsicStates,
+  stripeProductsList,
 ];
 
 /// Method to return any body
@@ -228,6 +230,8 @@ NodeBody getBody(final NType type) {
       return CenterBody();
     case NType.checkbox:
       return CheckBoxBody();
+    case NType.stripeProductsList:
+      return StripeProductListBody();
     case NType.column:
       return ColumnBody();
     case NType.component:

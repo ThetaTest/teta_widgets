@@ -147,6 +147,8 @@ dev_dependencies:
 dependencies_overrides:
   teta_core:
     path: ../../Teta/teta_core
+  mobile_editor:
+    path: ../../Teta/mobile_editor
 
 # For information on the generic Dart part of this file, see the
 # following page: https://dart.dev/tools/pub/pubspec

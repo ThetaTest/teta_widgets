@@ -458,7 +458,7 @@ class FActionElement extends Equatable {
             }
             await FDelay.action(int.tryParse('${delay?.value}') ?? 0);
             FLoop.action(
-              () => FActionStripeBuy.action(context, states, stateName),
+              () => FActionStripeBuy.action(context, states, stateName, dataset,loop),
               everyMilliseconds,
               context,
               withLoop: withLoop ?? false,
@@ -1379,6 +1379,7 @@ class FActionElement extends Equatable {
         break;
       case ActionType.stripe:
         switch (actionStripe) {
+          //todo: complete this
           case ActionStripe.buy:
             return FCondition.toCode(
                   context,
