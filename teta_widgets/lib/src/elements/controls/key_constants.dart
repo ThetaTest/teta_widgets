@@ -6,28 +6,7 @@ import 'package:flutter/foundation.dart';
 // Package imports:
 import 'package:teta_core/src/models/variable.dart';
 // Project imports:
-import 'package:teta_widgets/src/elements/features/action.dart';
-import 'package:teta_widgets/src/elements/features/align.dart';
-import 'package:teta_widgets/src/elements/features/border.dart';
-import 'package:teta_widgets/src/elements/features/border_radius.dart';
-import 'package:teta_widgets/src/elements/features/box_fit.dart';
-import 'package:teta_widgets/src/elements/features/cross_axis_alignment.dart';
-import 'package:teta_widgets/src/elements/features/dataset.dart';
-import 'package:teta_widgets/src/elements/features/fill.dart';
-import 'package:teta_widgets/src/elements/features/firestore_path.dart';
-import 'package:teta_widgets/src/elements/features/font_size.dart';
-import 'package:teta_widgets/src/elements/features/font_style.dart';
 import 'package:teta_widgets/src/elements/features/font_weight.dart';
-import 'package:teta_widgets/src/elements/features/main_axis_alignment.dart';
-import 'package:teta_widgets/src/elements/features/main_axis_size.dart';
-import 'package:teta_widgets/src/elements/features/margins.dart';
-import 'package:teta_widgets/src/elements/features/page_transition.dart';
-import 'package:teta_widgets/src/elements/features/shadow.dart';
-import 'package:teta_widgets/src/elements/features/sizes.dart';
-import 'package:teta_widgets/src/elements/features/text_align.dart';
-import 'package:teta_widgets/src/elements/features/text_decoration.dart';
-import 'package:teta_widgets/src/elements/features/text_style.dart';
-import 'package:teta_widgets/src/elements/features/text_type_input.dart';
 import 'package:teta_widgets/src/elements/index.dart';
 
 class DBKeys {
@@ -140,6 +119,13 @@ class DBKeys {
   static const String labelText = 'lt';
   static const String visibility = 'vs';
   static const String borderFill = 'bF';
+
+  static const String rotateX = 'rttX';
+  static const String rotateY = 'rttY';
+  static const String rotateZ = 'rttZ';
+
+  static const String tranX = 'tranX';
+  static const String tranY = 'tranY';
 
   // Supabase ---------------------------------------------
   /// Use for from's value in Supabase operation
@@ -279,6 +265,16 @@ class DynamicAttributes {
         case DBKeys.top:
           return value;
         case DBKeys.value:
+          return FTextTypeInput.fromJson(value as Map<String, dynamic>);
+        case DBKeys.rotateX:
+          return FTextTypeInput.fromJson(value as Map<String, dynamic>);
+        case DBKeys.rotateY:
+          return FTextTypeInput.fromJson(value as Map<String, dynamic>);
+        case DBKeys.rotateZ:
+          return FTextTypeInput.fromJson(value as Map<String, dynamic>);
+        case DBKeys.tranX:
+          return FTextTypeInput.fromJson(value as Map<String, dynamic>);
+        case DBKeys.tranY:
           return FTextTypeInput.fromJson(value as Map<String, dynamic>);
         case DBKeys.duration:
           return FTextTypeInput.fromJson(value as Map<String, dynamic>);
@@ -494,6 +490,16 @@ class DynamicAttributes {
       case DBKeys.top:
         return value;
       case DBKeys.value:
+        return value != null ? value.toJson() : FTextTypeInput().toJson();
+      case DBKeys.rotateX:
+        return value != null ? value.toJson() : FTextTypeInput().toJson();
+      case DBKeys.rotateY:
+        return value != null ? value.toJson() : FTextTypeInput().toJson();
+      case DBKeys.rotateZ:
+        return value != null ? value.toJson() : FTextTypeInput().toJson();
+      case DBKeys.tranX:
+        return value != null ? value.toJson() : FTextTypeInput().toJson();
+      case DBKeys.tranY:
         return value != null ? value.toJson() : FTextTypeInput().toJson();
       case DBKeys.datasetInput:
         return value != null ? value.toJson() : FDataset().toJson();

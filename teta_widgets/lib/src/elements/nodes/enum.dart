@@ -107,6 +107,12 @@ enum NType {
   wrapper,
   fontAwesome,
 
+  // Transform
+  transformRotate,
+  transformTranslate,
+  transformScale,
+  transformPerspective,
+
   // Supabase
   supabaseFutureBuilder,
   supabaseStreamBuilder,
