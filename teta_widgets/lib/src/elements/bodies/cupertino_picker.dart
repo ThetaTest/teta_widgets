@@ -48,6 +48,7 @@ final cupertinoPickerIntrinsicStates = IntrinsicStates(
   gestures: [
     ActionGesture.onChange,
   ],
+  permissions:[],
 );
 
 /// Cupertino Picker's body

@@ -40,6 +40,7 @@ final indexedStackIntrinsicStates = IntrinsicStates(
   canHave: ChildrenEnum.children,
   addChildLabels: [],
   gestures: [],
+  permissions:[],
 );
 
 /// Set of funcs to use Column widget

@@ -57,6 +57,7 @@ final cupertinoSwitchIntrinsicStates = IntrinsicStates(
   gestures: [
     ActionGesture.onChange,
   ],
+  permissions:[],
 );
 
 /// Instrict State of Cupertino Switch

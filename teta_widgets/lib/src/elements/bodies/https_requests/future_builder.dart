@@ -43,6 +43,7 @@ final httpRequestFutureBuilderIntrinsicStates = IntrinsicStates(
   canHave: ChildrenEnum.children,
   addChildLabels: [],
   gestures: [],
+  permissions:[],
 );
 
 /// HTTP Request FB's body

@@ -40,6 +40,7 @@ final componentIntrinsicStates = IntrinsicStates(
   canHave: ChildrenEnum.none,
   addChildLabels: [],
   gestures: [],
+  permissions:[],
 );
 
 /// Set of funcs to use a Component widget

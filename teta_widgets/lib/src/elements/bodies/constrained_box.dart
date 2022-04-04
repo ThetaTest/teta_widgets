@@ -40,6 +40,7 @@ final constrainedBoxIntrinsicStates = IntrinsicStates(
   canHave: ChildrenEnum.child,
   addChildLabels: [],
   gestures: [],
+  permissions:[],
 );
 
 /// Set of funcs of Center node

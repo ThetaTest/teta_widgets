@@ -45,6 +45,7 @@ final firebaseIsAuthenticatedIntrinsicStates = IntrinsicStates(
   canHave: ChildrenEnum.child,
   addChildLabels: [],
   gestures: [],
+  permissions:[],
 );
 
 /// Firebase Authenticated's Body

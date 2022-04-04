@@ -46,6 +46,7 @@ final firebaseFutureBuilderIntrinsicStates = IntrinsicStates(
   canHave: ChildrenEnum.child,
   addChildLabels: [],
   gestures: [],
+  permissions:[],
 );
 
 /// Firebase FB's body

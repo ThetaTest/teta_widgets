@@ -46,6 +46,7 @@ final refreshIndicatorIntrinsicStates = IntrinsicStates(
   canHave: ChildrenEnum.children,
   addChildLabels: [],
   gestures: [],
+  permissions:[],
 );
 
 /// Set of funcs of Center node

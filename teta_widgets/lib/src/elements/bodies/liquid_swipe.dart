@@ -37,6 +37,7 @@ final liquidSwipeIntrinsicStates = IntrinsicStates(
   canHave: ChildrenEnum.children,
   addChildLabels: [],
   gestures: [],
+  permissions:[],
 );
 
 /// LiquidSwipe's body

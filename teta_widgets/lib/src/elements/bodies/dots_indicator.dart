@@ -47,6 +47,7 @@ final dotsIndicatorIntrinsicStates = IntrinsicStates(
   canHave: ChildrenEnum.child,
   addChildLabels: [],
   gestures: [],
+  permissions:[],
 );
 
 /// Expanded's body
