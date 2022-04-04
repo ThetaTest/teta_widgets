@@ -19,7 +19,8 @@ enum Permissions {
   ///
   storage,
   ///
-  speachRecognition,
+  billing,
+  
 }
 
 //intrinsic state ha una lista di enum e poi in export si fa il check per i nodi in base a
@@ -114,6 +115,5 @@ If you are building a new world with smart homes that make it possible to contro
 // NSSiriUsageDescription	Your app provides a SiriKit Intent
 // NSSpeechRecognitionUsageDescription	Your app uses speech recognition
 // NSMotionUsageDescription	Your app uses the device motion tracking hardware
-// NSVideoSubscriberAccountUsageDescription	(tvOS only) your app uses the video subscriber account
 // NSAppleMusicUsageDescription	Your app uses Apple Music integration
 // NSFaceIDUsageDescription	Your app uses FaceID
