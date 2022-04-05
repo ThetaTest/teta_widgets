@@ -9,6 +9,7 @@ import 'package:teta_core/src/models/dataset.dart';
 import 'package:teta_core/src/models/variable.dart';
 // Project imports:
 import 'package:teta_widgets/src/elements/code/templates/revenuecat_products_list.dart';
+import 'package:teta_widgets/src/elements/features/actions/enums/permissions.dart';
 import 'package:teta_widgets/src/elements/intrinsic_states/class.dart';
 import 'package:teta_widgets/src/elements/nodes/categories.dart';
 import 'package:teta_widgets/src/elements/nodes/children_enum.dart';
@@ -48,7 +49,9 @@ final revenueCatProductsListIntrinsicStates = IntrinsicStates(
   canHave: ChildrenEnum.children,
   addChildLabels: [],
   gestures: [],
-  permissions:[],
+  permissions:[
+    Permissions.billing,
+  ],
 );
 
 /// Body

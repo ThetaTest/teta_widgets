@@ -10,6 +10,7 @@ import 'package:teta_core/src/models/variable.dart';
 import 'package:teta_widgets/src/elements/code/templates/stripe_products_list_template.dart';
 // Project imports:
 import 'package:teta_widgets/src/elements/controls/control_model.dart';
+import 'package:teta_widgets/src/elements/features/actions/enums/permissions.dart';
 import 'package:teta_widgets/src/elements/intrinsic_states/class.dart';
 import 'package:teta_widgets/src/elements/nodes/categories.dart';
 import 'package:teta_widgets/src/elements/nodes/children_enum.dart';
@@ -45,7 +46,9 @@ final stripeProductsList = IntrinsicStates(
   canHave: ChildrenEnum.children,
   addChildLabels: [],
   gestures: [],
-  permissions:[],
+  permissions:[
+    Permissions.billing,
+  ],
 );
 
 /// Body

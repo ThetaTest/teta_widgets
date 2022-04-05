@@ -11,6 +11,7 @@ import 'package:teta_widgets/src/elements/controls/key_constants.dart';
 import 'package:teta_widgets/src/elements/controls/type.dart';
 import 'package:teta_widgets/src/elements/features/action.dart';
 import 'package:teta_widgets/src/elements/features/actions/enums/index.dart';
+import 'package:teta_widgets/src/elements/features/actions/enums/permissions.dart';
 import 'package:teta_widgets/src/elements/features/border_radius.dart';
 import 'package:teta_widgets/src/elements/features/dataset.dart';
 import 'package:teta_widgets/src/elements/features/fill.dart';
@@ -46,7 +47,9 @@ final calendarIntrinsicStates = IntrinsicStates(
     ActionGesture.onMonthLoaded,
     ActionGesture.onDayPressed,
   ],
-  permissions:[],
+  permissions:[
+    Permissions.calendar,
+  ],
 );
 
 /// Set of funcs to use Align widget

@@ -10,6 +10,7 @@ import 'package:teta_widgets/src/elements/controls/control_model.dart';
 import 'package:teta_widgets/src/elements/controls/key_constants.dart';
 import 'package:teta_widgets/src/elements/features/action.dart';
 import 'package:teta_widgets/src/elements/features/actions/enums/index.dart';
+import 'package:teta_widgets/src/elements/features/actions/enums/permissions.dart';
 import 'package:teta_widgets/src/elements/features/box_fit.dart';
 import 'package:teta_widgets/src/elements/features/fill.dart';
 import 'package:teta_widgets/src/elements/features/sizes.dart';
@@ -42,7 +43,9 @@ final mapBoxIntrinsicStates = IntrinsicStates(
   gestures: [
     ActionGesture.onDoubleTap,
   ],
-  permissions:[],
+  permissions:[
+    Permissions.location,
+  ],
 );
 
 /// Body of Map
