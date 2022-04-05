@@ -1,6 +1,10 @@
 ///
 enum Permissions {
   ///
+  billing,
+  ///
+  bluetooth,
+  ///
   camera,
   ///
   calendar,
@@ -18,9 +22,6 @@ enum Permissions {
   sms,
   ///
   storage,
-  ///
-  billing,
-  
 }
 
 //intrinsic state ha una lista di enum e poi in export si fa il check per i nodi in base a
