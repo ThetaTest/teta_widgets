@@ -43,6 +43,7 @@ final loginGoogleIntrinsicStates = IntrinsicStates(
   canHave: ChildrenEnum.none,
   addChildLabels: [],
   gestures: [ActionGesture.onTap, ActionGesture.onLongPress],
+  permissions:[],
 );
 
 /// Google Login's body

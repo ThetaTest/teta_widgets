@@ -42,6 +42,7 @@ final textButtonIntrinsicStates = IntrinsicStates(
   canHave: ChildrenEnum.child,
   addChildLabels: [],
   gestures: [ActionGesture.onTap],
+  permissions:[],
 );
 
 /// Body for [TextButton] widget

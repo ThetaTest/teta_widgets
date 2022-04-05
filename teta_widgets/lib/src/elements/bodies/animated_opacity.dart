@@ -40,6 +40,7 @@ final animatedOpacityIntrinsicStates = IntrinsicStates(
   canHave: ChildrenEnum.child,
   addChildLabels: [],
   gestures: [],
+  permissions:[],
 );
 
 /// AnimatedOpacity's body

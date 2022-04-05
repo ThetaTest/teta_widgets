@@ -41,6 +41,7 @@ final fontAwesomeIntrinsicStates = IntrinsicStates(
   canHave: ChildrenEnum.none,
   addChildLabels: [],
   gestures: [],
+  permissions:[],
 );
 
 /// Icon's body

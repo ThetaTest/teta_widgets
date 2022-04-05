@@ -44,6 +44,7 @@ final firebaseStreamBuilderIntrinsicStates = IntrinsicStates(
   canHave: ChildrenEnum.child,
   addChildLabels: [],
   gestures: [],
+  permissions:[],
 );
 
 /// Firebase Stream Builder's body

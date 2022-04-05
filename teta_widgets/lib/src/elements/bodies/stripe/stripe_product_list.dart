@@ -7,6 +7,7 @@ import 'package:flutter/material.dart';
 import 'package:teta_core/gen/assets.gen.dart';
 import 'package:teta_core/src/models/dataset.dart';
 import 'package:teta_core/src/models/variable.dart';
+import 'package:teta_widgets/src/elements/code/templates/stripe_products_list_template.dart';
 // Project imports:
 import 'package:teta_widgets/src/elements/controls/control_model.dart';
 import 'package:teta_widgets/src/elements/intrinsic_states/class.dart';
@@ -44,6 +45,7 @@ final stripeProductsList = IntrinsicStates(
   canHave: ChildrenEnum.children,
   addChildLabels: [],
   gestures: [],
+  permissions:[],
 );
 
 /// Body
@@ -73,7 +75,6 @@ class StripeProductListBody extends NodeBody {
     final CNode? child,
     final List<CNode>? children,
   }) {
-    
     return WStripeProductsList(
       ValueKey(
         '''
@@ -97,7 +98,7 @@ class StripeProductListBody extends NodeBody {
       loop: loop,
     );
   }
-  
+
   //todo: concludere questo
   @override
   String toCode(
@@ -108,5 +109,5 @@ class StripeProductListBody extends NodeBody {
     final int pageId,
     final int? loop,
   ) =>
-      'coming soon..';
+      stripeProductsListTemplate(context, node, child, children, pageId, loop);
 }

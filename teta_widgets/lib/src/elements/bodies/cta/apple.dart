@@ -43,6 +43,7 @@ final loginAppleIntrinsicStates = IntrinsicStates(
   canHave: ChildrenEnum.none,
   addChildLabels: [],
   gestures: <ActionGesture>[ActionGesture.onTap, ActionGesture.onLongPress],
+  permissions:[],
 );
 
 /// Login Apple's body

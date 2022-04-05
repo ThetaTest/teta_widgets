@@ -33,6 +33,7 @@ final appBarIntrinsicStates = IntrinsicStates(
   canHave: ChildrenEnum.child,
   addChildLabels: ['Add AppBar Widget'],
   gestures: [],
+  permissions:[],
 );
 
 /// Body

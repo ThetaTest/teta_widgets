@@ -43,6 +43,7 @@ final loginFacebookIntrinsicStates = IntrinsicStates(
   canHave: ChildrenEnum.none,
   addChildLabels: [],
   gestures: <ActionGesture>[ActionGesture.onTap, ActionGesture.onLongPress],
+  permissions:[],
 );
 
 /// Facebook Login's body

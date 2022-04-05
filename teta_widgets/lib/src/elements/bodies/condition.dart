@@ -45,6 +45,7 @@ final conditionIntrinsicStates = IntrinsicStates(
   canHave: ChildrenEnum.children,
   addChildLabels: ['Add Widget If True', 'Add Widget If False'],
   gestures: [],
+  permissions:[],
 );
 
 /// Set of funcs to use Condition widget

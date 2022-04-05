@@ -48,6 +48,7 @@ final bottombaritemIntrinsicStates = IntrinsicStates(
   canHave: ChildrenEnum.none,
   addChildLabels: [],
   gestures: [ActionGesture.onTap, ActionGesture.onLongPress],
+  permissions:[],
 );
 
 /// BottomBarItem's body

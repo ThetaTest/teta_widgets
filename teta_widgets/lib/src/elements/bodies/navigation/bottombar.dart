@@ -33,6 +33,7 @@ final bottomBarIntrinsicStates = IntrinsicStates(
   canHave: ChildrenEnum.child,
   addChildLabels: ['Add BottomBar Widget'],
   gestures: [],
+  permissions:[],
 );
 
 /// Body

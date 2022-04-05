@@ -32,7 +32,8 @@ final cupertinoSegmentedControlIntrinsicStates = IntrinsicStates(
       If this widget has a child, 
       it defers to that child for its sizing behavior. 
       If it does not have a child, it grows to fit the parent instead. 
-      By default a GestureDetector with an invisible child ignores touches;''',
+      By default a GestureDetector with an invisible child ignores touches,
+''',
   advicedChildren: [
     NodeType.name(NType.container),
     NodeType.name(NType.image),
@@ -56,6 +57,7 @@ final cupertinoSegmentedControlIntrinsicStates = IntrinsicStates(
   gestures: [
     ActionGesture.onTap,
   ],
+  permissions:[],
 );
 
 /// Cupertino Segmented Control's body

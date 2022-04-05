@@ -38,6 +38,7 @@ final ignorePointIntrinsicStates = IntrinsicStates(
   canHave: ChildrenEnum.child,
   addChildLabels: [],
   gestures: [],
+  permissions:[],
 );
 
 /// IgnorePointer's body

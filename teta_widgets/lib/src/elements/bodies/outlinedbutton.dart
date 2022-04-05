@@ -39,6 +39,7 @@ final outlinedButtonIntrinsicStates = IntrinsicStates(
   canHave: ChildrenEnum.child,
   addChildLabels: [],
   gestures: [ActionGesture.onTap],
+  permissions:[],
 );
 
 /// Body

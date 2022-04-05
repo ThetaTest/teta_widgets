@@ -46,6 +46,7 @@ final firebasePaginationIntrinsicStates = IntrinsicStates(
   canHave: ChildrenEnum.child,
   addChildLabels: [],
   gestures: [],
+  permissions:[],
 );
 
 /// Firebase Pagination's body

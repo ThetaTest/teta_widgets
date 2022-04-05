@@ -56,6 +56,7 @@ final buttonIntrinsicStates = IntrinsicStates(
     ActionGesture.onLongPress,
     ActionGesture.onDoubleTap
   ],
+  permissions:[],
 );
 
 /// Set of funcs to use a Button widget

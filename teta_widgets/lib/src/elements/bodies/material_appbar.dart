@@ -41,6 +41,7 @@ final materialAppBarIntrinsicStates = IntrinsicStates(
     'Add Action'
   ],
   gestures: [],
+  permissions:[],
 );
 
 /// ```dart

@@ -41,6 +41,7 @@ final dividerIntrinsicStates = IntrinsicStates(
   canHave: ChildrenEnum.none,
   addChildLabels: [],
   gestures: [],
+  permissions:[],
 );
 
 /// Divider's body

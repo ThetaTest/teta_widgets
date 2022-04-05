@@ -58,6 +58,7 @@ final tcardBuilderIntrinsicStates = IntrinsicStates(
     ActionGesture.swipeRight,
     ActionGesture.onEnd,
   ],
+  permissions:[],
 );
 
 /// Body

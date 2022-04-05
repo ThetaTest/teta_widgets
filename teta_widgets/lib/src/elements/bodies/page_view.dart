@@ -43,6 +43,7 @@ final pageViewIntrinsicStates = IntrinsicStates(
   gestures: [
     ActionGesture.onChange,
   ],
+  permissions:[],
 );
 
 /// PageView's body

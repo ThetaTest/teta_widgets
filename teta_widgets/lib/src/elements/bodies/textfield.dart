@@ -48,6 +48,7 @@ final textFieldIntrinsicStates = IntrinsicStates(
   canHave: ChildrenEnum.none,
   addChildLabels: [],
   gestures: [ActionGesture.onChange, ActionGesture.onSubmitted],
+  permissions:[],
 );
 
 /// Body for TextField widget

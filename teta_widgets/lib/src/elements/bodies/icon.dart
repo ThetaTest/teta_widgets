@@ -41,6 +41,7 @@ final iconIntrinsicStates = IntrinsicStates(
   canHave: ChildrenEnum.none,
   addChildLabels: [],
   gestures: [],
+  permissions:[],
 );
 
 /// Icon's body

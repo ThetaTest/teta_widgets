@@ -38,6 +38,7 @@ final lottieIntrinsicStates = IntrinsicStates(
   canHave: ChildrenEnum.none,
   addChildLabels: [],
   gestures: [],
+  permissions:[],
 );
 
 /// Body of Lottie

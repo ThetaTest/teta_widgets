@@ -40,6 +40,7 @@ final linearProgressIndicatorIntrinsicStates = IntrinsicStates(
   canHave: ChildrenEnum.none,
   addChildLabels: [],
   gestures: [],
+  permissions:[],
 );
 
 /// Set of funcs of Center node

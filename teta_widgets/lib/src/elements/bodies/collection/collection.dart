@@ -39,6 +39,7 @@ final collectionIntrinsicStates = IntrinsicStates(
   maxChildren: 1,
   canHave: ChildrenEnum.child,
   addChildLabels: [],
+  permissions:[],
 );
 
 class CollectionIntrinsicStates extends IntrinsicStates {

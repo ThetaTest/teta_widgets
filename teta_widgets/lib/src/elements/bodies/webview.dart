@@ -38,6 +38,7 @@ final webviewIntrinsicStates = IntrinsicStates(
   canHave: ChildrenEnum.none,
   addChildLabels: [],
   gestures: [],
+  permissions:[],
 );
 
 /// Set of funcs to use Align widget

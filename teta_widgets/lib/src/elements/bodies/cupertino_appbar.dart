@@ -39,6 +39,7 @@ final cupertinoAppBarIntrinsicStates = IntrinsicStates(
     'Add Trailing',
   ],
   gestures: [],
+  permissions:[],
 );
 
 /// ```dart

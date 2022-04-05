@@ -38,6 +38,7 @@ final materialBottomBarIntrinsicStates = IntrinsicStates(
     'Add Trailing',
   ],
   gestures: [],
+  permissions:[],
 );
 
 /// ```dart

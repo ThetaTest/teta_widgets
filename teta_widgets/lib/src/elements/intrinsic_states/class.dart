@@ -6,6 +6,7 @@ import 'package:teta_core/gen/assets.gen.dart';
 // Project imports:
 import 'package:teta_widgets/src/elements/control_center.dart';
 import 'package:teta_widgets/src/elements/features/actions/enums/gestures.dart';
+import 'package:teta_widgets/src/elements/features/actions/enums/permissions.dart';
 import 'package:teta_widgets/src/elements/nodes/categories.dart';
 import 'package:teta_widgets/src/elements/nodes/children_enum.dart';
 import 'package:teta_widgets/src/elements/nodes/enum.dart';
@@ -26,6 +27,7 @@ class IntrinsicStates {
     required this.canHave,
     required this.addChildLabels,
     required this.gestures,
+    required this.permissions,
   });
 
   /// Icon of the node.
@@ -69,6 +71,9 @@ class IntrinsicStates {
   /// List of gesture supported by node.
   final List<ActionGesture> gestures;
 
+  /// List of permissions to support in the released app -> dynamic based on node needs
+  final List<Permissions> permissions;
+
   bool get canHaveChildren => canHave == ChildrenEnum.children;
   bool get canHaveChild => canHave == ChildrenEnum.child;
 
@@ -87,6 +92,7 @@ class IntrinsicStates {
         canHave: ChildrenEnum.none,
         addChildLabels: [],
         gestures: <ActionGesture>[],
+        permissions: <Permissions>[],
       );
 
   static IntrinsicStates get(final NType type) {

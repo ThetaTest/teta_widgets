@@ -33,6 +33,7 @@ final drawerIntrinsicStates = IntrinsicStates(
   canHave: ChildrenEnum.child,
   addChildLabels: ['Add Widget To Drawer'],
   gestures: [],
+  permissions:[],
 );
 
 /// Body

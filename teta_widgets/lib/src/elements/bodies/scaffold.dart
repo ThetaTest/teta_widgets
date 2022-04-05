@@ -55,6 +55,7 @@ final scaffoldIntrinsicStates = IntrinsicStates(
   gestures: [
     ActionGesture.initState,
   ],
+  permissions:[],
 );
 
 /// Body of Scaffold

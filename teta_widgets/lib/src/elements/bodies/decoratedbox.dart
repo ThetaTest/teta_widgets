@@ -42,6 +42,7 @@ final decoratedBoxIntrinsicStates = IntrinsicStates(
   canHave: ChildrenEnum.child,
   addChildLabels: [],
   gestures: [],
+  permissions:[],
 );
 
 /// Set of funcs to use DecoratedBox widget

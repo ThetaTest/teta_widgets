@@ -42,6 +42,7 @@ final listTileIntrinsicStates = IntrinsicStates(
     'Add Title',
   ],
   gestures: [],
+  permissions:[],
 );
 
 /// ListTile's body

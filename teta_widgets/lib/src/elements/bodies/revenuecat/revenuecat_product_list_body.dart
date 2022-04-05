@@ -48,6 +48,7 @@ final revenueCatProductsListIntrinsicStates = IntrinsicStates(
   canHave: ChildrenEnum.children,
   addChildLabels: [],
   gestures: [],
+  permissions:[],
 );
 
 /// Body

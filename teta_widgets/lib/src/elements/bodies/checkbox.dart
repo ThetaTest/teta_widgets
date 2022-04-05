@@ -37,6 +37,7 @@ final checkBoxIntrinsicStates = IntrinsicStates(
   canHave: ChildrenEnum.none,
   addChildLabels: [],
   gestures: [ActionGesture.onChange],
+  permissions:[],
 );
 
 /// Set of funcs to use CheckBox widget

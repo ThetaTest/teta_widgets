@@ -46,6 +46,7 @@ final calendarIntrinsicStates = IntrinsicStates(
     ActionGesture.onMonthLoaded,
     ActionGesture.onDayPressed,
   ],
+  permissions:[],
 );
 
 /// Set of funcs to use Align widget

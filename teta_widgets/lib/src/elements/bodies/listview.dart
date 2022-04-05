@@ -42,6 +42,7 @@ final listIntrinsicStates = IntrinsicStates(
   canHave: ChildrenEnum.children,
   addChildLabels: [],
   gestures: [],
+  permissions:[],
 );
 
 /// Body of ListView
