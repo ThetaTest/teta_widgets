@@ -6,10 +6,8 @@ import 'package:flutter/material.dart';
 // Package imports:
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:hovering/hovering.dart';
-import 'package:teta_core/src/blocs/focus/bloc.dart';
-import 'package:teta_core/src/design_system/dialogs/color_picker.dart';
-import 'package:teta_core/src/design_system/hex_color.dart';
 import 'package:teta_core/src/design_system/textfield/minitextfield.dart';
+import 'package:teta_core/teta_core.dart';
 // Project imports:
 import 'package:teta_widgets/src/elements/features/features.dart';
 import 'package:teta_widgets/src/elements/nodes/node.dart';
@@ -90,95 +88,102 @@ class SolidFillControlState extends State<SolidFillControl> {
       },
       child: BlocBuilder<FocusBloc, List<CNode>>(
         builder: (final context, final state) {
-          return Row(
-            children: [
-              Padding(
-                padding: const EdgeInsets.only(right: 4),
-                child: GestureDetector(
-                  onTap: () {
-                    showPicker(context);
-                  },
-                  child: HoverWidget(
-                    hoverChild: Container(
-                      width: 48,
-                      height: 48,
-                      decoration: BoxDecoration(
-                        color: HexColor(
-                          widget.color != null
-                              ? widget.color!
-                              : widget.fill!.levels!.first.color,
+          return TContainer(
+            padding: const EdgeInsets.symmetric(horizontal: 8),
+            decoration: BoxDecoration(
+              color: Palette.bgTertiary,
+              borderRadius: BorderRadius.circular(8),
+            ),
+            child: Row(
+              children: [
+                Padding(
+                  padding: const EdgeInsets.only(right: 4),
+                  child: GestureDetector(
+                    onTap: () {
+                      showPicker(context);
+                    },
+                    child: HoverWidget(
+                      hoverChild: Container(
+                        width: 32,
+                        height: 32,
+                        decoration: BoxDecoration(
+                          color: HexColor(
+                            widget.color != null
+                                ? widget.color!
+                                : widget.fill!.levels!.first.color,
+                          ),
+                          borderRadius: BorderRadius.circular(8),
+                          border: Border.all(color: Colors.white),
                         ),
-                        borderRadius: BorderRadius.circular(8),
-                        border: Border.all(color: Colors.white),
                       ),
-                    ),
-                    onHover: (final e) {},
-                    child: Container(
-                      width: 48,
-                      height: 48,
-                      decoration: BoxDecoration(
-                        color: HexColor(
-                          widget.color != null
-                              ? widget.color!
-                              : widget.fill!.levels!.first.color,
+                      onHover: (final e) {},
+                      child: Container(
+                        width: 32,
+                        height: 32,
+                        decoration: BoxDecoration(
+                          color: HexColor(
+                            widget.color != null
+                                ? widget.color!
+                                : widget.fill!.levels!.first.color,
+                          ),
+                          borderRadius: BorderRadius.circular(8),
+                          border: Border.all(color: Palette.bgGrey),
                         ),
-                        borderRadius: BorderRadius.circular(8),
-                        border: Border.all(color: Colors.grey),
                       ),
                     ),
                   ),
                 ),
-              ),
-              Expanded(
-                child: CMiniTextField(
-                  controller: controller,
-                  placeholder: tempColor,
-                  hpadding: 4,
-                  onSubmitted: (final text) {
-                    final hexCode = text.replaceAll('#', '');
-                    if (hexCode.length == 3) {
-                      final hexColor =
-                          RegExp(r'^#?([0-9a-fA-F]{3}|[0-9a-fA-F]{6})$');
-                      if (hexColor.hasMatch(hexCode)) {
-                        final old = FFill().fromJson(widget.fill!.toJson());
-                        widget.fill!.levels!.first.color = '$hexCode$hexCode';
-                        widget.callBack(widget.fill!, false, old);
+                Expanded(
+                  child: CMiniTextField(
+                    controller: controller,
+                    placeholder: tempColor,
+                    hpadding: 4,
+                    onSubmitted: (final text) {
+                      final hexCode = text.replaceAll('#', '');
+                      if (hexCode.length == 3) {
+                        final hexColor =
+                            RegExp(r'^#?([0-9a-fA-F]{3}|[0-9a-fA-F]{6})$');
+                        if (hexColor.hasMatch(hexCode)) {
+                          final old = FFill().fromJson(widget.fill!.toJson());
+                          widget.fill!.levels!.first.color = '$hexCode$hexCode';
+                          widget.callBack(widget.fill!, false, old);
+                        }
                       }
-                    }
-                    if (hexCode.length == 6) {
-                      final hexColor =
-                          RegExp(r'^#?([0-9a-fA-F]{3}|[0-9a-fA-F]{6})$');
-                      if (hexColor.hasMatch(hexCode)) {
-                        final old = FFill().fromJson(widget.fill!.toJson());
-                        widget.fill!.levels!.first.color = hexCode;
-                        widget.callBack(widget.fill!, false, old);
+                      if (hexCode.length == 6) {
+                        final hexColor =
+                            RegExp(r'^#?([0-9a-fA-F]{3}|[0-9a-fA-F]{6})$');
+                        if (hexColor.hasMatch(hexCode)) {
+                          final old = FFill().fromJson(widget.fill!.toJson());
+                          widget.fill!.levels!.first.color = hexCode;
+                          widget.callBack(widget.fill!, false, old);
+                        }
                       }
-                    }
-                  },
-                  callBack: (final text) {
-                    final hexCode = text.replaceAll('#', '');
-                    if (hexCode.length == 3) {
-                      final hexColor =
-                          RegExp(r'^#?([0-9a-fA-F]{3}|[0-9a-fA-F]{6})$');
-                      if (hexColor.hasMatch(hexCode)) {
-                        final old = FFill().fromJson(widget.fill!.toJson());
-                        widget.fill!.levels!.first.color = '$hexCode$hexCode';
-                        widget.callBack(widget.fill!, false, old);
+                    },
+                    callBack: (final text) {
+                      final hexCode = text.replaceAll('#', '');
+                      if (hexCode.length == 3) {
+                        final hexColor =
+                            RegExp(r'^#?([0-9a-fA-F]{3}|[0-9a-fA-F]{6})$');
+                        if (hexColor.hasMatch(hexCode)) {
+                          final old = FFill().fromJson(widget.fill!.toJson());
+                          widget.fill!.levels!.first.color = '$hexCode$hexCode';
+                          widget.callBack(widget.fill!, false, old);
+                        }
                       }
-                    }
-                    if (hexCode.length == 6) {
-                      final hexColor =
-                          RegExp(r'^#?([0-9a-fA-F]{3}|[0-9a-fA-F]{6})$');
-                      if (hexColor.hasMatch(hexCode)) {
-                        final old = FFill().fromJson(widget.fill!.toJson());
-                        widget.fill!.levels!.first.color = hexCode;
-                        widget.callBack(widget.fill!, false, old);
+                      if (hexCode.length == 6) {
+                        final hexColor =
+                            RegExp(r'^#?([0-9a-fA-F]{3}|[0-9a-fA-F]{6})$');
+                        if (hexColor.hasMatch(hexCode)) {
+                          final old = FFill().fromJson(widget.fill!.toJson());
+                          widget.fill!.levels!.first.color = hexCode;
+                          widget.callBack(widget.fill!, false, old);
+                        }
                       }
-                    }
-                  },
+                    },
+                  ),
                 ),
-              ),
-            ],
+              ],
+            ),
           );
         },
       ),

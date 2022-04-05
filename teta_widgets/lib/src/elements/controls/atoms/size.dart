@@ -177,7 +177,7 @@ class SizeControlsState extends State<SizeControl> {
                   children: [
                     SizedBox(
                       width: MediaQuery.of(context).size.width >= 600
-                          ? 260
+                          ? 300
                           : MediaQuery.of(context).size.width - 20,
                       height: 60,
                       child: Stack(
@@ -209,10 +209,10 @@ class SizeControlsState extends State<SizeControl> {
                           ),
                           Positioned(
                             top: 4,
-                            right: 8,
+                            right: 12,
                             bottom: 18,
                             child: Container(
-                              color: const Color(0xFF333333),
+                              color: Palette.bgTertiary,
                               child: Column(
                                 mainAxisAlignment: MainAxisAlignment.center,
                                 children: [
@@ -259,7 +259,8 @@ class SizeControlsState extends State<SizeControl> {
   }
 
   Widget maxIcon({final SizeUnit? unit}) {
-    return Container(
+    return TContainer(
+      key: UniqueKey(),
       width: 32,
       decoration: BoxDecoration(
         border: Border.all(
@@ -270,7 +271,8 @@ class SizeControlsState extends State<SizeControl> {
       ),
       child: const Center(
         child: TDetailLabel(
-          'MAX',
+          'Max',
+          color: Palette.txtGrey,
         ),
       ),
     );

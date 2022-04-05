@@ -6,10 +6,6 @@ import 'package:flutter/material.dart';
 // Package imports:
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:hovering/hovering.dart';
-import 'package:teta_core/src/blocs/focus/bloc.dart';
-import 'package:teta_core/src/design_system/buttons/button.dart';
-import 'package:teta_core/src/design_system/dialogs/color_picker.dart';
-import 'package:teta_core/src/design_system/hex_color.dart';
 import 'package:teta_core/src/design_system/textfield/textfield.dart';
 import 'package:teta_core/teta_core.dart';
 // Project imports:
@@ -240,6 +236,7 @@ class ColorControlState extends State<LinearFillControl> {
                     padding: const EdgeInsets.only(right: 4),
                     child: CButton(
                       label: 'Begin',
+                      isPrimary: false,
                       callback: () {
                         setState(() {
                           align = widget.fill.begin;
@@ -254,6 +251,7 @@ class ColorControlState extends State<LinearFillControl> {
                     padding: const EdgeInsets.only(left: 4),
                     child: CButton(
                       label: 'End',
+                      isPrimary: false,
                       callback: () {
                         _showPickerAlign(widget.fill.end!, 'end');
                       },
@@ -525,84 +523,105 @@ class FillElementState extends State<FillElement> {
         child: Row(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            Padding(
-              padding: const EdgeInsets.only(right: 4),
-              child: GestureDetector(
-                onTap: () {
-                  widget.callBackIndex(widget.index);
-                },
-                child: HoverWidget(
-                  hoverChild: Container(
-                    width: 48,
-                    height: 48,
-                    decoration: BoxDecoration(
-                      color: HexColor(widget.element.color),
-                      borderRadius: BorderRadius.circular(8),
-                      border: Border.all(
-                        color: Colors.white,
+            Expanded(
+              flex: 2,
+              child: TContainer(
+                padding: const EdgeInsets.symmetric(horizontal: 8),
+                decoration: BoxDecoration(
+                  color: Palette.bgTertiary,
+                  borderRadius: BorderRadius.circular(8),
+                ),
+                child: Row(
+                  children: [
+                    Padding(
+                      padding: const EdgeInsets.only(right: 4),
+                      child: GestureDetector(
+                        onTap: () {
+                          widget.callBackIndex(widget.index);
+                        },
+                        child: HoverWidget(
+                          hoverChild: Container(
+                            width: 32,
+                            height: 32,
+                            decoration: BoxDecoration(
+                              color: HexColor(widget.element.color),
+                              borderRadius: BorderRadius.circular(8),
+                              border: Border.all(
+                                color: Colors.white,
+                              ),
+                            ),
+                          ),
+                          onHover: (final e) {},
+                          child: Container(
+                            width: 32,
+                            height: 32,
+                            decoration: BoxDecoration(
+                              color: HexColor(widget.element.color),
+                              borderRadius: BorderRadius.circular(8),
+                              border: Border.all(color: Colors.transparent),
+                            ),
+                          ),
+                        ),
                       ),
                     ),
-                  ),
-                  onHover: (final e) {},
-                  child: Container(
-                    width: 48,
-                    height: 48,
-                    decoration: BoxDecoration(
-                      color: HexColor(widget.element.color),
-                      borderRadius: BorderRadius.circular(8),
-                      border: Border.all(color: Colors.transparent),
+                    Expanded(
+                      child: CTextField(
+                        controller: editingController,
+                        hpadding: 4,
+                        onSubmitted: (final text) {
+                          final hexCode = text.replaceAll('#', '');
+                          if (hexCode.length == 3) {
+                            final hexColor =
+                                RegExp(r'^#?([0-9a-fA-F]{3}|[0-9a-fA-F]{6})$');
+                            if (hexColor.hasMatch(hexCode)) {
+                              final old =
+                                  FFill().fromJson(widget.fill.toJson());
+                              widget.element.color = '$hexCode$hexCode';
+                              widget.callBack(widget.fill, old);
+                            }
+                          }
+                          if (hexCode.length == 6) {
+                            final hexColor =
+                                RegExp(r'^#?([0-9a-fA-F]{3}|[0-9a-fA-F]{6})$');
+                            if (hexColor.hasMatch(hexCode)) {
+                              final old =
+                                  FFill().fromJson(widget.fill.toJson());
+                              widget.element.color = hexCode;
+                              widget.callBack(widget.fill, old);
+                            }
+                          }
+                        },
+                        callBack: (final text) {
+                          final hexCode = text.replaceAll('#', '');
+                          if (hexCode.length == 3) {
+                            final hexColor =
+                                RegExp(r'^#?([0-9a-fA-F]{3}|[0-9a-fA-F]{6})$');
+                            if (hexColor.hasMatch(hexCode)) {
+                              final old =
+                                  FFill().fromJson(widget.fill.toJson());
+                              widget.element.color = '$hexCode$hexCode';
+                              widget.callBack(widget.fill, old);
+                            }
+                          }
+                          if (hexCode.length == 6) {
+                            final hexColor =
+                                RegExp(r'^#?([0-9a-fA-F]{3}|[0-9a-fA-F]{6})$');
+                            if (hexColor.hasMatch(hexCode)) {
+                              final old =
+                                  FFill().fromJson(widget.fill.toJson());
+                              widget.element.color = hexCode;
+                              widget.callBack(widget.fill, old);
+                            }
+                          }
+                        },
+                      ),
                     ),
-                  ),
+                  ],
                 ),
               ),
             ),
-            Expanded(
-              child: CTextField(
-                controller: editingController,
-                hpadding: 4,
-                onSubmitted: (final text) {
-                  final hexCode = text.replaceAll('#', '');
-                  if (hexCode.length == 3) {
-                    final hexColor =
-                        RegExp(r'^#?([0-9a-fA-F]{3}|[0-9a-fA-F]{6})$');
-                    if (hexColor.hasMatch(hexCode)) {
-                      final old = FFill().fromJson(widget.fill.toJson());
-                      widget.element.color = '$hexCode$hexCode';
-                      widget.callBack(widget.fill, old);
-                    }
-                  }
-                  if (hexCode.length == 6) {
-                    final hexColor =
-                        RegExp(r'^#?([0-9a-fA-F]{3}|[0-9a-fA-F]{6})$');
-                    if (hexColor.hasMatch(hexCode)) {
-                      final old = FFill().fromJson(widget.fill.toJson());
-                      widget.element.color = hexCode;
-                      widget.callBack(widget.fill, old);
-                    }
-                  }
-                },
-                callBack: (final text) {
-                  final hexCode = text.replaceAll('#', '');
-                  if (hexCode.length == 3) {
-                    final hexColor =
-                        RegExp(r'^#?([0-9a-fA-F]{3}|[0-9a-fA-F]{6})$');
-                    if (hexColor.hasMatch(hexCode)) {
-                      final old = FFill().fromJson(widget.fill.toJson());
-                      widget.element.color = '$hexCode$hexCode';
-                      widget.callBack(widget.fill, old);
-                    }
-                  }
-                  if (hexCode.length == 6) {
-                    final hexColor =
-                        RegExp(r'^#?([0-9a-fA-F]{3}|[0-9a-fA-F]{6})$');
-                    if (hexColor.hasMatch(hexCode)) {
-                      final old = FFill().fromJson(widget.fill.toJson());
-                      widget.element.color = hexCode;
-                      widget.callBack(widget.fill, old);
-                    }
-                  }
-                },
-              ),
+            const SizedBox(
+              width: 8,
             ),
             Expanded(
               child: CTextField(

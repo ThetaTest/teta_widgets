@@ -42,7 +42,7 @@ class WTransform extends StatelessWidget {
       forPlay: forPlay,
       child: Transform(
         transform: Matrix4.identity()
-          ..setEntry(3, 3, 0.001)
+          ..setEntry(1, 1, 1)
           ..rotateX(
             double.tryParse(
                   valueX.get(params, states, dataset, forPlay, loop),
