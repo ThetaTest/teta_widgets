@@ -234,6 +234,7 @@ class ActionElementControlState extends State<ActionElementControl> {
                     },
                     child: CMiniTextField(
                       controller: delayController,
+                      backgroundColor: Palette.bgGreyLight,
                       callBack: (final text) {
                         if (int.tryParse(text) != null) {
                           final old = widget.element;
