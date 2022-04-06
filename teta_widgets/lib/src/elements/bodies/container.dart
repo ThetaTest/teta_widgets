@@ -107,11 +107,11 @@ class ContainerBody extends NodeBody {
           key: DBKeys.borders,
           value: attributes[DBKeys.borders],
         ),
-        ControlObject(
-          type: ControlType.shadows,
-          key: DBKeys.shadows,
-          value: attributes[DBKeys.shadows],
-        ),
+        // ControlObject(
+        //   type: ControlType.shadows,
+        //   key: DBKeys.shadows,
+        //   value: attributes[DBKeys.shadows],
+        // ),
       ];
 
   @override
