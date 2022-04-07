@@ -18,6 +18,7 @@ class WCard extends StatelessWidget {
     required this.dataset,
     required this.elevation,
     required this.color,
+    required this.borderRadius,
     this.child,
     this.loop,
   }) : super(key: key);
@@ -27,6 +28,7 @@ class WCard extends StatelessWidget {
   final bool forPlay;
   final int? loop;
   final FTextTypeInput elevation;
+  final FBorderRadius borderRadius;
   final FFill color;
   final List<VariableObject> params;
   final List<VariableObject> states;
@@ -41,6 +43,7 @@ class WCard extends StatelessWidget {
       child: Card(
         color: HexColor(color.getHexColor(context)),
         elevation: double.tryParse(val) != null ? double.parse(val) : 1,
+        shape: TetaShapeCard.get(context: context, borderRadius: borderRadius),
         child: ChildConditionBuilder(
           ValueKey('${node.nid} $loop'),
           name: node.intrinsicState.displayName,

@@ -9,6 +9,7 @@ import 'package:teta_widgets/src/elements/code/templates/card.dart';
 import 'package:teta_widgets/src/elements/controls/control_model.dart';
 import 'package:teta_widgets/src/elements/controls/key_constants.dart';
 import 'package:teta_widgets/src/elements/controls/type.dart';
+import 'package:teta_widgets/src/elements/features/border_radius.dart';
 import 'package:teta_widgets/src/elements/features/fill.dart';
 import 'package:teta_widgets/src/elements/features/text_type_input.dart';
 import 'package:teta_widgets/src/elements/intrinsic_states/class.dart';
@@ -51,6 +52,7 @@ class CardBody extends NodeBody {
   Map<String, dynamic> attributes = <String, dynamic>{
     DBKeys.value: FTextTypeInput(),
     DBKeys.fill: FFill(),
+    DBKeys.borderRadius: FBorderRadius(),
   };
 
   @override
@@ -69,6 +71,11 @@ class CardBody extends NodeBody {
           isNoneEnabled: false,
           isOnlySolid: true,
           isStyled: false,
+        ),
+        ControlObject(
+          type: ControlType.borderRadius,
+          key: DBKeys.borderRadius,
+          value: attributes[DBKeys.borderRadius],
         ),
       ];
 
@@ -91,6 +98,7 @@ class CardBody extends NodeBody {
             ${child ?? children}
             ${(attributes[DBKeys.value] as FTextTypeInput).toJson()}, 
             ${(attributes[DBKeys.fill] as FFill).toJson()},
+            ${attributes[DBKeys.borderRadius] as FBorderRadius}
             ''',
         ),
         node: node,
@@ -98,6 +106,7 @@ class CardBody extends NodeBody {
         elevation: attributes[DBKeys.value] as FTextTypeInput,
         color: attributes[DBKeys.fill] as FFill,
         loop: loop,
+        borderRadius: attributes[DBKeys.borderRadius] as FBorderRadius,
         forPlay: forPlay,
         params: params,
         states: states,
