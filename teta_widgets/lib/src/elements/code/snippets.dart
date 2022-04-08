@@ -239,6 +239,7 @@ class CS {
     return '''
       shape: RoundedRectangleBorder(
         ${CS.borderRadius(context, body)}
+        ),
     ''';
   }
 
