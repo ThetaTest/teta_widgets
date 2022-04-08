@@ -90,15 +90,15 @@ class ComponentControlState extends State<ComponentControl> {
             items: components.map((final e) => e.name).toList(),
             onChange: (final String? newValue) {
               if (newValue != null) {
-                final old =
-                    widget.node.body.attributes[DBKeys.componentName] as String;
+                final old = widget.node.body.attributes[DBKeys.componentName]
+                    as String?;
                 pageObject = components
                     .firstWhere((final element) => element.name == newValue);
                 setState(() {
                   dropdown = newValue;
                   name = '${pageObject!.id}';
                 });
-                widget.callBack(pageObject!.name, old);
+                widget.callBack(pageObject!.name, old ?? '');
               }
             },
           ),
