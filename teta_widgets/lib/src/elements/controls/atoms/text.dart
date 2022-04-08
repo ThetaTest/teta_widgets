@@ -118,6 +118,7 @@ class PaddingsState extends State<TextControl> {
               CTextField(
                 //text: text,
                 controller: controller,
+                bgColor: Palette.bgGrey,
                 callBack: (final value) {
                   value.replaceAll(r'\', r'\\');
                   final old = widget.value;

@@ -7,6 +7,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 // Package imports:
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:gap/gap.dart';
 import 'package:material_design_icons_flutter/icon_map.dart';
 import 'package:material_design_icons_flutter/material_design_icons_flutter.dart';
 import 'package:teta_core/src/design_system/textfield/minitextfield.dart';
@@ -102,17 +103,17 @@ class IconControlState extends State<IconControl> {
             create: (final context) => cubit,
             child: AlertDialog(
               backgroundColor: const Color(0xFF222222),
-              title: CupertinoSegmentedControl(
-                children: const <int, Widget>{
-                  0: THeadline3(
-                    'Material',
-                  ),
-                  1: THeadline3(
-                    'Material',
-                  ),
-                },
-                onValueChanged: (final i) {},
-              ),
+              // title: CupertinoSegmentedControl(
+              //   children: const <int, Widget>{
+              //     0: THeadline3(
+              //       'Material',
+              //     ),
+              //     1: THeadline3(
+              //       'Material',
+              //     ),
+              //   },
+              //   onValueChanged: (final i) {},
+              // ),
               content: BlocBuilder<GoogleFontsCubit, String>(
                 bloc: cubit,
                 builder: (final context, final state) {
@@ -137,14 +138,14 @@ class IconControlState extends State<IconControl> {
                     }
                   });
                   return SizedBox(
-                    height: 380,
+                    height: 400,
                     width: 400,
                     child: Column(
                       children: [
                         CMiniTextField(
                           controller: editingController,
                           placeholder: 'Write here',
-                          color: Colors.white,
+                          backgroundColor: Palette.bgGrey,
                           callBack: (final text) {
                             cubit.updateTextToFind(text);
                             setState(() {
@@ -159,18 +160,17 @@ class IconControlState extends State<IconControl> {
                             });
                           },
                         ),
-                        const Divider(
-                          height: 1,
-                          color: Colors.black12,
-                        ),
+                        const Gap(Grid.small),
                         SizedBox(
-                          height: 326,
+                          height: 340,
                           child: GridView.builder(
                             controller: scrollController,
                             itemCount: filteredIcons.length,
                             gridDelegate:
                                 const SliverGridDelegateWithFixedCrossAxisCount(
-                              crossAxisCount: 8,
+                              crossAxisCount: 6,
+                              crossAxisSpacing: 8,
+                              mainAxisSpacing: 8,
                             ),
                             itemBuilder: (final context, final index) {
                               final icon = filteredIcons[index];
@@ -186,11 +186,17 @@ class IconControlState extends State<IconControl> {
                                       .pop(null);
                                 },
                                 child: Container(
-                                  padding: const EdgeInsets.all(8),
+                                  height: 32,
+                                  width: 32,
+                                  padding: EI.smA,
+                                  decoration:const BoxDecoration(
+                                    color: Palette.bgGrey,
+                                    borderRadius: BorderRadius.all(Radius.circular(16)),
+                                    ),
                                   child: Center(
                                     child: Icon(
                                       icon.iconData,
-                                      size: 32,
+                                      size: 28,
                                       color: Colors.white,
                                     ),
                                   ),
@@ -205,15 +211,14 @@ class IconControlState extends State<IconControl> {
                 },
               ),
               actions: <Widget>[
-                TextButton(
-                  onPressed: () {
-                    //setState(() => fill = pickerColor);
+                CButton(
+                  label: 'Cancel',
+                  maxWidth: 80,
+                  isPrimary: false,
+                  callback: () {
                     Navigator.of(context, rootNavigator: true).pop(null);
                   },
-                  child: const TActionLabel(
-                    'Cancel',
-                  ),
-                ),
+                )
               ],
             ),
           ),

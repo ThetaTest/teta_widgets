@@ -24,6 +24,7 @@ String cardCodeTemplate(
     Card(
       elevation: $elevation,
       color: Color(0xFF$fill),
+      ${CS.shapeCardBorderRadius(context, body)}
       ${CS.child(context, child, comma: true)}
     )
   ''';

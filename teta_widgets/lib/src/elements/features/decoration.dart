@@ -93,3 +93,15 @@ class TetaBoxDecoration {
                           );
   }
 }
+
+class TetaShapeCard {
+  /// Get a [BoxDecoration]
+  static RoundedRectangleBorder get({
+    required final BuildContext context,
+    final FBorderRadius? borderRadius,
+  }) {
+    return RoundedRectangleBorder(
+      borderRadius: borderRadius != null ? borderRadius.get : BorderRadius.zero,
+    );
+  }
+}

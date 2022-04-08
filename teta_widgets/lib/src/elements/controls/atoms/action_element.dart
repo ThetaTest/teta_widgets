@@ -234,6 +234,7 @@ class ActionElementControlState extends State<ActionElementControl> {
                     },
                     child: CMiniTextField(
                       controller: delayController,
+                      backgroundColor: Palette.bgGrey,
                       callBack: (final text) {
                         if (int.tryParse(text) != null) {
                           final old = widget.element;
@@ -289,6 +290,7 @@ class ActionElementControlState extends State<ActionElementControl> {
                           },
                           child: CMiniTextField(
                             controller: loopController,
+                            backgroundColor: Palette.bgGrey,
                             callBack: (final text) {
                               if (int.tryParse(text) != null) {
                                 final old = widget.element;

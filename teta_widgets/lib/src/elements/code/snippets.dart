@@ -231,6 +231,17 @@ class CS {
       ),
     ''';
   }
+  ///shape for card
+  static String shapeCardBorderRadius(
+    final BuildContext context,
+    final NodeBody body,
+  ) {
+    return '''
+      shape: RoundedRectangleBorder(
+        ${CS.borderRadius(context, body)}
+        ),
+    ''';
+  }
 
   /// Returns BorderRadius code
   ///

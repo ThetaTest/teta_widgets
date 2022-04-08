@@ -35,7 +35,7 @@ class FBorder {
   }) {
     fill ??= FFill();
     width ??= FMargins();
-    style ??= FBorderStyle();
+    style ??= FBorderStyle(style: BorderStyle.none,);
   }
 
   /// The [fill] of [Border]. It must be solid only
