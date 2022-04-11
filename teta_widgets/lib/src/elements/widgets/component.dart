@@ -56,7 +56,7 @@ class _WComponentState extends State<WComponent> {
   void initState() {
     prjState =
         BlocProvider.of<FocusProjectBloc>(context).state as ProjectLoaded;
-    if (componentName != '' && componentName != widget.componentName) {
+    if (widget.componentName != '' && componentName != widget.componentName) {
       calc();
       componentName = widget.componentName;
     }
