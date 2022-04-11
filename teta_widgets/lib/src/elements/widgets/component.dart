@@ -20,19 +20,19 @@ class WComponent extends StatefulWidget {
   const WComponent(
     final Key? key, {
     required this.node,
+    required this.componentName,
     required this.forPlay,
     required this.params,
     required this.states,
     required this.dataset,
     this.child,
-    this.componentName,
     this.paramsToSend,
     this.loop,
   }) : super(key: key);
 
   final CNode node;
   final CNode? child;
-  final String? componentName;
+  final String componentName;
   final Map<String, dynamic>? paramsToSend;
   final bool forPlay;
   final int? loop;
@@ -56,8 +56,7 @@ class _WComponentState extends State<WComponent> {
   void initState() {
     prjState =
         BlocProvider.of<FocusProjectBloc>(context).state as ProjectLoaded;
-    if (componentName != widget.componentName) {
-      debugPrint('calc');
+    if (componentName != '' && componentName != widget.componentName) {
       calc();
       componentName = widget.componentName;
     }
@@ -72,7 +71,37 @@ class _WComponentState extends State<WComponent> {
     if (component?.isHardCoded ?? false) {
       return hardCoded(component!);
     } else {
-      return body(context);
+      return component != null
+          ? BlocProvider<FocusPageBloc>(
+              create: (final context) => FocusPageBloc()
+                ..add(
+                  OnFocusPage(
+                    prj: prjState!.prj,
+                    page: component!,
+                    context: context,
+                    forPlay: widget.forPlay,
+                    isComponent: true,
+                  ),
+                ),
+              child: BlocBuilder<FocusPageBloc, PageObject>(
+                builder: (final context, final page) {
+                  return (page.scaffold == null)
+                      ? const SizedBox()
+                      : page.scaffold!.toWidget(
+                          params: (widget.paramsToSend != null)
+                              ? getVariableObjectsFromParams(page)
+                              : page.params,
+                          states: page.states,
+                          dataset: page.datasets,
+                          forPlay: widget.forPlay,
+                          loop: widget.loop,
+                        );
+                },
+              ),
+            )
+          : PlaceholderChildBuilder(
+              name: widget.node.intrinsicState.displayName,
+            );
     }
   }
 
@@ -132,38 +161,6 @@ class _WComponentState extends State<WComponent> {
         });
       }
     }
-  }
-
-  Widget body(final BuildContext context) {
-    return component != null
-        ? BlocProvider<FocusPageBloc>(
-            create: (final context) => FocusPageBloc()
-              ..add(
-                OnFocusPage(
-                  prj: prjState!.prj,
-                  page: component!,
-                  context: context,
-                  forPlay: widget.forPlay,
-                  isComponent: true,
-                ),
-              ),
-            child: BlocBuilder<FocusPageBloc, PageObject>(
-              builder: (final context, final page) {
-                return (page.scaffold == null)
-                    ? const SizedBox()
-                    : page.scaffold!.toWidget(
-                        params: (widget.paramsToSend != null)
-                            ? getVariableObjectsFromParams(page)
-                            : page.params,
-                        states: page.states,
-                        dataset: page.datasets,
-                        forPlay: widget.forPlay,
-                        loop: widget.loop,
-                      );
-              },
-            ),
-          )
-        : PlaceholderChildBuilder(name: widget.node.intrinsicState.displayName);
   }
 
   String initializeParamsForUri(
