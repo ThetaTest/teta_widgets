@@ -54,6 +54,8 @@ class _WComponentState extends State<WComponent> {
 
   @override
   void initState() {
+    prjState =
+        BlocProvider.of<FocusProjectBloc>(context).state as ProjectLoaded;
     if (componentName != widget.componentName) {
       calc();
     }
@@ -78,6 +80,7 @@ class _WComponentState extends State<WComponent> {
       );
     }
     if (_component != null && !_component.isHardCoded) {
+      print('enter here');
       if (component?.scaffold == null) {
         final nodes = await fetch(_component, context);
         final scaffold = NodeRendering.renderTree(nodes);
