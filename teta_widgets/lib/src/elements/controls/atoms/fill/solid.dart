@@ -68,125 +68,139 @@ class SolidFillControlState extends State<SolidFillControl> {
       controller.text = tempColor;
       isUpdated = false;
     }*/
-    return BlocListener<FocusBloc, List<CNode>>(
-      listener: (final context, final state) {
-        if (state.isNotEmpty) {
-          if (state.first.nid != nodeId) {
-            setState(() {
-              isUpdated = true;
-              if (widget.color != null) {
-                controller.text = widget.color ?? '';
-                tempColor = widget.color;
-              } else {
-                controller.text = widget.fill!.get(context).levels!.first.color;
-                tempColor = widget.fill!.get(context).levels!.first.color;
+    return Column(
+      children: [
+        BlocListener<FocusBloc, List<CNode>>(
+          listener: (final context, final state) {
+            if (state.isNotEmpty) {
+              if (state.first.nid != nodeId) {
+                setState(() {
+                  isUpdated = true;
+                  if (widget.color != null) {
+                    controller.text = widget.color ?? '';
+                    tempColor = widget.color;
+                  } else {
+                    controller.text =
+                        widget.fill!.get(context).levels!.first.color;
+                    tempColor = widget.fill!.get(context).levels!.first.color;
+                  }
+                });
+                nodeId = state.first.nid;
               }
-            });
-            nodeId = state.first.nid;
-          }
-        }
-      },
-      child: BlocBuilder<FocusBloc, List<CNode>>(
-        builder: (final context, final state) {
-          return TContainer(
-            padding: const EdgeInsets.symmetric(horizontal: 8),
-            decoration: BoxDecoration(
-              color: Palette.bgTertiary,
-              borderRadius: BorderRadius.circular(8),
-            ),
-            child: Row(
-              children: [
-                Padding(
-                  padding: const EdgeInsets.only(right: 4),
-                  child: GestureDetector(
-                    onTap: () {
-                      showPicker(context);
-                    },
-                    child: HoverWidget(
-                      hoverChild: Container(
-                        width: 32,
-                        height: 32,
-                        decoration: BoxDecoration(
-                          color: HexColor(
-                            widget.color != null
-                                ? widget.color!
-                                : widget.fill!.levels!.first.color,
+            }
+          },
+          child: BlocBuilder<FocusBloc, List<CNode>>(
+            builder: (final context, final state) {
+              return TContainer(
+                padding: const EdgeInsets.symmetric(horizontal: 8),
+                decoration: BoxDecoration(
+                  color: Palette.bgTertiary,
+                  borderRadius: BorderRadius.circular(8),
+                ),
+                child: Row(
+                  children: [
+                    Padding(
+                      padding: const EdgeInsets.only(right: 4),
+                      child: GestureDetector(
+                        onTap: () {
+                          showPicker(context);
+                        },
+                        child: HoverWidget(
+                          hoverChild: TContainer(
+                            width: 32,
+                            height: 32,
+                            decoration: BoxDecoration(
+                              color: HexColor(
+                                widget.color != null
+                                    ? widget.color!
+                                    : widget.fill!.levels!.first.color,
+                              ),
+                              borderRadius: BorderRadius.circular(8),
+                              border: Border.all(color: Colors.white),
+                            ),
                           ),
-                          borderRadius: BorderRadius.circular(8),
-                          border: Border.all(color: Colors.white),
-                        ),
-                      ),
-                      onHover: (final e) {},
-                      child: Container(
-                        width: 32,
-                        height: 32,
-                        decoration: BoxDecoration(
-                          color: HexColor(
-                            widget.color != null
-                                ? widget.color!
-                                : widget.fill!.levels!.first.color,
+                          onHover: (final e) {},
+                          child: TContainer(
+                            width: 32,
+                            height: 32,
+                            decoration: BoxDecoration(
+                              color: HexColor(
+                                widget.color != null
+                                    ? widget.color!
+                                    : widget.fill!.levels!.first.color,
+                              ),
+                              borderRadius: BorderRadius.circular(8),
+                              border: Border.all(color: Palette.bgGrey),
+                            ),
                           ),
-                          borderRadius: BorderRadius.circular(8),
-                          border: Border.all(color: Palette.bgGrey),
                         ),
                       ),
                     ),
-                  ),
+                    Expanded(
+                      child: CMiniTextField(
+                        controller: controller,
+                        placeholder: tempColor,
+                        hpadding: 4,
+                        onSubmitted: (final text) {
+                          final hexCode = text.replaceAll('#', '');
+                          if (hexCode.length == 3) {
+                            final hexColor =
+                                RegExp(r'^#?([0-9a-fA-F]{3}|[0-9a-fA-F]{6})$');
+                            if (hexColor.hasMatch(hexCode)) {
+                              final old =
+                                  FFill().fromJson(widget.fill!.toJson());
+                              widget.fill!.levels!.first.color =
+                                  '$hexCode$hexCode';
+                              widget.callBack(widget.fill!, false, old);
+                            }
+                          }
+                          if (hexCode.length == 6) {
+                            final hexColor =
+                                RegExp(r'^#?([0-9a-fA-F]{3}|[0-9a-fA-F]{6})$');
+                            if (hexColor.hasMatch(hexCode)) {
+                              final old =
+                                  FFill().fromJson(widget.fill!.toJson());
+                              widget.fill!.levels!.first.color = hexCode;
+                              widget.callBack(widget.fill!, false, old);
+                            }
+                          }
+                        },
+                        callBack: (final text) {
+                          final hexCode = text.replaceAll('#', '');
+                          if (hexCode.length == 3) {
+                            final hexColor =
+                                RegExp(r'^#?([0-9a-fA-F]{3}|[0-9a-fA-F]{6})$');
+                            if (hexColor.hasMatch(hexCode)) {
+                              final old =
+                                  FFill().fromJson(widget.fill!.toJson());
+                              widget.fill!.levels!.first.color =
+                                  '$hexCode$hexCode';
+                              widget.callBack(widget.fill!, false, old);
+                            }
+                          }
+                          if (hexCode.length == 6) {
+                            final hexColor =
+                                RegExp(r'^#?([0-9a-fA-F]{3}|[0-9a-fA-F]{6})$');
+                            if (hexColor.hasMatch(hexCode)) {
+                              final old =
+                                  FFill().fromJson(widget.fill!.toJson());
+                              widget.fill!.levels!.first.color = hexCode;
+                              widget.callBack(widget.fill!, false, old);
+                            }
+                          }
+                        },
+                      ),
+                    ),
+                  ],
                 ),
-                Expanded(
-                  child: CMiniTextField(
-                    controller: controller,
-                    placeholder: tempColor,
-                    hpadding: 4,
-                    onSubmitted: (final text) {
-                      final hexCode = text.replaceAll('#', '');
-                      if (hexCode.length == 3) {
-                        final hexColor =
-                            RegExp(r'^#?([0-9a-fA-F]{3}|[0-9a-fA-F]{6})$');
-                        if (hexColor.hasMatch(hexCode)) {
-                          final old = FFill().fromJson(widget.fill!.toJson());
-                          widget.fill!.levels!.first.color = '$hexCode$hexCode';
-                          widget.callBack(widget.fill!, false, old);
-                        }
-                      }
-                      if (hexCode.length == 6) {
-                        final hexColor =
-                            RegExp(r'^#?([0-9a-fA-F]{3}|[0-9a-fA-F]{6})$');
-                        if (hexColor.hasMatch(hexCode)) {
-                          final old = FFill().fromJson(widget.fill!.toJson());
-                          widget.fill!.levels!.first.color = hexCode;
-                          widget.callBack(widget.fill!, false, old);
-                        }
-                      }
-                    },
-                    callBack: (final text) {
-                      final hexCode = text.replaceAll('#', '');
-                      if (hexCode.length == 3) {
-                        final hexColor =
-                            RegExp(r'^#?([0-9a-fA-F]{3}|[0-9a-fA-F]{6})$');
-                        if (hexColor.hasMatch(hexCode)) {
-                          final old = FFill().fromJson(widget.fill!.toJson());
-                          widget.fill!.levels!.first.color = '$hexCode$hexCode';
-                          widget.callBack(widget.fill!, false, old);
-                        }
-                      }
-                      if (hexCode.length == 6) {
-                        final hexColor =
-                            RegExp(r'^#?([0-9a-fA-F]{3}|[0-9a-fA-F]{6})$');
-                        if (hexColor.hasMatch(hexCode)) {
-                          final old = FFill().fromJson(widget.fill!.toJson());
-                          widget.fill!.levels!.first.color = hexCode;
-                          widget.callBack(widget.fill!, false, old);
-                        }
-                      }
-                    },
-                  ),
-                ),
-              ],
-            ),
-          );
-        },
-      ),
+              );
+            },
+          ),
+        ),
+        const SizedBox(
+          height: 16,
+        ),
+      ],
     );
   }
 

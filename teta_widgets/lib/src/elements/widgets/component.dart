@@ -20,19 +20,19 @@ class WComponent extends StatefulWidget {
   const WComponent(
     final Key? key, {
     required this.node,
+    required this.componentName,
     required this.forPlay,
     required this.params,
     required this.states,
     required this.dataset,
     this.child,
-    this.componentName,
     this.paramsToSend,
     this.loop,
   }) : super(key: key);
 
   final CNode node;
   final CNode? child;
-  final String? componentName;
+  final String componentName;
   final Map<String, dynamic>? paramsToSend;
   final bool forPlay;
   final int? loop;
