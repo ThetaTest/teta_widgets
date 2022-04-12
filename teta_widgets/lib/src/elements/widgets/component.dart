@@ -56,71 +56,10 @@ class _WComponentState extends State<WComponent> {
   void initState() {
     prjState =
         BlocProvider.of<FocusProjectBloc>(context).state as ProjectLoaded;
-    if (widget.componentName != '' && componentName != widget.componentName) {
+    if (componentName != widget.componentName) {
       calc();
-      componentName = widget.componentName;
     }
     super.initState();
-  }
-
-  @override
-  Widget build(final BuildContext context) {
-    if (!isLoaded && component == null) {
-      return const SizedBox();
-    }
-    if (component?.isHardCoded ?? false) {
-      return hardCoded(component!);
-    } else {
-      return component != null
-          ? BlocProvider<FocusPageBloc>(
-              create: (final context) => FocusPageBloc()
-                ..add(
-                  OnFocusPage(
-                    prj: prjState!.prj,
-                    page: component!,
-                    context: context,
-                    forPlay: widget.forPlay,
-                    isComponent: true,
-                  ),
-                ),
-              child: BlocBuilder<FocusPageBloc, PageObject>(
-                builder: (final context, final page) {
-                  return (page.scaffold == null)
-                      ? const SizedBox()
-                      : page.scaffold!.toWidget(
-                          params: (widget.paramsToSend != null)
-                              ? getVariableObjectsFromParams(page)
-                              : page.params,
-                          states: page.states,
-                          dataset: page.datasets,
-                          forPlay: widget.forPlay,
-                          loop: widget.loop,
-                        );
-                },
-              ),
-            )
-          : PlaceholderChildBuilder(
-              name: widget.node.intrinsicState.displayName,
-            );
-    }
-  }
-
-  Future<List<CNode>> fetch(
-    final PageObject page,
-    final BuildContext context,
-  ) async {
-    debugPrint('fetching');
-    final list = await NodeQueries.fetchNodesByPage(page.id);
-    final nodes = <CNode>[];
-    for (final e in list) {
-      nodes.add(
-        CNode.fromJson(
-          e as Map<String, dynamic>,
-          page.id,
-        ),
-      );
-    }
-    return nodes;
   }
 
   Future<void> calc() async {
@@ -141,7 +80,7 @@ class _WComponentState extends State<WComponent> {
       );
     }
     if (_component != null && !_component.isHardCoded) {
-      debugPrint('component fetched');
+      print('enter here');
       if (component?.scaffold == null) {
         final nodes = await fetch(_component, context);
         final scaffold = NodeRendering.renderTree(nodes);
@@ -161,6 +100,69 @@ class _WComponentState extends State<WComponent> {
         });
       }
     }
+  }
+
+  @override
+  Widget build(final BuildContext context) {
+    if (!isLoaded && component == null) {
+      return const SizedBox();
+    }
+    if (component?.isHardCoded ?? false) {
+      return hardCoded(component!);
+    } else {
+      return body(context);
+    }
+  }
+
+  Future<List<CNode>> fetch(
+    final PageObject page,
+    final BuildContext context,
+  ) async {
+    final list = await NodeQueries.fetchNodesByPage(page.id);
+    final nodes = <CNode>[];
+    for (final e in list) {
+      nodes.add(
+        CNode.fromJson(
+          e as Map<String, dynamic>,
+          page.id,
+        ),
+      );
+    }
+    return nodes;
+  }
+
+  
+
+  Widget body(final BuildContext context) {
+    return component != null
+        ? BlocProvider<FocusPageBloc>(
+            create: (final context) => FocusPageBloc()
+              ..add(
+                OnFocusPage(
+                  prj: prjState!.prj,
+                  page: component!,
+                  context: context,
+                  forPlay: widget.forPlay,
+                  isComponent: true,
+                ),
+              ),
+            child: BlocBuilder<FocusPageBloc, PageObject>(
+              builder: (final context, final page) {
+                return (page.scaffold == null)
+                    ? const SizedBox()
+                    : page.scaffold!.toWidget(
+                        params: (widget.paramsToSend != null)
+                            ? getVariableObjectsFromParams(page)
+                            : page.params,
+                        states: page.states,
+                        dataset: page.datasets,
+                        forPlay: widget.forPlay,
+                        loop: widget.loop,
+                      );
+              },
+            ),
+          )
+        : PlaceholderChildBuilder(name: widget.node.intrinsicState.displayName);
   }
 
   String initializeParamsForUri(
@@ -220,7 +222,6 @@ class _WComponentState extends State<WComponent> {
           if (selectedDataset?['name'] == 'Parameters' ||
               selectedDataset?['name'] == 'States') {
             final map = selectedDataset!['map'] as List<Map<String, dynamic>>;
-            //final element = map[loop ?? 0];
             for (final element in map) {
               if (element.keys.toList()[widget.loop ?? 0] ==
                   widget.paramsToSend?[e.id]?['label']) {
@@ -274,13 +275,10 @@ class _WComponentState extends State<WComponent> {
       return e;
     }).toList();
   }
-
+  //! this in the editor need to be in a sizedBox
   Widget hardCoded(final PageObject page) {
     final _paramsString =
         initializeParamsForUri(getVariableObjectsFromParams(page));
-    debugPrint(
-      'run url: ${component!.runUrl}?${Uri.encodeFull(_paramsString)}',
-    );
     return WebViewX(
       width: double.maxFinite,
       height: double.maxFinite,
