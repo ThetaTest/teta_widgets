@@ -107,7 +107,7 @@ abstract class CNode extends Equatable {
   Map<String, dynamic> toJson() {
     return NDynamic(
       globalType: intrinsicState.type,
-      body: NDynamic.getBody(intrinsicState.type),
+      body: body,
       childrenIds: FChildrenIds(),
       inSpawned: false,
     ).toJson();

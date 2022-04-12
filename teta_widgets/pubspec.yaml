@@ -17,6 +17,10 @@ dependencies:
       url: git@github.com:andreabuttarelli/Teta.git
       path: teta_core
       ref: develop
+  teta_db:
+    path: ../../Teta/teta_db/
+  teta_cms:
+    path: ../../Teta/teta_cms/
 
   # DB & Services
   supabase: ^0.2.14
@@ -148,8 +152,8 @@ dev_dependencies:
 dependencies_overrides:
   teta_core:
     path: ../../Teta/teta_core
-  mobile_editor:
-    path: ../../Teta/mobile_editor
+  teta_db:
+    path: ../../Teta/teta_db
 
 # For information on the generic Dart part of this file, see the
 # following page: https://dart.dev/tools/pub/pubspec
