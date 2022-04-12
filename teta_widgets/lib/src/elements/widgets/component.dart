@@ -54,44 +54,10 @@ class _WComponentState extends State<WComponent> {
 
   @override
   void initState() {
-    prjState =
-        BlocProvider.of<FocusProjectBloc>(context).state as ProjectLoaded;
     if (componentName != widget.componentName) {
-      debugPrint('calc');
       calc();
-      componentName = widget.componentName;
     }
     super.initState();
-  }
-
-  @override
-  Widget build(final BuildContext context) {
-    if (!isLoaded && component == null) {
-      return const SizedBox();
-    }
-    if (component?.isHardCoded ?? false) {
-      return hardCoded(component!);
-    } else {
-      return body(context);
-    }
-  }
-
-  Future<List<CNode>> fetch(
-    final PageObject page,
-    final BuildContext context,
-  ) async {
-    debugPrint('fetching');
-    final list = await NodeQueries.fetchNodesByPage(page.id);
-    final nodes = <CNode>[];
-    for (final e in list) {
-      nodes.add(
-        CNode.fromJson(
-          e as Map<String, dynamic>,
-          page.id,
-        ),
-      );
-    }
-    return nodes;
   }
 
   Future<void> calc() async {
@@ -112,7 +78,6 @@ class _WComponentState extends State<WComponent> {
       );
     }
     if (_component != null && !_component.isHardCoded) {
-      debugPrint('component fetched');
       if (component?.scaffold == null) {
         final nodes = await fetch(_component, context);
         final scaffold = NodeRendering.renderTree(nodes);
@@ -133,6 +98,37 @@ class _WComponentState extends State<WComponent> {
       }
     }
   }
+
+  @override
+  Widget build(final BuildContext context) {
+    if (!isLoaded && component == null) {
+      return const SizedBox();
+    }
+    if (component?.isHardCoded ?? false) {
+      return hardCoded(component!);
+    } else {
+      return body(context);
+    }
+  }
+
+  Future<List<CNode>> fetch(
+    final PageObject page,
+    final BuildContext context,
+  ) async {
+    final list = await NodeQueries.fetchNodesByPage(page.id);
+    final nodes = <CNode>[];
+    for (final e in list) {
+      nodes.add(
+        CNode.fromJson(
+          e as Map<String, dynamic>,
+          page.id,
+        ),
+      );
+    }
+    return nodes;
+  }
+
+  
 
   Widget body(final BuildContext context) {
     return component != null
@@ -223,7 +219,6 @@ class _WComponentState extends State<WComponent> {
           if (selectedDataset?['name'] == 'Parameters' ||
               selectedDataset?['name'] == 'States') {
             final map = selectedDataset!['map'] as List<Map<String, dynamic>>;
-            //final element = map[loop ?? 0];
             for (final element in map) {
               if (element.keys.toList()[widget.loop ?? 0] ==
                   widget.paramsToSend?[e.id]?['label']) {
@@ -277,13 +272,10 @@ class _WComponentState extends State<WComponent> {
       return e;
     }).toList();
   }
-
+  //! this in the editor need to be in a sizedBox
   Widget hardCoded(final PageObject page) {
     final _paramsString =
         initializeParamsForUri(getVariableObjectsFromParams(page));
-    debugPrint(
-      'run url: ${component!.runUrl}?${Uri.encodeFull(_paramsString)}',
-    );
     return WebViewX(
       width: double.maxFinite,
       height: double.maxFinite,
