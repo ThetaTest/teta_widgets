@@ -27,7 +27,7 @@ const _globalType = NType.component;
 /// Instrict State of Component
 final componentIntrinsicStates = IntrinsicStates(
   nodeIcon: Assets.wIcons.component,
-  nodeVideo: 'EgtPleVwxBQ', //Check
+  nodeVideo:'', //'EgtPleVwxBQ', //Check
   nodeDescription: null,
   advicedChildren: [],
   blockedTypes: [],
@@ -108,5 +108,5 @@ class ComponentBody extends NodeBody {
     final int pageId,
     final int? loop,
   ) =>
-      componentCodeTemplate(context, this, children ?? []);
+      componentCodeTemplate(context, this, children ?? [],pageId);
 }
