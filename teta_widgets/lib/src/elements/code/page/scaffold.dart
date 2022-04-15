@@ -188,10 +188,10 @@ String pageCodeTemplate(
       ${paramsString.toString()}
 
       @override
-      _State createState() => _State();
+      _State${pageNameRC.pascalCase} createState() => _State${pageNameRC.pascalCase}();
     }
 
-    class _State extends $isARState {
+    class _State${pageNameRC.pascalCase} extends $isARState {
       ${statesString.toString()}
       final datasets = <String, dynamic>{};
 

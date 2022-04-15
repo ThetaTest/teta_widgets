@@ -21,8 +21,8 @@ String componentCodeTemplate(
   final List<CNode> children,
   final int pageId,
 ) {
-  ///1)reperire codice da
-  String toReturn = 'is not loaded';
+  String? toReturn = 'is not loaded';
+
   final projectLoaded =
       BlocProvider.of<FocusProjectBloc>(context).state as ProjectLoaded;
   if (body.attributes[DBKeys.componentName] == null ||
@@ -34,41 +34,35 @@ String componentCodeTemplate(
   final compWidget = projectLoaded.prj.pages!.firstWhere(
     (final element) => element.name == body.attributes[DBKeys.componentName],
   );
-  debugPrint('---->$compWidget');
+  //debugPrint('---->$compWidget');
   //used to prepare parmas in uri for loading url in webview
-  prepareParamsForUi(compWidget, body);
+  //prepareParamsForUi(compWidget, body);
 
   if (compWidget.isHardCoded) {
-    //here we stay in a custom code component
-    toReturn = '''
-WebViewX(
-    width: double.maxFinite,
-    height: double.maxFinite,
-    onWebViewCreated: (final controller) {
-      WebViewXController webViewController = controller;
-      webViewController.loadContent('${compWidget.runUrl}', SourceType.url,);
-      },
-    )
-''';
-  } else {
-    //here we stay in a visual  component
-    final target = projectLoaded.prj.pages!.firstWhere(
-      (final element) => element.id == compWidget.id,
-    );
+    if (compWidget.code != null) {
 
-    if (target.flatList == null) {
+      //print(compWidget.code!.split('return'));
+      // var ultraRegex = RegExp('/return(.*?);/');
+      // final effectiveString = ultraRegex.allMatches(compWidget.code!);
+      // print('----->${effectiveString.first.group(0)}');
+      // toReturn = effectiveString.first.group(0);
+      toReturn = compWidget.code;
+    } else {
+      toReturn = 'code was not initialized well';
+    }
+  } else {
+    if (compWidget.flatList == null) {
       toReturn = 'Target was not found';
     } else {
       final finalCode = StringBuffer()..write('');
-      for (final item in target.flatList!) {
-          finalCode.write(item.toCode(context) + ',');
-        }
+      for (final item in compWidget.flatList!) {
+        finalCode.write('${item.toCode(context)},');
+      }
       toReturn = finalCode.toString();
     }
-
   }
 
-  return toReturn;
+  return toReturn!;
 
   // final temp = removeDiacritics(
   //   page.name
@@ -127,7 +121,6 @@ void prepareParamsForUi(final PageObject page, final NodeBody body) {
 }
 
 //todo: in the code export make a check if(page.isHardcoded) call this method instead of tocode
-String toComponentCode(){
-
+String toComponentCode() {
   return '';
 }
