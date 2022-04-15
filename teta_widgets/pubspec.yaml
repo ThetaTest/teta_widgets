@@ -18,10 +18,10 @@ dependencies:
       path: teta_core
       ref: develop
 
-  teta_db:
+  teta_cms:
     git:
-      url: https://github.com/teta-so/db.git
-      path: teta_db
+      url: https://github.com/teta-so/cms.git
+      path: teta_cms
       ref: main
 
   # DB & Services

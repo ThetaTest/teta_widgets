@@ -21,10 +21,10 @@ import 'package:teta_widgets/src/elements/nodes/node.dart';
 import 'package:teta_widgets/src/elements/nodes/node_body.dart';
 import 'package:teta_widgets/src/elements/widgets/supabase/future_builder.dart';
 
-const _globalType = NType.supabaseFutureBuilder;
+const _globalType = NType.cmsFetch;
 
 /// IS
-final supabaseFutureBuilderIntrinsicStates = IntrinsicStates(
+final cms_FetchIntrinsicStates = IntrinsicStates(
   nodeIcon: Assets.wIcons.supabaseLogoIcon,
   nodeVideo: null,
   nodeDescription: null,
@@ -36,14 +36,15 @@ final supabaseFutureBuilderIntrinsicStates = IntrinsicStates(
   blockedTypes: [],
   synonymous: [
     NodeType.name(_globalType),
-    'firestore',
-    'firebase',
-    'future builder',
+    'cms',
+    'teta',
+    'articles',
+    'feed',
   ],
   advicedChildrenCanHaveAtLeastAChild: [],
   displayName: NodeType.name(_globalType),
   type: _globalType,
-  category: NodeCategories.supabase,
+  category: NodeCategories.basic,
   maxChildren: 2,
   canHave: ChildrenEnum.children,
   addChildLabels: [],

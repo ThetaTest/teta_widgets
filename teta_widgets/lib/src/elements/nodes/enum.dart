@@ -125,6 +125,10 @@ enum NType {
 
   // HTTP Requests
   httpRequest,
+
+  // TetaCMS
+  cmsFetch,
+  cmsStream,
 }
 
 extension NodeType on NType {

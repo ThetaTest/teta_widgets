@@ -157,6 +157,8 @@ class DBKeys {
   static const String supabaseSearchValue = 'spSeV';
   static const String supabaseEqName = 'spEqN';
   static const String supabaseEqValue = 'spEqV';
+
+  static const String cmsCollection = 'cmsColl';
 }
 
 class DynamicAttributes {
@@ -320,6 +322,8 @@ class DynamicAttributes {
           return value;
         case DBKeys.showDrawer:
           return value;
+        case DBKeys.cmsCollection:
+          return FTextTypeInput.fromJson(value as Map<String, dynamic>);
         case DBKeys.supabaseFrom:
           return FTextTypeInput.fromJson(value as Map<String, dynamic>);
         case DBKeys.supabaseSelect:
@@ -537,6 +541,8 @@ class DynamicAttributes {
                 .map((final e) => e.toJson())
                 .toList()
             : null;
+      case DBKeys.cmsCollection:
+        return value != null ? value.toJson() : FTextTypeInput().toJson();
       case DBKeys.supabaseFrom:
         return value != null ? value.toJson() : FTextTypeInput().toJson();
       case DBKeys.supabaseSelect:
