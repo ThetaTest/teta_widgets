@@ -17,10 +17,12 @@ dependencies:
       url: git@github.com:andreabuttarelli/Teta.git
       path: teta_core
       ref: develop
+
   teta_db:
-    path: ../../Teta/teta_db/
-  teta_cms:
-    path: ../../Teta/teta_cms/
+    git:
+      url: https://github.com/teta-so/db.git
+      path: teta_db
+      ref: main
 
   # DB & Services
   supabase: ^0.2.14
@@ -152,13 +154,7 @@ dev_dependencies:
 dependencies_overrides:
   teta_core:
     path: ../../Teta/teta_core
-  teta_db:
-    path: ../../Teta/teta_db
 
-# For information on the generic Dart part of this file, see the
-# following page: https://dart.dev/tools/pub/pubspec
-
-# The following section is specific to Flutter.
 flutter:
 
   # To add assets to your package, add an assets section, like this:
