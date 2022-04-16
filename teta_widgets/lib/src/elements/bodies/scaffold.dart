@@ -283,13 +283,11 @@ class ScaffoldBody extends NodeBody {
     final int pageId,
     final int? loop,
   ) {
-    Logger.printWarning('ayayaaaaaaaaa');
+    // 
     final isPage = BlocProvider.of<FocusPageBloc>(context).state.isPage;
     if (isPage) {
-      Logger.printWarning('is a page');
       return pageCodeTemplate(context, node, children ?? [], pageId);
     } else {
-      Logger.printWarning('is a component');
       return pageComponentCodeTemplate(context, this, children ?? [], pageId);
     }
   }
