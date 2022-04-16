@@ -10,6 +10,7 @@ import 'package:teta_core/gen/assets.gen.dart';
 import 'package:teta_core/src/blocs/focus_page/bloc.dart';
 import 'package:teta_core/src/models/dataset.dart';
 import 'package:teta_core/src/models/variable.dart';
+import 'package:teta_core/src/utils/logger/logger.dart';
 // Project imports:
 import 'package:teta_widgets/src/elements/code/page/component.dart';
 import 'package:teta_widgets/src/elements/code/page/scaffold.dart';
@@ -282,11 +283,13 @@ class ScaffoldBody extends NodeBody {
     final int pageId,
     final int? loop,
   ) {
+    Logger.printWarning('ayayaaaaaaaaa');
     final isPage = BlocProvider.of<FocusPageBloc>(context).state.isPage;
     if (isPage) {
-      print('queste volte lo chiama questo??');
+      Logger.printWarning('is a page');
       return pageCodeTemplate(context, node, children ?? [], pageId);
     } else {
+      Logger.printWarning('is a component');
       return pageComponentCodeTemplate(context, this, children ?? [], pageId);
     }
   }

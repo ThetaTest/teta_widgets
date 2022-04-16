@@ -36,21 +36,15 @@ String componentCodeTemplate(
   final compWidget = projectLoaded.prj.pages!.firstWhere(
     (final element) => element.name == body.attributes[DBKeys.componentName],
   );
-  
+
 
   debugPrint('---->$compWidget');
   //used to prepare parmas in uri for loading url in webview
   //prepareParamsForUi(compWidget, body);
 
   if (compWidget.isHardCoded) {
-
+    //? here we are in the code component part
     if (compWidget.code != null) {
-
-      //print(compWidget.code!.split('return'));
-      // var ultraRegex = RegExp('/return(.*?);/');
-      // final effectiveString = ultraRegex.allMatches(compWidget.code!);
-      // print('----->${effectiveString.first.group(0)}');
-      // toReturn = effectiveString.first.group(0);
       final data =
       RegExp('return (.*);', dotAll: true).allMatches(compWidget.code.toString()).first.group(1);
       toReturn = '$data,';
@@ -58,6 +52,7 @@ String componentCodeTemplate(
       toReturn = 'code was not initialized well';
     }
   } else {
+    //? here we are in the visual component part
     if (compWidget.flatList == null) {
       toReturn = 'Target was not found';
     } else {
