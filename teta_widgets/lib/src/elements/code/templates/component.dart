@@ -25,20 +25,25 @@ String componentCodeTemplate(
 
   final projectLoaded =
       BlocProvider.of<FocusProjectBloc>(context).state as ProjectLoaded;
+  //!this fix an error of badstate
   if (body.attributes[DBKeys.componentName] == null ||
       (projectLoaded.prj.pages ?? <PageObject>[]).indexWhere(
             (final element) =>
                 element.name == body.attributes[DBKeys.componentName],
           ) ==
           -1) return '';
+
   final compWidget = projectLoaded.prj.pages!.firstWhere(
     (final element) => element.name == body.attributes[DBKeys.componentName],
   );
-  //debugPrint('---->$compWidget');
+  
+
+  debugPrint('---->$compWidget');
   //used to prepare parmas in uri for loading url in webview
   //prepareParamsForUi(compWidget, body);
 
   if (compWidget.isHardCoded) {
+
     if (compWidget.code != null) {
 
       //print(compWidget.code!.split('return'));
@@ -46,7 +51,9 @@ String componentCodeTemplate(
       // final effectiveString = ultraRegex.allMatches(compWidget.code!);
       // print('----->${effectiveString.first.group(0)}');
       // toReturn = effectiveString.first.group(0);
-      toReturn = compWidget.code;
+      final data =
+      RegExp('return (.*);', dotAll: true).allMatches(compWidget.code.toString()).first.group(1);
+      toReturn = '$data,';
     } else {
       toReturn = 'code was not initialized well';
     }
@@ -62,7 +69,7 @@ String componentCodeTemplate(
     }
   }
 
-  return toReturn!;
+  return toReturn;
 
   // final temp = removeDiacritics(
   //   page.name

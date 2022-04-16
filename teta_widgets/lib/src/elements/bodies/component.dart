@@ -47,7 +47,7 @@ final componentIntrinsicStates = IntrinsicStates(
 class ComponentBody extends NodeBody {
   /// Returns the body of Component node
   ComponentBody({final String? name}) {
-    attributes[DBKeys.componentName] = name;
+    attributes[DBKeys.componentName] = name ?? 'Component';
   }
 
   @override
