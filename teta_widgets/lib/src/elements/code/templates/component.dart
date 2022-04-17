@@ -44,8 +44,10 @@ String componentCodeTemplate(
     //? here we are in the code component part
     if (compWidget.code != null) {
       //this regex is user to pick from the first return it encounter and the last ';' of the custom code component
-      final data =
-      RegExp('return (.*);', dotAll: true).allMatches(compWidget.code.toString()).first.group(1);
+      final data = RegExp('return (.*);', dotAll: true)
+          .allMatches(compWidget.code.toString())
+          .first
+          .group(1);
       toReturn = '$data,';
     } else {
       //this will be never called, if it's called something is wrong
@@ -54,12 +56,15 @@ String componentCodeTemplate(
   } else {
     //? here we are in the visual component part
     if (compWidget.flatList == null) {
+      //todo: find a way to initialize the flat list of the component in the initialization of the project
       //this should be never called
       toReturn = 'Target was not found';
     } else {
       final finalCode = StringBuffer()..write('');
       for (final item in compWidget.flatList!) {
-        finalCode.write(item.toCode(context));
+        if (item.globalType != NType.scaffold) {
+          finalCode.write(item.toCode(context));
+        }
       }
       toReturn = finalCode.toString();
     }
