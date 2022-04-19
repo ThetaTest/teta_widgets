@@ -10,6 +10,7 @@ import 'package:teta_core/gen/assets.gen.dart';
 import 'package:teta_core/src/blocs/focus_page/bloc.dart';
 import 'package:teta_core/src/models/dataset.dart';
 import 'package:teta_core/src/models/variable.dart';
+import 'package:teta_core/src/utils/logger/logger.dart';
 // Project imports:
 import 'package:teta_widgets/src/elements/code/page/component.dart';
 import 'package:teta_widgets/src/elements/code/page/scaffold.dart';
@@ -206,77 +207,72 @@ class ScaffoldBody extends NodeBody {
         loop: loop,
       );
 
-  /// To Body
-  String toBody(final BuildContext context, final List<CNode>? children) {
-    final strChildren = StringBuffer()..write('');
-    var componentImport = '';
-    if (children != null) {
-      for (final e in children) {
-        if (e.globalType == NType.component) {
-          componentImport =
-              "import 'package:myapp/lib/src/components/index.dart';";
-        } else {
-          if (e.globalType != NType.appBar ||
-              e.globalType != NType.bottomBar ||
-              e.globalType != NType.drawer) {
-            var str = e.toCode(context);
-            str = str.substring(0, str.length - 6);
-            strChildren.write(
-              '$str.toWidget(params: params, states: states, dataset: dataset),',
-            );
-          }
-        }
-      }
-    }
-    return """
-    import 'package:flutter/material.dart';
-    import 'package:flutter_bloc/flutter_bloc.dart';
-    import 'package:teta_framework/teta_framework.dart';
-    import 'package:myapp/src/pages/index.dart';
-    $componentImport
-
-    class Body extends StatefulWidget {
-      final List<VariableObject>? params;
-      Body({Key? key, this.params}) : super(key: key);
-
-      @override
-      _BodyState createState() => _BodyState();
-    }
-
-    class _BodyState extends State<Body> {
-      List<VariableObject> params = [];
-      final int? loop = 0;
-
-      @override
-      void initState() {
-        params = widget.params ?? [];
-        super.initState();
-      }
-
-      @override
-      Widget build(BuildContext context) {
-        return BlocBuilder<StatesCubit, List<VariableObject>>(
-            builder: (context, states) => BlocBuilder<DatasetCubit, List<DatasetObject>>(
-              builder: (context, dataset) => NotificationListener(
-                onNotification: (v) {
-                  if (v is ScrollUpdateNotification) {
-                    BlocProvider.of<ScrollYCubit>(context)
-                        .update(v.scrollDelta ?? 0);
-                  }
-                  return true;
-                },
-                child: BlocBuilder<ScrollYCubit, double>(
-                  builder: (context, scrollY) => ListView(children: [
-                    ${strChildren.toString()}
-                  ], 
-                ), 
-              ),
-            ),
-          ),
-        );
-      }
-    }""";
-  }
+  // To Body
+  // String toBody(final BuildContext context, final List<CNode>? children) {
+  //   final strChildren = StringBuffer()..write('');
+  //   var componentImport = '';
+  //   if (children != null) {
+  //     for (final e in children) {
+  //       if (e.globalType == NType.component) {
+  //         componentImport =
+  //             "import 'package:myapp/lib/src/components/index.dart';";
+  //       } else {
+  //         if (e.globalType != NType.appBar ||
+  //             e.globalType != NType.bottomBar ||
+  //             e.globalType != NType.drawer) {
+  //           var str = e.toCode(context);
+  //           str = str.substring(0, str.length - 6);
+  //           strChildren.write(
+  //             '$str.toWidget(params: params, states: states, dataset: dataset),',
+  //           );
+  //         }
+  //       }
+  //     }
+  //   }
+  //   return """
+  //   import 'package:flutter/material.dart';
+  //   import 'package:flutter_bloc/flutter_bloc.dart';
+  //   import 'package:teta_framework/teta_framework.dart';
+  //   import 'package:myapp/src/pages/index.dart';
+  //   $componentImport
+  //   class Body extends StatefulWidget {
+  //     final List<VariableObject>? params;
+  //     Body({Key? key, this.params}) : super(key: key);
+  //     @override
+  //     _BodyState createState() => _BodyState();
+  //   }
+  //   class _BodyState extends State<Body> {
+  //     List<VariableObject> params = [];
+  //     final int? loop = 0;
+  //     @override
+  //     void initState() {
+  //       params = widget.params ?? [];
+  //       super.initState();
+  //     }
+  //     @override
+  //     Widget build(BuildContext context) {
+  //       return BlocBuilder<StatesCubit, List<VariableObject>>(
+  //           builder: (context, states) => BlocBuilder<DatasetCubit, List<DatasetObject>>(
+  //             builder: (context, dataset) => NotificationListener(
+  //               onNotification: (v) {
+  //                 if (v is ScrollUpdateNotification) {
+  //                   BlocProvider.of<ScrollYCubit>(context)
+  //                       .update(v.scrollDelta ?? 0);
+  //                 }
+  //                 return true;
+  //               },
+  //               child: BlocBuilder<ScrollYCubit, double>(
+  //                 builder: (context, scrollY) => ListView(children: [
+  //                   ${strChildren.toString()}
+  //                 ], 
+  //               ), 
+  //             ),
+  //           ),
+  //         ),
+  //       );
+  //     }
+  //   }""";
+  // }
 
   @override
   String toCode(

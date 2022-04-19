@@ -6,12 +6,10 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:recase/recase.dart';
-import 'package:teta_core/src/blocs/focus_project/index.dart';
-import 'package:teta_core/src/models/page.dart';
+import 'package:teta_core/teta_core.dart';
 // Project imports:
 import 'package:teta_widgets/src/elements/controls/key_constants.dart';
 import 'package:teta_widgets/src/elements/index.dart';
-import 'package:teta_widgets/src/elements/nodes/node.dart';
 import 'package:teta_widgets/src/elements/nodes/node_body.dart';
 
 /// Component Template
@@ -21,51 +19,89 @@ String componentCodeTemplate(
   final List<CNode> children,
   final int pageId,
 ) {
-  ///1)reperire codice da
-  String toReturn = 'is not loaded';
+  String? toReturn = 'is not loaded';
+
   final projectLoaded =
       BlocProvider.of<FocusProjectBloc>(context).state as ProjectLoaded;
+  //!this fix an error of badstate
   if (body.attributes[DBKeys.componentName] == null ||
       (projectLoaded.prj.pages ?? <PageObject>[]).indexWhere(
             (final element) =>
                 element.name == body.attributes[DBKeys.componentName],
           ) ==
           -1) return '';
+
   final compWidget = projectLoaded.prj.pages!.firstWhere(
     (final element) => element.name == body.attributes[DBKeys.componentName],
   );
-  debugPrint('---->$compWidget');
-  //used to prepare parmas in uri for loading url in webview
-  prepareParamsForUi(compWidget, body);
-
+  //todo:external parameters implementation
+  //used to prepare parmas in uri for loading url?
+  //prepareParamsForUi(compWidget, body);
   if (compWidget.isHardCoded) {
-    //here we stay in a custom code component
-    toReturn = '''
-WebViewX(
-    width: double.maxFinite,
-    height: double.maxFinite,
-    onWebViewCreated: (final controller) {
-      WebViewXController webViewController = controller;
-      webViewController.loadContent('${compWidget.runUrl}', SourceType.url,);
-      },
-    )
-''';
-  } else {
-    //here we stay in a visual  component
-    final target = projectLoaded.prj.pages!.firstWhere(
-      (final element) => element.id == compWidget.id,
-    );
-
-    if (target.flatList == null) {
-      toReturn = 'Target was not found';
-    } else {
-      final finalCode = StringBuffer()..write('');
-      for (final item in target.flatList!) {
-          finalCode.write(item.toCode(context) + ',');
+    //? here we are in the code component part
+    if (compWidget.code != null) {
+      //this regex is user to pick from the first return it encounter and the last ';' of the custom code component
+      //this take the material app if present and remove all untill the scaffold
+      final data = RegExp('return (.*);', dotAll: true)
+          .allMatches(compWidget.code.toString())
+          .first
+          .group(1);
+      //here we have the material app as a father of the code
+      if (data!.contains('home')) {
+        //this regex take from scaffold and go untill he find home and remove the scaffold untill he finds the child
+        //and remove the last ')' in order to be built well with the CS.children snippet
+        final finalString = RegExp('home: (.*),.+\\)', dotAll: true)
+            .allMatches(data)
+            .first
+            .group(1);
+        //if the second regex works, he finds a scaffold and remove it
+        if (finalString != null) {
+          toReturn = finalString;
         }
-      toReturn = finalCode.toString();
+      }
+      //if we are here the scaffold was not finded, so it takes the code 
+      else {
+        toReturn = data;
+      }
+    } else {
+      //!this will be never called, if it's called something is wrong
+      toReturn = 'code was not initialized well';
     }
-
+  } else {
+    //? here we are in the visual component part
+    //!this is a control that should be removed when flatlist will update well in initialization
+    if (compWidget.flatList == null) {
+      //todo: find a way to initialize the flat list of the component in the initialization of the project
+      //this should be never called
+      toReturn = 'Target was not found';
+    }
+    //here im in a 'Sections' template, visual component already made
+    else if (compWidget.runUrl == null &&
+        compWidget.code == null &&
+        compWidget.isPrimary == false &&
+        compWidget.isPage == false &&
+        compWidget.isHardCoded == false) {
+      final finalSectionTemplateCode = StringBuffer()..write('');
+      if (compWidget.scaffold != null &&
+          compWidget.scaffold!.children!.isNotEmpty) {
+        for (final item in compWidget.scaffold!.children!) {
+          finalSectionTemplateCode.write(item.toCode(context));
+        }
+        toReturn = finalSectionTemplateCode.toString();
+      }
+    }
+    //here im in a 'Visual' component made by user with his chicken brain
+    else {
+      final finalCode = StringBuffer()..write('');
+      //take only the first node that will be always a scaffold if we are here in a visual
+      //component. From first node take all the children in order to call the method tocode on each of his children.
+      if (compWidget.flatList![0].globalType == NType.scaffold) {
+        for (final item in compWidget.flatList![0].children!) {
+          finalCode.write(item.toCode(context));
+        }
+        toReturn = finalCode.toString();
+      }
+    }
   }
 
   return toReturn;
@@ -88,7 +124,6 @@ WebViewX(
   // );
   // final pageNameRC = ReCase(temp);
   // final realPageName = 'Component${pageNameRC.camelCase}';
-
   // return '''
   //   $realPageName(
   //     ${stringParamsToSend.toString()}
@@ -96,7 +131,7 @@ WebViewX(
   //   ''';
 }
 
-void prepareParamsForUi(final PageObject page, final NodeBody body) {
+String prepareParamsForUi(final PageObject page, final NodeBody body) {
   final stringParamsToSend = StringBuffer()..write('');
   for (final param in page.params) {
     final valueToSend = (body.attributes[DBKeys.paramsToSend] ??
@@ -124,10 +159,5 @@ void prepareParamsForUi(final PageObject page, final NodeBody body) {
       }
     }
   }
-}
-
-//todo: in the code export make a check if(page.isHardcoded) call this method instead of tocode
-String toComponentCode(){
-
-  return '';
+  return stringParamsToSend.toString();
 }

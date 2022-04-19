@@ -54,8 +54,8 @@ class _WComponentState extends State<WComponent> {
 
   @override
   void initState() {
-    prjState =
-        BlocProvider.of<FocusProjectBloc>(context).state as ProjectLoaded;
+    // prjState =
+    //     BlocProvider.of<FocusProjectBloc>(context).state as ProjectLoaded;
     if (componentName != widget.componentName) {
       calc();
     }
@@ -63,10 +63,10 @@ class _WComponentState extends State<WComponent> {
   }
 
   Future<void> calc() async {
-    final prjState =
+    prjState =
         BlocProvider.of<FocusProjectBloc>(context).state as ProjectLoaded;
     PageObject? _component;
-    _component = prjState.prj.pages!.firstWhereOrNull(
+    _component = prjState!.prj.pages!.firstWhereOrNull(
       (final element) => element.name == widget.componentName,
     );
     if (_component != null) {
@@ -92,7 +92,8 @@ class _WComponentState extends State<WComponent> {
           isLoaded = true;
         });
       }
-    } else {
+    }
+     else {
       if (mounted) {
         setState(() {
           component = _component;

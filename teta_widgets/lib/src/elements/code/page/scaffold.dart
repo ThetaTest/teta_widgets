@@ -163,7 +163,7 @@ String pageCodeTemplate(
       ? "import 'package:badges/badges.dart';"
       : '';
 
-  return """
+  return '''
     import 'package:flutter/material.dart';
     ${isSupabaseIntegrated ? "import 'package:supabase/supabase.dart';" : ''}
     ${isSupabaseIntegrated ? "import 'package:supabase_flutter/supabase_flutter.dart';" : ''}
@@ -188,10 +188,10 @@ String pageCodeTemplate(
       ${paramsString.toString()}
 
       @override
-      _State createState() => _State();
+      _State${pageNameRC.pascalCase} createState() => _State${pageNameRC.pascalCase}();
     }
 
-    class _State extends $isARState {
+    class _State${pageNameRC.pascalCase} extends $isARState {
       ${statesString.toString()}
       final datasets = <String, dynamic>{};
 
@@ -215,5 +215,5 @@ String pageCodeTemplate(
       );
     }
   }
-  """;
+  ''';
 }

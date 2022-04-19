@@ -27,7 +27,7 @@ const _globalType = NType.component;
 /// Instrict State of Component
 final componentIntrinsicStates = IntrinsicStates(
   nodeIcon: Assets.wIcons.component,
-  nodeVideo:'', //'EgtPleVwxBQ', //Check
+  nodeVideo:'EgtPleVwxBQ', //'EgtPleVwxBQ', //Check
   nodeDescription: null,
   advicedChildren: [],
   blockedTypes: [],
@@ -47,7 +47,7 @@ final componentIntrinsicStates = IntrinsicStates(
 class ComponentBody extends NodeBody {
   /// Returns the body of Component node
   ComponentBody({final String? name}) {
-    attributes[DBKeys.componentName] = name;
+    attributes[DBKeys.componentName] = name ?? 'Component';
   }
 
   @override
@@ -108,5 +108,5 @@ class ComponentBody extends NodeBody {
     final int pageId,
     final int? loop,
   ) =>
-      componentCodeTemplate(context, this, children ?? [],pageId);
+      componentCodeTemplate(context, this, children ?? [], pageId);
 }
