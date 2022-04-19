@@ -15,6 +15,9 @@ class FMainAxisSize {
 
   MainAxisSize get get => _align;
 
+  /// Returns a String value for DropDowns' value
+  String get getString => _convertValueToJson(_align);
+
   void set(final String key) => _align = _convertJsonToValue(key);
 
   static FMainAxisSize fromJson(final String? json) {

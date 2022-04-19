@@ -27,6 +27,7 @@ import 'package:teta_widgets/src/elements/controls/atoms/firebase/path.dart';
 import 'package:teta_widgets/src/elements/controls/atoms/flag.dart';
 import 'package:teta_widgets/src/elements/controls/atoms/icon.dart';
 import 'package:teta_widgets/src/elements/controls/atoms/main_axis_alignment.dart';
+import 'package:teta_widgets/src/elements/controls/atoms/main_axis_size.dart';
 import 'package:teta_widgets/src/elements/controls/atoms/map_controller.dart';
 import 'package:teta_widgets/src/elements/controls/atoms/margins.dart';
 import 'package:teta_widgets/src/elements/controls/atoms/navigation/component.dart';
@@ -40,17 +41,7 @@ import 'package:teta_widgets/src/elements/controls/control_model.dart';
 import 'package:teta_widgets/src/elements/controls/key_constants.dart';
 import 'package:teta_widgets/src/elements/controls/prefabs/sizes_prefab_control.dart';
 import 'package:teta_widgets/src/elements/controls/prefabs/text_prefab_control.dart';
-import 'package:teta_widgets/src/elements/features/action.dart';
-import 'package:teta_widgets/src/elements/features/align.dart';
-import 'package:teta_widgets/src/elements/features/border.dart';
-import 'package:teta_widgets/src/elements/features/border_radius.dart';
-import 'package:teta_widgets/src/elements/features/cross_axis_alignment.dart';
-import 'package:teta_widgets/src/elements/features/dataset.dart';
-import 'package:teta_widgets/src/elements/features/main_axis_alignment.dart';
-import 'package:teta_widgets/src/elements/features/margins.dart';
-import 'package:teta_widgets/src/elements/features/text_style.dart';
-import 'package:teta_widgets/src/elements/features/text_type_input.dart';
-import 'package:teta_widgets/src/elements/nodes/node.dart';
+import 'package:teta_widgets/src/elements/index.dart';
 
 enum ControlType {
   /// Made for colors, gradients and images.
@@ -462,8 +453,8 @@ class ControlBuilder {
             node,
             context,
             control.key,
-            value,
-            old,
+            value.toJson(),
+            old.toJson(),
           ),
         ),
       );
@@ -525,13 +516,31 @@ class ControlBuilder {
             node,
             context,
             control.key,
-            value,
-            old,
+            value.toJson(),
+            old.toJson(),
           ),
         ),
       );
     }
-    if (control.type == ControlType.mainAxisSize) return const SizedBox();
+    if (control.type == ControlType.mainAxisSize) {
+      return descriptionControlWidget(
+        description: control.description,
+        control: MainAxisSizeControl(
+          key: ValueKey('${node.nid}'),
+          node: node,
+          size: control.value as FMainAxisSize,
+          callBack: (final value, final old) => ControlBuilder.toDB(
+            prj,
+            page,
+            node,
+            context,
+            control.key,
+            value.toJson(),
+            old.toJson(),
+          ),
+        ),
+      );
+    }
     if (control.type == ControlType.margins) {
       return descriptionControlWidget(
         description: control.description,

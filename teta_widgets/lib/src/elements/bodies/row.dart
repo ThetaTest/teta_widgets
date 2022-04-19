@@ -43,7 +43,7 @@ final rowIntrinsicStates = IntrinsicStates(
   canHave: ChildrenEnum.children,
   addChildLabels: [],
   gestures: [],
-  permissions:[],
+  permissions: [],
 );
 
 /// Body
@@ -67,6 +67,11 @@ class RowBody extends NodeBody {
           type: ControlType.crossAxisAlignment,
           key: DBKeys.crossAxisAlignment,
           value: attributes[DBKeys.crossAxisAlignment],
+        ),
+        ControlObject(
+          type: ControlType.mainAxisSize,
+          key: DBKeys.mainAxisSize,
+          value: attributes[DBKeys.mainAxisSize],
         ),
       ];
 

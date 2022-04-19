@@ -42,12 +42,11 @@ final columnIntrinsicStates = IntrinsicStates(
   canHave: ChildrenEnum.children,
   addChildLabels: [],
   gestures: [],
-  permissions:[],
+  permissions: [],
 );
 
 /// Set of funcs to use Column widget
 class ColumnBody extends NodeBody {
-  
   @override
   // ignore: overridden_fields
   Map<String, dynamic> attributes = <String, dynamic>{
@@ -67,6 +66,11 @@ class ColumnBody extends NodeBody {
           type: ControlType.crossAxisAlignment,
           key: DBKeys.crossAxisAlignment,
           value: attributes[DBKeys.crossAxisAlignment],
+        ),
+        ControlObject(
+          type: ControlType.mainAxisSize,
+          key: DBKeys.mainAxisSize,
+          value: attributes[DBKeys.mainAxisSize],
         ),
       ];
 

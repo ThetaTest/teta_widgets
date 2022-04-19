@@ -10,7 +10,6 @@ import 'package:teta_core/gen/assets.gen.dart';
 import 'package:teta_core/src/blocs/focus_page/bloc.dart';
 import 'package:teta_core/src/models/dataset.dart';
 import 'package:teta_core/src/models/variable.dart';
-import 'package:teta_core/src/utils/logger/logger.dart';
 // Project imports:
 import 'package:teta_widgets/src/elements/code/page/component.dart';
 import 'package:teta_widgets/src/elements/code/page/scaffold.dart';
@@ -56,7 +55,7 @@ final scaffoldIntrinsicStates = IntrinsicStates(
   gestures: [
     ActionGesture.initState,
   ],
-  permissions:[],
+  permissions: [],
 );
 
 /// Body of Scaffold
@@ -264,8 +263,8 @@ class ScaffoldBody extends NodeBody {
   //               child: BlocBuilder<ScrollYCubit, double>(
   //                 builder: (context, scrollY) => ListView(children: [
   //                   ${strChildren.toString()}
-  //                 ], 
-  //               ), 
+  //                 ],
+  //               ),
   //             ),
   //           ),
   //         ),
