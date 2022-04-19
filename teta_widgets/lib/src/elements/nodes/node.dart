@@ -64,7 +64,7 @@ abstract class CNode extends Equatable {
   FChildrenIds childrenIds;
 
   @override
-  String toString() => 'Default Element { }';
+  String toString() => 'Component: GlobalType: $globalType, Name: $name, Index: $index';
 
   /// Returns display name of any node
   static List<String> get nodes => NType.values.map(NodeType.type).toList();

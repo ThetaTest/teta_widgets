@@ -283,13 +283,10 @@ class ScaffoldBody extends NodeBody {
     final int pageId,
     final int? loop,
   ) {
-    debugPrint('why in tocode of a visual component call this instead of the tocode of component??');
     final isPage = BlocProvider.of<FocusPageBloc>(context).state.isPage;
     if (isPage) {
-      debugPrint('page code template called');
       return pageCodeTemplate(context, node, children ?? [], pageId);
     } else {
-      debugPrint('component code template called');
       return pageComponentCodeTemplate(context, this, children ?? [], pageId);
     }
   }

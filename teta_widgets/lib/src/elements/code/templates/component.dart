@@ -8,6 +8,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:recase/recase.dart';
 import 'package:teta_core/src/blocs/focus_project/index.dart';
 import 'package:teta_core/src/models/page.dart';
+import 'package:teta_core/teta_core.dart';
 // Project imports:
 import 'package:teta_widgets/src/elements/controls/key_constants.dart';
 import 'package:teta_widgets/src/elements/index.dart';
@@ -61,12 +62,15 @@ String componentCodeTemplate(
       toReturn = 'Target was not found';
     } else {
       final finalCode = StringBuffer()..write('');
-      for (final item in compWidget.flatList!) {
-        if (item.globalType != NType.scaffold) {
+      //take only the first node that will be always a scaffold if we are here inside a visual
+      //component. From first node take all the children in order to call a tocode on each of his children.
+      ///
+      if (compWidget.flatList![0].globalType == NType.scaffold) {
+        for (final item in compWidget.flatList![0].children!) {
           finalCode.write(item.toCode(context));
         }
+        toReturn = finalCode.toString();
       }
-      toReturn = finalCode.toString();
     }
   }
 

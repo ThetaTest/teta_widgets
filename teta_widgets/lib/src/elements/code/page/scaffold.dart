@@ -163,7 +163,7 @@ String pageCodeTemplate(
       ? "import 'package:badges/badges.dart';"
       : '';
 
-  return """
+  return '''
     import 'package:flutter/material.dart';
     ${isSupabaseIntegrated ? "import 'package:supabase/supabase.dart';" : ''}
     ${isSupabaseIntegrated ? "import 'package:supabase_flutter/supabase_flutter.dart';" : ''}
@@ -215,5 +215,5 @@ String pageCodeTemplate(
       );
     }
   }
-  """;
+  ''';
 }
