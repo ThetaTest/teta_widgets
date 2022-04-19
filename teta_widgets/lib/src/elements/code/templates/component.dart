@@ -49,7 +49,11 @@ String componentCodeTemplate(
           .allMatches(compWidget.code.toString())
           .first
           .group(1);
-      toReturn = '$data,';
+      final finalString = RegExp('home: (.*),.+\\)', dotAll: true)
+          .allMatches(data!)
+          .first
+          .group(1);
+      toReturn = finalString;
     } else {
       //this will be never called, if it's called something is wrong
       toReturn = 'code was not initialized well';
@@ -74,7 +78,7 @@ String componentCodeTemplate(
     }
   }
 
-  return toReturn;
+  return toReturn!;
 
   // final temp = removeDiacritics(
   //   page.name
