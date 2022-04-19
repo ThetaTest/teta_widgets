@@ -1,11 +1,9 @@
-/*
 // Flutter imports:
 // Package imports:
 // ignore_for_file: avoid_dynamic_calls
 
 // Flutter imports:
 import 'package:flutter/material.dart';
-import 'package:flutter_bloc/flutter_bloc.dart';
 // Package imports:
 import 'package:supabase/supabase.dart';
 import 'package:teta_cms/teta_cms.dart';
@@ -65,7 +63,7 @@ class _WCmsFetchState extends State<WCmsFetch> {
     map: [<String, dynamic>{}],
   );
   bool isLoaded = true;
-  Future<PostgrestResponse>? _future;
+  Future<List<dynamic>>? _future;
   SupabaseClient? client;
 
   @override
@@ -75,7 +73,7 @@ class _WCmsFetchState extends State<WCmsFetch> {
   }
 
   Future calc() async {
-    final from = widget.collection.get(
+    final collectionId = widget.collection.get(
       widget.params,
       widget.states,
       widget.dataset,
@@ -83,30 +81,7 @@ class _WCmsFetchState extends State<WCmsFetch> {
       widget.loop,
     );
 
-    final BlocProvider.of<FocusProjectBloc>
-    final query = TetaCMS.instance.client.getCollection(prjId: prjId, id: id)
-
-    // ignore: literal_only_boolean_expressions
-    if (order.isNotEmpty) {
-      query.order(order, ascending: true);
-    }
-    if (searchName.isNotEmpty) {
-      //query.textSearch(searchName, searchValue, type: TextSearchType.plain);
-      query.ilike(searchName, '%$searchValue%');
-    }
-    if (eqName.isNotEmpty) {
-      if (eqName == 'id') {
-        query.eq(eqName, int.tryParse(eqValue) ?? 0);
-      } else {
-        query.eq(eqName, eqValue);
-      }
-    }
-    // ignore: literal_only_boolean_expressions
-    if (true) {
-      query.range(valueFromRange, valueToRange * valueToPage);
-    }
-
-    _future = query.execute();
+    _future = TetaCMS.instance.client.getCollection(collectionId);
   }
 
   @override
@@ -140,14 +115,7 @@ class _WCmsFetchState extends State<WCmsFetch> {
           if (snapshot.error != null) {
             // TODO: Returns a error widget
           }
-          final response = snapshot.data as PostgrestResponse?;
-          if (response?.error != null) {
-            // TODO: Returns a error widget
-          }
-          if (response?.data.runtimeType != List) {
-            // TODO: Returns a message error, probably from and select are not selected well
-          }
-          final list = response?.data as List<dynamic>?;
+          final list = snapshot.data as List<dynamic>?;
           _map = _map.copyWith(
             name: widget.node.name ?? widget.node.intrinsicState.displayName,
             map: (list ?? const <dynamic>[])
@@ -172,4 +140,3 @@ class _WCmsFetchState extends State<WCmsFetch> {
     );
   }
 }
-*/

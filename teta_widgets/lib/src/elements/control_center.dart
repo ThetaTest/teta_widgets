@@ -92,6 +92,7 @@ import 'package:teta_widgets/src/elements/bodies/supabase/future_stream_builder.
 import 'package:teta_widgets/src/elements/bodies/supabase/logged_user.dart';
 import 'package:teta_widgets/src/elements/bodies/tcard.dart';
 import 'package:teta_widgets/src/elements/bodies/tcard_builder.dart';
+import 'package:teta_widgets/src/elements/bodies/teta_cms/fetch.dart';
 import 'package:teta_widgets/src/elements/bodies/text.dart';
 import 'package:teta_widgets/src/elements/bodies/textbutton.dart';
 import 'package:teta_widgets/src/elements/bodies/textfield.dart';
@@ -211,6 +212,7 @@ final stateTypes = <IntrinsicStates>[
   revenueCatProductsListIntrinsicStates,
   stripeProductsList,
   transformPerspectiveIntrinsicStates,
+  cmsFetchIntrinsicStates,
 ];
 
 /// Method to return any body
@@ -422,6 +424,8 @@ NodeBody getBody(final NType type) {
       return WrapperBody();
     case NType.transformPerspective:
       return TransformPerspectiveBody();
+    case NType.cmsFetch:
+      return cmsFetchBody();
     case NType.listViewSeparated:
       break;
     case NType.nil:
