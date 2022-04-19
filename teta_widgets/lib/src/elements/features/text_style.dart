@@ -10,13 +10,8 @@ import 'package:teta_core/src/blocs/text_styles/index.dart';
 import 'package:teta_core/src/models/text_style.dart';
 // Project imports:
 import 'package:teta_widgets/src/elements/controls/key_constants.dart';
-import 'package:teta_widgets/src/elements/features/fill.dart';
-import 'package:teta_widgets/src/elements/features/font_size.dart';
-import 'package:teta_widgets/src/elements/features/font_style.dart';
 import 'package:teta_widgets/src/elements/features/font_weight.dart';
-import 'package:teta_widgets/src/elements/features/text_align.dart';
-import 'package:teta_widgets/src/elements/features/text_decoration.dart';
-import 'package:teta_widgets/src/elements/features/text_styles.dart';
+import 'package:teta_widgets/src/elements/index.dart';
 
 class FTextStyle {
   /// Set of funcs to use TextStyle in Teta's widgets
@@ -29,6 +24,7 @@ class FTextStyle {
     this.textAlign,
     this.fontStyle,
     this.textStyleModel,
+    this.textDirection,
   }) {
     fill ??= FFill(
       type: FFillType.solid,
@@ -42,6 +38,7 @@ class FTextStyle {
     textDecoration ??= FTextDecoration();
     textAlign ??= FTextAlign();
     fontStyle ??= FFontStyle();
+    textDirection ??= FTextDirection();
   }
 
   FFill? fill;
@@ -52,6 +49,7 @@ class FTextStyle {
   FTextAlign? textAlign;
   FFontStyle? fontStyle;
   String? textStyleModel;
+  FTextDirection? textDirection;
 
   TextStyle get(
     final BuildContext context,
@@ -98,6 +96,9 @@ class FTextStyle {
         fontStyle: doc[DBKeys.fontStyle] != null
             ? FFontStyle().fromJson(doc[DBKeys.fontStyle] as String)
             : FFontStyle(),
+        textDirection: doc[DBKeys.textDirection] != null
+            ? FTextDirection.fromJson(doc[DBKeys.textDirection] as String)
+            : FTextDirection(),
         textStyleModel: doc[DBKeys.textStyleModel] as String?,
       );
     } catch (e) {
@@ -112,6 +113,7 @@ class FTextStyle {
         textDecoration: FTextDecoration(),
         textAlign: FTextAlign(),
         fontStyle: FFontStyle(),
+        textDirection: FTextDirection(),
       );
     }
   }
@@ -136,6 +138,9 @@ class FTextStyle {
             (textAlign != null) ? textAlign!.toJson() : FTextAlign().toJson(),
         DBKeys.fontStyle:
             (fontStyle != null) ? fontStyle!.toJson() : FFontStyle().toJson(),
+        DBKeys.textDirection: (textDirection != null)
+            ? textDirection!.toJson()
+            : FTextDirection().toJson(),
         DBKeys.textStyleModel: textStyleModel,
       };
 
@@ -167,6 +172,7 @@ class FTextStyle {
     final weight = (model?.fontWeight ?? fontWeight)?.toCode();
     final style = fontStyle?.toCode();
     final decoration = textDecoration?.toCode();
+    final direction = textDirection?.toCode();
 
     return '''
     style: GoogleFonts.${rc.camelCase}(
@@ -179,6 +185,7 @@ class FTextStyle {
       ),
     ),
     textAlign: $align,
+    textDirection: $direction,
     ''';
   }
 }

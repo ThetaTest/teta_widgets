@@ -2,12 +2,13 @@
 // ignore_for_file: public_member_api_docs
 
 // Package imports:
-import 'package:intl/intl.dart';
+
+import 'package:flutter/material.dart';
 
 class FTextDirection {
   /// Set of funcs to use TextDirection within Teta
   FTextDirection({
-    final TextDirection dir = TextDirection.LTR,
+    final TextDirection dir = TextDirection.ltr,
   }) : _dir = dir;
 
   TextDirection _dir;
@@ -31,28 +32,28 @@ class FTextDirection {
   String toJson() => _convertValueToJson(_dir);
 
   static TextDirection _convertJsonToValue(final String key) {
-    if (key == 'r') return TextDirection.RTL;
-    return TextDirection.LTR;
+    if (key == 'r') return TextDirection.rtl;
+    return TextDirection.ltr;
   }
 
   static TextDirection _convertDropDownToValue(final String key) {
-    if (key == 'Right to Left') return TextDirection.RTL;
-    return TextDirection.LTR;
+    if (key == 'Right to Left') return TextDirection.rtl;
+    return TextDirection.ltr;
   }
 
   static String _convertValueToDropDown(final TextDirection key) {
-    if (key == TextDirection.RTL) return 'Right to Left';
+    if (key == TextDirection.rtl) return 'Right to Left';
     return 'Left to Right';
   }
 
   static String _convertValueToJson(final TextDirection value) {
-    if (value == TextDirection.RTL) return 'r';
+    if (value == TextDirection.rtl) return 'r';
     return 'l';
   }
 
   static String _convertValueToCode(final TextDirection? value) {
-    if (value == TextDirection.RTL) return 'TextDirection.RTL';
-    return 'TextDirection.LTR';
+    if (value == TextDirection.rtl) return 'TextDirection.rtl';
+    return 'TextDirection.ltr';
   }
 
   String toCode() => _convertValueToCode(_dir);

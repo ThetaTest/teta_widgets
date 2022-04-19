@@ -44,7 +44,7 @@ final cms_FetchIntrinsicStates = IntrinsicStates(
   advicedChildrenCanHaveAtLeastAChild: [],
   displayName: NodeType.name(_globalType),
   type: _globalType,
-  category: NodeCategories.basic,
+  category: NodeCategories.experimental,
   maxChildren: 2,
   canHave: ChildrenEnum.children,
   addChildLabels: [],
@@ -57,79 +57,17 @@ class SupabaseFutureBuilderBody extends NodeBody {
   @override
   // ignore: overridden_fields
   Map<String, dynamic> attributes = <String, dynamic>{
-    DBKeys.supabaseFrom: FTextTypeInput(value: 'users'),
-    DBKeys.supabaseSelect: FTextTypeInput(value: 'id, name'),
-    DBKeys.supabaseToRange: FTextTypeInput(value: '15'),
-    DBKeys.supabaseFromRange: FTextTypeInput(value: '0'),
-    DBKeys.supabaseNumberPage: FTextTypeInput(value: '1'),
-    DBKeys.supabaseOrder: FTextTypeInput(value: 'name'),
-    DBKeys.supabaseSearchName: FTextTypeInput(),
-    DBKeys.supabaseSearchValue: FTextTypeInput(),
-    DBKeys.supabaseEqName: FTextTypeInput(),
-    DBKeys.supabaseEqValue: FTextTypeInput(),
+    DBKeys.cmsCollection: FTextTypeInput(),
   };
 
   @override
   List<ControlModel> get controls => [
         ControlObject(
-          title: 'From',
+          title: 'Collection',
           type: ControlType.value,
-          key: DBKeys.supabaseFrom,
-          value: attributes[DBKeys.supabaseFrom],
-        ),
-        ControlObject(
-          title: 'Select',
-          type: ControlType.value,
-          key: DBKeys.supabaseSelect,
-          value: attributes[DBKeys.supabaseSelect],
-        ),
-        ControlObject(
-          title: 'To Range',
-          type: ControlType.value,
-          key: DBKeys.supabaseToRange,
-          value: attributes[DBKeys.supabaseToRange],
-        ),
-        ControlObject(
-          title: 'From Range',
-          type: ControlType.value,
-          key: DBKeys.supabaseFromRange,
-          value: attributes[DBKeys.supabaseFromRange],
-        ),
-        ControlObject(
-          title: 'Number Page',
-          type: ControlType.value,
-          key: DBKeys.supabaseNumberPage,
-          value: attributes[DBKeys.supabaseNumberPage],
-        ),
-        ControlObject(
-          title: 'Order',
-          type: ControlType.value,
-          key: DBKeys.supabaseOrder,
-          value: attributes[DBKeys.supabaseOrder],
-        ),
-        ControlObject(
-          title: 'Search Column',
-          type: ControlType.value,
-          key: DBKeys.supabaseSearchName,
-          value: attributes[DBKeys.supabaseSearchName],
-        ),
-        ControlObject(
-          title: 'Search Value',
-          type: ControlType.value,
-          key: DBKeys.supabaseSearchValue,
-          value: attributes[DBKeys.supabaseSearchValue],
-        ),
-        ControlObject(
-          title: 'Equaliser Name',
-          type: ControlType.value,
-          key: DBKeys.supabaseEqName,
-          value: attributes[DBKeys.supabaseEqName],
-        ),
-        ControlObject(
-          title: 'Equaliser Value',
-          type: ControlType.value,
-          key: DBKeys.supabaseEqValue,
-          value: attributes[DBKeys.supabaseEqValue],
+          key: DBKeys.cmsCollection,
+          value: attributes[DBKeys.cmsCollection],
+          description: 'Fetch all documents of a specific collection',
         ),
       ];
 

@@ -1,6 +1,6 @@
 name: teta_widgets
 description: Official package of Teta
-version: 0.0.9
+version: 0.0.10
 homepage:
 publish_to: builder.teta.so:8888
 

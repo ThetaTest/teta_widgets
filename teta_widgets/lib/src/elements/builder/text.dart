@@ -82,6 +82,7 @@ class TextBuilder extends StatelessWidget {
           style: _textStyle.get(context, model),
           textAlign: _textStyle.textAlign!.get,
           maxLines: intValue,
+          textDirection: _textStyle.textDirection?.get,
         );
       },
     );

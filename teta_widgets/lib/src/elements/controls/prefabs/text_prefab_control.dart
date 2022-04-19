@@ -3,6 +3,7 @@
 
 // Flutter imports:
 import 'package:flutter/material.dart';
+import 'package:gap/gap.dart';
 import 'package:teta_core/src/repositories/project.dart';
 import 'package:teta_core/src/repositories/queries/color_style.dart';
 import 'package:teta_core/teta_core.dart';
@@ -14,6 +15,7 @@ import 'package:teta_widgets/src/elements/controls/atoms/font_style.dart';
 import 'package:teta_widgets/src/elements/controls/atoms/font_weight.dart';
 import 'package:teta_widgets/src/elements/controls/atoms/text_align.dart';
 import 'package:teta_widgets/src/elements/controls/atoms/text_decoration.dart';
+import 'package:teta_widgets/src/elements/controls/atoms/text_direction.dart';
 import 'package:teta_widgets/src/elements/controls/atoms/text_styles.dart';
 import 'package:teta_widgets/src/elements/controls/type.dart';
 import 'package:teta_widgets/src/elements/features/fill.dart';
@@ -212,10 +214,25 @@ class TextPrefabControl extends StatelessWidget {
             ],
           ),
         ),
-        const Padding(
-          padding: EdgeInsets.only(top: 8, bottom: 8),
-          child: Divider(height: 1, color: Colors.white38),
+        const Gap(16),
+        TextDirectionControl(
+          node: node,
+          textDirection: textStyle.textDirection!,
+          callBack: (final dir, final old) {
+            final old = FTextStyle.fromJson(textStyle.toJson());
+            textStyle.textDirection = dir;
+            ControlBuilder.toDB(
+              prj,
+              page,
+              node,
+              context,
+              keyValue,
+              textStyle.toJson(),
+              old,
+            );
+          },
         ),
+        const Gap(16),
         FillControl(
           title: 'Fill',
           fill: textStyle.fill ?? FFill(),

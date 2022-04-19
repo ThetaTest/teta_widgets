@@ -25,6 +25,7 @@ class DBKeys {
   static const String fontWeight = 'fWgh';
   static const String fontStyle = 'fStl';
   static const String textDecoration = 'txtDc';
+  static const String textDirection = 'txtDir';
   static const String textStyle = 'txtStl';
   static const String textStyle2 = 'txtStl2';
   static const String margins = 'm';
