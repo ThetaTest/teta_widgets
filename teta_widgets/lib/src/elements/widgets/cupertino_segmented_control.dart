@@ -20,7 +20,7 @@ class WCupertinoSegmentedControl extends StatefulWidget {
     required this.selectedColor,
     required this.unselectedColor,
     required this.borderColor,
-    required this.action,
+    //required this.action,
     required this.params,
     required this.states,
     required this.dataset,
@@ -31,7 +31,7 @@ class WCupertinoSegmentedControl extends StatefulWidget {
   final List<CNode> children;
   final bool forPlay;
   final int? loop;
-  final FAction action;
+  //final FAction action;
   final FFill pressedColor;
   final FFill selectedColor;
   final FFill unselectedColor;
@@ -94,8 +94,8 @@ class _WCupertinoSegmentedControlState
             GestureBuilder.get(
               context: context,
               node: widget.node,
-              action: widget.action,
-              actionValue: FTextTypeInput(value: '$v'),
+              action:null, //widget.action,
+              actionValue:null, //FTextTypeInput(value: '$v'),
               gesture: ActionGesture.onTap,
               params: widget.params,
               states: widget.states,

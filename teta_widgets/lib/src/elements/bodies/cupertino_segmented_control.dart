@@ -65,7 +65,7 @@ class CupertinoSegmentedControlBody extends NodeBody {
   @override
   // ignore: overridden_fields
   Map<String, dynamic> attributes = <String, dynamic>{
-    DBKeys.action: FAction(),
+    //DBKeys.action: FAction(),
     DBKeys.fill: FFill(
       levels: [
         FFillElement(color: '3285FF', stop: 0),
@@ -90,11 +90,11 @@ class CupertinoSegmentedControlBody extends NodeBody {
 
   @override
   List<ControlModel> get controls => [
-        ControlObject(
-          type: ControlType.action,
-          key: DBKeys.action,
-          value: attributes[DBKeys.action],
-        ),
+        // ControlObject(
+        //   type: ControlType.action,
+        //   key: DBKeys.action,
+        //   value: attributes[DBKeys.action],
+        // ),
         FillControlObject(
           title: 'Selected Color',
           key: DBKeys.fill,
@@ -151,7 +151,7 @@ class CupertinoSegmentedControlBody extends NodeBody {
       $loop
             ${child ?? children}
       ${(attributes[DBKeys.textFill] as FFill).toJson()}
-      ${(attributes[DBKeys.action] as FAction).toJson()}
+      
       ${(attributes[DBKeys.activeFill] as FFill).toJson()}
       ${(attributes[DBKeys.fill] as FFill).toJson()}
       ${(attributes[DBKeys.bgFill] as FFill).toJson()}
@@ -165,7 +165,7 @@ class CupertinoSegmentedControlBody extends NodeBody {
         unselectedColor: attributes[DBKeys.bgFill] as FFill,
         forPlay: forPlay,
         loop: loop,
-        action: attributes[DBKeys.action] as FAction,
+        //action: attributes[DBKeys.action] as FAction,
         params: params,
         states: states,
         dataset: dataset,

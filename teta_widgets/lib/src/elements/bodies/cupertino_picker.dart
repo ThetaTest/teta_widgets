@@ -107,7 +107,7 @@ class CupertinoPickerBody extends NodeBody {
         ),
         node: node,
         children: children ?? <CNode>[],
-        flag: attributes[DBKeys.flag] as bool,
+        loopingFlag: attributes[DBKeys.flag] as bool,
         height: attributes[DBKeys.height] as FSize,
         forPlay: forPlay,
         loop: loop,
