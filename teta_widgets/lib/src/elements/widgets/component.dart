@@ -54,13 +54,14 @@ class _WComponentState extends State<WComponent> {
 
   @override
   void initState() {
-    // prjState =
-    //     BlocProvider.of<FocusProjectBloc>(context).state as ProjectLoaded;
+     prjState =
+         BlocProvider.of<FocusProjectBloc>(context).state as ProjectLoaded;
     if (componentName != widget.componentName) {
       calc();
     }
     super.initState();
   }
+
 
   Future<void> calc() async {
     prjState =
@@ -69,6 +70,7 @@ class _WComponentState extends State<WComponent> {
     _component = prjState!.prj.pages!.firstWhereOrNull(
       (final element) => element.name == widget.componentName,
     );
+
     if (_component != null) {
       _component = _component.copyWith(
         states: [
@@ -78,6 +80,8 @@ class _WComponentState extends State<WComponent> {
               .toList()
         ],
       );
+        final nodes = await fetch(_component, context);
+
     }
     if (_component != null && !_component.isHardCoded) {
       print('enter here');

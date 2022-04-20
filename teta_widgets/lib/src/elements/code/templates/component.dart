@@ -19,7 +19,7 @@ String componentCodeTemplate(
   final List<CNode> children,
   final int pageId,
 ) {
-  String? toReturn = 'is not loaded';
+  String? toReturn = '';
 
   final projectLoaded =
       BlocProvider.of<FocusProjectBloc>(context).state as ProjectLoaded;
@@ -65,7 +65,7 @@ String componentCodeTemplate(
       }
     } else {
       //!this will be never called, if it's called something is wrong
-      toReturn = 'code was not initialized well';
+      toReturn = '';
     }
   } else {
     //? here we are in the visual component part
@@ -73,7 +73,7 @@ String componentCodeTemplate(
     if (compWidget.flatList == null) {
       //todo: find a way to initialize the flat list of the component in the initialization of the project
       //this should be never called
-      toReturn = 'Target was not found';
+      toReturn = '';
     }
     //here im in a 'Sections' template, visual component already made
     else if (compWidget.runUrl == null &&
