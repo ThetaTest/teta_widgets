@@ -425,7 +425,7 @@ NodeBody getBody(final NType type) {
     case NType.transformPerspective:
       return TransformPerspectiveBody();
     case NType.cmsFetch:
-      return cmsFetchBody();
+      return CmsFetchBody();
     case NType.listViewSeparated:
       break;
     case NType.nil:

@@ -24,7 +24,7 @@ const _globalType = NType.cmsFetch;
 
 /// IS
 final cmsFetchIntrinsicStates = IntrinsicStates(
-  nodeIcon: Assets.wIcons.supabaseLogoIcon,
+  nodeIcon: Assets.icons.left.dataset,
   nodeVideo: null,
   nodeDescription: null,
   advicedChildren: [
@@ -52,7 +52,7 @@ final cmsFetchIntrinsicStates = IntrinsicStates(
 );
 
 /// Body
-class cmsFetchBody extends NodeBody {
+class CmsFetchBody extends NodeBody {
   @override
   // ignore: overridden_fields
   Map<String, dynamic> attributes = <String, dynamic>{
@@ -92,7 +92,7 @@ class cmsFetchBody extends NodeBody {
       ),
       node: node,
       children: children ?? [],
-      collection: attributes[DBKeys.supabaseFrom] as FTextTypeInput,
+      collection: attributes[DBKeys.cmsCollection] as FTextTypeInput,
       forPlay: forPlay,
       params: params,
       states: states,

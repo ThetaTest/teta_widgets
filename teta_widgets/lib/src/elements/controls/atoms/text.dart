@@ -62,7 +62,8 @@ class PaddingsState extends State<TextControl> {
   @override
   Widget build(final BuildContext context) {
     final index = widget.page.datasets.indexWhere(
-        (final element) => element.getName == widget.value.datasetName);
+      (final element) => element.getName == widget.value.datasetName,
+    );
     final dataset =
         index != -1 ? widget.page.datasets[index] : DatasetObject.empty();
     return BlocBuilder<FocusBloc, List<CNode>>(
@@ -225,29 +226,32 @@ class PaddingsState extends State<TextControl> {
               ),
             if (widget.value.type == FTextTypeEnum.dataset &&
                 widget.value.datasetName != null)
-              CDropdown(
-                value: (dataset.getMap.isNotEmpty
-                            ? dataset.getMap.first
-                            : <String, dynamic>{})
-                        .keys
-                        .toSet()
-                        .contains(widget.value.datasetAttr)
-                    ? widget.value.datasetAttr
-                    : null,
-                items: (dataset.getMap.isNotEmpty
-                        ? dataset.getMap.first
-                        : <String, dynamic>{})
-                    .keys
-                    .toSet()
-                    .toList(),
-                onChange: (final newValue) {
-                  setState(() {
-                    databaseAttribute = newValue!;
-                  });
-                  final old = widget.value;
-                  widget.value.datasetAttr = newValue;
-                  widget.callBack(widget.value, old);
-                },
+              Padding(
+                padding: EI.smT,
+                child: CDropdown(
+                  value: (dataset.getMap.isNotEmpty
+                              ? dataset.getMap.first
+                              : <String, dynamic>{})
+                          .keys
+                          .toSet()
+                          .contains(widget.value.datasetAttr)
+                      ? widget.value.datasetAttr
+                      : null,
+                  items: (dataset.getMap.isNotEmpty
+                          ? dataset.getMap.first
+                          : <String, dynamic>{})
+                      .keys
+                      .toSet()
+                      .toList(),
+                  onChange: (final newValue) {
+                    setState(() {
+                      databaseAttribute = newValue!;
+                    });
+                    final old = widget.value;
+                    widget.value.datasetAttr = newValue;
+                    widget.callBack(widget.value, old);
+                  },
+                ),
               ),
           ],
         );

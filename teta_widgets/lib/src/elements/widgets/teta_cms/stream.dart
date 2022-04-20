@@ -6,16 +6,15 @@
 import 'package:flutter/material.dart';
 // Package imports:
 import 'package:supabase/supabase.dart';
-import 'package:teta_cms/teta_cms.dart';
 import 'package:teta_core/teta_core.dart';
 // Project imports:
 import 'package:teta_widgets/src/elements/index.dart';
 
 // ignore_for_file: public_member_api_docs
 
-class WCmsFetch extends StatefulWidget {
+class WCmsStream extends StatefulWidget {
   /// Construct
-  const WCmsFetch(
+  const WCmsStream(
     final Key? key, {
     required this.node,
     required this.collection,
@@ -54,12 +53,12 @@ class WCmsFetch extends StatefulWidget {
   final List<DatasetObject> dataset;
 
   @override
-  _WCmsFetchState createState() => _WCmsFetchState();
+  _WCmsStreamState createState() => _WCmsStreamState();
 }
 
-class _WCmsFetchState extends State<WCmsFetch> {
+class _WCmsStreamState extends State<WCmsStream> {
   DatasetObject _map = DatasetObject(
-    name: 'Collection Query',
+    name: 'Collection Stream',
     map: [<String, dynamic>{}],
   );
   bool isLoaded = true;
@@ -80,8 +79,6 @@ class _WCmsFetchState extends State<WCmsFetch> {
       widget.forPlay,
       widget.loop,
     );
-
-    _future = TetaCMS.instance.client.getCollection(collectionId);
   }
 
   @override
