@@ -35,7 +35,7 @@ final mapBuilderIntrinsicStates = IntrinsicStates(
   advicedChildrenCanHaveAtLeastAChild: [],
   displayName: NodeType.name(_globalType),
   type: _globalType,
-  category: NodeCategories.map,
+  category: NodeCategories.unclassified,
   maxChildren: null,
   canHave: ChildrenEnum.child,
   addChildLabels: [],
