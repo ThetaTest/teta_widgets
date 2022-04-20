@@ -15,7 +15,7 @@ class WCupertinoPicker extends StatefulWidget {
     required this.children,
     required this.node,
     required this.height,
-    required this.flag,
+    required this.loopingFlag,
     required this.forPlay,
     required this.action,
     required this.params,
@@ -30,7 +30,7 @@ class WCupertinoPicker extends StatefulWidget {
   final int? loop;
   final FAction action;
   final FSize height;
-  final bool flag;
+  final bool loopingFlag;
   final List<VariableObject> params;
   final List<VariableObject> states;
   final List<DatasetObject> dataset;
@@ -40,7 +40,6 @@ class WCupertinoPicker extends StatefulWidget {
 }
 
 class _WCupertinoPickerState extends State<WCupertinoPicker> {
-  bool flag = false;
 
   @override
   Widget build(final BuildContext context) {
@@ -62,7 +61,7 @@ class _WCupertinoPickerState extends State<WCupertinoPicker> {
             forPlay: widget.forPlay,
           );
         },
-        looping: flag,
+        looping: widget.loopingFlag,
         children: widget.children
             .map(
               (final e) => e.toWidget(
