@@ -80,14 +80,7 @@ class _WCmsFetchState extends State<WCmsFetch> {
       widget.forPlay,
       widget.loop,
     );
-
     _future = TetaCMS.instance.client.getCollection(collectionId);
-    await TetaCMS.instance.realtime.on(
-      collectionId: collectionId,
-      callback: (final e) {
-        print(e);
-      },
-    );
   }
 
   @override

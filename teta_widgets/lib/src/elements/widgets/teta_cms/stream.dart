@@ -6,6 +6,7 @@
 import 'package:flutter/material.dart';
 // Package imports:
 import 'package:supabase/supabase.dart';
+import 'package:teta_cms/teta_cms.dart';
 import 'package:teta_core/teta_core.dart';
 // Project imports:
 import 'package:teta_widgets/src/elements/index.dart';
@@ -62,7 +63,7 @@ class _WCmsStreamState extends State<WCmsStream> {
     map: [<String, dynamic>{}],
   );
   bool isLoaded = true;
-  Future<List<dynamic>>? _future;
+  Stream<List<dynamic>>? _stream;
   SupabaseClient? client;
 
   @override
@@ -79,6 +80,7 @@ class _WCmsStreamState extends State<WCmsStream> {
       widget.forPlay,
       widget.loop,
     );
+    _stream = TetaCMS.instance.realtime.streamCollection(collectionId);
   }
 
   @override
@@ -86,8 +88,8 @@ class _WCmsStreamState extends State<WCmsStream> {
     return NodeSelectionBuilder(
       node: widget.node,
       forPlay: widget.forPlay,
-      child: FutureBuilder(
-        future: _future,
+      child: StreamBuilder(
+        stream: _stream,
         builder: (final context, final snapshot) {
           if (!snapshot.hasData) {
             if (widget.children.isNotEmpty) {
@@ -100,9 +102,6 @@ class _WCmsStreamState extends State<WCmsStream> {
             } else {
               return const CircularProgressIndicator();
             }
-          }
-          if (snapshot.error != null) {
-            // TODO: Returns a error widget
           }
           final list = snapshot.data as List<dynamic>?;
           _map = _map.copyWith(

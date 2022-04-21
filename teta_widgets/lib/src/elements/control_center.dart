@@ -93,6 +93,7 @@ import 'package:teta_widgets/src/elements/bodies/supabase/logged_user.dart';
 import 'package:teta_widgets/src/elements/bodies/tcard.dart';
 import 'package:teta_widgets/src/elements/bodies/tcard_builder.dart';
 import 'package:teta_widgets/src/elements/bodies/teta_cms/fetch.dart';
+import 'package:teta_widgets/src/elements/bodies/teta_cms/stream.dart';
 import 'package:teta_widgets/src/elements/bodies/text.dart';
 import 'package:teta_widgets/src/elements/bodies/textbutton.dart';
 import 'package:teta_widgets/src/elements/bodies/textfield.dart';
@@ -426,6 +427,8 @@ NodeBody getBody(final NType type) {
       return TransformPerspectiveBody();
     case NType.cmsFetch:
       return CmsFetchBody();
+    case NType.cmsStream:
+      return CmsStreamBody();
     case NType.listViewSeparated:
       break;
     case NType.nil:
