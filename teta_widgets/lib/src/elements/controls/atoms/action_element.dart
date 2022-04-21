@@ -11,6 +11,7 @@ import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_feather_icons/flutter_feather_icons.dart';
+import 'package:gap/gap.dart';
 import 'package:hovering/hovering.dart';
 import 'package:teta_core/src/design_system/textfield/minitextfield.dart';
 import 'package:teta_core/src/repositories/node.dart';
@@ -526,6 +527,7 @@ class ActionElementControlState extends State<ActionElementControl> {
                     }
                   },
                 ),
+              const Gap(Grid.small),
               if (widget.element.actionType == ActionType.state &&
                   widget.element.actionState == ActionState.changeWith)
                 CDropdown(
@@ -551,6 +553,7 @@ class ActionElementControlState extends State<ActionElementControl> {
                     }
                   },
                 ),
+                const Gap(Grid.small),
               if (widget.element.actionType == ActionType.state &&
                   widget.element.actionState != ActionState.changeWith &&
                   widget.element.actionState != ActionState.changeWithParams)
@@ -598,35 +601,35 @@ class ActionElementControlState extends State<ActionElementControl> {
                 Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
-                    const Padding(
-                      padding: EdgeInsets.only(top: 2, bottom: 4),
-                      child: THeadline3(
-                        'State',
-                      ),
-                    ),
-                    CDropdown(
-                      value: widget.page.states
-                                  .map((final e) => e.name)
-                                  .where((final element) => element != 'null')
-                                  .toList()
-                                  .indexWhere(
-                                    (final e) => e == widget.element.stateName,
-                                  ) !=
-                              -1
-                          ? widget.element.stateName
-                          : null,
-                      items: widget.page.states
-                          .map((final e) => e.name)
-                          .where((final element) => element != 'null')
-                          .toList(),
-                      onChange: (final newValue) {
-                        if (newValue != null) {
-                          final old = widget.element;
-                          widget.element.stateName = newValue;
-                          widget.callBack(widget.element, old);
-                        }
-                      },
-                    ),
+                    // const Padding(
+                    //   padding: EdgeInsets.only(top: 2, bottom: 4),
+                    //   child: THeadline3(
+                    //     'State',
+                    //   ),
+                    // ),
+                    // CDropdown(
+                    //   value: widget.page.states
+                    //               .map((final e) => e.name)
+                    //               .where((final element) => element != 'null')
+                    //               .toList()
+                    //               .indexWhere(
+                    //                 (final e) => e == widget.element.stateName,
+                    //               ) !=
+                    //           -1
+                    //       ? widget.element.stateName
+                    //       : null,
+                    //   items: widget.page.states
+                    //       .map((final e) => e.name)
+                    //       .where((final element) => element != 'null')
+                    //       .toList(),
+                    //   onChange: (final newValue) {
+                    //     if (newValue != null) {
+                    //       final old = widget.element;
+                    //       widget.element.stateName = newValue;
+                    //       widget.callBack(widget.element, old);
+                    //     }
+                    //   },
+                    // ),
                     const Padding(
                       padding: EdgeInsets.only(top: 2, bottom: 4),
                       child: THeadline3(
@@ -763,6 +766,7 @@ class ActionElementControlState extends State<ActionElementControl> {
                     }
                   },
                 ),
+
               if ((widget.element.actionType == ActionType.state &&
                       widget.element.actionState == ActionState.changeWith &&
                       !widget.node.intrinsicState.gestures
