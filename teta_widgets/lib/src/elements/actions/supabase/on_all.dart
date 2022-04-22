@@ -10,7 +10,7 @@ import 'package:supabase/supabase.dart';
 import 'package:teta_core/src/blocs/focus_page/index.dart';
 import 'package:teta_core/src/cubits/supabase.dart';
 import 'package:teta_core/src/models/dataset.dart';
-import 'package:teta_core/src/models/supabase_map_element.dart';
+import 'package:teta_core/src/models/map_element.dart';
 import 'package:teta_core/src/models/variable.dart';
 // Project imports:
 import 'package:teta_widgets/src/elements/actions/snippets/take_state_from.dart';
@@ -47,14 +47,14 @@ class FASupabaseOnAll {
     final String? nameOfPage,
     final Map<String, dynamic>? paramsToSend,
     final FTextTypeInput? supabaseFrom,
-    final List<SupabaseMapElement>? supabaseData,
+    final List<MapElement>? supabaseData,
   ) {
     final page = BlocProvider.of<FocusPageBloc>(context).state;
     final status = takeStateFrom(page, 'status');
     final client = BlocProvider.of<SupabaseCubit>(context).state;
     if (client != null) {
       final map = <String, dynamic>{};
-      for (final e in supabaseData ?? <SupabaseMapElement>[]) {
+      for (final e in supabaseData ?? <MapElement>[]) {
         if (e.key.toLowerCase() != 'id') {
           if (e.value.type == FTextTypeEnum.text) {
             map[e.key] = '"${e.value.toCode(0)}"';

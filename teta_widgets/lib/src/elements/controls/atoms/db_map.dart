@@ -8,12 +8,12 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:hovering/hovering.dart';
 import 'package:teta_core/teta_core.dart';
 // Project imports:
-import 'package:teta_widgets/src/elements/controls/atoms/supabase_element.dart';
+import 'package:teta_widgets/src/elements/controls/atoms/map_element.dart';
 import 'package:teta_widgets/src/elements/features/text_type_input.dart';
 import 'package:teta_widgets/src/elements/nodes/node.dart';
 
-class SupabaseMapControl extends StatefulWidget {
-  const SupabaseMapControl({
+class DBMapControl extends StatefulWidget {
+  const DBMapControl({
     required this.node,
     required this.list,
     required this.page,
@@ -22,15 +22,15 @@ class SupabaseMapControl extends StatefulWidget {
   }) : super(key: key);
 
   final CNode node;
-  final List<SupabaseMapElement> list;
+  final List<MapElement> list;
   final PageObject page;
-  final Function(List<SupabaseMapElement>, List<SupabaseMapElement>) callBack;
+  final Function(List<MapElement>, List<MapElement>) callBack;
 
   @override
-  SupabaseMapControlState createState() => SupabaseMapControlState();
+  DBMapControlState createState() => DBMapControlState();
 }
 
-class SupabaseMapControlState extends State<SupabaseMapControl> {
+class DBMapControlState extends State<DBMapControl> {
   int? nodeId;
   bool? isUpdated;
   TextEditingController controller = TextEditingController();
@@ -73,7 +73,7 @@ class SupabaseMapControlState extends State<SupabaseMapControl> {
                         onTap: () {
                           final old = widget.list;
                           widget.list.add(
-                            SupabaseMapElement(
+                            MapElement(
                               key: '',
                               value: FTextTypeInput(),
                             ),
@@ -128,7 +128,7 @@ class SupabaseMapControlState extends State<SupabaseMapControl> {
                           color: Colors.black26,
                           borderRadius: BorderRadius.circular(8),
                         ),
-                        child: SupabaseMapElementControl(
+                        child: MapElementControl(
                           node: widget.node,
                           value: e,
                           page: widget.page,

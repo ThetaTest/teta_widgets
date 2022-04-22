@@ -7,7 +7,7 @@ import 'package:flutter/widgets.dart';
 // Package imports:
 import 'package:teta_core/teta_core.dart';
 // Project imports:
-import 'package:teta_widgets/src/elements/controls/atoms/supabase_map.dart';
+import 'package:teta_widgets/src/elements/controls/atoms/db_map.dart';
 import 'package:teta_widgets/src/elements/controls/atoms/text.dart';
 import 'package:teta_widgets/src/elements/features/actions/element.dart';
 import 'package:teta_widgets/src/elements/features/text_type_input.dart';
@@ -57,9 +57,9 @@ class SupabaseInsertControl extends StatelessWidget {
           title: 'From Table',
           callBack: (final value, final old) {},
         ),
-        SupabaseMapControl(
+        DBMapControl(
           node: node,
-          list: action.supabaseData ?? [],
+          list: action.supabaseData ?? <MapElement>[],
           page: page,
           callBack: (final value, final old) {
             action.supabaseData = value;

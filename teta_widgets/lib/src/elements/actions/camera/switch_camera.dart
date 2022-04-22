@@ -9,7 +9,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:teta_core/src/blocs/focus_page/index.dart';
 import 'package:teta_core/src/models/dataset.dart';
-import 'package:teta_core/src/models/supabase_map_element.dart';
 import 'package:teta_core/src/models/variable.dart';
 // Project imports:
 import 'package:teta_widgets/src/elements/actions/navigation/open_page.dart';
@@ -19,7 +18,6 @@ class FACameraSwitch {
   static Future action(
     final BuildContext context,
     final String? stateName,
-    final List<SupabaseMapElement>? supabaseData,
     final List<VariableObject> params,
     final List<VariableObject> states,
     final List<DatasetObject> dataset,

@@ -214,6 +214,7 @@ final stateTypes = <IntrinsicStates>[
   stripeProductsList,
   transformPerspectiveIntrinsicStates,
   cmsFetchIntrinsicStates,
+  cmsStreamIntrinsicStates,
 ];
 
 /// Method to return any body

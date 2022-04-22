@@ -9,7 +9,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:teta_core/src/blocs/focus_page/index.dart';
 import 'package:teta_core/src/cubits/supabase.dart';
 import 'package:teta_core/src/models/dataset.dart';
-import 'package:teta_core/src/models/supabase_map_element.dart';
+import 'package:teta_core/src/models/map_element.dart';
 import 'package:teta_core/src/models/variable.dart';
 // Project imports:
 import 'package:teta_widgets/src/elements/actions/snippets/change_state.dart';
@@ -20,7 +20,7 @@ class FASupabaseDelete {
   static Future action(
     final BuildContext context,
     final FTextTypeInput? supabaseFrom,
-    final SupabaseMapElement supabaseEq,
+    final MapElement supabaseEq,
     final List<VariableObject> params,
     final List<VariableObject> states,
     final List<DatasetObject> dataset,
@@ -57,7 +57,7 @@ class FASupabaseDelete {
     final String? nameOfPage,
     final Map<String, dynamic>? paramsToSend,
     final FTextTypeInput? supabaseFrom,
-    final SupabaseMapElement? supabaseEq,
+    final MapElement? supabaseEq,
   ) {
     final page = BlocProvider.of<FocusPageBloc>(context).state;
     final status = takeStateFrom(page, 'status');

@@ -11,8 +11,8 @@ import 'package:teta_core/teta_core.dart';
 import 'package:teta_widgets/src/elements/controls/atoms/text.dart';
 import 'package:teta_widgets/src/elements/nodes/node.dart';
 
-class SupabaseMapElementControl extends StatefulWidget {
-  const SupabaseMapElementControl({
+class MapElementControl extends StatefulWidget {
+  const MapElementControl({
     required this.node,
     required this.value,
     required this.page,
@@ -21,16 +21,15 @@ class SupabaseMapElementControl extends StatefulWidget {
   }) : super(key: key);
 
   final CNode node;
-  final SupabaseMapElement value;
+  final MapElement value;
   final PageObject page;
-  final Function(SupabaseMapElement, SupabaseMapElement) callBack;
+  final Function(MapElement, MapElement) callBack;
 
   @override
-  SupabaseMapElementControlState createState() =>
-      SupabaseMapElementControlState();
+  MapElementControlState createState() => MapElementControlState();
 }
 
-class SupabaseMapElementControlState extends State<SupabaseMapElementControl> {
+class MapElementControlState extends State<MapElementControl> {
   int? nodeId;
   bool? isUpdated;
   TextEditingController controller = TextEditingController();

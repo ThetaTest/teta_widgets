@@ -10,9 +10,9 @@ import 'package:equatable/equatable.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:teta_core/src/models/dataset.dart';
+import 'package:teta_core/src/models/map_element.dart';
 import 'package:teta_core/src/models/page.dart';
 import 'package:teta_core/src/models/project.dart';
-import 'package:teta_core/src/models/supabase_map_element.dart';
 import 'package:teta_core/src/models/variable.dart';
 // Project imports:
 import 'package:teta_widgets/src/elements/actions/audio_player/loop_all.dart';
@@ -64,6 +64,7 @@ import 'package:teta_widgets/src/elements/features/actions/enums/camera.dart';
 import 'package:teta_widgets/src/elements/features/actions/enums/index.dart';
 import 'package:teta_widgets/src/elements/features/actions/enums/revenue_cat.dart';
 import 'package:teta_widgets/src/elements/features/actions/enums/stripe.dart';
+import 'package:teta_widgets/src/elements/features/actions/enums/teta_cms.dart';
 import 'package:teta_widgets/src/elements/features/actions/enums/webview.dart';
 import 'package:teta_widgets/src/elements/features/text_type_input.dart';
 import 'package:teta_widgets/src/elements/nodes/dynamic.dart';
@@ -151,14 +152,14 @@ class FActionElement extends Equatable {
         FTextTypeInput.fromJson(doc['sFrom'] as Map<String, dynamic>?);
     supabaseData = (doc['sData'] as List<dynamic>? ?? <dynamic>[])
         .map(
-          (final dynamic e) => SupabaseMapElement.fromJson(
+          (final dynamic e) => MapElement.fromJson(
             e as Map<String, dynamic>,
           ),
         )
         .toList();
     supabaseEq = doc['sEq'] != null
-        ? SupabaseMapElement.fromJson(doc['sEq'] as Map<String, dynamic>)
-        : SupabaseMapElement(
+        ? MapElement.fromJson(doc['sEq'] as Map<String, dynamic>)
+        : MapElement(
             key: '',
             value: FTextTypeInput(),
           );
@@ -191,6 +192,8 @@ class FActionElement extends Equatable {
   ActionCamera? actionCamera;
   ActionWebView? actionWebView;
   ActionAudioPlayer? actionAudioPlayer;
+  ActionTetaCmsDB? actionTetaDB;
+  ActionTetaCmsAuth? actionTetaAuth;
   FTextTypeInput? delay;
   bool? withCondition;
   FTextTypeInput? condition;
@@ -209,10 +212,10 @@ class FActionElement extends Equatable {
   FTextTypeInput? supabaseFrom;
 
   /// Supabase data for insert / update map
-  List<SupabaseMapElement>? supabaseData;
+  List<MapElement>? supabaseData;
 
   /// Supabase name of column for condition
-  SupabaseMapElement? supabaseEq;
+  MapElement? supabaseEq;
 
   @override
   List<Object?> get props => [
@@ -241,6 +244,8 @@ class FActionElement extends Equatable {
         return [
           'State',
           'Navigation',
+          'Teta db',
+          'Teta auth',
           if (config.supabaseEnabled ?? false) 'Supabase auth',
           if (config.supabaseEnabled ?? false) 'Supabase database',
           if (config.isRevenueCatEnabled) 'RevenueCat',
@@ -335,6 +340,14 @@ class FActionElement extends Equatable {
     return [];
   }
 
+  static List<String> getTetaDB() {
+    return enumsToListString(ActionTetaCmsDB.values);
+  }
+
+  static List<String> getTetaAuth() {
+    return enumsToListString(ActionTetaCmsAuth.values);
+  }
+
   static List<String> getCamera() {
     return enumsToListString(ActionCamera.values);
   }
@@ -367,7 +380,7 @@ class FActionElement extends Equatable {
     if (value == 'RevenueCat') {
       return ActionType.revenueCat;
     }
-     if (value == 'Stripe') {
+    if (value == 'Stripe') {
       return ActionType.stripe;
     }
     if (value != null) {
@@ -396,7 +409,9 @@ class FActionElement extends Equatable {
         'aW': convertValueToDropdown(actionWebView),
         'aAP': convertValueToDropdown(actionAudioPlayer),
         'aRC': convertValueToDropdown(actionRevenueCat),
-        'sPK':convertValueToDropdown(actionStripe),
+        'sPK': convertValueToDropdown(actionStripe),
+        'aTDb': convertValueToDropdown(actionTetaDB),
+        'aTAu': convertValueToDropdown(actionTetaAuth),
         'sN': stateName,
         'pTS': paramsToSend,
         'pN': nameOfPage,
@@ -458,7 +473,13 @@ class FActionElement extends Equatable {
             }
             await FDelay.action(int.tryParse('${delay?.value}') ?? 0);
             FLoop.action(
-              () => FActionStripeBuy.action(context, states, stateName, dataset,loop),
+              () => FActionStripeBuy.action(
+                context,
+                states,
+                stateName,
+                dataset,
+                loop,
+              ),
               everyMilliseconds,
               context,
               withLoop: withLoop ?? false,
@@ -860,8 +881,7 @@ class FActionElement extends Equatable {
                 context,
                 supabaseFrom,
                 supabaseData,
-                supabaseEq ??
-                    SupabaseMapElement(key: '', value: FTextTypeInput()),
+                supabaseEq ?? MapElement(key: '', value: FTextTypeInput()),
                 params,
                 states,
                 dataset,
@@ -884,8 +904,7 @@ class FActionElement extends Equatable {
               () => FASupabaseDelete.action(
                 context,
                 supabaseFrom,
-                supabaseEq ??
-                    SupabaseMapElement(key: '', value: FTextTypeInput()),
+                supabaseEq ?? MapElement(key: '', value: FTextTypeInput()),
                 params,
                 states,
                 dataset,
@@ -1006,7 +1025,6 @@ class FActionElement extends Equatable {
               () => FACameraTakePhoto.action(
                 context,
                 stateName,
-                supabaseData,
                 params,
                 states,
                 dataset,
@@ -1029,7 +1047,6 @@ class FActionElement extends Equatable {
               () => FACameraSwitch.action(
                 context,
                 stateName,
-                supabaseData,
                 params,
                 states,
                 dataset,
@@ -1052,7 +1069,6 @@ class FActionElement extends Equatable {
               () => FACameraOffFlash.action(
                 context,
                 stateName,
-                supabaseData,
                 params,
                 states,
                 dataset,
@@ -1094,7 +1110,6 @@ class FActionElement extends Equatable {
               () => FACameraAutoFlash.action(
                 context,
                 stateName,
-                supabaseData,
                 params,
                 states,
                 dataset,
@@ -1117,7 +1132,6 @@ class FActionElement extends Equatable {
               () => FACameraTorchFlash.action(
                 context,
                 stateName,
-                supabaseData,
                 params,
                 states,
                 dataset,
@@ -1140,7 +1154,6 @@ class FActionElement extends Equatable {
               () => FACameraStopRecording.action(
                 context,
                 stateName,
-                supabaseData,
                 params,
                 states,
                 dataset,

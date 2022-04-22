@@ -16,4 +16,6 @@ enum ActionType {
   audioPlayer,
   webview,
   map,
+  tetaDatabase,
+  tetaAuth,
 }
