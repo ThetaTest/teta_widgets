@@ -164,13 +164,14 @@ String pageCodeTemplate(
       : '';
 
   return '''
+    import 'dart:ui';
     import 'package:flutter/material.dart';
     ${isSupabaseIntegrated ? "import 'package:supabase/supabase.dart';" : ''}
     ${isSupabaseIntegrated ? "import 'package:supabase_flutter/supabase_flutter.dart';" : ''}
     ${page.isAuthenticatedRequired ? "import 'package:myapp/auth/auth_required_state.dart';" : "import 'package:myapp/auth/auth_state.dart';"}
     $authSocialButtonsImport
     $iconImport
-    import 'package:intl/intl.dart';
+    import 'package:intl/intl.dart' hide TextDirection;
     import 'package:collection/collection.dart';
     import 'package:myapp/src/pages/index.dart';
     import 'package:google_fonts/google_fonts.dart';
