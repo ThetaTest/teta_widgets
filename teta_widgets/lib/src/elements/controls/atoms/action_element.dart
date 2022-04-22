@@ -32,6 +32,7 @@ import 'package:teta_widgets/src/elements/features/actions/enums/revenue_cat.dar
 import 'package:teta_widgets/src/elements/features/actions/enums/state.dart';
 import 'package:teta_widgets/src/elements/features/actions/enums/stripe.dart';
 import 'package:teta_widgets/src/elements/features/actions/enums/supabase.dart';
+import 'package:teta_widgets/src/elements/features/actions/enums/teta_cms.dart';
 import 'package:teta_widgets/src/elements/features/actions/enums/type.dart';
 import 'package:teta_widgets/src/elements/features/actions/enums/webview.dart';
 import 'package:teta_widgets/src/elements/features/text_type_input.dart';
@@ -553,7 +554,7 @@ class ActionElementControlState extends State<ActionElementControl> {
                     }
                   },
                 ),
-                const Gap(Grid.small),
+              const Gap(Grid.small),
               if (widget.element.actionType == ActionType.state &&
                   widget.element.actionState != ActionState.changeWith &&
                   widget.element.actionState != ActionState.changeWithParams)
@@ -682,7 +683,7 @@ class ActionElementControlState extends State<ActionElementControl> {
                     }
                   },
                 ),
-                //todo: here stuffs
+              //todo: here stuffs
               if (widget.element.actionType == ActionType.stripe)
                 CDropdown(
                   value: FActionElement.convertValueToDropdown(
@@ -709,7 +710,7 @@ class ActionElementControlState extends State<ActionElementControl> {
               //     width: double.maxFinite,
               //      height: 40,
               //      color: Colors.black54,),
-              
+
               if (widget.element.actionType == ActionType.navigation)
                 CDropdown(
                   value: FActionElement.convertValueToDropdown(
@@ -766,7 +767,24 @@ class ActionElementControlState extends State<ActionElementControl> {
                     }
                   },
                 ),
-
+              if (widget.element.actionType == ActionType.tetaDatabase)
+                CDropdown(
+                  value: FActionElement.convertValueToDropdown(
+                    widget.element.actionTetaDB,
+                  ),
+                  items: FActionElement.getTetaDB().toSet().toList(),
+                  onChange: (final newValue) {
+                    if (newValue != null) {
+                      final old = widget.element;
+                      widget.element.actionTetaDB =
+                          FActionElement.convertDropdownToValue(
+                        ActionTetaCmsDB.values,
+                        newValue,
+                      ) as ActionTetaCmsDB?;
+                      widget.callBack(widget.element, old);
+                    }
+                  },
+                ),
               if ((widget.element.actionType == ActionType.state &&
                       widget.element.actionState == ActionState.changeWith &&
                       !widget.node.intrinsicState.gestures
@@ -1086,8 +1104,11 @@ class ActionElementControlState extends State<ActionElementControl> {
                       ),
                   ],
                 ),
-              if (widget.element.actionType == ActionType.supabaseDatabase &&
-                  widget.element.actionSupabaseDB == ActionSupabaseDB.insert)
+              if ((widget.element.actionType == ActionType.supabaseDatabase &&
+                      widget.element.actionSupabaseDB ==
+                          ActionSupabaseDB.insert) ||
+                  (widget.element.actionType == ActionType.tetaDatabase &&
+                      widget.element.actionTetaDB == ActionTetaCmsDB.insert))
                 SupabaseInsertControl(
                   prj: widget.prj,
                   page: widget.page,
@@ -1098,8 +1119,11 @@ class ActionElementControlState extends State<ActionElementControl> {
                     widget.callBack(widget.element, old);
                   },
                 ),
-              if (widget.element.actionType == ActionType.supabaseDatabase &&
-                  widget.element.actionSupabaseDB == ActionSupabaseDB.update)
+              if ((widget.element.actionType == ActionType.supabaseDatabase &&
+                      widget.element.actionSupabaseDB ==
+                          ActionSupabaseDB.update) ||
+                  (widget.element.actionType == ActionType.tetaDatabase &&
+                      widget.element.actionTetaDB == ActionTetaCmsDB.update))
                 SupabaseUpdateControl(
                   prj: widget.prj,
                   page: widget.page,
@@ -1110,8 +1134,11 @@ class ActionElementControlState extends State<ActionElementControl> {
                     widget.callBack(widget.element, old);
                   },
                 ),
-              if (widget.element.actionType == ActionType.supabaseDatabase &&
-                  widget.element.actionSupabaseDB == ActionSupabaseDB.delete)
+              if ((widget.element.actionType == ActionType.supabaseDatabase &&
+                      widget.element.actionSupabaseDB ==
+                          ActionSupabaseDB.delete) ||
+                  (widget.element.actionType == ActionType.tetaDatabase &&
+                      widget.element.actionTetaDB == ActionTetaCmsDB.delete))
                 SupabaseDeleteControl(
                   prj: widget.prj,
                   page: widget.page,

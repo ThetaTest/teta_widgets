@@ -144,6 +144,12 @@ class FActionElement extends Equatable {
     actionAudioPlayer =
         convertDropdownToValue(ActionAudioPlayer.values, doc['aAP'] as String?)
             as ActionAudioPlayer?;
+    actionTetaDB =
+        convertDropdownToValue(ActionTetaCmsDB.values, doc['aTDb'] as String?)
+            as ActionTetaCmsDB?;
+    actionTetaAuth =
+        convertDropdownToValue(ActionTetaCmsAuth.values, doc['aTAu'] as String?)
+            as ActionTetaCmsAuth?;
     stateName = doc['sN'] as String?;
     nameOfPage = doc['pN'] as String?;
     paramsToSend = doc['pTS'] as Map<String, dynamic>?;
@@ -244,7 +250,7 @@ class FActionElement extends Equatable {
         return [
           'State',
           'Navigation',
-          'Teta db',
+          'Teta database',
           'Teta auth',
           if (config.supabaseEnabled ?? false) 'Supabase auth',
           if (config.supabaseEnabled ?? false) 'Supabase database',
