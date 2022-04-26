@@ -62,7 +62,7 @@ class FActionStripeBuy {
   //todo: concludere questo
   static String toCode(final BuildContext context, final String? stateName) {
     return '''
-   
+   payment here;
     ''';
   }
 
