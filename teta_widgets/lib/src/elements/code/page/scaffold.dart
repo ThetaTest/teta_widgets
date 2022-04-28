@@ -13,7 +13,7 @@ import 'package:teta_widgets/src/elements/controls/key_constants.dart';
 import 'package:teta_widgets/src/elements/features/fill.dart';
 import 'package:teta_widgets/src/elements/nodes/enum.dart';
 import 'package:teta_widgets/src/elements/nodes/node.dart';
-
+//todo: fix conflict between dart:core and package:map for Map class
 /// Generates the code for a page
 String pageCodeTemplate(
   final BuildContext context,
@@ -122,6 +122,7 @@ String pageCodeTemplate(
   }
 
   final isSupabaseIntegrated = prj.config?.supabaseEnabled ?? false;
+  final isStripeIntegrated = prj.config?.isStripeEnabled?? false;
 
   final backgroundColor =
       (node.body.attributes[DBKeys.fill] as FFill).getHexColor(context);
@@ -151,6 +152,10 @@ String pageCodeTemplate(
       ? "import 'package:lottie/lottie.dart';"
       : '';
 
+   final stripeImport = isStripeIntegrated
+      ? "import 'package:flutter_stripe/flutter_stripe.dart';"
+      : '';
+
   final isARState = isSupabaseIntegrated
       ? page.isAuthenticatedRequired
           ? 'AuthRequiredState<Page${pageNameRC.pascalCase}> with SingleTickerProviderStateMixin'
@@ -165,20 +170,23 @@ String pageCodeTemplate(
 
   return '''
     import 'dart:ui';
+    import 'dart:convert';
     import 'package:flutter/material.dart';
     ${isSupabaseIntegrated ? "import 'package:supabase/supabase.dart';" : ''}
     ${isSupabaseIntegrated ? "import 'package:supabase_flutter/supabase_flutter.dart';" : ''}
     ${page.isAuthenticatedRequired ? "import 'package:myapp/auth/auth_required_state.dart';" : "import 'package:myapp/auth/auth_state.dart';"}
     $authSocialButtonsImport
     $iconImport
+    $stripeImport
     import 'package:intl/intl.dart' hide TextDirection;
     import 'package:collection/collection.dart';
     import 'package:myapp/src/pages/index.dart';
     import 'package:google_fonts/google_fonts.dart';
     import 'package:url_launcher/url_launcher.dart';
-    import 'package:map/map.dart';
+    import 'package:map/map.dart' hide Map;
     import 'package:latlng/latlng.dart';
     import 'package:paged_vertical_calendar/paged_vertical_calendar.dart';
+    import 'package:http/http.dart' as http;
     $lottieImport
     $componentImport
     $badgeImport
@@ -194,7 +202,7 @@ String pageCodeTemplate(
 
     class _State${pageNameRC.pascalCase} extends $isARState {
       ${statesString.toString()}
-      final datasets = <String, dynamic>{};
+      var datasets = <Map<String, dynamic>>[];
 
       @override
       void initState() { 

@@ -176,7 +176,7 @@ class FTextTypeInput {
       return "'''\${${state.camelCase}}'''";
     }
     if (type == FTextTypeEnum.dataset) {
-      return "((datasets['$datasetName'] as List<dynamic>)[index] as Map<String, dynamic>)['$datasetAttr'] as String? ?? ''";
+      return "this.datasets[index]['$datasetAttr'].toString()";
     }
     if (type == FTextTypeEnum.asset) {
       return file?.url ?? '';
