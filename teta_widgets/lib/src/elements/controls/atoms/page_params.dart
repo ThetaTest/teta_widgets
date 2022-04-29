@@ -276,6 +276,7 @@ class PaddingsState extends State<PageParamsControl> {
                           controller: nameController,
                           placeholder: 'Name',
                           text: variable.name,
+                          backgroundColor: Palette.bgGrey,
                           callBack: (final text) {
                             if (page.params.indexWhere(
                                   (final element) =>
@@ -384,6 +385,7 @@ class PaddingsState extends State<PageParamsControl> {
                           controller: defaultValueController,
                           placeholder: 'Default Value',
                           text: variable.defaultValue,
+                          backgroundColor: Palette.bgGrey,
                           callBack: (final text) {
                             if (variable.type ==
                                 VariableType.cameraController) {

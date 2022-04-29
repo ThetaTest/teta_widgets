@@ -58,14 +58,7 @@ class StripeProductListBody extends NodeBody {
   Map<String, dynamic> attributes = <String, dynamic>{};
 
   @override
-  List<ControlModel> get controls => [
-        // ControlObject(
-        //   title: 'From',
-        //   type: ControlType.value,
-        //   key: DBKeys.supabaseFrom,
-        //   value: attributes[DBKeys.supabaseFrom],
-        // ),
-      ];
+  List<ControlModel> get controls => [];
 
   @override
   Widget toWidget({

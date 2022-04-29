@@ -24,7 +24,7 @@ const _globalType = NType.card;
 
 /// Intrinsic States of Center node type
 final cardIntrinsicStates = IntrinsicStates(
-  nodeIcon: Assets.wIcons.center,
+  nodeIcon: Assets.wIcons.card,
   nodeVideo: null,
   nodeDescription: 'A widget that centers its child within itself.',
   advicedChildren: [

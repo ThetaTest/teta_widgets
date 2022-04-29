@@ -53,7 +53,7 @@ class _WStripeProductsListState extends State<WStripeProductsList> {
   Future calc() async {
     final prj =
         (BlocProvider.of<FocusProjectBloc>(context).state as ProjectLoaded).prj;
-    debugPrint('prj id: ${prj.id}');
+    //debugPrint('prj id: ${prj.id}');
 
     final baseUrl = 'https://builder.teta.so:8402/product/${prj.id}/list';
 
@@ -65,7 +65,7 @@ class _WStripeProductsListState extends State<WStripeProductsList> {
     );
 
     if (response.statusCode == 200) {
-      debugPrint('get body: ${response.body}');
+      //debugPrint('get body: ${response.body}');
 
       final jsonData = json.decode(response.body) as List<dynamic>;
       final map =
@@ -78,7 +78,7 @@ class _WStripeProductsListState extends State<WStripeProductsList> {
 
       widget.dataset.clear();
       widget.dataset.add(datasetObject);
-    }else{
+    } else {
       debugPrint('Error in calc WStripeProductsList -> ${response.body}');
     }
   }

@@ -1409,7 +1409,7 @@ class FActionElement extends Equatable {
                 FDelay.toCode(int.tryParse('${delay?.value}') ?? 0) +
                 FLoop.toCode(
                   int.tryParse(everyMilliseconds?.value ?? '0') ?? 0,
-                  FActionStripeBuy.toCode(context, stateName),
+                  FActionStripeBuy.toCode(context, stateName, body),
                   withLoop: withLoop ?? false,
                 );
           default:

@@ -1,7 +1,6 @@
 // Flutter imports:
 import 'package:flutter/material.dart';
 // Project imports:
-import 'package:teta_widgets/src/elements/code/snippets.dart';
 import 'package:teta_widgets/src/elements/controls/key_constants.dart';
 import 'package:teta_widgets/src/elements/features/text_type_input.dart';
 import 'package:teta_widgets/src/elements/nodes/node.dart';
@@ -24,14 +23,11 @@ String streamBuilderCodeTemplate(
   final rangeTo =
       int.tryParse(valueRangeTo) != null ? int.parse(valueRangeTo) : 15;
 
-  var child = 'const SizedBox();';
+  var child = 'const SizedBox()';
   if (children.isNotEmpty) {
-    child = CS.child(context, children.first, comma: true).replaceAll(',', '');
+    child = children.first.toCode(context);
   }
-  var loader = 'const CircularProgressIndicator();';
-  if (children.length >= 2) {
-    loader = CS.child(context, children[1], comma: true).replaceAll(',', '');
-  }
+  
   return '''
     StreamBuilder(
       stream: client
@@ -41,10 +37,10 @@ String streamBuilderCodeTemplate(
       .execute(),
       builder: (context, snapshot) {
         if (!snapshot.hasData) {
-          return $loader;
+          return const CircularProgressIndicator();
         }
         return $child;
-      });
+      }
     )
   ''';
 }

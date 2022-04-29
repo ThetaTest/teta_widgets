@@ -35,7 +35,7 @@ final animatedOpacityIntrinsicStates = IntrinsicStates(
   advicedChildrenCanHaveAtLeastAChild: [],
   displayName: NodeType.name(_globalType),
   type: _globalType,
-  category: NodeCategories.animated,
+  category: NodeCategories.unclassified,
   maxChildren: 1,
   canHave: ChildrenEnum.child,
   addChildLabels: [],
