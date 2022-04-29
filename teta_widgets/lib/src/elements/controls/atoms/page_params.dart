@@ -6,6 +6,7 @@ import 'package:enum_to_string/enum_to_string.dart';
 // Flutter imports:
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_feather_icons/flutter_feather_icons.dart';
 import 'package:hovering/hovering.dart';
 import 'package:teta_core/src/design_system/textfield/minitextfield.dart';
 import 'package:teta_core/src/design_system/textfield/multi_line_textfield.dart';
@@ -106,10 +107,45 @@ class PaddingsState extends State<PageParamsControl> {
         Column(
           children: widget.page.params
               .map(
-                (final variable) => HoverWidget(
-                  hoverChild: item(variable, onHover: true),
-                  onHover: (final e) {},
-                  child: item(variable, onHover: false),
+                (final variable) => Row(
+                  children: [
+                    Expanded(
+                      child: HoverWidget(
+                        hoverChild: item(variable, onHover: true),
+                        onHover: (final e) {},
+                        child: item(variable, onHover: false),
+                      ),
+                    ),
+                    Padding(
+                      padding: const EdgeInsets.only(
+                        left: 8,
+                        top: 6,
+                        right: 6,
+                      ),
+                      child: GestureDetector(
+                        onTap: () {
+                          widget.page.params.remove(variable);
+                          widget.callBack(widget.page.params);
+                        },
+                        child: Tooltip(
+                          message: 'Delete. This action cannot be undone',
+                          child: HoverWidget(
+                            hoverChild: const Icon(
+                              FeatherIcons.x,
+                              color: Colors.red,
+                              size: 20,
+                            ),
+                            onHover: (final e) {},
+                            child: const Icon(
+                              FeatherIcons.x,
+                              color: Colors.white,
+                              size: 20,
+                            ),
+                          ),
+                        ),
+                      ),
+                    ),
+                  ],
                 ),
               )
               .toList(),
@@ -201,7 +237,7 @@ class PaddingsState extends State<PageParamsControl> {
                     onTap: () {
                       Navigator.of(context, rootNavigator: true).pop(null);
                       widget.page.params.remove(variable);
-                      widget.callBack(widget.page.states);
+                      widget.callBack(widget.page.params);
                     },
                     child: MouseRegion(
                       cursor: SystemMouseCursors.click,
