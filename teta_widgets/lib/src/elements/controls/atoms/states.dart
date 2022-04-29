@@ -271,7 +271,7 @@ class StatesControlState extends State<StatesControl> {
                         child: CMiniTextField(
                           controller: nameController,
                           placeholder: 'Name',
-                          color: Colors.white,
+                          backgroundColor: Palette.bgGrey,
                           text: variable.name,
                           callBack: (final text) {
                             if (page.states.indexWhere(
@@ -372,7 +372,7 @@ class StatesControlState extends State<StatesControl> {
                           controller: defaultValueController,
                           placeholder: 'Default Value',
                           text: variable.defaultValue,
-                          color: Colors.white,
+                          backgroundColor: Palette.bgGrey,
                           callBack: (final text) {
                             if (variable.type ==
                                 VariableType.cameraController) {

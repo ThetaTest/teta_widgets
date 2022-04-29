@@ -239,8 +239,8 @@ class PaddingsState extends State<PageParamsControl> {
                         child: CMiniTextField(
                           controller: nameController,
                           placeholder: 'Name',
-                          color: Colors.white,
                           text: variable.name,
+                          backgroundColor: Palette.bgGrey,
                           callBack: (final text) {
                             if (page.params.indexWhere(
                                   (final element) =>
@@ -349,7 +349,7 @@ class PaddingsState extends State<PageParamsControl> {
                           controller: defaultValueController,
                           placeholder: 'Default Value',
                           text: variable.defaultValue,
-                          color: Colors.white,
+                          backgroundColor: Palette.bgGrey,
                           callBack: (final text) {
                             if (variable.type ==
                                 VariableType.cameraController) {
@@ -370,7 +370,6 @@ class PaddingsState extends State<PageParamsControl> {
                           controller: docValueController,
                           placeholder: 'Description',
                           text: variable.doc,
-                          color: Colors.white,
                           callBack: (final text) {
                             variable.doc = text;
                           },

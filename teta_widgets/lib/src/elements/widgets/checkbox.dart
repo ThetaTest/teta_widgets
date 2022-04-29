@@ -40,34 +40,31 @@ class _WCheckBoxState extends State<WCheckBox> {
     return NodeSelectionBuilder(
       node: widget.node,
       forPlay: widget.forPlay,
-      child: IgnorePointer(
-        ignoring: !widget.forPlay,
-        child: Checkbox(
-          onChanged: (final value) {
-            if (widget.forPlay) {
-              setState(() {
-                flag = value ?? false;
-              });
-            }
-            GestureBuilder.get(
-              context: context,
-              node: widget.node,
-              action: widget.action,
-              actionValue: FTextTypeInput(value: '$flag'),
-              gesture: ActionGesture.onChange,
-              params: widget.params,
-              states: widget.states,
-              dataset: widget.dataset,
-              forPlay: widget.forPlay,
-            );
-          },
+      child: Checkbox(
+        onChanged: (final value) {
+          if (widget.forPlay) {
+            setState(() {
+              flag = value ?? false;
+            });
+          }
+          GestureBuilder.get(
+            context: context,
+            node: widget.node,
+            action: widget.action,
+            actionValue: FTextTypeInput(value: '$flag'),
+            gesture: ActionGesture.onChange,
+            params: widget.params,
+            states: widget.states,
+            dataset: widget.dataset,
+            forPlay: widget.forPlay,
+          );
+        },
 
-          value: flag,
-          mouseCursor: const FCursor().get(),
-          fillColor:
-              MaterialStateProperty.resolveWith((final states) => Colors.black),
-          //shape:
-        ),
+        value: flag,
+        mouseCursor: const FCursor().get(),
+        fillColor:
+            MaterialStateProperty.resolveWith((final states) => Colors.black),
+        //shape:
       ),
     );
   }
