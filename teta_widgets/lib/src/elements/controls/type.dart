@@ -643,7 +643,10 @@ class ControlBuilder {
           key: ValueKey('${node.nid}'),
           node: node,
           page: page,
-          callBack: (final list) => PageQueries.update(page),
+          callBack: (final list) async {
+            await PageQueries.update(page);
+            BlocProvider.of<RefreshCubit>(context).change();
+          },
         ),
       );
     }
@@ -654,7 +657,10 @@ class ControlBuilder {
           key: ValueKey('${node.nid}'),
           node: node,
           page: page,
-          callBack: (final list) => PageQueries.update(page),
+          callBack: (final list) async {
+            await PageQueries.update(page);
+            BlocProvider.of<RefreshCubit>(context).change();
+          },
         ),
       );
     }

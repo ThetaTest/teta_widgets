@@ -73,7 +73,7 @@ class FASupabaseOnUpdate {
       return '''
         final response = await Supabase.instance.client
               .from(${supabaseFrom?.toCode(0) ?? ''})
-              .insert($mapString)
+              .insert($mapString, returning: ReturningOption.minimal,)
               .execute();
         if (response.error != null) {
           ${status != null ? "setState(() { status = 'Failed'; });" : ''}

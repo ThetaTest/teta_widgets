@@ -6,6 +6,7 @@
 import 'package:flutter/material.dart';
 // Package imports:
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:supabase/supabase.dart';
 import 'package:teta_core/src/blocs/focus_page/index.dart';
 import 'package:teta_core/src/cubits/supabase.dart';
 import 'package:teta_core/src/models/dataset.dart';
@@ -45,7 +46,10 @@ class FASupabaseInsert {
       }
       final response = await client
           .from(supabaseFrom?.get(params, states, dataset, true, loop) ?? '')
-          .insert(map)
+          .insert(
+            map,
+            returning: ReturningOption.minimal,
+          )
           .execute();
       if (response.error != null) changeState(status, context, 'Failed');
       changeState(status, context, 'Success');
@@ -83,7 +87,7 @@ class FASupabaseInsert {
       return '''
         final response = await Supabase.instance.client
               .from(${supabaseFrom?.toCode(0) ?? ''})
-              .insert($mapString)
+              .insert($mapString, returning: ReturningOption.minimal,)
               .execute();
         if (response.error != null) {
           ${status != null ? "setState(() { status = 'Failed'; });" : ''}
