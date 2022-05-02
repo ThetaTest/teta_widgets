@@ -231,6 +231,7 @@ class CS {
       ),
     ''';
   }
+
   ///shape for card
   static String shapeCardBorderRadius(
     final BuildContext context,
@@ -343,13 +344,7 @@ class CS {
         code.write(element.toCode(value, context, node));
       }
     }
-    return code.toString() == ''
-        ? isRequired
-            ? '$func { },'
-            : ''
-        : func == ''
-            ? code.toString()
-            : '''
+    return '''
     $func {
       ${code.toString()}
     },

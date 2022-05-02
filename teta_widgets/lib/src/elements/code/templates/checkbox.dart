@@ -15,10 +15,9 @@ String checkBoxCodeTemplate(
   final CNode? child,
   final int? loop,
 ) {
-  final flag = body.attributes[DBKeys.flag] as bool;
   return '''
     Checkbox(
-      value: $flag,
+      value: false,
       ${CS.action(context, node, ActionGesture.onChange, 'onChanged: (bool? value) async ', null, isRequired: false)}
     )
   ''';
