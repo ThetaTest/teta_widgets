@@ -250,8 +250,8 @@ class FActionElement extends Equatable {
         return [
           'State',
           'Navigation',
-          'Teta database',
-          'Teta auth',
+          if (kDebugMode) 'Teta database',
+          if (kDebugMode) 'Teta auth',
           if (config.supabaseEnabled ?? false) 'Supabase auth',
           if (config.supabaseEnabled ?? false) 'Supabase database',
           if (config.isRevenueCatEnabled) 'RevenueCat',

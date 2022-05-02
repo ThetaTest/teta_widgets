@@ -123,7 +123,7 @@ class ScaffoldBody extends NodeBody {
           key: DBKeys.action,
           value: attributes[DBKeys.action],
         ),
-        FlagControlObject(
+        /*FlagControlObject(
           title: 'Show AppBar',
           key: DBKeys.showAppBar,
           value: attributes[DBKeys.showAppBar],
@@ -143,7 +143,7 @@ class ScaffoldBody extends NodeBody {
           value: attributes[DBKeys.showDrawer],
           description:
               'It is a vertical panel that is typically displayed to the left of the body (and often hidden on phones) using the drawer property',
-        ),
+        ),*/
       ];
 
   @override
