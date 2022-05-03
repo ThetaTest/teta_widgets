@@ -80,7 +80,7 @@ class FATetaCMSOnAll {
       return '''
         final response = await Supabase.instance.client
               .from(${supabaseFrom?.toCode(0) ?? ''})
-              .insert($mapString, returning: ReturningOption.minimal,)
+              .insert($mapString)
               .execute();
         if (response.error != null) {
           ${status != null ? "setState(() { status = 'Failed'; });" : ''}

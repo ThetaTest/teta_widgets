@@ -33,7 +33,7 @@ final checkBoxIntrinsicStates = IntrinsicStates(
   displayName: NodeType.name(_globalType),
   type: _globalType,
   //todo: reset to input when fixed
-  category: NodeCategories.unclassified,
+  category: NodeCategories.input,
   maxChildren: 0,
   canHave: ChildrenEnum.none,
   addChildLabels: [],
