@@ -1398,7 +1398,6 @@ class FActionElement extends Equatable {
         break;
       case ActionType.stripe:
         switch (actionStripe) {
-          //todo: complete this
           case ActionStripe.buy:
             return FCondition.toCode(
                   context,
