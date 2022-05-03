@@ -9,8 +9,6 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:teta_core/src/repositories/node.dart';
 import 'package:teta_core/src/repositories/queries/color_style.dart';
 import 'package:teta_core/src/repositories/queries/page.dart';
-import 'package:teta_core/src/repositories/queries/project.dart';
-import 'package:teta_core/src/repositories/queries/user.dart';
 import 'package:teta_core/teta_core.dart';
 // Project imports:
 import 'package:teta_widgets/src/elements/controls/atoms/action.dart';
@@ -160,12 +158,6 @@ class ControlBuilder {
         key: key,
         value: value,
         old: old,
-      );
-      ProjectQueries.updateData(prj.id);
-      UserQueries.updateData(
-        (BlocProvider.of<AuthenticationBloc>(context).state as Authenticated)
-            .user
-            .email!,
       );
     } catch (e) {
       if (kDebugMode) {
