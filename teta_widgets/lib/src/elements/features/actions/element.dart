@@ -254,8 +254,10 @@ class FActionElement extends Equatable {
           if (kDebugMode) 'Teta auth',
           if (config.supabaseEnabled ?? false) 'Supabase auth',
           if (config.supabaseEnabled ?? false) 'Supabase database',
-          if (config.isRevenueCatEnabled) 'RevenueCat',
-          if (config.isStripeEnabled) 'Stripe',
+          if (kDebugMode)
+            if (config.isRevenueCatEnabled) 'RevenueCat',
+          if (kDebugMode)
+            if (config.isStripeEnabled) 'Stripe',
           if ((page.flatList ?? <CNode>[]).indexWhere(
                 (final element) => element.intrinsicState.type == NType.camera,
               ) !=
@@ -921,100 +923,101 @@ class FActionElement extends Equatable {
               withLoop: withLoop ?? false,
             );
             break;
-          case ActionSupabaseDB.onAll:
-            if (withCondition == true) {
-              if (condition?.get(params, states, dataset, true, loop) !=
-                  valueOfCondition?.get(params, states, dataset, true, loop)) {
-                break;
-              }
-            }
-            await FDelay.action(int.tryParse('${delay?.value}') ?? 0);
-            FLoop.action(
-              () => FASupabaseOnAll.action(
-                context,
-                supabaseFrom,
-                stateName,
-                params,
-                states,
-                dataset,
-                loop,
-              ),
-              everyMilliseconds,
-              context,
-              withLoop: withLoop ?? false,
-            );
-            break;
-          case ActionSupabaseDB.onInsert:
-            if (withCondition == true) {
-              if (condition?.get(params, states, dataset, true, loop) !=
-                  valueOfCondition?.get(params, states, dataset, true, loop)) {
-                break;
-              }
-            }
-            await FDelay.action(int.tryParse('${delay?.value}') ?? 0);
-            FLoop.action(
-              () => FASupabaseOnInsert.action(
-                context,
-                supabaseFrom,
-                stateName,
-                params,
-                states,
-                dataset,
-                loop,
-              ),
-              everyMilliseconds,
-              context,
-              withLoop: withLoop ?? false,
-            );
-            break;
-          case ActionSupabaseDB.onUpdate:
-            if (withCondition == true) {
-              if (condition?.get(params, states, dataset, true, loop) !=
-                  valueOfCondition?.get(params, states, dataset, true, loop)) {
-                break;
-              }
-            }
-            await FDelay.action(int.tryParse('${delay?.value}') ?? 0);
-            FLoop.action(
-              () => FASupabaseOnUpdate.action(
-                context,
-                supabaseFrom,
-                stateName,
-                params,
-                states,
-                dataset,
-                loop,
-              ),
-              everyMilliseconds,
-              context,
-              withLoop: withLoop ?? false,
-            );
-            break;
-          case ActionSupabaseDB.onDelete:
-            if (withCondition == true) {
-              if (condition?.get(params, states, dataset, true, loop) !=
-                  valueOfCondition?.get(params, states, dataset, true, loop)) {
-                break;
-              }
-            }
-            await FDelay.action(int.tryParse('${delay?.value}') ?? 0);
-            FLoop.action(
-              () => FASupabaseOnDelete.action(
-                context,
-                supabaseFrom,
-                stateName,
-                params,
-                states,
-                dataset,
-                loop,
-              ),
-              everyMilliseconds,
-              context,
-              withLoop: withLoop ?? false,
-            );
-            break;
-          case null:
-            break;
+          //todo: adjust this
+          // case ActionSupabaseDB.onAll:
+          //   if (withCondition == true) {
+          //     if (condition?.get(params, states, dataset, true, loop) !=
+          //         valueOfCondition?.get(params, states, dataset, true, loop)) {
+          //       break;
+          //     }
+          //   }
+          //   await FDelay.action(int.tryParse('${delay?.value}') ?? 0);
+          //   FLoop.action(
+          //     () => FASupabaseOnAll.action(
+          //       context,
+          //       supabaseFrom,
+          //       stateName,
+          //       params,
+          //       states,
+          //       dataset,
+          //       loop,
+          //     ),
+          //     everyMilliseconds,
+          //     context,
+          //     withLoop: withLoop ?? false,
+          //   );
+          //   break;
+          // case ActionSupabaseDB.onInsert:
+          //   if (withCondition == true) {
+          //     if (condition?.get(params, states, dataset, true, loop) !=
+          //         valueOfCondition?.get(params, states, dataset, true, loop)) {
+          //       break;
+          //     }
+          //   }
+          //   await FDelay.action(int.tryParse('${delay?.value}') ?? 0);
+          //   FLoop.action(
+          //     () => FASupabaseOnInsert.action(
+          //       context,
+          //       supabaseFrom,
+          //       stateName,
+          //       params,
+          //       states,
+          //       dataset,
+          //       loop,
+          //     ),
+          //     everyMilliseconds,
+          //     context,
+          //     withLoop: withLoop ?? false,
+          //   );
+          //   break;
+          // case ActionSupabaseDB.onUpdate:
+          //   if (withCondition == true) {
+          //     if (condition?.get(params, states, dataset, true, loop) !=
+          //         valueOfCondition?.get(params, states, dataset, true, loop)) {
+          //       break;
+          //     }
+          //   }
+          //   await FDelay.action(int.tryParse('${delay?.value}') ?? 0);
+          //   FLoop.action(
+          //     () => FASupabaseOnUpdate.action(
+          //       context,
+          //       supabaseFrom,
+          //       stateName,
+          //       params,
+          //       states,
+          //       dataset,
+          //       loop,
+          //     ),
+          //     everyMilliseconds,
+          //     context,
+          //     withLoop: withLoop ?? false,
+          //   );
+          //   break;
+          // case ActionSupabaseDB.onDelete:
+          //   if (withCondition == true) {
+          //     if (condition?.get(params, states, dataset, true, loop) !=
+          //         valueOfCondition?.get(params, states, dataset, true, loop)) {
+          //       break;
+          //     }
+          //   }
+          //   await FDelay.action(int.tryParse('${delay?.value}') ?? 0);
+          //   FLoop.action(
+          //     () => FASupabaseOnDelete.action(
+          //       context,
+          //       supabaseFrom,
+          //       stateName,
+          //       params,
+          //       states,
+          //       dataset,
+          //       loop,
+          //     ),
+          //     everyMilliseconds,
+          //     context,
+          //     withLoop: withLoop ?? false,
+          //   );
+          //   break;
+          // case null:
+          //   break;
         }
         break;
       case ActionType.camera:
@@ -1738,15 +1741,15 @@ class FActionElement extends Equatable {
                   ),
                   withLoop: withLoop ?? false,
                 );
-
-          case ActionSupabaseDB.onAll:
-            return '';
-          case ActionSupabaseDB.onInsert:
-            return '';
-          case ActionSupabaseDB.onUpdate:
-            return '';
-          case ActionSupabaseDB.onDelete:
-            return '';
+          //todo: adjust this
+          // case ActionSupabaseDB.onAll:
+          //   return '';
+          // case ActionSupabaseDB.onInsert:
+          //   return '';
+          // case ActionSupabaseDB.onUpdate:
+          //   return '';
+          // case ActionSupabaseDB.onDelete:
+          //   return '';
           case null:
             return '';
         }
