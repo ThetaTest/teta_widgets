@@ -2,6 +2,7 @@
 // ignore_for_file: public_member_api_docs, avoid_dynamic_calls
 
 // Flutter imports:
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:gap/gap.dart';
 import 'package:teta_core/src/repositories/project.dart';
@@ -214,24 +215,25 @@ class TextPrefabControl extends StatelessWidget {
             ],
           ),
         ),
-        const Gap(16),
-        TextDirectionControl(
-          node: node,
-          textDirection: textStyle.textDirection!,
-          callBack: (final dir, final old) {
-            final old = FTextStyle.fromJson(textStyle.toJson());
-            textStyle.textDirection = dir;
-            ControlBuilder.toDB(
-              prj,
-              page,
-              node,
-              context,
-              keyValue,
-              textStyle.toJson(),
-              old,
-            );
-          },
-        ),
+        if (kDebugMode) const Gap(16),
+        if (kDebugMode)
+          TextDirectionControl(
+            node: node,
+            textDirection: textStyle.textDirection!,
+            callBack: (final dir, final old) {
+              final old = FTextStyle.fromJson(textStyle.toJson());
+              textStyle.textDirection = dir;
+              ControlBuilder.toDB(
+                prj,
+                page,
+                node,
+                context,
+                keyValue,
+                textStyle.toJson(),
+                old,
+              );
+            },
+          ),
         const Gap(16),
         FillControl(
           title: 'Fill',
