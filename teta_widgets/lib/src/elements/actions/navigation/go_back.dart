@@ -9,7 +9,7 @@ class FActionNavigationGoBack {
   //? actual behaviour: now stops the play mode and pop the context (of the editor)
   //? wanted behaviour: go back on the precedent page (on the play mode app running)
   static Future action(final BuildContext context) async {
-    Navigator.of(context, rootNavigator: true).pop(null);
+    Navigator.pop(context);
   }
 
   static String toCode() {
