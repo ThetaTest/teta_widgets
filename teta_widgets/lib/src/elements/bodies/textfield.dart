@@ -48,7 +48,7 @@ final textFieldIntrinsicStates = IntrinsicStates(
   canHave: ChildrenEnum.none,
   addChildLabels: [],
   gestures: [ActionGesture.onChange, ActionGesture.onSubmitted],
-  permissions:[],
+  permissions: [],
 );
 
 /// Body for TextField widget
@@ -167,13 +167,13 @@ class TextFieldBody extends NodeBody {
           key: DBKeys.textStyle,
           value: attributes[DBKeys.textStyle],
         ),
-        SizeControlObject(
+        /*SizeControlObject(
           type: ControlType.size,
           key: DBKeys.width,
           title: 'Size',
           isWidth: true,
           value: attributes[DBKeys.width] as FSize,
-        ),
+        ),*/
         FillControlObject(
           title: 'Background',
           key: DBKeys.fill,
