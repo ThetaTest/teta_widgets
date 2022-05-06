@@ -108,6 +108,8 @@ import 'package:teta_widgets/src/elements/intrinsic_states/class.dart';
 import 'package:teta_widgets/src/elements/nodes/enum.dart';
 import 'package:teta_widgets/src/elements/nodes/node_body.dart';
 
+import 'google_ad_mob_banner_ad_body.dart';
+
 /// The list of the all instrict states
 final stateTypes = <IntrinsicStates>[
   alignIntrinsicStates,
@@ -145,6 +147,7 @@ final stateTypes = <IntrinsicStates>[
   spacerIntrinsicStates,
   stackIntrinsicStates,
   textIntrinsicStates,
+  googleAdMobBannerAdIntrinsicStates,
   textButtonIntrinsicStates,
   textFieldIntrinsicStates,
   videoIntrinsicStates,
@@ -316,6 +319,8 @@ NodeBody getBody(final NType type) {
       return StackBody();
     case NType.text:
       return TextBody();
+    case NType.adMobBannerAd:
+      return GoogleAdMobBannerAdBody();
     case NType.textButton:
       return TextButtonBody();
     case NType.textField:

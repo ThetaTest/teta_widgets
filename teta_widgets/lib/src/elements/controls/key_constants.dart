@@ -9,6 +9,7 @@ import 'package:teta_core/src/models/variable.dart';
 import 'package:teta_widgets/src/elements/features/font_weight.dart';
 import 'package:teta_widgets/src/elements/index.dart';
 
+
 class DBKeys {
   // DB param keys
   static const String id = 'id';
@@ -160,6 +161,10 @@ class DBKeys {
   static const String supabaseEqValue = 'spEqV';
 
   static const String cmsCollection = 'cmsColl';
+
+  static const String adMobAdAndroidUnitId = 'adMobAndroidUnitId';
+  static const String adMobAdIosUnitId = 'adMobIosUnitId';
+
 }
 
 class DynamicAttributes {
@@ -209,6 +214,10 @@ class DynamicAttributes {
           return value;
         case DBKeys.fontSize:
           return FFontSize().fromJson(value);
+        case DBKeys.adMobAdAndroidUnitId:
+          return FTextTypeInput.fromJson(value as Map<String, dynamic>);
+        case DBKeys.adMobAdIosUnitId:
+          return FTextTypeInput.fromJson(value as Map<String, dynamic>);
         case DBKeys.fontStyle:
           return FFontStyle().fromJson(value as String);
         case DBKeys.fontWeight:
@@ -436,6 +445,10 @@ class DynamicAttributes {
         return value;
       case DBKeys.fontSize:
         return value != null ? value.toJson() : FFontSize().toJson();
+      case DBKeys.adMobAdAndroidUnitId:
+        return value != null ? value.toJson() : FTextTypeInput().toJson();
+      case DBKeys.adMobAdIosUnitId:
+        return value != null ? value.toJson() : FTextTypeInput().toJson();
       case DBKeys.fontStyle:
         return value != null ? value.toJson() : FFontStyle().toJson();
       case DBKeys.fontWeight:
