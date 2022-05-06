@@ -129,6 +129,9 @@ enum NType {
   // TetaCMS
   cmsFetch,
   cmsStream,
+
+  //AdMob
+  adMobBannerAd
 }
 
 extension NodeType on NType {
