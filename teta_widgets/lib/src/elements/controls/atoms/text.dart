@@ -6,6 +6,7 @@ import 'package:collection/collection.dart';
 // Flutter imports:
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:gap/gap.dart';
 import 'package:teta_core/src/design_system/textfield/minitextfield.dart';
 import 'package:teta_core/src/design_system/textfield/textfield.dart';
 import 'package:teta_core/teta_core.dart';
@@ -42,6 +43,7 @@ class PaddingsState extends State<TextControl> {
   String databaseName = '';
   String databaseAttribute = '';
   FTextTypeEnum typeOfInput = FTextTypeEnum.text;
+  bool isChanged = false;
 
   @override
   void initState() {
@@ -116,22 +118,42 @@ class PaddingsState extends State<TextControl> {
               ],
             ),
             if (widget.value.type == FTextTypeEnum.text)
-              CTextField(
-                //text: text,
-                controller: controller,
-                bgColor: Palette.bgGrey,
-                callBack: (final value) {
-                  value.replaceAll(r'\', r'\\');
-                  final old = widget.value;
-                  widget.value.value = value;
-                  widget.callBack(widget.value, old);
-                },
-                onSubmitted: (final value) {
-                  value.replaceAll(r'\', r'\\');
-                  final old = widget.value;
-                  widget.value.value = value;
-                  widget.callBack(widget.value, old);
-                },
+              Column(
+                children: [
+                  CTextField(
+                    //text: text,
+                    controller: controller,
+                    bgColor: Palette.bgGrey,
+                    callBack: (final value) {
+                      setState(() {
+                        isChanged = true;
+                      });
+                    },
+                    onSubmitted: (final value) {
+                      value.replaceAll(r'\', r'\\');
+                      final old = widget.value;
+                      widget.value.value = value;
+                      widget.callBack(widget.value, old);
+                      setState(() {
+                        isChanged = false;
+                      });
+                    },
+                  ),
+                  const Gap(Grid.small),
+                  CButton(
+                    label: 'Confirm',
+                    isPrimary: isChanged,
+                    callback: () {
+                      final old = widget.value;
+                      widget.value.value =
+                          controller.text.replaceAll(r'\', r'\\');
+                      widget.callBack(widget.value, old);
+                      setState(() {
+                        isChanged = false;
+                      });
+                    },
+                  )
+                ],
               ),
             if (widget.value.type == FTextTypeEnum.param)
               Column(

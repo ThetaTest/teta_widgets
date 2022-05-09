@@ -55,7 +55,6 @@ class NameState extends State<NameControl> {
             ),
             CTextField(
               controller: controller,
-              hpadding: 0,
               callBack: (final text) {
                 setState(() {
                   isLoading = true;

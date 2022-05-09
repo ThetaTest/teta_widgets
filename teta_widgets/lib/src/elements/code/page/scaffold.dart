@@ -123,6 +123,7 @@ String pageCodeTemplate(
 
   final isSupabaseIntegrated = prj.config?.supabaseEnabled ?? false;
   final isStripeIntegrated = prj.config?.isStripeEnabled?? false;
+  final isAdMobIntegrated = prj.config?.isGoogleAdMobEnabled?? false;
 
   final backgroundColor =
       (node.body.attributes[DBKeys.fill] as FFill).getHexColor(context);
@@ -156,6 +157,10 @@ String pageCodeTemplate(
       ? "import 'package:flutter_stripe/flutter_stripe.dart';"
       : '';
 
+   final adMobImports = isAdMobIntegrated
+      ? "import 'package:google_mobile_ads/google_mobile_ads.dart'; \n import 'dart:io';"
+      : '';
+
   final isARState = isSupabaseIntegrated
       ? page.isAuthenticatedRequired
           ? 'AuthRequiredState<Page${pageNameRC.pascalCase}> with SingleTickerProviderStateMixin'
@@ -178,6 +183,7 @@ String pageCodeTemplate(
     $authSocialButtonsImport
     $iconImport
     $stripeImport
+    $adMobImports
     import 'package:intl/intl.dart' hide TextDirection;
     import 'package:collection/collection.dart';
     import 'package:myapp/src/pages/index.dart';

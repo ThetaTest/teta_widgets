@@ -223,23 +223,26 @@ class SrcImageControlState extends State<SrcImageControl> {
                     ),
                   if (widget.image.type == FTextTypeEnum.dataset &&
                       widget.image.datasetName != null)
-                    CDropdown(
-                      value: widget.page.datasets.indexWhere(
-                                (final element) =>
-                                    element.getName == widget.image.datasetName,
-                              ) !=
-                              -1
-                          ? widget.image.datasetAttr
-                          : null,
-                      items: list,
-                      onChange: (final newValue) {
-                        setState(() {
-                          databaseAttribute = newValue!;
-                        });
-                        final old = widget.image;
-                        widget.image.datasetAttr = newValue;
-                        widget.callBack(widget.image, old);
-                      },
+                    Padding(
+                      padding: EI.smT,
+                      child: CDropdown(
+                        value: widget.page.datasets.indexWhere(
+                                  (final element) =>
+                                      element.getName == widget.image.datasetName,
+                                ) !=
+                                -1
+                            ? widget.image.datasetAttr
+                            : null,
+                        items: list,
+                        onChange: (final newValue) {
+                          setState(() {
+                            databaseAttribute = newValue!;
+                          });
+                          final old = widget.image;
+                          widget.image.datasetAttr = newValue;
+                          widget.callBack(widget.image, old);
+                        },
+                      ),
                     ),
                   if (widget.image.type == FTextTypeEnum.asset)
                     BlocBuilder<SupabaseCubit, SupabaseClient?>(

@@ -25,8 +25,8 @@ dependencies:
       ref: main
 
   # DB & Services
-  supabase: ^0.2.14
-  supabase_flutter: ^0.2.12
+  supabase: ^0.3.3
+  supabase_flutter: ^0.3.0
   http:
   github: 
   socket_io_client: ^1.0.1
@@ -124,6 +124,7 @@ dependencies:
   universal_platform: ^1.0.0+1
   freezed_annotation: ^1.1.0
   gap: ^2.0.0
+  google_mobile_ads: ^1.2.0
 
   # Storage
   hive:

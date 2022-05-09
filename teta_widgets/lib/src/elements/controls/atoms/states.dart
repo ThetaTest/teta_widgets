@@ -349,7 +349,13 @@ class StatesControlState extends State<StatesControl> {
                             isDense: true,
                             isExpanded: true,
                             items: EnumToString.toList(
-                              VariableType.values,
+                              VariableType.values
+                                  .where(
+                                    (final element) =>
+                                        element !=
+                                        VariableType.cameraController,
+                                  )
+                                  .toList(),
                               camelCase: true,
                             ).map<DropdownMenuItem<String>>(
                                 (final String value) {
@@ -393,7 +399,6 @@ class StatesControlState extends State<StatesControl> {
                           controller: docValueController,
                           placeholder: 'Description',
                           text: variable.doc,
-                          color: Colors.white,
                           callBack: (final text) {
                             variable.doc = text;
                           },
