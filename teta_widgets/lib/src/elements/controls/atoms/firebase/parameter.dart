@@ -180,7 +180,9 @@ class ParameterState extends State<FirestoreParameterControl> {
               ),
             if (widget.value.type == FTextTypeEnum.dataset &&
                 widget.value.datasetName != null)
-              CDropdown(
+              Padding(
+                padding: EI.smT,
+                child:CDropdown(
                 value: widget.page.datasets
                         .firstWhere(
                           (final element) =>
@@ -213,7 +215,7 @@ class ParameterState extends State<FirestoreParameterControl> {
                   widget.value.datasetAttr = newValue;
                   widget.callBack(widget.value, old);
                 },
-              ),
+              ),),
           ],
         ),
       ),

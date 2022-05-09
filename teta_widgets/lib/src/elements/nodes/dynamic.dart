@@ -214,7 +214,6 @@ class NDynamic extends CNode {
 
   @override
   String toCode(final BuildContext context) => '''
-      ${description != '' && description != null ? '// $description' : ''}
       ${body.toCode(context, this, child, children, pageId!, null)}
       ''';
 
