@@ -8,6 +8,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:gap/gap.dart';
 import 'package:teta_core/src/design_system/textfield/minitextfield.dart';
+import 'package:teta_core/src/design_system/textfield/multi_line_textfield.dart';
 import 'package:teta_core/src/design_system/textfield/textfield.dart';
 import 'package:teta_core/teta_core.dart';
 // Project imports:
@@ -120,10 +121,9 @@ class PaddingsState extends State<TextControl> {
             if (widget.value.type == FTextTypeEnum.text)
               Column(
                 children: [
-                  CTextField(
+                  CMultiLinesTextField(
                     //text: text,
                     controller: controller,
-                    bgColor: Palette.bgGrey,
                     callBack: (final value) {
                       setState(() {
                         isChanged = true;
@@ -152,7 +152,7 @@ class PaddingsState extends State<TextControl> {
                         isChanged = false;
                       });
                     },
-                  )
+                  ),
                 ],
               ),
             if (widget.value.type == FTextTypeEnum.param)
