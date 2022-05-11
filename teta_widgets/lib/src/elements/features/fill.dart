@@ -114,7 +114,7 @@ class FFill {
     } else {
       PaletteModel? model;
       BlocProvider.of<PaletteBloc>(context).state.forEach((final element) {
-        if (element.name == paletteStyle) model = element;
+        if (element.id == paletteStyle) model = element;
       });
       fill = (model != null) ? model!.fill! : FFill().ready(FFillType.solid);
     }
