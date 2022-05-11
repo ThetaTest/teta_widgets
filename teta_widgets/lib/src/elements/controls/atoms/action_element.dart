@@ -136,13 +136,13 @@ class ActionElementControlState extends State<ActionElementControl> {
                 onTap: widget.callBackToDelete,
                 child: HoverWidget(
                   hoverChild: const Icon(
-                    Icons.delete,
+                    FeatherIcons.trash,
                     size: 24,
                     color: Colors.white,
                   ),
                   onHover: (final e) {},
                   child: const Icon(
-                    Icons.delete,
+                    FeatherIcons.trash,
                     size: 24,
                     color: Colors.white24,
                   ),

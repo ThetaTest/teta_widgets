@@ -19,78 +19,63 @@ class TetaBoxDecoration {
     final FBorder? borders,
     final FFill? borderFill,
   }) {
-    return fill.type == FFillType.none
-        ? BoxDecoration(
-            borderRadius: borderRadius?.get,
-            boxShadow: const [
-              //shadows.get(context),
-            ],
-            border: borders?.get(context, forPlay: true),
-          )
-        : fill.paletteStyle != null
-            ? BoxDecoration(
-                color: HexColor(fill.get(context).getHexColor(context)),
-                borderRadius: borderRadius?.get,
-                boxShadow: const [
-                  //shadows.get(context),
-                ],
-                border: borders?.get(context, forPlay: true),
-              )
-            : fill.type == FFillType.solid
-                ? BoxDecoration(
-                    color: HexColor(fill.levels!.first.color),
-                    borderRadius: borderRadius?.get,
-                    boxShadow: const [
-                      //shadows.get(context),
-                    ],
-                    border: borders?.get(context, forPlay: true),
-                  )
-                : fill.type == FFillType.linearGradient
-                    ? BoxDecoration(
-                        gradient: LinearGradient(
-                          colors: fill.levels!
-                              .map((final e) => HexColor(e.color))
-                              .toList(),
-                          begin: fill.begin!,
-                          end: fill.end!,
-                          stops: fill.levels!.map((final e) => e.stop).toList(),
-                        ),
-                        borderRadius: borderRadius?.get,
-                        boxShadow: const [
-                          //shadows.get(context),
-                        ],
-                        border: borders?.get(context, forPlay: true),
-                      )
-                    : fill.type == FFillType.radialGradient
-                        ? BoxDecoration(
-                            gradient: RadialGradient(
-                              colors: fill.levels!
-                                  .map((final e) => HexColor(e.color))
-                                  .toList(),
-                              center: fill.center!,
-                              radius: fill.radius!,
-                              stops: fill.levels!
-                                  .map((final e) => e.stop)
-                                  .toList(),
-                            ),
-                            borderRadius: borderRadius?.get,
-                            boxShadow: const [
-                              //shadows.get(context),
-                            ],
-                            border: borders?.get(context, forPlay: true),
-                          )
-                        : BoxDecoration(
-                            image: DecorationImage(
-                              image: NetworkImage(
-                                fill.levels!.first.color,
-                              ),
-                              fit: fill.boxFit!.get,
-                            ),
-                            boxShadow: const [
-                              //shadows.get(context),
-                            ],
-                            border: borders?.get(context, forPlay: true),
-                          );
+    if (fill.type == FFillType.solid) {
+      return BoxDecoration(
+        color: HexColor(fill.levels!.first.color),
+        borderRadius: borderRadius?.get,
+        boxShadow: const [
+          //shadows.get(context),
+        ],
+        border: borders?.get(context, forPlay: true),
+      );
+    } else if (fill.type == FFillType.linearGradient) {
+      return BoxDecoration(
+        gradient: LinearGradient(
+          colors: fill.levels!.map((final e) => HexColor(e.color)).toList(),
+          begin: fill.begin!,
+          end: fill.end!,
+          stops: fill.levels!.map((final e) => e.stop).toList(),
+        ),
+        borderRadius: borderRadius?.get,
+        boxShadow: const [
+          //shadows.get(context),
+        ],
+        border: borders?.get(context, forPlay: true),
+      );
+    } else if (fill.paletteStyle != null) {
+      return BoxDecoration(
+        color: HexColor(fill.get(context).getHexColor(context)),
+        borderRadius: borderRadius?.get,
+        boxShadow: const [
+          //shadows.get(context),
+        ],
+        border: borders?.get(context, forPlay: true),
+      );
+    } else if (fill.type == FFillType.radialGradient) {
+      return BoxDecoration(
+        gradient: RadialGradient(
+          colors: fill.levels!.map((final e) => HexColor(e.color)).toList(),
+          center: fill.center!,
+          radius: fill.radius!,
+          stops: fill.levels!.map((final e) => e.stop).toList(),
+        ),
+        borderRadius: borderRadius?.get,
+        boxShadow: const [
+          //shadows.get(context),
+        ],
+        border: borders?.get(context, forPlay: true),
+      );
+    } 
+    //fill.type -> none
+    else {
+      return BoxDecoration(
+        borderRadius: borderRadius?.get,
+        boxShadow: const [
+          //shadows.get(context),
+        ],
+        border: borders?.get(context, forPlay: true),
+      );
+    }
   }
 }
 

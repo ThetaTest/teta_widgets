@@ -3,6 +3,7 @@
 
 // Flutter imports:
 import 'package:flutter/material.dart';
+import 'package:flutter_feather_icons/flutter_feather_icons.dart';
 import 'package:teta_core/teta_core.dart';
 // Project imports:
 import 'package:teta_widgets/src/elements/controls/atoms/firebase/parameter.dart';
@@ -118,7 +119,7 @@ class FirestorePathControlState extends State<FirestorePathControl> {
                     ),
                     child: const Center(
                       child: Icon(
-                        Icons.delete,
+                        FeatherIcons.trash,
                         size: 24,
                         color: Colors.white,
                       ),

@@ -245,12 +245,12 @@ class PaddingsState extends State<PageParamsControl> {
                         message: 'This action cannot be undone',
                         child: HoverWidget(
                           hoverChild: const Icon(
-                            Icons.delete,
+                            FeatherIcons.trash,
                             size: 20,
                             color: Colors.red,
                           ),
                           child: const Icon(
-                            Icons.delete,
+                            FeatherIcons.trash,
                             size: 20,
                             color: Colors.white,
                           ),
