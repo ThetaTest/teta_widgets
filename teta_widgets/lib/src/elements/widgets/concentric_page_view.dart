@@ -62,7 +62,7 @@ class _WConcentricPageViewState extends State<WConcentricPageView> {
                 HexColor(widget.fill.getHexColor(context))
               ],
         itemCount: widget.children.length,
-        itemBuilder: (final int index, final double value) {
+        itemBuilder: (final int index) {
           return widget.children[index].toWidget(
             params: widget.params,
             states: widget.states,
