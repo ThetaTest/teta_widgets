@@ -268,11 +268,11 @@ class ColorControlState extends State<LinearFillControl> {
                       fill: widget.fill,
                       index: widget.fill.levels?.indexOf(e) ?? 0,
                       node: widget.node,
-                      callBackIndex: (final index) {
+                      callBackIndex: (final index, final controller) {
                         setState(() {
                           selectedElementIndex = index;
                         });
-                        _showPicker();
+                        _showPicker(controller);
                       },
                       callBack: (final fill, final old) {
                         widget.callBack(fill, false, old);
@@ -322,14 +322,17 @@ class ColorControlState extends State<LinearFillControl> {
     Navigator.of(context, rootNavigator: true).pop(null);
   }
 
-  void _showPicker() {
+  void _showPicker(final TextEditingController controller) {
     showDialog<void>(
       context: context,
       builder: (final context) {
         return ColorPickerDialog(
           context: context,
           color: tempColor!,
-          callback: _updateColor,
+          callback: (final color) {
+            controller.text = color.value.toRadixString(16).substring(2, 8);
+            _updateColor(color);
+          },
         );
       },
     );
@@ -482,7 +485,7 @@ class FillElement extends StatefulWidget {
   final FFillElement element;
   final int index;
   final CNode node;
-  final Function(int) callBackIndex;
+  final Function(int, TextEditingController) callBackIndex;
   final Function(FFill, FFill) callBack;
 
   @override
@@ -537,7 +540,7 @@ class FillElementState extends State<FillElement> {
                       padding: const EdgeInsets.only(right: 4),
                       child: GestureDetector(
                         onTap: () {
-                          widget.callBackIndex(widget.index);
+                          widget.callBackIndex(widget.index, editingController);
                         },
                         child: HoverWidget(
                           hoverChild: Container(

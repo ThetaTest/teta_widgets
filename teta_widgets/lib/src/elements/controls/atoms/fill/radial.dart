@@ -117,11 +117,11 @@ class ColorControlState extends State<RadialFillControl> {
                       fill: widget.fill,
                       index: widget.fill.levels!.indexOf(e),
                       node: widget.node,
-                      callBackIndex: (final index) {
+                      callBackIndex: (final index, final controller) {
                         setState(() {
                           selectedElementIndex = index;
                         });
-                        showPicker();
+                        _showPicker(controller);
                       },
                       callBack: (final fill, final old) {
                         widget.callBack(fill, false, old);
@@ -152,18 +152,18 @@ class ColorControlState extends State<RadialFillControl> {
     );
   }
 
-  Future updateState(final CNode node) async {
+  Future _updateState(final CNode node) async {
     await Future<void>.delayed(const Duration(milliseconds: 100));
     if (mounted) {
       setState(() {
         tempColor = widget.fill.levels!.first.color;
       });
     } else {
-      await updateState(node);
+      await _updateState(node);
     }
   }
 
-  void updateColor(final Color color) {
+  void _updateColor(final Color color) {
     final old = FFill().fromJson(widget.fill.toJson());
     setState(() {
       widget.fill.levels![selectedElementIndex].color =
@@ -174,21 +174,24 @@ class ColorControlState extends State<RadialFillControl> {
     widget.callBack(widget.fill, false, old);
   }
 
-  void updatedPosition(final Alignment align, final String name) {
+  void _updatedPosition(final Alignment align, final String name) {
     final old = FFill().fromJson(widget.fill.toJson());
     if (name == 'center') widget.fill.center = align;
     widget.callBack(widget.fill, false, old);
     Navigator.of(context, rootNavigator: true).pop(null);
   }
 
-  void showPicker() {
+  void _showPicker(final TextEditingController controller) {
     showDialog<void>(
       context: context,
       builder: (final context) {
         return ColorPickerDialog(
           context: context,
           color: tempColor!,
-          callback: updateColor,
+          callback: (final color) {
+            controller.text = color.value.toRadixString(16).substring(2, 8);
+            _updateColor(color);
+          },
         );
       },
     );
@@ -317,7 +320,7 @@ class ColorControlState extends State<RadialFillControl> {
   }) {
     return GestureDetector(
       onTap: () {
-        if (isPreview) updatedPosition(alignTarget, name);
+        if (isPreview) _updatedPosition(alignTarget, name);
       },
       child: Container(
         width: isPreview ? 8 : 32,
@@ -350,7 +353,7 @@ class FillElement extends StatefulWidget {
   final FFillElement element;
   final int index;
   final CNode node;
-  final Function(int) callBackIndex;
+  final Function(int, TextEditingController) callBackIndex;
   final Function(FFill, FFill) callBack;
 
   @override
@@ -395,7 +398,10 @@ class FillElementState extends State<FillElement> {
               padding: const EdgeInsets.only(right: 4),
               child: GestureDetector(
                 onTap: () {
-                  widget.callBackIndex(widget.index);
+                  widget.callBackIndex(
+                    widget.index,
+                    editingController,
+                  );
                 },
                 child: HoverWidget(
                   hoverChild: Container(
