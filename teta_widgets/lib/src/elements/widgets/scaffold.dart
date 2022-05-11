@@ -128,7 +128,7 @@ class _WScaffoldState extends State<WScaffold> {
                     )
                   : const SizedBox(),
             ),
-            drawer: drawerNode != null
+            drawer: drawerNode != null && widget.showDrawer
                 ? Drawer(
                     child: drawerNode.toWidget(
                       params: widget.params,
