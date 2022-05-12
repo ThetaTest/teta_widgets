@@ -42,8 +42,7 @@ final radioIntrinsicStates = IntrinsicStates(
   advicedChildrenCanHaveAtLeastAChild: [],
   displayName: NodeType.name(_globalType),
   type: _globalType,
-  //todo: adjust this and than in input
-  category: NodeCategories.unclassified,
+  category: NodeCategories.input,
   maxChildren: null,
   canHave: ChildrenEnum.none,
   addChildLabels: [],
