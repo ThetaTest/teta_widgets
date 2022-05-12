@@ -72,7 +72,7 @@ class FASupabaseOnUpdate {
       mapString.write('}');
       return '''
         final response = await Supabase.instance.client
-              .from(${supabaseFrom?.toCode(0) ?? ''})
+              .from('${supabaseFrom?.toCode(0) ?? ''}')
               .insert($mapString, returning: ReturningOption.minimal,)
               .execute();
         if (response.error != null) {

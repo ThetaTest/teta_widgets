@@ -101,7 +101,7 @@ class FASupabaseUpdate {
       mapString.write('}');
       return '''
         final response = await Supabase.instance.client
-              .from(${supabaseFrom?.toCode(0) ?? ''})
+              .from('${supabaseFrom?.toCode(0) ?? ''}')
               .update($mapString)
               .eq('${supabaseEq?.key}', '$eqValue')
               .execute();
