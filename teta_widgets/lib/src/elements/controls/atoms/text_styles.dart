@@ -91,7 +91,7 @@ class TextStylesControlState extends State<TextStylesControl> {
                       ),
                     ),
                   ),
-                GestureDetector(
+                BounceSmall(
                   onTap: () {
                     if (widget.textStyle.textStyleModel == null) {
                       /*newTextStylePicker(
@@ -194,7 +194,6 @@ class TextStylesControlState extends State<TextStylesControl> {
                     CMiniTextField(
                       controller: editingController,
                       placeholder: 'write here',
-                      color: Colors.white,
                       callBack: (final text) => setState(() {
                         searchedText = text;
                       }),

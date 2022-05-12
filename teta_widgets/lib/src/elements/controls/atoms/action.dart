@@ -67,7 +67,7 @@ class ActionControlState extends State<ActionControl> {
                 ),
                 Row(
                   children: [
-                    GestureDetector(
+                    BounceSmall(
                       onTap: () {
                         final old = widget.action;
                         widget.action.actions = [

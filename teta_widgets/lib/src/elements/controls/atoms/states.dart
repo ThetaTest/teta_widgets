@@ -41,7 +41,7 @@ class StatesControlState extends State<StatesControl> {
             const THeadline3(
               'States',
             ),
-            GestureDetector(
+            BounceSmall(
               onTap: () {
                 const pagePrefix = 'State';
                 var pageName = '';

@@ -42,7 +42,7 @@ class PaddingsState extends State<PageParamsControl> {
             const THeadline3(
               'Page Params',
             ),
-            GestureDetector(
+            BounceSmall(
               onTap: () {
                 //widget.page.params.remove(null);
                 //widget.page.params["Untitled ${widget.page.params.length}"] =

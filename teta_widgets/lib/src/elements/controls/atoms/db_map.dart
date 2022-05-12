@@ -69,7 +69,7 @@ class DBMapControlState extends State<DBMapControl> {
                   ),
                   Row(
                     children: [
-                      GestureDetector(
+                      BounceSmall(
                         onTap: () {
                           final old = widget.list;
                           widget.list.add(
