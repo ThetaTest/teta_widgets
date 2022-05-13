@@ -9,8 +9,6 @@ import 'package:teta_widgets/src/elements/code/templates/marker.dart';
 import 'package:teta_widgets/src/elements/controls/control_model.dart';
 import 'package:teta_widgets/src/elements/controls/key_constants.dart';
 import 'package:teta_widgets/src/elements/controls/type.dart';
-import 'package:teta_widgets/src/elements/features/fill.dart';
-import 'package:teta_widgets/src/elements/features/sizes.dart';
 import 'package:teta_widgets/src/elements/features/text_type_input.dart';
 import 'package:teta_widgets/src/elements/intrinsic_states/class.dart';
 import 'package:teta_widgets/src/elements/nodes/categories.dart';
@@ -25,7 +23,7 @@ const _globalType = NType.marker;
 /// Intrinsic States of Marker
 final markerIntrinsicStates = IntrinsicStates(
   nodeIcon: Assets.wIcons.marker,
-  nodeVideo: '7oIAs-0G4mw', //Check
+  nodeVideo: null,
   nodeDescription: null,
   advicedChildren: [
     NodeType.name(NType.container),
@@ -33,7 +31,7 @@ final markerIntrinsicStates = IntrinsicStates(
     NodeType.name(NType.icon),
   ],
   blockedTypes: [],
-  synonymous: ['marker', 'map', 'icon'],
+  synonymous: [NodeType.name(_globalType), 'map', 'icon'],
   advicedChildrenCanHaveAtLeastAChild: [],
   displayName: NodeType.name(_globalType),
   type: _globalType,
@@ -42,7 +40,7 @@ final markerIntrinsicStates = IntrinsicStates(
   canHave: ChildrenEnum.child,
   addChildLabels: [],
   gestures: [],
-  permissions:[],
+  permissions: [],
 );
 
 /// Body of Marker
@@ -50,9 +48,6 @@ class MarkerBody extends NodeBody {
   @override
   // ignore: overridden_fields
   Map<String, dynamic> attributes = <String, dynamic>{
-    DBKeys.icon: 'plus',
-    DBKeys.width: FSize(size: '24', unit: SizeUnit.pixel),
-    DBKeys.fill: FFill(),
     DBKeys.latitude: FTextTypeInput(value: '41.90'),
     DBKeys.longitude: FTextTypeInput(value: '12.49'),
   };
@@ -89,19 +84,13 @@ class MarkerBody extends NodeBody {
           '''
       ${node.nid}
       $loop
-            ${child ?? children}
-      ${attributes[DBKeys.icon]}
-      ${(attributes[DBKeys.width] as FSize).toJson()}
-      ${(attributes[DBKeys.fill] as FFill).toJson()}
+      ${child ?? children}
       ${(attributes[DBKeys.latitude] as FTextTypeInput).toJson()}
       ${(attributes[DBKeys.longitude] as FTextTypeInput).toJson()}
       ''',
         ),
         node: node,
         child: child,
-        width: attributes[DBKeys.width] as FSize,
-        icon: attributes[DBKeys.icon] as String? ?? 'plus',
-        fill: attributes[DBKeys.fill] as FFill,
         latitude: attributes[DBKeys.latitude] as FTextTypeInput,
         longitude: attributes[DBKeys.longitude] as FTextTypeInput,
         forPlay: forPlay,

@@ -12,10 +12,7 @@ class WMarker extends StatelessWidget {
   /// Returns a Icon widget in Teta
   const WMarker(
     final Key? key, {
-    required this.icon,
     required this.node,
-    required this.width,
-    required this.fill,
     required this.forPlay,
     required this.params,
     required this.states,
@@ -28,9 +25,6 @@ class WMarker extends StatelessWidget {
 
   final CNode node;
   final CNode? child;
-  final FSize? width;
-  final String icon;
-  final FFill fill;
   final bool forPlay;
   final int? loop;
   final FTextTypeInput latitude;
@@ -42,17 +36,15 @@ class WMarker extends StatelessWidget {
 
   @override
   Widget build(final BuildContext context) {
-    return GestureDetector(
-      child: ChildConditionBuilder(
-        ValueKey('${node.nid} $loop'),
-        name: node.intrinsicState.displayName,
-        child: child,
-        params: params,
-        states: states,
-        dataset: dataset,
-        forPlay: forPlay,
-        loop: loop,
-      ),
+    return ChildConditionBuilder(
+      ValueKey('${node.nid} $loop'),
+      name: node.intrinsicState.displayName,
+      child: child,
+      params: params,
+      states: states,
+      dataset: dataset,
+      forPlay: forPlay,
+      loop: loop,
     );
   }
 }

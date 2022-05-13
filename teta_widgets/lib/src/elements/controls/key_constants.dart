@@ -9,7 +9,6 @@ import 'package:teta_core/src/models/variable.dart';
 import 'package:teta_widgets/src/elements/features/font_weight.dart';
 import 'package:teta_widgets/src/elements/index.dart';
 
-
 class DBKeys {
   // DB param keys
   static const String id = 'id';
@@ -164,7 +163,6 @@ class DBKeys {
 
   static const String adMobAdAndroidUnitId = 'adMobAndroidUnitId';
   static const String adMobAdIosUnitId = 'adMobIosUnitId';
-
 }
 
 class DynamicAttributes {
@@ -606,9 +604,9 @@ class DynamicAttributes {
       case DBKeys.childAspectRatio:
         return value != null ? value.toJson() : FTextTypeInput().toJson();
       case DBKeys.latitude:
-        return FTextTypeInput.fromJson(value as Map<String, dynamic>);
+        return value != null ? value.toJson() : FTextTypeInput().toJson();
       case DBKeys.longitude:
-        return FTextTypeInput.fromJson(value as Map<String, dynamic>);
+        return value != null ? value.toJson() : FTextTypeInput().toJson();
       case DBKeys.labelText:
         return value != null ? value.toJson() : FTextTypeInput().toJson();
       case DBKeys.visibility:
