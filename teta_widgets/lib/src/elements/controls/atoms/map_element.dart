@@ -32,10 +32,11 @@ class MapElementControl extends StatefulWidget {
 class MapElementControlState extends State<MapElementControl> {
   int? nodeId;
   bool? isUpdated;
-  TextEditingController controller = TextEditingController();
+  late TextEditingController controller;
 
   @override
   void initState() {
+    controller = TextEditingController();
     nodeId = widget.node.nid;
     controller.text = widget.value.key;
     super.initState();

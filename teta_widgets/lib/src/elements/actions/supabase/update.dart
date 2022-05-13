@@ -96,7 +96,7 @@ class FASupabaseUpdate {
       }
       final mapString = StringBuffer()..write('{');
       for (final key in map.keys) {
-        mapString.write("'''$key''': ${map[key]},");
+        mapString.write("'''$key''': '${map[key]}',");
       }
       mapString.write('}');
       return '''

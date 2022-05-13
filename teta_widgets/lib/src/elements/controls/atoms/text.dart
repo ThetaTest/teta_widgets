@@ -39,8 +39,8 @@ class PaddingsState extends State<TextControl> {
   int? nodeId;
   bool? isUpdated;
   String? text;
-  TextEditingController controller = TextEditingController();
-  TextEditingController keyController = TextEditingController();
+  late TextEditingController controller;
+  late TextEditingController keyController;
   String databaseName = '';
   String databaseAttribute = '';
   FTextTypeEnum typeOfInput = FTextTypeEnum.text;
@@ -48,6 +48,8 @@ class PaddingsState extends State<TextControl> {
 
   @override
   void initState() {
+    controller = TextEditingController();
+    keyController = TextEditingController();
     nodeId = widget.node.nid;
     try {
       text = widget.value.value ?? '';
@@ -75,7 +77,7 @@ class PaddingsState extends State<TextControl> {
           if (state.first.nid != nodeId) {
             if (mounted) {
               nodeId = state.first.nid;
-              controller.text = controller.text = widget.value.value ?? '';
+              controller.text = widget.value.value ?? '';
             }
           }
         }

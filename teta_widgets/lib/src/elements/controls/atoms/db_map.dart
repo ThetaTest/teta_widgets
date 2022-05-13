@@ -33,10 +33,11 @@ class DBMapControl extends StatefulWidget {
 class DBMapControlState extends State<DBMapControl> {
   int? nodeId;
   bool? isUpdated;
-  TextEditingController controller = TextEditingController();
+  late TextEditingController controller;
 
   @override
   void initState() {
+    controller = TextEditingController();
     nodeId = widget.node.nid;
     super.initState();
   }
