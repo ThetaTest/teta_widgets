@@ -45,14 +45,14 @@ class _WRadioState extends State<WRadio> {
       node: widget.node,
       forPlay: widget.forPlay,
       child: Radio<String>(
-        value: widget.groupValue.get(
+        groupValue: widget.groupValue.get(
           widget.params,
           widget.states,
           widget.dataset,
           widget.forPlay,
           widget.loop,
         ),
-        groupValue: widget.value.get(
+        value: widget.value.get(
           widget.params,
           widget.states,
           widget.dataset,
