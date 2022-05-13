@@ -160,6 +160,10 @@ class DBKeys {
   static const String supabaseEqValue = 'spEqV';
 
   static const String cmsCollection = 'cmsColl';
+  static const String cmsLimit = 'cmsLmt';
+  static const String cmsPage = 'cmsPage';
+  static const String cmsLikeKey = 'cmsKey';
+  static const String cmsLikeValue = 'cmsValue';
 
   static const String adMobAdAndroidUnitId = 'adMobAndroidUnitId';
   static const String adMobAdIosUnitId = 'adMobIosUnitId';
@@ -331,6 +335,14 @@ class DynamicAttributes {
         case DBKeys.showDrawer:
           return value;
         case DBKeys.cmsCollection:
+          return FTextTypeInput.fromJson(value as Map<String, dynamic>);
+        case DBKeys.cmsPage:
+          return FTextTypeInput.fromJson(value as Map<String, dynamic>);
+        case DBKeys.cmsLimit:
+          return FTextTypeInput.fromJson(value as Map<String, dynamic>);
+        case DBKeys.cmsLikeKey:
+          return FTextTypeInput.fromJson(value as Map<String, dynamic>);
+        case DBKeys.cmsLikeValue:
           return FTextTypeInput.fromJson(value as Map<String, dynamic>);
         case DBKeys.supabaseFrom:
           return FTextTypeInput.fromJson(value as Map<String, dynamic>);
@@ -554,6 +566,14 @@ class DynamicAttributes {
                 .toList()
             : null;
       case DBKeys.cmsCollection:
+        return value != null ? value.toJson() : FTextTypeInput().toJson();
+      case DBKeys.cmsPage:
+        return value != null ? value.toJson() : FTextTypeInput().toJson();
+      case DBKeys.cmsLimit:
+        return value != null ? value.toJson() : FTextTypeInput().toJson();
+      case DBKeys.cmsLikeKey:
+        return value != null ? value.toJson() : FTextTypeInput().toJson();
+      case DBKeys.cmsLikeValue:
         return value != null ? value.toJson() : FTextTypeInput().toJson();
       case DBKeys.supabaseFrom:
         return value != null ? value.toJson() : FTextTypeInput().toJson();

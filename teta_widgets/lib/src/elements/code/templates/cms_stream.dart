@@ -19,6 +19,23 @@ String cmsStreamCodeTemplate(
   if (!collectionId.contains("'")) {
     collectionId = "'$collectionId'";
   }
+  final limit =
+      (node.body.attributes[DBKeys.cmsLimit] as FTextTypeInput).toCode(loop);
+  final page =
+      (node.body.attributes[DBKeys.cmsPage] as FTextTypeInput).toCode(loop);
+  var keyName =
+      (node.body.attributes[DBKeys.cmsLikeKey] as FTextTypeInput).toCode(loop);
+  if (!keyName.contains("'") && keyName.isNotEmpty) {
+    keyName = "'$keyName'";
+  }
+  var keyValue = (node.body.attributes[DBKeys.cmsLikeValue] as FTextTypeInput)
+      .toCode(loop);
+  if (!keyValue.contains("'") && keyValue.isNotEmpty) {
+    keyValue = "'$keyValue'";
+  }
+  final filter = keyName.isNotEmpty && keyValue.isNotEmpty
+      ? 'Filter($keyName, $keyValue)'
+      : '';
 
   var child = 'const SizedBox()';
   if (children.isNotEmpty) {
@@ -36,7 +53,14 @@ String cmsStreamCodeTemplate(
 
   return '''
   StreamBuilder(
-    stream: TetaCMS.instance.client.streamCollection($collectionId),
+    stream: TetaCMS.instance.client.streamCollection(
+      '$collectionId',
+      filters: [
+        $filter
+      ], 
+      ${limit.isNotEmpty ? 'limit: $limit,' : ''}
+      ${page.isNotEmpty ? 'page: $page,' : ''}
+    ),
     builder: (context, snapshot) {
       if (!snapshot.hasData) {
         return $loader;

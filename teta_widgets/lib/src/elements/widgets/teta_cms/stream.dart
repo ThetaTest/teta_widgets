@@ -19,6 +19,10 @@ class WCmsStream extends StatefulWidget {
     final Key? key, {
     required this.node,
     required this.collection,
+    required this.limit,
+    required this.page,
+    required this.keyName,
+    required this.keyValue,
     required this.forPlay,
     required this.params,
     required this.states,
@@ -32,6 +36,10 @@ class WCmsStream extends StatefulWidget {
 
   /// The from's value
   final FTextTypeInput collection;
+  final FTextTypeInput limit;
+  final FTextTypeInput page;
+  final FTextTypeInput keyValue;
+  final FTextTypeInput keyName;
 
   /// The opzional child of this widget
   final List<CNode> children;
@@ -80,7 +88,48 @@ class _WCmsStreamState extends State<WCmsStream> {
       widget.forPlay,
       widget.loop,
     );
-    _stream = TetaCMS.instance.realtime.streamCollection(collectionId);
+    final limit = widget.limit.get(
+      widget.params,
+      widget.states,
+      widget.dataset,
+      widget.forPlay,
+      widget.loop,
+    );
+    final page = widget.page.get(
+      widget.params,
+      widget.states,
+      widget.dataset,
+      widget.forPlay,
+      widget.loop,
+    );
+    final keyName = widget.keyName.get(
+      widget.params,
+      widget.states,
+      widget.dataset,
+      widget.forPlay,
+      widget.loop,
+    );
+    final keyValue = widget.keyValue.get(
+      widget.params,
+      widget.states,
+      widget.dataset,
+      widget.forPlay,
+      widget.loop,
+    );
+    Logger.printWarning(
+      '$collectionId, keyName: $keyName, keyValue: $keyValue, limit: $limit, page: $page ',
+    );
+    setState(() {
+      _stream = TetaCMS.instance.realtime.streamCollection(
+        collectionId,
+        filters: [
+          if (keyName.isNotEmpty && keyValue.isNotEmpty)
+            Filter(keyName, keyValue),
+        ],
+        limit: int.tryParse(limit) ?? 20,
+        page: int.tryParse(page) ?? 0,
+      );
+    });
   }
 
   @override

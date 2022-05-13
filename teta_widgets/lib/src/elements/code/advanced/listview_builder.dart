@@ -34,15 +34,15 @@ String listViewBuilderCodeTemplate(
           : '';
   final shrinkWrap = body.attributes[DBKeys.flag] as bool? ?? false;
   final childString = child != null ? child.toCode(context) : '';
-  // final dataset =
-  //     (body.attributes[DBKeys.datasetInput] as FDataset).datasetName;
+  final dataset =
+      (body.attributes[DBKeys.datasetInput] as FDataset).datasetName;
   return '''
     Builder(
       builder: (context) {
         return ListView.builder(
           $_scrollDirection
           shrinkWrap: $shrinkWrap,
-          itemCount: this.datasets.length > 0 ? this.datasets.length : 0,
+          itemCount: this.datasets['$dataset'].length > 0 ? this.datasets['$dataset'].length : 0,
           itemBuilder: (context, index) {
             return $childString;
           },

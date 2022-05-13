@@ -13,6 +13,7 @@ import 'package:teta_widgets/src/elements/controls/key_constants.dart';
 import 'package:teta_widgets/src/elements/features/fill.dart';
 import 'package:teta_widgets/src/elements/nodes/enum.dart';
 import 'package:teta_widgets/src/elements/nodes/node.dart';
+
 //todo: fix conflict between dart:core and package:map for Map class
 /// Generates the code for a page
 String pageCodeTemplate(
@@ -122,8 +123,8 @@ String pageCodeTemplate(
   }
 
   final isSupabaseIntegrated = prj.config?.supabaseEnabled ?? false;
-  final isStripeIntegrated = prj.config?.isStripeEnabled?? false;
-  final isAdMobIntegrated = prj.config?.isGoogleAdMobEnabled?? false;
+  final isStripeIntegrated = prj.config?.isStripeEnabled ?? false;
+  final isAdMobIntegrated = prj.config?.isGoogleAdMobEnabled ?? false;
 
   final backgroundColor =
       (node.body.attributes[DBKeys.fill] as FFill).getHexColor(context);
@@ -153,11 +154,11 @@ String pageCodeTemplate(
       ? "import 'package:lottie/lottie.dart';"
       : '';
 
-   final stripeImport = isStripeIntegrated
+  final stripeImport = isStripeIntegrated
       ? "import 'package:flutter_stripe/flutter_stripe.dart';"
       : '';
 
-   final adMobImports = isAdMobIntegrated
+  final adMobImports = isAdMobIntegrated
       ? "import 'package:google_mobile_ads/google_mobile_ads.dart'; \n import 'dart:io';"
       : '';
 
@@ -193,6 +194,7 @@ String pageCodeTemplate(
     import 'package:latlng/latlng.dart';
     import 'package:paged_vertical_calendar/paged_vertical_calendar.dart';
     import 'package:http/http.dart' as http;
+    import 'package:teta_cms/teta_cms.dart';
     $lottieImport
     $componentImport
     $badgeImport
@@ -208,7 +210,7 @@ String pageCodeTemplate(
 
     class _State${pageNameRC.pascalCase} extends $isARState {
       ${statesString.toString()}
-      var datasets = <Map<String, dynamic>>[];
+      var datasets = <String, dynamic>{};
 
       @override
       void initState() { 

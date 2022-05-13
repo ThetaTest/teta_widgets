@@ -139,6 +139,7 @@ String pageComponentCodeTemplate(
     import 'package:map/map.dart';
     import 'package:latlng/latlng.dart';
     import 'package:paged_vertical_calendar/paged_vertical_calendar.dart';
+    import 'package:teta_cms/teta_cms.dart';
     $componentImport
     $badgeImport
 

@@ -60,16 +60,48 @@ class CmsStreamBody extends NodeBody {
   // ignore: overridden_fields
   Map<String, dynamic> attributes = <String, dynamic>{
     DBKeys.cmsCollection: FTextTypeInput(),
+    DBKeys.cmsLimit: FTextTypeInput(),
+    DBKeys.cmsPage: FTextTypeInput(),
+    DBKeys.cmsLikeKey: FTextTypeInput(),
+    DBKeys.cmsLikeValue: FTextTypeInput(),
   };
 
   @override
   List<ControlModel> get controls => [
         ControlObject(
           title: 'Collection',
-          type: ControlType.value,
+          type: ControlType.cmsCollections,
           key: DBKeys.cmsCollection,
           value: attributes[DBKeys.cmsCollection],
-          description: 'Fetch all documents of a specific collection',
+          description: 'Fetch all documents of a specific collection by name',
+        ),
+        ControlObject(
+          title: 'Limit',
+          type: ControlType.value,
+          key: DBKeys.cmsLimit,
+          value: attributes[DBKeys.cmsLimit],
+          description: 'Limit the number of docs per page',
+        ),
+        ControlObject(
+          title: 'Page',
+          type: ControlType.value,
+          key: DBKeys.cmsPage,
+          value: attributes[DBKeys.cmsPage],
+          description: 'Index of page',
+        ),
+        ControlObject(
+          title: 'Like: key',
+          type: ControlType.value,
+          key: DBKeys.cmsLikeKey,
+          value: attributes[DBKeys.cmsLikeKey],
+          description: 'Like op: the key name used to filter',
+        ),
+        ControlObject(
+          title: 'Like: value',
+          type: ControlType.value,
+          key: DBKeys.cmsLikeValue,
+          value: attributes[DBKeys.cmsLikeValue],
+          description: 'Like op: the value to search in db',
         ),
       ];
 
@@ -91,11 +123,19 @@ class CmsStreamBody extends NodeBody {
         $loop
         ${child ?? children}
         ${(attributes[DBKeys.cmsCollection] as FTextTypeInput).get(params, states, dataset, forPlay, loop)}
+        ${(attributes[DBKeys.cmsLimit] as FTextTypeInput).get(params, states, dataset, forPlay, loop)}
+        ${(attributes[DBKeys.cmsPage] as FTextTypeInput).get(params, states, dataset, forPlay, loop)}
+        ${(attributes[DBKeys.cmsLikeKey] as FTextTypeInput).get(params, states, dataset, forPlay, loop)}
+        ${(attributes[DBKeys.cmsLikeValue] as FTextTypeInput).get(params, states, dataset, forPlay, loop)}
       ''',
       ),
       node: node,
       children: children ?? [],
       collection: attributes[DBKeys.cmsCollection] as FTextTypeInput,
+      limit: attributes[DBKeys.cmsLimit] as FTextTypeInput,
+      page: attributes[DBKeys.cmsPage] as FTextTypeInput,
+      keyName: attributes[DBKeys.cmsLikeKey] as FTextTypeInput,
+      keyValue: attributes[DBKeys.cmsLikeValue] as FTextTypeInput,
       forPlay: forPlay,
       params: params,
       states: states,

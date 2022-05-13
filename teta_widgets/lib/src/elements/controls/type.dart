@@ -18,6 +18,7 @@ import 'package:teta_widgets/src/elements/controls/atoms/border_radius.dart';
 import 'package:teta_widgets/src/elements/controls/atoms/borders.dart';
 import 'package:teta_widgets/src/elements/controls/atoms/box_fit.dart';
 import 'package:teta_widgets/src/elements/controls/atoms/camera_controller.dart';
+import 'package:teta_widgets/src/elements/controls/atoms/cms_collections.dart';
 import 'package:teta_widgets/src/elements/controls/atoms/cross_axis_alignment.dart';
 import 'package:teta_widgets/src/elements/controls/atoms/dataset.dart';
 import 'package:teta_widgets/src/elements/controls/atoms/fill.dart';
@@ -137,6 +138,8 @@ enum ControlType {
   webViewController,
   audioController,
   mapController,
+
+  cmsCollections,
 }
 
 /// Set of funcs to generate the focused widget' controls.
@@ -243,6 +246,31 @@ class ControlBuilder {
     required final BuildContext context,
     required final ControlObject control,
   }) {
+    if (control.type == ControlType.cmsCollections) {
+      return descriptionControlWidget(
+        description: control.description,
+        control: CMSCollectionControl(
+          key: ValueKey(
+            '${node.nid} ${(control.value as FTextTypeInput).value}',
+          ),
+          node: node,
+          collectionId: (control.value as FTextTypeInput).value ?? '',
+          callBack: (final value, final old) {
+            Logger.printWarning('value: $value, old: $old');
+            ControlBuilder.toDB(
+              prj,
+              page,
+              node,
+              context,
+              control.key,
+              FTextTypeInput(value: value).toJson(),
+              FTextTypeInput(value: old).toJson(),
+            );
+            BlocProvider.of<RefreshCubit>(context).change();
+          },
+        ),
+      );
+    }
     if (control.type == ControlType.audioController) {
       return descriptionControlWidget(
         description: control.description,

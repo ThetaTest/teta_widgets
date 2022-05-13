@@ -19,6 +19,10 @@ class WCmsFetch extends StatefulWidget {
     final Key? key, {
     required this.node,
     required this.collection,
+    required this.limit,
+    required this.page,
+    required this.keyName,
+    required this.keyValue,
     required this.forPlay,
     required this.params,
     required this.states,
@@ -32,6 +36,10 @@ class WCmsFetch extends StatefulWidget {
 
   /// The from's value
   final FTextTypeInput collection;
+  final FTextTypeInput limit;
+  final FTextTypeInput page;
+  final FTextTypeInput keyValue;
+  final FTextTypeInput keyName;
 
   /// The opzional child of this widget
   final List<CNode> children;
@@ -80,7 +88,48 @@ class _WCmsFetchState extends State<WCmsFetch> {
       widget.forPlay,
       widget.loop,
     );
-    _future = TetaCMS.instance.client.getCollection(collectionId);
+    final limit = widget.limit.get(
+      widget.params,
+      widget.states,
+      widget.dataset,
+      widget.forPlay,
+      widget.loop,
+    );
+    final page = widget.page.get(
+      widget.params,
+      widget.states,
+      widget.dataset,
+      widget.forPlay,
+      widget.loop,
+    );
+    final keyName = widget.keyName.get(
+      widget.params,
+      widget.states,
+      widget.dataset,
+      widget.forPlay,
+      widget.loop,
+    );
+    final keyValue = widget.keyValue.get(
+      widget.params,
+      widget.states,
+      widget.dataset,
+      widget.forPlay,
+      widget.loop,
+    );
+    Logger.printWarning(
+      '$collectionId, keyName: $keyName, keyValue: $keyValue',
+    );
+    setState(() {
+      _future = TetaCMS.instance.client.getCollection(
+        collectionId,
+        filters: [
+          if (keyName.isNotEmpty && keyValue.isNotEmpty)
+            Filter(keyName, keyValue),
+        ],
+        limit: int.tryParse(limit) ?? 20,
+        page: int.tryParse(page) ?? 0,
+      );
+    });
   }
 
   @override
@@ -106,7 +155,9 @@ class _WCmsFetchState extends State<WCmsFetch> {
           if (snapshot.error != null) {
             // TODO: Returns a error widget
           }
+
           final list = snapshot.data as List<dynamic>?;
+          Logger.printWarning('list: $list');
           _map = _map.copyWith(
             name: widget.node.name ?? widget.node.intrinsicState.displayName,
             map: (list ?? const <dynamic>[])
