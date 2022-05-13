@@ -55,6 +55,7 @@ dependencies:
   multi_split_view: ^1.11.0
   focus_detector: ^2.0.1
   sa3_liquid: ^1.0.1
+  flutter_staggered_animations: ^1.0.0
 
   # Share & send
   mailto: ^2.0.0

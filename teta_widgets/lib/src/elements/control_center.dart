@@ -3,6 +3,11 @@ import 'package:teta_widgets/src/elements/bodies/align.dart';
 import 'package:teta_widgets/src/elements/bodies/animated_align.dart';
 import 'package:teta_widgets/src/elements/bodies/animated_container.dart';
 import 'package:teta_widgets/src/elements/bodies/animated_opacity.dart';
+import 'package:teta_widgets/src/elements/bodies/animations/anim_config_grid.dart';
+import 'package:teta_widgets/src/elements/bodies/animations/anim_config_list.dart';
+import 'package:teta_widgets/src/elements/bodies/animations/fade_in.dart';
+import 'package:teta_widgets/src/elements/bodies/animations/scale.dart';
+import 'package:teta_widgets/src/elements/bodies/animations/slide.dart';
 import 'package:teta_widgets/src/elements/bodies/aspect_ratio.dart';
 import 'package:teta_widgets/src/elements/bodies/audio_player.dart';
 import 'package:teta_widgets/src/elements/bodies/badge.dart';
@@ -104,11 +109,10 @@ import 'package:teta_widgets/src/elements/bodies/visibility.dart';
 import 'package:teta_widgets/src/elements/bodies/webview.dart';
 import 'package:teta_widgets/src/elements/bodies/wordpress/example.dart';
 import 'package:teta_widgets/src/elements/bodies/wrap.dart';
+import 'package:teta_widgets/src/elements/google_ad_mob_banner_ad_body.dart';
 import 'package:teta_widgets/src/elements/intrinsic_states/class.dart';
 import 'package:teta_widgets/src/elements/nodes/enum.dart';
 import 'package:teta_widgets/src/elements/nodes/node_body.dart';
-
-import 'google_ad_mob_banner_ad_body.dart';
 
 /// The list of the all instrict states
 final stateTypes = <IntrinsicStates>[
@@ -218,6 +222,11 @@ final stateTypes = <IntrinsicStates>[
   transformPerspectiveIntrinsicStates,
   cmsFetchIntrinsicStates,
   cmsStreamIntrinsicStates,
+  animationConfigListIntrinsicStates,
+  animationConfigGridIntrinsicStates,
+  fadeInAnimationIntrinsicStates,
+  scaleAnimationIntrinsicStates,
+  slideAnimationIntrinsicStates,
 ];
 
 /// Method to return any body
@@ -435,6 +444,16 @@ NodeBody getBody(final NType type) {
       return CmsFetchBody();
     case NType.cmsStream:
       return CmsStreamBody();
+    case NType.animationConfigList:
+      return AnimationConfigListBody();
+    case NType.animationConfigGrid:
+      return AnimationConfigGridBody();
+    case NType.fadeInAnimation:
+      return FadeInAnimationBody();
+    case NType.scaleAnimation:
+      return ScaleAnimationBody();
+    case NType.slideAnimation:
+      return SlideAnimationBody();
     case NType.listViewSeparated:
       break;
     case NType.nil:

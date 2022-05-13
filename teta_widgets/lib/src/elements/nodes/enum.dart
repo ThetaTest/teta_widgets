@@ -120,7 +120,7 @@ enum NType {
   //Stripe
   stripeProductsList,
 
-  //RevenueCat
+  // RevenueCat
   revenueCatProductsList,
 
   // HTTP Requests
@@ -130,8 +130,16 @@ enum NType {
   cmsFetch,
   cmsStream,
 
-  //AdMob
-  adMobBannerAd
+  // AdMob
+  adMobBannerAd,
+
+  // Animations
+  animationConfigList,
+  animationConfigGrid,
+  animationConfigStaticList,
+  fadeInAnimation,
+  slideAnimation,
+  scaleAnimation,
 }
 
 extension NodeType on NType {
