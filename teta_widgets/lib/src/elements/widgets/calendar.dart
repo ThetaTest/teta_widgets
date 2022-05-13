@@ -82,7 +82,7 @@ class _WCalendarState extends State<WCalendar> {
   @override
   Widget build(final BuildContext context) {
     return PagedVerticalCalendar(
-      startDate: DateTime.now(),
+      minDate: DateTime.now(),
       addAutomaticKeepAlives: true,
       dayBuilder: (final context, final date) {
         var eventExists = false;
