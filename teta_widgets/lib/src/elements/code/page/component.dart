@@ -143,7 +143,7 @@ String pageComponentCodeTemplate(
     $componentImport
     $badgeImport
 
-    class ${pageNameRC.pascalCase} extends StatelessWidget {
+    class ${pageNameRC.pascalCase} extends StatefulWidget {
       const ${pageNameRC.pascalCase}({Key? key, ${parametersString.toString()}}) : super(key: key);
 
       ${paramsString.toString()}

@@ -53,8 +53,8 @@ String cmsStreamCodeTemplate(
 
   return '''
   StreamBuilder(
-    stream: TetaCMS.instance.client.streamCollection(
-      '$collectionId',
+    stream: TetaCMS.instance.realtime.streamCollection(
+      $collectionId,
       filters: [
         $filter
       ], 

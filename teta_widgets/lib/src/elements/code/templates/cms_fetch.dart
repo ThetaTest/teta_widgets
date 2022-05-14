@@ -51,7 +51,7 @@ String cmsFetchCodeTemplate(
   return '''
   FutureBuilder(
     future: TetaCMS.instance.client.getCollection(
-      '$collectionId',
+      $collectionId,
       filters: [
         $filter
       ], 
