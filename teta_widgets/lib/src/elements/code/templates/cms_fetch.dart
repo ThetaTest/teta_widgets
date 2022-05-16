@@ -13,9 +13,12 @@ String cmsFetchCodeTemplate(
   final List<CNode> children,
   final int? loop,
 ) {
-  final collectionId =
+  var collectionId =
       (node.body.attributes[DBKeys.cmsCollection] as FTextTypeInput)
           .toCode(loop);
+  if (!collectionId.contains("'")) {
+    collectionId = "'$collectionId'";
+  }
   final limit =
       (node.body.attributes[DBKeys.cmsLimit] as FTextTypeInput).toCode(loop);
   final page =
