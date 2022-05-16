@@ -19,8 +19,6 @@ class FATetaCMSLoginGoogle {
     final CNode node,
     final String? nameOfPage,
     final BuildContext context,
-    final String? collectionId,
-    final Map<String, dynamic> map,
     final Map<String, dynamic>? paramsToSend,
     final List<VariableObject> params,
     final List<VariableObject> states,
