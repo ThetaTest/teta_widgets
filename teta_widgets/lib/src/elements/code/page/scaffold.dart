@@ -211,7 +211,7 @@ String pageCodeTemplate(
     class _State${pageNameRC.pascalCase} extends $isARState {
       ${statesString.toString()}
       var datasets = <String, dynamic>{};
-
+      ${isStripeIntegrated ? 'var stripeProductsList = <Map<String,dynamic>>[];' : ''}
       @override
       void initState() { 
         super.initState();

@@ -42,7 +42,7 @@ String stripeProductsListTemplate(
           final map = jsonData
               .map((final dynamic e) => e as Map<String, dynamic>)
               .toList();
-          this.datasets = map;
+          this.stripeProductsList = map;
           return $child
         }
       }),
