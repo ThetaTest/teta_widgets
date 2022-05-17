@@ -46,16 +46,13 @@ import 'package:teta_widgets/src/elements/actions/state/increment.dart';
 import 'package:teta_widgets/src/elements/actions/stripe/buy.dart';
 import 'package:teta_widgets/src/elements/actions/supabase/delete.dart';
 import 'package:teta_widgets/src/elements/actions/supabase/insert.dart';
-import 'package:teta_widgets/src/elements/actions/supabase/on_all.dart';
-import 'package:teta_widgets/src/elements/actions/supabase/on_delete.dart';
-import 'package:teta_widgets/src/elements/actions/supabase/on_insert.dart';
-import 'package:teta_widgets/src/elements/actions/supabase/on_update.dart';
 import 'package:teta_widgets/src/elements/actions/supabase/signin_w_apple.dart';
 import 'package:teta_widgets/src/elements/actions/supabase/signin_w_credentials.dart';
 import 'package:teta_widgets/src/elements/actions/supabase/signin_w_facebook.dart';
 import 'package:teta_widgets/src/elements/actions/supabase/signin_w_google.dart';
 import 'package:teta_widgets/src/elements/actions/supabase/signup_w_credentials.dart';
 import 'package:teta_widgets/src/elements/actions/supabase/update.dart';
+import 'package:teta_widgets/src/elements/actions/teta_cms/auth/login_google.dart';
 import 'package:teta_widgets/src/elements/actions/webview/back.dart';
 import 'package:teta_widgets/src/elements/actions/webview/forward.dart';
 import 'package:teta_widgets/src/elements/actions/webview/reload.dart';
@@ -251,7 +248,7 @@ class FActionElement extends Equatable {
           'State',
           'Navigation',
           if (kDebugMode) 'Teta database',
-          if (kDebugMode) 'Teta auth',
+          'Teta auth',
           if (config.supabaseEnabled ?? false) 'Supabase auth',
           if (config.supabaseEnabled ?? false) 'Supabase database',
           if (kDebugMode)
@@ -449,6 +446,30 @@ class FActionElement extends Equatable {
     final int? loop,
   ) async {
     switch (actionType) {
+      case ActionType.tetaAuth:
+        switch (actionTetaAuth) {
+          case ActionTetaCmsAuth.signInWithGoogle:
+            await FDelay.action(int.tryParse('${delay?.value}') ?? 0);
+            FLoop.action(
+              () => FATetaCMSLoginGoogle.action(
+                node,
+                nameOfPage,
+                context,
+                paramsToSend,
+                params,
+                states,
+                dataset,
+                loop,
+              ),
+              everyMilliseconds,
+              context,
+              withLoop: withLoop ?? false,
+            );
+            break;
+          default:
+            break;
+        }
+        break;
       case ActionType.revenueCat:
         switch (actionRevenueCat) {
           case ActionRevenueCat.buy:
