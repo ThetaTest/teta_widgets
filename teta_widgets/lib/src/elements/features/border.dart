@@ -35,7 +35,9 @@ class FBorder {
   }) {
     fill ??= FFill();
     width ??= FMargins();
-    style ??= FBorderStyle(style: BorderStyle.none,);
+    style ??= FBorderStyle(
+      style: BorderStyle.none,
+    );
   }
 
   /// The [fill] of [Border]. It must be solid only
@@ -102,13 +104,13 @@ class FBorder {
     return '''
     Border(
       left:
-          BorderSide(width: ${values[0]}, ${style?.get != BorderStyle.solid ? 'style: ${style!.toCode()},' : ''} color: Color(0xFF$color)),
+          BorderSide(width: ${values[0] != '' ? values[0] : '0'}, ${style?.get != BorderStyle.solid ? 'style: ${style!.toCode()},' : ''} color: Color(0xFF$color)),
       top:
-          BorderSide(width: ${values[1]}, ${style?.get != BorderStyle.solid ? 'style: ${style!.toCode()},' : ''} color: Color(0xFF$color)),
+          BorderSide(width: ${values[1] != '' ? values[1] : '0'}, ${style?.get != BorderStyle.solid ? 'style: ${style!.toCode()},' : ''} color: Color(0xFF$color)),
       right:
-          BorderSide(width: ${values[2]}, ${style?.get != BorderStyle.solid ? 'style: ${style!.toCode()},' : ''} color: Color(0xFF$color)),
+          BorderSide(width: ${values[2] != '' ? values[2] : '0'}, ${style?.get != BorderStyle.solid ? 'style: ${style!.toCode()},' : ''} color: Color(0xFF$color)),
       bottom:
-          BorderSide(width: ${values[3]}, ${style?.get != BorderStyle.solid ? 'style: ${style!.toCode()},' : ''} color: Color(0xFF$color)),
+          BorderSide(width: ${values[3] != '' ? values[3] : '0'}, ${style?.get != BorderStyle.solid ? 'style: ${style!.toCode()},' : ''} color: Color(0xFF$color)),
     )
   ''';
   }

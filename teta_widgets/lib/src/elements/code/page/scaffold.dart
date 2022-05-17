@@ -125,6 +125,7 @@ String pageCodeTemplate(
   final isSupabaseIntegrated = prj.config?.supabaseEnabled ?? false;
   final isStripeIntegrated = prj.config?.isStripeEnabled ?? false;
   final isAdMobIntegrated = prj.config?.isGoogleAdMobEnabled ?? false;
+  final isMapBoxIntegrated = prj.config?.mapboxKey != null ? true : false;
 
   final backgroundColor =
       (node.body.attributes[DBKeys.fill] as FFill).getHexColor(context);
@@ -181,6 +182,7 @@ String pageCodeTemplate(
     ${isSupabaseIntegrated ? "import 'package:supabase/supabase.dart';" : ''}
     ${isSupabaseIntegrated ? "import 'package:supabase_flutter/supabase_flutter.dart';" : ''}
     ${page.isAuthenticatedRequired ? "import 'package:myapp/auth/auth_required_state.dart';" : "import 'package:myapp/auth/auth_state.dart';"}
+    ${isMapBoxIntegrated ? "import 'package:map/map.dart' as map;" : ''}
     $authSocialButtonsImport
     $iconImport
     $stripeImport
@@ -190,7 +192,6 @@ String pageCodeTemplate(
     import 'package:myapp/src/pages/index.dart';
     import 'package:google_fonts/google_fonts.dart';
     import 'package:url_launcher/url_launcher.dart';
-    import 'package:map/map.dart' hide Map;
     import 'package:latlng/latlng.dart';
     import 'package:paged_vertical_calendar/paged_vertical_calendar.dart';
     import 'package:http/http.dart' as http;

@@ -3,6 +3,7 @@
 
 // Package imports:
 // Flutter imports:
+import 'package:diacritic/diacritic.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:recase/recase.dart';
@@ -11,6 +12,7 @@ import 'package:teta_core/teta_core.dart';
 import 'package:teta_widgets/src/elements/controls/key_constants.dart';
 import 'package:teta_widgets/src/elements/index.dart';
 import 'package:teta_widgets/src/elements/nodes/node_body.dart';
+import 'package:teta_core/src/rendering/nodes_original.dart';
 
 /// Component Template
 String componentCodeTemplate(
@@ -31,7 +33,7 @@ String componentCodeTemplate(
           ) ==
           -1) return '';
 
-  final compWidget = projectLoaded.prj.pages!.firstWhere(
+  var compWidget = projectLoaded.prj.pages!.firstWhere(
     (final element) => element.name == body.attributes[DBKeys.componentName],
   );
   //todo:external parameters implementation
@@ -59,7 +61,7 @@ String componentCodeTemplate(
           toReturn = finalString;
         }
       }
-      //if we are here the scaffold was not finded, so it takes the code 
+      //if we are here the scaffold was not finded, so it takes the code
       else {
         toReturn = data;
       }
@@ -68,15 +70,56 @@ String componentCodeTemplate(
       toReturn = '';
     }
   } else {
+    //here we are in the Visual Component
+    //checks for Page Name
+    final page = body.attributes[DBKeys.componentName] as String;
+    final temp = removeDiacritics(
+      page
+          .replaceFirst('0', 'A0')
+          .replaceFirst('1', 'A1')
+          .replaceFirst('2', 'A2')
+          .replaceFirst('3', 'A3')
+          .replaceFirst('4', 'A4')
+          .replaceFirst('5', 'A5')
+          .replaceFirst('6', 'A6')
+          .replaceFirst('7', 'A7')
+          .replaceFirst('8', 'A8')
+          .replaceFirst('9', 'A9')
+          .replaceAll(' ', '')
+          .replaceAll("'", '')
+          .replaceAll('"', ''),
+    );
+    final pageNameRC = ReCase(temp);
+    //params
+    final parametersString = StringBuffer()..write('');
+    for (final element in compWidget.params) {
+      final rc = ReCase(element.name);
+      final value = element.typeDeclaration(rc.camelCase) == 'String'
+          ? "'${element.get}'"
+          : element.firstValueForInitialization();
+      parametersString.write('${rc.pascalCase.toLowerCase()}: $value,');
+    }
+
+    // final stringParamsToSend = StringBuffer()..write('');
+    // for (final param in compWidget.params) {
+    //   final valueToSend = (paramsToSend ?? <String, dynamic>{})[param.id]
+    //           ?['label'] as String? ??
+    //       'null';
+    //   if (valueToSend != 'null') {
+    //     final name = ReCase(param.name);
+    //     stringParamsToSend.write('${name.camelCase}: ');
+    //     final rc = ReCase(valueToSend);
+    //     stringParamsToSend.write('${rc.camelCase}, ');
+    //   }
+    // }
+    //end params
+
     //? here we are in the visual component part
     //!this is a control that should be removed when flatlist will update well in initialization
-    if (compWidget.flatList == null) {
-      //todo: find a way to initialize the flat list of the component in the initialization of the project
-      //this should be never called
-      toReturn = '';
-    }
+    return 'Page${pageNameRC.pascalCase}(${parametersString.toString()})';
+
     //here im in a 'Sections' template, visual component already made
-    else if (compWidget.runUrl == null &&
+    /*else if (compWidget.runUrl == null &&
         compWidget.code == null &&
         compWidget.isPrimary == false &&
         compWidget.isPage == false &&
@@ -101,7 +144,7 @@ String componentCodeTemplate(
         }
         toReturn = finalCode.toString();
       }
-    }
+    }*/
   }
 
   return toReturn;
