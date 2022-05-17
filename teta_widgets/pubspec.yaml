@@ -122,7 +122,6 @@ dependencies:
   msix: ^2.8.17
   geocode: ^1.0.1
   universal_platform: ^1.0.0+1
-  freezed_annotation: ^1.1.0
   gap: ^2.0.0
   google_mobile_ads: ^1.2.0
 
