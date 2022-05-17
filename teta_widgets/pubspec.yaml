@@ -85,7 +85,6 @@ dependencies:
   uuid: ^3.0.4
   archive:
   path_provider: ^2.0.1
-  downloads_path_provider: ^0.1.0
   password_strength: ^0.2.0
   nanoid: ^1.0.0
   tinycolor: ^1.0.3
