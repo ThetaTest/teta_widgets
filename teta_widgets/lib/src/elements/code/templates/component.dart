@@ -109,7 +109,7 @@ String componentCodeTemplate(
         stringParamsToSend.write('${rc.camelCase}, ');
         value = rc.camelCase;
       }
-      parametersString.write('${rc.pascalCase.toLowerCase()}: $value,');
+      parametersString.write('${rc.camelCase}: $value,');
     }
 
     // final stringParamsToSend = StringBuffer()..write('');

@@ -192,7 +192,7 @@ class FActionNavigationOpenPage {
             -1) return '';
     final page = prj.prj.pages!
         .firstWhere((final element) => element.name == nameOfPage);
-    final realPageName = "Page${nameOfPage.replaceAll(RegExp(' '), "")}";
+    final realPageName = "Page${nameOfPage.replaceAll(RegExp('_'), "")}";
 
     final stringParamsToSend = StringBuffer()..write('');
     for (final param in page.params) {

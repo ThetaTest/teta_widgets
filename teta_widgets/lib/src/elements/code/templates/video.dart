@@ -20,7 +20,7 @@ String videoCodeTemplate(
   return """
   YoutubePlayerIFrame(
     controller: YoutubePlayerController(
-      initialVideoId: r'''$value''',
+      initialVideoId: ${value.contains('widget') ? value : "r'''$value'''"},
       params: YoutubePlayerParams(
         startAt: Duration(seconds: $startAt),
         showControls: $showControls,
