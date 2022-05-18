@@ -21,7 +21,7 @@ class FActionStripeBuy {
     final List<DatasetObject> datasets,
     final int? loop,
   ) async {
-    final _style = TextStyle(
+    const _style = TextStyle(
       fontWeight: FontWeight.bold,
       color: Colors.white,
       fontSize: 20,
@@ -72,7 +72,7 @@ class FActionStripeBuy {
                     'subscription: ${isSubscription.toString()}',
                     style: _style,
                   ),
-                  Text(
+                  const Text(
                     'Action: Buy',
                     style: _style,
                   ),
@@ -94,11 +94,14 @@ class FActionStripeBuy {
     final prj =
         (BlocProvider.of<FocusProjectBloc>(context).state as ProjectLoaded).prj;
     return '''
-     Map<String, dynamic> body = {
-        'amount': this.datasets[index]['price'].toString(),
-        'currency': this.datasets[index]['currency'].toString(),
-        'payment_method_types[]': 'card'
-      };
+    
+    final dataset = datasets['products'][index];
+                                
+    Map<String, dynamic> body = {
+      'amount': dataset['price'].toString(),
+      'currency': dataset['currency'].toString(),
+    };
+                                
       var response = await http.post(
           Uri.parse('https://api.stripe.com/v1/payment_intents'),
           body: body,
