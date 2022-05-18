@@ -4,7 +4,6 @@
 // Package imports:
 // Flutter imports:
 import 'package:diacritic/diacritic.dart';
-import 'package:collection/collection.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:recase/recase.dart';
@@ -96,20 +95,24 @@ String componentCodeTemplate(
     final parametersString = StringBuffer()..write('');
     final stringParamsToSend = StringBuffer()..write('');
     for (final param in compWidget.params) {
-      final rc = ReCase(param.name);
-      var value = param.typeDeclaration(rc.camelCase) == 'String'
-          ? "'${param.get}'"
-          : param.firstValueForInitialization();
-      final valueToSend = (paramsToSend ?? <String, dynamic>{})[param.id]
-              ?['label'] as String? ??
-          'null';
-      Logger.printWarning(valueToSend);
-      if (valueToSend != 'null') {
-        final rc = ReCase(valueToSend);
-        stringParamsToSend.write('${rc.camelCase}, ');
-        value = rc.camelCase;
+      if ("${paramsToSend?[param.id]?['dataset']}" == 'States' ||
+          "${paramsToSend?[param.id]?['dataset']}" == 'Params') {
+        final valueToSend = (paramsToSend ?? <String, dynamic>{})[param.id]
+                ?['label'] as String? ??
+            'null';
+        if (valueToSend != 'null') {
+          final name = ReCase(param.name);
+          stringParamsToSend.write('${name.camelCase}: ');
+          final rc = ReCase(valueToSend);
+          stringParamsToSend.write('${rc.camelCase}, ');
+        }
+      } else {
+        final name = ReCase(param.name);
+        stringParamsToSend.write('${name.camelCase}: ');
+        final valueToSend =
+            "datasets['${paramsToSend?[param.id]?['dataset']}'][index]['${paramsToSend?[param.id]?['label']}']";
+        stringParamsToSend.write('$valueToSend, ');
       }
-      parametersString.write('${rc.camelCase}: $value,');
     }
 
     // final stringParamsToSend = StringBuffer()..write('');

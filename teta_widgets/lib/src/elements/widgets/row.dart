@@ -17,6 +17,7 @@ class WRow extends StatelessWidget {
     required final bool forPlay,
     required final FMainAxisAlignment mainAxisAlignment,
     required final FCrossAxisAlignment crossAxisAlignment,
+    required final FMainAxisSize mainAxisSize,
     required final List<VariableObject> params,
     required final List<VariableObject> states,
     required final List<DatasetObject> dataset,
@@ -26,6 +27,7 @@ class WRow extends StatelessWidget {
         _forPlay = forPlay,
         _mainAxisAlignment = mainAxisAlignment,
         _crossAxisAlignment = crossAxisAlignment,
+        _mainAxisSize = mainAxisSize,
         _loop = loop,
         _params = params,
         _states = states,
@@ -37,6 +39,7 @@ class WRow extends StatelessWidget {
   final bool _forPlay;
   final FMainAxisAlignment _mainAxisAlignment;
   final FCrossAxisAlignment _crossAxisAlignment;
+  final FMainAxisSize _mainAxisSize;
   final int? _loop;
   final List<VariableObject> _params;
   final List<VariableObject> _states;
@@ -50,7 +53,7 @@ class WRow extends StatelessWidget {
       child: Row(
         mainAxisAlignment: _mainAxisAlignment.get,
         crossAxisAlignment: _crossAxisAlignment.get,
-        mainAxisSize: MainAxisSize.min,
+        mainAxisSize: _mainAxisSize.get,
         children: _children.isNotEmpty
             ? _children
                 .map(

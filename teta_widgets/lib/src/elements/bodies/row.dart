@@ -94,6 +94,7 @@ class RowBody extends NodeBody {
             ${child ?? children}
             ${(attributes[DBKeys.mainAxisAlignment] as FMainAxisAlignment).toJson()}
             ${(attributes[DBKeys.crossAxisAlignment] as FCrossAxisAlignment).toJson()}
+            ${(attributes[DBKeys.mainAxisSize] as FMainAxisSize).toJson()}
             ''',
         ),
         node: node,
@@ -102,6 +103,7 @@ class RowBody extends NodeBody {
             attributes[DBKeys.mainAxisAlignment] as FMainAxisAlignment,
         crossAxisAlignment:
             attributes[DBKeys.crossAxisAlignment] as FCrossAxisAlignment,
+        mainAxisSize: attributes[DBKeys.mainAxisSize] as FMainAxisSize,
         forPlay: forPlay,
         loop: loop,
         params: params,

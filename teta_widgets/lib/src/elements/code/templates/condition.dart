@@ -31,7 +31,7 @@ String conditionCodeTemplate(
         .replaceFirst('child: ', '');
   }
   var childIfFalse = 'const SizedBox()';
-  if (children.isNotEmpty && children.length > 2) {
+  if (children.isNotEmpty && children.length > 1) {
     childIfFalse = CS
         .child(context, children.last, comma: false)
         .replaceFirst('child: ', '');
