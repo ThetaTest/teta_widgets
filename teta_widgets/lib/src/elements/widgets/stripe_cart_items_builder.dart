@@ -12,9 +12,9 @@ import 'package:teta_core/teta_core.dart';
 // Project imports:
 import 'package:teta_widgets/src/elements/index.dart';
 
-class WStripeProductsBuilder extends StatefulWidget {
+class WStripeCartItemsBuilder extends StatefulWidget {
   /// Returns a ListView.builder in Teta
-  const WStripeProductsBuilder(
+  const WStripeCartItemsBuilder(
     final Key? key, {
     required this.child,
     required this.node,
@@ -41,10 +41,10 @@ class WStripeProductsBuilder extends StatefulWidget {
   final List<DatasetObject> dataset;
 
   @override
-  WStripeProductsBuilderState createState() => WStripeProductsBuilderState();
+  _WStripeCartItemsBuilderState createState() => _WStripeCartItemsBuilderState();
 }
 
-class WStripeProductsBuilderState extends State<WStripeProductsBuilder> {
+class _WStripeCartItemsBuilderState extends State<WStripeCartItemsBuilder> {
   bool isLoading = true;
 
   @override
@@ -66,7 +66,7 @@ class WStripeProductsBuilderState extends State<WStripeProductsBuilder> {
         scrollDirection: widget.isVertical ? Axis.vertical : Axis.horizontal,
         itemCount: widget.dataset
             .firstWhere(
-              (final element) => element.getName.contains('products'),
+              (final element) => element.getName.contains('cart'),
               orElse: DatasetObject.empty,
             )
             .getMap
@@ -105,7 +105,7 @@ class WStripeProductsBuilderState extends State<WStripeProductsBuilder> {
           jsonData.map((final dynamic e) => e as Map<String, dynamic>).toList();
 
       final datasetObject = DatasetObject(
-        name: 'products',
+        name: 'cart',
         map: map,
       );
 

@@ -119,6 +119,7 @@ enum NType {
   supabaseLoggedUser,
   //Stripe
   stripeProductsBuilder,
+  stripeCartItemsBuilder,
 
   // RevenueCat
   revenueCatProductsList,

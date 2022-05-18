@@ -114,6 +114,8 @@ import 'package:teta_widgets/src/elements/intrinsic_states/class.dart';
 import 'package:teta_widgets/src/elements/nodes/enum.dart';
 import 'package:teta_widgets/src/elements/nodes/node_body.dart';
 
+import 'bodies/stripe_cart_items_builder_body.dart';
+
 /// The list of the all instrict states
 final stateTypes = <IntrinsicStates>[
   alignIntrinsicStates,
@@ -219,6 +221,7 @@ final stateTypes = <IntrinsicStates>[
   wrapperIntrinsicStates,
   revenueCatProductsListIntrinsicStates,
   stripeProductsBuilder,
+  stripeCartItemsBuilderBodyIntrinsicStates,
   transformPerspectiveIntrinsicStates,
   cmsFetchIntrinsicStates,
   cmsStreamIntrinsicStates,
@@ -250,6 +253,8 @@ NodeBody getBody(final NType type) {
       return CheckBoxBody();
     case NType.stripeProductsBuilder:
       return StripeProductsBuilderBody();
+    case NType.stripeCartItemsBuilder:
+      return StripeCartItemsBuilderBody();
     case NType.column:
       return ColumnBody();
     case NType.component:
