@@ -4,6 +4,7 @@
 // Package imports:
 // Flutter imports:
 import 'package:diacritic/diacritic.dart';
+import 'package:collection/collection.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:recase/recase.dart';
@@ -71,9 +72,11 @@ String componentCodeTemplate(
   } else {
     //here we are in the Visual Component
     //checks for Page Name
-    final page = body.attributes[DBKeys.componentName] as String;
+    final pageName = body.attributes[DBKeys.componentName] as String;
+    final paramsToSend =
+        body.attributes[DBKeys.paramsToSend] as Map<String, dynamic>?;
     final temp = removeDiacritics(
-      page
+      pageName
           .replaceFirst('0', 'A0')
           .replaceFirst('1', 'A1')
           .replaceFirst('2', 'A2')
@@ -91,11 +94,21 @@ String componentCodeTemplate(
     final pageNameRC = ReCase(temp);
     //params
     final parametersString = StringBuffer()..write('');
-    for (final element in compWidget.params) {
-      final rc = ReCase(element.name);
-      final value = element.typeDeclaration(rc.camelCase) == 'String'
-          ? "'${element.get}'"
-          : element.firstValueForInitialization();
+    final stringParamsToSend = StringBuffer()..write('');
+    for (final param in compWidget.params) {
+      final rc = ReCase(param.name);
+      var value = param.typeDeclaration(rc.camelCase) == 'String'
+          ? "'${param.get}'"
+          : param.firstValueForInitialization();
+      final valueToSend = (paramsToSend ?? <String, dynamic>{})[param.id]
+              ?['label'] as String? ??
+          'null';
+      Logger.printWarning(valueToSend);
+      if (valueToSend != 'null') {
+        final rc = ReCase(valueToSend);
+        stringParamsToSend.write('${rc.camelCase}, ');
+        value = rc.camelCase;
+      }
       parametersString.write('${rc.pascalCase.toLowerCase()}: $value,');
     }
 

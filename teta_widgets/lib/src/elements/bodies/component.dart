@@ -27,7 +27,7 @@ const _globalType = NType.component;
 /// Instrict State of Component
 final componentIntrinsicStates = IntrinsicStates(
   nodeIcon: Assets.wIcons.component,
-  nodeVideo:'EgtPleVwxBQ', //'EgtPleVwxBQ', //Check
+  nodeVideo: 'EgtPleVwxBQ', //'EgtPleVwxBQ', //Check
   nodeDescription: null,
   advicedChildren: [],
   blockedTypes: [],
@@ -40,7 +40,7 @@ final componentIntrinsicStates = IntrinsicStates(
   canHave: ChildrenEnum.none,
   addChildLabels: [],
   gestures: [],
-  permissions:[],
+  permissions: [],
 );
 
 /// Set of funcs to use a Component widget
