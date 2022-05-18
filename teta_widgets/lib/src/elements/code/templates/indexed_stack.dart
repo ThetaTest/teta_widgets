@@ -16,7 +16,9 @@ String indexedStackCodeTemplate(
 ) {
   final abstract = body.attributes[DBKeys.value] as FTextTypeInput;
   final value = abstract.toCode(loop);
-  final index = int.tryParse(value) != null ? int.parse(value) : 0;
+  final index = int.tryParse(value) == null
+      ? value.replaceAll(r"'''${", '').replaceAll("}'''", '')
+      : 0;
   return '''
     IndexedStack(
       index: $index,
