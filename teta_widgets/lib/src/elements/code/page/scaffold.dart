@@ -221,7 +221,7 @@ String pageCodeTemplate(
 
       @override
       Widget build(BuildContext context) {
-        return Scaffold(
+        return ${page.isPage ? '''Scaffold(
           $appBarString
           $drawerString
           backgroundColor: const Color(0xFF$backgroundColor),
@@ -230,7 +230,7 @@ String pageCodeTemplate(
             $bottomBarString
           ],
         ),
-      );
+      );''' : strChildren.toString()}
     }
   }
   ''';
