@@ -86,7 +86,13 @@ String pageCodeTemplate(
       }
     }
   }
-  if (strChildren.toString() != '') strChildren.write(',');
+  if (strChildren.toString() != '') {
+    if (page.isPage) {
+      strChildren.write(',');
+    } else {
+      strChildren.write(';');
+    }
+  }
 
   final paramsString = StringBuffer()..write('');
   final parametersString = StringBuffer()..write('');
