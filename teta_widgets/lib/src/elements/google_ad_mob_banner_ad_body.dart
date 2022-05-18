@@ -22,7 +22,7 @@ const _globalType = NType.adMobBannerAd;
 
 /// IntrinsicStates for [] widget
 final googleAdMobBannerAdIntrinsicStates = IntrinsicStates(
-  nodeIcon: Assets.wIcons.text,
+  nodeIcon: Assets.wIcons.adMob,
   nodeVideo: null,
   nodeDescription: null,
   advicedChildren: [],
@@ -31,7 +31,7 @@ final googleAdMobBannerAdIntrinsicStates = IntrinsicStates(
   advicedChildrenCanHaveAtLeastAChild: [],
   displayName: NodeType.name(_globalType),
   type: _globalType,
-  category: NodeCategories.unclassified,
+  category: NodeCategories.advanced,
   maxChildren: 0,
   canHave: ChildrenEnum.none,
   addChildLabels: [],

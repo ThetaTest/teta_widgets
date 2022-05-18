@@ -42,18 +42,15 @@ String tCardBuilderCodeTemplate(
       return TCard(
         onForward: (index, info) async {
           if (info.direction == SwipDirection.Right) {
-            //like
-            ${CS.action(context, node, ActionGesture.swipeRight, '', null, isRequired: false)}
+            print('Like');
           } else {
-            //dislike
-            ${CS.action(context, node, ActionGesture.swipeLeft, '', null, isRequired: false)}
+            print('Dislike');
           }
         },
-        ${CS.action(context, node, ActionGesture.onEnd, 'onEnd: () async', null, isRequired: false)}
         lockYAxis: $lockYAxis,
         slideSpeed: $slideSpeed,
         delaySlideFor: $delaySlideFor,
-        cards: (datasets['$dataset'] as List<dynamic>? ?? <dynamic>[]).map((e) => $childString).toList(),
+        cards: (datasets['$dataset'] as List<dynamic> ?? <dynamic>[]).map((e) => $childString).toList(),
       );
     }
   )

@@ -52,7 +52,6 @@ export './icon.dart';
 export './ignore_pointer.dart';
 export './image.dart';
 export './index_stack.dart';
-export './infinite_list.dart';
 export './linear_progress_indicator.dart';
 export './liquid_swipe.dart';
 export './list_tile.dart';

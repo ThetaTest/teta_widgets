@@ -36,15 +36,13 @@ String tCardCodeTemplate(
   TCard(
     onForward: (index, info) {
       if (info.direction == SwipDirection.Right) {
-        //like
-        ${CS.action(context, node, ActionGesture.swipeRight, '', null, isRequired: false)}
+        print('Like');
       } else {
-        //dislike
-        ${CS.action(context, node, ActionGesture.swipeLeft, '', null, isRequired: false)}
+        print('Dislike');
       }
     },
     onEnd: () {
-      ${CS.action(context, node, ActionGesture.onEnd, 'onEnd: () async', null, isRequired: false)}
+
     },
     lockYAxis: $lockYAxis,
     slideSpeed: $slideSpeed,

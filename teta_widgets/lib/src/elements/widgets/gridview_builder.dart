@@ -102,49 +102,40 @@ class _WGridViewState extends State<WGridViewBuilder> {
           )
         : -1;
     final db = index != -1 ? widget.dataset[index] : DatasetObject.empty();
-    return MouseRegion(
-      onEnter: (final v) {
-        BlocProvider.of<ZoomableCubit>(context)
-            .changeZoomableFlag(value: false);
-      },
-      onExit: (final v) {
-        BlocProvider.of<ZoomableCubit>(context).changeZoomableFlag(value: true);
-      },
-      child: GridView.builder(
-        shrinkWrap: widget.shrinkWrap,
-        primary: widget.primary,
-        scrollDirection: widget.isVertical ? Axis.vertical : Axis.horizontal,
-        gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
-          crossAxisCount: int.tryParse(crossAxisCountString) != null &&
-                  (int.tryParse(crossAxisCountString) ?? 0) > 0.1
-              ? int.parse(crossAxisCountString)
-              : 2,
-          mainAxisSpacing: double.tryParse(mainAxisSpacingString) != null &&
-                  (double.tryParse(mainAxisSpacingString) ?? 0) > 0.1
-              ? double.parse(mainAxisSpacingString)
-              : 2,
-          crossAxisSpacing: double.tryParse(crossAxisSpacingString) != null &&
-                  (double.tryParse(crossAxisSpacingString) ?? 0) > 0.1
-              ? double.parse(crossAxisSpacingString)
-              : 2,
-          childAspectRatio: double.tryParse(childAspectRatioString) != null &&
-                  (double.tryParse(childAspectRatioString) ?? 0) > 0.1
-              ? double.parse(childAspectRatioString)
-              : 1,
-        ),
-        itemCount: db.getMap.length,
-        itemBuilder: (final context, final index) => widget.child != null
-            ? widget.child!.toWidget(
-                forPlay: widget.forPlay,
-                params: [...widget.params, ...widget.params],
-                states: widget.states,
-                dataset: widget.dataset,
-                loop: index,
-              )
-            : PlaceholderChildBuilder(
-                name: widget.node.intrinsicState.displayName,
-              ),
+    return GridView.builder(
+      shrinkWrap: widget.shrinkWrap,
+      primary: widget.primary,
+      scrollDirection: widget.isVertical ? Axis.vertical : Axis.horizontal,
+      gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
+        crossAxisCount: int.tryParse(crossAxisCountString) != null &&
+                (int.tryParse(crossAxisCountString) ?? 0) > 0.1
+            ? int.parse(crossAxisCountString)
+            : 2,
+        mainAxisSpacing: double.tryParse(mainAxisSpacingString) != null &&
+                (double.tryParse(mainAxisSpacingString) ?? 0) > 0.1
+            ? double.parse(mainAxisSpacingString)
+            : 2,
+        crossAxisSpacing: double.tryParse(crossAxisSpacingString) != null &&
+                (double.tryParse(crossAxisSpacingString) ?? 0) > 0.1
+            ? double.parse(crossAxisSpacingString)
+            : 2,
+        childAspectRatio: double.tryParse(childAspectRatioString) != null &&
+                (double.tryParse(childAspectRatioString) ?? 0) > 0.1
+            ? double.parse(childAspectRatioString)
+            : 1,
       ),
+      itemCount: db.getMap.length,
+      itemBuilder: (final context, final index) => widget.child != null
+          ? widget.child!.toWidget(
+              forPlay: widget.forPlay,
+              params: [...widget.params, ...widget.params],
+              states: widget.states,
+              dataset: widget.dataset,
+              loop: index,
+            )
+          : PlaceholderChildBuilder(
+              name: widget.node.intrinsicState.displayName,
+            ),
     );
   }
 

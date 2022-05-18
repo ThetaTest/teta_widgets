@@ -9,7 +9,7 @@ import 'package:teta_core/src/models/dataset.dart';
 import 'package:teta_core/src/models/variable.dart';
 // Project imports:
 import 'package:teta_widgets/src/elements/code/advanced/listview_builder.dart';
-import 'package:teta_widgets/src/elements/code/templates/stripe_products_builder.dart';
+import 'package:teta_widgets/src/elements/code/templates/stripe_products_builder_template.dart';
 import 'package:teta_widgets/src/elements/controls/control_model.dart';
 import 'package:teta_widgets/src/elements/controls/key_constants.dart';
 import 'package:teta_widgets/src/elements/controls/type.dart';
@@ -69,11 +69,6 @@ class StripeProductsBuilderBody extends NodeBody {
           value: attributes[DBKeys.flag],
           description:
               'Whether the extent of the scroll view in the scrollDirection should be determined by the contents being viewed.',
-        ),
-        ControlObject(
-          type: ControlType.datasetType,
-          key: DBKeys.datasetInput,
-          value: attributes[DBKeys.datasetInput],
         ),
       ];
 

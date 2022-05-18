@@ -21,16 +21,16 @@ String mapCodeTemplate(
   final flag = body.attributes[DBKeys.flag] as bool;
 
   return '''
-MapLayoutBuilder(
-  controller: MapController(
+map.MapLayoutBuilder(
+  controller: map.MapController(
     location: LatLng(41.52, 12.30),
     zoom: 4,
   ),
   builder: (context, transformer) {
     return Stack(
       children: [
-        Map( 
-          controller: MapController(
+        map.Map( 
+          controller: map.MapController(
             location: LatLng(41.52, 12.30),
             zoom: 4,
           ),
@@ -39,8 +39,6 @@ MapLayoutBuilder(
             final darkUrl = 'https://api.mapbox.com/styles/v1/mapbox/dark-v10/tiles/\$z/\$x/\$y?access_token=$value';
             return Image.network(
               $flag ? darkUrl : url,
-              ${CS.size(context, body, isWidth: true)}
-              ${CS.size(context, body, isWidth: false)}
               fit: BoxFit.cover,
             );
           },

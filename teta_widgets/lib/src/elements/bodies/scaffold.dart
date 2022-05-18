@@ -5,13 +5,10 @@
 import 'package:collection/collection.dart';
 // Flutter imports:
 import 'package:flutter/material.dart';
-import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:teta_core/gen/assets.gen.dart';
-import 'package:teta_core/src/blocs/focus_page/bloc.dart';
 import 'package:teta_core/src/models/dataset.dart';
 import 'package:teta_core/src/models/variable.dart';
 // Project imports:
-import 'package:teta_widgets/src/elements/code/page/component.dart';
 import 'package:teta_widgets/src/elements/code/page/scaffold.dart';
 import 'package:teta_widgets/src/elements/controls/control_model.dart';
 import 'package:teta_widgets/src/elements/controls/key_constants.dart';
@@ -282,11 +279,6 @@ class ScaffoldBody extends NodeBody {
     final int pageId,
     final int? loop,
   ) {
-    final isPage = BlocProvider.of<FocusPageBloc>(context).state.isPage;
-    if (isPage) {
-      return pageCodeTemplate(context, node, children ?? [], pageId);
-    } else {
-      return pageComponentCodeTemplate(context, this, children ?? [], pageId);
-    }
+    return pageCodeTemplate(context, node, children ?? [], pageId);
   }
 }

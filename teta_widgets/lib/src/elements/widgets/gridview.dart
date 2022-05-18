@@ -4,7 +4,6 @@
 // Flutter imports:
 import 'package:flutter/material.dart';
 // Package imports:
-import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:teta_core/teta_core.dart';
 // Project imports:
 import 'package:teta_widgets/src/elements/index.dart';
@@ -66,47 +65,38 @@ class WGridView extends StatelessWidget {
         crossAxisSpacing.get(params, states, dataset, forPlay, loop);
     final childAspectRatioString =
         childAspectRatio.get(params, states, dataset, forPlay, loop);
-    return MouseRegion(
-      onEnter: (final v) {
-        BlocProvider.of<ZoomableCubit>(context)
-            .changeZoomableFlag(value: false);
-      },
-      onExit: (final v) {
-        BlocProvider.of<ZoomableCubit>(context).changeZoomableFlag(value: true);
-      },
-      child: GridView.builder(
-        gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
-          crossAxisCount: int.tryParse(crossAxisCountString) != null &&
-                  (int.tryParse(crossAxisCountString) ?? 0) > 0.1
-              ? int.parse(crossAxisCountString)
-              : 2,
-          mainAxisSpacing: double.tryParse(mainAxisSpacingString) != null &&
-                  (double.tryParse(mainAxisSpacingString) ?? 0) > 0.1
-              ? double.parse(mainAxisSpacingString)
-              : 2,
-          crossAxisSpacing: double.tryParse(crossAxisSpacingString) != null &&
-                  (double.tryParse(crossAxisSpacingString) ?? 0) > 0.1
-              ? double.parse(crossAxisSpacingString)
-              : 2,
-          childAspectRatio: double.tryParse(childAspectRatioString) != null &&
-                  (double.tryParse(childAspectRatioString) ?? 0) > 0.1
-              ? double.parse(childAspectRatioString)
-              : 1,
-        ),
-        shrinkWrap: shrinkWrap,
-        primary: isPrimary,
-        scrollDirection: isVertical ? Axis.vertical : Axis.horizontal,
-        itemCount: children.isEmpty ? 1 : children.length,
-        itemBuilder: (final context, final index) => children.isNotEmpty
-            ? children[index].toWidget(
-                loop: index,
-                forPlay: forPlay,
-                params: params,
-                states: states,
-                dataset: dataset,
-              )
-            : PlaceholderChildBuilder(name: node.intrinsicState.displayName),
+    return GridView.builder(
+      gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
+        crossAxisCount: int.tryParse(crossAxisCountString) != null &&
+                (int.tryParse(crossAxisCountString) ?? 0) > 0.1
+            ? int.parse(crossAxisCountString)
+            : 2,
+        mainAxisSpacing: double.tryParse(mainAxisSpacingString) != null &&
+                (double.tryParse(mainAxisSpacingString) ?? 0) > 0.1
+            ? double.parse(mainAxisSpacingString)
+            : 2,
+        crossAxisSpacing: double.tryParse(crossAxisSpacingString) != null &&
+                (double.tryParse(crossAxisSpacingString) ?? 0) > 0.1
+            ? double.parse(crossAxisSpacingString)
+            : 2,
+        childAspectRatio: double.tryParse(childAspectRatioString) != null &&
+                (double.tryParse(childAspectRatioString) ?? 0) > 0.1
+            ? double.parse(childAspectRatioString)
+            : 1,
       ),
+      shrinkWrap: shrinkWrap,
+      primary: isPrimary,
+      scrollDirection: isVertical ? Axis.vertical : Axis.horizontal,
+      itemCount: children.isEmpty ? 1 : children.length,
+      itemBuilder: (final context, final index) => children.isNotEmpty
+          ? children[index].toWidget(
+              loop: index,
+              forPlay: forPlay,
+              params: params,
+              states: states,
+              dataset: dataset,
+            )
+          : PlaceholderChildBuilder(name: node.intrinsicState.displayName),
     );
   }
 }

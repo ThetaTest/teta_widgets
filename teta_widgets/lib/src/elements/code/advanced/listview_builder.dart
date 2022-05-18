@@ -48,7 +48,7 @@ String listViewBuilderCodeTemplate(
           },
         );
       },
-    );
+    )
   ''';
 }
 
