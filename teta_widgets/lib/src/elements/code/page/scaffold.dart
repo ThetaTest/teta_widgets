@@ -103,7 +103,6 @@ String pageCodeTemplate(
         : element.firstValueForInitialization();
     paramsString.write(
       '''
-      ${element.doc != '' && element.doc != null ? '// ${element.doc}' : ''}
       final ${element.typeDeclaration(rc.camelCase)} ${rc.camelCase};
       ''',
     );
@@ -119,7 +118,6 @@ String pageCodeTemplate(
         : '${element.get}';
     statesString.write(
       '''
-      ${element.doc != '' && element.doc != null ? '// ${element.doc}' : ''}
       ${element.typeDeclaration(rc.camelCase)} ${rc.camelCase} = $value;
       ''',
     );
@@ -149,18 +147,6 @@ String pageCodeTemplate(
       ? "import 'package:auth_buttons/auth_buttons.dart';"
       : '';
 
-  final iconImport = (page.flatList ?? <CNode>[])
-          .where((final element) => element.intrinsicState.type == NType.icon)
-          .isNotEmpty
-      ? "import 'package:material_design_icons_flutter/material_design_icons_flutter.dart';"
-      : '';
-
-  final lottieImport = (page.flatList ?? <CNode>[])
-          .where((final element) => element.intrinsicState.type == NType.lottie)
-          .isNotEmpty
-      ? "import 'package:lottie/lottie.dart';"
-      : '';
-
   final stripeImport = isStripeIntegrated
       ? "import 'package:flutter_stripe/flutter_stripe.dart';"
       : '';
@@ -175,36 +161,34 @@ String pageCodeTemplate(
           : 'AuthState<Page${pageNameRC.pascalCase}> with SingleTickerProviderStateMixin'
       : 'State<Page${pageNameRC.pascalCase}>';
 
-  final badgeImport = (page.flatList ?? <CNode>[])
-          .where((final element) => element.intrinsicState.type == NType.badge)
-          .isNotEmpty
-      ? "import 'package:badges/badges.dart';"
-      : '';
-
   return '''
     import 'dart:ui';
     import 'dart:convert';
     import 'package:flutter/material.dart';
+    import 'package:myapp/src/components/index.dart';
     ${isSupabaseIntegrated ? "import 'package:supabase/supabase.dart';" : ''}
     ${isSupabaseIntegrated ? "import 'package:supabase_flutter/supabase_flutter.dart';" : ''}
     ${page.isAuthenticatedRequired ? "import 'package:myapp/auth/auth_required_state.dart';" : "import 'package:myapp/auth/auth_state.dart';"}
     ${isMapBoxIntegrated ? "import 'package:map/map.dart' as map;" : ''}
-    $authSocialButtonsImport
-    $iconImport
+    import 'package:auth_buttons/auth_buttons.dart';
     $stripeImport
     $adMobImports
+    import 'package:bouncing_widget/bouncing_widget.dart';
     import 'package:intl/intl.dart' hide TextDirection;
     import 'package:collection/collection.dart';
     import 'package:myapp/src/pages/index.dart';
     import 'package:google_fonts/google_fonts.dart';
     import 'package:url_launcher/url_launcher.dart';
+    import 'package:lottie/lottie.dart';
     import 'package:latlng/latlng.dart';
+    import 'package:badges/badges.dart';
     import 'package:paged_vertical_calendar/paged_vertical_calendar.dart';
+    import 'package:youtube_player_iframe/youtube_player_iframe.dart';
+    import 'package:material_design_icons_flutter/material_design_icons_flutter.dart';
+    import 'package:flutter_staggered_animations/flutter_staggered_animations.dart';
     import 'package:http/http.dart' as http;
     import 'package:teta_cms/teta_cms.dart';
-    $lottieImport
     $componentImport
-    $badgeImport
 
     class Page${pageNameRC.pascalCase} extends StatefulWidget {
       const Page${pageNameRC.pascalCase}({Key? key, ${parametersString.toString()}}) : super(key: key);
