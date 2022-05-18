@@ -265,6 +265,15 @@ class ElementState extends State<Element> {
                 onChange: (final String? newValue) {
                   setState(() {
                     dropdownDataset = newValue;
+                    listSecondDropwdown = [];
+                    listSecondDropwdown.addAll(
+                      listDataset
+                          .firstWhere(
+                            (final element) =>
+                                element.getName == dropdownDataset,
+                          )
+                          .getMap,
+                    );
                   });
                 },
               ),

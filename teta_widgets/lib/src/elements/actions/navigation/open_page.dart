@@ -9,13 +9,9 @@ import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:recase/recase.dart';
-import 'package:teta_core/src/blocs/focus_page/index.dart';
-import 'package:teta_core/src/blocs/focus_project/index.dart';
-import 'package:teta_core/src/models/dataset.dart';
-import 'package:teta_core/src/models/page.dart';
-import 'package:teta_core/src/models/variable.dart';
 import 'package:teta_core/src/rendering/nodes_original.dart';
 import 'package:teta_core/src/repositories/queries/node.dart';
+import 'package:teta_core/teta_core.dart';
 // Project imports:
 import 'package:teta_widgets/src/elements/controls/key_constants.dart';
 import 'package:teta_widgets/src/elements/features/page_transition.dart';
@@ -200,14 +196,23 @@ class FActionNavigationOpenPage {
 
     final stringParamsToSend = StringBuffer()..write('');
     for (final param in page.params) {
-      final valueToSend = (paramsToSend ?? <String, dynamic>{})[param.id]
-              ?['label'] as String? ??
-          'null';
-      if (valueToSend != 'null') {
+      if ("${paramsToSend?[param.id]?['dataset']}" == 'States' ||
+          "${paramsToSend?[param.id]?['dataset']}" == 'Params') {
+        final valueToSend = (paramsToSend ?? <String, dynamic>{})[param.id]
+                ?['label'] as String? ??
+            'null';
+        if (valueToSend != 'null') {
+          final name = ReCase(param.name);
+          stringParamsToSend.write('${name.camelCase}: ');
+          final rc = ReCase(valueToSend);
+          stringParamsToSend.write('${rc.camelCase}, ');
+        }
+      } else {
         final name = ReCase(param.name);
         stringParamsToSend.write('${name.camelCase}: ');
-        final rc = ReCase(valueToSend);
-        stringParamsToSend.write('${rc.camelCase}, ');
+        final valueToSend =
+            "datasets['${paramsToSend?[param.id]?['dataset']}'][index]['${paramsToSend?[param.id]?['label']}']";
+        stringParamsToSend.write('$valueToSend, ');
       }
     }
 

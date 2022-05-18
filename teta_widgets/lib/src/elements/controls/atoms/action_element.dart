@@ -729,6 +729,24 @@ class ActionElementControlState extends State<ActionElementControl> {
                     }
                   },
                 ),
+              if (widget.element.actionType == ActionType.tetaAuth)
+                CDropdown(
+                  value: FActionElement.convertValueToDropdown(
+                    widget.element.actionTetaAuth,
+                  ),
+                  items: FActionElement.getTetaAuth(),
+                  onChange: (final newValue) {
+                    if (newValue != null) {
+                      final old = widget.element;
+                      widget.element.actionTetaAuth =
+                          FActionElement.convertDropdownToValue(
+                        ActionTetaCmsAuth.values,
+                        newValue,
+                      ) as ActionTetaCmsAuth?;
+                      widget.callBack(widget.element, old);
+                    }
+                  },
+                ),
               if (widget.element.actionType == ActionType.supabaseAuth)
                 CDropdown(
                   value: FActionElement.convertValueToDropdown(
@@ -830,7 +848,8 @@ class ActionElementControlState extends State<ActionElementControl> {
                               ActionNavigation.openBottomSheet ||
                           widget.element.actionNavigation ==
                               ActionNavigation.openSnackBar)) ||
-                  (widget.element.actionType == ActionType.supabaseAuth))
+                  (widget.element.actionType == ActionType.supabaseAuth ||
+                      widget.element.actionType == ActionType.tetaAuth))
                 Column(
                   children: [
                     Padding(
@@ -1202,7 +1221,7 @@ class _ElementState extends State<Element> {
   List<DatasetObject> listDataset = <DatasetObject>[];
   String? dropdownDataset;
   String? dropdown;
-  final listSecondDropwdown = <Map<String, dynamic>>[];
+  List<Map<String, dynamic>> listSecondDropwdown = <Map<String, dynamic>>[];
 
   @override
   void initState() {
@@ -1280,6 +1299,14 @@ class _ElementState extends State<Element> {
               onChange: (final newValue) {
                 setState(() {
                   dropdownDataset = newValue;
+                  listSecondDropwdown = <Map<String, dynamic>>[];
+                  listSecondDropwdown.addAll(
+                    listDataset
+                        .firstWhere(
+                          (final element) => element.getName == dropdownDataset,
+                        )
+                        .getMap,
+                  );
                 });
               },
             ),

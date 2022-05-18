@@ -50,7 +50,7 @@ String componentCodeTemplate(
       if (data!.contains('home')) {
         //this regex take from scaffold and go untill he find home and remove the scaffold untill he finds the child
         //and remove the last ')' in order to be built well with the CS.children snippet
-        final finalString = RegExp('home: (.*),.+\\)', dotAll: true)
+        final finalString = RegExp(r'home: (.*),.+\)', dotAll: true)
             .allMatches(data)
             .first
             .group(1);
@@ -59,7 +59,7 @@ String componentCodeTemplate(
           toReturn = finalString;
         }
       }
-      //if we are here the scaffold was not finded, so it takes the code 
+      //if we are here the scaffold was not finded, so it takes the code
       else {
         toReturn = data;
       }
@@ -70,7 +70,7 @@ String componentCodeTemplate(
   } else {
     //? here we are in the visual component part
     //!this is a control that should be removed when flatlist will update well in initialization
-    if (compWidget.flatList == null) {
+    if (compWidget.scaffold == null) {
       //todo: find a way to initialize the flat list of the component in the initialization of the project
       //this should be never called
       toReturn = '';
