@@ -96,12 +96,12 @@ class FASupabaseUpdate {
       }
       final mapString = StringBuffer()..write('{');
       for (final key in map.keys) {
-        mapString.write("'''$key''': ${map[key]},");
+        mapString.write("'''$key''': '${map[key]}',");
       }
       mapString.write('}');
       return '''
         final response = await Supabase.instance.client
-              .from(${supabaseFrom?.toCode(0) ?? ''})
+              .from('${supabaseFrom?.toCode(0) ?? ''}')
               .update($mapString)
               .eq('${supabaseEq?.key}', '$eqValue')
               .execute();

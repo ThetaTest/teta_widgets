@@ -71,7 +71,7 @@ class FASupabaseDelete {
       }
       return '''
         final response = await Supabase.instance.client
-              .from(${supabaseFrom?.toCode(0) ?? ''})
+              .from('${supabaseFrom?.toCode(0) ?? ''}')
               .delete()
               .eq('${supabaseEq?.key}', '$eqValue')
               .execute();
