@@ -220,7 +220,7 @@ String pageCodeTemplate(
             $bottomBarString
           ],
         ),
-      );''' : strChildren.toString().isNotEmpty ? strChildren.toString() : 'const SizedBox()'}
+      );''' : strChildren.toString().isNotEmpty ? strChildren.toString() : 'const SizedBox();'}
     }
   }
   ''';
