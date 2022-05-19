@@ -41,17 +41,15 @@ class StripeCartItemsBuilderTemplate {
     if (child != null) {
       childCode = child.toCode(context);
     }
-    return '''
-       ListView.builder(
-              $_scrollDirection
-              shrinkWrap: $shrinkWrap,
-              itemCount: (this.datasets['cart'] ?? []).length,
-              itemBuilder: (context, index) {
-                return $childCode;
-              },
-            );
-          }
-        }),
+    return
+    '''
+      ListView.builder(
+        $_scrollDirection
+        shrinkWrap: $shrinkWrap,
+        itemCount: (globalDatasets['cart'] as List? ?? []).length,
+        itemBuilder: (context, index) {
+          return $childCode;
+        },
       )
     ''';
   }

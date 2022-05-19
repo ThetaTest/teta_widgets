@@ -91,7 +91,7 @@ class FActionStripeCartRemoveProductsListItemFromCart {
     return '''
     try {
       final cart =
-      this.datasets['cart'] as List?;
+      globalDatasets['cart'] as List?;
       if (cart != null &&
           cart.length > index) {
         cart.remove(
