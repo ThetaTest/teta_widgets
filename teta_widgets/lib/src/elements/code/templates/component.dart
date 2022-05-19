@@ -110,7 +110,7 @@ String componentCodeTemplate(
         final name = ReCase(param.name);
         stringParamsToSend.write('${name.camelCase}: ');
         final valueToSend =
-            "datasets['${paramsToSend?[param.id]?['dataset']}'][index]['${paramsToSend?[param.id]?['label']}']";
+            "datasets['${paramsToSend?[param.id]?['dataset']}']?[index]?['${paramsToSend?[param.id]?['label']}']";
         stringParamsToSend.write('$valueToSend, ');
       }
     }
@@ -129,7 +129,7 @@ String componentCodeTemplate(
     // }
     //end params
 
-    return 'Page${pageNameRC.pascalCase}(${parametersString.toString()})';
+    return 'Page${pageNameRC.pascalCase}(${stringParamsToSend.toString()})';
     //here im in a 'Sections' template, visual component already made
     /*else if (compWidget.runUrl == null &&
         compWidget.code == null &&

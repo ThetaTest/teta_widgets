@@ -45,8 +45,9 @@ class FActionStateChangeWith {
     final varName = ReCase(stateName).camelCase;
 
     final buffer = StringBuffer()..write('');
+    //this will be inserted in a onChange (string value) method so this should work like this
     if (variable.type == VariableType.string) {
-      buffer.write("$varName = '''$valueToChangeWith''';");
+      buffer.write("$varName = '''\$value''';");
     } else {
       if (variable.type == VariableType.int) {
         buffer.write(
