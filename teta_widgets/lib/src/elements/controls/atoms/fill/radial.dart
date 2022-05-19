@@ -170,7 +170,6 @@ class ColorControlState extends State<RadialFillControl> {
           color.value.toRadixString(16).substring(2, 8);
       isUpdated = true;
     });
-    controller.text = color.value.toRadixString(16).substring(2, 8);
     widget.callBack(widget.fill, false, old);
   }
 
@@ -320,7 +319,7 @@ class ColorControlState extends State<RadialFillControl> {
   }) {
     return GestureDetector(
       onTap: () {
-        if (isPreview) _updatedPosition(alignTarget, name);
+        _updatedPosition(alignTarget, name);
       },
       child: Container(
         width: isPreview ? 8 : 32,
