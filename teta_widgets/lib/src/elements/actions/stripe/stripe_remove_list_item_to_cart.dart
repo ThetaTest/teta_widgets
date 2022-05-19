@@ -94,10 +94,10 @@ class FActionStripeRemoveProductsListItemFromCart {
       this.datasets['products'] as List?;
       if (products != null &&
           products.length > index) {
-        if (this.datasets['cart'] == null) {
-          this.datasets['cart'] = [];
+        if (globalDatasets['cart'] == null) {
+          globalDatasets['cart'] = [];
         }
-        final cart = this.datasets['cart'] as List;
+        final cart = globalDatasets['cart'] as List;
 
         cart.remove(
           cart.firstWhere(
