@@ -1507,6 +1507,45 @@ class FActionElement extends Equatable {
                   FActionStripeBuy.toCode(context, stateName, body),
                   withLoop: withLoop ?? false,
                 );
+          case ActionStripe.addProductsListItemToCart:
+            return FCondition.toCode(
+              context,
+              condition,
+              valueOfCondition,
+              withCondition: withCondition ?? false,
+            ) +
+                FDelay.toCode(int.tryParse('${delay?.value}') ?? 0) +
+                FLoop.toCode(
+                  int.tryParse(everyMilliseconds?.value ?? '0') ?? 0,
+                  FActionStripeAddProductsListItemToCart.toCode(context, stateName, body),
+                  withLoop: withLoop ?? false,
+                );
+          case ActionStripe.removeCartListItemFromCart:
+            return FCondition.toCode(
+              context,
+              condition,
+              valueOfCondition,
+              withCondition: withCondition ?? false,
+            ) +
+                FDelay.toCode(int.tryParse('${delay?.value}') ?? 0) +
+                FLoop.toCode(
+                  int.tryParse(everyMilliseconds?.value ?? '0') ?? 0,
+                  FActionStripeCartRemoveProductsListItemFromCart.toCode(context, stateName, body),
+                  withLoop: withLoop ?? false,
+                );
+          case ActionStripe.removeProductsListItemFromCart:
+            return FCondition.toCode(
+              context,
+              condition,
+              valueOfCondition,
+              withCondition: withCondition ?? false,
+            ) +
+                FDelay.toCode(int.tryParse('${delay?.value}') ?? 0) +
+                FLoop.toCode(
+                  int.tryParse(everyMilliseconds?.value ?? '0') ?? 0,
+                  FActionStripeRemoveProductsListItemFromCart.toCode(context, stateName, body),
+                  withLoop: withLoop ?? false,
+                );
           default:
             break;
         }

@@ -144,26 +144,4 @@ class FActionStripeBuy {
     }
     ''';
   }
-
-  //!Test only
-  // static Future payments(
-  //     final BuildContext context, final String productId) async {
-  //   ProjectObject prj =
-  //       (BlocProvider.of<FocusProjectBloc>(context).state as ProjectLoaded).prj;
-  //   final baseUrl =
-  //       'https://builder.teta.so:8402/portal/${prj.id}/$productId/pay';
-  //   final response = await http.get(
-  //     Uri.parse(baseUrl),
-  //     headers: <String, String>{
-  //       'stripe-api-key': prj.config!.stripePrivateKey!,
-  //     },
-  //   );
-  //   if (response.statusCode == 200) {
-  //     debugPrint('payment response: ${response.body}');
-  //     await launch(response.body);
-  //   }
-  //   if (response.statusCode != 200) {
-  //     debugPrint('payment error: ${response.body}');
-  //   }
-  // }
 }
