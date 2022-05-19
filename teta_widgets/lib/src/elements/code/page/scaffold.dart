@@ -212,6 +212,7 @@ String pageCodeTemplate(
       @override
       Widget build(BuildContext context) {
         return ${page.isPage ? '''Scaffold(
+          resizeToAvoidBottomInset: false,
           $appBarString
           $drawerString
           backgroundColor: const Color(0xFF$backgroundColor),
