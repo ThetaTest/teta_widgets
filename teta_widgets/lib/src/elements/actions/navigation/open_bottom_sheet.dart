@@ -113,7 +113,7 @@ class FActionNavigationOpenBottomSheet {
       return '''
       await showModalBottomSheet<void>(
         context: context,
-        builder: (context) => ${pageNameRC.pascalCase}(
+        builder: (context) => Page${pageNameRC.pascalCase}(
           ${stringParamsToSend.toString()}
         ),
       );

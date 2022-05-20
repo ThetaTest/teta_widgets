@@ -237,7 +237,7 @@ class FActionNavigationOpenPage {
     await Navigator.push<void>(
       context,
       MaterialPageRoute(
-        builder: (context) => ${pageNameRC.pascalCase}(
+        builder: (context) => Page${pageNameRC.pascalCase}(
           ${stringParamsToSend.toString()}
         ),
       ),

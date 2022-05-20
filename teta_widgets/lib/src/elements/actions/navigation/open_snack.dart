@@ -88,7 +88,7 @@ class FActionNavigationOpenSnackBar {
 
       return '''
       final snackBar = SnackBar(
-        content: ${pageNameRC.pascalCase}(
+        content: Page${pageNameRC.pascalCase}(
           ${stringParamsToSend.toString()}
         ),
       );
