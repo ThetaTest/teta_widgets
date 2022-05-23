@@ -38,7 +38,7 @@ final webviewIntrinsicStates = IntrinsicStates(
   canHave: ChildrenEnum.none,
   addChildLabels: [],
   gestures: [],
-  permissions:[],
+  permissions: [],
 );
 
 /// Set of funcs to use Align widget
@@ -92,7 +92,7 @@ class WebViewBody extends NodeBody {
             ${child ?? children}
             ${(attributes[DBKeys.value] as FTextTypeInput).toJson()}
             ${(attributes[DBKeys.valueOfCondition] as FTextTypeInput).toJson()}
-            some rebase
+            some rebase 7777
             ''',
         ),
         controller: attributes[DBKeys.value] as FTextTypeInput,
@@ -100,7 +100,6 @@ class WebViewBody extends NodeBody {
         node: node,
         forPlay: forPlay,
         loop: loop,
-        rebase
         params: params,
         states: states,
         dataset: dataset,
