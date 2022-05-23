@@ -99,8 +99,8 @@ class WebViewBody extends NodeBody {
         controller: attributes[DBKeys.value] as FTextTypeInput,
         url: attributes[DBKeys.valueOfCondition] as FTextTypeInput,
         node: node,
-        forPlay: forPlay,asdasdfasd
-        loop: loop,asfasfasf
+        forPlay: forPlay,
+        loop: loop,
         params: params,
         states: states,
         dataset: dataset,
