@@ -92,6 +92,7 @@ class WebViewBody extends NodeBody {
             ${child ?? children}
             ${(attributes[DBKeys.value] as FTextTypeInput).toJson()}
             ${(attributes[DBKeys.valueOfCondition] as FTextTypeInput).toJson()}
+            some rebase
             ''',
         ),
         controller: attributes[DBKeys.value] as FTextTypeInput,
@@ -99,6 +100,7 @@ class WebViewBody extends NodeBody {
         node: node,
         forPlay: forPlay,
         loop: loop,
+        rebase
         params: params,
         states: states,
         dataset: dataset,
