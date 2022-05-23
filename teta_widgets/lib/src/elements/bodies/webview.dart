@@ -92,7 +92,7 @@ class WebViewBody extends NodeBody {
             ${child ?? children}
             ${(attributes[DBKeys.value] as FTextTypeInput).toJson()}
             ${(attributes[DBKeys.valueOfCondition] as FTextTypeInput).toJson()}
-            some rebase 7777 ysysysys
+            some rebase 7777 
             ''',
         ),
         controller: attributes[DBKeys.value] as FTextTypeInput,
