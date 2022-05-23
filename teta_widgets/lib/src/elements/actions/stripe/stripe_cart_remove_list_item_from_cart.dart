@@ -96,7 +96,7 @@ class FActionStripeCartRemoveProductsListItemFromCart {
           cart.length > index) {
         cart.remove(
           cart.firstWhere(
-            cart[index]['id'],
+            (e) => e['id'] == cart[index]['id'],
           ),
         );
       }

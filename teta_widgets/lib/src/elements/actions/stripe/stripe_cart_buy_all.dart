@@ -15,7 +15,7 @@ import 'package:url_launcher/url_launcher.dart';
 
 //pk_test_51KqdzMGPvMnMI31y86lGM16w4HD9XITvjxuBMiQ7c74Q2lo8g9M94nU2W149XcM0Nb86rzWxik0AdIHsyBuHayqh000Jvu5Te7
 //sk_test_51KqdzMGPvMnMI31yeQ2EIzATq6JtLElCHJuWoDp9JC8cxXSpVWZfOdQHdqdCO4Us4nlQYY8cVRx1lisCRk5zU2og00HM2MhVWL
-class FActionStripeRemoveProductsListItemFromCart {
+class FActionStripeCartBuyAll {
   static Future action(final BuildContext context,
       final List<VariableObject> states,
       final String? stateName,
@@ -89,22 +89,76 @@ class FActionStripeRemoveProductsListItemFromCart {
       final String? stateName,
       final CNode body,) {
     return '''
-    try {
-      final products =
-      this.datasets['products'] as List?;
-      if (products != null &&
-          products.length > index) {
-        if (globalDatasets['cart'] == null) {
-          globalDatasets['cart'] = [];
-        }
-        final cart = globalDatasets['cart'] as List;
+    final dataset = (globalDatasets['cart'] ??
+        []) as List;
+    var ammount = 0;
+    dataset.forEach((element) {
+      ammount =
+          ammount + (element['price'] as int);
+    });
 
-        cart.remove(
-          cart.firstWhere(
-            (e) => e['id'] == products[index]['id'],
-          ),
-        );
-      }
+    Map<String, dynamic> body = {
+      'amount': ammount.toString(),
+      'currency': dataset.first['currency']
+          .toString(),
+    };
+
+    var response = await http.post(
+        Uri.parse(
+            'https://api.stripe.com/v1/payment_intents'),
+        body: body,
+        headers: {
+          'Authorization':
+          'Bearer sk_test_51KyvFcCM2la1VogZ4FAXO7onAGrhbHSpC2IeZbimJ6sbBNMqtPZRwDgEu9Al5MuC75s1bCSyFwGGlLwwmL8KQEik00BPKr12io',
+          'Content-Type':
+          'application/x-www-form-urlencoded'
+        });
+    print(response.body);
+    Map<String, dynamic>? paymentIntentData =
+    jsonDecode(response.body);
+    await Stripe.instance
+        .initPaymentSheet(
+        paymentSheetParameters:
+        SetupPaymentSheetParameters(
+            paymentIntentClientSecret:
+            paymentIntentData![
+            'client_secret'],
+            applePay: true,
+            googlePay: true,
+            testEnv: true,
+            style: ThemeMode.dark,
+            merchantCountryCode: 'US',
+            merchantDisplayName:
+            'pk_test_51KyvFcCM2la1VogZW2BXirL3OWnIueYEwB0RhiDYJNn32FzdNIphmUGOlZu2daz1TZiPDK37DnNtC6kTb7MOTgnX00BBHlIfYs'))
+        .then((value) {});
+    try {
+      await Stripe.instance
+          .presentPaymentSheet(
+          parameters:
+          PresentPaymentSheetParameters(
+            clientSecret: paymentIntentData[
+            'client_secret'],
+            confirmPayment: true,
+          ))
+          .then((newValue) {
+        ScaffoldMessenger.of(context)
+            .showSnackBar(SnackBar(
+            content: Text(
+                "paid successfully")));
+        paymentIntentData = null;
+      }).onError((error, stackTrace) {
+        print(
+            'Exception/DISPLAYPAYMENTSHEET');
+      });
+    } on StripeException catch (e) {
+      print(
+          'Exception/DISPLAYPAYMENTSHEET on StripeException catch');
+      showDialog(
+          context: context,
+          builder: (_) =>
+              AlertDialog(
+                content: Text("Cancelled "),
+              ));
     } catch (e) {
       print(e.toString());
     }
