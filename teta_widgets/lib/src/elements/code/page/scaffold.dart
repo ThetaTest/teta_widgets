@@ -188,6 +188,7 @@ String pageCodeTemplate(
     import 'package:flutter_staggered_animations/flutter_staggered_animations.dart';
     import 'package:http/http.dart' as http;
     import 'package:teta_cms/teta_cms.dart';
+    import 'package:webviewx/webviewx.dart';
     $componentImport
 
     class Page${pageNameRC.pascalCase} extends StatefulWidget {
