@@ -99,7 +99,7 @@ String pageCodeTemplate(
   for (final element in page.params) {
     final rc = ReCase(element.name);
     final value = element.typeDeclaration(rc.camelCase) == 'String'
-        ? "'${element.get}'"
+        ? "'''${element.get}'''"
         : element.firstValueForInitialization();
     paramsString.write(
       '''
