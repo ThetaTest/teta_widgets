@@ -109,7 +109,7 @@ import 'package:teta_widgets/src/elements/bodies/visibility.dart';
 import 'package:teta_widgets/src/elements/bodies/webview.dart';
 import 'package:teta_widgets/src/elements/bodies/wordpress/example.dart';
 import 'package:teta_widgets/src/elements/bodies/wrap.dart';
-import 'package:teta_widgets/src/elements/google_ad_mob_banner_ad_body.dart';
+import 'package:teta_widgets/src/elements/bodies/google_ad_mob_banner_ad_body.dart';
 import 'package:teta_widgets/src/elements/intrinsic_states/class.dart';
 import 'package:teta_widgets/src/elements/nodes/enum.dart';
 import 'package:teta_widgets/src/elements/nodes/node_body.dart';
