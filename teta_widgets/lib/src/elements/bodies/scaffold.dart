@@ -78,6 +78,7 @@ class ScaffoldBody extends NodeBody {
     DBKeys.showAppBar: false,
     DBKeys.showBottomBar: false,
     DBKeys.showDrawer: false,
+    DBKeys.flag: true,
   };
 
   /// Parameters of the page
@@ -120,6 +121,13 @@ class ScaffoldBody extends NodeBody {
           key: DBKeys.action,
           value: attributes[DBKeys.action],
         ),
+        FlagControlObject(
+          title: 'ResizeToAvoidBottomInset',
+          key: DBKeys.flag,
+          value: attributes[DBKeys.flag],
+          description:
+              'if true, the bottombar is hidden under the keyboard. if false it is put on top',
+        ),
         /*FlagControlObject(
           title: 'Show AppBar',
           key: DBKeys.showAppBar,
@@ -134,13 +142,7 @@ class ScaffoldBody extends NodeBody {
           description:
               'It is a horizontal bar typically shown at the bottom of an app using the bottomNavigationBar property',
         ),
-        FlagControlObject(
-          title: 'Show Drawer',
-          key: DBKeys.showDrawer,
-          value: attributes[DBKeys.showDrawer],
-          description:
-              'It is a vertical panel that is typically displayed to the left of the body (and often hidden on phones) using the drawer property',
-        ),*/
+        */
       ];
 
   @override
@@ -167,6 +169,7 @@ class ScaffoldBody extends NodeBody {
             ${attributes[DBKeys.showAppBar] as bool}
             ${attributes[DBKeys.showBottomBar] as bool}
             ${attributes[DBKeys.showDrawer] as bool}
+            ${attributes[DBKeys.flag] as bool}
             ''',
         ),
         node: node,
@@ -179,6 +182,7 @@ class ScaffoldBody extends NodeBody {
         appBar: appBar,
         bottomBar: bottomBar,
         drawer: drawer,
+        flag: attributes[DBKeys.flag] as bool,
         showAppBar: attributes[DBKeys.showAppBar] as bool,
         showBottomBar: attributes[DBKeys.showBottomBar] as bool,
         showDrawer: attributes[DBKeys.showDrawer] as bool,
@@ -202,73 +206,6 @@ class ScaffoldBody extends NodeBody {
         dataset: dataset,
         loop: loop,
       );
-
-  // To Body
-  // String toBody(final BuildContext context, final List<CNode>? children) {
-  //   final strChildren = StringBuffer()..write('');
-  //   var componentImport = '';
-  //   if (children != null) {
-  //     for (final e in children) {
-  //       if (e.globalType == NType.component) {
-  //         componentImport =
-  //             "import 'package:myapp/lib/src/components/index.dart';";
-  //       } else {
-  //         if (e.globalType != NType.appBar ||
-  //             e.globalType != NType.bottomBar ||
-  //             e.globalType != NType.drawer) {
-  //           var str = e.toCode(context);
-  //           str = str.substring(0, str.length - 6);
-  //           strChildren.write(
-  //             '$str.toWidget(params: params, states: states, dataset: dataset),',
-  //           );
-  //         }
-  //       }
-  //     }
-  //   }
-  //   return """
-  //   import 'package:flutter/material.dart';
-  //   import 'package:flutter_bloc/flutter_bloc.dart';
-  //   import 'package:teta_framework/teta_framework.dart';
-  //   import 'package:myapp/src/pages/index.dart';
-  //   $componentImport
-  //   class Body extends StatefulWidget {
-  //     final List<VariableObject>? params;
-  //     Body({Key? key, this.params}) : super(key: key);
-  //     @override
-  //     _BodyState createState() => _BodyState();
-  //   }
-  //   class _BodyState extends State<Body> {
-  //     List<VariableObject> params = [];
-  //     final int? loop = 0;
-  //     @override
-  //     void initState() {
-  //       params = widget.params ?? [];
-  //       super.initState();
-  //     }
-  //     @override
-  //     Widget build(BuildContext context) {
-  //       return BlocBuilder<StatesCubit, List<VariableObject>>(
-  //           builder: (context, states) => BlocBuilder<DatasetCubit, List<DatasetObject>>(
-  //             builder: (context, dataset) => NotificationListener(
-  //               onNotification: (v) {
-  //                 if (v is ScrollUpdateNotification) {
-  //                   BlocProvider.of<ScrollYCubit>(context)
-  //                       .update(v.scrollDelta ?? 0);
-  //                 }
-  //                 return true;
-  //               },
-  //               child: BlocBuilder<ScrollYCubit, double>(
-  //                 builder: (context, scrollY) => ListView(children: [
-  //                   ${strChildren.toString()}
-  //                 ],
-  //               ),
-  //             ),
-  //           ),
-  //         ),
-  //       );
-  //     }
-  //   }""";
-  // }
 
   @override
   String toCode(

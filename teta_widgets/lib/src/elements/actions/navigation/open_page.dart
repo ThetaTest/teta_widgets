@@ -228,7 +228,7 @@ class FActionNavigationOpenPage {
         final name = ReCase(param.name);
         stringParamsToSend.write('${name.camelCase}: ');
         final valueToSend =
-            "datasets['${paramsToSend?[param.id]?['dataset']}'][index]['${paramsToSend?[param.id]?['label']}']";
+            "datasets['${paramsToSend?[param.id]?['dataset']}']?[index]?['${paramsToSend?[param.id]?['label']}'] ?? ''";
         stringParamsToSend.write('$valueToSend, ');
       }
     }
