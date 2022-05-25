@@ -69,6 +69,7 @@ class WBottomBarItem extends StatelessWidget {
               params: params,
               states: states,
               dataset: dataset,
+              loop: loop,
               forPlay: forPlay,
             ),
             onDoubleTap: () => GestureBuilder.get(
@@ -80,6 +81,7 @@ class WBottomBarItem extends StatelessWidget {
               params: params,
               states: states,
               dataset: dataset,
+              loop: loop,
               forPlay: forPlay,
             ),
             onLongPress: () => GestureBuilder.get(
@@ -91,6 +93,7 @@ class WBottomBarItem extends StatelessWidget {
               params: params,
               states: states,
               dataset: dataset,
+              loop: loop,
               forPlay: forPlay,
             ),
             child: Column(

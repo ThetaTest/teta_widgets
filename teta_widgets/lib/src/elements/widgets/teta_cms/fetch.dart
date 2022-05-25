@@ -23,6 +23,7 @@ class WCmsFetch extends StatefulWidget {
     required this.page,
     required this.keyName,
     required this.keyValue,
+    required this.showDrafts,
     required this.forPlay,
     required this.params,
     required this.states,
@@ -40,6 +41,7 @@ class WCmsFetch extends StatefulWidget {
   final FTextTypeInput page;
   final FTextTypeInput keyValue;
   final FTextTypeInput keyName;
+  final bool showDrafts;
 
   /// The opzional child of this widget
   final List<CNode> children;
@@ -125,6 +127,7 @@ class _WCmsFetchState extends State<WCmsFetch> {
         filters: [
           if (keyName.isNotEmpty && keyValue.isNotEmpty)
             Filter(keyName, keyValue),
+          if (!widget.showDrafts) Filter('_vis', 'public'),
         ],
         limit: int.tryParse(limit) ?? 20,
         page: int.tryParse(page) ?? 0,

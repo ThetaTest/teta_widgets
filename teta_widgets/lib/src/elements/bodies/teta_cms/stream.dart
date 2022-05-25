@@ -64,6 +64,7 @@ class CmsStreamBody extends NodeBody {
     DBKeys.cmsPage: FTextTypeInput(),
     DBKeys.cmsLikeKey: FTextTypeInput(),
     DBKeys.cmsLikeValue: FTextTypeInput(),
+    DBKeys.flag: true,
   };
 
   @override
@@ -103,6 +104,13 @@ class CmsStreamBody extends NodeBody {
           value: attributes[DBKeys.cmsLikeValue],
           description: 'Like op: the value to search in db',
         ),
+        FlagControlObject(
+          title: 'Show drafts',
+          key: DBKeys.flag,
+          value: attributes[DBKeys.flag],
+          description:
+              'Show doc drafts. Valid only in editor, not in production',
+        ),
       ];
 
   @override
@@ -127,6 +135,7 @@ class CmsStreamBody extends NodeBody {
         ${(attributes[DBKeys.cmsPage] as FTextTypeInput).get(params, states, dataset, forPlay, loop)}
         ${(attributes[DBKeys.cmsLikeKey] as FTextTypeInput).get(params, states, dataset, forPlay, loop)}
         ${(attributes[DBKeys.cmsLikeValue] as FTextTypeInput).get(params, states, dataset, forPlay, loop)}
+        ${attributes[DBKeys.flag] as bool}
       ''',
       ),
       node: node,
@@ -136,6 +145,7 @@ class CmsStreamBody extends NodeBody {
       page: attributes[DBKeys.cmsPage] as FTextTypeInput,
       keyName: attributes[DBKeys.cmsLikeKey] as FTextTypeInput,
       keyValue: attributes[DBKeys.cmsLikeValue] as FTextTypeInput,
+      showDrafts: attributes[DBKeys.flag] as bool? ?? false,
       forPlay: forPlay,
       params: params,
       states: states,

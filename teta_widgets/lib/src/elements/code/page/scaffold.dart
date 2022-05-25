@@ -47,6 +47,9 @@ String pageCodeTemplate(
   var appBarString = '';
   var bottomBarString = '';
   var drawerString = '';
+
+  final flag = node.body.attributes[DBKeys.flag] as bool;
+
   for (final e in children) {
     if (e.globalType == NType.appBar) {
       appBarString = e.child != null &&
@@ -86,14 +89,20 @@ String pageCodeTemplate(
       }
     }
   }
-  if (strChildren.toString() != '') strChildren.write(',');
+  if (strChildren.toString() != '') {
+    if (page.isPage) {
+      strChildren.write(',');
+    } else {
+      strChildren.write(';');
+    }
+  }
 
   final paramsString = StringBuffer()..write('');
   final parametersString = StringBuffer()..write('');
   for (final element in page.params) {
     final rc = ReCase(element.name);
     final value = element.typeDeclaration(rc.camelCase) == 'String'
-        ? "'${element.get}'"
+        ? "'''${element.get}'''"
         : element.firstValueForInitialization();
     paramsString.write(
       '''
@@ -185,6 +194,7 @@ String pageCodeTemplate(
     import 'package:flutter_staggered_animations/flutter_staggered_animations.dart';
     import 'package:http/http.dart' as http;
     import 'package:teta_cms/teta_cms.dart';
+    import 'package:webviewx/webviewx.dart';
     $componentImport
 
     class Page${pageNameRC.pascalCase} extends StatefulWidget {
@@ -209,6 +219,7 @@ String pageCodeTemplate(
       @override
       Widget build(BuildContext context) {
         return ${page.isPage ? '''Scaffold(
+          resizeToAvoidBottomInset: $flag,
           $appBarString
           $drawerString
           backgroundColor: const Color(0xFF$backgroundColor),
@@ -217,7 +228,7 @@ String pageCodeTemplate(
             $bottomBarString
           ],
         ),
-      );''' : strChildren.toString()}
+      );''' : strChildren.toString().isNotEmpty ? strChildren.toString() : 'const SizedBox();'}
     }
   }
   ''';

@@ -4,6 +4,7 @@
 // Package imports:
 import 'package:camera/camera.dart';
 import 'package:collection/collection.dart';
+import 'package:diacritic/diacritic.dart';
 // Flutter imports:
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
@@ -192,7 +193,23 @@ class FActionNavigationOpenPage {
             -1) return '';
     final page = prj.prj.pages!
         .firstWhere((final element) => element.name == nameOfPage);
-    final realPageName = "Page${nameOfPage.replaceAll(RegExp('_'), "")}";
+    final temp = removeDiacritics(
+      page.name
+          .replaceFirst('0', 'A0')
+          .replaceFirst('1', 'A1')
+          .replaceFirst('2', 'A2')
+          .replaceFirst('3', 'A3')
+          .replaceFirst('4', 'A4')
+          .replaceFirst('5', 'A5')
+          .replaceFirst('6', 'A6')
+          .replaceFirst('7', 'A7')
+          .replaceFirst('8', 'A8')
+          .replaceFirst('9', 'A9')
+          .replaceAll(' ', '')
+          .replaceAll("'", '')
+          .replaceAll('"', ''),
+    );
+    final pageNameRC = ReCase(temp);
 
     final stringParamsToSend = StringBuffer()..write('');
     for (final param in page.params) {
@@ -211,7 +228,7 @@ class FActionNavigationOpenPage {
         final name = ReCase(param.name);
         stringParamsToSend.write('${name.camelCase}: ');
         final valueToSend =
-            "datasets['${paramsToSend?[param.id]?['dataset']}'][index]['${paramsToSend?[param.id]?['label']}']";
+            "datasets['${paramsToSend?[param.id]?['dataset']}']?[index]?['${paramsToSend?[param.id]?['label']}'] ?? ''";
         stringParamsToSend.write('$valueToSend, ');
       }
     }
@@ -220,7 +237,7 @@ class FActionNavigationOpenPage {
     await Navigator.push<void>(
       context,
       MaterialPageRoute(
-        builder: (context) => $realPageName(
+        builder: (context) => Page${pageNameRC.pascalCase}(
           ${stringParamsToSend.toString()}
         ),
       ),

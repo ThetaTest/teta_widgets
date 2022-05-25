@@ -3,6 +3,7 @@
 
 // Package imports:
 import 'package:collection/collection.dart';
+import 'package:diacritic/diacritic.dart';
 // Flutter imports:
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
@@ -77,9 +78,25 @@ class FActionNavigationOpenBottomSheet {
           (prj.prj.pages ?? <PageObject>[])
                   .indexWhere((final element) => element.name == nameOfPage) ==
               -1) return '';
-      final page =
-          prj.prj.pages!.firstWhere((final element) => element.name == nameOfPage);
-      final realPageName = "Page${nameOfPage.replaceAll(' ', "")}";
+      final page = prj.prj.pages!
+          .firstWhere((final element) => element.name == nameOfPage);
+      final temp = removeDiacritics(
+        page.name
+            .replaceFirst('0', 'A0')
+            .replaceFirst('1', 'A1')
+            .replaceFirst('2', 'A2')
+            .replaceFirst('3', 'A3')
+            .replaceFirst('4', 'A4')
+            .replaceFirst('5', 'A5')
+            .replaceFirst('6', 'A6')
+            .replaceFirst('7', 'A7')
+            .replaceFirst('8', 'A8')
+            .replaceFirst('9', 'A9')
+            .replaceAll(' ', '')
+            .replaceAll("'", '')
+            .replaceAll('"', ''),
+      );
+      final pageNameRC = ReCase(temp);
 
       final stringParamsToSend = StringBuffer()..write('');
       for (final param in page.params) {
@@ -96,7 +113,7 @@ class FActionNavigationOpenBottomSheet {
       return '''
       await showModalBottomSheet<void>(
         context: context,
-        builder: (context) => $realPageName(
+        builder: (context) => Page${pageNameRC.pascalCase}(
           ${stringParamsToSend.toString()}
         ),
       );

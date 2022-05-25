@@ -1,11 +1,14 @@
 // Flutter imports:
 import 'package:flutter/material.dart';
+
 // Package imports:
 import 'package:teta_core/gen/assets.gen.dart';
 import 'package:teta_core/src/models/dataset.dart';
 import 'package:teta_core/src/models/variable.dart';
+
 // Project imports:
 import 'package:teta_widgets/src/elements/code/templates/align.dart';
+import 'package:teta_widgets/src/elements/code/templates/web_view_x_template.dart';
 import 'package:teta_widgets/src/elements/controls/control_model.dart';
 import 'package:teta_widgets/src/elements/controls/key_constants.dart';
 import 'package:teta_widgets/src/elements/controls/type.dart';
@@ -38,7 +41,7 @@ final webviewIntrinsicStates = IntrinsicStates(
   canHave: ChildrenEnum.none,
   addChildLabels: [],
   gestures: [],
-  permissions:[],
+  permissions: [],
 );
 
 /// Set of funcs to use Align widget
@@ -113,5 +116,8 @@ class WebViewBody extends NodeBody {
     final int pageId,
     final int? loop,
   ) =>
-      alignCodeTemplate(context, this, child);
+      WebViewXTemplate.toCode(
+        initialUrl: (attributes[DBKeys.valueOfCondition] as FTextTypeInput)
+            .toCode(loop),
+      );
 }
