@@ -2,6 +2,7 @@
 
 enum ActionStripe {
   buy,
+  buyCartItems,
   addProductsListItemToCart,
   removeProductsListItemFromCart,
   removeCartListItemFromCart
