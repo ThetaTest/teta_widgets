@@ -47,6 +47,9 @@ String pageCodeTemplate(
   var appBarString = '';
   var bottomBarString = '';
   var drawerString = '';
+
+  final flag = node.body.attributes[DBKeys.flag] as bool;
+
   for (final e in children) {
     if (e.globalType == NType.appBar) {
       appBarString = e.child != null &&
@@ -212,7 +215,7 @@ String pageCodeTemplate(
       @override
       Widget build(BuildContext context) {
         return ${page.isPage ? '''Scaffold(
-          resizeToAvoidBottomInset: false,
+          resizeToAvoidBottomInset: $flag,
           $appBarString
           $drawerString
           backgroundColor: const Color(0xFF$backgroundColor),
