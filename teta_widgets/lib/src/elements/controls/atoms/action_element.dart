@@ -548,8 +548,11 @@ class ActionElementControlState extends State<ActionElementControl> {
                   },
                 ),
               const Gap(Grid.small),
-              if (widget.element.actionType == ActionType.state &&
-                  widget.element.actionState == ActionState.changeWith)
+              if ((widget.element.actionType == ActionType.state &&
+                      widget.element.actionState == ActionState.changeWith) ||
+                  (widget.element.actionType == ActionType.navigation &&
+                      widget.element.actionNavigation ==
+                          ActionNavigation.launchURL))
                 CDropdown(
                   value: widget.page.states
                               .map((final e) => e.name)
@@ -574,13 +577,9 @@ class ActionElementControlState extends State<ActionElementControl> {
                   },
                 ),
               const Gap(Grid.small),
-              if ((widget.element.actionType == ActionType.state &&
-                      widget.element.actionState != ActionState.changeWith &&
-                      widget.element.actionState !=
-                          ActionState.changeWithParams) ||
-                  (widget.element.actionType == ActionType.navigation &&
-                      widget.element.actionNavigation ==
-                          ActionNavigation.launchURL))
+              if (widget.element.actionType == ActionType.state &&
+                  widget.element.actionState != ActionState.changeWith &&
+                  widget.element.actionState != ActionState.changeWithParams)
                 Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
