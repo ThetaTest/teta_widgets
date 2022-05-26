@@ -64,16 +64,6 @@ class MarginsState extends State<Margins> {
   }
 
   void onChangeHandler(final FMargins value, final FMargins old) {
-    /*const duration = Duration(milliseconds: 100);
-    if (searchOnStoppedTyping != null) {
-      setState(() => searchOnStoppedTyping!.cancel());
-    }
-    setState(
-      () => searchOnStoppedTyping = Timer(
-        duration,
-        () => setValue(value, old),
-      ),
-    );*/
     setValue(value, old);
   }
 
@@ -172,14 +162,15 @@ class MarginsState extends State<Margins> {
                     hpadding: 4,
                     withSwipe: true,
                     callBack: (final text) {
-                      margins![0] = text;
+                      final finalText = text.replaceAll('-', '');
+                      margins![0] = finalText;
                       if (isLinked) {
-                        margins![1] = text;
-                        controllers[1].text = text;
-                        margins![2] = text;
-                        controllers[2].text = text;
-                        margins![3] = text;
-                        controllers[3].text = text;
+                        margins![1] = finalText;
+                        controllers[1].text = finalText;
+                        margins![2] = finalText;
+                        controllers[2].text = finalText;
+                        margins![3] = finalText;
+                        controllers[3].text = finalText;
                       }
                       final old = FMargins.fromJson(widget.value.toJson());
                       final temp = FMargins.fromJson(widget.value.toJson());
@@ -196,7 +187,8 @@ class MarginsState extends State<Margins> {
                       hpadding: 4,
                       withSwipe: true,
                       callBack: (final text) {
-                        margins![1] = text;
+                        final finalText = text.replaceAll('-', '');
+                        margins![1] = finalText;
                         final old = FMargins.fromJson(widget.value.toJson());
                         final temp = FMargins.fromJson(widget.value.toJson());
                         onChangeHandler(temp, old);
@@ -212,7 +204,8 @@ class MarginsState extends State<Margins> {
                       hpadding: 4,
                       withSwipe: true,
                       callBack: (final text) {
-                        margins![2] = text;
+                        final finalText = text.replaceAll('-', '');
+                        margins![2] = finalText;
                         final old = FMargins.fromJson(widget.value.toJson());
                         final temp = FMargins.fromJson(widget.value.toJson());
                         onChangeHandler(temp, old);
@@ -228,7 +221,8 @@ class MarginsState extends State<Margins> {
                       hpadding: 4,
                       withSwipe: true,
                       callBack: (final text) {
-                        margins![3] = text;
+                        final finalText = text.replaceAll('-', '');
+                        margins![3] = finalText;
                         final old = FMargins.fromJson(widget.value.toJson());
                         final temp = FMargins.fromJson(widget.value.toJson());
                         onChangeHandler(temp, old);
