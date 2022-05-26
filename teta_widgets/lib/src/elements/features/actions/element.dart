@@ -756,7 +756,11 @@ class FActionElement extends Equatable {
             }
             await FDelay.action(int.tryParse('${delay?.value}') ?? 0);
             FLoop.action(
-              () => FActionNavigationLaunchURL.action(context, this.value),
+              () => FActionNavigationLaunchURL.action(
+                context,
+                states,
+                stateName,
+              ),
               everyMilliseconds,
               context,
               withLoop: withLoop ?? false,
@@ -1725,7 +1729,7 @@ class FActionElement extends Equatable {
                 FDelay.toCode(int.tryParse('${delay?.value}') ?? 0) +
                 FLoop.toCode(
                   int.tryParse(everyMilliseconds?.value ?? '0') ?? 0,
-                  FActionNavigationLaunchURL.toCode(value),
+                  FActionNavigationLaunchURL.toCode(context, stateName),
                   withLoop: withLoop ?? false,
                 );
 
