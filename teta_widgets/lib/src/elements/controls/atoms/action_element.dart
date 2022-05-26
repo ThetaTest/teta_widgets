@@ -831,6 +831,7 @@ class ActionElementControlState extends State<ActionElementControl> {
                         }
                       },
                       child: CMiniTextField(
+                        backgroundColor: Palette.bgGrey,
                         controller: controller,
                         callBack: (final text) {
                           final old = widget.element;
