@@ -529,11 +529,27 @@ class ActionElementControlState extends State<ActionElementControl> {
                   },
                 ),
               const Gap(Grid.small),
-              if ((widget.element.actionType == ActionType.state &&
-                      widget.element.actionState == ActionState.changeWith) ||
-                  (widget.element.actionType == ActionType.navigation &&
-                      widget.element.actionNavigation ==
-                          ActionNavigation.launchURL))
+              if (widget.element.actionType == ActionType.navigation)
+                CDropdown(
+                  value: FActionElement.convertValueToDropdown(
+                    widget.element.actionNavigation,
+                  ),
+                  items: FActionElement.getNavigation().toSet().toList(),
+                  onChange: (final newValue) {
+                    if (newValue != null) {
+                      final old = widget.element;
+                      widget.element.actionNavigation =
+                          FActionElement.convertDropdownToValue(
+                        ActionNavigation.values,
+                        newValue,
+                      ) as ActionNavigation?;
+                      widget.callBack(widget.element, old);
+                    }
+                  },
+                ),
+              const Gap(Grid.small),
+              if (widget.element.actionType == ActionType.state &&
+                  widget.element.actionState == ActionState.changeWith)
                 CDropdown(
                   value: widget.page.states
                               .map((final e) => e.name)
@@ -558,9 +574,13 @@ class ActionElementControlState extends State<ActionElementControl> {
                   },
                 ),
               const Gap(Grid.small),
-              if (widget.element.actionType == ActionType.state &&
-                  widget.element.actionState != ActionState.changeWith &&
-                  widget.element.actionState != ActionState.changeWithParams)
+              if ((widget.element.actionType == ActionType.state &&
+                      widget.element.actionState != ActionState.changeWith &&
+                      widget.element.actionState !=
+                          ActionState.changeWithParams) ||
+                  (widget.element.actionType == ActionType.navigation &&
+                      widget.element.actionNavigation ==
+                          ActionNavigation.launchURL))
                 Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
@@ -714,24 +734,6 @@ class ActionElementControlState extends State<ActionElementControl> {
               //      height: 40,
               //      color: Colors.black54,),
 
-              if (widget.element.actionType == ActionType.navigation)
-                CDropdown(
-                  value: FActionElement.convertValueToDropdown(
-                    widget.element.actionNavigation,
-                  ),
-                  items: FActionElement.getNavigation().toSet().toList(),
-                  onChange: (final newValue) {
-                    if (newValue != null) {
-                      final old = widget.element;
-                      widget.element.actionNavigation =
-                          FActionElement.convertDropdownToValue(
-                        ActionNavigation.values,
-                        newValue,
-                      ) as ActionNavigation?;
-                      widget.callBack(widget.element, old);
-                    }
-                  },
-                ),
               if (widget.element.actionType == ActionType.tetaAuth)
                 CDropdown(
                   value: FActionElement.convertValueToDropdown(
