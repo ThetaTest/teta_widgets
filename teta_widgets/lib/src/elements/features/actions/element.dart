@@ -224,6 +224,8 @@ class FActionElement extends Equatable {
   /// Supabase name of column for condition
   MapElement? supabaseEq;
 
+  FTextTypeInput? valueTextTypeInput;
+
   @override
   List<Object?> get props => [
         id,
@@ -1553,7 +1555,10 @@ class FActionElement extends Equatable {
                 FLoop.toCode(
                   int.tryParse(everyMilliseconds?.value ?? '0') ?? 0,
                   FActionStripeAddProductsListItemToCart.toCode(
-                      context, stateName, body),
+                    context,
+                    stateName,
+                    body,
+                  ),
                   withLoop: withLoop ?? false,
                 );
           case ActionStripe.removeCartListItemFromCart:
@@ -1567,7 +1572,10 @@ class FActionElement extends Equatable {
                 FLoop.toCode(
                   int.tryParse(everyMilliseconds?.value ?? '0') ?? 0,
                   FActionStripeCartRemoveProductsListItemFromCart.toCode(
-                      context, stateName, body),
+                    context,
+                    stateName,
+                    body,
+                  ),
                   withLoop: withLoop ?? false,
                 );
           case ActionStripe.removeProductsListItemFromCart:
@@ -1581,7 +1589,10 @@ class FActionElement extends Equatable {
                 FLoop.toCode(
                   int.tryParse(everyMilliseconds?.value ?? '0') ?? 0,
                   FActionStripeRemoveProductsListItemFromCart.toCode(
-                      context, stateName, body),
+                    context,
+                    stateName,
+                    body,
+                  ),
                   withLoop: withLoop ?? false,
                 );
           default:
