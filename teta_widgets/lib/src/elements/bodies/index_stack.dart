@@ -40,7 +40,7 @@ final indexedStackIntrinsicStates = IntrinsicStates(
   canHave: ChildrenEnum.children,
   addChildLabels: [],
   gestures: [],
-  permissions:[],
+  permissions: [],
 );
 
 /// Set of funcs to use Column widget
@@ -48,7 +48,7 @@ class IndexedStackBody extends NodeBody {
   @override
   // ignore: overridden_fields
   Map<String, dynamic> attributes = <String, dynamic>{
-    DBKeys.value: FTextTypeInput(),
+    DBKeys.value: FTextTypeInput(value: '0'),
   };
 
   @override
@@ -57,6 +57,7 @@ class IndexedStackBody extends NodeBody {
           type: ControlType.value,
           key: DBKeys.value,
           value: attributes[DBKeys.value],
+          description: 'Use only integer numbers as an input',
         ),
       ];
 
