@@ -24,10 +24,10 @@ class FMargins {
     final bottom =
         MathExpression.parse(context: context, expression: margins![3]);
     return EdgeInsets.only(
-      left: double.tryParse(left) != null ? double.parse(left) : 0,
-      top: double.tryParse(top) != null ? double.parse(top) : 0,
-      right: double.tryParse(right) != null ? double.parse(right) : 0,
-      bottom: double.tryParse(bottom) != null ? double.parse(bottom) : 0,
+      left: double.tryParse(left) != null ? double.parse(left).abs() : 0,
+      top: double.tryParse(top) != null ? double.parse(top).abs() : 0,
+      right: double.tryParse(right) != null ? double.parse(right).abs() : 0,
+      bottom: double.tryParse(bottom) != null ? double.parse(bottom).abs() : 0,
     );
   }
 
@@ -80,10 +80,10 @@ class FMargins {
     }
     return '''
     const EdgeInsets.only(
-      ${double.tryParse(left) != null && double.tryParse(left) != 0 ? "left: ${margins![0]}," : ""}
-      ${double.tryParse(top) != null && double.tryParse(top) != 0 ? "top: ${margins![1]}," : ""}
-      ${double.tryParse(right) != null && double.tryParse(right) != 0 ? "right: ${margins![2]}," : ""}
-      ${double.tryParse(bottom) != null && double.tryParse(bottom) != 0 ? "bottom: ${margins![3]}," : ""}
+      ${double.tryParse(left) != null && double.tryParse(left) != 0 ? "left: ${double.parse(margins![0]).abs()}," : ""}
+      ${double.tryParse(top) != null && double.tryParse(top) != 0 ? "top: ${double.parse(margins![1]).abs()}," : ""}
+      ${double.tryParse(right) != null && double.tryParse(right) != 0 ? "right: ${double.parse(margins![2]).abs()}," : ""}
+      ${double.tryParse(bottom) != null && double.tryParse(bottom) != 0 ? "bottom: ${double.parse(margins![3]).abs()}," : ""}
     )''';
   }
 
