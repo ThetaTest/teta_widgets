@@ -529,8 +529,11 @@ class ActionElementControlState extends State<ActionElementControl> {
                   },
                 ),
               const Gap(Grid.small),
-              if (widget.element.actionType == ActionType.state &&
-                  widget.element.actionState == ActionState.changeWith)
+              if ((widget.element.actionType == ActionType.state &&
+                      widget.element.actionState == ActionState.changeWith) ||
+                  (widget.element.actionType == ActionType.navigation &&
+                      widget.element.actionNavigation ==
+                          ActionNavigation.launchURL))
                 CDropdown(
                   value: widget.page.states
                               .map((final e) => e.name)
@@ -803,18 +806,14 @@ class ActionElementControlState extends State<ActionElementControl> {
                     }
                   },
                 ),
-              if ((widget.element.actionType == ActionType.state &&
-                      widget.element.actionState == ActionState.changeWith &&
-                      !widget.node.intrinsicState.gestures
-                          .contains(ActionGesture.onChange) &&
-                      (widget.node.intrinsicState.type != NType.calendar &&
-                          widget.node.intrinsicState.type !=
-                              NType.cupertinoSegmentedControl &&
-                          widget.node.intrinsicState.type !=
-                              NType.cupertinoSwitch)) ||
-                  (widget.element.actionType == ActionType.navigation &&
-                      widget.element.actionNavigation ==
-                          ActionNavigation.launchURL))
+              if (widget.element.actionType == ActionType.state &&
+                  widget.element.actionState == ActionState.changeWith &&
+                  !widget.node.intrinsicState.gestures
+                      .contains(ActionGesture.onChange) &&
+                  (widget.node.intrinsicState.type != NType.calendar &&
+                      widget.node.intrinsicState.type !=
+                          NType.cupertinoSegmentedControl &&
+                      widget.node.intrinsicState.type != NType.cupertinoSwitch))
                 Padding(
                   padding: const EdgeInsets.only(top: 8),
                   child: SizedBox(
