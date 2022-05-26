@@ -30,6 +30,7 @@ class WScaffold extends StatefulWidget {
     required this.params,
     required this.states,
     required this.dataset,
+    required this.flag,
     this.appBar,
     this.bottomBar,
     this.drawer,
@@ -52,6 +53,7 @@ class WScaffold extends StatefulWidget {
   final bool isScrollable;
   final bool isClipped;
   final bool bodyExtended;
+  final bool flag;
   final int? loop;
 
   final List<VariableObject> params;
@@ -116,7 +118,7 @@ class _WScaffoldState extends State<WScaffold> {
     return widget.forPlay
         ? Scaffold(
             backgroundColor: HexColor(widget.fill.getHexColor(context)),
-            resizeToAvoidBottomInset: false,
+            resizeToAvoidBottomInset: widget.flag,
             appBar: PreferredSize(
               preferredSize: const Size.fromHeight(120),
               child: widget.showAppBar && appBar != null

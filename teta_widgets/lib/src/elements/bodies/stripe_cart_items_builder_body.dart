@@ -1,78 +1,71 @@
 // Flutter imports:
-import 'package:flutter/material.dart';
+// ignore_for_file: lines_longer_than_80_chars
 
+// Flutter imports:
+import 'package:flutter/material.dart';
 // Package imports:
 import 'package:teta_core/gen/assets.gen.dart';
 import 'package:teta_core/src/models/dataset.dart';
 import 'package:teta_core/src/models/variable.dart';
-
+import 'package:teta_widgets/src/elements/code/templates/stripe_cart_items_builder_template.dart';
 // Project imports:
-import 'package:teta_widgets/src/elements/code/templates/align.dart';
-import 'package:teta_widgets/src/elements/code/templates/web_view_x_template.dart';
 import 'package:teta_widgets/src/elements/controls/control_model.dart';
 import 'package:teta_widgets/src/elements/controls/key_constants.dart';
-import 'package:teta_widgets/src/elements/controls/type.dart';
-import 'package:teta_widgets/src/elements/features/text_type_input.dart';
+import 'package:teta_widgets/src/elements/features/dataset.dart';
 import 'package:teta_widgets/src/elements/intrinsic_states/class.dart';
 import 'package:teta_widgets/src/elements/nodes/categories.dart';
 import 'package:teta_widgets/src/elements/nodes/children_enum.dart';
 import 'package:teta_widgets/src/elements/nodes/enum.dart';
 import 'package:teta_widgets/src/elements/nodes/node.dart';
 import 'package:teta_widgets/src/elements/nodes/node_body.dart';
-import 'package:teta_widgets/src/elements/widgets/webview.dart';
+import 'package:teta_widgets/src/elements/widgets/stripe_cart_items_builder.dart';
 
-const _globalType = NType.webview;
+const _globalType = NType.stripeCartItemsBuilder;
 
-/// IS
-final webviewIntrinsicStates = IntrinsicStates(
-  nodeIcon: Assets.wIcons.webView,
+/// Intrinsic States of ListView Builder
+final stripeCartItemsBuilderBodyIntrinsicStates = IntrinsicStates(
+  nodeIcon: Assets.wIcons.supabaseLogoIcon,
   nodeVideo: null,
   nodeDescription: null,
   advicedChildren: [],
   blockedTypes: [],
-  synonymous: [
-    NodeType.name(_globalType),
-  ],
+  synonymous: ['stripe', 'scroll', 'vertical list', 'products', 'cart', 'checkout'],
   advicedChildrenCanHaveAtLeastAChild: [],
   displayName: NodeType.name(_globalType),
   type: _globalType,
   category: NodeCategories.advanced,
   maxChildren: 1,
-  canHave: ChildrenEnum.none,
+  canHave: ChildrenEnum.child,
   addChildLabels: [],
   gestures: [],
   permissions: [],
 );
 
-/// Set of funcs to use Align widget
-/// ```dart
-/// Align({
-///   Key? key,
-///   AlignmentGeometry alignment,
-///   double? widthFactor,
-///   double? heightFactor,
-///   Widget? child
-/// })
-/// ```
-class WebViewBody extends NodeBody {
+/// ListView Builder's body
+class StripeCartItemsBuilderBody extends NodeBody {
   @override
   // ignore: overridden_fields
   Map<String, dynamic> attributes = <String, dynamic>{
-    DBKeys.value: FTextTypeInput(type: FTextTypeEnum.state),
-    DBKeys.valueOfCondition: FTextTypeInput(value: 'https://teta.so'),
+    DBKeys.datasetInput: FDataset(),
+    DBKeys.isVertical: true,
+    DBKeys.flag: true,
+    DBKeys.isPrimary: true,
   };
 
   @override
   List<ControlModel> get controls => [
-        ControlObject(
-          type: ControlType.webViewController,
-          key: DBKeys.value,
-          value: attributes[DBKeys.value] as FTextTypeInput,
+        FlagControlObject(
+          title: 'Is Vertical',
+          key: DBKeys.isVertical,
+          value: attributes[DBKeys.isVertical],
+          description: 'The axis along which the scroll view scrolls.',
         ),
-        ControlObject(
-          type: ControlType.value,
-          key: DBKeys.valueOfCondition,
-          value: attributes[DBKeys.valueOfCondition] as FTextTypeInput,
+        FlagControlObject(
+          title: 'Shrink Wrap',
+          key: DBKeys.flag,
+          value: attributes[DBKeys.flag],
+          description:
+              'Whether the extent of the scroll view in the scrollDirection should be determined by the contents being viewed.',
         ),
       ];
 
@@ -87,19 +80,22 @@ class WebViewBody extends NodeBody {
     final CNode? child,
     final List<CNode>? children,
   }) =>
-      WWebViewXPage(
+      WStripeCartItemsBuilder(
         ValueKey(
           '''
-            ${node.nid}
-            $loop
+      ${node.nid}
+      $loop
             ${child ?? children}
-            ${(attributes[DBKeys.value] as FTextTypeInput).toJson()}
-            ${(attributes[DBKeys.valueOfCondition] as FTextTypeInput).toJson()}
-            ''',
+      ${(attributes[DBKeys.datasetInput] as FDataset).toJson()}
+      ${attributes[DBKeys.isVertical] as bool}
+      ${attributes[DBKeys.flag] as bool}
+      ''',
         ),
-        controller: attributes[DBKeys.value] as FTextTypeInput,
-        url: attributes[DBKeys.valueOfCondition] as FTextTypeInput,
         node: node,
+        child: child,
+        value: attributes[DBKeys.datasetInput] as FDataset,
+        isVertical: attributes[DBKeys.isVertical] as bool,
+        shrinkWrap: attributes[DBKeys.flag] as bool,
         forPlay: forPlay,
         loop: loop,
         params: params,
@@ -116,8 +112,5 @@ class WebViewBody extends NodeBody {
     final int pageId,
     final int? loop,
   ) =>
-      WebViewXTemplate.toCode(
-        initialUrl: (attributes[DBKeys.valueOfCondition] as FTextTypeInput)
-            .toCode(loop),
-      );
+      StripeCartItemsBuilderTemplate.toCode(context, this, child);
 }

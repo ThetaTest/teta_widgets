@@ -44,6 +44,10 @@ import 'package:teta_widgets/src/elements/actions/state/change_with_param.dart';
 import 'package:teta_widgets/src/elements/actions/state/decrement.dart';
 import 'package:teta_widgets/src/elements/actions/state/increment.dart';
 import 'package:teta_widgets/src/elements/actions/stripe/buy.dart';
+import 'package:teta_widgets/src/elements/actions/stripe/stripe_add_list_item_to_cart.dart';
+import 'package:teta_widgets/src/elements/actions/stripe/stripe_cart_buy_all.dart';
+import 'package:teta_widgets/src/elements/actions/stripe/stripe_cart_remove_list_item_from_cart.dart';
+import 'package:teta_widgets/src/elements/actions/stripe/stripe_remove_list_item_to_cart.dart';
 import 'package:teta_widgets/src/elements/actions/supabase/delete.dart';
 import 'package:teta_widgets/src/elements/actions/supabase/insert.dart';
 import 'package:teta_widgets/src/elements/actions/supabase/signin_w_apple.dart';
@@ -509,6 +513,90 @@ class FActionElement extends Equatable {
             await FDelay.action(int.tryParse('${delay?.value}') ?? 0);
             FLoop.action(
               () => FActionStripeBuy.action(
+                context,
+                states,
+                stateName,
+                dataset,
+                loop,
+              ),
+              everyMilliseconds,
+              context,
+              withLoop: withLoop ?? false,
+            );
+            break;
+          case ActionStripe.buyCartItems:
+            if (withCondition == true) {
+              if (condition?.get(params, states, dataset, true, loop) !=
+                  valueOfCondition?.get(params, states, dataset, true, loop)) {
+                break;
+              }
+            }
+            await FDelay.action(int.tryParse('${delay?.value}') ?? 0);
+            FLoop.action(
+              () => FActionStripeCartBuyAll.action(
+                context,
+                states,
+                stateName,
+                dataset,
+                loop,
+              ),
+              everyMilliseconds,
+              context,
+              withLoop: withLoop ?? false,
+            );
+            break;
+          case ActionStripe.addProductsListItemToCart:
+            if (withCondition == true) {
+              if (condition?.get(params, states, dataset, true, loop) !=
+                  valueOfCondition?.get(params, states, dataset, true, loop)) {
+                break;
+              }
+            }
+            await FDelay.action(int.tryParse('${delay?.value}') ?? 0);
+            FLoop.action(
+              () => FActionStripeAddProductsListItemToCart.action(
+                context,
+                states,
+                stateName,
+                dataset,
+                loop,
+              ),
+              everyMilliseconds,
+              context,
+              withLoop: withLoop ?? false,
+            );
+            break;
+          case ActionStripe.removeProductsListItemFromCart:
+            if (withCondition == true) {
+              if (condition?.get(params, states, dataset, true, loop) !=
+                  valueOfCondition?.get(params, states, dataset, true, loop)) {
+                break;
+              }
+            }
+            await FDelay.action(int.tryParse('${delay?.value}') ?? 0);
+            FLoop.action(
+              () => FActionStripeRemoveProductsListItemFromCart.action(
+                context,
+                states,
+                stateName,
+                dataset,
+                loop,
+              ),
+              everyMilliseconds,
+              context,
+              withLoop: withLoop ?? false,
+            );
+            break;
+          case ActionStripe.removeCartListItemFromCart:
+            if (withCondition == true) {
+              if (condition?.get(params, states, dataset, true, loop) !=
+                  valueOfCondition?.get(params, states, dataset, true, loop)) {
+                break;
+              }
+            }
+            await FDelay.action(int.tryParse('${delay?.value}') ?? 0);
+            FLoop.action(
+              () => FActionStripeCartRemoveProductsListItemFromCart.action(
                 context,
                 states,
                 stateName,
@@ -1439,6 +1527,61 @@ class FActionElement extends Equatable {
                 FLoop.toCode(
                   int.tryParse(everyMilliseconds?.value ?? '0') ?? 0,
                   FActionStripeBuy.toCode(context, stateName, body),
+                  withLoop: withLoop ?? false,
+                );
+          case ActionStripe.buyCartItems:
+            return FCondition.toCode(
+                  context,
+                  condition,
+                  valueOfCondition,
+                  withCondition: withCondition ?? false,
+                ) +
+                FDelay.toCode(int.tryParse('${delay?.value}') ?? 0) +
+                FLoop.toCode(
+                  int.tryParse(everyMilliseconds?.value ?? '0') ?? 0,
+                  FActionStripeCartBuyAll.toCode(context, stateName, body),
+                  withLoop: withLoop ?? false,
+                );
+          case ActionStripe.addProductsListItemToCart:
+            return FCondition.toCode(
+                  context,
+                  condition,
+                  valueOfCondition,
+                  withCondition: withCondition ?? false,
+                ) +
+                FDelay.toCode(int.tryParse('${delay?.value}') ?? 0) +
+                FLoop.toCode(
+                  int.tryParse(everyMilliseconds?.value ?? '0') ?? 0,
+                  FActionStripeAddProductsListItemToCart.toCode(
+                      context, stateName, body),
+                  withLoop: withLoop ?? false,
+                );
+          case ActionStripe.removeCartListItemFromCart:
+            return FCondition.toCode(
+                  context,
+                  condition,
+                  valueOfCondition,
+                  withCondition: withCondition ?? false,
+                ) +
+                FDelay.toCode(int.tryParse('${delay?.value}') ?? 0) +
+                FLoop.toCode(
+                  int.tryParse(everyMilliseconds?.value ?? '0') ?? 0,
+                  FActionStripeCartRemoveProductsListItemFromCart.toCode(
+                      context, stateName, body),
+                  withLoop: withLoop ?? false,
+                );
+          case ActionStripe.removeProductsListItemFromCart:
+            return FCondition.toCode(
+                  context,
+                  condition,
+                  valueOfCondition,
+                  withCondition: withCondition ?? false,
+                ) +
+                FDelay.toCode(int.tryParse('${delay?.value}') ?? 0) +
+                FLoop.toCode(
+                  int.tryParse(everyMilliseconds?.value ?? '0') ?? 0,
+                  FActionStripeRemoveProductsListItemFromCart.toCode(
+                      context, stateName, body),
                   withLoop: withLoop ?? false,
                 );
           default:
