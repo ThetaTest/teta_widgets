@@ -3,7 +3,6 @@
 
 // Flutter imports:
 import 'package:flutter/material.dart';
-
 // Package imports:
 import 'package:teta_core/teta_core.dart';
 import 'package:teta_widgets/src/elements/code/templates/ad_mob_banner_ad_template.dart';
@@ -18,7 +17,7 @@ import 'package:teta_widgets/src/elements/nodes/node_body.dart';
 import 'package:teta_widgets/src/elements/widgets/w_google_ad_mob_banner_ad_body.dart';
 
 /// GlobalType for [] widget
-const _globalType = NType.adMobBannerAd;
+const _globalType = NType.adMobBanner;
 
 /// IntrinsicStates for [] widget
 final googleAdMobBannerAdIntrinsicStates = IntrinsicStates(

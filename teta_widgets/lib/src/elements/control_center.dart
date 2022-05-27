@@ -48,6 +48,7 @@ import 'package:teta_widgets/src/elements/bodies/firebase/pagination.dart';
 import 'package:teta_widgets/src/elements/bodies/firebase/stream_builder.dart';
 import 'package:teta_widgets/src/elements/bodies/fitted_box.dart';
 import 'package:teta_widgets/src/elements/bodies/gesture_detector.dart';
+import 'package:teta_widgets/src/elements/bodies/google_ad_mob_banner_ad_body.dart';
 import 'package:teta_widgets/src/elements/bodies/gridview.dart';
 import 'package:teta_widgets/src/elements/bodies/gridview_builder.dart';
 import 'package:teta_widgets/src/elements/bodies/hero.dart';
@@ -91,6 +92,7 @@ import 'package:teta_widgets/src/elements/bodies/scaffold.dart';
 import 'package:teta_widgets/src/elements/bodies/sizedbox.dart';
 import 'package:teta_widgets/src/elements/bodies/spacer.dart';
 import 'package:teta_widgets/src/elements/bodies/stack.dart';
+import 'package:teta_widgets/src/elements/bodies/stripe_cart_items_builder_body.dart';
 import 'package:teta_widgets/src/elements/bodies/stripe_products_builder.dart';
 import 'package:teta_widgets/src/elements/bodies/supabase/future_builder.dart';
 import 'package:teta_widgets/src/elements/bodies/supabase/future_stream_builder.dart';
@@ -109,12 +111,9 @@ import 'package:teta_widgets/src/elements/bodies/visibility.dart';
 import 'package:teta_widgets/src/elements/bodies/webview.dart';
 import 'package:teta_widgets/src/elements/bodies/wordpress/example.dart';
 import 'package:teta_widgets/src/elements/bodies/wrap.dart';
-import 'package:teta_widgets/src/elements/bodies/google_ad_mob_banner_ad_body.dart';
 import 'package:teta_widgets/src/elements/intrinsic_states/class.dart';
 import 'package:teta_widgets/src/elements/nodes/enum.dart';
 import 'package:teta_widgets/src/elements/nodes/node_body.dart';
-
-import 'bodies/stripe_cart_items_builder_body.dart';
 
 /// The list of the all instrict states
 final stateTypes = <IntrinsicStates>[
@@ -333,7 +332,7 @@ NodeBody getBody(final NType type) {
       return StackBody();
     case NType.text:
       return TextBody();
-    case NType.adMobBannerAd:
+    case NType.adMobBanner:
       return GoogleAdMobBannerAdBody();
     case NType.textButton:
       return TextButtonBody();

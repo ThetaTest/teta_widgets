@@ -132,7 +132,7 @@ enum NType {
   cmsStream,
 
   // AdMob
-  adMobBannerAd,
+  adMobBanner,
 
   // Animations
   animationConfigList,
