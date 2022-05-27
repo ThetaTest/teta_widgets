@@ -176,7 +176,7 @@ String pageCodeTemplate(
     ${isSupabaseIntegrated ? "import 'package:supabase_flutter/supabase_flutter.dart';" : ''}
     ${page.isAuthenticatedRequired ? "import 'package:myapp/auth/auth_required_state.dart';" : "import 'package:myapp/auth/auth_state.dart';"}
     ${isMapBoxIntegrated ? "import 'package:map/map.dart' as map;" : ''}
-    import 'package:url_launcher/url_launcher.dart';
+    import 'package:url_launcher/url_launcher_string.dart';
     import 'package:auth_buttons/auth_buttons.dart';
     $stripeImport
     $adMobImports
@@ -185,7 +185,6 @@ String pageCodeTemplate(
     import 'package:collection/collection.dart';
     import 'package:myapp/src/pages/index.dart';
     import 'package:google_fonts/google_fonts.dart';
-    import 'package:url_launcher/url_launcher.dart';
     import 'package:lottie/lottie.dart';
     import 'package:latlng/latlng.dart';
     import 'package:badges/badges.dart';
