@@ -27,10 +27,12 @@ String buttonCodeTemplate(
         ${CS.size(context, body, isWidth: true)}
         ${CS.size(context, body, isWidth: false)}
         ${CS.boxDecoration(context, body, DBKeys.fill)}
-        child: Text(
-          '$value',
-          ${CS.textStyle(context, body, DBKeys.textStyle)}
-        ),
+        child: Center(
+            child: Text(
+            '$value',
+            ${CS.textStyle(context, body, DBKeys.textStyle)}
+          ),
+        )
       ),
     )
   ''';
