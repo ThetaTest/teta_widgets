@@ -12,11 +12,20 @@ String cupertinoSwitchCodeTemplate(
   final NodeBody body,
   final CNode node,
   final CNode? child,
+  final int loop,
 ) {
   return '''
     CupertinoSwitch(
       value: false,
-      ${CS.action(context, node, ActionGesture.onChange, 'onChanged: (value) async', 'false', isRequired: true)}
+      ${CS.action(
+    context,
+    node,
+    ActionGesture.onChange,
+    'onChanged: (value) async',
+    'false',
+    isRequired: true,
+    loop: loop,
+  )}
     )
   ''';
 }

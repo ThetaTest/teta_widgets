@@ -43,7 +43,7 @@ final loginFacebookIntrinsicStates = IntrinsicStates(
   canHave: ChildrenEnum.none,
   addChildLabels: [],
   gestures: <ActionGesture>[ActionGesture.onTap, ActionGesture.onLongPress],
-  permissions:[],
+  permissions: [],
 );
 
 /// Facebook Login's body
@@ -107,5 +107,5 @@ class LoginWithFacebookBody extends NodeBody {
     final int pageId,
     final int? loop,
   ) =>
-      loginFacebookCodeTemplate(context, node, child);
+      loginFacebookCodeTemplate(context, node, child, loop ?? 0);
 }

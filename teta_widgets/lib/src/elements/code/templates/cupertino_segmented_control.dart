@@ -14,6 +14,7 @@ String cupertinoSegmentedControlCodeTemplate(
   final NodeBody body,
   final CNode node,
   final List<CNode> children,
+  final int loop,
 ) {
   StringBuffer map;
   if (children.isNotEmpty) {
@@ -73,7 +74,15 @@ String cupertinoSegmentedControlCodeTemplate(
   return '''
     CupertinoSegmentedControl<int>(
       children: $map
-      ${CS.action(context, node, ActionGesture.onTap, 'onValueChanged: (value) async', 'value', isRequired: true)}
+      ${CS.action(
+    context,
+    node,
+    ActionGesture.onTap,
+    'onValueChanged: (value) async',
+    'value',
+    isRequired: true,
+    loop: loop,
+  )}
       $selectedColor
       $unselectedColor
       $pressedColor

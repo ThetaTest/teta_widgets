@@ -1,11 +1,9 @@
 // Flutter imports:
 import 'package:flutter/material.dart';
-
 // Package imports:
 import 'package:teta_core/gen/assets.gen.dart';
 import 'package:teta_core/src/models/dataset.dart';
 import 'package:teta_core/src/models/variable.dart';
-
 // Project imports:
 import 'package:teta_widgets/src/elements/code/templates/cupertino_switch.dart';
 import 'package:teta_widgets/src/elements/controls/control_model.dart';
@@ -57,7 +55,7 @@ final cupertinoSwitchIntrinsicStates = IntrinsicStates(
   gestures: [
     ActionGesture.onChange,
   ],
-  permissions:[],
+  permissions: [],
 );
 
 /// Instrict State of Cupertino Switch
@@ -116,5 +114,11 @@ class CupertinoSwitchBody extends NodeBody {
     final int pageId,
     final int? loop,
   ) =>
-      cupertinoSwitchCodeTemplate(context, this, node, child);
+      cupertinoSwitchCodeTemplate(
+        context,
+        this,
+        node,
+        child,
+        loop ?? 0,
+      );
 }

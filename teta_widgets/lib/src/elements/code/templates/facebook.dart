@@ -10,11 +10,28 @@ String loginFacebookCodeTemplate(
   final BuildContext context,
   final CNode node,
   final CNode? child,
+  final int loop,
 ) {
   return '''
     FacebookAuthButton(
-      ${CS.action(context, node, ActionGesture.onTap, 'onPressed: () async', null, isRequired: true)}
-      ${CS.action(context, node, ActionGesture.onLongPress, 'onLongPress: () async', null, isRequired: true)}
+      ${CS.action(
+    context,
+    node,
+    ActionGesture.onTap,
+    'onPressed: () async',
+    null,
+    isRequired: true,
+    loop: loop,
+  )}
+      ${CS.action(
+    context,
+    node,
+    ActionGesture.onLongPress,
+    'onLongPress: () async',
+    null,
+    isRequired: true,
+    loop: loop,
+  )}
     )
   ''';
 }

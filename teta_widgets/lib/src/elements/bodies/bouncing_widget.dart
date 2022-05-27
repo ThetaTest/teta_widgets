@@ -44,7 +44,7 @@ final bouncingWidgetIntrinsicStates = IntrinsicStates(
   gestures: [
     ActionGesture.onTap,
   ],
-  permissions:[],
+  permissions: [],
 );
 
 /// Set of funcs to use Container widget
@@ -122,5 +122,5 @@ class BouncingWidgetBody extends NodeBody {
     final int pageId,
     final int? loop,
   ) =>
-      bouncingWidgetCodeTemplate(context, this, node, child, loop);
+      bouncingWidgetCodeTemplate(context, this, node, child, loop ?? 0);
 }

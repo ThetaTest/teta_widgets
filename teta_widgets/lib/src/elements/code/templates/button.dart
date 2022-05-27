@@ -14,15 +14,31 @@ String buttonCodeTemplate(
   final NodeBody body,
   final CNode node,
   final CNode? child,
-  final int? loop,
+  final int loop,
 ) {
   final abstract = body.attributes[DBKeys.value] as FTextTypeInput;
   final value = abstract.toCode(loop);
 
   return '''
     GestureDetector(
-      ${CS.action(context, node, ActionGesture.onTap, 'onTap: () async', null, isRequired: false)}
-      ${CS.action(context, node, ActionGesture.onLongPress, 'onLongPress: () async', null, isRequired: false)}
+      ${CS.action(
+    context,
+    node,
+    ActionGesture.onTap,
+    'onTap: () async',
+    null,
+    isRequired: false,
+    loop: loop,
+  )}
+      ${CS.action(
+    context,
+    node,
+    ActionGesture.onLongPress,
+    'onLongPress: () async',
+    null,
+    isRequired: false,
+    loop: loop,
+  )}
       child: Container(
         ${CS.size(context, body, isWidth: true)}
         ${CS.size(context, body, isWidth: false)}

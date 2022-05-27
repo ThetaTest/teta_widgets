@@ -48,7 +48,7 @@ final bottombaritemIntrinsicStates = IntrinsicStates(
   canHave: ChildrenEnum.none,
   addChildLabels: [],
   gestures: [ActionGesture.onTap, ActionGesture.onLongPress],
-  permissions:[],
+  permissions: [],
 );
 
 /// BottomBarItem's body
@@ -170,5 +170,5 @@ class BottomBarItemBody extends NodeBody {
     final int pageId,
     final int? loop,
   ) =>
-      bottomBarItemCodeTemplate(context, this, node, child, loop);
+      bottomBarItemCodeTemplate(context, this, node, child, loop ?? 0);
 }

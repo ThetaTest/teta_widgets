@@ -13,6 +13,7 @@ String cupertinoPickerCodeTemplate(
   final NodeBody body,
   final CNode node,
   final List<CNode> children,
+  final int loop,
 ) {
   final flag = body.attributes[DBKeys.flag] as bool;
   final itemExtent = CS
@@ -23,7 +24,15 @@ String cupertinoPickerCodeTemplate(
     CupertinoPicker(
       looping: $flag,
       $itemExtent
-      ${CS.action(context, node, ActionGesture.onChange, 'onSelectedItemChanged: (int) async', 'false', isRequired: true)}
+      ${CS.action(
+    context,
+    node,
+    ActionGesture.onChange,
+    'onSelectedItemChanged: (int) async',
+    'false',
+    isRequired: true,
+    loop: loop,
+  )}
       ${CS.children(
     context,
     children,

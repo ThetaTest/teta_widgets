@@ -39,7 +39,7 @@ final outlinedButtonIntrinsicStates = IntrinsicStates(
   canHave: ChildrenEnum.child,
   addChildLabels: [],
   gestures: [ActionGesture.onTap],
-  permissions:[],
+  permissions: [],
 );
 
 /// Body
@@ -100,5 +100,10 @@ class OutlinedButtonBody extends NodeBody {
     final int pageId,
     final int? loop,
   ) =>
-      outlinedButtonCodeTemplate(context, node, child);
+      outlinedButtonCodeTemplate(
+        context,
+        node,
+        child,
+        loop ?? 0,
+      );
 }

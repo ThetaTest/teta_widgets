@@ -56,7 +56,7 @@ final buttonIntrinsicStates = IntrinsicStates(
     ActionGesture.onLongPress,
     ActionGesture.onDoubleTap
   ],
-  permissions:[],
+  permissions: [],
 );
 
 /// Set of funcs to use a Button widget
@@ -187,5 +187,5 @@ class ButtonBody extends NodeBody {
     final int pageId,
     final int? loop,
   ) =>
-      buttonCodeTemplate(context, this, node, child, loop);
+      buttonCodeTemplate(context, this, node, child, loop ?? 0);
 }
