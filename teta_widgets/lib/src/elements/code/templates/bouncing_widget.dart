@@ -14,7 +14,7 @@ String bouncingWidgetCodeTemplate(
   final NodeBody body,
   final CNode node,
   final CNode? child,
-  final int? loop,
+  final int loop,
 ) {
   final abstract = body.attributes[DBKeys.value] as FTextTypeInput;
   final value = abstract.toCode(loop);
@@ -24,7 +24,15 @@ String bouncingWidgetCodeTemplate(
   final scale = double.tryParse(valueOfCondition) ?? 1;
   return '''
     BouncingWidget(
-      ${CS.action(context, node, ActionGesture.onTap, 'onPressed: () async', null, isRequired: false)}
+      ${CS.action(
+    context,
+    node,
+    ActionGesture.onTap,
+    'onPressed: () async',
+    null,
+    isRequired: false,
+    loop: loop,
+  )}
       duration: const Duration(milliseconds: $duration),
       scaleFactor: $scale,
       ${CS.child(context, child, comma: true)}

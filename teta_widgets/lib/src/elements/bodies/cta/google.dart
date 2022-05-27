@@ -43,7 +43,7 @@ final loginGoogleIntrinsicStates = IntrinsicStates(
   canHave: ChildrenEnum.none,
   addChildLabels: [],
   gestures: [ActionGesture.onTap, ActionGesture.onLongPress],
-  permissions:[],
+  permissions: [],
 );
 
 /// Google Login's body
@@ -107,5 +107,5 @@ class LoginWithGoogleBody extends NodeBody {
     final int pageId,
     final int? loop,
   ) =>
-      loginGoogleCodeTemplate(context, node, child);
+      loginGoogleCodeTemplate(context, node, child, loop ?? 0);
 }

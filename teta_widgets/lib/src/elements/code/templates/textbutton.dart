@@ -10,6 +10,7 @@ String textButtonCodeTemplate(
   final BuildContext context,
   final CNode node,
   final CNode? child,
+  final int loop,
 ) {
   return '''
     TextButton(
@@ -20,6 +21,7 @@ String textButtonCodeTemplate(
     'onPressed: () async',
     null,
     isRequired: true,
+    loop: loop,
   )}
       ${CS.action(
     context,
@@ -28,6 +30,7 @@ String textButtonCodeTemplate(
     'onLongPress: () async',
     null,
     isRequired: false,
+    loop: loop,
   )}
       ${CS.child(context, child, comma: true)}
     )

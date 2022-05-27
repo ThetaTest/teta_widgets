@@ -10,12 +10,37 @@ String gestureDetectorCodeTemplate(
   final BuildContext context,
   final CNode node,
   final CNode? child,
+  final int loop,
 ) {
   return '''
   GestureDetector(
-    ${CS.action(context, node, ActionGesture.onTap, 'onTap: () async', null, isRequired: false)}
-    ${CS.action(context, node, ActionGesture.onDoubleTap, 'onDoubleTap: () async', null, isRequired: false)}
-    ${CS.action(context, node, ActionGesture.onLongPress, 'onLongPress: () async', null, isRequired: false)}
+    ${CS.action(
+    context,
+    node,
+    ActionGesture.onTap,
+    'onTap: () async',
+    null,
+    isRequired: false,
+    loop: loop,
+  )}
+    ${CS.action(
+    context,
+    node,
+    ActionGesture.onDoubleTap,
+    'onDoubleTap: () async',
+    null,
+    isRequired: false,
+    loop: loop,
+  )}
+    ${CS.action(
+    context,
+    node,
+    ActionGesture.onLongPress,
+    'onLongPress: () async',
+    null,
+    isRequired: false,
+    loop: loop,
+  )}
     ${CS.child(context, child, comma: true)}
   )
   ''';

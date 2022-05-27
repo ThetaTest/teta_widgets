@@ -662,10 +662,13 @@ class FActionElement extends Equatable {
             await FDelay.action(int.tryParse('${delay?.value}') ?? 0);
             FLoop.action(
               () => FActionStateChangeWith.action(
-                context,
-                states,
-                stateName,
-                value ?? this.value,
+                context: context,
+                states: states,
+                params: params,
+                datasets: dataset,
+                stateName: stateName,
+                valueToChangeWith: valueTextTypeInput ?? FTextTypeInput(),
+                loop: loop ?? 0,
               ),
               everyMilliseconds,
               context,
@@ -1501,11 +1504,12 @@ class FActionElement extends Equatable {
     }
   }
 
-  String toCode(
+  String toCode({
+    required final BuildContext context,
+    required final CNode body,
     final String? value,
-    final BuildContext context,
-    final CNode body,
-  ) {
+    final int loop = 0,
+  }) {
     switch (actionType) {
       case ActionType.revenueCat:
         switch (actionRevenueCat) {
@@ -1651,9 +1655,10 @@ class FActionElement extends Equatable {
                 FLoop.toCode(
                   int.tryParse(everyMilliseconds?.value ?? '0') ?? 0,
                   FActionStateChangeWith.toCode(
-                    context,
-                    stateName,
-                    value ?? this.value,
+                    context: context,
+                    stateName: stateName,
+                    valueToChangeWith: valueTextTypeInput,
+                    loop: loop,
                   ),
                   withLoop: withLoop ?? false,
                 );

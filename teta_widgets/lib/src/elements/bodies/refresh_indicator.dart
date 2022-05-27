@@ -46,7 +46,7 @@ final refreshIndicatorIntrinsicStates = IntrinsicStates(
   canHave: ChildrenEnum.children,
   addChildLabels: [],
   gestures: [],
-  permissions:[],
+  permissions: [],
 );
 
 /// Set of funcs of Center node
@@ -127,5 +127,11 @@ class RefreshIndicatorBody extends NodeBody {
     final int pageId,
     final int? loop,
   ) =>
-      refreshIndicatorCodeTemplate(context, this, node, children ?? [], loop);
+      refreshIndicatorCodeTemplate(
+        context,
+        this,
+        node,
+        children ?? [],
+        loop ?? 0,
+      );
 }

@@ -8,8 +8,6 @@ import 'package:teta_core/src/models/variable.dart';
 import 'package:teta_widgets/src/elements/code/templates/cupertino_segmented_control.dart';
 import 'package:teta_widgets/src/elements/controls/control_model.dart';
 import 'package:teta_widgets/src/elements/controls/key_constants.dart';
-import 'package:teta_widgets/src/elements/controls/type.dart';
-import 'package:teta_widgets/src/elements/features/action.dart';
 import 'package:teta_widgets/src/elements/features/actions/enums/gestures.dart';
 import 'package:teta_widgets/src/elements/features/fill.dart';
 import 'package:teta_widgets/src/elements/intrinsic_states/class.dart';
@@ -57,7 +55,7 @@ final cupertinoSegmentedControlIntrinsicStates = IntrinsicStates(
   gestures: [
     ActionGesture.onTap,
   ],
-  permissions:[],
+  permissions: [],
 );
 
 /// Cupertino Segmented Control's body
@@ -185,5 +183,6 @@ class CupertinoSegmentedControlBody extends NodeBody {
         this,
         node,
         children ?? <CNode>[],
+        loop ?? 0,
       );
 }

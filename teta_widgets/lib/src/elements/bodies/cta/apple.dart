@@ -43,7 +43,7 @@ final loginAppleIntrinsicStates = IntrinsicStates(
   canHave: ChildrenEnum.none,
   addChildLabels: [],
   gestures: <ActionGesture>[ActionGesture.onTap, ActionGesture.onLongPress],
-  permissions:[],
+  permissions: [],
 );
 
 /// Login Apple's body
@@ -107,5 +107,5 @@ class LoginWithAppleBody extends NodeBody {
     final int pageId,
     final int? loop,
   ) =>
-      loginAppleCodeTemplate(context, node, child);
+      loginAppleCodeTemplate(context, node, child, loop ?? 0);
 }

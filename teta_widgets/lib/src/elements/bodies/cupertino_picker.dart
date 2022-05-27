@@ -48,7 +48,7 @@ final cupertinoPickerIntrinsicStates = IntrinsicStates(
   gestures: [
     ActionGesture.onChange,
   ],
-  permissions:[],
+  permissions: [],
 );
 
 /// Cupertino Picker's body
@@ -126,5 +126,6 @@ class CupertinoPickerBody extends NodeBody {
     final int pageId,
     final int? loop,
   ) =>
-      cupertinoPickerCodeTemplate(context, this, node, children ?? []);
+      cupertinoPickerCodeTemplate(
+          context, this, node, children ?? [], loop ?? 0);
 }

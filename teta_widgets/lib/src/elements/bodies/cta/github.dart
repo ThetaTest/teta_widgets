@@ -43,7 +43,7 @@ final loginGitHubIntrinsicStates = IntrinsicStates(
   canHave: ChildrenEnum.none,
   addChildLabels: [],
   gestures: [ActionGesture.onTap, ActionGesture.onLongPress],
-  permissions:[],
+  permissions: [],
 );
 
 /// Instrict State of GitHub Login
@@ -107,5 +107,5 @@ class LoginWithGitHubBody extends NodeBody {
     final int pageId,
     final int? loop,
   ) =>
-      loginGitHubCodeTemplate(context, node, child);
+      loginGitHubCodeTemplate(context, node, child, loop ?? 0);
 }

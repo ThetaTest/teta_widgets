@@ -8,12 +8,21 @@ class RadioButtonToCode {
     final CNode node,
     final FTextTypeInput groupValue,
     final FTextTypeInput value,
+    final int loop,
   ) {
     return '''
     Radio<String>(
       value: '${value.value}',
       groupValue: '${groupValue.value}',
-      ${CS.action(context, node, ActionGesture.onChange, 'onChanged: (final value) async', null, isRequired: true)}
+      ${CS.action(
+      context,
+      node,
+      ActionGesture.onChange,
+      'onChanged: (final value) async',
+      null,
+      isRequired: true,
+      loop: loop,
+    )}
     )
   ''';
   }

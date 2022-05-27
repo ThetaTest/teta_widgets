@@ -47,7 +47,7 @@ final calendarIntrinsicStates = IntrinsicStates(
     ActionGesture.onMonthLoaded,
     ActionGesture.onDayPressed,
   ],
-  permissions:[
+  permissions: [
     Permissions.calendar,
   ],
 );
@@ -200,5 +200,5 @@ class CalendarBody extends NodeBody {
     final int pageId,
     final int? loop,
   ) =>
-      calendarCodeTemplate(context, node, child);
+      calendarCodeTemplate(context, node, child, loop ?? 0);
 }

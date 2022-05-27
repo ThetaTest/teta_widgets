@@ -14,7 +14,7 @@ String textFieldCodeTemplate(
   final NodeBody body,
   final CNode node,
   final CNode? child,
-  final int? loop,
+  final int loop,
 ) {
   final labelText =
       (body.attributes[DBKeys.labelText] as FTextTypeInput).toCode(loop);
@@ -36,8 +36,24 @@ String textFieldCodeTemplate(
     ${CS.size(context, body, isWidth: true)}
     ${CS.boxDecoration(context, body, DBKeys.fill)}
     child: TextField(
-      ${CS.action(context, node, ActionGesture.onChange, 'onChanged: (String value) async', null, isRequired: true)}
-      ${CS.action(context, node, ActionGesture.onSubmitted, 'onSubmitted: (String value) async', null, isRequired: false)}
+      ${CS.action(
+    context,
+    node,
+    ActionGesture.onChange,
+    'onChanged: (String value) async',
+    null,
+    isRequired: true,
+    loop: loop,
+  )}
+      ${CS.action(
+    context,
+    node,
+    ActionGesture.onSubmitted,
+    'onSubmitted: (String value) async',
+    null,
+    isRequired: false,
+    loop: loop,
+  )}
       decoration: const InputDecoration(
         border: OutlineInputBorder(
           ${CS.borderRadius(context, body)}

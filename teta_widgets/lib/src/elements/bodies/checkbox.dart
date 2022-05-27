@@ -38,7 +38,7 @@ final checkBoxIntrinsicStates = IntrinsicStates(
   canHave: ChildrenEnum.none,
   addChildLabels: [],
   gestures: [ActionGesture.onChange],
-  permissions:[],
+  permissions: [],
 );
 
 /// Set of funcs to use CheckBox widget
@@ -96,5 +96,5 @@ class CheckBoxBody extends NodeBody {
     final int pageId,
     final int? loop,
   ) =>
-      checkBoxCodeTemplate(context, this, node, child, loop);
+      checkBoxCodeTemplate(context, this, node, child, loop ?? 0);
 }

@@ -15,6 +15,7 @@ String calendarCodeTemplate(
   final BuildContext context,
   final CNode node,
   final CNode? child,
+  final int loop,
 ) {
   final dataset = node.body.attributes[DBKeys.datasetInput] as FDataset;
   var firstDecoration = CS
@@ -25,8 +26,24 @@ String calendarCodeTemplate(
   Builder(builder: (context) {
     return PagedVerticalCalendar(
       addAutomaticKeepAlives: true,
-      ${CS.action(context, node, ActionGesture.onDayPressed, 'onDayPressed: (date) async', '\$date', isRequired: false)}
-      ${CS.action(context, node, ActionGesture.onMonthLoaded, 'onMonthLoaded: (year, month) async', '\$month', isRequired: false)}
+      ${CS.action(
+    context,
+    node,
+    ActionGesture.onDayPressed,
+    'onDayPressed: (date) async',
+    '\$date',
+    isRequired: false,
+    loop: loop,
+  )}
+      ${CS.action(
+    context,
+    node,
+    ActionGesture.onMonthLoaded,
+    'onMonthLoaded: (year, month) async',
+    '\$month',
+    isRequired: false,
+    loop: loop,
+  )}
       dayBuilder: (context, date) {
         final dataset = datasets['${dataset.datasetName}'];
          final element =

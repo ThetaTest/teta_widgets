@@ -334,6 +334,7 @@ class CS {
     final ActionGesture gesture,
     final String func,
     final String? value, {
+    required final int? loop,
     required final bool isRequired,
   }) {
     final code = StringBuffer()..write('');
@@ -341,7 +342,14 @@ class CS {
     for (final element
         in (node.body.attributes[DBKeys.action] as FAction).actions!) {
       if (element.actionGesture == gesture) {
-        code.write(element.toCode(value, context, node));
+        code.write(
+          element.toCode(
+            value: value,
+            context: context,
+            body: node,
+            loop: loop ?? 0,
+          ),
+        );
       }
     }
     return '''

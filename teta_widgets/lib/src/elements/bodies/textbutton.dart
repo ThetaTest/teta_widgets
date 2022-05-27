@@ -42,7 +42,7 @@ final textButtonIntrinsicStates = IntrinsicStates(
   canHave: ChildrenEnum.child,
   addChildLabels: [],
   gestures: [ActionGesture.onTap],
-  permissions:[],
+  permissions: [],
 );
 
 /// Body for [TextButton] widget
@@ -114,5 +114,10 @@ class TextButtonBody extends NodeBody {
     final int pageId,
     final int? loop,
   ) =>
-      textButtonCodeTemplate(context, node, child);
+      textButtonCodeTemplate(
+        context,
+        node,
+        child,
+        loop ?? 0,
+      );
 }

@@ -14,7 +14,7 @@ String refreshIndicatorCodeTemplate(
   final NodeBody body,
   final CNode node,
   final List<CNode> children,
-  final int? loop,
+  final int loop,
 ) {
   final abstract = body.attributes[DBKeys.duration] as FTextTypeInput;
   final value = abstract.toCode(loop);
@@ -22,7 +22,15 @@ String refreshIndicatorCodeTemplate(
   return '''
     RefreshIndicator(
       duration: const Duration(milliseconds: $duration),
-      ${CS.action(context, node, ActionGesture.onTap, 'onPressed: () async', null, isRequired: false)}
+      ${CS.action(
+    context,
+    node,
+    ActionGesture.onTap,
+    'onPressed: () async',
+    null,
+    isRequired: false,
+    loop: loop,
+  )}
       ${CS.size(context, body, isWidth: false)}
       ${CS.children(context, children)}
     )

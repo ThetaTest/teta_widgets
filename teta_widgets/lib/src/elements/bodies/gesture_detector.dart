@@ -52,7 +52,7 @@ final gestureDetectorIntrinsicStates = IntrinsicStates(
     ActionGesture.onLongPress,
     ActionGesture.onDoubleTap
   ],
-  permissions:[],
+  permissions: [],
 );
 
 /// GestureDetector's body
@@ -112,5 +112,10 @@ class GestureDetectorBody extends NodeBody {
     final int pageId,
     final int? loop,
   ) =>
-      gestureDetectorCodeTemplate(context, node, child);
+      gestureDetectorCodeTemplate(
+        context,
+        node,
+        child,
+        loop ?? 0,
+      );
 }

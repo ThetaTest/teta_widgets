@@ -43,7 +43,7 @@ final loginTwitterIntrinsicStates = IntrinsicStates(
   canHave: ChildrenEnum.none,
   addChildLabels: [],
   gestures: [ActionGesture.onTap, ActionGesture.onLongPress],
-  permissions:[],
+  permissions: [],
 );
 
 /// Instrict State of Twitter Login
@@ -107,5 +107,5 @@ class LoginWithTwitterBody extends NodeBody {
     final int pageId,
     final int? loop,
   ) =>
-      loginTwitterCodeTemplate(context, node, child);
+      loginTwitterCodeTemplate(context, node, child, loop ?? 0);
 }
