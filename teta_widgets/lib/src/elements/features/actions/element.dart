@@ -56,7 +56,7 @@ import 'package:teta_widgets/src/elements/actions/supabase/signin_w_facebook.dar
 import 'package:teta_widgets/src/elements/actions/supabase/signin_w_google.dart';
 import 'package:teta_widgets/src/elements/actions/supabase/signup_w_credentials.dart';
 import 'package:teta_widgets/src/elements/actions/supabase/update.dart';
-import 'package:teta_widgets/src/elements/actions/teta_cms/auth/login_google.dart';
+import 'package:teta_widgets/src/elements/actions/teta_cms/auth/login.dart';
 import 'package:teta_widgets/src/elements/actions/webview/back.dart';
 import 'package:teta_widgets/src/elements/actions/webview/forward.dart';
 import 'package:teta_widgets/src/elements/actions/webview/reload.dart';
@@ -470,7 +470,7 @@ class FActionElement extends Equatable {
             }
             await FDelay.action(int.tryParse('${delay?.value}') ?? 0);
             FLoop.action(
-              () => FATetaCMSLoginGoogle.action(
+              () => FATetaCMSLogin.action(
                 node,
                 nameOfPage,
                 context,
@@ -669,6 +669,7 @@ class FActionElement extends Equatable {
                 datasets: dataset,
                 stateName: stateName,
                 valueToChangeWith: valueTextTypeInput ?? FTextTypeInput(),
+                value: value,
                 loop: loop ?? 0,
               ),
               everyMilliseconds,

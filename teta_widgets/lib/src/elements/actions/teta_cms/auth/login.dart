@@ -14,7 +14,7 @@ import 'package:teta_widgets/src/elements/actions/snippets/take_state_from.dart'
 import 'package:teta_widgets/src/elements/index.dart';
 // Project imports:
 
-class FATetaCMSLoginGoogle {
+class FATetaCMSLogin {
   static Future action(
     final CNode node,
     final String? nameOfPage,

@@ -21,13 +21,17 @@ class FActionStateChangeWith {
     required final List<DatasetObject> datasets,
     required final String? stateName,
     required final FTextTypeInput valueToChangeWith,
+    required final String? value,
     final int loop = 0,
   }) async {
     try {
       final index =
           states.indexWhere((final element) => element.name == stateName);
       if (index >= 0) {
-        states[index].value =
+        print(
+          value ?? valueToChangeWith.get(params, states, datasets, true, loop),
+        );
+        states[index].value = value ??
             valueToChangeWith.get(params, states, datasets, true, loop);
         update(context);
       }
