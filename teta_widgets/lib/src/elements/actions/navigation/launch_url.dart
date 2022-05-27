@@ -3,24 +3,30 @@
 
 // Flutter imports:
 import 'package:flutter/material.dart';
-import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:recase/recase.dart';
 import 'package:teta_core/teta_core.dart';
-import 'package:teta_widgets/src/elements/actions/snippets/take_state_from.dart';
+import 'package:teta_widgets/src/elements/index.dart';
 // Package imports:
 import 'package:url_launcher/url_launcher_string.dart';
 
 class FActionNavigationLaunchURL {
-  static Future action(
-    final BuildContext context,
-    final List<VariableObject> states,
-    final String? stateName,
-  ) async {
-    final index =
-        states.indexWhere((final element) => element.name == stateName);
-    if (await canLaunchUrlString('${states[index].get}')) {
+  static Future action({
+    required final BuildContext context,
+    required final List<VariableObject> params,
+    required final List<VariableObject> states,
+    required final List<DatasetObject> datasets,
+    required final FTextTypeInput value,
+    required final int loop,
+  }) async {
+    final valueCode = value.get(
+      params,
+      states,
+      datasets,
+      true,
+      loop,
+    );
+    if (await canLaunchUrlString(valueCode)) {
       await launchUrlString(
-        '${states[index].get}',
+        valueCode,
         mode: LaunchMode.inAppWebView,
       );
     }
@@ -28,22 +34,20 @@ class FActionNavigationLaunchURL {
 
   static String toCode(
     final BuildContext context,
-    final String? stateName,
+    final FTextTypeInput value,
+    final int loop,
   ) {
-    final page = BlocProvider.of<FocusPageBloc>(context).state;
-    final variable = takeStateFrom(page, '$stateName');
-    if (variable == null || stateName == null) return '';
-
-    final varName = ReCase(stateName).camelCase;
+    final code = value.toCode(loop);
 
     final buffer = StringBuffer()..write('');
-    return """
-    if (await canLaunchUrlString('''\${$varName}''')) {
+    final str = code.contains(r'${') ? code : "'''$code'''";
+    return '''
+    if (await canLaunchUrlString($str)) {
       await launchUrlString(
-        '''\${$varName}''',
+        $str,
         mode: LaunchMode.inAppWebView,
       );
     }
-    """;
+    ''';
   }
 }

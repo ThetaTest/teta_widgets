@@ -445,6 +445,8 @@ class FActionElement extends Equatable {
         'wLoop': withLoop,
         'evrMll':
             everyMilliseconds != null ? everyMilliseconds!.toJson() : null,
+        'vTTI':
+            valueTextTypeInput != null ? valueTextTypeInput!.toJson() : null,
       }..removeWhere((final String key, final dynamic value) => value == null);
 
   Future getAction(
@@ -766,9 +768,12 @@ class FActionElement extends Equatable {
             await FDelay.action(int.tryParse('${delay?.value}') ?? 0);
             FLoop.action(
               () => FActionNavigationLaunchURL.action(
-                context,
-                states,
-                stateName,
+                context: context,
+                params: params,
+                states: states,
+                datasets: dataset,
+                loop: loop ?? 0,
+                value: valueTextTypeInput ?? FTextTypeInput(),
               ),
               everyMilliseconds,
               context,
@@ -1740,7 +1745,11 @@ class FActionElement extends Equatable {
                 FDelay.toCode(int.tryParse('${delay?.value}') ?? 0) +
                 FLoop.toCode(
                   int.tryParse(everyMilliseconds?.value ?? '0') ?? 0,
-                  FActionNavigationLaunchURL.toCode(context, stateName),
+                  FActionNavigationLaunchURL.toCode(
+                    context,
+                    valueTextTypeInput ?? FTextTypeInput(),
+                    loop,
+                  ),
                   withLoop: withLoop ?? false,
                 );
 

@@ -57,9 +57,15 @@ class FActionStateChangeWith {
       final buffer = StringBuffer()..write('');
       //this will be inserted in a onChange (string value) method so this should work like this
       if (variable.type == VariableType.string) {
-        buffer.write(
-          "$varName = ${value.isNotEmpty ? "'''$value'''" : 'value'};",
-        );
+        if (value.contains(r'${')) {
+          buffer.write(
+            '$varName = $value;',
+          );
+        } else {
+          buffer.write(
+            "$varName = ${value.isNotEmpty ? "'''$value'''" : 'value'};",
+          );
+        }
       } else {
         if (variable.type == VariableType.int) {
           buffer.write(
