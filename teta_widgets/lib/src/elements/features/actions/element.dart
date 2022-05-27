@@ -157,11 +157,10 @@ class FActionElement extends Equatable {
     paramsToSend = doc['pTS'] as Map<String, dynamic>?;
     valueTextTypeInput =
         doc['v'] != null ? FTextTypeInput(value: doc['v'] as String?) : null;
-    valueTextTypeInput = valueTextTypeInput == null
-        ? doc['vTTI'] != null
+    valueTextTypeInput = valueTextTypeInput ??
+        (doc['vTTI'] != null
             ? FTextTypeInput.fromJson(doc['vTTI'] as Map<String, dynamic>)
-            : FTextTypeInput()
-        : null;
+            : FTextTypeInput());
     supabaseFrom =
         FTextTypeInput.fromJson(doc['sFrom'] as Map<String, dynamic>?);
     supabaseData = (doc['sData'] as List<dynamic>? ?? <dynamic>[])
