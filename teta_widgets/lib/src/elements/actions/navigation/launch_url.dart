@@ -40,7 +40,11 @@ class FActionNavigationLaunchURL {
     final code = value.toCode(loop);
 
     final buffer = StringBuffer()..write('');
-    final str = code.contains(r'${') ? code : "'''$code'''";
+    final str = code.contains(r'${')
+        ? code
+        : code.contains('this.datasets')
+            ? "'''\${$code}'''"
+            : "'''$code'''";
     return '''
     if (await canLaunchUrlString($str)) {
       await launchUrlString(

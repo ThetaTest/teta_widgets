@@ -1,9 +1,6 @@
 // Flutter imports:
-import 'dart:io';
 
 import 'package:flutter/material.dart';
-import 'package:google_mobile_ads/google_mobile_ads.dart';
-
 // Project imports:
 import 'package:teta_widgets/src/elements/controls/key_constants.dart';
 import 'package:teta_widgets/src/elements/features/text_type_input.dart';
@@ -26,27 +23,27 @@ class AdMobBannerAdTemplate {
 
     return '''
       FutureBuilder<BannerAd>(
-                  future: Future.delayed(Duration(milliseconds: 0), () async {
-                    final ad = BannerAd(
-                      request: const AdRequest(),
-                      adUnitId: Platform.isIOS
-                          ? '$iosKey'
-                          : '$androidKey',
-                      listener: const BannerAdListener(),
-                      size: AdSize.fluid,
-                    );
-                    await ad.load();
-                    return ad;
-                  }),
-                  builder: (context, ad) {
-                    if (ad.data == null) {
-                      return Container();
-                    }
-                    return AdWidget(
-                      ad: ad.data!,
-                    );
-                  },
-                )
+        future: Future.delayed(Duration(milliseconds: 0), () async {
+          final ad = BannerAd(
+            request: const AdRequest(),
+            adUnitId: Platform.isIOS
+                ? '$iosKey'
+                : '$androidKey',
+            listener: const BannerAdListener(),
+            size: AdSize.fluid,
+          );
+          await ad.load();
+          return ad;
+        }),
+        builder: (context, ad) {
+          if (ad.data == null) {
+            return Container();
+          }
+          return AdWidget(
+            ad: ad.data!,
+          );
+        },
+      )
   ''';
   }
 }
