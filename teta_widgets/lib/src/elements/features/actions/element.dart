@@ -101,6 +101,7 @@ class FActionElement extends Equatable {
     this.valueOfCondition,
     this.withLoop,
     this.everyMilliseconds,
+    this.valueTextTypeInput,
   }) {
     id ??= const Uuid().v1();
     delay ??= FTextTypeInput(value: '0');
@@ -154,7 +155,13 @@ class FActionElement extends Equatable {
     stateName = doc['sN'] as String?;
     nameOfPage = doc['pN'] as String?;
     paramsToSend = doc['pTS'] as Map<String, dynamic>?;
-    value = doc['v'] as String?;
+    valueTextTypeInput =
+        doc['v'] != null ? FTextTypeInput(value: doc['v'] as String?) : null;
+    valueTextTypeInput = valueTextTypeInput == null
+        ? doc['vTTI'] != null
+            ? FTextTypeInput.fromJson(doc['vTTI'] as Map<String, dynamic>)
+            : FTextTypeInput()
+        : null;
     supabaseFrom =
         FTextTypeInput.fromJson(doc['sFrom'] as Map<String, dynamic>?);
     supabaseData = (doc['sData'] as List<dynamic>? ?? <dynamic>[])
@@ -214,6 +221,7 @@ class FActionElement extends Equatable {
   String? nameOfDataset;
   Map<String, dynamic>? paramsToSend;
   String? value;
+  FTextTypeInput? valueTextTypeInput;
 
   /// Supabase from
   FTextTypeInput? supabaseFrom;
@@ -223,8 +231,6 @@ class FActionElement extends Equatable {
 
   /// Supabase name of column for condition
   MapElement? supabaseEq;
-
-  FTextTypeInput? valueTextTypeInput;
 
   @override
   List<Object?> get props => [

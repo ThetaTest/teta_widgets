@@ -819,23 +819,17 @@ class ActionElementControlState extends State<ActionElementControl> {
                   padding: const EdgeInsets.only(top: 8),
                   child: SizedBox(
                     width: double.maxFinite,
-                    child: BlocListener<FocusBloc, List<CNode>>(
-                      listener: (final context, final state) {
-                        if (state.isNotEmpty) {
-                          if (state.first.nid != nodeId) {
-                            setState(() {
-                              controller.text = widget.element.value ?? '';
-                            });
-                            nodeId = state.first.nid;
-                          }
-                        }
-                      },
-                      child: CMiniTextField(
-                        backgroundColor: Palette.bgGrey,
-                        controller: controller,
-                        callBack: (final text) {
+                    child: descriptionControlWidget(
+                      description: '''''',
+                      control: TextControl(
+                        node: widget.node,
+                        value: widget.element.valueTextTypeInput ??
+                            FTextTypeInput(),
+                        page: widget.page,
+                        title: 'Value',
+                        callBack: (final value, final old) {
                           final old = widget.element;
-                          widget.element.value = text;
+                          widget.element.valueOfCondition = value;
                           widget.callBack(widget.element, old);
                         },
                       ),
