@@ -9,6 +9,7 @@ import 'package:equatable/equatable.dart';
 // Flutter imports:
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
+import 'package:teta_cms/teta_cms.dart';
 import 'package:teta_core/src/models/dataset.dart';
 import 'package:teta_core/src/models/map_element.dart';
 import 'package:teta_core/src/models/page.dart';
@@ -479,6 +480,32 @@ class FActionElement extends Equatable {
                 states,
                 dataset,
                 loop,
+                TetaProvider.google,
+              ),
+              everyMilliseconds,
+              context,
+              withLoop: withLoop ?? false,
+            );
+            break;
+          case ActionTetaCmsAuth.signInWithGitHub:
+            if (withCondition == true) {
+              if (condition?.get(params, states, dataset, true, loop) !=
+                  valueOfCondition?.get(params, states, dataset, true, loop)) {
+                break;
+              }
+            }
+            await FDelay.action(int.tryParse('${delay?.value}') ?? 0);
+            FLoop.action(
+              () => FATetaCMSLogin.action(
+                node,
+                nameOfPage,
+                context,
+                paramsToSend,
+                params,
+                states,
+                dataset,
+                loop,
+                TetaProvider.github,
               ),
               everyMilliseconds,
               context,
@@ -1516,6 +1543,48 @@ class FActionElement extends Equatable {
     final int loop = 0,
   }) {
     switch (actionType) {
+      case ActionType.tetaAuth:
+        switch (actionTetaAuth) {
+          case ActionTetaCmsAuth.signInWithGoogle:
+            return FCondition.toCode(
+                  context,
+                  condition,
+                  valueOfCondition,
+                  withCondition: withCondition ?? false,
+                ) +
+                FDelay.toCode(int.tryParse('${delay?.value}') ?? 0) +
+                FLoop.toCode(
+                  int.tryParse(everyMilliseconds?.value ?? '0') ?? 0,
+                  FATetaCMSLogin.toCode(
+                    context,
+                    TetaProvider.google,
+                    nameOfPage,
+                    paramsToSend,
+                  ),
+                  withLoop: withLoop ?? false,
+                );
+          case ActionTetaCmsAuth.signInWithGitHub:
+            return FCondition.toCode(
+                  context,
+                  condition,
+                  valueOfCondition,
+                  withCondition: withCondition ?? false,
+                ) +
+                FDelay.toCode(int.tryParse('${delay?.value}') ?? 0) +
+                FLoop.toCode(
+                  int.tryParse(everyMilliseconds?.value ?? '0') ?? 0,
+                  FATetaCMSLogin.toCode(
+                    context,
+                    TetaProvider.github,
+                    nameOfPage,
+                    paramsToSend,
+                  ),
+                  withLoop: withLoop ?? false,
+                );
+          default:
+            break;
+        }
+        break;
       case ActionType.revenueCat:
         switch (actionRevenueCat) {
           case ActionRevenueCat.buy:
