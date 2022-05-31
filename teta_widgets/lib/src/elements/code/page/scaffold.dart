@@ -7,14 +7,13 @@ import 'package:diacritic/diacritic.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:recase/recase.dart';
-import 'package:teta_core/src/blocs/focus_project/index.dart';
+import 'package:teta_core/teta_core.dart';
 // Project imports:
 import 'package:teta_widgets/src/elements/controls/key_constants.dart';
 import 'package:teta_widgets/src/elements/features/fill.dart';
 import 'package:teta_widgets/src/elements/nodes/enum.dart';
 import 'package:teta_widgets/src/elements/nodes/node.dart';
 
-//todo: fix conflict between dart:core and package:map for Map class
 /// Generates the code for a page
 String pageCodeTemplate(
   final BuildContext context,
@@ -43,7 +42,6 @@ String pageCodeTemplate(
   );
   final pageNameRC = ReCase(temp);
   final strChildren = StringBuffer()..write('');
-  var componentImport = '';
   var appBarString = '';
   var bottomBarString = '';
   var drawerString = '';
@@ -82,7 +80,22 @@ String pageCodeTemplate(
     } else if (e.globalType == NType.drawer) {
       drawerString = e.child != null ? 'drawer: ${e.toCode(context)},' : '';
     } else if (e.globalType == NType.component) {
-      componentImport = "import 'package:myapp/src/components/index.dart';";
+      Logger.printSuccess('entered here');
+      // final pages =
+      //     (BlocProvider.of<FocusProjectBloc>(context).state as ProjectLoaded)
+      //         .prj
+      //         .pages;
+      // final currentComponent = pages!.firstWhere(
+      //   (final p) => e.name == p.name,
+      // );
+      // Logger.printWarning(
+      //   'components was selected to extract code -> $currentComponent',
+      // );
+      // //this is a (pageobjectmodel) and have the coe
+      // if (currentComponent.isHardCoded) {
+      //   strChildren.write(currentComponent.code);
+      // }
+
     } else {
       if (strChildren.toString() == '') {
         strChildren.write(e.toCode(context));
@@ -95,6 +108,29 @@ String pageCodeTemplate(
     } else {
       strChildren.write(';');
     }
+  }
+
+  Logger.printSuccess('page: isPage -> strchild: ${strChildren.toString()}');
+  //this is the process for hardcoded pages (customComponents)
+  if (page.isHardCoded) {
+    String? stringToWrite;
+    final data = RegExp('return (.*);', dotAll: true)
+        .allMatches(page.code!)
+        .first
+        .group(1);
+    if (data!.contains('home')) {
+      final finalString = RegExp(r'home: (.*),.+\)', dotAll: true)
+          .allMatches(data)
+          .first
+          .group(1);
+      //if the second regex works, he finds a scaffold and remove it
+      if (finalString != null) {
+        stringToWrite = finalString;
+      }
+    } else {
+      stringToWrite = data;
+    }
+    strChildren.write('$stringToWrite;');
   }
 
   final paramsString = StringBuffer()..write('');
@@ -171,7 +207,7 @@ String pageCodeTemplate(
     import 'dart:ui';
     import 'dart:convert';
     import 'package:flutter/material.dart';
-    import 'package:myapp/src/components/index.dart';
+    ${page.isPage ? "import 'package:myapp/src/components/index.dart';" : ''}
     ${isSupabaseIntegrated ? "import 'package:supabase/supabase.dart';" : ''}
     ${isSupabaseIntegrated ? "import 'package:supabase_flutter/supabase_flutter.dart';" : ''}
     ${page.isAuthenticatedRequired ? "import 'package:myapp/auth/auth_required_state.dart';" : "import 'package:myapp/auth/auth_state.dart';"}
@@ -195,7 +231,6 @@ String pageCodeTemplate(
     import 'package:http/http.dart' as http;
     import 'package:teta_cms/teta_cms.dart';
     import 'package:webviewx/webviewx.dart';
-    $componentImport
 
     class Page${pageNameRC.pascalCase} extends StatefulWidget {
       const Page${pageNameRC.pascalCase}({Key? key, ${parametersString.toString()}}) : super(key: key);
@@ -209,7 +244,7 @@ String pageCodeTemplate(
     class _State${pageNameRC.pascalCase} extends $isARState {
       ${statesString.toString()}
       var datasets = <String, dynamic>{};
-      ${isStripeIntegrated ? 'var stripeProductsList = <Map<String,dynamic>>[];' : ''}
+
       @override
       void initState() { 
         super.initState();
