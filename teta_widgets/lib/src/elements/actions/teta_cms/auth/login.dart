@@ -9,12 +9,8 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:teta_cms/teta_cms.dart';
 import 'package:teta_core/teta_core.dart';
 import 'package:teta_widgets/src/elements/actions/navigation/open_page.dart';
-import 'package:teta_widgets/src/elements/actions/snippets/change_state.dart';
 import 'package:teta_widgets/src/elements/actions/snippets/take_state_from.dart';
 import 'package:teta_widgets/src/elements/index.dart';
-import 'package:uni_links/uni_links.dart';
-import 'package:universal_platform/universal_platform.dart';
-import 'package:url_launcher/url_launcher.dart';
 // Project imports:
 
 class FATetaCMSLogin {
@@ -36,50 +32,10 @@ class FATetaCMSLogin {
     final page = BlocProvider.of<FocusPageBloc>(context).state;
     final status = takeStateFrom(page, 'status');
 
-    final resp = await TetaCMS.instance.auth.signInWithBrowser(
+    await TetaCMS.instance.auth.signIn(
       context,
-      prjId,
       provider: provider,
-    );
-    if (!UniversalPlatform.isWeb) {
-      uriLinkStream.listen(
-        (final Uri? uri) async {
-          debugPrint('uri: ${uri.toString()}');
-          if (uri != null) {
-            if (uri.queryParameters['access_token'] != null &&
-                uri.queryParameters['access_token'] is String) {
-              await closeInAppWebView();
-              await TetaCMS.instance.auth.insertUser(
-                // ignore: cast_nullable_to_non_nullable
-                uri.queryParameters['access_token'] as String,
-              );
-              if (!resp) {
-                changeState(status, context, 'Failed');
-              } else {
-                changeState(status, context, 'Success');
-                await FActionNavigationOpenPage.action(
-                  node,
-                  context,
-                  nameOfPage,
-                  paramsToSend,
-                  params,
-                  states,
-                  dataset,
-                  loop,
-                );
-              }
-            }
-          }
-        },
-        onError: (final Object err) {
-          throw Exception('got err: $err');
-        },
-      );
-    } else {
-      if (!resp) {
-        changeState(status, context, 'Failed');
-      } else {
-        changeState(status, context, 'Success');
+      onSuccess: () async {
         await FActionNavigationOpenPage.action(
           node,
           context,
@@ -90,8 +46,8 @@ class FATetaCMSLogin {
           dataset,
           loop,
         );
-      }
-    }
+      },
+    );
   }
 
   static String toCode(
@@ -104,30 +60,13 @@ class FATetaCMSLogin {
         ? 'TetaProvider.google'
         : 'TetaProvider.github';
     return '''
-      final resp = await TetaCMS.instance.auth.signInWithBrowser(
+      await TetaCMS.instance.auth.signInWithBrowser(
         context,
         provider: $providerStr,
+        onSuccess: () async {
+          ${FActionNavigationOpenPage.toCode(context, nameOfPage, paramsToSend)}
+        }
       );
-      if (!UniversalPlatform.isWeb) {
-        uriLinkStream.listen(
-          (final Uri? uri) async {
-            if (uri != null) {
-              if (uri.queryParameters['access_token'] != null &&
-                uri.queryParameters['access_token'] is String) {
-                await closeInAppWebView();
-                await TetaCMS.instance.auth.insertUser(
-                  // ignore: cast_nullable_to_non_nullable
-                  uri.queryParameters['access_token'] as String,
-                );
-                ${FActionNavigationOpenPage.toCode(context, nameOfPage, paramsToSend)}
-              }
-            }
-          },
-          onError: (final Object err) {
-            throw Exception('got err: \$err');
-          },
-        );
-      }
       ''';
   }
 }
