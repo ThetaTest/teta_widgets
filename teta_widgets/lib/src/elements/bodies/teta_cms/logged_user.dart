@@ -18,7 +18,7 @@ const _globalType = NType.cmsLoggedUser;
 
 /// IS
 final cmsLoggedUserIntrinsicStates = IntrinsicStates(
-  nodeIcon: Assets.wIcons.supabaseLogoIcon,
+  nodeIcon: Assets.icons.left.dataset,
   nodeVideo: null,
   nodeDescription: null,
   advicedChildren: [
@@ -37,7 +37,7 @@ final cmsLoggedUserIntrinsicStates = IntrinsicStates(
   advicedChildrenCanHaveAtLeastAChild: [],
   displayName: NodeType.name(_globalType),
   type: _globalType,
-  category: NodeCategories.unclassified,
+  category: NodeCategories.animated,
   maxChildren: 1,
   canHave: ChildrenEnum.child,
   addChildLabels: [],
