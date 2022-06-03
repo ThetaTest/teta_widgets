@@ -100,6 +100,7 @@ import 'package:teta_widgets/src/elements/bodies/supabase/logged_user.dart';
 import 'package:teta_widgets/src/elements/bodies/tcard.dart';
 import 'package:teta_widgets/src/elements/bodies/tcard_builder.dart';
 import 'package:teta_widgets/src/elements/bodies/teta_cms/fetch.dart';
+import 'package:teta_widgets/src/elements/bodies/teta_cms/logged_user.dart';
 import 'package:teta_widgets/src/elements/bodies/teta_cms/stream.dart';
 import 'package:teta_widgets/src/elements/bodies/text.dart';
 import 'package:teta_widgets/src/elements/bodies/textbutton.dart';
@@ -224,6 +225,7 @@ final stateTypes = <IntrinsicStates>[
   transformPerspectiveIntrinsicStates,
   cmsFetchIntrinsicStates,
   cmsStreamIntrinsicStates,
+  cmsLoggedUserIntrinsicStates,
   animationConfigListIntrinsicStates,
   animationConfigGridIntrinsicStates,
   fadeInAnimationIntrinsicStates,
@@ -448,6 +450,8 @@ NodeBody getBody(final NType type) {
       return CmsFetchBody();
     case NType.cmsStream:
       return CmsStreamBody();
+    case NType.cmsLoggedUser:
+      return CMSLoggedUserBody();
     case NType.animationConfigList:
       return AnimationConfigListBody();
     case NType.animationConfigGrid:

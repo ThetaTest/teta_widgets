@@ -6,6 +6,7 @@
 import 'package:flutter/material.dart';
 // Package imports:
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:supabase_flutter/supabase_flutter.dart';
 import 'package:teta_core/src/blocs/focus_page/index.dart';
 import 'package:teta_core/src/cubits/supabase.dart';
 import 'package:teta_core/src/models/dataset.dart';
@@ -17,6 +18,9 @@ import 'package:teta_widgets/src/elements/actions/navigation/open_page.dart';
 import 'package:teta_widgets/src/elements/actions/snippets/change_state.dart';
 import 'package:teta_widgets/src/elements/actions/snippets/take_state_from.dart';
 import 'package:teta_widgets/src/elements/nodes/node.dart';
+import 'package:uni_links/uni_links.dart';
+import 'package:universal_platform/universal_platform.dart';
+import 'package:url_launcher/url_launcher.dart';
 
 class FASupabaseSignInWithGoogle {
   static Future action(
@@ -41,6 +45,25 @@ class FASupabaseSignInWithGoogle {
     if (client != null) {
       final response = await UserSocialLoginService.instance
           .executeLogin(client.supabaseUrl, LoginProvider.google);
+
+      if (!UniversalPlatform.isWeb) {
+        uriLinkStream.listen(
+          (final Uri? uri) {
+            if (uri != null) {
+              final uriParameters =
+                  SupabaseAuth.instance.parseUriParameters(Uri.base);
+              if (uriParameters.containsKey('access_token') &&
+                  uriParameters.containsKey('refresh_token') &&
+                  uriParameters.containsKey('expires_in')) {
+                closeInAppWebView();
+              }
+            }
+          },
+          onError: (final Object err) {
+            throw 'got err: $err';
+          },
+        );
+      }
 
       if (response.jwt.isEmpty) changeState(status, context, 'Failed');
       changeState(status, context, 'Success');

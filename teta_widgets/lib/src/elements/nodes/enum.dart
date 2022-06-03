@@ -130,6 +130,7 @@ enum NType {
   // TetaCMS
   cmsFetch,
   cmsStream,
+  cmsLoggedUser,
 
   // AdMob
   adMobBanner,

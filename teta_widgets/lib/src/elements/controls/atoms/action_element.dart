@@ -21,6 +21,9 @@ import 'package:teta_widgets/src/elements/controls/atoms/flag.dart';
 import 'package:teta_widgets/src/elements/controls/atoms/subapase/delete.dart';
 import 'package:teta_widgets/src/elements/controls/atoms/subapase/insert.dart';
 import 'package:teta_widgets/src/elements/controls/atoms/subapase/update.dart';
+import 'package:teta_widgets/src/elements/controls/atoms/teta_cms/delete.dart';
+import 'package:teta_widgets/src/elements/controls/atoms/teta_cms/insert.dart';
+import 'package:teta_widgets/src/elements/controls/atoms/teta_cms/update.dart';
 import 'package:teta_widgets/src/elements/controls/atoms/text.dart';
 import 'package:teta_widgets/src/elements/controls/type.dart';
 import 'package:teta_widgets/src/elements/features/actions/element.dart';
@@ -1119,11 +1122,8 @@ class ActionElementControlState extends State<ActionElementControl> {
                       ),
                   ],
                 ),
-              if ((widget.element.actionType == ActionType.supabaseDatabase &&
-                      widget.element.actionSupabaseDB ==
-                          ActionSupabaseDB.insert) ||
-                  (widget.element.actionType == ActionType.tetaDatabase &&
-                      widget.element.actionTetaDB == ActionTetaCmsDB.insert))
+              if (widget.element.actionType == ActionType.supabaseDatabase &&
+                  widget.element.actionSupabaseDB == ActionSupabaseDB.insert)
                 SupabaseInsertControl(
                   prj: widget.prj,
                   page: widget.page,
@@ -1134,11 +1134,20 @@ class ActionElementControlState extends State<ActionElementControl> {
                     widget.callBack(widget.element, old);
                   },
                 ),
-              if ((widget.element.actionType == ActionType.supabaseDatabase &&
-                      widget.element.actionSupabaseDB ==
-                          ActionSupabaseDB.update) ||
-                  (widget.element.actionType == ActionType.tetaDatabase &&
-                      widget.element.actionTetaDB == ActionTetaCmsDB.update))
+              if (widget.element.actionType == ActionType.tetaDatabase &&
+                  widget.element.actionTetaDB == ActionTetaCmsDB.insert)
+                TetaCmsInsertControl(
+                  prj: widget.prj,
+                  page: widget.page,
+                  node: widget.node,
+                  action: widget.element,
+                  callback: () {
+                    final old = widget.element;
+                    widget.callBack(widget.element, old);
+                  },
+                ),
+              if (widget.element.actionType == ActionType.supabaseDatabase &&
+                  widget.element.actionSupabaseDB == ActionSupabaseDB.update)
                 SupabaseUpdateControl(
                   prj: widget.prj,
                   page: widget.page,
@@ -1149,12 +1158,33 @@ class ActionElementControlState extends State<ActionElementControl> {
                     widget.callBack(widget.element, old);
                   },
                 ),
-              if ((widget.element.actionType == ActionType.supabaseDatabase &&
-                      widget.element.actionSupabaseDB ==
-                          ActionSupabaseDB.delete) ||
-                  (widget.element.actionType == ActionType.tetaDatabase &&
-                      widget.element.actionTetaDB == ActionTetaCmsDB.delete))
+              if (widget.element.actionType == ActionType.tetaDatabase &&
+                  widget.element.actionTetaDB == ActionTetaCmsDB.update)
+                TetaCmsUpdateControl(
+                  prj: widget.prj,
+                  page: widget.page,
+                  node: widget.node,
+                  action: widget.element,
+                  callback: () {
+                    final old = widget.element;
+                    widget.callBack(widget.element, old);
+                  },
+                ),
+              if (widget.element.actionType == ActionType.supabaseDatabase &&
+                  widget.element.actionSupabaseDB == ActionSupabaseDB.delete)
                 SupabaseDeleteControl(
+                  prj: widget.prj,
+                  page: widget.page,
+                  node: widget.node,
+                  action: widget.element,
+                  callback: () {
+                    final old = widget.element;
+                    widget.callBack(widget.element, old);
+                  },
+                ),
+              if (widget.element.actionType == ActionType.tetaDatabase &&
+                  widget.element.actionTetaDB == ActionTetaCmsDB.delete)
+                TetaCmsDeleteControl(
                   prj: widget.prj,
                   page: widget.page,
                   node: widget.node,

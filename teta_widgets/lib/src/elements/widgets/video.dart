@@ -82,18 +82,21 @@ class WVideo extends StatelessWidget {
             )
           : AspectRatio(
               aspectRatio: 16 / 9,
-              child: Column(
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: const [
-                  Icon(
-                    Icons.play_arrow,
-                    size: 48,
-                    color: Colors.white,
-                  ),
-                  THeadline3(
-                    'Play to watch',
-                  ),
-                ],
+              child: Container(
+                color: Palette.bgGreyLight,
+                child: Column(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: const [
+                    Icon(
+                      Icons.play_arrow,
+                      size: 48,
+                      color: Colors.white,
+                    ),
+                    THeadline3(
+                      'Play to watch',
+                    ),
+                  ],
+                ),
               ),
             ),
     );

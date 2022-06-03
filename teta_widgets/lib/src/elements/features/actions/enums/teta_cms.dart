@@ -2,6 +2,7 @@
 
 enum ActionTetaCmsAuth {
   signInWithGoogle,
+  signInWithGitHub,
 }
 
 enum ActionTetaCmsDB {

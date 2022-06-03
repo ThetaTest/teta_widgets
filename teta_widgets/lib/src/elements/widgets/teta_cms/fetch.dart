@@ -152,7 +152,9 @@ class _WCmsFetchState extends State<WCmsFetch> {
                 forPlay: widget.forPlay,
               );
             } else {
-              return const CircularProgressIndicator();
+              return const Center(
+                child: CircularProgressIndicator(),
+              );
             }
           }
           if (snapshot.error != null) {

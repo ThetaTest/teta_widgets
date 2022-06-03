@@ -9,7 +9,6 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:teta_cms/teta_cms.dart';
 import 'package:teta_core/teta_core.dart';
 import 'package:teta_widgets/src/elements/actions/navigation/open_page.dart';
-import 'package:teta_widgets/src/elements/actions/snippets/change_state.dart';
 import 'package:teta_widgets/src/elements/actions/snippets/take_state_from.dart';
 import 'package:teta_widgets/src/elements/index.dart';
 // Project imports:
@@ -24,6 +23,7 @@ class FATetaCMSLogin {
     final List<VariableObject> states,
     final List<DatasetObject> dataset,
     final int? loop,
+    final TetaProvider provider,
   ) async {
     final prjId =
         (BlocProvider.of<FocusProjectBloc>(context).state as ProjectLoaded)
@@ -32,31 +32,41 @@ class FATetaCMSLogin {
     final page = BlocProvider.of<FocusPageBloc>(context).state;
     final status = takeStateFrom(page, 'status');
 
-    final resp = await TetaCMS.instance.auth.signInWithBrowser(
+    await TetaCMS.instance.auth.signIn(
       context,
-      prjId,
+      provider: provider,
+      onSuccess: () async {
+        await FActionNavigationOpenPage.action(
+          node,
+          context,
+          nameOfPage,
+          paramsToSend,
+          params,
+          states,
+          dataset,
+          loop,
+        );
+      },
     );
-    if (!resp) {
-      changeState(status, context, 'Failed');
-    } else {
-      changeState(status, context, 'Success');
-      await FActionNavigationOpenPage.action(
-        node,
-        context,
-        nameOfPage,
-        paramsToSend,
-        params,
-        states,
-        dataset,
-        loop,
-      );
-    }
   }
 
   static String toCode(
     final BuildContext context,
-    final String? collectionId,
-    final Map<String, dynamic> map,
-  ) =>
-      "final resp = await TetaCMS.instance.auth.signInWithProvider('$collectionId', <String, dynamic>$map);";
+    final TetaProvider provider,
+    final String? nameOfPage,
+    final Map<String, dynamic>? paramsToSend,
+  ) {
+    final providerStr = provider == TetaProvider.google
+        ? 'TetaProvider.google'
+        : 'TetaProvider.github';
+    return '''
+      await TetaCMS.instance.auth.signInWithBrowser(
+        context,
+        provider: $providerStr,
+        onSuccess: () async {
+          ${FActionNavigationOpenPage.toCode(context, nameOfPage, paramsToSend)}
+        }
+      );
+      ''';
+  }
 }
