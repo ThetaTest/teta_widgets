@@ -60,7 +60,7 @@ class FATetaCMSLogin {
         ? 'TetaProvider.google'
         : 'TetaProvider.github';
     return '''
-      await TetaCMS.instance.auth.signInWithBrowser(
+      await TetaCMS.instance.auth.signIn(
         context,
         provider: $providerStr,
         onSuccess: () async {
