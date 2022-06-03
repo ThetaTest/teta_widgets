@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:teta_core/gen/assets.gen.dart';
 import 'package:teta_core/src/models/dataset.dart';
 import 'package:teta_core/src/models/variable.dart';
+import 'package:teta_widgets/src/elements/code/templates/responsive_condition.dart';
 // Project imports:
 import 'package:teta_widgets/src/elements/controls/control_model.dart';
 import 'package:teta_widgets/src/elements/controls/key_constants.dart';
@@ -44,7 +45,7 @@ final responsiveIntrinsicStates = IntrinsicStates(
   canHave: ChildrenEnum.child,
   addChildLabels: [],
   gestures: [],
-  permissions:[],
+  permissions: [],
 );
 
 /// Body
@@ -71,12 +72,12 @@ class ResponsiveBody extends NodeBody {
           value: attributes[DBKeys.visibleOnTablet],
           description: 'Is the child visible on tablet?',
         ),
-        FlagControlObject(
-          title: 'Desktop',
-          key: DBKeys.visibleOnDesktop,
-          value: attributes[DBKeys.visibleOnDesktop],
-          description: 'Is the child visible on desktop?',
-        ),
+        // FlagControlObject(
+        //   title: 'Desktop',
+        //   key: DBKeys.visibleOnDesktop,
+        //   value: attributes[DBKeys.visibleOnDesktop],
+        //   description: 'Is the child visible on desktop?',
+        // ),
       ];
 
   @override
@@ -96,14 +97,13 @@ class ResponsiveBody extends NodeBody {
             ${node.nid}
             $loop
             ${child ?? children}
-            ${attributes[DBKeys.visibleOnDesktop] as bool}
             ${attributes[DBKeys.visibleOnMobile] as bool}
             ${attributes[DBKeys.visibleOnTablet] as bool}
             ''',
         ),
         node: node,
         child: child,
-        visibleOnDesktop: attributes[DBKeys.visibleOnDesktop] as bool,
+        //visibleOnDesktop: attributes[DBKeys.visibleOnDesktop] as bool,
         visibleOnMobile: attributes[DBKeys.visibleOnMobile] as bool,
         visibleOnTablet: attributes[DBKeys.visibleOnTablet] as bool,
         forPlay: forPlay,
@@ -122,7 +122,6 @@ class ResponsiveBody extends NodeBody {
     final int pageId,
     final int? loop,
   ) {
-    return '''
-    ''';
+    return responsiveConditionCodeTemplate(context, this, child);
   }
 }
