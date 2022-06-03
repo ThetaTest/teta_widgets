@@ -52,17 +52,17 @@ class SupabaseUpdateControl extends StatelessWidget {
         ),
         TextControl(
           node: node,
-          value: action.supabaseFrom ?? FTextTypeInput(),
+          value: action.dbFrom ?? FTextTypeInput(),
           page: page,
           title: 'From Table',
           callBack: (final value, final old) {},
         ),
         DBMapControl(
           node: node,
-          list: action.supabaseData ?? [],
+          list: action.dbData ?? [],
           page: page,
           callBack: (final value, final old) {
-            action.supabaseData = value;
+            action.dbData = value;
             callback();
           },
         ),
@@ -80,11 +80,10 @@ class SupabaseUpdateControl extends StatelessWidget {
           ),
           child: MapElementControl(
             node: node,
-            value: action.supabaseEq ??
-                MapElement(key: '', value: FTextTypeInput()),
+            value: action.dbEq ?? MapElement(key: '', value: FTextTypeInput()),
             page: page,
             callBack: (final value, final old) {
-              action.supabaseEq = value;
+              action.dbEq = value;
               callback();
             },
           ),

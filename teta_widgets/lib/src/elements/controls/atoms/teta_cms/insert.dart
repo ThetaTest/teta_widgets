@@ -6,15 +6,14 @@ import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 // Package imports:
 import 'package:teta_core/teta_core.dart';
+import 'package:teta_widgets/src/elements/controls/atoms/cms_collections.dart';
 // Project imports:
 import 'package:teta_widgets/src/elements/controls/atoms/db_map.dart';
-import 'package:teta_widgets/src/elements/controls/atoms/text.dart';
 import 'package:teta_widgets/src/elements/features/actions/element.dart';
-import 'package:teta_widgets/src/elements/features/text_type_input.dart';
 import 'package:teta_widgets/src/elements/nodes/node.dart';
 
-class SupabaseInsertControl extends StatelessWidget {
-  const SupabaseInsertControl({
+class TetaCmsInsertControl extends StatelessWidget {
+  const TetaCmsInsertControl({
     required this.prj,
     required this.page,
     required this.node,
@@ -50,12 +49,13 @@ class SupabaseInsertControl extends StatelessWidget {
             ],
           ),
         ),
-        TextControl(
+        CMSCollectionControl(
           node: node,
-          value: action.dbFrom ?? FTextTypeInput(),
-          page: page,
-          title: 'From Table',
-          callBack: (final value, final old) {},
+          collectionId: action.cmsCollectionId,
+          callBack: (final value, final old) {
+            action.cmsCollectionId = value;
+            callback();
+          },
         ),
         DBMapControl(
           node: node,

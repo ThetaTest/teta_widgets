@@ -4,11 +4,13 @@ import 'package:flutter/material.dart';
 import 'package:teta_core/gen/assets.gen.dart';
 import 'package:teta_core/src/models/dataset.dart';
 import 'package:teta_core/src/models/variable.dart';
+import 'package:teta_widgets/src/elements/code/templates/cms_logged_user.dart';
 // Project imports:
 import 'package:teta_widgets/src/elements/controls/control_model.dart';
 import 'package:teta_widgets/src/elements/intrinsic_states/class.dart';
 import 'package:teta_widgets/src/elements/nodes/categories.dart';
 import 'package:teta_widgets/src/elements/nodes/children_enum.dart';
+import 'package:teta_widgets/src/elements/nodes/dynamic.dart';
 import 'package:teta_widgets/src/elements/nodes/enum.dart';
 import 'package:teta_widgets/src/elements/nodes/node.dart';
 import 'package:teta_widgets/src/elements/nodes/node_body.dart';
@@ -39,7 +41,7 @@ final cmsLoggedUserIntrinsicStates = IntrinsicStates(
   type: _globalType,
   category: NodeCategories.animated,
   maxChildren: 1,
-  canHave: ChildrenEnum.child,
+  canHave: ChildrenEnum.children,
   addChildLabels: [],
   gestures: [],
   permissions: [],
@@ -74,7 +76,7 @@ class CMSLoggedUserBody extends NodeBody {
       ''',
       ),
       node: node,
-      child: child,
+      children: children ?? [],
       forPlay: forPlay,
       params: params,
       states: states,
@@ -91,5 +93,10 @@ class CMSLoggedUserBody extends NodeBody {
     final int pageId,
     final int? loop,
   ) =>
-      '';
+      cmsLoggedUserCodeTemplate(
+        context,
+        node as NDynamic,
+        children ?? [],
+        loop,
+      );
 }

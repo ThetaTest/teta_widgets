@@ -21,8 +21,8 @@ class CMSCollectionControl extends StatefulWidget {
   }) : super(key: key);
 
   final CNode node;
-  final String collectionId;
-  final Function(String, String) callBack;
+  final String? collectionId;
+  final Function(String, String?) callBack;
 
   @override
   CMSCollectionControlState createState() => CMSCollectionControlState();
@@ -81,9 +81,11 @@ class CMSCollectionControlState extends State<CMSCollectionControl> {
                       .firstWhereOrNull(
                         (final element) =>
                             element.id ==
-                            (widget.node.body.attributes[DBKeys.cmsCollection]
-                                    as FTextTypeInput)
-                                .value,
+                            (widget.collectionId ??
+                                (widget.node.body
+                                            .attributes[DBKeys.cmsCollection]
+                                        as FTextTypeInput?)
+                                    ?.value),
                       )
                       ?.name;
                   return CDropdown(
@@ -102,8 +104,8 @@ class CMSCollectionControlState extends State<CMSCollectionControl> {
                             )
                             ?.id;
                         (widget.node.body.attributes[DBKeys.cmsCollection]
-                                as FTextTypeInput)
-                            .value = nw;
+                                as FTextTypeInput?)
+                            ?.value = nw;
                         if (nw != null) {
                           widget.callBack(nw, old);
                         }

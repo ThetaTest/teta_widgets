@@ -58,6 +58,9 @@ import 'package:teta_widgets/src/elements/actions/supabase/signin_w_google.dart'
 import 'package:teta_widgets/src/elements/actions/supabase/signup_w_credentials.dart';
 import 'package:teta_widgets/src/elements/actions/supabase/update.dart';
 import 'package:teta_widgets/src/elements/actions/teta_cms/auth/login.dart';
+import 'package:teta_widgets/src/elements/actions/teta_cms/database/delete.dart';
+import 'package:teta_widgets/src/elements/actions/teta_cms/database/insert.dart';
+import 'package:teta_widgets/src/elements/actions/teta_cms/database/update.dart';
 import 'package:teta_widgets/src/elements/actions/webview/back.dart';
 import 'package:teta_widgets/src/elements/actions/webview/forward.dart';
 import 'package:teta_widgets/src/elements/actions/webview/reload.dart';
@@ -94,9 +97,10 @@ class FActionElement extends Equatable {
     this.paramsToSend,
     this.value,
     this.delay,
-    this.supabaseFrom,
-    this.supabaseData,
-    this.supabaseEq,
+    this.dbFrom,
+    this.cmsCollectionId,
+    this.dbData,
+    this.dbEq,
     this.withCondition,
     this.condition,
     this.valueOfCondition,
@@ -162,16 +166,16 @@ class FActionElement extends Equatable {
         (doc['vTTI'] != null
             ? FTextTypeInput.fromJson(doc['vTTI'] as Map<String, dynamic>)
             : FTextTypeInput());
-    supabaseFrom =
-        FTextTypeInput.fromJson(doc['sFrom'] as Map<String, dynamic>?);
-    supabaseData = (doc['sData'] as List<dynamic>? ?? <dynamic>[])
+    dbFrom = FTextTypeInput.fromJson(doc['sFrom'] as Map<String, dynamic>?);
+    cmsCollectionId = doc['cmsCId'] as String?;
+    dbData = (doc['sData'] as List<dynamic>? ?? <dynamic>[])
         .map(
           (final dynamic e) => MapElement.fromJson(
             e as Map<String, dynamic>,
           ),
         )
         .toList();
-    supabaseEq = doc['sEq'] != null
+    dbEq = doc['sEq'] != null
         ? MapElement.fromJson(doc['sEq'] as Map<String, dynamic>)
         : MapElement(
             key: '',
@@ -224,13 +228,14 @@ class FActionElement extends Equatable {
   FTextTypeInput? valueTextTypeInput;
 
   /// Supabase from
-  FTextTypeInput? supabaseFrom;
+  FTextTypeInput? dbFrom;
+  String? cmsCollectionId;
 
   /// Supabase data for insert / update map
-  List<MapElement>? supabaseData;
+  List<MapElement>? dbData;
 
   /// Supabase name of column for condition
-  MapElement? supabaseEq;
+  MapElement? dbEq;
 
   @override
   List<Object?> get props => [
@@ -250,6 +255,9 @@ class FActionElement extends Equatable {
         valueOfCondition,
         withLoop,
         everyMilliseconds,
+        dbFrom,
+        cmsCollectionId,
+        dbData,
       ];
 
   /// Get avaiable action types for drop down list
@@ -259,7 +267,7 @@ class FActionElement extends Equatable {
         return [
           'State',
           'Navigation',
-          if (kDebugMode) 'Teta database',
+          'Teta database',
           'Teta auth',
           if (config.supabaseEnabled ?? false) 'Supabase auth',
           if (config.supabaseEnabled ?? false) 'Supabase database',
@@ -433,11 +441,12 @@ class FActionElement extends Equatable {
         'pTS': paramsToSend,
         'pN': nameOfPage,
         'v': value,
-        'sFrom': supabaseFrom != null ? supabaseFrom!.toJson() : null,
-        'sData': supabaseData != null
-            ? supabaseData!.map((final e) => e.toJson()).toList()
+        'sFrom': dbFrom != null ? dbFrom!.toJson() : null,
+        'cmsCId': cmsCollectionId,
+        'sData': dbData != null
+            ? dbData!.map((final e) => e.toJson()).toList()
             : null,
-        'sEq': supabaseEq != null ? supabaseEq!.toJson() : null,
+        'sEq': dbEq != null ? dbEq!.toJson() : null,
         'delay': delay != null ? delay!.toJson() : null,
         'wCond': withCondition,
         'cond': condition != null ? condition!.toJson() : null,
@@ -460,6 +469,77 @@ class FActionElement extends Equatable {
     final int? loop,
   ) async {
     switch (actionType) {
+      case ActionType.tetaDatabase:
+        switch (actionTetaDB) {
+          case ActionTetaCmsDB.insert:
+            if (withCondition == true) {
+              if (condition?.get(params, states, dataset, true, loop) !=
+                  valueOfCondition?.get(params, states, dataset, true, loop)) {
+                break;
+              }
+            }
+            await FDelay.action(int.tryParse('${delay?.value}') ?? 0);
+            FLoop.action(
+              () => FATetaCMSInsert.action(
+                cmsCollectionId,
+                dbData,
+                params,
+                states,
+                dataset,
+                loop,
+              ),
+              everyMilliseconds,
+              context,
+              withLoop: withLoop ?? false,
+            );
+            break;
+          case ActionTetaCmsDB.update:
+            if (withCondition == true) {
+              if (condition?.get(params, states, dataset, true, loop) !=
+                  valueOfCondition?.get(params, states, dataset, true, loop)) {
+                break;
+              }
+            }
+            await FDelay.action(int.tryParse('${delay?.value}') ?? 0);
+            FLoop.action(
+              () => FATetaCMSUpdate.action(
+                cmsCollectionId,
+                dbData,
+                dbFrom,
+                params,
+                states,
+                dataset,
+                loop,
+              ),
+              everyMilliseconds,
+              context,
+              withLoop: withLoop ?? false,
+            );
+            break;
+          case ActionTetaCmsDB.delete:
+            if (withCondition == true) {
+              if (condition?.get(params, states, dataset, true, loop) !=
+                  valueOfCondition?.get(params, states, dataset, true, loop)) {
+                break;
+              }
+            }
+            await FDelay.action(int.tryParse('${delay?.value}') ?? 0);
+            FLoop.action(
+              () => FATetaCMSDelete.action(
+                cmsCollectionId,
+                dbFrom,
+                params,
+                states,
+                dataset,
+                loop,
+              ),
+              everyMilliseconds,
+              context,
+              withLoop: withLoop ?? false,
+            );
+            break;
+        }
+        break;
       case ActionType.tetaAuth:
         switch (actionTetaAuth) {
           case ActionTetaCmsAuth.signInWithGoogle:
@@ -1013,175 +1093,6 @@ class FActionElement extends Equatable {
             break;
         }
         break;
-      case ActionType.supabaseDatabase:
-        switch (actionSupabaseDB) {
-          case ActionSupabaseDB.insert:
-            if (withCondition == true) {
-              if (condition?.get(params, states, dataset, true, loop) !=
-                  valueOfCondition?.get(params, states, dataset, true, loop)) {
-                break;
-              }
-            }
-            await FDelay.action(int.tryParse('${delay?.value}') ?? 0);
-            FLoop.action(
-              () => FASupabaseInsert.action(
-                context,
-                supabaseFrom,
-                supabaseData,
-                params,
-                states,
-                dataset,
-                loop,
-              ),
-              everyMilliseconds,
-              context,
-              withLoop: withLoop ?? false,
-            );
-            break;
-          case ActionSupabaseDB.update:
-            if (withCondition == true) {
-              if (condition?.get(params, states, dataset, true, loop) !=
-                  valueOfCondition?.get(params, states, dataset, true, loop)) {
-                break;
-              }
-            }
-            await FDelay.action(int.tryParse('${delay?.value}') ?? 0);
-            FLoop.action(
-              () => FASupabaseUpdate.action(
-                context,
-                supabaseFrom,
-                supabaseData,
-                supabaseEq ?? MapElement(key: '', value: FTextTypeInput()),
-                params,
-                states,
-                dataset,
-                loop,
-              ),
-              everyMilliseconds,
-              context,
-              withLoop: withLoop ?? false,
-            );
-            break;
-          case ActionSupabaseDB.delete:
-            if (withCondition == true) {
-              if (condition?.get(params, states, dataset, true, loop) !=
-                  valueOfCondition?.get(params, states, dataset, true, loop)) {
-                break;
-              }
-            }
-            await FDelay.action(int.tryParse('${delay?.value}') ?? 0);
-            FLoop.action(
-              () => FASupabaseDelete.action(
-                context,
-                supabaseFrom,
-                supabaseEq ?? MapElement(key: '', value: FTextTypeInput()),
-                params,
-                states,
-                dataset,
-                loop,
-              ),
-              everyMilliseconds,
-              context,
-              withLoop: withLoop ?? false,
-            );
-            break;
-          //todo: adjust this
-          // case ActionSupabaseDB.onAll:
-          //   if (withCondition == true) {
-          //     if (condition?.get(params, states, dataset, true, loop) !=
-          //         valueOfCondition?.get(params, states, dataset, true, loop)) {
-          //       break;
-          //     }
-          //   }
-          //   await FDelay.action(int.tryParse('${delay?.value}') ?? 0);
-          //   FLoop.action(
-          //     () => FASupabaseOnAll.action(
-          //       context,
-          //       supabaseFrom,
-          //       stateName,
-          //       params,
-          //       states,
-          //       dataset,
-          //       loop,
-          //     ),
-          //     everyMilliseconds,
-          //     context,
-          //     withLoop: withLoop ?? false,
-          //   );
-          //   break;
-          // case ActionSupabaseDB.onInsert:
-          //   if (withCondition == true) {
-          //     if (condition?.get(params, states, dataset, true, loop) !=
-          //         valueOfCondition?.get(params, states, dataset, true, loop)) {
-          //       break;
-          //     }
-          //   }
-          //   await FDelay.action(int.tryParse('${delay?.value}') ?? 0);
-          //   FLoop.action(
-          //     () => FASupabaseOnInsert.action(
-          //       context,
-          //       supabaseFrom,
-          //       stateName,
-          //       params,
-          //       states,
-          //       dataset,
-          //       loop,
-          //     ),
-          //     everyMilliseconds,
-          //     context,
-          //     withLoop: withLoop ?? false,
-          //   );
-          //   break;
-          // case ActionSupabaseDB.onUpdate:
-          //   if (withCondition == true) {
-          //     if (condition?.get(params, states, dataset, true, loop) !=
-          //         valueOfCondition?.get(params, states, dataset, true, loop)) {
-          //       break;
-          //     }
-          //   }
-          //   await FDelay.action(int.tryParse('${delay?.value}') ?? 0);
-          //   FLoop.action(
-          //     () => FASupabaseOnUpdate.action(
-          //       context,
-          //       supabaseFrom,
-          //       stateName,
-          //       params,
-          //       states,
-          //       dataset,
-          //       loop,
-          //     ),
-          //     everyMilliseconds,
-          //     context,
-          //     withLoop: withLoop ?? false,
-          //   );
-          //   break;
-          // case ActionSupabaseDB.onDelete:
-          //   if (withCondition == true) {
-          //     if (condition?.get(params, states, dataset, true, loop) !=
-          //         valueOfCondition?.get(params, states, dataset, true, loop)) {
-          //       break;
-          //     }
-          //   }
-          //   await FDelay.action(int.tryParse('${delay?.value}') ?? 0);
-          //   FLoop.action(
-          //     () => FASupabaseOnDelete.action(
-          //       context,
-          //       supabaseFrom,
-          //       stateName,
-          //       params,
-          //       states,
-          //       dataset,
-          //       loop,
-          //     ),
-          //     everyMilliseconds,
-          //     context,
-          //     withLoop: withLoop ?? false,
-          //   );
-          //   break;
-          // case null:
-          //   break;
-        }
-        break;
       case ActionType.camera:
         switch (actionCamera) {
           case ActionCamera.takePhoto:
@@ -1543,6 +1454,62 @@ class FActionElement extends Equatable {
     final int loop = 0,
   }) {
     switch (actionType) {
+      case ActionType.tetaDatabase:
+        switch (actionTetaDB) {
+          case ActionTetaCmsDB.insert:
+            return FCondition.toCode(
+                  context,
+                  condition,
+                  valueOfCondition,
+                  withCondition: withCondition ?? false,
+                ) +
+                FDelay.toCode(int.tryParse('${delay?.value}') ?? 0) +
+                FLoop.toCode(
+                  int.tryParse(everyMilliseconds?.value ?? '0') ?? 0,
+                  FATetaCMSInsert.toCode(
+                    cmsCollectionId,
+                    dbData,
+                  ),
+                  withLoop: withLoop ?? false,
+                );
+          case ActionTetaCmsDB.delete:
+            return FCondition.toCode(
+                  context,
+                  condition,
+                  valueOfCondition,
+                  withCondition: withCondition ?? false,
+                ) +
+                FDelay.toCode(int.tryParse('${delay?.value}') ?? 0) +
+                FLoop.toCode(
+                  int.tryParse(everyMilliseconds?.value ?? '0') ?? 0,
+                  FATetaCMSDelete.toCode(
+                    cmsCollectionId,
+                    dbFrom,
+                    loop,
+                  ),
+                  withLoop: withLoop ?? false,
+                );
+
+          case ActionTetaCmsDB.update:
+            return FCondition.toCode(
+                  context,
+                  condition,
+                  valueOfCondition,
+                  withCondition: withCondition ?? false,
+                ) +
+                FDelay.toCode(int.tryParse('${delay?.value}') ?? 0) +
+                FLoop.toCode(
+                  int.tryParse(everyMilliseconds?.value ?? '0') ?? 0,
+                  FATetaCMSUpdate.toCode(
+                    cmsCollectionId,
+                    dbData,
+                    dbFrom,
+                    loop,
+                  ),
+                  withLoop: withLoop ?? false,
+                );
+        }
+        break;
       case ActionType.tetaAuth:
         switch (actionTetaAuth) {
           case ActionTetaCmsAuth.signInWithGoogle:
@@ -1969,8 +1936,8 @@ class FActionElement extends Equatable {
                     context,
                     nameOfPage,
                     paramsToSend,
-                    supabaseFrom,
-                    supabaseData,
+                    dbFrom,
+                    dbData,
                   ),
                   withLoop: withLoop ?? false,
                 );
@@ -1989,8 +1956,8 @@ class FActionElement extends Equatable {
                     context,
                     nameOfPage,
                     paramsToSend,
-                    supabaseFrom,
-                    supabaseEq,
+                    dbFrom,
+                    dbEq,
                   ),
                   withLoop: withLoop ?? false,
                 );
@@ -2009,9 +1976,9 @@ class FActionElement extends Equatable {
                     context,
                     nameOfPage,
                     paramsToSend,
-                    supabaseFrom,
-                    supabaseData,
-                    supabaseEq,
+                    dbFrom,
+                    dbData,
+                    dbEq,
                   ),
                   withLoop: withLoop ?? false,
                 );

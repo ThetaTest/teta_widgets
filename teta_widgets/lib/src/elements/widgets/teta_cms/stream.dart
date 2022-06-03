@@ -152,7 +152,9 @@ class _WCmsStreamState extends State<WCmsStream> {
                 forPlay: widget.forPlay,
               );
             } else {
-              return const CircularProgressIndicator();
+              return const Center(
+                child: CircularProgressIndicator(),
+              );
             }
           }
           final list = snapshot.data as List<dynamic>?;

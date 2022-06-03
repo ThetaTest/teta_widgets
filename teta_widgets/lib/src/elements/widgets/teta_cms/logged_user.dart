@@ -20,7 +20,7 @@ class WCMSLoggedUser extends StatefulWidget {
     required this.params,
     required this.states,
     required this.dataset,
-    this.child,
+    required this.children,
     this.loop,
   }) : super(key: key);
 
@@ -28,7 +28,7 @@ class WCMSLoggedUser extends StatefulWidget {
   final CNode node;
 
   /// The opzional child of this widget
-  final CNode? child;
+  final List<CNode> children;
 
   /// Are we in Play Mode?
   final bool forPlay;
@@ -68,9 +68,9 @@ class _WCMSLoggedUserState extends State<WCMSLoggedUser> {
 
   Future<Map<String, dynamic>> load() async {
     final user = await TetaCMS.instance.auth.user.get;
-    print(user);
     return <String, dynamic>{
       'isLogged': user.keys.isNotEmpty,
+      'uid': user['uid'],
       'name': user['name'],
       'email': user['email'],
       'locale': user['locale'],
@@ -84,21 +84,38 @@ class _WCMSLoggedUserState extends State<WCMSLoggedUser> {
       future: load(),
       builder: (final context, final snapshot) {
         if (!snapshot.hasData) {
-          return const SizedBox();
+          if (widget.children.isNotEmpty) {
+            return widget.children.last.toWidget(
+              params: widget.params,
+              states: widget.states,
+              dataset: widget.dataset,
+              forPlay: widget.forPlay,
+            );
+          } else {
+            return const Center(
+              child: CircularProgressIndicator(),
+            );
+          }
         }
 
         final map = snapshot.data as Map<String, dynamic>?;
-        if ((map?.keys ?? <String>[]).isNotEmpty) {
-          _map = _map.copyWith(
-            name: 'Teta Auth User',
-            map: [
-              if (map != null) map,
-            ],
-          );
-        }
+        _map = _map.copyWith(
+          name: 'Teta Auth User',
+          map: [
+            map ??
+                <String, dynamic>{
+                  'isLogged': false,
+                  'uid': null,
+                  'name': null,
+                  'email': null,
+                  'locale': null,
+                  'provider': null,
+                },
+          ],
+        );
         datasets = addDataset(context, widget.dataset, _map);
-        if (widget.child != null) {
-          return widget.child!.toWidget(
+        if (widget.children.isNotEmpty) {
+          return widget.children.first.toWidget(
             params: widget.params,
             states: widget.states,
             dataset: widget.dataset.isEmpty ? datasets : widget.dataset,

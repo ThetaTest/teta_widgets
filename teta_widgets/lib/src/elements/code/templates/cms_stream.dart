@@ -41,7 +41,7 @@ String cmsStreamCodeTemplate(
   if (children.isNotEmpty) {
     child = children.first.toCode(context);
   }
-  var loader = 'const CircularProgressIndicator()';
+  var loader = 'const Center(child: CircularProgressIndicator(),)';
   if (children.length >= 2) {
     loader = children[1].toCode(context);
   }

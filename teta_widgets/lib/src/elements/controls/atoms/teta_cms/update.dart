@@ -3,18 +3,18 @@
 
 // Flutter imports:
 import 'package:flutter/material.dart';
-import 'package:flutter/widgets.dart';
 // Package imports:
 import 'package:teta_core/teta_core.dart';
-// Project imports:
+import 'package:teta_widgets/src/elements/controls/atoms/cms_collections.dart';
 import 'package:teta_widgets/src/elements/controls/atoms/db_map.dart';
+// Project imports:
 import 'package:teta_widgets/src/elements/controls/atoms/text.dart';
 import 'package:teta_widgets/src/elements/features/actions/element.dart';
 import 'package:teta_widgets/src/elements/features/text_type_input.dart';
 import 'package:teta_widgets/src/elements/nodes/node.dart';
 
-class SupabaseInsertControl extends StatelessWidget {
-  const SupabaseInsertControl({
+class TetaCmsUpdateControl extends StatelessWidget {
+  const TetaCmsUpdateControl({
     required this.prj,
     required this.page,
     required this.node,
@@ -43,28 +43,49 @@ class SupabaseInsertControl extends StatelessWidget {
               const Padding(
                 padding: EdgeInsets.only(left: 8),
                 child: THeadline3(
-                  'INSERT NEW DATA',
+                  'UPDATE DATA',
                   color: Color(0xFFe7e7e7),
                 ),
               ),
             ],
           ),
         ),
-        TextControl(
+        CMSCollectionControl(
           node: node,
-          value: action.dbFrom ?? FTextTypeInput(),
-          page: page,
-          title: 'From Table',
-          callBack: (final value, final old) {},
+          collectionId: action.cmsCollectionId,
+          callBack: (final value, final old) {
+            action.cmsCollectionId = value;
+            callback();
+          },
         ),
         DBMapControl(
           node: node,
-          list: action.dbData ?? <MapElement>[],
+          list: action.dbData ?? [],
           page: page,
           callBack: (final value, final old) {
             action.dbData = value;
             callback();
           },
+        ),
+        const Padding(
+          padding: EdgeInsets.only(bottom: 8),
+          child: THeadline3(
+            'Where',
+          ),
+        ),
+        Container(
+          padding: const EdgeInsets.all(16),
+          decoration: BoxDecoration(
+            color: Colors.black26,
+            borderRadius: BorderRadius.circular(8),
+          ),
+          child: TextControl(
+            node: node,
+            value: action.dbFrom ?? FTextTypeInput(),
+            page: page,
+            title: 'Document Id',
+            callBack: (final value, final old) {},
+          ),
         ),
       ],
     );

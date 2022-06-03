@@ -51,7 +51,7 @@ class SupabaseDeleteControl extends StatelessWidget {
         ),
         TextControl(
           node: node,
-          value: action.supabaseFrom ?? FTextTypeInput(),
+          value: action.dbFrom ?? FTextTypeInput(),
           page: page,
           title: 'From Table',
           callBack: (final value, final old) {},
@@ -73,11 +73,10 @@ class SupabaseDeleteControl extends StatelessWidget {
           ),
           child: MapElementControl(
             node: node,
-            value: action.supabaseEq ??
-                MapElement(key: '', value: FTextTypeInput()),
+            value: action.dbEq ?? MapElement(key: '', value: FTextTypeInput()),
             page: page,
             callBack: (final value, final old) {
-              action.supabaseEq = value;
+              action.dbEq = value;
               callback();
             },
           ),
