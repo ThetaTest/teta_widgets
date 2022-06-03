@@ -37,6 +37,6 @@ String conditionCodeTemplate(
         .replaceFirst('child: ', '');
   }
   return '''
-    ($value == $valueOfCondition) ? $childIfTrue : $childIfFalse
+    (($value) == $valueOfCondition) ? $childIfTrue : $childIfFalse
   ''';
 }
