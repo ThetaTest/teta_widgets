@@ -111,8 +111,11 @@ String pageCodeTemplate(
   }
 
   Logger.printSuccess('page: isPage -> strchild: ${strChildren.toString()}');
+  //------------------------------------------------
   //this is the process for hardcoded pages (customComponents)
   if (page.isHardCoded) {
+    Logger.printMessage(page.code!);
+
     String? stringToWrite;
     final data = RegExp('return (.*);', dotAll: true)
         .allMatches(page.code!)
@@ -132,6 +135,7 @@ String pageCodeTemplate(
     }
     strChildren.write('$stringToWrite;');
   }
+  //------------------------------------------------
 
   final paramsString = StringBuffer()..write('');
   final parametersString = StringBuffer()..write('');
