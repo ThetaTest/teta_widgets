@@ -73,9 +73,6 @@ class CMSLoggedUserBody extends NodeBody {
         ${node.nid}
         $loop
         ${child ?? children}
-        $params
-        $states
-        $dataset
         $forPlay
       ''',
       ),
