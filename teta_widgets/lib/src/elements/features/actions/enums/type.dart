@@ -18,4 +18,5 @@ enum ActionType {
   map,
   tetaDatabase,
   tetaAuth,
+  customFunctions,
 }

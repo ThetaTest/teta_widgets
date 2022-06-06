@@ -30,6 +30,7 @@ import 'package:teta_widgets/src/elements/actions/camera/switch_camera.dart';
 import 'package:teta_widgets/src/elements/actions/camera/take_photo.dart';
 import 'package:teta_widgets/src/elements/actions/camera/torch_flash.dart';
 import 'package:teta_widgets/src/elements/actions/condition.dart';
+import 'package:teta_widgets/src/elements/actions/custom_functions/custom_function.dart';
 import 'package:teta_widgets/src/elements/actions/delay.dart';
 import 'package:teta_widgets/src/elements/actions/loop.dart';
 import 'package:teta_widgets/src/elements/actions/navigation/go_back.dart';
@@ -66,6 +67,7 @@ import 'package:teta_widgets/src/elements/actions/webview/forward.dart';
 import 'package:teta_widgets/src/elements/actions/webview/reload.dart';
 import 'package:teta_widgets/src/elements/features/actions/enums/audio_player.dart';
 import 'package:teta_widgets/src/elements/features/actions/enums/camera.dart';
+import 'package:teta_widgets/src/elements/features/actions/enums/custom_function.dart';
 import 'package:teta_widgets/src/elements/features/actions/enums/index.dart';
 import 'package:teta_widgets/src/elements/features/actions/enums/revenue_cat.dart';
 import 'package:teta_widgets/src/elements/features/actions/enums/stripe.dart';
@@ -86,6 +88,7 @@ class FActionElement extends Equatable {
     this.actionGesture,
     this.actionNavigation,
     this.actionState,
+    this.actionCustomFunction,
     this.actionSupabaseAuth,
     this.actionSupabaseDB,
     this.actionCamera,
@@ -205,6 +208,7 @@ class FActionElement extends Equatable {
   ActionState? actionState;
   ActionRevenueCat? actionRevenueCat;
   ActionStripe? actionStripe;
+  ActionCustomFunction? actionCustomFunction;
   ActionSupabaseAuth? actionSupabaseAuth;
   ActionSupabaseDB? actionSupabaseDB;
   ActionCamera? actionCamera;
@@ -269,6 +273,7 @@ class FActionElement extends Equatable {
           'Navigation',
           'Teta database',
           'Teta auth',
+          'Custom Functions',
           if (config.supabaseEnabled ?? false) 'Supabase auth',
           if (config.supabaseEnabled ?? false) 'Supabase database',
           if (kDebugMode)
@@ -347,6 +352,10 @@ class FActionElement extends Equatable {
     return [];
   }
 
+  static List<String> getCustomFunctions() {
+    return enumsToListString(ActionCustomFunction.values);
+  }
+
   static List<String> getSupabaseAuth(final ProjectConfig? config) {
     if (config != null) {
       if (config.supabaseEnabled ?? false) {
@@ -392,6 +401,9 @@ class FActionElement extends Equatable {
     if (type == ActionType.stripe) {
       return 'Stripe';
     }
+    if (type == 'Custom Functions') {
+      return 'Custom Functions';
+    }
     if (type != null) {
       return EnumToString.convertToString(type, camelCase: true);
     }
@@ -407,6 +419,9 @@ class FActionElement extends Equatable {
     }
     if (value == 'Stripe') {
       return ActionType.stripe;
+    }
+    if (value == 'Custom Functions') {
+      return ActionType.customFunctions;
     }
     if (value != null) {
       return EnumToString.fromString<dynamic>(list, value, camelCase: true);
@@ -425,6 +440,7 @@ class FActionElement extends Equatable {
   Map<String, dynamic> toJson() => <String, dynamic>{
         'id': id,
         'aT': convertValueToDropdown(actionType),
+        'cF': convertValueToDropdown(actionType),
         'aN': convertValueToDropdown(actionNavigation),
         'aS': convertValueToDropdown(actionState),
         'g': convertValueToDropdown(actionGesture),
@@ -469,6 +485,26 @@ class FActionElement extends Equatable {
     final int? loop,
   ) async {
     switch (actionType) {
+      case ActionType.customFunctions:
+        if (withCondition == true) {
+          if (condition?.get(params, states, dataset, true, loop) !=
+              valueOfCondition?.get(params, states, dataset, true, loop)) {
+            break;
+          }
+        }
+        await FDelay.action(int.tryParse('${delay?.value}') ?? 0);
+        FLoop.action(
+          () => FActionCustomFunction.action(
+            context,
+            states,
+            dataset,
+            loop,
+          ),
+          everyMilliseconds,
+          context,
+          withLoop: withLoop ?? false,
+        );
+        break;
       case ActionType.tetaDatabase:
         switch (actionTetaDB) {
           case ActionTetaCmsDB.insert:
@@ -1479,6 +1515,21 @@ class FActionElement extends Equatable {
     final int loop = 0,
   }) {
     switch (actionType) {
+      case ActionType.customFunctions:
+        return FCondition.toCode(
+              context,
+              condition,
+              valueOfCondition,
+              withCondition: withCondition ?? false,
+            ) +
+            FDelay.toCode(int.tryParse('${delay?.value}') ?? 0) +
+            FLoop.toCode(
+              int.tryParse(everyMilliseconds?.value ?? '0') ?? 0,
+              FActionCustomFunction.toCode(
+                context,
+              ),
+              withLoop: withLoop ?? false,
+            );
       case ActionType.tetaDatabase:
         switch (actionTetaDB) {
           case ActionTetaCmsDB.insert:

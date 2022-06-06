@@ -1,0 +1,3 @@
+enum ActionCustomFunction {
+  simple,
+}
