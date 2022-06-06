@@ -267,7 +267,11 @@ class _WScaffoldState extends State<WScaffold> {
           ),
         )
         .toList();
-    return widgets.isNotEmpty ? widgets.first : _placeholder(context);
+    return widgets.isNotEmpty
+        ? Stack(
+            children: [widgets.first],
+          )
+        : _placeholder(context);
   }
 
   Widget _placeholder(final BuildContext context) {

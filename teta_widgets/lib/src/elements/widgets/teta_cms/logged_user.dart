@@ -3,7 +3,6 @@
 // Flutter imports:
 import 'package:flutter/material.dart';
 // Package imports:
-import 'package:supabase/supabase.dart';
 import 'package:teta_cms/teta_cms.dart';
 import 'package:teta_core/teta_core.dart';
 // Project imports:
@@ -56,9 +55,7 @@ class _WCMSLoggedUserState extends State<WCMSLoggedUser> {
     name: 'Teta Auth User',
     map: [<String, dynamic>{}],
   );
-  bool isLoaded = true;
-  SupabaseClient? client;
-  List<DatasetObject> datasets = [];
+  Future<Map<String, dynamic>>? _future;
 
   @override
   void initState() {
@@ -66,22 +63,16 @@ class _WCMSLoggedUserState extends State<WCMSLoggedUser> {
     load();
   }
 
-  Future<Map<String, dynamic>> load() async {
-    final user = await TetaCMS.instance.auth.user.get;
-    return <String, dynamic>{
-      'isLogged': user.keys.isNotEmpty,
-      'uid': user['uid'],
-      'name': user['name'],
-      'email': user['email'],
-      'locale': user['locale'],
-      'provider': user['provider'],
-    };
+  Future load() async {
+    setState(() {
+      _future ??= TetaCMS.instance.auth.user.get;
+    });
   }
 
   @override
   Widget build(final BuildContext context) {
     return FutureBuilder(
-      future: load(),
+      future: _future,
       builder: (final context, final snapshot) {
         if (!snapshot.hasData) {
           if (widget.children.isNotEmpty) {
@@ -98,22 +89,20 @@ class _WCMSLoggedUserState extends State<WCMSLoggedUser> {
           }
         }
 
-        final map = snapshot.data as Map<String, dynamic>?;
+        final data = snapshot.data as Map<String, dynamic>?;
+        final map = <String, dynamic>{
+          'isLogged': data?.keys.isNotEmpty,
+          'uid': data?['uid'],
+          'name': data?['name'],
+          'email': data?['email'],
+          'locale': data?['locale'],
+          'provider': data?['provider'],
+        };
         _map = _map.copyWith(
           name: 'Teta Auth User',
-          map: [
-            map ??
-                <String, dynamic>{
-                  'isLogged': false,
-                  'uid': null,
-                  'name': null,
-                  'email': null,
-                  'locale': null,
-                  'provider': null,
-                },
-          ],
+          map: [map],
         );
-        datasets = addDataset(context, widget.dataset, _map);
+        final datasets = addDataset(context, widget.dataset, _map);
         if (widget.children.isNotEmpty) {
           return widget.children.first.toWidget(
             params: widget.params,

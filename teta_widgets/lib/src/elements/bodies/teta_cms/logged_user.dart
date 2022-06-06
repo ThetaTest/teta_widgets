@@ -20,7 +20,7 @@ const _globalType = NType.cmsLoggedUser;
 
 /// IS
 final cmsLoggedUserIntrinsicStates = IntrinsicStates(
-  nodeIcon: Assets.icons.left.dataset,
+  nodeIcon: const AssetGenImage('assets/icons/left/auth.png'),
   nodeVideo: null,
   nodeDescription: null,
   advicedChildren: [
@@ -39,8 +39,8 @@ final cmsLoggedUserIntrinsicStates = IntrinsicStates(
   advicedChildrenCanHaveAtLeastAChild: [],
   displayName: NodeType.name(_globalType),
   type: _globalType,
-  category: NodeCategories.animated,
-  maxChildren: 1,
+  category: NodeCategories.basic,
+  maxChildren: 2,
   canHave: ChildrenEnum.children,
   addChildLabels: [],
   gestures: [],
@@ -73,6 +73,7 @@ class CMSLoggedUserBody extends NodeBody {
         ${node.nid}
         $loop
         ${child ?? children}
+        $forPlay
       ''',
       ),
       node: node,
