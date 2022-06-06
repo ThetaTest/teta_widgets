@@ -68,7 +68,11 @@ class FATetaCMSLogin {
   ) {
     final providerStr = provider == TetaProvider.google
         ? 'TetaProvider.google'
-        : 'TetaProvider.github';
+        : provider == TetaProvider.twitter
+            ? 'TetaProvider.twitter'
+            : provider == TetaProvider.apple
+                ? 'TetaProvider.apple'
+                : 'TetaProvider.github';
     return '''
       await TetaCMS.instance.auth.signIn(
         context,

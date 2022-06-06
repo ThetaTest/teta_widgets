@@ -592,6 +592,31 @@ class FActionElement extends Equatable {
               withLoop: withLoop ?? false,
             );
             break;
+          case ActionTetaCmsAuth.signInWithTwitter:
+            if (withCondition == true) {
+              if (condition?.get(params, states, dataset, true, loop) !=
+                  valueOfCondition?.get(params, states, dataset, true, loop)) {
+                break;
+              }
+            }
+            await FDelay.action(int.tryParse('${delay?.value}') ?? 0);
+            FLoop.action(
+              () => FATetaCMSLogin.action(
+                node,
+                nameOfPage,
+                context,
+                paramsToSend,
+                params,
+                states,
+                dataset,
+                loop,
+                TetaProvider.twitter,
+              ),
+              everyMilliseconds,
+              context,
+              withLoop: withLoop ?? false,
+            );
+            break;
           default:
             break;
         }
@@ -1543,6 +1568,24 @@ class FActionElement extends Equatable {
                   FATetaCMSLogin.toCode(
                     context,
                     TetaProvider.github,
+                    nameOfPage,
+                    paramsToSend,
+                  ),
+                  withLoop: withLoop ?? false,
+                );
+          case ActionTetaCmsAuth.signInWithTwitter:
+            return FCondition.toCode(
+                  context,
+                  condition,
+                  valueOfCondition,
+                  withCondition: withCondition ?? false,
+                ) +
+                FDelay.toCode(int.tryParse('${delay?.value}') ?? 0) +
+                FLoop.toCode(
+                  int.tryParse(everyMilliseconds?.value ?? '0') ?? 0,
+                  FATetaCMSLogin.toCode(
+                    context,
+                    TetaProvider.twitter,
                     nameOfPage,
                     paramsToSend,
                   ),
