@@ -37,8 +37,6 @@ String componentCodeTemplate(
 
   if (compWidget.isHardCoded) {
     final pageName = body.attributes[DBKeys.componentName] as String;
-    final paramsToSend =
-        body.attributes[DBKeys.paramsToSend] as Map<String, dynamic>?;
     final temp = removeDiacritics(
       pageName
           .replaceFirst('0', 'A0')
@@ -57,30 +55,14 @@ String componentCodeTemplate(
     );
     final pageNameRC = ReCase(temp);
     //params
-    final parametersString = StringBuffer()..write('');
     final stringParamsToSend = StringBuffer()..write('');
     for (final param in compWidget.params) {
-      if ("${paramsToSend?[param.id]?['dataset']}" == 'States' ||
-          "${paramsToSend?[param.id]?['dataset']}" == 'Params') {
-        final valueToSend = (paramsToSend ?? <String, dynamic>{})[param.id]
-                ?['label'] as String? ??
-            'null';
-        if (valueToSend != 'null') {
-          final name = ReCase(param.name);
-          stringParamsToSend.write('${name.camelCase}: ');
-          final rc = ReCase(valueToSend);
-          stringParamsToSend.write('${rc.camelCase}, ');
-        }
-      } else {
-        final name = ReCase(param.name);
-        stringParamsToSend.write('${name.camelCase}: ');
-        final valueToSend =
-            "datasets['${paramsToSend?[param.id]?['dataset']}']?[index]?['${paramsToSend?[param.id]?['label']}'] ?? ''";
-        stringParamsToSend.write('$valueToSend, ');
-      }
+      final name = ReCase(param.name);
+      stringParamsToSend.write('${name.camelCase}: ');
+      final rc = ReCase(param.value.toString());
+      stringParamsToSend.write(" '${rc.camelCase}', ");
     }
-
-    return 'Page${pageNameRC.pascalCase}(${stringParamsToSend.toString()})';
+    return '${pageNameRC.pascalCase}(${stringParamsToSend.toString()})';
   } else {
     //here we are in the Visual Component
     //checks for Page Name

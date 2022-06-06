@@ -79,23 +79,6 @@ String pageCodeTemplate(
               : '';
     } else if (e.globalType == NType.drawer) {
       drawerString = e.child != null ? 'drawer: ${e.toCode(context)},' : '';
-    } else if (e.globalType == NType.component) {
-      Logger.printSuccess('entered here');
-      // final pages =
-      //     (BlocProvider.of<FocusProjectBloc>(context).state as ProjectLoaded)
-      //         .prj
-      //         .pages;
-      // final currentComponent = pages!.firstWhere(
-      //   (final p) => e.name == p.name,
-      // );
-      // Logger.printWarning(
-      //   'components was selected to extract code -> $currentComponent',
-      // );
-      // //this is a (pageobjectmodel) and have the coe
-      // if (currentComponent.isHardCoded) {
-      //   strChildren.write(currentComponent.code);
-      // }
-
     } else {
       if (strChildren.toString() == '') {
         strChildren.write(e.toCode(context));
@@ -109,33 +92,6 @@ String pageCodeTemplate(
       strChildren.write(';');
     }
   }
-
-  Logger.printSuccess('page: isPage -> strchild: ${strChildren.toString()}');
-  //------------------------------------------------
-  //this is the process for hardcoded pages (customComponents)
-  if (page.isHardCoded) {
-    Logger.printMessage(page.code!);
-
-    String? stringToWrite;
-    final data = RegExp('return (.*);', dotAll: true)
-        .allMatches(page.code!)
-        .first
-        .group(1);
-    if (data!.contains('home')) {
-      final finalString = RegExp(r'home: (.*),.+\)', dotAll: true)
-          .allMatches(data)
-          .first
-          .group(1);
-      //if the second regex works, he finds a scaffold and remove it
-      if (finalString != null) {
-        stringToWrite = finalString;
-      }
-    } else {
-      stringToWrite = data;
-    }
-    strChildren.write('$stringToWrite;');
-  }
-  //------------------------------------------------
 
   final paramsString = StringBuffer()..write('');
   final parametersString = StringBuffer()..write('');

@@ -18,6 +18,7 @@ String codeComponentTemplate(
 ) {
   final prj =
       (BlocProvider.of<FocusProjectBloc>(context).state as ProjectLoaded).prj;
+
   final page = prj.pages!.firstWhere((final element) => element.id == pageId);
   final list1 = page.code!.split('void');
   final imports = list1[0]; //returns my imports
@@ -25,7 +26,7 @@ String codeComponentTemplate(
   final code = 'class ${list2[1]}\n class ${list2[2]}';
 
   return '''
-    ${imports ?? ''}
-    ${code ?? ''}
+    $imports
+    $code 
   ''';
 }
