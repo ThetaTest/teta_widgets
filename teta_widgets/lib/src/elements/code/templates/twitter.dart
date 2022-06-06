@@ -13,7 +13,10 @@ String loginTwitterCodeTemplate(
   final int loop,
 ) {
   return '''
-    TwitterAuthButton(
+SizedBox(
+    ${CS.size(context, node.body, isWidth: true)}
+    ${CS.size(context, node.body, isWidth: false)}
+    child: TwitterAuthButton(
       ${CS.action(
     context,
     node,
@@ -32,6 +35,7 @@ String loginTwitterCodeTemplate(
     isRequired: false,
     loop: loop,
   )}
-    )
+    ),
+  )
   ''';
 }

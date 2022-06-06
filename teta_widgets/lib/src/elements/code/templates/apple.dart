@@ -13,7 +13,10 @@ String loginAppleCodeTemplate(
   final int loop,
 ) {
   return '''
-    AppleAuthButton(
+SizedBox(
+    ${CS.size(context, node.body, isWidth: true)}
+    ${CS.size(context, node.body, isWidth: false)}
+    child: AppleAuthButton(
       ${CS.action(
     context,
     node,
@@ -32,6 +35,7 @@ String loginAppleCodeTemplate(
     isRequired: false,
     loop: loop,
   )}
-    )
+    ),
+  )
   ''';
 }

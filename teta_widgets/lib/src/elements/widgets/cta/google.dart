@@ -43,36 +43,36 @@ class WLoginWithGoogle extends StatelessWidget {
     return NodeSelectionBuilder(
       node: node,
       forPlay: forPlay,
-      child: GoogleAuthButton(
-        onPressed: () => GestureBuilder.get(
-          context: context,
-          node: node,
-          gesture: ActionGesture.onTap,
-          action: action,
-          actionValue: null,
-          params: params,
-          states: states,
-          dataset: dataset,
-          forPlay: forPlay,
+      child: SizedBox(
+        width: width.get(context: context, isWidth: true),
+        height: height.get(context: context, isWidth: false),
+        child: GoogleAuthButton(
+          onPressed: () => GestureBuilder.get(
+            context: context,
+            node: node,
+            gesture: ActionGesture.onTap,
+            action: action,
+            actionValue: null,
+            params: params,
+            states: states,
+            dataset: dataset,
+            forPlay: forPlay,
+          ),
+          onLongPress: () => GestureBuilder.get(
+            context: context,
+            node: node,
+            gesture: ActionGesture.onLongPress,
+            action: action,
+            actionValue: null,
+            params: params,
+            states: states,
+            dataset: dataset,
+            forPlay: forPlay,
+          ),
+          style: const AuthButtonStyle(
+            padding: EdgeInsets.symmetric(vertical: 16),
+          ),
         ),
-        onLongPress: () => GestureBuilder.get(
-          context: context,
-          node: node,
-          gesture: ActionGesture.onLongPress,
-          action: action,
-          actionValue: null,
-          params: params,
-          states: states,
-          dataset: dataset,
-          forPlay: forPlay,
-        ),
-        style: AuthButtonStyle(
-          padding: const EdgeInsets.symmetric(vertical: 16),
-          width: width.get(context: context, isWidth: true),
-          height: height.get(context: context, isWidth: false),
-        ),
-        // darkMode: false,
-        //rtl: false,
       ),
     );
   }

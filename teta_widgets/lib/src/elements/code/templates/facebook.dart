@@ -13,7 +13,10 @@ String loginFacebookCodeTemplate(
   final int loop,
 ) {
   return '''
-    FacebookAuthButton(
+SizedBox(
+    ${CS.size(context, node.body, isWidth: true)}
+    ${CS.size(context, node.body, isWidth: false)}
+    child: FacebookAuthButton(
       ${CS.action(
     context,
     node,
@@ -32,6 +35,7 @@ String loginFacebookCodeTemplate(
     isRequired: true,
     loop: loop,
   )}
-    )
+    ),
+  )
   ''';
 }
