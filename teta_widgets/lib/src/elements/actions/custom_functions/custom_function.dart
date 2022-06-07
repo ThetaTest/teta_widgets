@@ -2,9 +2,8 @@
 import 'package:flutter/material.dart';
 // Package imports:
 import 'package:teta_core/teta_core.dart';
-import 'package:teta_widgets/src/elements/nodes/node.dart';
 
-class FActionCustomFunction {
+class FActionCustomFunctionSimple {
   static Future action(
     final BuildContext context,
     final List<VariableObject> states,
@@ -53,6 +52,8 @@ class FActionCustomFunction {
   static String toCode(
     final BuildContext context,
   ) {
-    return '''''';
+    return '''
+      print('hello world');
+    ''';
   }
 }

@@ -127,6 +127,10 @@ class FActionElement extends Equatable {
     actionNavigation =
         convertDropdownToValue(ActionNavigation.values, doc['aN'] as String?)
             as ActionNavigation?;
+    actionCustomFunction = convertDropdownToValue(
+      ActionCustomFunction.values,
+      doc['cF'] as String?,
+    ) as ActionCustomFunction?;
     actionRevenueCat =
         convertDropdownToValue(ActionRevenueCat.values, doc['aRC'] as String?)
             as ActionRevenueCat?;
@@ -273,7 +277,7 @@ class FActionElement extends Equatable {
           'Navigation',
           'Teta database',
           'Teta auth',
-          'Custom Functions',
+          if (kDebugMode) 'Custom Functions',
           if (config.supabaseEnabled ?? false) 'Supabase auth',
           if (config.supabaseEnabled ?? false) 'Supabase database',
           if (kDebugMode)
@@ -401,7 +405,7 @@ class FActionElement extends Equatable {
     if (type == ActionType.stripe) {
       return 'Stripe';
     }
-    if (type == 'Custom Functions') {
+    if (type == ActionType.customFunctions) {
       return 'Custom Functions';
     }
     if (type != null) {
@@ -440,7 +444,7 @@ class FActionElement extends Equatable {
   Map<String, dynamic> toJson() => <String, dynamic>{
         'id': id,
         'aT': convertValueToDropdown(actionType),
-        'cF': convertValueToDropdown(actionType),
+        'cF': convertValueToDropdown(actionCustomFunction),
         'aN': convertValueToDropdown(actionNavigation),
         'aS': convertValueToDropdown(actionState),
         'g': convertValueToDropdown(actionGesture),
@@ -486,24 +490,28 @@ class FActionElement extends Equatable {
   ) async {
     switch (actionType) {
       case ActionType.customFunctions:
-        if (withCondition == true) {
-          if (condition?.get(params, states, dataset, true, loop) !=
-              valueOfCondition?.get(params, states, dataset, true, loop)) {
+        switch (actionCustomFunction) {
+          case ActionCustomFunction.simple:
+            if (withCondition == true) {
+              if (condition?.get(params, states, dataset, true, loop) !=
+                  valueOfCondition?.get(params, states, dataset, true, loop)) {
+                break;
+              }
+            }
+            await FDelay.action(int.tryParse('${delay?.value}') ?? 0);
+            FLoop.action(
+              () => FActionCustomFunctionSimple.action(
+                context,
+                states,
+                dataset,
+                loop,
+              ),
+              everyMilliseconds,
+              context,
+              withLoop: withLoop ?? false,
+            );
             break;
-          }
         }
-        await FDelay.action(int.tryParse('${delay?.value}') ?? 0);
-        FLoop.action(
-          () => FActionCustomFunction.action(
-            context,
-            states,
-            dataset,
-            loop,
-          ),
-          everyMilliseconds,
-          context,
-          withLoop: withLoop ?? false,
-        );
         break;
       case ActionType.tetaDatabase:
         switch (actionTetaDB) {
@@ -1516,20 +1524,24 @@ class FActionElement extends Equatable {
   }) {
     switch (actionType) {
       case ActionType.customFunctions:
-        return FCondition.toCode(
-              context,
-              condition,
-              valueOfCondition,
-              withCondition: withCondition ?? false,
-            ) +
-            FDelay.toCode(int.tryParse('${delay?.value}') ?? 0) +
-            FLoop.toCode(
-              int.tryParse(everyMilliseconds?.value ?? '0') ?? 0,
-              FActionCustomFunction.toCode(
-                context,
-              ),
-              withLoop: withLoop ?? false,
-            );
+        switch (actionCustomFunction) {
+          case ActionCustomFunction.simple:
+            return FCondition.toCode(
+                  context,
+                  condition,
+                  valueOfCondition,
+                  withCondition: withCondition ?? false,
+                ) +
+                FDelay.toCode(int.tryParse('${delay?.value}') ?? 0) +
+                FLoop.toCode(
+                  int.tryParse(everyMilliseconds?.value ?? '0') ?? 0,
+                  FActionCustomFunctionSimple.toCode(
+                    context,
+                  ),
+                  withLoop: withLoop ?? false,
+                );
+        }
+        break;
       case ActionType.tetaDatabase:
         switch (actionTetaDB) {
           case ActionTetaCmsDB.insert:

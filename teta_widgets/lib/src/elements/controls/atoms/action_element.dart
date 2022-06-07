@@ -29,6 +29,7 @@ import 'package:teta_widgets/src/elements/controls/type.dart';
 import 'package:teta_widgets/src/elements/features/actions/element.dart';
 import 'package:teta_widgets/src/elements/features/actions/enums/audio_player.dart';
 import 'package:teta_widgets/src/elements/features/actions/enums/camera.dart';
+import 'package:teta_widgets/src/elements/features/actions/enums/custom_function.dart';
 import 'package:teta_widgets/src/elements/features/actions/enums/gestures.dart';
 import 'package:teta_widgets/src/elements/features/actions/enums/navigation.dart';
 import 'package:teta_widgets/src/elements/features/actions/enums/revenue_cat.dart';
@@ -684,7 +685,25 @@ class ActionElementControlState extends State<ActionElementControl> {
                     ),
                   ],
                 ),
-              //todo: see how it works
+              //todo: here
+              if (widget.element.actionType == ActionType.customFunctions)
+                CDropdown(
+                  value: FActionElement.convertValueToDropdown(
+                    widget.element.actionCustomFunction,
+                  ),
+                  items: FActionElement.getCustomFunctions().toSet().toList(),
+                  onChange: (final newValue) {
+                    if (newValue != null) {
+                      final old = widget.element;
+                      widget.element.actionCustomFunction =
+                          FActionElement.convertDropdownToValue(
+                        ActionCustomFunction.values,
+                        newValue,
+                      ) as ActionCustomFunction?;
+                      widget.callBack(widget.element, old);
+                    }
+                  },
+                ),
               if (widget.element.actionType == ActionType.revenueCat)
                 CDropdown(
                   value: FActionElement.convertValueToDropdown(
@@ -705,7 +724,6 @@ class ActionElementControlState extends State<ActionElementControl> {
                     }
                   },
                 ),
-              //todo: here stuffs
               if (widget.element.actionType == ActionType.stripe)
                 CDropdown(
                   value: FActionElement.convertValueToDropdown(
@@ -726,13 +744,6 @@ class ActionElementControlState extends State<ActionElementControl> {
                     }
                   },
                 ),
-              //todo: choose the dataset to pass at FStripeBuyAction
-              // if (widget.element.actionStripe == ActionStripe.buy)
-              //  Container(
-              //     width: double.maxFinite,
-              //      height: 40,
-              //      color: Colors.black54,),
-
               if (widget.element.actionType == ActionType.tetaAuth)
                 CDropdown(
                   value: FActionElement.convertValueToDropdown(
@@ -1194,27 +1205,6 @@ class ActionElementControlState extends State<ActionElementControl> {
                     widget.callBack(widget.element, old);
                   },
                 ),
-              /*if (widget.element.actionType == ActionType.shopify &&
-                  (widget.element.actionShopify ==
-                          ActionShopify.shopifyBuyNow ||
-                      widget.element.actionShopify ==
-                          ActionShopify.shopifyAddToCart))
-                ActionvalueControl(
-                  title: 'Prod Id',
-                  node: widget.node,
-                  page: widget.page,
-                  actionValue: widget.,
-                  callBack: (text, old) => {
-                    NodeRepository(context: context).changeMapAttr(
-                      prjId: widget.prj.id,
-                      pageId: widget.page.id!,
-                      nodeId: widget.node.nid!,
-                      key: 'actVal',
-                      value: text.toJson(),
-                      old: old.toJson(),
-                    ),
-                  },
-                ),*/
             ],
           ),
         ),
