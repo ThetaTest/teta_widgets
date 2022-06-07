@@ -14,7 +14,10 @@ String loginGitHubCodeTemplate(
   final int loop,
 ) {
   return '''
-  GithubAuthButton(
+SizedBox(
+    ${CS.size(context, node.body, isWidth: true)}
+    ${CS.size(context, node.body, isWidth: false)}
+    child: GithubAuthButton(
     ${CS.action(
     pageId,
     context,
@@ -35,6 +38,7 @@ String loginGitHubCodeTemplate(
     isRequired: false,
     loop: loop,
   )}
-  )
+  ),
+)
   ''';
 }

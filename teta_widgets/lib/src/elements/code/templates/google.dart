@@ -14,7 +14,10 @@ String loginGoogleCodeTemplate(
   final int loop,
 ) {
   return '''
-  GoogleAuthButton(
+  SizedBox(
+    ${CS.size(context, node.body, isWidth: true)}
+    ${CS.size(context, node.body, isWidth: false)}
+    child: GoogleAuthButton(
     ${CS.action(
     pageId,
     context,
@@ -35,6 +38,7 @@ String loginGoogleCodeTemplate(
     isRequired: false,
     loop: loop,
   )}
-  )
+  ),
+)
   ''';
 }
