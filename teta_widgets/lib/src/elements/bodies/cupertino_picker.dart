@@ -127,5 +127,11 @@ class CupertinoPickerBody extends NodeBody {
     final int? loop,
   ) =>
       cupertinoPickerCodeTemplate(
-          context, this, node, children ?? [], loop ?? 0);
+        pageId,
+        context,
+        this,
+        node,
+        children ?? [],
+        loop ?? 0,
+      );
 }

@@ -7,6 +7,7 @@ import 'package:teta_widgets/src/elements/nodes/node.dart';
 
 /// OutlinedButton Template
 String outlinedButtonCodeTemplate(
+  final int pageId,
   final BuildContext context,
   final CNode node,
   final CNode? child,
@@ -15,6 +16,7 @@ String outlinedButtonCodeTemplate(
   return '''
     OutlinedButton(
       ${CS.action(
+    pageId,
     context,
     node,
     ActionGesture.onTap,
@@ -24,6 +26,7 @@ String outlinedButtonCodeTemplate(
     loop: loop,
   )}
       ${CS.action(
+    pageId,
     context,
     node,
     ActionGesture.onLongPress,

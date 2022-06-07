@@ -122,5 +122,5 @@ class BouncingWidgetBody extends NodeBody {
     final int pageId,
     final int? loop,
   ) =>
-      bouncingWidgetCodeTemplate(context, this, node, child, loop ?? 0);
+      bouncingWidgetCodeTemplate(pageId, context, this, node, child, loop ?? 0);
 }

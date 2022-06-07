@@ -107,5 +107,5 @@ class LoginWithAppleBody extends NodeBody {
     final int pageId,
     final int? loop,
   ) =>
-      loginAppleCodeTemplate(context, node, child, loop ?? 0);
+      loginAppleCodeTemplate(pageId, context, node, child, loop ?? 0);
 }

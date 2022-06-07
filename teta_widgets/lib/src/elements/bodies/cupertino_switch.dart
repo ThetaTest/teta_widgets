@@ -115,6 +115,7 @@ class CupertinoSwitchBody extends NodeBody {
     final int? loop,
   ) =>
       cupertinoSwitchCodeTemplate(
+        pageId,
         context,
         this,
         node,

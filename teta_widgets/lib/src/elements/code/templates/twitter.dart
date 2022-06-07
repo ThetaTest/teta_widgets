@@ -7,6 +7,7 @@ import 'package:teta_widgets/src/elements/nodes/node.dart';
 
 /// Twitter Login Template
 String loginTwitterCodeTemplate(
+  final int pageId,
   final BuildContext context,
   final CNode node,
   final CNode? child,
@@ -15,6 +16,7 @@ String loginTwitterCodeTemplate(
   return '''
     TwitterAuthButton(
       ${CS.action(
+    pageId,
     context,
     node,
     ActionGesture.onTap,
@@ -24,6 +26,7 @@ String loginTwitterCodeTemplate(
     loop: loop,
   )}
       ${CS.action(
+    pageId,
     context,
     node,
     ActionGesture.onLongPress,

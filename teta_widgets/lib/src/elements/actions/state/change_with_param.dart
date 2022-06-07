@@ -4,10 +4,9 @@
 // Flutter imports:
 import 'package:flutter/material.dart';
 // Package imports:
-import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:recase/recase.dart';
-import 'package:teta_core/src/blocs/focus_page/index.dart';
 import 'package:teta_core/src/models/variable.dart';
+import 'package:teta_widgets/src/elements/actions/snippets/get_page_on_code.dart';
 // Project imports:
 import 'package:teta_widgets/src/elements/actions/snippets/take_param_from.dart';
 import 'package:teta_widgets/src/elements/actions/snippets/take_state_from.dart';
@@ -41,11 +40,13 @@ class FActionStateChangeWithParam {
   }
 
   static String toCode(
+    final int pageId,
     final BuildContext context,
     final String? stateName,
     final String? paramN,
   ) {
-    final page = BlocProvider.of<FocusPageBloc>(context).state;
+    final page = getPageOnToCode(pageId, context);
+    if (page == null) return '';
     final variable = takeStateFrom(page, '$stateName');
     final param = takeParamFrom(page, '$paramN');
     if (param == null ||

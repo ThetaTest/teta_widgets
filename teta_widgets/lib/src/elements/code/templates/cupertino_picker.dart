@@ -9,6 +9,7 @@ import 'package:teta_widgets/src/elements/nodes/node_body.dart';
 
 /// Cupertino Picker Template
 String cupertinoPickerCodeTemplate(
+  final int pageId,
   final BuildContext context,
   final NodeBody body,
   final CNode node,
@@ -25,6 +26,7 @@ String cupertinoPickerCodeTemplate(
       looping: $flag,
       $itemExtent
       ${CS.action(
+    pageId,
     context,
     node,
     ActionGesture.onChange,

@@ -8,6 +8,7 @@ import 'package:teta_widgets/src/elements/nodes/node_body.dart';
 
 /// Cupertino Switch Template
 String cupertinoSwitchCodeTemplate(
+  final int pageId,
   final BuildContext context,
   final NodeBody body,
   final CNode node,
@@ -18,6 +19,7 @@ String cupertinoSwitchCodeTemplate(
     CupertinoSwitch(
       value: false,
       ${CS.action(
+    pageId,
     context,
     node,
     ActionGesture.onChange,

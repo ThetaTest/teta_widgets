@@ -7,6 +7,7 @@ import 'package:teta_widgets/src/elements/nodes/node.dart';
 
 /// GestureDetector Template
 String gestureDetectorCodeTemplate(
+  final int pageId,
   final BuildContext context,
   final CNode node,
   final CNode? child,
@@ -15,6 +16,7 @@ String gestureDetectorCodeTemplate(
   return '''
   GestureDetector(
     ${CS.action(
+    pageId,
     context,
     node,
     ActionGesture.onTap,
@@ -24,6 +26,7 @@ String gestureDetectorCodeTemplate(
     loop: loop,
   )}
     ${CS.action(
+    pageId,
     context,
     node,
     ActionGesture.onDoubleTap,
@@ -33,6 +36,7 @@ String gestureDetectorCodeTemplate(
     loop: loop,
   )}
     ${CS.action(
+    pageId,
     context,
     node,
     ActionGesture.onLongPress,

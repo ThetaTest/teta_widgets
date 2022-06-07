@@ -5,9 +5,9 @@
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 // Package imports:
-import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:recase/recase.dart';
 import 'package:teta_core/teta_core.dart';
+import 'package:teta_widgets/src/elements/actions/snippets/get_page_on_code.dart';
 // Project imports:
 import 'package:teta_widgets/src/elements/actions/snippets/take_state_from.dart';
 import 'package:teta_widgets/src/elements/actions/snippets/update.dart';
@@ -28,9 +28,6 @@ class FActionStateChangeWith {
       final index =
           states.indexWhere((final element) => element.name == stateName);
       if (index >= 0) {
-        print(
-          value ?? valueToChangeWith.get(params, states, datasets, true, loop),
-        );
         states[index].value = value ??
             valueToChangeWith.get(params, states, datasets, true, loop);
         update(context);
@@ -44,13 +41,15 @@ class FActionStateChangeWith {
   }
 
   static String toCode({
+    required final int pageId,
     required final BuildContext context,
     required final String? stateName,
     required final FTextTypeInput? valueToChangeWith,
     final int loop = 0,
   }) {
     if (valueToChangeWith != null && stateName != null) {
-      final page = BlocProvider.of<FocusPageBloc>(context).state;
+      final page = getPageOnToCode(pageId, context);
+      if (page == null) return '';
       final variable = takeStateFrom(page, stateName);
       if (variable == null) return '';
 

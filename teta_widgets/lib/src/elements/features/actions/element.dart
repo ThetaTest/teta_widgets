@@ -617,6 +617,31 @@ class FActionElement extends Equatable {
               withLoop: withLoop ?? false,
             );
             break;
+          case ActionTetaCmsAuth.signInWithApple:
+            if (withCondition == true) {
+              if (condition?.get(params, states, dataset, true, loop) !=
+                  valueOfCondition?.get(params, states, dataset, true, loop)) {
+                break;
+              }
+            }
+            await FDelay.action(int.tryParse('${delay?.value}') ?? 0);
+            FLoop.action(
+              () => FATetaCMSLogin.action(
+                node,
+                nameOfPage,
+                context,
+                paramsToSend,
+                params,
+                states,
+                dataset,
+                loop,
+                TetaProvider.apple,
+              ),
+              everyMilliseconds,
+              context,
+              withLoop: withLoop ?? false,
+            );
+            break;
           default:
             break;
         }
@@ -1473,6 +1498,7 @@ class FActionElement extends Equatable {
   }
 
   String toCode({
+    required final int pageId,
     required final BuildContext context,
     required final CNode body,
     final String? value,
@@ -1586,6 +1612,24 @@ class FActionElement extends Equatable {
                   FATetaCMSLogin.toCode(
                     context,
                     TetaProvider.twitter,
+                    nameOfPage,
+                    paramsToSend,
+                  ),
+                  withLoop: withLoop ?? false,
+                );
+          case ActionTetaCmsAuth.signInWithApple:
+            return FCondition.toCode(
+                  context,
+                  condition,
+                  valueOfCondition,
+                  withCondition: withCondition ?? false,
+                ) +
+                FDelay.toCode(int.tryParse('${delay?.value}') ?? 0) +
+                FLoop.toCode(
+                  int.tryParse(everyMilliseconds?.value ?? '0') ?? 0,
+                  FATetaCMSLogin.toCode(
+                    context,
+                    TetaProvider.apple,
                     nameOfPage,
                     paramsToSend,
                   ),
@@ -1710,7 +1754,7 @@ class FActionElement extends Equatable {
                 FDelay.toCode(int.tryParse('${delay?.value}') ?? 0) +
                 FLoop.toCode(
                   int.tryParse(everyMilliseconds?.value ?? '0') ?? 0,
-                  FActionStateIncrement.toCode(context, stateName),
+                  FActionStateIncrement.toCode(pageId, context, stateName),
                   withLoop: withLoop ?? false,
                 );
 
@@ -1724,7 +1768,7 @@ class FActionElement extends Equatable {
                 FDelay.toCode(int.tryParse('${delay?.value}') ?? 0) +
                 FLoop.toCode(
                   int.tryParse(everyMilliseconds?.value ?? '0') ?? 0,
-                  FActionStateDecrement.toCode(context, stateName),
+                  FActionStateDecrement.toCode(pageId, context, stateName),
                   withLoop: withLoop ?? false,
                 );
 
@@ -1739,6 +1783,7 @@ class FActionElement extends Equatable {
                 FLoop.toCode(
                   int.tryParse(everyMilliseconds?.value ?? '0') ?? 0,
                   FActionStateChangeWith.toCode(
+                    pageId: pageId,
                     context: context,
                     stateName: stateName,
                     valueToChangeWith: valueTextTypeInput,
@@ -1758,6 +1803,7 @@ class FActionElement extends Equatable {
                 FLoop.toCode(
                   int.tryParse(everyMilliseconds?.value ?? '0') ?? 0,
                   FActionStateChangeWithParam.toCode(
+                    pageId,
                     context,
                     stateName,
                     this.value,
@@ -2049,7 +2095,7 @@ class FActionElement extends Equatable {
                 FDelay.toCode(int.tryParse('${delay?.value}') ?? 0) +
                 FLoop.toCode(
                   int.tryParse(everyMilliseconds?.value ?? '0') ?? 0,
-                  FACameraTakePhoto.toCode(context, stateName),
+                  FACameraTakePhoto.toCode(pageId, context, stateName),
                   withLoop: withLoop ?? false,
                 );
 
@@ -2063,7 +2109,12 @@ class FActionElement extends Equatable {
                 FDelay.toCode(int.tryParse('${delay?.value}') ?? 0) +
                 FLoop.toCode(
                   int.tryParse(everyMilliseconds?.value ?? '0') ?? 0,
-                  FACameraSwitch.toCode(context, stateName, paramsToSend),
+                  FACameraSwitch.toCode(
+                    pageId,
+                    context,
+                    stateName,
+                    paramsToSend,
+                  ),
                   withLoop: withLoop ?? false,
                 );
 
@@ -2077,7 +2128,12 @@ class FActionElement extends Equatable {
                 FDelay.toCode(int.tryParse('${delay?.value}') ?? 0) +
                 FLoop.toCode(
                   int.tryParse(everyMilliseconds?.value ?? '0') ?? 0,
-                  FACameraOffFlash.toCode(context, stateName, paramsToSend),
+                  FACameraOffFlash.toCode(
+                    pageId,
+                    context,
+                    stateName,
+                    paramsToSend,
+                  ),
                   withLoop: withLoop ?? false,
                 );
 
@@ -2091,7 +2147,12 @@ class FActionElement extends Equatable {
                 FDelay.toCode(int.tryParse('${delay?.value}') ?? 0) +
                 FLoop.toCode(
                   int.tryParse(everyMilliseconds?.value ?? '0') ?? 0,
-                  FACameraAlwaysFlash.toCode(context, nameOfPage, paramsToSend),
+                  FACameraAlwaysFlash.toCode(
+                    pageId,
+                    context,
+                    nameOfPage,
+                    paramsToSend,
+                  ),
                   withLoop: withLoop ?? false,
                 );
 
@@ -2117,7 +2178,7 @@ class FActionElement extends Equatable {
                 FDelay.toCode(int.tryParse('${delay?.value}') ?? 0) +
                 FLoop.toCode(
                   int.tryParse(everyMilliseconds?.value ?? '0') ?? 0,
-                  FActionWebViewBack.toCode(context, stateName),
+                  FActionWebViewBack.toCode(pageId, context, stateName),
                   withLoop: withLoop ?? false,
                 );
 
@@ -2131,7 +2192,7 @@ class FActionElement extends Equatable {
                 FDelay.toCode(int.tryParse('${delay?.value}') ?? 0) +
                 FLoop.toCode(
                   int.tryParse(everyMilliseconds?.value ?? '0') ?? 0,
-                  FActionWebViewForward.toCode(context, stateName),
+                  FActionWebViewForward.toCode(pageId, context, stateName),
                   withLoop: withLoop ?? false,
                 );
 
@@ -2145,7 +2206,7 @@ class FActionElement extends Equatable {
                 FDelay.toCode(int.tryParse('${delay?.value}') ?? 0) +
                 FLoop.toCode(
                   int.tryParse(everyMilliseconds?.value ?? '0') ?? 0,
-                  FActionWebViewReload.toCode(context, stateName),
+                  FActionWebViewReload.toCode(pageId, context, stateName),
                   withLoop: withLoop ?? false,
                 );
 
@@ -2164,7 +2225,7 @@ class FActionElement extends Equatable {
                 FDelay.toCode(int.tryParse('${delay?.value}') ?? 0) +
                 FLoop.toCode(
                   int.tryParse(everyMilliseconds?.value ?? '0') ?? 0,
-                  FAudioPlayerPause.toCode(context, stateName),
+                  FAudioPlayerPause.toCode(pageId, context, stateName),
                   withLoop: withLoop ?? false,
                 );
 
@@ -2178,7 +2239,7 @@ class FActionElement extends Equatable {
                 FDelay.toCode(int.tryParse('${delay?.value}') ?? 0) +
                 FLoop.toCode(
                   int.tryParse(everyMilliseconds?.value ?? '0') ?? 0,
-                  FAudioPlayerPlay.toCode(context, stateName),
+                  FAudioPlayerPlay.toCode(pageId, context, stateName),
                   withLoop: withLoop ?? false,
                 );
 
@@ -2192,7 +2253,7 @@ class FActionElement extends Equatable {
                 FDelay.toCode(int.tryParse('${delay?.value}') ?? 0) +
                 FLoop.toCode(
                   int.tryParse(everyMilliseconds?.value ?? '0') ?? 0,
-                  FAudioPlayerReload.toCode(context, stateName),
+                  FAudioPlayerReload.toCode(pageId, context, stateName),
                   withLoop: withLoop ?? false,
                 );
 
@@ -2206,7 +2267,7 @@ class FActionElement extends Equatable {
                 FDelay.toCode(int.tryParse('${delay?.value}') ?? 0) +
                 FLoop.toCode(
                   int.tryParse(everyMilliseconds?.value ?? '0') ?? 0,
-                  FAudioPlayerLoopOff.toCode(context, stateName),
+                  FAudioPlayerLoopOff.toCode(pageId, context, stateName),
                   withLoop: withLoop ?? false,
                 );
 
@@ -2220,7 +2281,7 @@ class FActionElement extends Equatable {
                 FDelay.toCode(int.tryParse('${delay?.value}') ?? 0) +
                 FLoop.toCode(
                   int.tryParse(everyMilliseconds?.value ?? '0') ?? 0,
-                  FAudioPlayerLoopOne.toCode(context, stateName),
+                  FAudioPlayerLoopOne.toCode(pageId, context, stateName),
                   withLoop: withLoop ?? false,
                 );
 
@@ -2234,7 +2295,7 @@ class FActionElement extends Equatable {
                 FDelay.toCode(int.tryParse('${delay?.value}') ?? 0) +
                 FLoop.toCode(
                   int.tryParse(everyMilliseconds?.value ?? '0') ?? 0,
-                  FAudioPlayerLoopAll.toCode(context, stateName),
+                  FAudioPlayerLoopAll.toCode(pageId, context, stateName),
                   withLoop: withLoop ?? false,
                 );
 

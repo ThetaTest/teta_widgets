@@ -11,6 +11,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:recase/recase.dart';
 import 'package:teta_core/src/blocs/focus_page/index.dart';
 import 'package:teta_core/src/models/variable.dart';
+import 'package:teta_widgets/src/elements/actions/snippets/get_page_on_code.dart';
 
 class FACameraAlwaysFlash {
   static Future action(
@@ -28,11 +29,13 @@ class FACameraAlwaysFlash {
   }
 
   static String toCode(
+    final int pageId,
     final BuildContext context,
     final String? nameOfPage,
     final Map<String, dynamic>? paramsToSend,
   ) {
-    final page = BlocProvider.of<FocusPageBloc>(context).state;
+    final page = getPageOnToCode(pageId, context);
+    if (page == null) return '';
     final state = page.states
         .firstWhereOrNull((final e) => e.type == VariableType.cameraController);
     if (state == null) return '';

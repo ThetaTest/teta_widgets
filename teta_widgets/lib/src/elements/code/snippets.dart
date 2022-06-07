@@ -329,6 +329,7 @@ class CS {
   /// }
   /// ```
   static String action(
+    final int pageId,
     final BuildContext context,
     final CNode node,
     final ActionGesture gesture,
@@ -344,6 +345,7 @@ class CS {
       if (element.actionGesture == gesture) {
         code.write(
           element.toCode(
+            pageId: pageId,
             value: value,
             context: context,
             body: node,
