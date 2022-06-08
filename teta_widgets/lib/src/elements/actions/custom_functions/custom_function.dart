@@ -1,13 +1,10 @@
 // Flutter imports:
 import 'package:flutter/material.dart';
 // Package imports:
-import 'package:teta_core/teta_core.dart';
 
 class FActionCustomFunctionSimple {
   static Future action(
     final BuildContext context,
-    final List<VariableObject> states,
-    final List<DatasetObject> datasets,
     final int? loop,
   ) async {
     const _style = TextStyle(
@@ -15,12 +12,11 @@ class FActionCustomFunctionSimple {
       color: Colors.white,
       fontSize: 20,
     );
-    //await payments(context, value);
     await showDialog<void>(
       context: context,
       builder: (final context) {
         return AlertDialog(
-          title: const Text('CustomFucntion'),
+          title: const Text('Custom Functions'),
           titleTextStyle: _style,
           backgroundColor: const Color(0xFF333333),
           shape: const RoundedRectangleBorder(
@@ -36,10 +32,6 @@ class FActionCustomFunctionSimple {
                     'Runned',
                     style: _style,
                   ),
-                  Text(
-                    'CustomFunction',
-                    style: _style,
-                  ),
                 ],
               ),
             ),
@@ -52,7 +44,6 @@ class FActionCustomFunctionSimple {
   static String toCode(
     final BuildContext context,
   ) {
-    
     return '''
       print('hello world');
     ''';

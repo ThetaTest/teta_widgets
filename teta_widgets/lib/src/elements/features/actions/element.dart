@@ -490,28 +490,22 @@ class FActionElement extends Equatable {
   ) async {
     switch (actionType) {
       case ActionType.customFunctions:
-        switch (actionCustomFunction) {
-          case ActionCustomFunction.simple:
-            if (withCondition == true) {
-              if (condition?.get(params, states, dataset, true, loop) !=
-                  valueOfCondition?.get(params, states, dataset, true, loop)) {
-                break;
-              }
-            }
-            await FDelay.action(int.tryParse('${delay?.value}') ?? 0);
-            FLoop.action(
-              () => FActionCustomFunctionSimple.action(
-                context,
-                states,
-                dataset,
-                loop,
-              ),
-              everyMilliseconds,
-              context,
-              withLoop: withLoop ?? false,
-            );
+        if (withCondition == true) {
+          if (condition?.get(params, states, dataset, true, loop) !=
+              valueOfCondition?.get(params, states, dataset, true, loop)) {
             break;
+          }
         }
+        await FDelay.action(int.tryParse('${delay?.value}') ?? 0);
+        FLoop.action(
+          () => FActionCustomFunctionSimple.action(
+            context,
+            loop,
+          ),
+          everyMilliseconds,
+          context,
+          withLoop: withLoop ?? false,
+        );
         break;
       case ActionType.tetaDatabase:
         switch (actionTetaDB) {
@@ -1524,24 +1518,20 @@ class FActionElement extends Equatable {
   }) {
     switch (actionType) {
       case ActionType.customFunctions:
-        switch (actionCustomFunction) {
-          case ActionCustomFunction.simple:
-            return FCondition.toCode(
-                  context,
-                  condition,
-                  valueOfCondition,
-                  withCondition: withCondition ?? false,
-                ) +
-                FDelay.toCode(int.tryParse('${delay?.value}') ?? 0) +
-                FLoop.toCode(
-                  int.tryParse(everyMilliseconds?.value ?? '0') ?? 0,
-                  FActionCustomFunctionSimple.toCode(
-                    context,
-                  ),
-                  withLoop: withLoop ?? false,
-                );
-        }
-        break;
+        return FCondition.toCode(
+              context,
+              condition,
+              valueOfCondition,
+              withCondition: withCondition ?? false,
+            ) +
+            FDelay.toCode(int.tryParse('${delay?.value}') ?? 0) +
+            FLoop.toCode(
+              int.tryParse(everyMilliseconds?.value ?? '0') ?? 0,
+              FActionCustomFunctionSimple.toCode(
+                context,
+              ),
+              withLoop: withLoop ?? false,
+            );
       case ActionType.tetaDatabase:
         switch (actionTetaDB) {
           case ActionTetaCmsDB.insert:
