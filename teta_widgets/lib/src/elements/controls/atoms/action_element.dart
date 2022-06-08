@@ -685,7 +685,7 @@ class ActionElementControlState extends State<ActionElementControl> {
                     ),
                   ],
                 ),
-              //todo: here
+              //todo: here----
               if (widget.element.actionType == ActionType.customFunctions)
                 CDropdown(
                   value: FActionElement.convertValueToDropdown(
@@ -1205,6 +1205,15 @@ class ActionElementControlState extends State<ActionElementControl> {
                     widget.callBack(widget.element, old);
                   },
                 ),
+              if (widget.element.actionType == ActionType.customFunctions &&
+                  widget.element.actionCustomFunction ==
+                      ActionCustomFunction.simple)
+                //todo: drowdown with all functions
+                Container(
+                  width: 200,
+                  height: 40,
+                  color: Colors.red,
+                )
             ],
           ),
         ),
