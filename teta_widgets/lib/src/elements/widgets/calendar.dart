@@ -157,17 +157,29 @@ class _WCalendarState extends State<WCalendar> {
           ),
         );
       },
-      onDayPressed: (final date) => GestureBuilder.get(
-        context: context,
-        node: widget.node,
-        gesture: ActionGesture.onDayPressed,
-        action: widget.action,
-        actionValue: FTextTypeInput(value: date.toIso8601String()),
-        params: widget.params,
-        states: widget.states,
-        dataset: widget.dataset,
-        forPlay: widget.forPlay,
-      ),
+      onDayPressed: (final date) {
+        final data = widget.dataset.firstWhere(
+          (final element) => element.getName == 'Cms stream',
+        );
+        final loop = data.getMap.indexOf(
+          data.getMap.firstWhere(
+            (final element) =>
+                element['created_at'] == date.toString().substring(0, 10),
+          ),
+        );
+        GestureBuilder.get(
+          context: context,
+          node: widget.node,
+          gesture: ActionGesture.onDayPressed,
+          action: widget.action,
+          actionValue: FTextTypeInput(value: date.toIso8601String()),
+          params: widget.params,
+          states: widget.states,
+          dataset: widget.dataset,
+          forPlay: widget.forPlay,
+          loop: loop,
+        );
+      },
       onMonthLoaded: (final year, final month) => GestureBuilder.get(
         context: context,
         node: widget.node,
@@ -178,6 +190,7 @@ class _WCalendarState extends State<WCalendar> {
         states: widget.states,
         dataset: widget.dataset,
         forPlay: widget.forPlay,
+        loop: widget.loop,
       ),
     );
   }

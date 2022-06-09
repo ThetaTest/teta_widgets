@@ -337,6 +337,7 @@ class CS {
     final String? value, {
     required final int? loop,
     required final bool isRequired,
+    final String? additionalCode,
   }) {
     final code = StringBuffer()..write('');
     if (node.body.attributes[DBKeys.action] == null) return '';
@@ -356,6 +357,7 @@ class CS {
     }
     return '''
     $func {
+      ${additionalCode ?? ''}
       ${code.toString()}
     },
     ''';

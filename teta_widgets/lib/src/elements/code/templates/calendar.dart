@@ -36,6 +36,13 @@ String calendarCodeTemplate(
     '\$date',
     isRequired: false,
     loop: loop,
+    additionalCode: '''
+      index = (datasets['Cms stream'] as List<dynamic>).indexOf(datasets['Cms stream'].firstWhere(
+        (element) =>
+          element['created_at'] ==
+          date.toString().substring(0, 10)
+        )
+      );''',
   )}
       ${CS.action(
     pageId,
@@ -63,7 +70,7 @@ String calendarCodeTemplate(
           ${CS.margin(context, node.body, isMargin: false)}
           decoration: element != null ? $firstDecoration : ${CS.boxDecoration(context, node.body, DBKeys.fill).replaceFirst('decoration:', '')}
           child: Column(
-            crossAxisAlignment: CrossAxisAlignment.stretch,
+            crossAxisAlignment: CrossAxisAlignment.center,
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
               Text(
