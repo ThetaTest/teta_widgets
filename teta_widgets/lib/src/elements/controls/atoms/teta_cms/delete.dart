@@ -77,7 +77,10 @@ class TetaCmsDeleteControl extends StatelessWidget {
             value: action.dbFrom ?? FTextTypeInput(),
             page: page,
             title: 'Document Id',
-            callBack: (final value, final old) {},
+            callBack: (final value, final old) {
+              action.dbFrom = value;
+              callback();
+            },
           ),
         ),
       ],

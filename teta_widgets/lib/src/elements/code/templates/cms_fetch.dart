@@ -56,7 +56,6 @@ String cmsFetchCodeTemplate(
     future: TetaCMS.instance.client.getCollection(
       $collectionId,
       filters: [
-        Filter('_vis', 'public'),
         $filter
       ], 
       ${limit.isNotEmpty ? 'limit: $limit,' : ''}

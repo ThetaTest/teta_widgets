@@ -43,7 +43,6 @@ class FATetaCMSLogin {
     );
 
     await TetaCMS.instance.auth.signIn(
-      context,
       provider: provider,
       onSuccess: () async {
         await FActionNavigationOpenPage.action(
@@ -75,7 +74,6 @@ class FATetaCMSLogin {
                 : 'TetaProvider.github';
     return '''
       await TetaCMS.instance.auth.signIn(
-        context,
         provider: $providerStr,
         onSuccess: () async {
           ${FActionNavigationOpenPage.toCode(context, nameOfPage, paramsToSend)}

@@ -56,7 +56,6 @@ String cmsStreamCodeTemplate(
     stream: TetaCMS.instance.realtime.streamCollection(
       $collectionId,
       filters: [
-        Filter('_vis', 'public'),
         $filter
       ], 
       ${limit.isNotEmpty ? 'limit: $limit,' : ''}
