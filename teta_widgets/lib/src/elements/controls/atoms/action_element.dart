@@ -29,7 +29,6 @@ import 'package:teta_widgets/src/elements/controls/type.dart';
 import 'package:teta_widgets/src/elements/features/actions/element.dart';
 import 'package:teta_widgets/src/elements/features/actions/enums/audio_player.dart';
 import 'package:teta_widgets/src/elements/features/actions/enums/camera.dart';
-import 'package:teta_widgets/src/elements/features/actions/enums/custom_function.dart';
 import 'package:teta_widgets/src/elements/features/actions/enums/gestures.dart';
 import 'package:teta_widgets/src/elements/features/actions/enums/navigation.dart';
 import 'package:teta_widgets/src/elements/features/actions/enums/revenue_cat.dart';
@@ -96,6 +95,9 @@ class ActionElementControlState extends State<ActionElementControl> {
 
   String? stateTest;
   bool isEmit = false;
+
+  ///needs for custom function
+  String? currentValue;
 
   @override
   void initState() {
@@ -625,35 +627,6 @@ class ActionElementControlState extends State<ActionElementControl> {
                 Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
-                    // const Padding(
-                    //   padding: EdgeInsets.only(top: 2, bottom: 4),
-                    //   child: THeadline3(
-                    //     'State',
-                    //   ),
-                    // ),
-                    // CDropdown(
-                    //   value: widget.page.states
-                    //               .map((final e) => e.name)
-                    //               .where((final element) => element != 'null')
-                    //               .toList()
-                    //               .indexWhere(
-                    //                 (final e) => e == widget.element.stateName,
-                    //               ) !=
-                    //           -1
-                    //       ? widget.element.stateName
-                    //       : null,
-                    //   items: widget.page.states
-                    //       .map((final e) => e.name)
-                    //       .where((final element) => element != 'null')
-                    //       .toList(),
-                    //   onChange: (final newValue) {
-                    //     if (newValue != null) {
-                    //       final old = widget.element;
-                    //       widget.element.stateName = newValue;
-                    //       widget.callBack(widget.element, old);
-                    //     }
-                    //   },
-                    // ),
                     const Padding(
                       padding: EdgeInsets.only(top: 2, bottom: 4),
                       child: THeadline3(
@@ -685,25 +658,55 @@ class ActionElementControlState extends State<ActionElementControl> {
                     ),
                   ],
                 ),
-              //todo: here----
+              //!1--------------------------------------------------------------------------
+              //TODO: PROBLEM WITH ANCESTOR IN CODE PREVIEW
+              //TODO: PROBLEM WITH FETCH OF ALREADY SELECTED FUNC
               if (widget.element.actionType == ActionType.customFunctions)
-                CDropdown(
-                  value: FActionElement.convertValueToDropdown(
-                    widget.element.actionCustomFunction,
-                  ),
-                  items: FActionElement.getCustomFunctions().toSet().toList(),
-                  onChange: (final newValue) {
-                    if (newValue != null) {
-                      final old = widget.element;
-                      widget.element.actionCustomFunction =
-                          FActionElement.convertDropdownToValue(
-                        ActionCustomFunction.values,
-                        newValue,
-                      ) as ActionCustomFunction?;
-                      widget.callBack(widget.element, old);
-                    }
-                  },
+                Column(
+                  children: [
+                    const Padding(
+                      padding: EdgeInsets.only(top: 8, bottom: 8),
+                      child: THeadline3('Which Function?'),
+                    ),
+                    Builder(
+                      builder: (final _) {
+                        final functions =
+                            BlocProvider.of<CustomFunctionsCubit>(context)
+                                .state;
+                        final tempList = <String>[];
+                        for (final item in functions) {
+                          tempList.add(item.name);
+                        }
+                        if (functions.isNotEmpty) {
+                          return SizedBox(
+                            height: 40,
+                            child: CDropdown(
+                              value: currentValue,
+                              items: tempList,
+                              onChange: (final newValue) {
+                                if (newValue != null) {
+                                  currentValue = newValue;
+                                  final old = widget.element;
+                                  widget.element.customFunctionId = functions
+                                      .firstWhere(
+                                        (final element) =>
+                                            element.name == newValue,
+                                      )
+                                      .id;
+                                  widget.callBack(widget.element, old);
+                                }
+                              },
+                            ),
+                          );
+                        } else {
+                          return Container();
+                        }
+                      },
+                    ),
+                  ],
                 ),
+
+              //!1--------------------------------------------------------------------------
 
               if (widget.element.actionType == ActionType.revenueCat)
                 CDropdown(

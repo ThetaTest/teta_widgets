@@ -67,7 +67,6 @@ import 'package:teta_widgets/src/elements/actions/webview/forward.dart';
 import 'package:teta_widgets/src/elements/actions/webview/reload.dart';
 import 'package:teta_widgets/src/elements/features/actions/enums/audio_player.dart';
 import 'package:teta_widgets/src/elements/features/actions/enums/camera.dart';
-import 'package:teta_widgets/src/elements/features/actions/enums/custom_function.dart';
 import 'package:teta_widgets/src/elements/features/actions/enums/index.dart';
 import 'package:teta_widgets/src/elements/features/actions/enums/revenue_cat.dart';
 import 'package:teta_widgets/src/elements/features/actions/enums/stripe.dart';
@@ -88,7 +87,9 @@ class FActionElement extends Equatable {
     this.actionGesture,
     this.actionNavigation,
     this.actionState,
-    this.actionCustomFunction,
+    //!1--------------------------------------------------------------------------
+    this.customFunctionId,
+    //!1--------------------------------------------------------------------------
     this.actionSupabaseAuth,
     this.actionSupabaseDB,
     this.actionCamera,
@@ -127,10 +128,9 @@ class FActionElement extends Equatable {
     actionNavigation =
         convertDropdownToValue(ActionNavigation.values, doc['aN'] as String?)
             as ActionNavigation?;
-    actionCustomFunction = convertDropdownToValue(
-      ActionCustomFunction.values,
-      doc['cF'] as String?,
-    ) as ActionCustomFunction?;
+    //!1--------------------------------------------------------------------------
+    customFunctionId = doc['cFid'] as int?;
+    //!1--------------------------------------------------------------------------
     actionRevenueCat =
         convertDropdownToValue(ActionRevenueCat.values, doc['aRC'] as String?)
             as ActionRevenueCat?;
@@ -212,7 +212,10 @@ class FActionElement extends Equatable {
   ActionState? actionState;
   ActionRevenueCat? actionRevenueCat;
   ActionStripe? actionStripe;
-  ActionCustomFunction? actionCustomFunction;
+  //!1--------------------------------------------------------------------------
+  int? customFunctionId;
+  //!1--------------------------------------------------------------------------
+
   ActionSupabaseAuth? actionSupabaseAuth;
   ActionSupabaseDB? actionSupabaseDB;
   ActionCamera? actionCamera;
@@ -277,6 +280,7 @@ class FActionElement extends Equatable {
           'Navigation',
           'Teta database',
           'Teta auth',
+          //!1--------------------------------------------------------------------------
           if (kDebugMode) 'Custom Functions',
           if (config.supabaseEnabled ?? false) 'Supabase auth',
           if (config.supabaseEnabled ?? false) 'Supabase database',
@@ -356,10 +360,6 @@ class FActionElement extends Equatable {
     return [];
   }
 
-  static List<String> getCustomFunctions() {
-    return enumsToListString(ActionCustomFunction.values);
-  }
-
   static List<String> getSupabaseAuth(final ProjectConfig? config) {
     if (config != null) {
       if (config.supabaseEnabled ?? false) {
@@ -405,6 +405,7 @@ class FActionElement extends Equatable {
     if (type == ActionType.stripe) {
       return 'Stripe';
     }
+    //!1--------------------------------------------------------------------------
     if (type == ActionType.customFunctions) {
       return 'Custom Functions';
     }
@@ -424,6 +425,7 @@ class FActionElement extends Equatable {
     if (value == 'Stripe') {
       return ActionType.stripe;
     }
+    //!1--------------------------------------------------------------------------
     if (value == 'Custom Functions') {
       return ActionType.customFunctions;
     }
@@ -444,7 +446,9 @@ class FActionElement extends Equatable {
   Map<String, dynamic> toJson() => <String, dynamic>{
         'id': id,
         'aT': convertValueToDropdown(actionType),
-        'cF': convertValueToDropdown(actionCustomFunction),
+        //!1--------------------------------------------------------------------------
+        'cFid': customFunctionId,
+        //!1--------------------------------------------------------------------------
         'aN': convertValueToDropdown(actionNavigation),
         'aS': convertValueToDropdown(actionState),
         'g': convertValueToDropdown(actionGesture),
@@ -489,6 +493,7 @@ class FActionElement extends Equatable {
     final int? loop,
   ) async {
     switch (actionType) {
+      //!1--------------------------------------------------------------------------
       case ActionType.customFunctions:
         if (withCondition == true) {
           if (condition?.get(params, states, dataset, true, loop) !=
@@ -498,15 +503,17 @@ class FActionElement extends Equatable {
         }
         await FDelay.action(int.tryParse('${delay?.value}') ?? 0);
         FLoop.action(
-          () => FActionCustomFunctionSimple.action(
+          () => FActionCustomFunction.action(
             context,
             loop,
+            customFunctionId,
           ),
           everyMilliseconds,
           context,
           withLoop: withLoop ?? false,
         );
         break;
+      //!1--------------------------------------------------------------------------
       case ActionType.tetaDatabase:
         switch (actionTetaDB) {
           case ActionTetaCmsDB.insert:
@@ -1517,6 +1524,7 @@ class FActionElement extends Equatable {
     final int loop = 0,
   }) {
     switch (actionType) {
+      //!1--------------------------------------------------------------------------
       case ActionType.customFunctions:
         return FCondition.toCode(
               context,
@@ -1527,11 +1535,13 @@ class FActionElement extends Equatable {
             FDelay.toCode(int.tryParse('${delay?.value}') ?? 0) +
             FLoop.toCode(
               int.tryParse(everyMilliseconds?.value ?? '0') ?? 0,
-              FActionCustomFunctionSimple.toCode(
+              FActionCustomFunction.toCode(
                 context,
+                customFunctionId,
               ),
               withLoop: withLoop ?? false,
             );
+      //!1--------------------------------------------------------------------------
       case ActionType.tetaDatabase:
         switch (actionTetaDB) {
           case ActionTetaCmsDB.insert:

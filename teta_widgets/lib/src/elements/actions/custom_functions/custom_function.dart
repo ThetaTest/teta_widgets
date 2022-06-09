@@ -1,11 +1,14 @@
 // Flutter imports:
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:teta_core/teta_core.dart';
 // Package imports:
 
-class FActionCustomFunctionSimple {
+class FActionCustomFunction {
   static Future action(
     final BuildContext context,
     final int? loop,
+    final int? customFunctionId,
   ) async {
     const _style = TextStyle(
       fontWeight: FontWeight.bold,
@@ -16,7 +19,7 @@ class FActionCustomFunctionSimple {
       context: context,
       builder: (final context) {
         return AlertDialog(
-          title: const Text('Custom Functions'),
+          title: Text('Custom Functions: $customFunctionId'),
           titleTextStyle: _style,
           backgroundColor: const Color(0xFF333333),
           shape: const RoundedRectangleBorder(
@@ -43,9 +46,20 @@ class FActionCustomFunctionSimple {
 
   static String toCode(
     final BuildContext context,
+    final int? customFunctionId,
   ) {
+    
+    final functions = BlocProvider.of<CustomFunctionsCubit>(context).state;
+    String code;
+    if (functions.isNotEmpty) {
+      final func = functions
+          .firstWhere((final element) => element.id == customFunctionId);
+      code = func.code!;
+    } else {
+      code = '''print('default value')''';
+    }
     return '''
-      print('hello world');
+      $code
     ''';
   }
 }
