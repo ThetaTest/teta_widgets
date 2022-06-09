@@ -59,6 +59,7 @@ import 'package:teta_widgets/src/elements/actions/supabase/signin_w_google.dart'
 import 'package:teta_widgets/src/elements/actions/supabase/signup_w_credentials.dart';
 import 'package:teta_widgets/src/elements/actions/supabase/update.dart';
 import 'package:teta_widgets/src/elements/actions/teta_cms/auth/login.dart';
+import 'package:teta_widgets/src/elements/actions/teta_cms/auth/logout.dart';
 import 'package:teta_widgets/src/elements/actions/teta_cms/database/delete.dart';
 import 'package:teta_widgets/src/elements/actions/teta_cms/database/insert.dart';
 import 'package:teta_widgets/src/elements/actions/teta_cms/database/update.dart';
@@ -72,6 +73,7 @@ import 'package:teta_widgets/src/elements/features/actions/enums/revenue_cat.dar
 import 'package:teta_widgets/src/elements/features/actions/enums/stripe.dart';
 import 'package:teta_widgets/src/elements/features/actions/enums/teta_cms.dart';
 import 'package:teta_widgets/src/elements/features/actions/enums/webview.dart';
+import 'package:teta_widgets/src/elements/features/actions/snippets.dart';
 import 'package:teta_widgets/src/elements/features/text_type_input.dart';
 import 'package:teta_widgets/src/elements/nodes/dynamic.dart';
 import 'package:teta_widgets/src/elements/nodes/enum.dart';
@@ -517,14 +519,7 @@ class FActionElement extends Equatable {
       case ActionType.tetaDatabase:
         switch (actionTetaDB) {
           case ActionTetaCmsDB.insert:
-            if (withCondition == true) {
-              if (condition?.get(params, states, dataset, true, loop) !=
-                  valueOfCondition?.get(params, states, dataset, true, loop)) {
-                break;
-              }
-            }
-            await FDelay.action(int.tryParse('${delay?.value}') ?? 0);
-            FLoop.action(
+            await actionS(
               () => FATetaCMSInsert.action(
                 cmsCollectionId,
                 dbData,
@@ -533,20 +528,15 @@ class FActionElement extends Equatable {
                 dataset,
                 loop,
               ),
-              everyMilliseconds,
-              context,
-              withLoop: withLoop ?? false,
+              context: context,
+              params: params,
+              states: states,
+              dataset: dataset,
+              loop: loop,
             );
             break;
           case ActionTetaCmsDB.update:
-            if (withCondition == true) {
-              if (condition?.get(params, states, dataset, true, loop) !=
-                  valueOfCondition?.get(params, states, dataset, true, loop)) {
-                break;
-              }
-            }
-            await FDelay.action(int.tryParse('${delay?.value}') ?? 0);
-            FLoop.action(
+            await actionS(
               () => FATetaCMSUpdate.action(
                 cmsCollectionId,
                 dbData,
@@ -556,20 +546,15 @@ class FActionElement extends Equatable {
                 dataset,
                 loop,
               ),
-              everyMilliseconds,
-              context,
-              withLoop: withLoop ?? false,
+              context: context,
+              params: params,
+              states: states,
+              dataset: dataset,
+              loop: loop,
             );
             break;
           case ActionTetaCmsDB.delete:
-            if (withCondition == true) {
-              if (condition?.get(params, states, dataset, true, loop) !=
-                  valueOfCondition?.get(params, states, dataset, true, loop)) {
-                break;
-              }
-            }
-            await FDelay.action(int.tryParse('${delay?.value}') ?? 0);
-            FLoop.action(
+            await actionS(
               () => FATetaCMSDelete.action(
                 cmsCollectionId,
                 dbFrom,
@@ -578,9 +563,11 @@ class FActionElement extends Equatable {
                 dataset,
                 loop,
               ),
-              everyMilliseconds,
-              context,
-              withLoop: withLoop ?? false,
+              context: context,
+              params: params,
+              states: states,
+              dataset: dataset,
+              loop: loop,
             );
             break;
         }
@@ -588,14 +575,7 @@ class FActionElement extends Equatable {
       case ActionType.tetaAuth:
         switch (actionTetaAuth) {
           case ActionTetaCmsAuth.signInWithGoogle:
-            if (withCondition == true) {
-              if (condition?.get(params, states, dataset, true, loop) !=
-                  valueOfCondition?.get(params, states, dataset, true, loop)) {
-                break;
-              }
-            }
-            await FDelay.action(int.tryParse('${delay?.value}') ?? 0);
-            FLoop.action(
+            await actionS(
               () => FATetaCMSLogin.action(
                 node,
                 nameOfPage,
@@ -607,20 +587,15 @@ class FActionElement extends Equatable {
                 loop,
                 TetaProvider.google,
               ),
-              everyMilliseconds,
-              context,
-              withLoop: withLoop ?? false,
+              context: context,
+              params: params,
+              states: states,
+              dataset: dataset,
+              loop: loop,
             );
             break;
           case ActionTetaCmsAuth.signInWithGitHub:
-            if (withCondition == true) {
-              if (condition?.get(params, states, dataset, true, loop) !=
-                  valueOfCondition?.get(params, states, dataset, true, loop)) {
-                break;
-              }
-            }
-            await FDelay.action(int.tryParse('${delay?.value}') ?? 0);
-            FLoop.action(
+            await actionS(
               () => FATetaCMSLogin.action(
                 node,
                 nameOfPage,
@@ -632,20 +607,15 @@ class FActionElement extends Equatable {
                 loop,
                 TetaProvider.github,
               ),
-              everyMilliseconds,
-              context,
-              withLoop: withLoop ?? false,
+              context: context,
+              params: params,
+              states: states,
+              dataset: dataset,
+              loop: loop,
             );
             break;
           case ActionTetaCmsAuth.signInWithTwitter:
-            if (withCondition == true) {
-              if (condition?.get(params, states, dataset, true, loop) !=
-                  valueOfCondition?.get(params, states, dataset, true, loop)) {
-                break;
-              }
-            }
-            await FDelay.action(int.tryParse('${delay?.value}') ?? 0);
-            FLoop.action(
+            await actionS(
               () => FATetaCMSLogin.action(
                 node,
                 nameOfPage,
@@ -657,9 +627,43 @@ class FActionElement extends Equatable {
                 loop,
                 TetaProvider.twitter,
               ),
-              everyMilliseconds,
-              context,
-              withLoop: withLoop ?? false,
+              context: context,
+              params: params,
+              states: states,
+              dataset: dataset,
+              loop: loop,
+            );
+            break;
+          case ActionTetaCmsAuth.signInWithApple:
+            await actionS(
+              () => FATetaCMSLogin.action(
+                node,
+                nameOfPage,
+                context,
+                paramsToSend,
+                params,
+                states,
+                dataset,
+                loop,
+                TetaProvider.apple,
+              ),
+              context: context,
+              params: params,
+              states: states,
+              dataset: dataset,
+              loop: loop,
+            );
+            break;
+          case ActionTetaCmsAuth.logout:
+            await actionS(
+              () => FATetaCMSLogout.action(
+                context,
+              ),
+              context: context,
+              params: params,
+              states: states,
+              dataset: dataset,
+              loop: loop,
             );
             break;
           default:
@@ -669,18 +673,13 @@ class FActionElement extends Equatable {
       case ActionType.revenueCat:
         switch (actionRevenueCat) {
           case ActionRevenueCat.buy:
-            if (withCondition == true) {
-              if (condition?.get(params, states, dataset, true, loop) !=
-                  valueOfCondition?.get(params, states, dataset, true, loop)) {
-                break;
-              }
-            }
-            await FDelay.action(int.tryParse('${delay?.value}') ?? 0);
-            FLoop.action(
+            await actionS(
               () => FActionRevenueCatBuy.action(context, states, stateName),
-              everyMilliseconds,
-              context,
-              withLoop: withLoop ?? false,
+              context: context,
+              params: params,
+              states: states,
+              dataset: dataset,
+              loop: loop,
             );
             break;
           default:
@@ -690,14 +689,7 @@ class FActionElement extends Equatable {
       case ActionType.stripe:
         switch (actionStripe) {
           case ActionStripe.buy:
-            if (withCondition == true) {
-              if (condition?.get(params, states, dataset, true, loop) !=
-                  valueOfCondition?.get(params, states, dataset, true, loop)) {
-                break;
-              }
-            }
-            await FDelay.action(int.tryParse('${delay?.value}') ?? 0);
-            FLoop.action(
+            await actionS(
               () => FActionStripeBuy.action(
                 context,
                 states,
@@ -705,20 +697,16 @@ class FActionElement extends Equatable {
                 dataset,
                 loop,
               ),
-              everyMilliseconds,
-              context,
-              withLoop: withLoop ?? false,
+              context: context,
+              params: params,
+              states: states,
+              dataset: dataset,
+              loop: loop,
             );
+
             break;
           case ActionStripe.buyCartItems:
-            if (withCondition == true) {
-              if (condition?.get(params, states, dataset, true, loop) !=
-                  valueOfCondition?.get(params, states, dataset, true, loop)) {
-                break;
-              }
-            }
-            await FDelay.action(int.tryParse('${delay?.value}') ?? 0);
-            FLoop.action(
+            await actionS(
               () => FActionStripeCartBuyAll.action(
                 context,
                 states,
@@ -726,20 +714,16 @@ class FActionElement extends Equatable {
                 dataset,
                 loop,
               ),
-              everyMilliseconds,
-              context,
-              withLoop: withLoop ?? false,
+              context: context,
+              params: params,
+              states: states,
+              dataset: dataset,
+              loop: loop,
             );
+
             break;
           case ActionStripe.addProductsListItemToCart:
-            if (withCondition == true) {
-              if (condition?.get(params, states, dataset, true, loop) !=
-                  valueOfCondition?.get(params, states, dataset, true, loop)) {
-                break;
-              }
-            }
-            await FDelay.action(int.tryParse('${delay?.value}') ?? 0);
-            FLoop.action(
+            await actionS(
               () => FActionStripeAddProductsListItemToCart.action(
                 context,
                 states,
@@ -747,20 +731,16 @@ class FActionElement extends Equatable {
                 dataset,
                 loop,
               ),
-              everyMilliseconds,
-              context,
-              withLoop: withLoop ?? false,
+              context: context,
+              params: params,
+              states: states,
+              dataset: dataset,
+              loop: loop,
             );
+
             break;
           case ActionStripe.removeProductsListItemFromCart:
-            if (withCondition == true) {
-              if (condition?.get(params, states, dataset, true, loop) !=
-                  valueOfCondition?.get(params, states, dataset, true, loop)) {
-                break;
-              }
-            }
-            await FDelay.action(int.tryParse('${delay?.value}') ?? 0);
-            FLoop.action(
+            await actionS(
               () => FActionStripeRemoveProductsListItemFromCart.action(
                 context,
                 states,
@@ -768,20 +748,15 @@ class FActionElement extends Equatable {
                 dataset,
                 loop,
               ),
-              everyMilliseconds,
-              context,
-              withLoop: withLoop ?? false,
+              context: context,
+              params: params,
+              states: states,
+              dataset: dataset,
+              loop: loop,
             );
             break;
           case ActionStripe.removeCartListItemFromCart:
-            if (withCondition == true) {
-              if (condition?.get(params, states, dataset, true, loop) !=
-                  valueOfCondition?.get(params, states, dataset, true, loop)) {
-                break;
-              }
-            }
-            await FDelay.action(int.tryParse('${delay?.value}') ?? 0);
-            FLoop.action(
+            await actionS(
               () => FActionStripeCartRemoveProductsListItemFromCart.action(
                 context,
                 states,
@@ -789,9 +764,11 @@ class FActionElement extends Equatable {
                 dataset,
                 loop,
               ),
-              everyMilliseconds,
-              context,
-              withLoop: withLoop ?? false,
+              context: context,
+              params: params,
+              states: states,
+              dataset: dataset,
+              loop: loop,
             );
             break;
           default:
@@ -801,44 +778,27 @@ class FActionElement extends Equatable {
       case ActionType.state:
         switch (actionState) {
           case ActionState.increment:
-            if (withCondition == true) {
-              if (condition?.get(params, states, dataset, true, loop) !=
-                  valueOfCondition?.get(params, states, dataset, true, loop)) {
-                break;
-              }
-            }
-            await FDelay.action(int.tryParse('${delay?.value}') ?? 0);
-            FLoop.action(
+            await actionS(
               () => FActionStateIncrement.action(context, states, stateName),
-              everyMilliseconds,
-              context,
-              withLoop: withLoop ?? false,
+              context: context,
+              params: params,
+              states: states,
+              dataset: dataset,
+              loop: loop,
             );
             break;
           case ActionState.decrement:
-            if (withCondition == true) {
-              if (condition?.get(params, states, dataset, true, loop) !=
-                  valueOfCondition?.get(params, states, dataset, true, loop)) {
-                break;
-              }
-            }
-            await FDelay.action(int.tryParse('${delay?.value}') ?? 0);
-            FLoop.action(
+            await actionS(
               () => FActionStateDecrement.action(context, states, stateName),
-              everyMilliseconds,
-              context,
-              withLoop: withLoop ?? false,
+              context: context,
+              params: params,
+              states: states,
+              dataset: dataset,
+              loop: loop,
             );
             break;
           case ActionState.changeWith:
-            if (withCondition == true) {
-              if (condition?.get(params, states, dataset, true, loop) !=
-                  valueOfCondition?.get(params, states, dataset, true, loop)) {
-                break;
-              }
-            }
-            await FDelay.action(int.tryParse('${delay?.value}') ?? 0);
-            FLoop.action(
+            await actionS(
               () => FActionStateChangeWith.action(
                 context: context,
                 states: states,
@@ -849,20 +809,16 @@ class FActionElement extends Equatable {
                 value: value,
                 loop: loop ?? 0,
               ),
-              everyMilliseconds,
-              context,
-              withLoop: withLoop ?? false,
+              context: context,
+              params: params,
+              states: states,
+              dataset: dataset,
+              loop: loop,
             );
+
             break;
           case ActionState.changeWithParams:
-            if (withCondition == true) {
-              if (condition?.get(params, states, dataset, true, loop) !=
-                  valueOfCondition?.get(params, states, dataset, true, loop)) {
-                break;
-              }
-            }
-            await FDelay.action(int.tryParse('${delay?.value}') ?? 0);
-            FLoop.action(
+            await actionS(
               () => FActionStateChangeWithParam.action(
                 context,
                 states,
@@ -870,10 +826,13 @@ class FActionElement extends Equatable {
                 stateName,
                 this.value,
               ),
-              everyMilliseconds,
-              context,
-              withLoop: withLoop ?? false,
+              context: context,
+              params: params,
+              states: states,
+              dataset: dataset,
+              loop: loop,
             );
+
             break;
           case null:
             break;
@@ -882,44 +841,28 @@ class FActionElement extends Equatable {
       case ActionType.navigation:
         switch (actionNavigation) {
           case ActionNavigation.goBack:
-            if (withCondition == true) {
-              if (condition?.get(params, states, dataset, true, loop) !=
-                  valueOfCondition?.get(params, states, dataset, true, loop)) {
-                break;
-              }
-            }
-            await FDelay.action(int.tryParse('${delay?.value}') ?? 0);
-            FLoop.action(
+            await actionS(
               () => FActionNavigationGoBack.action(context),
-              everyMilliseconds,
-              context,
-              withLoop: withLoop ?? false,
+              context: context,
+              params: params,
+              states: states,
+              dataset: dataset,
+              loop: loop,
             );
+
             break;
           case ActionNavigation.openDrawer:
-            if (withCondition == true) {
-              if (condition?.get(params, states, dataset, true, loop) !=
-                  valueOfCondition?.get(params, states, dataset, true, loop)) {
-                break;
-              }
-            }
-            await FDelay.action(int.tryParse('${delay?.value}') ?? 0);
-            FLoop.action(
+            await actionS(
               () => FActionNavigationOpenDrawer.action(context),
-              everyMilliseconds,
-              context,
-              withLoop: withLoop ?? false,
+              context: context,
+              params: params,
+              states: states,
+              dataset: dataset,
+              loop: loop,
             );
             break;
           case ActionNavigation.openPage:
-            if (withCondition == true) {
-              if (condition?.get(params, states, dataset, true, loop) !=
-                  valueOfCondition?.get(params, states, dataset, true, loop)) {
-                break;
-              }
-            }
-            await FDelay.action(int.tryParse('${delay?.value}') ?? 0);
-            FLoop.action(
+            await actionS(
               () => FActionNavigationOpenPage.action(
                 node,
                 context,
@@ -930,20 +873,15 @@ class FActionElement extends Equatable {
                 dataset,
                 loop,
               ),
-              everyMilliseconds,
-              context,
-              withLoop: withLoop ?? false,
+              context: context,
+              params: params,
+              states: states,
+              dataset: dataset,
+              loop: loop,
             );
             break;
           case ActionNavigation.launchURL:
-            if (withCondition == true) {
-              if (condition?.get(params, states, dataset, true, loop) !=
-                  valueOfCondition?.get(params, states, dataset, true, loop)) {
-                break;
-              }
-            }
-            await FDelay.action(int.tryParse('${delay?.value}') ?? 0);
-            FLoop.action(
+            await actionS(
               () => FActionNavigationLaunchURL.action(
                 context: context,
                 params: params,
@@ -952,20 +890,15 @@ class FActionElement extends Equatable {
                 loop: loop ?? 0,
                 value: valueTextTypeInput ?? FTextTypeInput(),
               ),
-              everyMilliseconds,
-              context,
-              withLoop: withLoop ?? false,
+              context: context,
+              params: params,
+              states: states,
+              dataset: dataset,
+              loop: loop,
             );
             break;
           case ActionNavigation.openBottomSheet:
-            if (withCondition == true) {
-              if (condition?.get(params, states, dataset, true, loop) !=
-                  valueOfCondition?.get(params, states, dataset, true, loop)) {
-                break;
-              }
-            }
-            await FDelay.action(int.tryParse('${delay?.value}') ?? 0);
-            FLoop.action(
+            await actionS(
               () => FActionNavigationOpenBottomSheet.action(
                 context,
                 nameOfPage,
@@ -975,20 +908,16 @@ class FActionElement extends Equatable {
                 dataset,
                 loop,
               ),
-              everyMilliseconds,
-              context,
-              withLoop: withLoop ?? false,
+              context: context,
+              params: params,
+              states: states,
+              dataset: dataset,
+              loop: loop,
             );
+
             break;
           case ActionNavigation.openSnackBar:
-            if (withCondition == true) {
-              if (condition?.get(params, states, dataset, true, loop) !=
-                  valueOfCondition?.get(params, states, dataset, true, loop)) {
-                break;
-              }
-            }
-            await FDelay.action(int.tryParse('${delay?.value}') ?? 0);
-            FLoop.action(
+            await actionS(
               () => FActionNavigationOpenSnackBar.action(
                 context,
                 nameOfPage,
@@ -998,29 +927,27 @@ class FActionElement extends Equatable {
                 dataset,
                 loop,
               ),
-              everyMilliseconds,
-              context,
-              withLoop: withLoop ?? false,
+              context: context,
+              params: params,
+              states: states,
+              dataset: dataset,
+              loop: loop,
             );
+
             break;
           case ActionNavigation.openDatePicker:
-            if (withCondition == true) {
-              if (condition?.get(params, states, dataset, true, loop) !=
-                  valueOfCondition?.get(params, states, dataset, true, loop)) {
-                break;
-              }
-            }
-            await FDelay.action(int.tryParse('${delay?.value}') ?? 0);
-            FLoop.action(
+            await actionS(
               () => FActionNavigationOpenDatePicker.action(
                 context,
                 states,
                 stateName,
                 loop,
               ),
-              everyMilliseconds,
-              context,
-              withLoop: withLoop ?? false,
+              context: context,
+              params: params,
+              states: states,
+              dataset: dataset,
+              loop: loop,
             );
             break;
           case null:
@@ -1030,14 +957,7 @@ class FActionElement extends Equatable {
       case ActionType.supabaseAuth:
         switch (actionSupabaseAuth) {
           case ActionSupabaseAuth.signUp:
-            if (withCondition == true) {
-              if (condition?.get(params, states, dataset, true, loop) !=
-                  valueOfCondition?.get(params, states, dataset, true, loop)) {
-                break;
-              }
-            }
-            await FDelay.action(int.tryParse('${delay?.value}') ?? 0);
-            FLoop.action(
+            await actionS(
               () => FASupabaseSignUp.action(
                 context,
                 value ?? this.value ?? '',
@@ -1050,20 +970,15 @@ class FActionElement extends Equatable {
                 dataset,
                 loop,
               ),
-              everyMilliseconds,
-              context,
-              withLoop: withLoop ?? false,
+              context: context,
+              params: params,
+              states: states,
+              dataset: dataset,
+              loop: loop,
             );
             break;
           case ActionSupabaseAuth.signInWithCredential:
-            if (withCondition == true) {
-              if (condition?.get(params, states, dataset, true, loop) !=
-                  valueOfCondition?.get(params, states, dataset, true, loop)) {
-                break;
-              }
-            }
-            await FDelay.action(int.tryParse('${delay?.value}') ?? 0);
-            FLoop.action(
+            await actionS(
               () => FASupabaseSignInWithCredentials.action(
                 context,
                 value ?? this.value ?? '',
@@ -1076,20 +991,16 @@ class FActionElement extends Equatable {
                 dataset,
                 loop,
               ),
-              everyMilliseconds,
-              context,
-              withLoop: withLoop ?? false,
+              context: context,
+              params: params,
+              states: states,
+              dataset: dataset,
+              loop: loop,
             );
+
             break;
           case ActionSupabaseAuth.signInWithGoogle:
-            if (withCondition == true) {
-              if (condition?.get(params, states, dataset, true, loop) !=
-                  valueOfCondition?.get(params, states, dataset, true, loop)) {
-                break;
-              }
-            }
-            await FDelay.action(int.tryParse('${delay?.value}') ?? 0);
-            FLoop.action(
+            await actionS(
               () => FASupabaseSignInWithGoogle.action(
                 context,
                 value ?? this.value ?? '',
@@ -1102,20 +1013,16 @@ class FActionElement extends Equatable {
                 dataset,
                 loop,
               ),
-              everyMilliseconds,
-              context,
-              withLoop: withLoop ?? false,
+              context: context,
+              params: params,
+              states: states,
+              dataset: dataset,
+              loop: loop,
             );
+
             break;
           case ActionSupabaseAuth.signInWithApple:
-            if (withCondition == true) {
-              if (condition?.get(params, states, dataset, true, loop) !=
-                  valueOfCondition?.get(params, states, dataset, true, loop)) {
-                break;
-              }
-            }
-            await FDelay.action(int.tryParse('${delay?.value}') ?? 0);
-            FLoop.action(
+            await actionS(
               () => FASupabaseSignInWithApple.action(
                 context,
                 value ?? this.value ?? '',
@@ -1128,20 +1035,16 @@ class FActionElement extends Equatable {
                 dataset,
                 loop,
               ),
-              everyMilliseconds,
-              context,
-              withLoop: withLoop ?? false,
+              context: context,
+              params: params,
+              states: states,
+              dataset: dataset,
+              loop: loop,
             );
+
             break;
           case ActionSupabaseAuth.signInWithFacebook:
-            if (withCondition == true) {
-              if (condition?.get(params, states, dataset, true, loop) !=
-                  valueOfCondition?.get(params, states, dataset, true, loop)) {
-                break;
-              }
-            }
-            await FDelay.action(int.tryParse('${delay?.value}') ?? 0);
-            FLoop.action(
+            await actionS(
               () => FASupabaseSignInWithFacebook.action(
                 context,
                 value ?? this.value ?? '',
@@ -1154,10 +1057,13 @@ class FActionElement extends Equatable {
                 dataset,
                 loop,
               ),
-              everyMilliseconds,
-              context,
-              withLoop: withLoop ?? false,
+              context: context,
+              params: params,
+              states: states,
+              dataset: dataset,
+              loop: loop,
             );
+
             break;
           case null:
             break;
@@ -1166,14 +1072,7 @@ class FActionElement extends Equatable {
       case ActionType.camera:
         switch (actionCamera) {
           case ActionCamera.takePhoto:
-            if (withCondition == true) {
-              if (condition?.get(params, states, dataset, true, loop) !=
-                  valueOfCondition?.get(params, states, dataset, true, loop)) {
-                break;
-              }
-            }
-            await FDelay.action(int.tryParse('${delay?.value}') ?? 0);
-            FLoop.action(
+            await actionS(
               () => FACameraTakePhoto.action(
                 context,
                 stateName,
@@ -1182,20 +1081,16 @@ class FActionElement extends Equatable {
                 dataset,
                 loop,
               ),
-              everyMilliseconds,
-              context,
-              withLoop: withLoop ?? false,
+              context: context,
+              params: params,
+              states: states,
+              dataset: dataset,
+              loop: loop,
             );
+
             break;
           case ActionCamera.switchCamera:
-            if (withCondition == true) {
-              if (condition?.get(params, states, dataset, true, loop) !=
-                  valueOfCondition?.get(params, states, dataset, true, loop)) {
-                break;
-              }
-            }
-            await FDelay.action(int.tryParse('${delay?.value}') ?? 0);
-            FLoop.action(
+            await actionS(
               () => FACameraSwitch.action(
                 context,
                 stateName,
@@ -1204,20 +1099,15 @@ class FActionElement extends Equatable {
                 dataset,
                 loop,
               ),
-              everyMilliseconds,
-              context,
-              withLoop: withLoop ?? false,
+              context: context,
+              params: params,
+              states: states,
+              dataset: dataset,
+              loop: loop,
             );
             break;
           case ActionCamera.offFlash:
-            if (withCondition == true) {
-              if (condition?.get(params, states, dataset, true, loop) !=
-                  valueOfCondition?.get(params, states, dataset, true, loop)) {
-                break;
-              }
-            }
-            await FDelay.action(int.tryParse('${delay?.value}') ?? 0);
-            FLoop.action(
+            await actionS(
               () => FACameraOffFlash.action(
                 context,
                 stateName,
@@ -1226,39 +1116,29 @@ class FActionElement extends Equatable {
                 dataset,
                 loop,
               ),
-              everyMilliseconds,
-              context,
-              withLoop: withLoop ?? false,
+              context: context,
+              params: params,
+              states: states,
+              dataset: dataset,
+              loop: loop,
             );
             break;
           case ActionCamera.alwaysFlash:
-            if (withCondition == true) {
-              if (condition?.get(params, states, dataset, true, loop) !=
-                  valueOfCondition?.get(params, states, dataset, true, loop)) {
-                break;
-              }
-            }
-            await FDelay.action(int.tryParse('${delay?.value}') ?? 0);
-            FLoop.action(
+            await actionS(
               () => FACameraAlwaysFlash.action(
                 context,
                 states,
                 stateName,
               ),
-              everyMilliseconds,
-              context,
-              withLoop: withLoop ?? false,
+              context: context,
+              params: params,
+              states: states,
+              dataset: dataset,
+              loop: loop,
             );
             break;
           case ActionCamera.autoFlash:
-            if (withCondition == true) {
-              if (condition?.get(params, states, dataset, true, loop) !=
-                  valueOfCondition?.get(params, states, dataset, true, loop)) {
-                break;
-              }
-            }
-            await FDelay.action(int.tryParse('${delay?.value}') ?? 0);
-            FLoop.action(
+            await actionS(
               () => FACameraAutoFlash.action(
                 context,
                 stateName,
@@ -1267,20 +1147,15 @@ class FActionElement extends Equatable {
                 dataset,
                 loop,
               ),
-              everyMilliseconds,
-              context,
-              withLoop: withLoop ?? false,
+              context: context,
+              params: params,
+              states: states,
+              dataset: dataset,
+              loop: loop,
             );
             break;
           case ActionCamera.torchFlash:
-            if (withCondition == true) {
-              if (condition?.get(params, states, dataset, true, loop) !=
-                  valueOfCondition?.get(params, states, dataset, true, loop)) {
-                break;
-              }
-            }
-            await FDelay.action(int.tryParse('${delay?.value}') ?? 0);
-            FLoop.action(
+            await actionS(
               () => FACameraTorchFlash.action(
                 context,
                 stateName,
@@ -1289,20 +1164,15 @@ class FActionElement extends Equatable {
                 dataset,
                 loop,
               ),
-              everyMilliseconds,
-              context,
-              withLoop: withLoop ?? false,
+              context: context,
+              params: params,
+              states: states,
+              dataset: dataset,
+              loop: loop,
             );
             break;
           case ActionCamera.toggleRecording:
-            if (withCondition == true) {
-              if (condition?.get(params, states, dataset, true, loop) !=
-                  valueOfCondition?.get(params, states, dataset, true, loop)) {
-                break;
-              }
-            }
-            await FDelay.action(int.tryParse('${delay?.value}') ?? 0);
-            FLoop.action(
+            await actionS(
               () => FACameraStopRecording.action(
                 context,
                 stateName,
@@ -1311,9 +1181,11 @@ class FActionElement extends Equatable {
                 dataset,
                 loop,
               ),
-              everyMilliseconds,
-              context,
-              withLoop: withLoop ?? false,
+              context: context,
+              params: params,
+              states: states,
+              dataset: dataset,
+              loop: loop,
             );
             break;
 
@@ -1324,60 +1196,45 @@ class FActionElement extends Equatable {
       case ActionType.webview:
         switch (actionWebView) {
           case ActionWebView.goBack:
-            if (withCondition == true) {
-              if (condition?.get(params, states, dataset, true, loop) !=
-                  valueOfCondition?.get(params, states, dataset, true, loop)) {
-                break;
-              }
-            }
-            await FDelay.action(int.tryParse('${delay?.value}') ?? 0);
-            FLoop.action(
+            await actionS(
               () => FActionWebViewBack.action(
                 context,
                 states,
                 stateName,
               ),
-              everyMilliseconds,
-              context,
-              withLoop: withLoop ?? false,
+              context: context,
+              params: params,
+              states: states,
+              dataset: dataset,
+              loop: loop,
             );
             break;
           case ActionWebView.reload:
-            if (withCondition == true) {
-              if (condition?.get(params, states, dataset, true, loop) !=
-                  valueOfCondition?.get(params, states, dataset, true, loop)) {
-                break;
-              }
-            }
-            await FDelay.action(int.tryParse('${delay?.value}') ?? 0);
-            FLoop.action(
+            await actionS(
               () => FActionWebViewReload.action(
                 context,
                 states,
                 stateName,
               ),
-              everyMilliseconds,
-              context,
-              withLoop: withLoop ?? false,
+              context: context,
+              params: params,
+              states: states,
+              dataset: dataset,
+              loop: loop,
             );
             break;
           case ActionWebView.goForward:
-            if (withCondition == true) {
-              if (condition?.get(params, states, dataset, true, loop) !=
-                  valueOfCondition?.get(params, states, dataset, true, loop)) {
-                break;
-              }
-            }
-            await FDelay.action(int.tryParse('${delay?.value}') ?? 0);
-            FLoop.action(
+            await actionS(
               () => FActionWebViewForward.action(
                 context,
                 states,
                 stateName,
               ),
-              everyMilliseconds,
-              context,
-              withLoop: withLoop ?? false,
+              context: context,
+              params: params,
+              states: states,
+              dataset: dataset,
+              loop: loop,
             );
             break;
           case null:
@@ -1387,118 +1244,91 @@ class FActionElement extends Equatable {
       case ActionType.audioPlayer:
         switch (actionAudioPlayer) {
           case ActionAudioPlayer.play:
-            if (withCondition == true) {
-              if (condition?.get(params, states, dataset, true, loop) !=
-                  valueOfCondition?.get(params, states, dataset, true, loop)) {
-                break;
-              }
-            }
-            await FDelay.action(int.tryParse('${delay?.value}') ?? 0);
-            FLoop.action(
+            await actionS(
               () => FAudioPlayerPlay.action(
                 context,
                 states,
                 stateName,
               ),
-              everyMilliseconds,
-              context,
-              withLoop: withLoop ?? false,
+              context: context,
+              params: params,
+              states: states,
+              dataset: dataset,
+              loop: loop,
             );
             break;
           case ActionAudioPlayer.pause:
-            if (withCondition == true) {
-              if (condition?.get(params, states, dataset, true, loop) !=
-                  valueOfCondition?.get(params, states, dataset, true, loop)) {
-                break;
-              }
-            }
-            await FDelay.action(int.tryParse('${delay?.value}') ?? 0);
-            FLoop.action(
+            await actionS(
               () => FAudioPlayerPause.action(
                 context,
                 states,
                 stateName,
               ),
-              everyMilliseconds,
-              context,
-              withLoop: withLoop ?? false,
+              context: context,
+              params: params,
+              states: states,
+              dataset: dataset,
+              loop: loop,
             );
             break;
           case ActionAudioPlayer.reload:
-            if (withCondition == true) {
-              if (condition?.get(params, states, dataset, true, loop) !=
-                  valueOfCondition?.get(params, states, dataset, true, loop)) {
-                break;
-              }
-            }
-            await FDelay.action(int.tryParse('${delay?.value}') ?? 0);
-            FLoop.action(
+            await actionS(
               () => FAudioPlayerReload.action(
                 context,
                 states,
                 stateName,
               ),
-              everyMilliseconds,
-              context,
-              withLoop: withLoop ?? false,
+              context: context,
+              params: params,
+              states: states,
+              dataset: dataset,
+              loop: loop,
             );
             break;
           case ActionAudioPlayer.loopOff:
-            if (withCondition == true) {
-              if (condition?.get(params, states, dataset, true, loop) !=
-                  valueOfCondition?.get(params, states, dataset, true, loop)) {
-                break;
-              }
-            }
-            await FDelay.action(int.tryParse('${delay?.value}') ?? 0);
-            FLoop.action(
+            await actionS(
               () => FAudioPlayerLoopOff.action(
                 context,
                 states,
                 stateName,
               ),
-              everyMilliseconds,
-              context,
-              withLoop: withLoop ?? false,
+              context: context,
+              params: params,
+              states: states,
+              dataset: dataset,
+              loop: loop,
             );
+
             break;
           case ActionAudioPlayer.loopOne:
-            if (withCondition == true) {
-              if (condition?.get(params, states, dataset, true, loop) !=
-                  valueOfCondition?.get(params, states, dataset, true, loop)) {
-                break;
-              }
-            }
-            await FDelay.action(int.tryParse('${delay?.value}') ?? 0);
-            FLoop.action(
+            await actionS(
               () => FAudioPlayerLoopOne.action(
                 context,
                 states,
                 stateName,
               ),
-              everyMilliseconds,
-              context,
-              withLoop: withLoop ?? false,
+              context: context,
+              params: params,
+              states: states,
+              dataset: dataset,
+              loop: loop,
             );
+
             break;
           case ActionAudioPlayer.loopAll:
-            if (withCondition == true) {
-              if (condition?.get(params, states, dataset, true, loop) !=
-                  valueOfCondition?.get(params, states, dataset, true, loop)) {
-                break;
-              }
-            }
-            await FDelay.action(int.tryParse('${delay?.value}') ?? 0);
-            FLoop.action(
+            await actionS(
               () => FAudioPlayerLoopAll.action(
                 context,
                 states,
                 stateName,
               ),
-              everyMilliseconds,
-              context,
-              withLoop: withLoop ?? false,
+              context: context,
+              params: params,
+              states: states,
+              dataset: dataset,
+              loop: loop,
             );
+
             break;
           case null:
             break;
@@ -1518,6 +1348,7 @@ class FActionElement extends Equatable {
   }
 
   String toCode({
+    required final int pageId,
     required final BuildContext context,
     required final CNode body,
     final String? value,
@@ -1545,115 +1376,78 @@ class FActionElement extends Equatable {
       case ActionType.tetaDatabase:
         switch (actionTetaDB) {
           case ActionTetaCmsDB.insert:
-            return FCondition.toCode(
-                  context,
-                  condition,
-                  valueOfCondition,
-                  withCondition: withCondition ?? false,
-                ) +
-                FDelay.toCode(int.tryParse('${delay?.value}') ?? 0) +
-                FLoop.toCode(
-                  int.tryParse(everyMilliseconds?.value ?? '0') ?? 0,
-                  FATetaCMSInsert.toCode(
-                    cmsCollectionId,
-                    dbData,
-                  ),
-                  withLoop: withLoop ?? false,
-                );
+            return codeS(
+              FATetaCMSInsert.toCode(
+                cmsCollectionId,
+                dbData,
+              ),
+              context,
+            );
           case ActionTetaCmsDB.delete:
-            return FCondition.toCode(
-                  context,
-                  condition,
-                  valueOfCondition,
-                  withCondition: withCondition ?? false,
-                ) +
-                FDelay.toCode(int.tryParse('${delay?.value}') ?? 0) +
-                FLoop.toCode(
-                  int.tryParse(everyMilliseconds?.value ?? '0') ?? 0,
-                  FATetaCMSDelete.toCode(
-                    cmsCollectionId,
-                    dbFrom,
-                    loop,
-                  ),
-                  withLoop: withLoop ?? false,
-                );
-
+            return codeS(
+              FATetaCMSDelete.toCode(
+                cmsCollectionId,
+                dbFrom,
+                loop,
+              ),
+              context,
+            );
           case ActionTetaCmsDB.update:
-            return FCondition.toCode(
-                  context,
-                  condition,
-                  valueOfCondition,
-                  withCondition: withCondition ?? false,
-                ) +
-                FDelay.toCode(int.tryParse('${delay?.value}') ?? 0) +
-                FLoop.toCode(
-                  int.tryParse(everyMilliseconds?.value ?? '0') ?? 0,
-                  FATetaCMSUpdate.toCode(
-                    cmsCollectionId,
-                    dbData,
-                    dbFrom,
-                    loop,
-                  ),
-                  withLoop: withLoop ?? false,
-                );
+            return codeS(
+              FATetaCMSUpdate.toCode(
+                cmsCollectionId,
+                dbData,
+                dbFrom,
+                loop,
+              ),
+              context,
+            );
         }
         break;
       case ActionType.tetaAuth:
         switch (actionTetaAuth) {
           case ActionTetaCmsAuth.signInWithGoogle:
-            return FCondition.toCode(
-                  context,
-                  condition,
-                  valueOfCondition,
-                  withCondition: withCondition ?? false,
-                ) +
-                FDelay.toCode(int.tryParse('${delay?.value}') ?? 0) +
-                FLoop.toCode(
-                  int.tryParse(everyMilliseconds?.value ?? '0') ?? 0,
-                  FATetaCMSLogin.toCode(
-                    context,
-                    TetaProvider.google,
-                    nameOfPage,
-                    paramsToSend,
-                  ),
-                  withLoop: withLoop ?? false,
-                );
+            return codeS(
+              FATetaCMSLogin.toCode(
+                context,
+                TetaProvider.google,
+                nameOfPage,
+                paramsToSend,
+              ),
+              context,
+            );
           case ActionTetaCmsAuth.signInWithGitHub:
-            return FCondition.toCode(
-                  context,
-                  condition,
-                  valueOfCondition,
-                  withCondition: withCondition ?? false,
-                ) +
-                FDelay.toCode(int.tryParse('${delay?.value}') ?? 0) +
-                FLoop.toCode(
-                  int.tryParse(everyMilliseconds?.value ?? '0') ?? 0,
-                  FATetaCMSLogin.toCode(
-                    context,
-                    TetaProvider.github,
-                    nameOfPage,
-                    paramsToSend,
-                  ),
-                  withLoop: withLoop ?? false,
-                );
+            return codeS(
+              FATetaCMSLogin.toCode(
+                context,
+                TetaProvider.github,
+                nameOfPage,
+                paramsToSend,
+              ),
+              context,
+            );
           case ActionTetaCmsAuth.signInWithTwitter:
-            return FCondition.toCode(
-                  context,
-                  condition,
-                  valueOfCondition,
-                  withCondition: withCondition ?? false,
-                ) +
-                FDelay.toCode(int.tryParse('${delay?.value}') ?? 0) +
-                FLoop.toCode(
-                  int.tryParse(everyMilliseconds?.value ?? '0') ?? 0,
-                  FATetaCMSLogin.toCode(
-                    context,
-                    TetaProvider.twitter,
-                    nameOfPage,
-                    paramsToSend,
-                  ),
-                  withLoop: withLoop ?? false,
-                );
+            return codeS(
+              FATetaCMSLogin.toCode(
+                context,
+                TetaProvider.twitter,
+                nameOfPage,
+                paramsToSend,
+              ),
+              context,
+            );
+          case ActionTetaCmsAuth.signInWithApple:
+            return codeS(
+              FATetaCMSLogin.toCode(
+                context,
+                TetaProvider.apple,
+                nameOfPage,
+                paramsToSend,
+              ),
+              context,
+            );
+          case ActionTetaCmsAuth.logout:
+            return codeS(FATetaCMSLogout.toCode(), context);
           default:
             break;
         }
@@ -1661,18 +1455,10 @@ class FActionElement extends Equatable {
       case ActionType.revenueCat:
         switch (actionRevenueCat) {
           case ActionRevenueCat.buy:
-            return FCondition.toCode(
-                  context,
-                  condition,
-                  valueOfCondition,
-                  withCondition: withCondition ?? false,
-                ) +
-                FDelay.toCode(int.tryParse('${delay?.value}') ?? 0) +
-                FLoop.toCode(
-                  int.tryParse(everyMilliseconds?.value ?? '0') ?? 0,
-                  FActionRevenueCatBuy.toCode(context, stateName),
-                  withLoop: withLoop ?? false,
-                );
+            return codeS(
+              FActionRevenueCatBuy.toCode(context, stateName),
+              context,
+            );
           default:
             break;
         }
@@ -1680,82 +1466,42 @@ class FActionElement extends Equatable {
       case ActionType.stripe:
         switch (actionStripe) {
           case ActionStripe.buy:
-            return FCondition.toCode(
-                  context,
-                  condition,
-                  valueOfCondition,
-                  withCondition: withCondition ?? false,
-                ) +
-                FDelay.toCode(int.tryParse('${delay?.value}') ?? 0) +
-                FLoop.toCode(
-                  int.tryParse(everyMilliseconds?.value ?? '0') ?? 0,
-                  FActionStripeBuy.toCode(context, stateName, body),
-                  withLoop: withLoop ?? false,
-                );
+            return codeS(
+              FActionStripeBuy.toCode(context, stateName, body),
+              context,
+            );
           case ActionStripe.buyCartItems:
-            return FCondition.toCode(
-                  context,
-                  condition,
-                  valueOfCondition,
-                  withCondition: withCondition ?? false,
-                ) +
-                FDelay.toCode(int.tryParse('${delay?.value}') ?? 0) +
-                FLoop.toCode(
-                  int.tryParse(everyMilliseconds?.value ?? '0') ?? 0,
-                  FActionStripeCartBuyAll.toCode(context, stateName, body),
-                  withLoop: withLoop ?? false,
-                );
+            return codeS(
+              FActionStripeCartBuyAll.toCode(context, stateName, body),
+              context,
+            );
           case ActionStripe.addProductsListItemToCart:
-            return FCondition.toCode(
-                  context,
-                  condition,
-                  valueOfCondition,
-                  withCondition: withCondition ?? false,
-                ) +
-                FDelay.toCode(int.tryParse('${delay?.value}') ?? 0) +
-                FLoop.toCode(
-                  int.tryParse(everyMilliseconds?.value ?? '0') ?? 0,
-                  FActionStripeAddProductsListItemToCart.toCode(
-                    context,
-                    stateName,
-                    body,
-                  ),
-                  withLoop: withLoop ?? false,
-                );
+            return codeS(
+              FActionStripeAddProductsListItemToCart.toCode(
+                context,
+                stateName,
+                body,
+              ),
+              context,
+            );
           case ActionStripe.removeCartListItemFromCart:
-            return FCondition.toCode(
-                  context,
-                  condition,
-                  valueOfCondition,
-                  withCondition: withCondition ?? false,
-                ) +
-                FDelay.toCode(int.tryParse('${delay?.value}') ?? 0) +
-                FLoop.toCode(
-                  int.tryParse(everyMilliseconds?.value ?? '0') ?? 0,
-                  FActionStripeCartRemoveProductsListItemFromCart.toCode(
-                    context,
-                    stateName,
-                    body,
-                  ),
-                  withLoop: withLoop ?? false,
-                );
+            return codeS(
+              FActionStripeCartRemoveProductsListItemFromCart.toCode(
+                context,
+                stateName,
+                body,
+              ),
+              context,
+            );
           case ActionStripe.removeProductsListItemFromCart:
-            return FCondition.toCode(
-                  context,
-                  condition,
-                  valueOfCondition,
-                  withCondition: withCondition ?? false,
-                ) +
-                FDelay.toCode(int.tryParse('${delay?.value}') ?? 0) +
-                FLoop.toCode(
-                  int.tryParse(everyMilliseconds?.value ?? '0') ?? 0,
-                  FActionStripeRemoveProductsListItemFromCart.toCode(
-                    context,
-                    stateName,
-                    body,
-                  ),
-                  withLoop: withLoop ?? false,
-                );
+            return codeS(
+              FActionStripeRemoveProductsListItemFromCart.toCode(
+                context,
+                stateName,
+                body,
+              ),
+              context,
+            );
           default:
             break;
         }
@@ -1764,173 +1510,91 @@ class FActionElement extends Equatable {
       case ActionType.state:
         switch (actionState) {
           case ActionState.increment:
-            return FCondition.toCode(
-                  context,
-                  condition,
-                  valueOfCondition,
-                  withCondition: withCondition ?? false,
-                ) +
-                FDelay.toCode(int.tryParse('${delay?.value}') ?? 0) +
-                FLoop.toCode(
-                  int.tryParse(everyMilliseconds?.value ?? '0') ?? 0,
-                  FActionStateIncrement.toCode(context, stateName),
-                  withLoop: withLoop ?? false,
-                );
-
+            return codeS(
+              FActionStateIncrement.toCode(pageId, context, stateName),
+              context,
+            );
           case ActionState.decrement:
-            return FCondition.toCode(
-                  context,
-                  condition,
-                  valueOfCondition,
-                  withCondition: withCondition ?? false,
-                ) +
-                FDelay.toCode(int.tryParse('${delay?.value}') ?? 0) +
-                FLoop.toCode(
-                  int.tryParse(everyMilliseconds?.value ?? '0') ?? 0,
-                  FActionStateDecrement.toCode(context, stateName),
-                  withLoop: withLoop ?? false,
-                );
+            return codeS(
+              FActionStateDecrement.toCode(pageId, context, stateName),
+              context,
+            );
 
           case ActionState.changeWith:
-            return FCondition.toCode(
-                  context,
-                  condition,
-                  valueOfCondition,
-                  withCondition: withCondition ?? false,
-                ) +
-                FDelay.toCode(int.tryParse('${delay?.value}') ?? 0) +
-                FLoop.toCode(
-                  int.tryParse(everyMilliseconds?.value ?? '0') ?? 0,
-                  FActionStateChangeWith.toCode(
-                    context: context,
-                    stateName: stateName,
-                    valueToChangeWith: valueTextTypeInput,
-                    loop: loop,
-                  ),
-                  withLoop: withLoop ?? false,
-                );
-
+            return codeS(
+              FActionStateChangeWith.toCode(
+                pageId: pageId,
+                context: context,
+                stateName: stateName,
+                valueToChangeWith: valueTextTypeInput,
+                loop: loop,
+              ),
+              context,
+            );
           case ActionState.changeWithParams:
-            return FCondition.toCode(
-                  context,
-                  condition,
-                  valueOfCondition,
-                  withCondition: withCondition ?? false,
-                ) +
-                FDelay.toCode(int.tryParse('${delay?.value}') ?? 0) +
-                FLoop.toCode(
-                  int.tryParse(everyMilliseconds?.value ?? '0') ?? 0,
-                  FActionStateChangeWithParam.toCode(
-                    context,
-                    stateName,
-                    this.value,
-                  ),
-                  withLoop: withLoop ?? false,
-                );
+            return codeS(
+              FActionStateChangeWithParam.toCode(
+                pageId,
+                context,
+                stateName,
+                this.value,
+              ),
+              context,
+            );
           case null:
             return '';
         }
       case ActionType.navigation:
         switch (actionNavigation) {
           case ActionNavigation.goBack:
-            return FCondition.toCode(
-                  context,
-                  condition,
-                  valueOfCondition,
-                  withCondition: withCondition ?? false,
-                ) +
-                FDelay.toCode(int.tryParse('${delay?.value}') ?? 0) +
-                FLoop.toCode(
-                  int.tryParse(everyMilliseconds?.value ?? '0') ?? 0,
-                  FActionNavigationGoBack.toCode(),
-                  withLoop: withLoop ?? false,
-                );
+            return codeS(
+              FActionNavigationGoBack.toCode(),
+              context,
+            );
 
           case ActionNavigation.openDrawer:
-            return FCondition.toCode(
-                  context,
-                  condition,
-                  valueOfCondition,
-                  withCondition: withCondition ?? false,
-                ) +
-                FDelay.toCode(int.tryParse('${delay?.value}') ?? 0) +
-                FLoop.toCode(
-                  int.tryParse(everyMilliseconds?.value ?? '0') ?? 0,
-                  FActionNavigationOpenDrawer.toCode(),
-                  withLoop: withLoop ?? false,
-                );
+            return codeS(
+              FActionNavigationOpenDrawer.toCode(),
+              context,
+            );
           case ActionNavigation.openPage:
-            return FCondition.toCode(
-                  context,
-                  condition,
-                  valueOfCondition,
-                  withCondition: withCondition ?? false,
-                ) +
-                FDelay.toCode(int.tryParse('${delay?.value}') ?? 0) +
-                FLoop.toCode(
-                  int.tryParse(everyMilliseconds?.value ?? '0') ?? 0,
-                  FActionNavigationOpenPage.toCode(
-                    context,
-                    nameOfPage,
-                    paramsToSend,
-                  ),
-                  withLoop: withLoop ?? false,
-                );
-
+            return codeS(
+              FActionNavigationOpenPage.toCode(
+                context,
+                nameOfPage,
+                paramsToSend,
+              ),
+              context,
+            );
           case ActionNavigation.launchURL:
-            return FCondition.toCode(
-                  context,
-                  condition,
-                  valueOfCondition,
-                  withCondition: withCondition ?? false,
-                ) +
-                FDelay.toCode(int.tryParse('${delay?.value}') ?? 0) +
-                FLoop.toCode(
-                  int.tryParse(everyMilliseconds?.value ?? '0') ?? 0,
-                  FActionNavigationLaunchURL.toCode(
-                    context,
-                    valueTextTypeInput ?? FTextTypeInput(),
-                    loop,
-                  ),
-                  withLoop: withLoop ?? false,
-                );
+            return codeS(
+              FActionNavigationLaunchURL.toCode(
+                context,
+                valueTextTypeInput ?? FTextTypeInput(),
+                loop,
+              ),
+              context,
+            );
 
           case ActionNavigation.openBottomSheet:
-            return FCondition.toCode(
-                  context,
-                  condition,
-                  valueOfCondition,
-                  withCondition: withCondition ?? false,
-                ) +
-                FDelay.toCode(int.tryParse('${delay?.value}') ?? 0) +
-                FLoop.toCode(
-                  int.tryParse(everyMilliseconds?.value ?? '0') ?? 0,
-                  FActionNavigationOpenBottomSheet.toCode(
-                    context,
-                    nameOfPage,
-                    paramsToSend,
-                  ),
-                  withLoop: withLoop ?? false,
-                );
+            return codeS(
+              FActionNavigationOpenBottomSheet.toCode(
+                context,
+                nameOfPage,
+                paramsToSend,
+              ),
+              context,
+            );
 
           case ActionNavigation.openSnackBar:
-            return FCondition.toCode(
-                  context,
-                  condition,
-                  valueOfCondition,
-                  withCondition: withCondition ?? false,
-                ) +
-                FDelay.toCode(int.tryParse('${delay?.value}') ?? 0) +
-                FLoop.toCode(
-                  int.tryParse(everyMilliseconds?.value ?? '0') ?? 0,
-                  FActionNavigationOpenSnackBar.toCode(
-                    context,
-                    nameOfPage,
-                    paramsToSend,
-                  ),
-                  withLoop: withLoop ?? false,
-                );
-
+            return codeS(
+              FActionNavigationOpenSnackBar.toCode(
+                context,
+                nameOfPage,
+                paramsToSend,
+              ),
+              context,
+            );
           case ActionNavigation.openDatePicker:
             return '';
           case null:
@@ -1939,89 +1603,49 @@ class FActionElement extends Equatable {
       case ActionType.supabaseAuth:
         switch (actionSupabaseAuth) {
           case ActionSupabaseAuth.signUp:
-            return FCondition.toCode(
-                  context,
-                  condition,
-                  valueOfCondition,
-                  withCondition: withCondition ?? false,
-                ) +
-                FDelay.toCode(int.tryParse('${delay?.value}') ?? 0) +
-                FLoop.toCode(
-                  int.tryParse(everyMilliseconds?.value ?? '0') ?? 0,
-                  FASupabaseSignUp.toCode(context, nameOfPage, paramsToSend),
-                  withLoop: withLoop ?? false,
-                );
+            return codeS(
+              FASupabaseSignUp.toCode(context, nameOfPage, paramsToSend),
+              context,
+            );
           case ActionSupabaseAuth.signInWithCredential:
-            return FCondition.toCode(
-                  context,
-                  condition,
-                  valueOfCondition,
-                  withCondition: withCondition ?? false,
-                ) +
-                FDelay.toCode(int.tryParse('${delay?.value}') ?? 0) +
-                FLoop.toCode(
-                  int.tryParse(everyMilliseconds?.value ?? '0') ?? 0,
-                  FASupabaseSignInWithCredentials.toCode(
-                    context,
-                    nameOfPage,
-                    paramsToSend,
-                  ),
-                  withLoop: withLoop ?? false,
-                );
+            return codeS(
+              FASupabaseSignInWithCredentials.toCode(
+                context,
+                nameOfPage,
+                paramsToSend,
+              ),
+              context,
+            );
 
           case ActionSupabaseAuth.signInWithGoogle:
-            return FCondition.toCode(
-                  context,
-                  condition,
-                  valueOfCondition,
-                  withCondition: withCondition ?? false,
-                ) +
-                FDelay.toCode(int.tryParse('${delay?.value}') ?? 0) +
-                FLoop.toCode(
-                  int.tryParse(everyMilliseconds?.value ?? '0') ?? 0,
-                  FASupabaseSignInWithGoogle.toCode(
-                    context,
-                    nameOfPage,
-                    paramsToSend,
-                  ),
-                  withLoop: withLoop ?? false,
-                );
+            return codeS(
+              FASupabaseSignInWithGoogle.toCode(
+                context,
+                nameOfPage,
+                paramsToSend,
+              ),
+              context,
+            );
 
           case ActionSupabaseAuth.signInWithApple:
-            return FCondition.toCode(
-                  context,
-                  condition,
-                  valueOfCondition,
-                  withCondition: withCondition ?? false,
-                ) +
-                FDelay.toCode(int.tryParse('${delay?.value}') ?? 0) +
-                FLoop.toCode(
-                  int.tryParse(everyMilliseconds?.value ?? '0') ?? 0,
-                  FASupabaseSignInWithApple.toCode(
-                    context,
-                    nameOfPage,
-                    paramsToSend,
-                  ),
-                  withLoop: withLoop ?? false,
-                );
+            return codeS(
+              FASupabaseSignInWithApple.toCode(
+                context,
+                nameOfPage,
+                paramsToSend,
+              ),
+              context,
+            );
 
           case ActionSupabaseAuth.signInWithFacebook:
-            return FCondition.toCode(
-                  context,
-                  condition,
-                  valueOfCondition,
-                  withCondition: withCondition ?? false,
-                ) +
-                FDelay.toCode(int.tryParse('${delay?.value}') ?? 0) +
-                FLoop.toCode(
-                  int.tryParse(everyMilliseconds?.value ?? '0') ?? 0,
-                  FASupabaseSignInWithFacebook.toCode(
-                    context,
-                    nameOfPage,
-                    paramsToSend,
-                  ),
-                  withLoop: withLoop ?? false,
-                );
+            return codeS(
+              FASupabaseSignInWithFacebook.toCode(
+                context,
+                nameOfPage,
+                paramsToSend,
+              ),
+              context,
+            );
 
           case null:
             return '';
@@ -2029,65 +1653,41 @@ class FActionElement extends Equatable {
       case ActionType.supabaseDatabase:
         switch (actionSupabaseDB) {
           case ActionSupabaseDB.insert:
-            return FCondition.toCode(
-                  context,
-                  condition,
-                  valueOfCondition,
-                  withCondition: withCondition ?? false,
-                ) +
-                FDelay.toCode(int.tryParse('${delay?.value}') ?? 0) +
-                FLoop.toCode(
-                  int.tryParse(everyMilliseconds?.value ?? '0') ?? 0,
-                  FASupabaseInsert.toCode(
-                    context,
-                    nameOfPage,
-                    paramsToSend,
-                    dbFrom,
-                    dbData,
-                  ),
-                  withLoop: withLoop ?? false,
-                );
+            return codeS(
+              FASupabaseInsert.toCode(
+                context,
+                nameOfPage,
+                paramsToSend,
+                dbFrom,
+                dbData,
+              ),
+              context,
+            );
 
           case ActionSupabaseDB.delete:
-            return FCondition.toCode(
-                  context,
-                  condition,
-                  valueOfCondition,
-                  withCondition: withCondition ?? false,
-                ) +
-                FDelay.toCode(int.tryParse('${delay?.value}') ?? 0) +
-                FLoop.toCode(
-                  int.tryParse(everyMilliseconds?.value ?? '0') ?? 0,
-                  FASupabaseDelete.toCode(
-                    context,
-                    nameOfPage,
-                    paramsToSend,
-                    dbFrom,
-                    dbEq,
-                  ),
-                  withLoop: withLoop ?? false,
-                );
+            return codeS(
+              FASupabaseDelete.toCode(
+                context,
+                nameOfPage,
+                paramsToSend,
+                dbFrom,
+                dbEq,
+              ),
+              context,
+            );
 
           case ActionSupabaseDB.update:
-            return FCondition.toCode(
-                  context,
-                  condition,
-                  valueOfCondition,
-                  withCondition: withCondition ?? false,
-                ) +
-                FDelay.toCode(int.tryParse('${delay?.value}') ?? 0) +
-                FLoop.toCode(
-                  int.tryParse(everyMilliseconds?.value ?? '0') ?? 0,
-                  FASupabaseUpdate.toCode(
-                    context,
-                    nameOfPage,
-                    paramsToSend,
-                    dbFrom,
-                    dbData,
-                    dbEq,
-                  ),
-                  withLoop: withLoop ?? false,
-                );
+            return codeS(
+              FASupabaseUpdate.toCode(
+                context,
+                nameOfPage,
+                paramsToSend,
+                dbFrom,
+                dbData,
+                dbEq,
+              ),
+              context,
+            );
           //todo: adjust this
           // case ActionSupabaseDB.onAll:
           //   return '';
@@ -2103,60 +1703,43 @@ class FActionElement extends Equatable {
       case ActionType.camera:
         switch (actionCamera) {
           case ActionCamera.takePhoto:
-            return FCondition.toCode(
-                  context,
-                  condition,
-                  valueOfCondition,
-                  withCondition: withCondition ?? false,
-                ) +
-                FDelay.toCode(int.tryParse('${delay?.value}') ?? 0) +
-                FLoop.toCode(
-                  int.tryParse(everyMilliseconds?.value ?? '0') ?? 0,
-                  FACameraTakePhoto.toCode(context, stateName),
-                  withLoop: withLoop ?? false,
-                );
+            return codeS(
+              FACameraTakePhoto.toCode(pageId, context, stateName),
+              context,
+            );
 
           case ActionCamera.switchCamera:
-            return FCondition.toCode(
-                  context,
-                  condition,
-                  valueOfCondition,
-                  withCondition: withCondition ?? false,
-                ) +
-                FDelay.toCode(int.tryParse('${delay?.value}') ?? 0) +
-                FLoop.toCode(
-                  int.tryParse(everyMilliseconds?.value ?? '0') ?? 0,
-                  FACameraSwitch.toCode(context, stateName, paramsToSend),
-                  withLoop: withLoop ?? false,
-                );
+            return codeS(
+              FACameraSwitch.toCode(
+                pageId,
+                context,
+                stateName,
+                paramsToSend,
+              ),
+              context,
+            );
 
           case ActionCamera.offFlash:
-            return FCondition.toCode(
-                  context,
-                  condition,
-                  valueOfCondition,
-                  withCondition: withCondition ?? false,
-                ) +
-                FDelay.toCode(int.tryParse('${delay?.value}') ?? 0) +
-                FLoop.toCode(
-                  int.tryParse(everyMilliseconds?.value ?? '0') ?? 0,
-                  FACameraOffFlash.toCode(context, stateName, paramsToSend),
-                  withLoop: withLoop ?? false,
-                );
+            return codeS(
+              FACameraOffFlash.toCode(
+                pageId,
+                context,
+                stateName,
+                paramsToSend,
+              ),
+              context,
+            );
 
           case ActionCamera.alwaysFlash:
-            return FCondition.toCode(
-                  context,
-                  condition,
-                  valueOfCondition,
-                  withCondition: withCondition ?? false,
-                ) +
-                FDelay.toCode(int.tryParse('${delay?.value}') ?? 0) +
-                FLoop.toCode(
-                  int.tryParse(everyMilliseconds?.value ?? '0') ?? 0,
-                  FACameraAlwaysFlash.toCode(context, nameOfPage, paramsToSend),
-                  withLoop: withLoop ?? false,
-                );
+            return codeS(
+              FACameraAlwaysFlash.toCode(
+                pageId,
+                context,
+                nameOfPage,
+                paramsToSend,
+              ),
+              context,
+            );
 
           case ActionCamera.autoFlash:
             break;
@@ -2171,46 +1754,22 @@ class FActionElement extends Equatable {
       case ActionType.webview:
         switch (actionWebView) {
           case ActionWebView.goBack:
-            return FCondition.toCode(
-                  context,
-                  condition,
-                  valueOfCondition,
-                  withCondition: withCondition ?? false,
-                ) +
-                FDelay.toCode(int.tryParse('${delay?.value}') ?? 0) +
-                FLoop.toCode(
-                  int.tryParse(everyMilliseconds?.value ?? '0') ?? 0,
-                  FActionWebViewBack.toCode(context, stateName),
-                  withLoop: withLoop ?? false,
-                );
+            return codeS(
+              FActionWebViewBack.toCode(pageId, context, stateName),
+              context,
+            );
 
           case ActionWebView.goForward:
-            return FCondition.toCode(
-                  context,
-                  condition,
-                  valueOfCondition,
-                  withCondition: withCondition ?? false,
-                ) +
-                FDelay.toCode(int.tryParse('${delay?.value}') ?? 0) +
-                FLoop.toCode(
-                  int.tryParse(everyMilliseconds?.value ?? '0') ?? 0,
-                  FActionWebViewForward.toCode(context, stateName),
-                  withLoop: withLoop ?? false,
-                );
+            return codeS(
+              FActionWebViewForward.toCode(pageId, context, stateName),
+              context,
+            );
 
           case ActionWebView.reload:
-            return FCondition.toCode(
-                  context,
-                  condition,
-                  valueOfCondition,
-                  withCondition: withCondition ?? false,
-                ) +
-                FDelay.toCode(int.tryParse('${delay?.value}') ?? 0) +
-                FLoop.toCode(
-                  int.tryParse(everyMilliseconds?.value ?? '0') ?? 0,
-                  FActionWebViewReload.toCode(context, stateName),
-                  withLoop: withLoop ?? false,
-                );
+            return codeS(
+              FActionWebViewReload.toCode(pageId, context, stateName),
+              context,
+            );
 
           case null:
             return '';
@@ -2218,88 +1777,40 @@ class FActionElement extends Equatable {
       case ActionType.audioPlayer:
         switch (actionAudioPlayer) {
           case ActionAudioPlayer.pause:
-            return FCondition.toCode(
-                  context,
-                  condition,
-                  valueOfCondition,
-                  withCondition: withCondition ?? false,
-                ) +
-                FDelay.toCode(int.tryParse('${delay?.value}') ?? 0) +
-                FLoop.toCode(
-                  int.tryParse(everyMilliseconds?.value ?? '0') ?? 0,
-                  FAudioPlayerPause.toCode(context, stateName),
-                  withLoop: withLoop ?? false,
-                );
+            return codeS(
+              FAudioPlayerPause.toCode(pageId, context, stateName),
+              context,
+            );
 
           case ActionAudioPlayer.play:
-            return FCondition.toCode(
-                  context,
-                  condition,
-                  valueOfCondition,
-                  withCondition: withCondition ?? false,
-                ) +
-                FDelay.toCode(int.tryParse('${delay?.value}') ?? 0) +
-                FLoop.toCode(
-                  int.tryParse(everyMilliseconds?.value ?? '0') ?? 0,
-                  FAudioPlayerPlay.toCode(context, stateName),
-                  withLoop: withLoop ?? false,
-                );
+            return codeS(
+              FAudioPlayerPlay.toCode(pageId, context, stateName),
+              context,
+            );
 
           case ActionAudioPlayer.reload:
-            return FCondition.toCode(
-                  context,
-                  condition,
-                  valueOfCondition,
-                  withCondition: withCondition ?? false,
-                ) +
-                FDelay.toCode(int.tryParse('${delay?.value}') ?? 0) +
-                FLoop.toCode(
-                  int.tryParse(everyMilliseconds?.value ?? '0') ?? 0,
-                  FAudioPlayerReload.toCode(context, stateName),
-                  withLoop: withLoop ?? false,
-                );
+            return codeS(
+              FAudioPlayerReload.toCode(pageId, context, stateName),
+              context,
+            );
 
           case ActionAudioPlayer.loopOff:
-            return FCondition.toCode(
-                  context,
-                  condition,
-                  valueOfCondition,
-                  withCondition: withCondition ?? false,
-                ) +
-                FDelay.toCode(int.tryParse('${delay?.value}') ?? 0) +
-                FLoop.toCode(
-                  int.tryParse(everyMilliseconds?.value ?? '0') ?? 0,
-                  FAudioPlayerLoopOff.toCode(context, stateName),
-                  withLoop: withLoop ?? false,
-                );
+            return codeS(
+              FAudioPlayerLoopOff.toCode(pageId, context, stateName),
+              context,
+            );
 
           case ActionAudioPlayer.loopOne:
-            return FCondition.toCode(
-                  context,
-                  condition,
-                  valueOfCondition,
-                  withCondition: withCondition ?? false,
-                ) +
-                FDelay.toCode(int.tryParse('${delay?.value}') ?? 0) +
-                FLoop.toCode(
-                  int.tryParse(everyMilliseconds?.value ?? '0') ?? 0,
-                  FAudioPlayerLoopOne.toCode(context, stateName),
-                  withLoop: withLoop ?? false,
-                );
+            return codeS(
+              FAudioPlayerLoopOne.toCode(pageId, context, stateName),
+              context,
+            );
 
           case ActionAudioPlayer.loopAll:
-            return FCondition.toCode(
-                  context,
-                  condition,
-                  valueOfCondition,
-                  withCondition: withCondition ?? false,
-                ) +
-                FDelay.toCode(int.tryParse('${delay?.value}') ?? 0) +
-                FLoop.toCode(
-                  int.tryParse(everyMilliseconds?.value ?? '0') ?? 0,
-                  FAudioPlayerLoopAll.toCode(context, stateName),
-                  withLoop: withLoop ?? false,
-                );
+            return codeS(
+              FAudioPlayerLoopAll.toCode(pageId, context, stateName),
+              context,
+            );
 
           case null:
             return '';
@@ -2317,4 +1828,38 @@ class FActionElement extends Equatable {
     }
     return '';
   }
+
+  Future<void> actionS(
+    final Function() func, {
+    required final BuildContext context,
+    required final List<VariableObject> params,
+    required final List<VariableObject> states,
+    required final List<DatasetObject> dataset,
+    required final int? loop,
+  }) async {
+    if (withCondition == true) {
+      if (condition?.get(params, states, dataset, true, loop) !=
+          valueOfCondition?.get(params, states, dataset, true, loop)) {
+        return;
+      }
+    }
+    await FDelay.action(int.tryParse('${delay?.value}') ?? 0);
+    FLoop.action(
+      func,
+      everyMilliseconds,
+      context,
+      withLoop: withLoop ?? false,
+    );
+  }
+
+  String codeS(final String func, final BuildContext context) => AS.toCode(
+        func,
+        context: context,
+        condition: condition,
+        valueOfCondition: valueOfCondition,
+        withCondition: withCondition,
+        everyMilliseconds: everyMilliseconds,
+        delay: delay,
+        withLoop: withLoop,
+      );
 }

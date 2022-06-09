@@ -204,6 +204,7 @@ String pageCodeTemplate(
     class _State${pageNameRC.pascalCase} extends $isARState {
       ${statesString.toString()}
       var datasets = <String, dynamic>{};
+      int index = 0;
 
       @override
       void initState() { 

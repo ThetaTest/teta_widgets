@@ -11,6 +11,7 @@ import 'package:teta_widgets/src/elements/nodes/node_body.dart';
 
 /// Generates the code for BottomBarItem widget
 String bottomBarItemCodeTemplate(
+  final int pageId,
   final BuildContext context,
   final NodeBody body,
   final CNode node,
@@ -24,6 +25,7 @@ String bottomBarItemCodeTemplate(
   return '''
     GestureDetector(
       ${CS.action(
+    pageId,
     context,
     node,
     ActionGesture.onTap,
@@ -33,6 +35,7 @@ String bottomBarItemCodeTemplate(
     loop: loop,
   )}
       ${CS.action(
+    pageId,
     context,
     node,
     ActionGesture.onLongPress,

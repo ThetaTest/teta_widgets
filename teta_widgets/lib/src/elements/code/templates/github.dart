@@ -7,14 +7,19 @@ import 'package:teta_widgets/src/elements/nodes/node.dart';
 
 /// GitHub Login Template
 String loginGitHubCodeTemplate(
+  final int pageId,
   final BuildContext context,
   final CNode node,
   final CNode? child,
   final int loop,
 ) {
   return '''
-  GithubAuthButton(
+SizedBox(
+    ${CS.size(context, node.body, isWidth: true)}
+    ${CS.size(context, node.body, isWidth: false)}
+    child: GithubAuthButton(
     ${CS.action(
+    pageId,
     context,
     node,
     ActionGesture.onTap,
@@ -24,6 +29,7 @@ String loginGitHubCodeTemplate(
     loop: loop,
   )}
     ${CS.action(
+    pageId,
     context,
     node,
     ActionGesture.onLongPress,
@@ -32,6 +38,7 @@ String loginGitHubCodeTemplate(
     isRequired: false,
     loop: loop,
   )}
-  )
+  ),
+)
   ''';
 }

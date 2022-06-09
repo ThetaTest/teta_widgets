@@ -329,6 +329,7 @@ class CS {
   /// }
   /// ```
   static String action(
+    final int pageId,
     final BuildContext context,
     final CNode node,
     final ActionGesture gesture,
@@ -336,6 +337,7 @@ class CS {
     final String? value, {
     required final int? loop,
     required final bool isRequired,
+    final String? additionalCode,
   }) {
     final code = StringBuffer()..write('');
     if (node.body.attributes[DBKeys.action] == null) return '';
@@ -344,6 +346,7 @@ class CS {
       if (element.actionGesture == gesture) {
         code.write(
           element.toCode(
+            pageId: pageId,
             value: value,
             context: context,
             body: node,
@@ -354,6 +357,7 @@ class CS {
     }
     return '''
     $func {
+      ${additionalCode ?? ''}
       ${code.toString()}
     },
     ''';

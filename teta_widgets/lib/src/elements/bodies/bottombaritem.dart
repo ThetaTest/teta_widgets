@@ -170,5 +170,5 @@ class BottomBarItemBody extends NodeBody {
     final int pageId,
     final int? loop,
   ) =>
-      bottomBarItemCodeTemplate(context, this, node, child, loop ?? 0);
+      bottomBarItemCodeTemplate(pageId, context, this, node, child, loop ?? 0);
 }

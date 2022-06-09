@@ -7,14 +7,19 @@ import 'package:teta_widgets/src/elements/nodes/node.dart';
 
 /// Facebook Login Template
 String loginFacebookCodeTemplate(
+  final int pageId,
   final BuildContext context,
   final CNode node,
   final CNode? child,
   final int loop,
 ) {
   return '''
-    FacebookAuthButton(
+SizedBox(
+    ${CS.size(context, node.body, isWidth: true)}
+    ${CS.size(context, node.body, isWidth: false)}
+    child: FacebookAuthButton(
       ${CS.action(
+    pageId,
     context,
     node,
     ActionGesture.onTap,
@@ -24,6 +29,7 @@ String loginFacebookCodeTemplate(
     loop: loop,
   )}
       ${CS.action(
+    pageId,
     context,
     node,
     ActionGesture.onLongPress,
@@ -32,6 +38,7 @@ String loginFacebookCodeTemplate(
     isRequired: true,
     loop: loop,
   )}
-    )
+    ),
+  )
   ''';
 }

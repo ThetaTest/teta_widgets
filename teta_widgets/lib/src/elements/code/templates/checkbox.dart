@@ -8,6 +8,7 @@ import 'package:teta_widgets/src/elements/nodes/node_body.dart';
 
 /// Generates the code for Checkbox widget
 String checkBoxCodeTemplate(
+  final int pageId,
   final BuildContext context,
   final NodeBody body,
   final CNode node,
@@ -18,6 +19,7 @@ String checkBoxCodeTemplate(
     Checkbox(
       value: false,
       ${CS.action(
+    pageId,
     context,
     node,
     ActionGesture.onChange,

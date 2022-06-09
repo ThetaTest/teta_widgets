@@ -6,11 +6,10 @@
 import 'package:collection/collection.dart';
 // Flutter imports:
 import 'package:flutter/material.dart';
-import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:recase/recase.dart';
-import 'package:teta_core/src/blocs/focus_page/index.dart';
 import 'package:teta_core/src/models/dataset.dart';
 import 'package:teta_core/src/models/variable.dart';
+import 'package:teta_widgets/src/elements/actions/snippets/get_page_on_code.dart';
 
 class FACameraStartRecording {
   static Future action(
@@ -32,10 +31,12 @@ class FACameraStartRecording {
   }
 
   static String toCode(
+    final int pageId,
     final BuildContext context,
     final String? stateName,
   ) {
-    final page = BlocProvider.of<FocusPageBloc>(context).state;
+    final page = getPageOnToCode(pageId, context);
+    if (page == null) return '';
     final state =
         page.states.firstWhereOrNull((final e) => e.name == stateName);
     if (state == null || stateName == null) return '';

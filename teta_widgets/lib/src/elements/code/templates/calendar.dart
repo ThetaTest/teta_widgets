@@ -12,6 +12,7 @@ import 'package:teta_widgets/src/elements/nodes/node.dart';
 
 /// Generates the code for Padding widget
 String calendarCodeTemplate(
+  final int pageId,
   final BuildContext context,
   final CNode node,
   final CNode? child,
@@ -27,6 +28,7 @@ String calendarCodeTemplate(
     return PagedVerticalCalendar(
       addAutomaticKeepAlives: true,
       ${CS.action(
+    pageId,
     context,
     node,
     ActionGesture.onDayPressed,
@@ -34,8 +36,16 @@ String calendarCodeTemplate(
     '\$date',
     isRequired: false,
     loop: loop,
+    additionalCode: '''
+      index = (datasets['Cms stream'] as List<dynamic>).indexOf(datasets['Cms stream'].firstWhere(
+        (element) =>
+          element['created_at'] ==
+          date.toString().substring(0, 10)
+        )
+      );''',
   )}
       ${CS.action(
+    pageId,
     context,
     node,
     ActionGesture.onMonthLoaded,
@@ -60,7 +70,7 @@ String calendarCodeTemplate(
           ${CS.margin(context, node.body, isMargin: false)}
           decoration: element != null ? $firstDecoration : ${CS.boxDecoration(context, node.body, DBKeys.fill).replaceFirst('decoration:', '')}
           child: Column(
-            crossAxisAlignment: CrossAxisAlignment.stretch,
+            crossAxisAlignment: CrossAxisAlignment.center,
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
               Text(

@@ -96,5 +96,5 @@ class CheckBoxBody extends NodeBody {
     final int pageId,
     final int? loop,
   ) =>
-      checkBoxCodeTemplate(context, this, node, child, loop ?? 0);
+      checkBoxCodeTemplate(pageId, context, this, node, child, loop ?? 0);
 }

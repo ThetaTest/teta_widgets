@@ -113,6 +113,7 @@ class GestureDetectorBody extends NodeBody {
     final int? loop,
   ) =>
       gestureDetectorCodeTemplate(
+        pageId,
         context,
         node,
         child,

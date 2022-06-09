@@ -107,5 +107,5 @@ class LoginWithGitHubBody extends NodeBody {
     final int pageId,
     final int? loop,
   ) =>
-      loginGitHubCodeTemplate(context, node, child, loop ?? 0);
+      loginGitHubCodeTemplate(pageId, context, node, child, loop ?? 0);
 }

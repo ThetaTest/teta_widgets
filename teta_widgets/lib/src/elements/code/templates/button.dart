@@ -10,6 +10,7 @@ import 'package:teta_widgets/src/elements/nodes/node_body.dart';
 
 /// Generates the code for Button widget
 String buttonCodeTemplate(
+  final int pageId,
   final BuildContext context,
   final NodeBody body,
   final CNode node,
@@ -22,6 +23,7 @@ String buttonCodeTemplate(
   return '''
     GestureDetector(
       ${CS.action(
+    pageId,
     context,
     node,
     ActionGesture.onTap,
@@ -31,6 +33,7 @@ String buttonCodeTemplate(
     loop: loop,
   )}
       ${CS.action(
+    pageId,
     context,
     node,
     ActionGesture.onLongPress,

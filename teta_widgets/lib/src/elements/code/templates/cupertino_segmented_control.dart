@@ -10,6 +10,7 @@ import 'package:teta_widgets/src/elements/nodes/node_body.dart';
 
 /// Cupertino Segmented Control Template
 String cupertinoSegmentedControlCodeTemplate(
+  final int pageId,
   final BuildContext context,
   final NodeBody body,
   final CNode node,
@@ -75,6 +76,7 @@ String cupertinoSegmentedControlCodeTemplate(
     CupertinoSegmentedControl<int>(
       children: $map
       ${CS.action(
+    pageId,
     context,
     node,
     ActionGesture.onTap,
