@@ -48,15 +48,15 @@ class FActionCustomFunction {
     final BuildContext context,
     final int? customFunctionId,
   ) {
-    
     final functions = BlocProvider.of<CustomFunctionsCubit>(context).state;
     String code;
     if (functions.isNotEmpty) {
       final func = functions
           .firstWhere((final element) => element.id == customFunctionId);
+      Logger.printMessage(func.toString());
       code = func.code!;
     } else {
-      code = '''print('default value')''';
+      code = '';
     }
     return '''
       $code

@@ -112,10 +112,24 @@ class ActionElementControlState extends State<ActionElementControl> {
         }
       }
     } catch (_) {}
+
     nodeId = widget.node.nid;
     controller.text = widget.element.value ?? '';
     delayController.text = widget.element.delay?.value ?? '0';
     loopController.text = widget.element.everyMilliseconds?.value ?? '0';
+
+    try {
+      final functions = BlocProvider.of<CustomFunctionsCubit>(context).state;
+      if (functions.isNotEmpty) {
+        final currentFunc = functions.firstWhere(
+          (final element) => element.id == widget.element.customFunctionId,
+        );
+        currentValue = currentFunc.name;
+      }
+    } catch (e) {
+      Logger.printError(e.toString());
+    }
+
     super.initState();
   }
 
@@ -659,10 +673,9 @@ class ActionElementControlState extends State<ActionElementControl> {
                   ],
                 ),
               //!1--------------------------------------------------------------------------
-              //TODO: PROBLEM WITH ANCESTOR IN CODE PREVIEW
-              //TODO: PROBLEM WITH FETCH OF ALREADY SELECTED FUNC
               if (widget.element.actionType == ActionType.customFunctions)
                 Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
                     const Padding(
                       padding: EdgeInsets.only(top: 8, bottom: 8),
@@ -679,7 +692,7 @@ class ActionElementControlState extends State<ActionElementControl> {
                         }
                         if (functions.isNotEmpty) {
                           return SizedBox(
-                            height: 40,
+                            height: 50,
                             child: CDropdown(
                               value: currentValue,
                               items: tempList,
@@ -705,9 +718,7 @@ class ActionElementControlState extends State<ActionElementControl> {
                     ),
                   ],
                 ),
-
               //!1--------------------------------------------------------------------------
-
               if (widget.element.actionType == ActionType.revenueCat)
                 CDropdown(
                   value: FActionElement.convertValueToDropdown(
