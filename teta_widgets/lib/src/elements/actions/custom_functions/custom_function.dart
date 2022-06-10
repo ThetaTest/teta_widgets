@@ -38,7 +38,6 @@ class FActionCustomFunction {
     if (functions.isNotEmpty) {
       final func = functions
           .firstWhere((final element) => element.id == customFunctionId);
-      Logger.printMessage(func.toString());
       code = func.code!;
     } else {
       code = '';
