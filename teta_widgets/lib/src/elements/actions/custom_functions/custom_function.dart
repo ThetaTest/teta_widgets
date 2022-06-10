@@ -33,17 +33,21 @@ class FActionCustomFunction {
     final BuildContext context,
     final int? customFunctionId,
   ) {
-    final functions = BlocProvider.of<CustomFunctionsCubit>(context).state;
-    String code;
-    if (functions.isNotEmpty) {
-      final func = functions
-          .firstWhere((final element) => element.id == customFunctionId);
-      code = func.code!;
-    } else {
-      code = '';
-    }
-    return '''
+    try {
+      final functions = BlocProvider.of<CustomFunctionsCubit>(context).state;
+      String code;
+      if (functions.isNotEmpty) {
+        final func = functions
+            .firstWhere((final element) => element.id == customFunctionId);
+        code = func.code!;
+      } else {
+        code = '''print('default custom function')''';
+      }
+      return '''
       $code
-    ''';
+      ''';
+    } catch (e) {
+      return '';
+    }
   }
 }
