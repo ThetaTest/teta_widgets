@@ -10,34 +10,19 @@ class FActionCustomFunction {
     final int? loop,
     final int? customFunctionId,
   ) async {
-    const _style = TextStyle(
-      fontWeight: FontWeight.bold,
-      color: Colors.white,
-      fontSize: 20,
-    );
     await showDialog<void>(
       context: context,
       builder: (final context) {
-        return AlertDialog(
-          title: Text('Custom Functions: $customFunctionId'),
-          titleTextStyle: _style,
-          backgroundColor: const Color(0xFF333333),
-          shape: const RoundedRectangleBorder(
-            borderRadius: BorderRadius.all(Radius.circular(20)),
+        return const AlertDialog(
+          title: Text('Custom Function'),
+          titleTextStyle: TextStyle(
+            fontWeight: FontWeight.bold,
+            color: Colors.white,
+            fontSize: 20,
           ),
-          content: SizedBox(
-            width: 400,
-            height: 400,
-            child: SingleChildScrollView(
-              child: Column(
-                children: const [
-                  Text(
-                    'Runned',
-                    style: _style,
-                  ),
-                ],
-              ),
-            ),
+          backgroundColor: Color(0xFF333333),
+          shape: RoundedRectangleBorder(
+            borderRadius: BorderRadius.all(Radius.circular(20)),
           ),
         );
       },

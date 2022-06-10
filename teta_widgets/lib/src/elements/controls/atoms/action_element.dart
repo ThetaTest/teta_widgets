@@ -672,7 +672,6 @@ class ActionElementControlState extends State<ActionElementControl> {
                     ),
                   ],
                 ),
-              //!1--------------------------------------------------------------------------
               if (widget.element.actionType == ActionType.customFunctions)
                 Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
@@ -718,7 +717,6 @@ class ActionElementControlState extends State<ActionElementControl> {
                     ),
                   ],
                 ),
-              //!1--------------------------------------------------------------------------
               if (widget.element.actionType == ActionType.revenueCat)
                 CDropdown(
                   value: FActionElement.convertValueToDropdown(
