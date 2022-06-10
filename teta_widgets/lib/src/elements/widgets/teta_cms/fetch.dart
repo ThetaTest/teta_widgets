@@ -127,10 +127,10 @@ class _WCmsFetchState extends State<WCmsFetch> {
         filters: [
           if (keyName.isNotEmpty && keyValue.isNotEmpty)
             Filter(keyName, keyValue),
-          if (!widget.showDrafts) Filter('_vis', 'public'),
         ],
         limit: int.tryParse(limit) ?? 20,
         page: int.tryParse(page) ?? 0,
+        showDrafts: widget.showDrafts,
       );
     });
   }

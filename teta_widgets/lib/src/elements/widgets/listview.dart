@@ -18,6 +18,7 @@ class WListView extends StatelessWidget {
     required this.flagValue,
     required this.value,
     required this.isVertical,
+    required this.isReverse,
     required this.params,
     required this.states,
     required this.dataset,
@@ -33,6 +34,7 @@ class WListView extends StatelessWidget {
   final bool flagValue;
   final FTextTypeInput value;
   final bool isPrimary;
+  final bool isReverse;
   final int? loop;
   final bool shrinkWrap;
 
@@ -46,6 +48,7 @@ class WListView extends StatelessWidget {
       node: node,
       forPlay: forPlay,
       child: ListView.builder(
+        reverse: isReverse,
         addAutomaticKeepAlives: false,
         addRepaintBoundaries: false,
         scrollDirection: isVertical ? Axis.vertical : Axis.horizontal,

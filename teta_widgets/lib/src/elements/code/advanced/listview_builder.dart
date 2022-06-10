@@ -33,6 +33,7 @@ String listViewBuilderCodeTemplate(
           ? 'scrollDirection: Axis.horizontal,'
           : '';
   final shrinkWrap = body.attributes[DBKeys.flag] as bool? ?? false;
+  final reverse = body.attributes[DBKeys.isPrimary] as bool;
   final childString = child != null ? child.toCode(context) : '';
   final dataset =
       (body.attributes[DBKeys.datasetInput] as FDataset).datasetName;
@@ -41,6 +42,7 @@ String listViewBuilderCodeTemplate(
       builder: (context) {
         return ListView.builder(
           $_scrollDirection
+          reverse: $reverse,
           shrinkWrap: $shrinkWrap,
           itemCount: this.datasets['$dataset'].length > 0 ? this.datasets['$dataset'].length : 0,
           itemBuilder: (context, index) {

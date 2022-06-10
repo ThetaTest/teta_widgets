@@ -42,7 +42,7 @@ final listIntrinsicStates = IntrinsicStates(
   canHave: ChildrenEnum.children,
   addChildLabels: [],
   gestures: [],
-  permissions:[],
+  permissions: [],
 );
 
 /// Body of ListView
@@ -53,6 +53,7 @@ class ListViewBody extends NodeBody {
     DBKeys.isVertical: true,
     DBKeys.flag: true,
     DBKeys.isPrimary: true,
+    DBKeys.isFullWidth: false,
   };
 
   @override
@@ -76,6 +77,12 @@ class ListViewBody extends NodeBody {
           value: attributes[DBKeys.isPrimary],
           description: 'Whether this is the primary scroll view',
         ),
+        FlagControlObject(
+          title: 'Reverse',
+          key: DBKeys.isFullWidth,
+          value: attributes[DBKeys.isFullWidth],
+          description: '',
+        ),
       ];
 
   @override
@@ -98,6 +105,7 @@ class ListViewBody extends NodeBody {
       ${attributes[DBKeys.isPrimary] as bool}
       ${attributes[DBKeys.isVertical] as bool}
       ${attributes[DBKeys.flag] as bool}
+      ${attributes[DBKeys.isFullWidth] as bool}
       ''',
         ),
         node: node,
@@ -107,6 +115,7 @@ class ListViewBody extends NodeBody {
         isPrimary: attributes[DBKeys.isPrimary] as bool, //Check
         isVertical: attributes[DBKeys.isVertical] as bool,
         shrinkWrap: attributes[DBKeys.flag] as bool,
+        isReverse: attributes[DBKeys.isFullWidth] as bool,
         forPlay: forPlay,
         loop: loop,
         params: params,

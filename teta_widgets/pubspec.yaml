@@ -152,7 +152,7 @@ dev_dependencies:
   
   import_sorter: ^4.6.0
 
-dependencies_overrides:
+dependency_overrides:
   teta_core:
     path: ../../Teta/teta_core
 

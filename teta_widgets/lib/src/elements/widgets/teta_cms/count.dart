@@ -13,9 +13,9 @@ import 'package:teta_widgets/src/elements/index.dart';
 
 // ignore_for_file: public_member_api_docs
 
-class WCmsStream extends StatefulWidget {
+class WCmsCount extends StatefulWidget {
   /// Construct
-  const WCmsStream(
+  const WCmsCount(
     final Key? key, {
     required this.node,
     required this.collection,
@@ -64,16 +64,16 @@ class WCmsStream extends StatefulWidget {
   final List<DatasetObject> dataset;
 
   @override
-  _WCmsStreamState createState() => _WCmsStreamState();
+  _WCmsCountState createState() => _WCmsCountState();
 }
 
-class _WCmsStreamState extends State<WCmsStream> {
+class _WCmsCountState extends State<WCmsCount> {
   DatasetObject _map = DatasetObject(
-    name: 'Collection Stream',
+    name: 'Collection Query',
     map: [<String, dynamic>{}],
   );
   bool isLoaded = true;
-  Stream<List<dynamic>>? _stream;
+  Future<int>? _future;
   SupabaseClient? client;
 
   @override
@@ -118,11 +118,8 @@ class _WCmsStreamState extends State<WCmsStream> {
       widget.forPlay,
       widget.loop,
     );
-    Logger.printWarning(
-      '$collectionId, keyName: $keyName, keyValue: $keyValue, limit: $limit, page: $page ',
-    );
     setState(() {
-      _stream = TetaCMS.instance.realtime.streamCollection(
+      _future = TetaCMS.instance.client.getCollectionCount(
         collectionId,
         filters: [
           if (keyName.isNotEmpty && keyValue.isNotEmpty)
@@ -130,7 +127,6 @@ class _WCmsStreamState extends State<WCmsStream> {
         ],
         limit: int.tryParse(limit) ?? 20,
         page: int.tryParse(page) ?? 0,
-        showDrafts: widget.showDrafts,
       );
     });
   }
@@ -140,8 +136,8 @@ class _WCmsStreamState extends State<WCmsStream> {
     return NodeSelectionBuilder(
       node: widget.node,
       forPlay: widget.forPlay,
-      child: StreamBuilder(
-        stream: _stream,
+      child: FutureBuilder(
+        future: _future,
         builder: (final context, final snapshot) {
           if (!snapshot.hasData) {
             if (widget.children.isNotEmpty) {
@@ -157,12 +153,18 @@ class _WCmsStreamState extends State<WCmsStream> {
               );
             }
           }
-          final list = snapshot.data as List<dynamic>?;
+          if (snapshot.error != null) {
+            // TODO: Returns a error widget
+          }
+
+          final count = snapshot.data as int? ?? 0;
           _map = _map.copyWith(
             name: widget.node.name ?? widget.node.intrinsicState.displayName,
-            map: (list ?? const <dynamic>[])
-                .map((final dynamic e) => e as Map<String, dynamic>)
-                .toList(),
+            map: [
+              <String, int>{
+                'count': count,
+              },
+            ],
           );
           final datasets = addDataset(context, widget.dataset, _map);
 
