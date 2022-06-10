@@ -30,6 +30,6 @@ class FATetaCMSLogout {
   static String toCode() {
     return '''
       await TetaCMS.instance.auth.logout();
-      ''';
+    ''';
   }
 }

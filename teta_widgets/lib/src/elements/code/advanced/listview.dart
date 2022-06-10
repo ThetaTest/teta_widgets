@@ -1,6 +1,5 @@
 // Flutter imports:
 import 'package:flutter/material.dart';
-
 // Project imports:
 import 'package:teta_widgets/src/elements/code/snippets.dart';
 import 'package:teta_widgets/src/elements/controls/key_constants.dart';
@@ -21,6 +20,7 @@ String listViewCodeTemplate(
   final NodeBody body,
   final List<CNode> children,
 ) {
+  final reverse = body.attributes[DBKeys.isPrimary] as bool;
   final primary = body.attributes[DBKeys.isPrimary] as bool;
   final _scrollDirection =
       !(body.attributes[DBKeys.isVertical] as bool? ?? false)
@@ -28,6 +28,7 @@ String listViewCodeTemplate(
           : '';
   return '''
     ListView(
+      reverse: $reverse,
       primary: $primary,
       $_scrollDirection
       ${CS.children(context, children)}

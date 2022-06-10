@@ -18,6 +18,7 @@ class WListViewBuilder extends StatefulWidget {
     required this.value,
     required this.shrinkWrap,
     required this.isVertical,
+    required this.isReverse,
     required this.params,
     required this.states,
     required this.dataset,
@@ -29,6 +30,7 @@ class WListViewBuilder extends StatefulWidget {
   final bool forPlay;
   final bool shrinkWrap;
   final bool isVertical;
+  final bool isReverse;
   final FDataset value;
   final int? loop;
 
@@ -57,6 +59,7 @@ class WListViewBuilderState extends State<WListViewBuilder> {
       node: widget.node,
       forPlay: widget.forPlay,
       child: ListView.builder(
+        reverse: widget.isReverse,
         addAutomaticKeepAlives: false,
         addRepaintBoundaries: false,
         shrinkWrap: widget.shrinkWrap,

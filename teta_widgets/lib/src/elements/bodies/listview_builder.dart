@@ -43,7 +43,7 @@ final listViewBuilderIntrinsicStates = IntrinsicStates(
   canHave: ChildrenEnum.child,
   addChildLabels: [],
   gestures: [],
-  permissions:[],
+  permissions: [],
 );
 
 /// ListView Builder's body
@@ -55,6 +55,7 @@ class ListViewBuilderBody extends NodeBody {
     DBKeys.isVertical: true,
     DBKeys.flag: true,
     DBKeys.isPrimary: true,
+    DBKeys.isFullWidth: false,
   };
 
   @override
@@ -76,6 +77,12 @@ class ListViewBuilderBody extends NodeBody {
           type: ControlType.datasetType,
           key: DBKeys.datasetInput,
           value: attributes[DBKeys.datasetInput],
+        ),
+        FlagControlObject(
+          title: 'Reverse',
+          key: DBKeys.isFullWidth,
+          value: attributes[DBKeys.isFullWidth],
+          description: '',
         ),
       ];
 
@@ -99,6 +106,7 @@ class ListViewBuilderBody extends NodeBody {
       ${(attributes[DBKeys.datasetInput] as FDataset).toJson()}
       ${attributes[DBKeys.isVertical] as bool}
       ${attributes[DBKeys.flag] as bool}
+      ${attributes[DBKeys.isFullWidth] as bool}
       ''',
         ),
         node: node,
@@ -106,6 +114,7 @@ class ListViewBuilderBody extends NodeBody {
         value: attributes[DBKeys.datasetInput] as FDataset,
         isVertical: attributes[DBKeys.isVertical] as bool,
         shrinkWrap: attributes[DBKeys.flag] as bool,
+        isReverse: attributes[DBKeys.isFullWidth] as bool,
         forPlay: forPlay,
         loop: loop,
         params: params,

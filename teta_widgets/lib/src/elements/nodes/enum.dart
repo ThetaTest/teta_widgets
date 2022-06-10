@@ -131,6 +131,7 @@ enum NType {
   cmsFetch,
   cmsStream,
   cmsLoggedUser,
+  cmsCount,
 
   // AdMob
   adMobBanner,

@@ -7,7 +7,7 @@ import 'package:teta_widgets/src/elements/nodes/dynamic.dart';
 import 'package:teta_widgets/src/elements/nodes/node.dart';
 
 /// Generates the code for Padding widget
-String cmsStreamCodeTemplate(
+String cmsCountCodeTemplate(
   final BuildContext context,
   final NDynamic node,
   final List<CNode> children,
@@ -52,8 +52,8 @@ String cmsStreamCodeTemplate(
   ''';
 
   return '''
-  StreamBuilder(
-    stream: TetaCMS.instance.realtime.streamCollection(
+  FutureBuilder(
+    future: TetaCMS.instance.client.getCollectionCount(
       $collectionId,
       filters: [
         $filter
