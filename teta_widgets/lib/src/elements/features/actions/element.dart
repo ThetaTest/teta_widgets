@@ -921,6 +921,7 @@ class FActionElement extends Equatable {
             );
 
             break;
+        //!----------------------------------------
           case ActionNavigation.openDatePicker:
             await actionS(
               () => FActionNavigationOpenDatePicker.action(
@@ -940,6 +941,8 @@ class FActionElement extends Equatable {
             break;
         }
         break;
+      //!----------------------------------------
+      
       case ActionType.supabaseAuth:
         switch (actionSupabaseAuth) {
           case ActionSupabaseAuth.signUp:
@@ -1579,11 +1582,15 @@ class FActionElement extends Equatable {
               ),
               context,
             );
+      //!----------------------------------------
+
           case ActionNavigation.openDatePicker:
             return '';
           case null:
             return '';
         }
+      //!----------------------------------------
+
       case ActionType.supabaseAuth:
         switch (actionSupabaseAuth) {
           case ActionSupabaseAuth.signUp:

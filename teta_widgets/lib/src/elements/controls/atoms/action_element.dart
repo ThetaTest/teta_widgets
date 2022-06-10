@@ -97,7 +97,10 @@ class ActionElementControlState extends State<ActionElementControl> {
   bool isEmit = false;
 
   ///needs for custom function
-  String? currentValue;
+  String? currentCustomFunctionValue;
+
+  ///needs for openDatePicker
+  String? currentStateNameValue;
 
   @override
   void initState() {
@@ -117,14 +120,26 @@ class ActionElementControlState extends State<ActionElementControl> {
     controller.text = widget.element.value ?? '';
     delayController.text = widget.element.delay?.value ?? '0';
     loopController.text = widget.element.everyMilliseconds?.value ?? '0';
-
+    //initialization for custom functions
     try {
       final functions = BlocProvider.of<CustomFunctionsCubit>(context).state;
       if (functions.isNotEmpty) {
         final currentFunc = functions.firstWhere(
           (final element) => element.id == widget.element.customFunctionId,
         );
-        currentValue = currentFunc.name;
+        currentCustomFunctionValue = currentFunc.name;
+      }
+    } catch (e) {
+      Logger.printError(e.toString());
+    }
+    //initialization for openDatePicker for states
+    try {
+      final states = widget.page.states;
+      if (states.isNotEmpty) {
+        final currentState = states.firstWhere(
+          (final element) => element.name == widget.element.stateName,
+        );
+        currentStateNameValue = currentState.name;
       }
     } catch (e) {
       Logger.printError(e.toString());
@@ -693,11 +708,11 @@ class ActionElementControlState extends State<ActionElementControl> {
                           return SizedBox(
                             height: 50,
                             child: CDropdown(
-                              value: currentValue,
+                              value: currentCustomFunctionValue,
                               items: tempList,
                               onChange: (final newValue) {
                                 if (newValue != null) {
-                                  currentValue = newValue;
+                                  currentCustomFunctionValue = newValue;
                                   final old = widget.element;
                                   widget.element.customFunctionId = functions
                                       .firstWhere(
@@ -713,6 +728,44 @@ class ActionElementControlState extends State<ActionElementControl> {
                         } else {
                           return Container();
                         }
+                      },
+                    ),
+                  ],
+                ),
+              //todo: make the open date picker
+              if (widget.element.actionType == ActionType.navigation &&
+                  widget.element.actionNavigation ==
+                      ActionNavigation.openDatePicker)
+                Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    const Padding(
+                      padding: EdgeInsets.only(top: 8, bottom: 8),
+                      child: THeadline3('Which State needs to change?'),
+                    ),
+                    Builder(
+                      builder: (final context) {
+                        final states = widget.page.states;
+                        final statesNameList = <String>[];
+                        for (final item in states) {
+                          statesNameList.add(item.name);
+                        }
+                        return CDropdown(
+                          value: currentStateNameValue,
+                          items: statesNameList,
+                          onChange: (final newValue) {
+                            if (newValue != null) {
+                              currentStateNameValue = newValue;
+                              final old = widget.element;
+                              widget.element.stateName = states
+                                  .firstWhere(
+                                    (final element) => element.name == newValue,
+                                  )
+                                  .name;
+                              widget.callBack(widget.element, old);
+                            }
+                          },
+                        );
                       },
                     ),
                   ],
@@ -865,6 +918,7 @@ class ActionElementControlState extends State<ActionElementControl> {
                     ),
                   ),
                 ),
+
               if ((widget.element.actionType == ActionType.navigation &&
                       (widget.element.actionNavigation ==
                               ActionNavigation.openPage ||
