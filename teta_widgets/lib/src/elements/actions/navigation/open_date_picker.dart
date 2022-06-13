@@ -28,6 +28,7 @@ class FActionNavigationOpenDatePicker {
       context: context,
       initialTime: initialTime,
     );
+    
     states[index].value =
         '${datePicked?.toIso8601String().substring(0, 10)} ${hourPicked!.hour.toString().padLeft(2, '0')}:${hourPicked.minute.toString().padLeft(2, '0')}';
   }
@@ -51,7 +52,9 @@ class FActionNavigationOpenDatePicker {
       context: context,
       initialTime: initialTime,
     );
-    $name = '\${datePicked?.toIso8601String().substring(0, 10)} \${hourPicked!.hour.toString().padLeft(2, '0')}:\${hourPicked.minute.toString().padLeft(2, '0')}';
+    setState((){
+      $name = '\${datePicked?.toIso8601String().substring(0, 10)} \${hourPicked!.hour.toString().padLeft(2, '0')}:\${hourPicked.minute.toString().padLeft(2, '0')}';
+    });
     ''';
     } catch (e) {
       return '''
