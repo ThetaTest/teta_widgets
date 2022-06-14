@@ -1,10 +1,7 @@
 // Flutter imports:
 import 'package:flutter/material.dart';
-import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:teta_core/teta_core.dart';
 // Project imports:
 import 'package:teta_widgets/src/elements/controls/key_constants.dart';
-import 'package:teta_widgets/src/elements/features/dataset.dart';
 import 'package:teta_widgets/src/elements/nodes/node.dart';
 import 'package:teta_widgets/src/elements/nodes/node_body.dart';
 
@@ -35,46 +32,37 @@ String stripeProductsBuilderCodeTemplate(
           ? 'scrollDirection: Axis.horizontal,'
           : '';
   final shrinkWrap = body.attributes[DBKeys.flag] as bool? ?? false;
-  // final dataset =
-  //     (body.attributes[DBKeys.datasetInput] as FDataset).datasetName;
 
-  final prj =
-      (BlocProvider.of<FocusProjectBloc>(context).state as ProjectLoaded).prj;
   var childCode = 'const SizedBox();';
   if (child != null) {
     childCode = child.toCode(context);
   }
   return '''
-   FutureBuilder(
-      future: http.get(
-        Uri.parse('https://builder.teta.so:8402/product/${prj.id}/list'),
-        headers: <String, String>{
-          'stripe-api-key':
-              '${prj.config!.stripePrivateKey}',
-        },
-      ),
+   FutureBuilder<TetaProductsResponse>(
+      future: TetaCMS.instance.store.products.all(),
       builder: ((context, snapshot) {
         if (!snapshot.hasData) {
           return Center(
             child: CircularProgressIndicator(),
           );
         } else {
-          final jsonData = json.decode((snapshot.data as http.Response).body)
-              as List<dynamic>;
-          final map = jsonData
-              .map((final dynamic e) => e as Map<String, dynamic>)
-              .toList();
-          this.datasets['products'] = map;
+          final r = snapshot.data?.data;
+          if(r != null) {
+          this.datasets['products'] = r.map((final e) => e.toJson()).toList(growable: true);
           return ListView.builder(
             $_scrollDirection
             shrinkWrap: $shrinkWrap,
-            itemCount: map.length,
+            itemCount: this.datasets['products'].length,
             itemBuilder: (context, index) {
               return $childCode;
             },
           );
+          } else {
+          return Container();
         }
-      }),
+      }
+      }
+      ),
     )
     ''';
 }

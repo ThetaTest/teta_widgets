@@ -2,13 +2,13 @@
 // ignore_for_file: public_member_api_docs
 
 // Flutter imports:
-import 'dart:convert';
 
 import 'package:flutter/material.dart';
-import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:http/http.dart' as http;
+import 'package:teta_cms/teta_cms.dart';
+
 // Package imports:
 import 'package:teta_core/teta_core.dart';
+
 // Project imports:
 import 'package:teta_widgets/src/elements/index.dart';
 
@@ -49,13 +49,14 @@ class WStripeProductsBuilderState extends State<WStripeProductsBuilder> {
 
   @override
   void initState() {
-    _getStripeProducts();
+    _getStripeProducts().whenComplete(() {
+      setState((){});
+    });
     super.initState();
   }
 
   @override
   Widget build(final BuildContext context) {
-    _getStripeProducts();
     return NodeSelectionBuilder(
       node: widget.node,
       forPlay: widget.forPlay,
@@ -87,31 +88,20 @@ class WStripeProductsBuilderState extends State<WStripeProductsBuilder> {
   }
 
   Future _getStripeProducts() async {
-    final prj =
-        (BlocProvider.of<FocusProjectBloc>(context).state as ProjectLoaded).prj;
+    try {
+      final r = await TetaCMS.instance.store.products.all();
 
-    final baseUrl = 'https://builder.teta.so:8402/product/${prj.id}/list';
-
-    final response = await http.get(
-      Uri.parse(baseUrl),
-      headers: <String, String>{
-        'stripe-api-key': prj.config!.stripePrivateKey!,
-      },
-    );
-
-    if (response.statusCode == 200) {
-      final jsonData = json.decode(response.body) as List<dynamic>;
-      final map =
-          jsonData.map((final dynamic e) => e as Map<String, dynamic>).toList();
-
-      final datasetObject = DatasetObject(
-        name: 'products',
-        map: map,
-      );
-
-      addDataset(context, [], datasetObject);
-    } else {
-      debugPrint('Error in calc WStripeProductsList -> ${response.body}');
+      if (r.data != null) {
+        final datasetObject = DatasetObject(
+          name: 'products',
+          map: r.data!.map((final e) => e.toJson()).toList(growable: true),
+        );
+        addDataset(context, widget.dataset, datasetObject);
+      } else {
+        debugPrint('Error in calc WStripeProductsList -> ${r.error}');
+      }
+    } catch (e) {
+      debugPrint('Error in calc WStripeProductsList -> ${e}');
     }
   }
 }
