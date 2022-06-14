@@ -9,7 +9,7 @@ import 'package:teta_core/src/models/asset_file.dart';
 import 'package:teta_core/src/models/dataset.dart';
 import 'package:teta_core/src/models/variable.dart';
 
-enum FTextTypeEnum { text, imageUrl, param, state, dataset, asset }
+enum FTextTypeEnum { text, imageUrl, param, state, dataset, asset, combined }
 
 class FTextTypeInput {
   /// Set of func to use text string in Teta's widgets
@@ -22,6 +22,7 @@ class FTextTypeInput {
     this.datasetAttr,
     this.file,
     this.mapKey,
+    this.combination,
   });
 
   FTextTypeEnum? type;
@@ -32,6 +33,7 @@ class FTextTypeInput {
   String? datasetAttr;
   AssetFile? file;
   String? mapKey;
+  List<FTextTypeInput>? combination;
 
   /// Returns value for texts
   String get(
@@ -100,6 +102,15 @@ class FTextTypeInput {
     if (type == FTextTypeEnum.asset) {
       return file?.url ?? '';
     }
+    if (type == FTextTypeEnum.combined) {
+      final string = StringBuffer();
+      for (final element in combination ?? <FTextTypeInput>[]) {
+        string.write(
+          element.get(params, states, dataset, forPlay, loop),
+        );
+      }
+      return string;
+    }
     return value ?? '';
   }
 
@@ -118,7 +129,9 @@ class FTextTypeInput {
                             ? FTextTypeEnum.dataset
                             : json?['t'] == 'asset'
                                 ? FTextTypeEnum.asset
-                                : FTextTypeEnum.text,
+                                : json?['t'] == 'combined'
+                                    ? FTextTypeEnum.combined
+                                    : FTextTypeEnum.text,
         value: json?['v'] as String?,
         paramName: json?['pN'] as String?,
         stateName: json?['sN'] as String?,
@@ -128,6 +141,14 @@ class FTextTypeInput {
             ? AssetFile.fromJson(json?['f'] as Map<String, dynamic>?)
             : null,
         mapKey: json?['mK'] as String?,
+        combination: json?['cmb'] != null
+            ? (json?['cmb'] as List<dynamic>)
+                .map(
+                  (final dynamic e) =>
+                      FTextTypeInput.fromJson(e as Map<String, dynamic>),
+                )
+                .toList()
+            : [],
       );
     } catch (e) {
       return FTextTypeInput();
@@ -145,13 +166,16 @@ class FTextTypeInput {
                         ? 'state'
                         : type == FTextTypeEnum.imageUrl
                             ? 'imageUrl'
-                            : 'text',
+                            : type == FTextTypeEnum.combined
+                                ? 'combined'
+                                : 'text',
         'v': value,
         'pN': paramName,
         'sN': stateName,
         'dN': datasetName,
         'dA': datasetAttr,
         'mK': mapKey,
+        'cmb': (combination ?? []).map((final e) => e.toJson()).toList(),
         if (file != null) 'f': file!.toJson(),
       }..removeWhere((final String key, final dynamic value) => value == null);
 
@@ -180,6 +204,18 @@ class FTextTypeInput {
     }
     if (type == FTextTypeEnum.asset) {
       return file?.url ?? '';
+    }
+    if (type == FTextTypeEnum.combined) {
+      final string = StringBuffer("'''");
+      for (final element in combination ?? <FTextTypeInput>[]) {
+        var code = element.toCode(loop).replaceAll("'''", '');
+        if (element.type == FTextTypeEnum.dataset) {
+          code = '\${$code}';
+        }
+        string.write(code);
+      }
+      string.write("'''");
+      return string.toString();
     }
     return value ?? '';
   }

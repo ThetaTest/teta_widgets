@@ -6,7 +6,9 @@ import 'package:collection/collection.dart';
 // Flutter imports:
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:flutter_feather_icons/flutter_feather_icons.dart';
 import 'package:gap/gap.dart';
+import 'package:hovering/hovering.dart';
 import 'package:teta_core/src/design_system/textfield/minitextfield.dart';
 import 'package:teta_core/src/design_system/textfield/multi_line_textfield.dart';
 import 'package:teta_core/src/design_system/textfield/textfield.dart';
@@ -22,6 +24,8 @@ class TextControl extends StatefulWidget {
     required this.page,
     required this.title,
     required this.callBack,
+    this.isSubControl = false,
+    this.remove,
     final Key? key,
   }) : super(key: key);
 
@@ -29,7 +33,9 @@ class TextControl extends StatefulWidget {
   final FTextTypeInput value;
   final PageObject page;
   final String title;
+  final bool isSubControl;
   final Function(FTextTypeInput, FTextTypeInput) callBack;
+  final Function()? remove;
 
   @override
   PaddingsState createState() => PaddingsState();
@@ -87,9 +93,48 @@ class PaddingsState extends State<TextControl> {
             Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
-                THeadline3(
-                  widget.title,
-                ),
+                if (!widget.isSubControl)
+                  THeadline3(
+                    widget.title,
+                  ),
+                if (widget.isSubControl)
+                  BounceSmall(
+                    onTap: () {
+                      if (widget.remove != null) {
+                        // ignore: prefer_null_aware_method_calls
+                        widget.remove!();
+                      }
+                    },
+                    child: HoverWidget(
+                      hoverChild: Container(
+                        padding: const EdgeInsets.all(4),
+                        decoration: BoxDecoration(
+                          border: Border.all(
+                            color: Colors.white,
+                          ),
+                        ),
+                        child: const Icon(
+                          FeatherIcons.minus,
+                          size: 24,
+                          color: Colors.white,
+                        ),
+                      ),
+                      onHover: (final e) {},
+                      child: Container(
+                        padding: const EdgeInsets.all(4),
+                        decoration: BoxDecoration(
+                          border: Border.all(
+                            color: Colors.transparent,
+                          ),
+                        ),
+                        child: const Icon(
+                          FeatherIcons.minus,
+                          size: 24,
+                          color: Colors.white,
+                        ),
+                      ),
+                    ),
+                  ),
                 CDropdownForType(
                   value: widget.value.type == FTextTypeEnum.dataset
                       ? 'dataset'
@@ -98,7 +143,13 @@ class PaddingsState extends State<TextControl> {
                           : widget.value.type == FTextTypeEnum.param
                               ? 'param'
                               : 'text',
-                  items: const ['text', 'param', 'state', 'dataset'],
+                  items: [
+                    'text',
+                    'param',
+                    'state',
+                    'dataset',
+                    if (!widget.isSubControl) 'combined'
+                  ],
                   onChange: (final value) {
                     var typeOfInput = FTextTypeEnum.text;
                     if (value == 'text') {
@@ -112,6 +163,9 @@ class PaddingsState extends State<TextControl> {
                     }
                     if (value == 'dataset') {
                       typeOfInput = FTextTypeEnum.dataset;
+                    }
+                    if (value == 'combined') {
+                      typeOfInput = FTextTypeEnum.combined;
                     }
                     final old = widget.value;
                     final newValue = widget.value..type = typeOfInput;
@@ -277,7 +331,185 @@ class PaddingsState extends State<TextControl> {
                   },
                 ),
               ),
+            if (widget.value.type == FTextTypeEnum.combined)
+              TContainer(
+                decoration: BoxDecoration(
+                  borderRadius: BR(8),
+                  color: Palette.bgTertiary,
+                ),
+                padding: EI.smA,
+                width: double.maxFinite,
+                child: Column(
+                  children: [
+                    Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      children: [
+                        const THeadline3('Combination'),
+                        Row(
+                          children: [
+                            BounceSmall(
+                              onTap: () {
+                                editChildrenAlert(context);
+                              },
+                              child: HoverWidget(
+                                hoverChild: Container(
+                                  padding: const EdgeInsets.all(4),
+                                  decoration: BoxDecoration(
+                                    border: Border.all(
+                                      color: Colors.white,
+                                    ),
+                                  ),
+                                  child: const Icon(
+                                    Icons.list,
+                                    size: 24,
+                                    color: Colors.white,
+                                  ),
+                                ),
+                                onHover: (final e) {},
+                                child: Container(
+                                  padding: const EdgeInsets.all(4),
+                                  decoration: BoxDecoration(
+                                    border: Border.all(
+                                      color: Colors.transparent,
+                                    ),
+                                  ),
+                                  child: const Icon(
+                                    Icons.list,
+                                    size: 24,
+                                    color: Colors.white,
+                                  ),
+                                ),
+                              ),
+                            ),
+                            BounceSmall(
+                              onTap: () {
+                                widget.value.combination ??= [];
+                                widget.value.combination!.add(FTextTypeInput());
+                              },
+                              child: HoverWidget(
+                                hoverChild: Container(
+                                  padding: const EdgeInsets.all(4),
+                                  decoration: BoxDecoration(
+                                    border: Border.all(
+                                      color: Colors.white,
+                                    ),
+                                  ),
+                                  child: const Icon(
+                                    Icons.add,
+                                    size: 24,
+                                    color: Colors.white,
+                                  ),
+                                ),
+                                onHover: (final e) {},
+                                child: Container(
+                                  padding: const EdgeInsets.all(4),
+                                  decoration: BoxDecoration(
+                                    border: Border.all(
+                                      color: Colors.transparent,
+                                    ),
+                                  ),
+                                  child: const Icon(
+                                    Icons.add,
+                                    size: 24,
+                                    color: Colors.white,
+                                  ),
+                                ),
+                              ),
+                            ),
+                          ],
+                        ),
+                      ],
+                    ),
+                    for (final element
+                        in widget.value.combination ?? <FTextTypeInput>[])
+                      TextControl(
+                        node: widget.node,
+                        value: element,
+                        page: widget.page,
+                        title: '',
+                        isSubControl: true,
+                        callBack: (final value, final old) {},
+                        remove: () {
+                          widget.value.combination?.remove(element);
+                        },
+                      ),
+                  ],
+                ),
+              ),
           ],
+        );
+      },
+    );
+  }
+
+  void editChildrenAlert(
+    final BuildContext context,
+  ) {
+    showDialog<void>(
+      context: context,
+      builder: (final ctxt) {
+        return StatefulBuilder(
+          builder: (final ctx, final setState) {
+            return AlertDialog(
+              backgroundColor: Palette.bgDialog,
+              title: const THeadline2(
+                'Change order',
+              ),
+              content: Container(
+                constraints:
+                    const BoxConstraints(minHeight: 300, maxHeight: 500),
+                width: 300,
+                height: 300,
+                decoration: BoxDecoration(
+                  color: Palette.bgTertiary,
+                  borderRadius: BR(8),
+                ),
+                clipBehavior: Clip.hardEdge,
+                child: ClipRect(
+                  child: Padding(
+                    padding: const EdgeInsets.all(8),
+                    child: ReorderableListView(
+                      shrinkWrap: true,
+                      onReorder: (final oldIndex, final newIndex) async {
+                        setState(() {
+                          var defIndex = newIndex;
+                          if (newIndex > oldIndex) {
+                            defIndex -= 1;
+                          }
+                          final items =
+                              widget.value.combination!.removeAt(oldIndex);
+                          widget.value.combination!.insert(defIndex, items);
+                        });
+                      },
+                      children: [
+                        for (int i = 0;
+                            i < (widget.value.combination?.length ?? 0);
+                            i++)
+                          Padding(
+                            key: ValueKey('Reord Element $i'),
+                            padding: const EdgeInsets.only(bottom: 4),
+                            child: DecoratedBox(
+                              decoration: BoxDecoration(
+                                color: Palette.bgGrey,
+                                borderRadius: BR(8),
+                              ),
+                              child: ListTile(
+                                key: ValueKey('Element $i'),
+                                title: THeadline3(
+                                  'Element $i',
+                                ),
+                                textColor: Palette.txtPrimary,
+                                tileColor: Palette.bgGrey,
+                              ),
+                            ),
+                          )
+                      ],
+                    ),
+                  ),
+                ),
+              ),
+            );
+          },
         );
       },
     );
