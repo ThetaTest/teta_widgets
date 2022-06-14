@@ -383,8 +383,10 @@ class PaddingsState extends State<TextControl> {
                             ),
                             BounceSmall(
                               onTap: () {
+                                final old = widget.value;
                                 widget.value.combination ??= [];
                                 widget.value.combination!.add(FTextTypeInput());
+                                widget.callBack(widget.value, old);
                               },
                               child: HoverWidget(
                                 hoverChild: Container(
@@ -420,7 +422,7 @@ class PaddingsState extends State<TextControl> {
                         ),
                       ],
                     ),
-                    for (final element
+                    for (var element
                         in widget.value.combination ?? <FTextTypeInput>[])
                       TextControl(
                         node: widget.node,
@@ -428,9 +430,15 @@ class PaddingsState extends State<TextControl> {
                         page: widget.page,
                         title: '',
                         isSubControl: true,
-                        callBack: (final value, final old) {},
+                        callBack: (final value, final old) {
+                          final old = widget.value;
+                          element = value;
+                          widget.callBack(widget.value, old);
+                        },
                         remove: () {
+                          final old = widget.value;
                           widget.value.combination?.remove(element);
+                          widget.callBack(widget.value, old);
                         },
                       ),
                   ],
@@ -471,6 +479,7 @@ class PaddingsState extends State<TextControl> {
                     child: ReorderableListView(
                       shrinkWrap: true,
                       onReorder: (final oldIndex, final newIndex) async {
+                        final old = widget.value;
                         setState(() {
                           var defIndex = newIndex;
                           if (newIndex > oldIndex) {
@@ -479,6 +488,7 @@ class PaddingsState extends State<TextControl> {
                           final items =
                               widget.value.combination!.removeAt(oldIndex);
                           widget.value.combination!.insert(defIndex, items);
+                          widget.callBack(widget.value, old);
                         });
                       },
                       children: [

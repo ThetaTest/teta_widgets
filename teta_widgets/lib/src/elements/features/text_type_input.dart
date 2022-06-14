@@ -175,7 +175,7 @@ class FTextTypeInput {
         'dN': datasetName,
         'dA': datasetAttr,
         'mK': mapKey,
-        'cmb': (combination ?? []).map((final e) => e.toJson()).toList(),
+        'cmb': combination?.map((final e) => e.toJson()).toList(),
         if (file != null) 'f': file!.toJson(),
       }..removeWhere((final String key, final dynamic value) => value == null);
 
