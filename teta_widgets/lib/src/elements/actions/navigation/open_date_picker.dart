@@ -28,9 +28,16 @@ class FActionNavigationOpenDatePicker {
       context: context,
       initialTime: initialTime,
     );
-    
-    states[index].value =
-        '${datePicked?.toIso8601String().substring(0, 10)} ${hourPicked!.hour.toString().padLeft(2, '0')}:${hourPicked.minute.toString().padLeft(2, '0')}';
+
+    final dateToPass = DateTime(
+      datePicked!.year,
+      datePicked.month,
+      datePicked.day,
+      hourPicked!.hour,
+      hourPicked.minute,
+    );
+
+    states[index].value = dateToPass.toIso8601String();
   }
 
   static String toCode(
@@ -52,8 +59,15 @@ class FActionNavigationOpenDatePicker {
       context: context,
       initialTime: initialTime,
     );
+    final dateToPass = DateTime(
+      datePicked!.year,
+      datePicked.month,
+      datePicked.day,
+      hourPicked!.hour,
+      hourPicked.minute,
+    );
     setState((){
-      $name = '\${datePicked?.toIso8601String().substring(0, 10)} \${hourPicked!.hour.toString().padLeft(2, '0')}:\${hourPicked.minute.toString().padLeft(2, '0')}';
+      $name = dateToPass.toIso8601String();
     });
     ''';
     } catch (e) {

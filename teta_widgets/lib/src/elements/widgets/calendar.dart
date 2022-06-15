@@ -164,7 +164,9 @@ class _WCalendarState extends State<WCalendar> {
         final loop = data.getMap.indexOf(
           data.getMap.firstWhere(
             (final element) =>
-                element['create_at'].toString().substring(0, 10) ==
+                element[widget.value.datasetAttrName]
+                    .toString()
+                    .substring(0, 10) ==
                 date.toString().substring(0, 10),
           ),
         );
