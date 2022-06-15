@@ -164,7 +164,8 @@ class _WCalendarState extends State<WCalendar> {
         final loop = data.getMap.indexOf(
           data.getMap.firstWhere(
             (final element) =>
-                element['created_at'] == date.toString().substring(0, 10),
+                element['date'].toString().substring(0, 10) ==
+                date.toString().substring(0, 10),
           ),
         );
         GestureBuilder.get(
