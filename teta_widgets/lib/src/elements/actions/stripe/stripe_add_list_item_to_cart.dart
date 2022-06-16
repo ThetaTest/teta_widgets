@@ -7,6 +7,7 @@ import 'package:collection/collection.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:http/http.dart' as http;
+import 'package:teta_cms/teta_cms.dart';
 
 // Package imports:
 import 'package:teta_core/teta_core.dart';
@@ -30,59 +31,8 @@ class FActionStripeAddProductsListItemToCart {
     final dataset = datasets
         .firstWhereOrNull((final element) => element.getName == 'products');
     //take the automatic id and loop foreach elements and take the id, this is used for purchase
-    final id = dataset!.getMap[loop ?? 0]['id'] as String;
-    final name = dataset.getMap[loop ?? 0]['name'] as String;
-    final price = dataset.getMap[loop ?? 0]['price'] as int;
-    final currency = dataset.getMap[loop ?? 0]['currency'] as String;
-    final isSubscription = dataset.getMap[loop ?? 0]['isSubscription'] as bool;
-    //await payments(context, value);
-    await showDialog<void>(
-      context: context,
-      builder: (final context) {
-        return AlertDialog(
-          title: const Text('Stripe Action Purchase'),
-          titleTextStyle: _style,
-          backgroundColor: const Color(0xFF333333),
-          shape: const RoundedRectangleBorder(
-            borderRadius: BorderRadius.all(Radius.circular(20)),
-          ),
-          content: SizedBox(
-            width: 400,
-            height: 400,
-            child: SingleChildScrollView(
-              child: Column(
-                children: [
-                  Text(
-                    name,
-                    style: _style,
-                  ),
-                  Text(
-                    id,
-                    style: _style,
-                  ),
-                  Text(
-                    price.toString(),
-                    style: _style,
-                  ),
-                  Text(
-                    currency,
-                    style: _style,
-                  ),
-                  Text(
-                    'subscription: ${isSubscription.toString()}',
-                    style: _style,
-                  ),
-                  const Text(
-                    'Action: Buy',
-                    style: _style,
-                  ),
-                ],
-              ),
-            ),
-          ),
-        );
-      },
-    );
+    final id = dataset!.getMap[loop ?? 0]['_id'] as String;
+    // TODO(andrei): create a special add to cart button that will transform into a minus sign or change text to remove from cart if the item is in cart
   }
 
   static String toCode(final BuildContext context,
@@ -95,12 +45,7 @@ class FActionStripeAddProductsListItemToCart {
           .datasets['products'] as List?;
       if (products != null &&
           products.length > index) {
-        if (globalDatasets['cart'] == null) {
-          globalDatasets['cart'] = [];
-        }
-        final cart = globalDatasets['cart'] as List;
-
-        cart.add(products[index]);
+      await TetaCMS.instance.store.cart.insert(products[index]['_id']);
       }
     } catch (e) {
       print(e.toString());
