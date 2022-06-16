@@ -228,7 +228,8 @@ class SrcImageControlState extends State<SrcImageControl> {
                       child: CDropdown(
                         value: widget.page.datasets.indexWhere(
                                   (final element) =>
-                                      element.getName == widget.image.datasetName,
+                                      element.getName ==
+                                      widget.image.datasetName,
                                 ) !=
                                 -1
                             ? widget.image.datasetAttr
@@ -248,16 +249,16 @@ class SrcImageControlState extends State<SrcImageControl> {
                     BlocBuilder<SupabaseCubit, SupabaseClient?>(
                       builder: (final context, final client) {
                         if (client == null) return const SizedBox();
-                        return FutureBuilder(
-                          future: getList(client, prjState.prj),
+                        final _future = getList(client, prjState.prj);
+                        return FutureBuilder<List<AssetFile>>(
+                          future: _future,
                           builder: (final context, final snapshot) {
                             if (!snapshot.hasData) {
                               return const Center(
                                 child: CircularProgressIndicator(),
                               );
                             }
-                            final list = snapshot.data as List<AssetFile>? ??
-                                <AssetFile>[];
+                            final list = snapshot.data ?? <AssetFile>[];
                             return Column(
                               crossAxisAlignment: CrossAxisAlignment.stretch,
                               children: [

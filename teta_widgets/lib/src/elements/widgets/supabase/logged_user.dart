@@ -60,11 +60,12 @@ class _WSupabaseLoggedUserState extends State<WSupabaseLoggedUser> {
   bool isLoaded = true;
   SupabaseClient? client;
   List<DatasetObject> datasets = [];
+  late final Future<Map<String, dynamic>> _future;
 
   @override
   void initState() {
     super.initState();
-    load();
+    _future = load();
   }
 
   Future<Map<String, dynamic>> load() async {
@@ -84,14 +85,14 @@ class _WSupabaseLoggedUserState extends State<WSupabaseLoggedUser> {
         ),
       );
     }
-    return FutureBuilder(
-      future: load(),
+    return FutureBuilder<Map<String, dynamic>>(
+      future: _future,
       builder: (final context, final snapshot) {
         if (!snapshot.hasData) {
           return const SizedBox();
         }
 
-        final map = snapshot.data as Map<String, dynamic>?;
+        final map = snapshot.data;
         if ((map?.keys ?? <String>[]).isNotEmpty) {
           _map = _map.copyWith(
             name: 'Supabase User',

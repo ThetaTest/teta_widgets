@@ -210,6 +210,14 @@ String pageCodeTemplate(
       void initState() { 
         super.initState();
         $initStateString
+        TetaCMS.instance.analytics.insertEvent(
+          TetaAnalyticsType.usage,
+          'App usage: view page',
+          <String, dynamic>{
+            'name': "${pageNameRC.pascalCase}",
+          },
+          isUserIdPreferableIfExists: true,
+        );
       }
 
       @override

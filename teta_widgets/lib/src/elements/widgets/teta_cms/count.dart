@@ -5,7 +5,6 @@
 // Flutter imports:
 import 'package:flutter/material.dart';
 // Package imports:
-import 'package:supabase/supabase.dart';
 import 'package:teta_cms/teta_cms.dart';
 import 'package:teta_core/teta_core.dart';
 // Project imports:
@@ -72,9 +71,7 @@ class _WCmsCountState extends State<WCmsCount> {
     name: 'Collection Query',
     map: [<String, dynamic>{}],
   );
-  bool isLoaded = true;
-  Future<int>? _future;
-  SupabaseClient? client;
+  late final Future<int>? _future;
 
   @override
   void initState() {
@@ -136,7 +133,7 @@ class _WCmsCountState extends State<WCmsCount> {
     return NodeSelectionBuilder(
       node: widget.node,
       forPlay: widget.forPlay,
-      child: FutureBuilder(
+      child: FutureBuilder<int>(
         future: _future,
         builder: (final context, final snapshot) {
           if (!snapshot.hasData) {
@@ -157,7 +154,7 @@ class _WCmsCountState extends State<WCmsCount> {
             // TODO: Returns a error widget
           }
 
-          final count = snapshot.data as int? ?? 0;
+          final count = snapshot.data ?? 0;
           _map = _map.copyWith(
             name: widget.node.name ?? widget.node.intrinsicState.displayName,
             map: [

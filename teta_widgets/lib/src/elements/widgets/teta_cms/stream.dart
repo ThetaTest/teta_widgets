@@ -73,7 +73,7 @@ class _WCmsStreamState extends State<WCmsStream> {
     map: [<String, dynamic>{}],
   );
   bool isLoaded = true;
-  Stream<List<dynamic>>? _stream;
+  late final Stream<List<dynamic>> _stream;
   SupabaseClient? client;
 
   @override

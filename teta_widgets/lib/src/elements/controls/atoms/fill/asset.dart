@@ -36,19 +36,20 @@ class AssetFillControlState extends State<AssetFillControl> {
           ? BlocBuilder<FocusBloc, List<CNode>>(
               builder: (final context, final state) {
                 //updateState(state);
+
                 return BlocBuilder<SupabaseCubit, SupabaseClient?>(
                   builder: (final context, final client) {
                     if (client == null) return const SizedBox();
-                    return FutureBuilder(
-                      future: getList(client, prjState.prj),
+                    final _future = getList(client, prjState.prj);
+                    return FutureBuilder<List<AssetFile>>(
+                      future: _future,
                       builder: (final context, final snapshot) {
                         if (!snapshot.hasData) {
                           return const Center(
                             child: CircularProgressIndicator(),
                           );
                         }
-                        final list =
-                            snapshot.data as List<AssetFile>? ?? <AssetFile>[];
+                        final list = snapshot.data ?? <AssetFile>[];
                         return Column(
                           crossAxisAlignment: CrossAxisAlignment.stretch,
                           children: [

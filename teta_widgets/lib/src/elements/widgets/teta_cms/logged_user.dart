@@ -55,7 +55,7 @@ class _WCMSLoggedUserState extends State<WCMSLoggedUser> {
     name: 'Teta Auth User',
     map: [<String, dynamic>{}],
   );
-  Future<Map<String, dynamic>>? _future;
+  late final Future<Map<String, dynamic>>? _future;
 
   @override
   void initState() {
@@ -65,7 +65,7 @@ class _WCMSLoggedUserState extends State<WCMSLoggedUser> {
 
   Future load() async {
     setState(() {
-      _future ??= TetaCMS.instance.auth.user.get;
+      _future = TetaCMS.instance.auth.user.get;
     });
   }
 
@@ -95,8 +95,8 @@ class _WCMSLoggedUserState extends State<WCMSLoggedUser> {
           'uid': data?['uid'],
           'name': data?['name'],
           'email': data?['email'],
-          'locale': data?['locale'],
           'provider': data?['provider'],
+          'created_at': data?['created_at'],
         };
         _map = _map.copyWith(
           name: 'Teta Auth User',

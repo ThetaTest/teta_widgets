@@ -5,7 +5,6 @@
 // Flutter imports:
 import 'package:flutter/material.dart';
 // Package imports:
-import 'package:supabase/supabase.dart';
 import 'package:teta_cms/teta_cms.dart';
 import 'package:teta_core/teta_core.dart';
 // Project imports:
@@ -72,9 +71,7 @@ class _WCmsFetchState extends State<WCmsFetch> {
     name: 'Collection Query',
     map: [<String, dynamic>{}],
   );
-  bool isLoaded = true;
-  Future<List<dynamic>>? _future;
-  SupabaseClient? client;
+  late final Future<List<dynamic>> _future;
 
   @override
   void initState() {
