@@ -39,7 +39,7 @@ String calendarCodeTemplate(
     additionalCode: '''
       index = (datasets['Cms stream'] as List<dynamic>).indexOf(datasets['Cms stream'].firstWhere(
         (element) =>
-          element['created_at'] ==
+          element['${dataset.datasetAttrName}'].toString().substring(0, 10) ==
           date.toString().substring(0, 10)
         )
       );''',
