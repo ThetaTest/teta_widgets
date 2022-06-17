@@ -28,16 +28,20 @@ class FActionNavigationOpenDatePicker {
       context: context,
       initialTime: initialTime,
     );
-
-    final dateToPass = DateTime(
-      datePicked!.year,
-      datePicked.month,
-      datePicked.day,
-      hourPicked!.hour,
-      hourPicked.minute,
-    );
-
-    states[index].value = dateToPass.toIso8601String();
+    if (datePicked != null && hourPicked != null) {
+      final dateToPass = DateTime(
+        datePicked.year,
+        datePicked.month,
+        datePicked.day,
+        hourPicked.hour,
+        hourPicked.minute,
+      );
+      states[index].value = dateToPass.toIso8601String();
+    } else if (datePicked != null && hourPicked == null) {
+      states[index].value = datePicked.toIso8601String();
+    } else {
+      states[index].value = '';
+    }
   }
 
   static String toCode(
@@ -59,16 +63,20 @@ class FActionNavigationOpenDatePicker {
       context: context,
       initialTime: initialTime,
     );
-    final dateToPass = DateTime(
-      datePicked!.year,
-      datePicked.month,
-      datePicked.day,
-      hourPicked!.hour,
-      hourPicked.minute,
-    );
-    setState((){
+    if (datePicked != null && hourPicked != null) {
+      final dateToPass = DateTime(
+        datePicked.year,
+        datePicked.month,
+        datePicked.day,
+        hourPicked.hour,
+        hourPicked.minute,
+      );
       $name = dateToPass.toIso8601String();
-    });
+    } else if (datePicked != null && hourPicked == null) {
+      $name = datePicked.toIso8601String();
+    } else {
+      $name = '';
+    }
     ''';
     } catch (e) {
       return '''
