@@ -7,6 +7,7 @@ import 'package:collection/collection.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:http/http.dart' as http;
+import 'package:teta_cms/teta_cms.dart';
 
 // Package imports:
 import 'package:teta_core/teta_core.dart';
@@ -89,79 +90,20 @@ class FActionStripeCartBuyAll {
       final String? stateName,
       final CNode body,) {
     return '''
-    final dataset = (globalDatasets['cart'] ??
-        []) as List;
-    var ammount = 0;
-    dataset.forEach((element) {
-      ammount =
-          ammount + (element['price'] as int);
-    });
-
-    Map<String, dynamic> body = {
-      'amount': ammount.toString(),
-      'currency': dataset.first['currency']
-          .toString(),
-    };
-
-    var response = await http.post(
-        Uri.parse(
-            'https://api.stripe.com/v1/payment_intents'),
-        body: body,
-        headers: {
-          'Authorization':
-          'Bearer sk_test_51KyvFcCM2la1VogZ4FAXO7onAGrhbHSpC2IeZbimJ6sbBNMqtPZRwDgEu9Al5MuC75s1bCSyFwGGlLwwmL8KQEik00BPKr12io',
-          'Content-Type':
-          'application/x-www-form-urlencoded'
-        });
-    print(response.body);
-    Map<String, dynamic>? paymentIntentData =
-    jsonDecode(response.body);
-    await Stripe.instance
-        .initPaymentSheet(
-        paymentSheetParameters:
-        SetupPaymentSheetParameters(
-            paymentIntentClientSecret:
-            paymentIntentData![
-            'client_secret'],
-            applePay: true,
-            googlePay: true,
-            testEnv: true,
-            style: ThemeMode.dark,
-            merchantCountryCode: 'US',
-            merchantDisplayName:
-            'pk_test_51KyvFcCM2la1VogZW2BXirL3OWnIueYEwB0RhiDYJNn32FzdNIphmUGOlZu2daz1TZiPDK37DnNtC6kTb7MOTgnX00BBHlIfYs'))
-        .then((value) {});
-    try {
-      await Stripe.instance
-          .presentPaymentSheet(
-          parameters:
-          PresentPaymentSheetParameters(
-            clientSecret: paymentIntentData[
-            'client_secret'],
-            confirmPayment: true,
-          ))
-          .then((newValue) {
-        ScaffoldMessenger.of(context)
-            .showSnackBar(SnackBar(
-            content: Text(
-                "paid successfully")));
-        paymentIntentData = null;
-      }).onError((error, stackTrace) {
-        print(
-            'Exception/DISPLAYPAYMENTSHEET');
-      });
-    } on StripeException catch (e) {
-      print(
-          'Exception/DISPLAYPAYMENTSHEET on StripeException catch');
-      showDialog(
-          context: context,
-          builder: (_) =>
-              AlertDialog(
-                content: Text("Cancelled "),
-              ));
-    } catch (e) {
-      print(e.toString());
-    }
+    final pi = (await TetaCMS.instance.store.cart.getPaymentIntent()).data;
+    await Stripe.instance.initPaymentSheet(
+        paymentSheetParameters: SetupPaymentSheetParameters(
+          applePay: true,
+          googlePay: true,
+          merchantDisplayName: 'Test',
+          merchantCountryCode: 'IT',
+          testEnv: true,
+          paymentIntentClientSecret: pi,
+        ));
+        
+    await Stripe.instance.presentPaymentSheet(
+        parameters: PresentPaymentSheetParameters(
+            clientSecret: pi ?? '', confirmPayment: true,),);
     ''';
   }
 }
