@@ -17,6 +17,7 @@ enum ResultTypeEnum {
   dateTime,
   int,
   double,
+  bool,
 }
 
 enum TypeDateTimeFormat {
@@ -108,6 +109,12 @@ class FTextTypeInput {
         case ResultTypeEnum.double:
           return double.tryParse(result as String) ??
               'Impossible to convert to double type';
+        case ResultTypeEnum.bool:
+          return (result as String?) == 'true'
+              ? true
+              : result == 'false'
+                  ? false
+                  : 'Impossible to convert to double type';
         case ResultTypeEnum.dateTime:
           final date = DateTime.tryParse(result as String);
           if (date != null) {
