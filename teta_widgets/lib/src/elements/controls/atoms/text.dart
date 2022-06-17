@@ -3,6 +3,7 @@
 
 // Package imports:
 import 'package:collection/collection.dart';
+import 'package:enum_to_string/enum_to_string.dart';
 // Flutter imports:
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -443,7 +444,69 @@ class PaddingsState extends State<TextControl> {
                       ),
                   ],
                 ),
-              ),
+              )
+            else
+              Column(
+                mainAxisSize: MainAxisSize.min,
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  const Gap(Grid.medium),
+                  const TDetailLabel('Convert to:'),
+                  Padding(
+                    padding: EI.smT,
+                    child: CDropdown(
+                      value: EnumToString.convertToString(
+                        widget.value.resultType,
+                        camelCase: true,
+                      ),
+                      items: EnumToString.toList(
+                        ResultTypeEnum.values,
+                        camelCase: true,
+                      ).toList(),
+                      onChange: (final newValue) {
+                        if (newValue != null) {
+                          final old = widget.value;
+                          final type = EnumToString.fromString(
+                            ResultTypeEnum.values,
+                            newValue,
+                            camelCase: true,
+                          );
+                          widget.value.resultType = type!;
+                          widget.callBack(widget.value, old);
+                        }
+                      },
+                    ),
+                  ),
+                  if (widget.value.resultType == ResultTypeEnum.dateTime)
+                    Padding(
+                      padding: EI.smT,
+                      child: CDropdown(
+                        value: widget.value.typeDateTimeFormat != null
+                            ? EnumToString.convertToString(
+                                widget.value.typeDateTimeFormat,
+                                camelCase: true,
+                              )
+                            : null,
+                        items: EnumToString.toList(
+                          TypeDateTimeFormat.values,
+                          camelCase: true,
+                        ).toList(),
+                        onChange: (final newValue) {
+                          if (newValue != null) {
+                            final old = widget.value;
+                            final type = EnumToString.fromString(
+                              TypeDateTimeFormat.values,
+                              newValue,
+                              camelCase: true,
+                            );
+                            widget.value.typeDateTimeFormat = type;
+                            widget.callBack(widget.value, old);
+                          }
+                        },
+                      ),
+                    ),
+                ],
+              )
           ],
         );
       },

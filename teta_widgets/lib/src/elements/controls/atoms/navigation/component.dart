@@ -7,6 +7,7 @@ import 'package:flutter/material.dart';
 // Package imports:
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_feather_icons/flutter_feather_icons.dart';
+import 'package:gap/gap.dart';
 import 'package:teta_core/src/design_system/textfield/textfield.dart';
 import 'package:teta_core/teta_core.dart';
 // Project imports:
@@ -277,6 +278,7 @@ class ElementState extends State<Element> {
                   });
                 },
               ),
+              const Gap(Grid.small),
               if (dropdownDataset != null && dropdownDataset == 'Text')
                 BlocBuilder<FocusBloc, List<CNode>>(
                   builder: (final context, final state) {

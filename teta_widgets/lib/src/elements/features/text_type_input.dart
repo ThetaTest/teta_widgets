@@ -3,13 +3,26 @@
 // ignore_for_file: public_member_api_docs, lines_longer_than_80_chars
 
 // Package imports:
+import 'package:camera/camera.dart';
 import 'package:collection/collection.dart';
+import 'package:enum_to_string/enum_to_string.dart';
+import 'package:intl/intl.dart';
 import 'package:recase/recase.dart';
-import 'package:teta_core/src/models/asset_file.dart';
-import 'package:teta_core/src/models/dataset.dart';
-import 'package:teta_core/src/models/variable.dart';
+import 'package:teta_core/teta_core.dart';
 
 enum FTextTypeEnum { text, imageUrl, param, state, dataset, asset, combined }
+
+enum ResultTypeEnum {
+  string,
+  dateTime,
+  int,
+  double,
+}
+
+enum TypeDateTimeFormat {
+  dateWithTime,
+  dateWithoutTime,
+}
 
 class FTextTypeInput {
   /// Set of func to use text string in Teta's widgets
@@ -23,6 +36,8 @@ class FTextTypeInput {
     this.file,
     this.mapKey,
     this.combination,
+    this.resultType = ResultTypeEnum.string,
+    this.typeDateTimeFormat,
   });
 
   FTextTypeEnum? type;
@@ -34,6 +49,8 @@ class FTextTypeInput {
   AssetFile? file;
   String? mapKey;
   List<FTextTypeInput>? combination;
+  ResultTypeEnum resultType;
+  TypeDateTimeFormat? typeDateTimeFormat;
 
   /// Returns value for texts
   String get(
@@ -64,6 +81,49 @@ class FTextTypeInput {
 
   /// Returns the value calculated based on params, states and dataset
   dynamic calc(
+    final List<VariableObject> params,
+    final List<VariableObject> states,
+    final List<DatasetObject> dataset,
+    final bool forPlay,
+    final int? loop,
+    final String placeholder,
+  ) {
+    final dynamic result = getRaw(
+      params,
+      states,
+      dataset,
+      forPlay,
+      loop,
+      placeholder,
+    );
+    if (result.runtimeType == XFile) {
+      return result;
+    } else if (result.runtimeType == String) {
+      switch (resultType) {
+        case ResultTypeEnum.string:
+          return result;
+        case ResultTypeEnum.int:
+          return int.tryParse(result as String) ??
+              'Impossible to convert to int type';
+        case ResultTypeEnum.double:
+          return double.tryParse(result as String) ??
+              'Impossible to convert to double type';
+        case ResultTypeEnum.dateTime:
+          final date = DateTime.tryParse(result as String);
+          if (date != null) {
+            if (typeDateTimeFormat == TypeDateTimeFormat.dateWithoutTime) {
+              return DateFormat('yyyy-MM-dd').format(date);
+            }
+            if (typeDateTimeFormat == TypeDateTimeFormat.dateWithTime) {
+              return DateFormat('yyyy-MM-dd hh:mm:ss').format(date);
+            }
+          }
+          return 'Impossible to convert to DateTime type';
+      }
+    }
+  }
+
+  dynamic getRaw(
     final List<VariableObject> params,
     final List<VariableObject> states,
     final List<DatasetObject> dataset,
@@ -149,6 +209,17 @@ class FTextTypeInput {
                 )
                 .toList()
             : [],
+        resultType: EnumToString.fromString(
+              ResultTypeEnum.values,
+              json?['rType'] as String? ?? 'string',
+            ) ??
+            ResultTypeEnum.string,
+        typeDateTimeFormat: EnumToString.fromString(
+              TypeDateTimeFormat.values,
+              json?['tDateTime'] as String? ??
+                  EnumToString.convertToString(TypeDateTimeFormat.dateWithTime),
+            ) ??
+            TypeDateTimeFormat.dateWithTime,
       );
     } catch (e) {
       return FTextTypeInput();
@@ -176,6 +247,10 @@ class FTextTypeInput {
         'dA': datasetAttr,
         'mK': mapKey,
         'cmb': combination?.map((final e) => e.toJson()).toList(),
+        'rType': EnumToString.convertToString(resultType),
+        'tDateTime': typeDateTimeFormat != null
+            ? EnumToString.convertToString(typeDateTimeFormat)
+            : EnumToString.convertToString(TypeDateTimeFormat.dateWithTime),
         if (file != null) 'f': file!.toJson(),
       }..removeWhere((final String key, final dynamic value) => value == null);
 
