@@ -137,49 +137,51 @@ class _WCmsFetchState extends State<WCmsFetch> {
     return NodeSelectionBuilder(
       node: widget.node,
       forPlay: widget.forPlay,
-      child: FutureBuilder(
-        future: _future,
-        builder: (final context, final snapshot) {
-          if (!snapshot.hasData) {
+      child: RepaintBoundary(
+        child: FutureBuilder(
+          future: _future,
+          builder: (final context, final snapshot) {
+            if (!snapshot.hasData) {
+              if (widget.children.isNotEmpty) {
+                return widget.children.last.toWidget(
+                  params: widget.params,
+                  states: widget.states,
+                  dataset: widget.dataset,
+                  forPlay: widget.forPlay,
+                );
+              } else {
+                return const Center(
+                  child: CircularProgressIndicator(),
+                );
+              }
+            }
+            if (snapshot.error != null) {
+              // TODO: Returns a error widget
+            }
+
+            final list = snapshot.data as List<dynamic>?;
+            Logger.printWarning('list: $list');
+            _map = _map.copyWith(
+              name: widget.node.name ?? widget.node.intrinsicState.displayName,
+              map: (list ?? const <dynamic>[])
+                  .map((final dynamic e) => e as Map<String, dynamic>)
+                  .toList(),
+            );
+            final datasets = addDataset(context, widget.dataset, _map);
+
+            // Returns child
             if (widget.children.isNotEmpty) {
-              return widget.children.last.toWidget(
+              return widget.children.first.toWidget(
                 params: widget.params,
                 states: widget.states,
-                dataset: widget.dataset,
+                dataset: widget.dataset.isEmpty ? datasets : widget.dataset,
                 forPlay: widget.forPlay,
               );
             } else {
-              return const Center(
-                child: CircularProgressIndicator(),
-              );
+              return const SizedBox();
             }
-          }
-          if (snapshot.error != null) {
-            // TODO: Returns a error widget
-          }
-
-          final list = snapshot.data as List<dynamic>?;
-          Logger.printWarning('list: $list');
-          _map = _map.copyWith(
-            name: widget.node.name ?? widget.node.intrinsicState.displayName,
-            map: (list ?? const <dynamic>[])
-                .map((final dynamic e) => e as Map<String, dynamic>)
-                .toList(),
-          );
-          final datasets = addDataset(context, widget.dataset, _map);
-
-          // Returns child
-          if (widget.children.isNotEmpty) {
-            return widget.children.first.toWidget(
-              params: widget.params,
-              states: widget.states,
-              dataset: widget.dataset.isEmpty ? datasets : widget.dataset,
-              forPlay: widget.forPlay,
-            );
-          } else {
-            return const SizedBox();
-          }
-        },
+          },
+        ),
       ),
     );
   }
