@@ -20,7 +20,7 @@ String textCodeTemplate(
       int.tryParse(valueMaxLines) != null ? int.parse(valueMaxLines) : '';
   return '''
     Text(
-      ${abstract.type == FTextTypeEnum.text ? "r'''$value'''" : value},
+      ${abstract.type == FTextTypeEnum.text ? "r$value" : value},
       ${CS.textStyle(context, body, DBKeys.textStyle)}
       ${maxLines != '' ? 'maxLines: $maxLines' : ''}
     )

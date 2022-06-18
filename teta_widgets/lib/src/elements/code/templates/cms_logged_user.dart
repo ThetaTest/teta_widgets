@@ -21,7 +21,7 @@ String cmsLoggedUserCodeTemplate(
   }
 
   return '''
-  FutureBuilder(
+  TetaFutureBuilder(
     future: TetaCMS.instance.auth.user.get,
     builder: (context, snapshot) {
       if (!snapshot.hasData) {

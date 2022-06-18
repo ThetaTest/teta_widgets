@@ -21,7 +21,7 @@ String badgeCodeTemplate(
   return '''
     Badge(
       badgeContent: Text( 
-        '$value',
+        $value,
         ${CS.textStyle(context, body, DBKeys.textStyle)}
         ),
       badgeColor:Color(0xFF$fill),

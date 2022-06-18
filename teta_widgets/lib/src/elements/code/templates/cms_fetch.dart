@@ -52,7 +52,7 @@ String cmsFetchCodeTemplate(
   ''';
 
   return '''
-  FutureBuilder(
+  TetaFutureBuilder(
     future: TetaCMS.instance.client.getCollection(
       $collectionId,
       filters: [

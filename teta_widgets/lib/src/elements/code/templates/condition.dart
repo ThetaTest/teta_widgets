@@ -19,10 +19,10 @@ String conditionCodeTemplate(
   var valueOfCondition =
       (body.attributes[DBKeys.valueOfCondition] as FTextTypeInput).toCode(loop);
   if (!value.contains("'")) {
-    value = "'$value'";
+    value = value;
   }
   if (!valueOfCondition.contains("'")) {
-    valueOfCondition = "'$valueOfCondition'";
+    valueOfCondition = valueOfCondition;
   }
   var childIfTrue = 'const SizedBox()';
   if (children.isNotEmpty) {

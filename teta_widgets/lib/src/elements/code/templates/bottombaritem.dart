@@ -51,7 +51,7 @@ String bottomBarItemCodeTemplate(
             ${CS.size(context, body, isWidth: true).replaceAll('width', 'size')}
             color: Color(0xFF$fill),
           ),
-          Text('$value',
+          Text($value,
             ${CS.textStyle(context, body, DBKeys.textStyle)}
           )
         ],

@@ -20,7 +20,7 @@ String imageCodeTemplate(
   return '''
     ${borderRadius != '' ? 'ClipRRect( ${CS.borderRadius(context, body)} child:' : ''} 
         Image.network(
-          ${abstract.type == FTextTypeEnum.text || abstract.type == FTextTypeEnum.asset ? "r'''$value'''" : value},
+          ${abstract.type == FTextTypeEnum.text || abstract.type == FTextTypeEnum.asset ? "r$value" : value},
           ${CS.size(context, body, isWidth: true)}
           ${CS.size(context, body, isWidth: false)}
           ${CS.boxFit(context, body)}

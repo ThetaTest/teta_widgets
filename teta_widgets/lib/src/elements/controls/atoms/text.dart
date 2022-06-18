@@ -143,7 +143,9 @@ class PaddingsState extends State<TextControl> {
                           ? 'state'
                           : widget.value.type == FTextTypeEnum.param
                               ? 'param'
-                              : 'text',
+                              : widget.value.type == FTextTypeEnum.combined
+                                  ? 'combined'
+                                  : 'text',
                   items: [
                     'text',
                     'param',

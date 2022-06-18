@@ -18,7 +18,7 @@ String lottieCodeTemplate(
   final value = abstract.toCode(loop);
   return '''
     Lottie.network(
-      ${abstract.type == FTextTypeEnum.text ? "r'''$value'''" : value},
+      ${abstract.type == FTextTypeEnum.text ? "r$value" : value},
       ${CS.size(context, body, isWidth: true)}
       ${CS.size(context, body, isWidth: false)}
       ${CS.boxFit(context, body)}

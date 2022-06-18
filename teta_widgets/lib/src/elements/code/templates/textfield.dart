@@ -67,7 +67,7 @@ String textFieldCodeTemplate(
         focusedBorder: OutlineInputBorder(
           ${CS.borderRadius(context, body)}
         ),  
-        hintText: r'''$labelText''',
+        hintText: r$labelText,
         ${CS.margin(context, body, isMargin: false).replaceAll('padding', 'contentPadding')}
       ),
       ${CS.textStyle(context, body, DBKeys.textStyle)}

@@ -48,7 +48,7 @@ String buttonCodeTemplate(
         ${CS.boxDecoration(context, body, DBKeys.fill)}
         child: Center(
             child: Text(
-            '$value',
+            $value,
             ${CS.textStyle(context, body, DBKeys.textStyle)}
           ),
         )

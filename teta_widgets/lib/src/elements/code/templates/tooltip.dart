@@ -16,10 +16,10 @@ String tooltipCodeTemplate(
 ) {
   final abstract = body.attributes[DBKeys.value] as FTextTypeInput;
   final value = abstract.toCode(loop);
-  return """
+  return '''
     Tooltip(
-      message: '''$value''',
+      message: $value,
       ${CS.child(context, child, comma: true)}
     )
-  """;
+  ''';
 }

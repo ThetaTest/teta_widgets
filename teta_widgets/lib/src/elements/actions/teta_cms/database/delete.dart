@@ -30,6 +30,6 @@ class FATetaCMSDelete {
     final int? loop,
   ) {
     final eqValue = documentId?.toCode(loop);
-    return "await TetaCMS.instance.client.deleteDocument('$collectionId', '$eqValue');";
+    return "await TetaCMS.instance.client.deleteDocument('$collectionId', $eqValue);";
   }
 }

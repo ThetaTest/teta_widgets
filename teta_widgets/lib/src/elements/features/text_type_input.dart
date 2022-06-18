@@ -1,6 +1,6 @@
 // Flutter imports:
 // Project imports:
-// ignore_for_file: public_member_api_docs, lines_longer_than_80_chars
+// ignore_for_file: public_member_api_docs, lines_longer_than_80_chars, avoid_escaping_inner_quotes
 
 // Package imports:
 import 'package:camera/camera.dart';
@@ -176,7 +176,7 @@ class FTextTypeInput {
           element.get(params, states, dataset, forPlay, loop),
         );
       }
-      return string;
+      return string.toString();
     }
     return value ?? '';
   }
@@ -273,11 +273,25 @@ class FTextTypeInput {
   String toCode(
     final int? loop,
   ) {
+    final code = getRawToCode(loop);
+
+    if (type == FTextTypeEnum.combined) {
+      return code;
+    }
+
+    return convertType(code);
+  }
+
+  String getRawToCode(
+    final int? loop,
+  ) {
     if (type == FTextTypeEnum.param) {
+      if (paramName?.isEmpty ?? true) return "''";
       final param = ReCase(paramName ?? '');
       return "'''\${widget.${param.camelCase}}'''";
     }
     if (type == FTextTypeEnum.state) {
+      if (stateName?.isEmpty ?? true) return "''";
       final state = ReCase(stateName ?? '');
       return "'''\${${state.camelCase}}'''";
     }
@@ -290,15 +304,47 @@ class FTextTypeInput {
     if (type == FTextTypeEnum.combined) {
       final string = StringBuffer("'''");
       for (final element in combination ?? <FTextTypeInput>[]) {
-        var code = element.toCode(loop).replaceAll("'''", '');
-        if (element.type == FTextTypeEnum.dataset) {
-          code = '\${$code}';
-        }
+        final code = convertType(
+          element.toCode(loop).replaceAll("'''", ''),
+        ).replaceAll("'''", '');
         string.write(code);
       }
       string.write("'''");
       return string.toString();
     }
     return value ?? '';
+  }
+
+  String convertType(final String original) {
+    var code = original;
+    if ((type == FTextTypeEnum.dataset ||
+            type == FTextTypeEnum.param ||
+            type == FTextTypeEnum.state) &&
+        code != "''") {
+      code =
+          code.replaceAll("'''", '').replaceAll(r'${', '').replaceAll('}', '');
+      code = '\${$code}';
+    }
+    if (code != "''") {
+      code = "'''$code'''";
+    }
+    switch (resultType) {
+      case ResultTypeEnum.string:
+        return code;
+      case ResultTypeEnum.int:
+        return "'\${int.tryParse($code)}'";
+      case ResultTypeEnum.double:
+        return "'\${double.tryParse($code)}'";
+      case ResultTypeEnum.bool:
+        return "'''\${$code == 'true'}";
+      case ResultTypeEnum.dateTime:
+        if (typeDateTimeFormat == TypeDateTimeFormat.dateWithoutTime) {
+          return "'\${DateFormat('yyyy-MM-dd').format(DateTime.tryParse($code) ?? DateTime.now())}'";
+        }
+        if (typeDateTimeFormat == TypeDateTimeFormat.dateWithTime) {
+          return "'\${DateFormat('yyyy-MM-dd hh:mm:ss').format(DateTime.tryParse($code) ?? DateTime.now())}'";
+        }
+    }
+    return code;
   }
 }

@@ -52,7 +52,7 @@ String cmsCountCodeTemplate(
   ''';
 
   return '''
-  FutureBuilder(
+  TetaFutureBuilder(
     future: TetaCMS.instance.client.getCollectionCount(
       $collectionId,
       filters: [

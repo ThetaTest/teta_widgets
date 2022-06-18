@@ -50,6 +50,6 @@ class FATetaCMSUpdate {
       mapString.write("'''$key''': '${map[key]}',");
     }
     mapString.write('}');
-    return "await TetaCMS.instance.client.updateDocument('$collectionId', '$eqValue', $map);";
+    return "await TetaCMS.instance.client.updateDocument('$collectionId', $eqValue, $map);";
   }
 }
