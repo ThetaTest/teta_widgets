@@ -5,13 +5,14 @@
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 // Package imports:
-import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:teta_core/src/cubits/device_mode/cubit.dart';
+import 'package:sizer/sizer.dart';
 import 'package:teta_core/src/utils/expression/expression.dart';
 
 enum SizeUnit {
   pixel,
   percent,
+  width,
+  height,
 }
 
 class FSize {
@@ -50,9 +51,13 @@ class FSize {
         }
       }
       if (value != null && unit == SizeUnit.percent) {
-        final screen =
+        /*final screen =
             BlocProvider.of<DeviceModeCubit>(context).state.screenSize;
-        value = isWidth ? screen.width : screen.height * (value / 100);
+        value = isWidth ? screen.width : screen.height * (value / 100);*/
+        value = isWidth ? value.w : value.h;
+      }
+      if (value != null && unit == SizeUnit.width) {
+        value = isWidth ? value.w : value.h;
       }
     }
     return value;
@@ -113,10 +118,8 @@ class FSize {
       }
       if (value != null && unit == SizeUnit.percent) {
         var finalString = '';
-        finalString = isWidth
-            ? 'MediaQuery.of(context).size.width'
-            : 'MediaQuery.of(context).size.height';
-        finalString += ' * (${(size ?? '').replaceAll('%', '')} / 100)';
+        finalString +=
+            '${(size ?? '16').replaceAll('%', '')}${isWidth ? '.w' : '.h'}';
         return finalString;
       }
     }

@@ -11,16 +11,16 @@ String linearProgressIndicatorCodeTemplate(
   final NodeBody body,
   final int? loop,
 ) {
-  final colorFill =
-      (body.attributes[DBKeys.fill] as FFill).getHexColor(context);
-  final colorBgFill =
-      (body.attributes[DBKeys.bgFill] as FFill).getHexColor(context);
+  final colorFill = body.attributes[DBKeys.fill] as FFill;
+  final hex1 = colorFill.getHexColor(context);
+  final colorBgFill = body.attributes[DBKeys.bgFill] as FFill;
+  final hex2 = colorBgFill.getHexColor(context);
 
   return '''
     LinearProgressIndicator(
-      backgroundColor: Color(0xFF$colorBgFill), 
+      backgroundColor: Color(0xFF$hex2).withOpacity(${colorBgFill.levels?.first.opacity ?? '1'}), 
       valueColor: AlwaysStoppedAnimation<Color>(
-              Color(0xFF$colorFill)),
+              Color(0xFF$hex1).withOpacity(${colorFill.levels?.first.opacity ?? '1'})),
     )
   ''';
 }

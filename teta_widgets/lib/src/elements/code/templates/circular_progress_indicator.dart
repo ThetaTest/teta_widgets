@@ -11,12 +11,13 @@ String circularProgressIndicatorCodeTemplate(
   final NodeBody body,
   final int? loop,
 ) {
-  final fill = (body.attributes[DBKeys.fill] as FFill).getHexColor(context);
+  final fill = body.attributes[DBKeys.fill] as FFill;
+  final hex = fill.getHexColor(context);
 
   return '''
     CircularProgressIndicator(
       valueColor: AlwaysStoppedAnimation<Color>(
-              Color(0xFF$fill)),
+              Color(0xFF$hex).withOpacity(${fill.levels?.first.opacity ?? '1'})),
     )
   ''';
 }

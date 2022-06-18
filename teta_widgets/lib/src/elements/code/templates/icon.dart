@@ -16,12 +16,13 @@ String iconCodeTemplate(
   final int? loop,
 ) {
   final icon = body.attributes[DBKeys.icon] as String;
-  final fill = (body.attributes[DBKeys.fill] as FFill).getHexColor(context);
+  final fill = body.attributes[DBKeys.fill] as FFill;
+  final hex = fill.getHexColor(context);
   return '''
     Icon (
       MdiIcons.fromString('$icon'),
       ${CS.size(context, body, isWidth: true).replaceAll('width', 'size')}
-      color: Color(0xFF$fill),
+      color: Color(0xFF$hex).withOpacity(${fill.levels?.first.opacity ?? '1'}),
     )
   ''';
 }

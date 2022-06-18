@@ -177,7 +177,7 @@ class FTextStyle {
     return '''
     style: GoogleFonts.${rc.camelCase}(
       textStyle: TextStyle(
-        color: const Color(0xFF$color),
+        color: Color(0xFF$color).withOpacity(${fill?.levels?.first.opacity ?? '1'}),
         fontWeight: $weight,
         fontSize: $size,
         fontStyle: $style,

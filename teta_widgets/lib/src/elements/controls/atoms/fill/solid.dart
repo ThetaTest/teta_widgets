@@ -20,12 +20,14 @@ class SolidFillControl extends StatefulWidget {
     required this.isStyled,
     required this.callBack,
     this.color,
+    this.opacity = 1,
     final Key? key,
   }) : super(key: key);
 
   final FFill? fill;
   final String title;
   final String? color;
+  final double? opacity;
   final CNode node;
   final bool isStyled;
   final Function(FFill, bool, FFill) callBack;
@@ -40,6 +42,7 @@ class SolidFillControlState extends State<SolidFillControl> {
   String? value;
   bool isVisible = true;
   TextEditingController controller = TextEditingController();
+  TextEditingController opacityController = TextEditingController();
   FFill? tempFill;
   String? tempColor;
 
@@ -49,9 +52,12 @@ class SolidFillControlState extends State<SolidFillControl> {
       nodeId = widget.node.nid;
       if (widget.color != null) {
         controller.text = widget.color ?? '';
+        opacityController.text = '${widget.opacity}';
         tempColor = widget.color;
       } else {
         controller.text = widget.fill!.get(context).levels!.first.color;
+        opacityController.text =
+            '${widget.fill!.get(context).levels!.first.opacity}';
         tempColor = widget.fill!.get(context).levels!.first.color;
       }
     } catch (_) {}
@@ -78,10 +84,13 @@ class SolidFillControlState extends State<SolidFillControl> {
                   isUpdated = true;
                   if (widget.color != null) {
                     controller.text = widget.color ?? '';
+                    controller.text = '${widget.opacity}';
                     tempColor = widget.color;
                   } else {
                     controller.text =
                         widget.fill!.get(context).levels!.first.color;
+                    opacityController.text =
+                        '${widget.fill!.get(context).levels!.first.opacity}';
                     tempColor = widget.fill!.get(context).levels!.first.color;
                   }
                 });
@@ -188,6 +197,25 @@ class SolidFillControlState extends State<SolidFillControl> {
                               widget.callBack(widget.fill!, false, old);
                             }
                           }
+                        },
+                      ),
+                    ),
+                    Expanded(
+                      child: CMiniTextField(
+                        controller: opacityController,
+                        placeholder: '1',
+                        hpadding: 4,
+                        onSubmitted: (final text) {
+                          final old = FFill().fromJson(widget.fill!.toJson());
+                          widget.fill!.levels!.first.opacity =
+                              double.tryParse(text) ?? 1;
+                          widget.callBack(widget.fill!, false, old);
+                        },
+                        callBack: (final text) {
+                          final old = FFill().fromJson(widget.fill!.toJson());
+                          widget.fill!.levels!.first.opacity =
+                              double.tryParse(text) ?? 1;
+                          widget.callBack(widget.fill!, false, old);
                         },
                       ),
                     ),

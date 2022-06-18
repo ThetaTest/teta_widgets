@@ -27,10 +27,13 @@ class FFillElement {
   FFillElement({
     required this.color,
     required this.stop,
+    this.opacity = 1,
   });
 
   /// Hex [String] (6 chars)
   String color;
+
+  double? opacity;
 
   /// [int] value for gradients
   double stop;
@@ -39,12 +42,14 @@ class FFillElement {
     return FFillElement(
       color: json['color'] as String,
       stop: double.tryParse('${json['stop']}') ?? 0,
+      opacity: json['opacity'] as double? ?? 1,
     );
   }
 
   Map<String, dynamic> toJson() => <String, dynamic>{
         'color': color,
         'stop': stop,
+        'opacity': opacity,
       };
 }
 
@@ -320,14 +325,14 @@ class FFill {
 
     if (fill.type == FFillType.none) return null;
     if (fill.type == FFillType.solid) {
-      return 'color: ${flagConst ?? false ? 'const' : ''} Color(0xFF${fill.getHexColor(context)}),';
+      return 'color: ${flagConst ?? false ? 'const' : ''} Color(0xFF${fill.getHexColor(context)}).withOpacity(${fill.levels!.first.opacity}),';
     }
     if (fill.type == FFillType.linearGradient) {
       return '''
       gradient: LinearGradient(
         begin: ${fill.begin},
         end: ${fill.end},
-        colors: <Color>${fill.levels!.map((final e) => 'Color(0xFF${e.color.toUpperCase()})').toList()},
+        colors: <Color>${fill.levels!.map((final e) => 'Color(0xFF${e.color.toUpperCase()}).withOpacity(${e.opacity})').toList()},
         stops: ${fill.levels!.map((final e) => e.stop).toList()},
       ),''';
     }
@@ -336,7 +341,7 @@ class FFill {
       gradient: RadialGradient(
         center: ${fill.center},
         radius: ${fill.radius},
-        colors: <Color>${fill.levels!.map((final e) => 'Color(0xFF${e.color.toUpperCase()})').toList()},
+        colors: <Color>${fill.levels!.map((final e) => 'Color(0xFF${e.color.toUpperCase()}).withOpacity(${e.opacity})').toList()},
         stops: ${fill.levels!.map((final e) => e.stop).toList()},
       ),''';
     }

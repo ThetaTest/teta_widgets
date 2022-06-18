@@ -217,14 +217,13 @@ class CS {
     final NodeBody body,
     final String keyFill,
   ) {
-    final flagConst = CS.borderRadius(context, body) != '';
     final fill = FFill.toCode(
       body.attributes[keyFill] as FFill,
       context,
-      flagConst: flagConst,
+      flagConst: false,
     );
     return '''
-      decoration: ${flagConst ? '' : 'const'} BoxDecoration(
+      decoration: BoxDecoration(
         ${fill ?? ''}
         ${CS.borderRadius(context, body)}
         ${CS.border(context, body)}

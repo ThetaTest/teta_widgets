@@ -8,11 +8,12 @@ import 'dart:async';
 import 'package:flutter/material.dart';
 // Package imports:
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:gap/gap.dart';
 import 'package:teta_core/src/design_system/textfield/textfield.dart';
 import 'package:teta_core/teta_core.dart';
+import 'package:teta_widgets/src/elements/controls/atoms/size.dart';
 // Project imports:
-import 'package:teta_widgets/src/elements/features/text_style.dart';
-import 'package:teta_widgets/src/elements/nodes/node.dart';
+import 'package:teta_widgets/src/elements/index.dart';
 
 class FontSizeControl extends StatefulWidget {
   const FontSizeControl({
@@ -39,7 +40,7 @@ class FontSizeState extends State<FontSizeControl> {
   @override
   void initState() {
     nodeId = widget.node.nid;
-    controller.text = '${widget.textStyle.fontSize?.get}';
+    controller.text = '${widget.textStyle.fontSize?.get()}';
     super.initState();
   }
 
@@ -71,7 +72,7 @@ class FontSizeState extends State<FontSizeControl> {
           if (state.first.nid != nodeId) {
             setState(() {
               isUpdated = true;
-              controller.text = '${widget.textStyle.fontSize!.get}';
+              controller.text = '${widget.textStyle.fontSize!.get()}';
             });
             nodeId = state.first.nid;
           }
@@ -80,15 +81,56 @@ class FontSizeState extends State<FontSizeControl> {
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          const Padding(
-            padding: EdgeInsets.only(bottom: 8),
-            child: THeadline3(
-              'Font Size',
-            ),
+          Row(
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            children: [
+              const THeadline3(
+                'Font Size',
+              ),
+              Row(
+                mainAxisSize: MainAxisSize.min,
+                children: [
+                  GestureDetector(
+                    onTap: () {
+                      final old = widget.textStyle;
+                      widget.textStyle.fontSize!.unit = SizeUnit.pixel;
+                      onChangeHandler(widget.textStyle, old);
+                    },
+                    child: unitIcon(
+                      unit: SizeUnit.pixel,
+                      unitFromNode: widget.textStyle.fontSize!.unit,
+                    ),
+                  ),
+                  GestureDetector(
+                    onTap: () {
+                      final old = widget.textStyle;
+                      widget.textStyle.fontSize!.unit = SizeUnit.width;
+                      onChangeHandler(widget.textStyle, old);
+                    },
+                    child: unitIcon(
+                      unit: SizeUnit.width,
+                      unitFromNode: widget.textStyle.fontSize!.unit,
+                    ),
+                  ),
+                  GestureDetector(
+                    onTap: () {
+                      final old = widget.textStyle;
+                      widget.textStyle.fontSize!.unit = SizeUnit.height;
+                      onChangeHandler(widget.textStyle, old);
+                    },
+                    child: unitIcon(
+                      unit: SizeUnit.height,
+                      unitFromNode: widget.textStyle.fontSize!.unit,
+                    ),
+                  ),
+                ],
+              ),
+            ],
           ),
+          const Gap(Grid.small),
           CTextField(
             controller: controller,
-            text: '${widget.textStyle.fontSize?.get}',
+            text: '${widget.textStyle.fontSize?.get()}',
             callBack: (final value) {
               final old = widget.textStyle;
               widget.textStyle.fontSize!.size = double.parse(value);

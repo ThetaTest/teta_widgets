@@ -181,6 +181,7 @@ String pageCodeTemplate(
     import 'package:collection/collection.dart';
     import 'package:myapp/src/pages/index.dart';
     import 'package:google_fonts/google_fonts.dart';
+    import 'package:sizer/sizer.dart';
     import 'package:lottie/lottie.dart';
     import 'package:latlng/latlng.dart';
     import 'package:badges/badges.dart';

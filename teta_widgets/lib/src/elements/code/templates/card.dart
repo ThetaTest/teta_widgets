@@ -18,12 +18,13 @@ String cardCodeTemplate(
   final abstract = body.attributes[DBKeys.value] as FTextTypeInput;
   final value = abstract.toCode(loop);
   final elevation = double.tryParse(value) != null ? double.parse(value) : '1';
-  final fill = (body.attributes[DBKeys.fill] as FFill).getHexColor(context);
+  final fill = body.attributes[DBKeys.fill] as FFill;
+  final hex = fill.getHexColor(context);
 
   return '''
     Card(
       elevation: $elevation,
-      color: Color(0xFF$fill),
+      color: Color(0xFF$hex).withOpacity(${fill.levels?.first.opacity ?? '1'}),
       ${CS.shapeCardBorderRadius(context, body)}
       ${CS.child(context, child, comma: true)}
     )

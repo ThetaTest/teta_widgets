@@ -5,6 +5,7 @@
 import 'package:flutter/material.dart';
 // Package imports:
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:gap/gap.dart';
 import 'package:hovering/hovering.dart';
 import 'package:teta_core/src/design_system/textfield/textfield.dart';
 import 'package:teta_core/teta_core.dart';
@@ -34,10 +35,6 @@ class LinearFillControl extends StatefulWidget {
 }
 
 class ColorControlState extends State<LinearFillControl> {
-  String? value;
-  bool isVisible = true;
-  TextEditingController controller = TextEditingController();
-  CNode? tempNode;
   bool isUpdated = false;
   String? tempColor;
   int selectedElementIndex = 0;
@@ -45,7 +42,6 @@ class ColorControlState extends State<LinearFillControl> {
 
   @override
   void initState() {
-    controller.text = widget.fill.get(context).levels!.first.color;
     tempColor = widget.fill.levels!.first.color;
     super.initState();
   }
@@ -310,7 +306,6 @@ class ColorControlState extends State<LinearFillControl> {
           color.value.toRadixString(16).substring(2, 8);
       isUpdated = true;
     });
-    controller.text = color.value.toRadixString(16).substring(2, 8);
     widget.callBack(widget.fill, false, old);
   }
 
@@ -495,6 +490,7 @@ class FillElement extends StatefulWidget {
 class FillElementState extends State<FillElement> {
   TextEditingController editingController = TextEditingController();
   TextEditingController stopController = TextEditingController();
+  TextEditingController opacityController = TextEditingController();
   int? nodeId;
   bool? isUpdated;
 
@@ -504,6 +500,7 @@ class FillElementState extends State<FillElement> {
     nodeId = widget.node.nid;
     editingController.text = widget.element.color;
     stopController.text = '${widget.element.stop}';
+    opacityController.text = '${widget.element.opacity}';
   }
 
   @override
@@ -623,9 +620,22 @@ class FillElementState extends State<FillElement> {
                 ),
               ),
             ),
-            const SizedBox(
-              width: 8,
+            const Gap(Grid.small),
+            Expanded(
+              child: CTextField(
+                controller: opacityController,
+                placeholder: '${widget.element.opacity}',
+                hpadding: 4,
+                callBack: (final text) {
+                  if (double.tryParse(text) != null) {
+                    final old = FFill().fromJson(widget.fill.toJson());
+                    widget.element.opacity = double.parse(text);
+                    widget.callBack(widget.fill, old);
+                  }
+                },
+              ),
             ),
+            const Gap(Grid.small),
             Expanded(
               child: CTextField(
                 controller: stopController,

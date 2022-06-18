@@ -41,7 +41,8 @@ class WCard extends StatelessWidget {
       node: node,
       forPlay: forPlay,
       child: Card(
-        color: HexColor(color.getHexColor(context)),
+        color: HexColor(color.getHexColor(context))
+            .withOpacity(color.levels?.first.opacity ?? 1),
         elevation: double.tryParse(val) != null ? double.parse(val) : 1,
         shape: TetaShapeCard.get(context: context, borderRadius: borderRadius),
         child: ChildConditionBuilder(

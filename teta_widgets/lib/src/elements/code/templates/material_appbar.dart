@@ -13,11 +13,12 @@ String materialAppBarCodeTemplate(
   final NodeBody body,
   final List<CNode> children,
 ) {
-  final fill = (body.attributes[DBKeys.fill] as FFill).getHexColor(context);
+  final fill = body.attributes[DBKeys.fill] as FFill;
+  final hex = fill.getHexColor(context);
 
   return '''
     MaterialAppBar(
-      color: Color(0xFF$fill),
+      color: Color(0xFF$hex).withOpacity(${fill.levels?.first.opacity ?? '1'}),
       ${CS.children(context, children)}
     )
   ''';

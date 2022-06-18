@@ -193,7 +193,6 @@ class SizeControlsState extends State<SizeControl> {
                               child: CMiniTextField(
                                 controller: controller,
                                 text: widget.size.size,
-                                hpadding: 0,
                                 callBack: (final value) {
                                   final szs = widget.size;
                                   final old =
@@ -277,43 +276,55 @@ class SizeControlsState extends State<SizeControl> {
       ),
     );
   }
+}
 
-  Widget unitIcon({final SizeUnit? unit, final SizeUnit? unitFromNode}) {
-    return HoverWidget(
-      hoverChild: Container(
-        width: 32,
-        height: 32,
-        decoration: BoxDecoration(
-          color: unitFromNode == unit ? Colors.white24 : Colors.transparent,
-          border: Border.all(
-            color: Colors.white,
-          ),
-          borderRadius: BorderRadius.circular(4),
+Widget unitIcon({final SizeUnit? unit, final SizeUnit? unitFromNode}) {
+  return HoverWidget(
+    hoverChild: Container(
+      width: 32,
+      height: 32,
+      decoration: BoxDecoration(
+        color: unitFromNode == unit ? Colors.white24 : Colors.transparent,
+        border: Border.all(
+          color: Colors.white,
         ),
-        child: Center(
-          child: TDetailLabel(
-            unit == SizeUnit.pixel ? 'PX' : '%',
-          ),
+        borderRadius: BorderRadius.circular(4),
+      ),
+      child: Center(
+        child: TDetailLabel(
+          unit == SizeUnit.pixel
+              ? 'px'
+              : unit == SizeUnit.percent
+                  ? '%'
+                  : unit == SizeUnit.width
+                      ? '.w'
+                      : '.h',
         ),
       ),
-      onHover: (final event) {},
-      child: Container(
-        width: 32,
-        height: 32,
-        decoration: BoxDecoration(
-          color: unitFromNode == unit ? Colors.white24 : Colors.transparent,
-          border: Border.all(
-            color: Colors.white,
-            style: BorderStyle.none,
-          ),
-          borderRadius: BorderRadius.circular(4),
+    ),
+    onHover: (final event) {},
+    child: Container(
+      width: 32,
+      height: 32,
+      decoration: BoxDecoration(
+        color: unitFromNode == unit ? Colors.white24 : Colors.transparent,
+        border: Border.all(
+          color: Colors.white,
+          style: BorderStyle.none,
         ),
-        child: Center(
-          child: TDetailLabel(
-            unit == SizeUnit.pixel ? 'PX' : '%',
-          ),
+        borderRadius: BorderRadius.circular(4),
+      ),
+      child: Center(
+        child: TDetailLabel(
+          unit == SizeUnit.pixel
+              ? 'px'
+              : unit == SizeUnit.percent
+                  ? '%'
+                  : unit == SizeUnit.width
+                      ? '.w'
+                      : '.h',
         ),
       ),
-    );
-  }
+    ),
+  );
 }

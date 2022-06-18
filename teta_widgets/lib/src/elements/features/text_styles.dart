@@ -28,9 +28,10 @@ class TetaTextStyles {
   }) {
     return GoogleFonts.getFont(
       (model != null) ? model.fontFamily! : fontFamily,
-      fontSize: (model != null) ? model.fontSize!.get : fontSize.get,
+      fontSize: (model != null) ? model.fontSize!.get() : fontSize.get(),
       fontWeight: (model != null) ? model.fontWeight!.get : fontWeight.get,
-      color: HexColor(fill.get(context).getHexColor(context)),
+      color: HexColor(fill.get(context).getHexColor(context))
+          .withOpacity(fill.levels?.first.opacity ?? 1),
       decoration: textDecoration.get,
       fontStyle: fontStyle.get,
     );

@@ -19,11 +19,12 @@ String placeholderCodeTemplate(
   final value = abstract.toCode(loop);
   final strokeWidth =
       double.tryParse(value) != null ? double.parse(value) : 2.0;
-  final fill = (body.attributes[DBKeys.fill] as FFill).getHexColor(context);
+  final fill = body.attributes[DBKeys.fill] as FFill;
+  final hex = fill.getHexColor(context);
   return '''
     Placeholder(
       stroke: $strokeWidth,
-      color: Color(0xFF$fill),
+      color: Color(0xFF$hex).withOpacity(${fill.levels?.first.opacity ?? '1'}),
       ${CS.size(context, body, isWidth: true)}
       ${CS.size(context, body, isWidth: false)}
       ${CS.child(context, child, comma: true)}

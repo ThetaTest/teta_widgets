@@ -87,51 +87,36 @@ class TextPrefabControl extends StatelessWidget {
               ),
               Padding(
                 padding: const EdgeInsets.only(top: 16),
-                child: Row(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    Expanded(
-                      child: Padding(
-                        padding: const EdgeInsets.only(
-                          right: 4,
-                        ),
-                        child: FontSizeControl(
-                          node: node,
-                          textStyle: textStyle,
-                          callBack: (final value, final old) {
-                            ControlBuilder.toDB(
-                              prj,
-                              page,
-                              node,
-                              context,
-                              keyValue,
-                              value,
-                              old,
-                            );
-                          },
-                        ),
-                      ),
-                    ),
-                    Expanded(
-                      child: Padding(
-                        padding: const EdgeInsets.only(left: 4),
-                        child: FontFamilyControl(
-                          node: node,
-                          textStyle: textStyle,
-                          callBack: (final value, final old) =>
-                              ControlBuilder.toDB(
-                            prj,
-                            page,
-                            node,
-                            context,
-                            keyValue,
-                            value,
-                            old,
-                          ),
-                        ),
-                      ),
-                    ),
-                  ],
+                child: FontSizeControl(
+                  node: node,
+                  textStyle: textStyle,
+                  callBack: (final value, final old) {
+                    ControlBuilder.toDB(
+                      prj,
+                      page,
+                      node,
+                      context,
+                      keyValue,
+                      value,
+                      old,
+                    );
+                  },
+                ),
+              ),
+              Padding(
+                padding: const EdgeInsets.only(top: 16),
+                child: FontFamilyControl(
+                  node: node,
+                  textStyle: textStyle,
+                  callBack: (final value, final old) => ControlBuilder.toDB(
+                    prj,
+                    page,
+                    node,
+                    context,
+                    keyValue,
+                    value,
+                    old,
+                  ),
                 ),
               ),
               Padding(

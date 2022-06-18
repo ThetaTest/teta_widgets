@@ -21,7 +21,8 @@ class TetaBoxDecoration {
   }) {
     if (fill.type == FFillType.solid) {
       return BoxDecoration(
-        color: HexColor(fill.levels!.first.color),
+        color: HexColor(fill.levels!.first.color)
+            .withOpacity(fill.levels!.first.opacity ?? 1),
         borderRadius: borderRadius?.get,
         boxShadow: const [
           //shadows.get(context),
@@ -31,7 +32,11 @@ class TetaBoxDecoration {
     } else if (fill.type == FFillType.linearGradient) {
       return BoxDecoration(
         gradient: LinearGradient(
-          colors: fill.levels!.map((final e) => HexColor(e.color)).toList(),
+          colors: fill.levels!
+              .map(
+                (final e) => HexColor(e.color).withOpacity(e.opacity ?? 1),
+              )
+              .toList(),
           begin: fill.begin!,
           end: fill.end!,
           stops: fill.levels!.map((final e) => e.stop).toList(),
@@ -54,7 +59,9 @@ class TetaBoxDecoration {
     } else if (fill.type == FFillType.radialGradient) {
       return BoxDecoration(
         gradient: RadialGradient(
-          colors: fill.levels!.map((final e) => HexColor(e.color)).toList(),
+          colors: fill.levels!
+              .map((final e) => HexColor(e.color).withOpacity(e.opacity ?? 1))
+              .toList(),
           center: fill.center!,
           radius: fill.radius!,
           stops: fill.levels!.map((final e) => e.stop).toList(),
@@ -65,7 +72,7 @@ class TetaBoxDecoration {
         ],
         border: borders?.get(context, forPlay: true),
       );
-    } 
+    }
     //fill.type -> none
     else {
       return BoxDecoration(
