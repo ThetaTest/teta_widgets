@@ -19,10 +19,12 @@ String cmsFetchCodeTemplate(
   if (!collectionId.contains("'")) {
     collectionId = "'$collectionId'";
   }
-  final limit =
-      (node.body.attributes[DBKeys.cmsLimit] as FTextTypeInput).toCode(loop);
-  final page =
-      (node.body.attributes[DBKeys.cmsPage] as FTextTypeInput).toCode(loop);
+  final limit = (node.body.attributes[DBKeys.cmsLimit] as FTextTypeInput)
+      .toCode(loop)
+      .replaceAll("'''", '');
+  final page = (node.body.attributes[DBKeys.cmsPage] as FTextTypeInput)
+      .toCode(loop)
+      .replaceAll("'''", '');
   var keyName =
       (node.body.attributes[DBKeys.cmsLikeKey] as FTextTypeInput).toCode(loop);
   if (!keyName.contains("'") && keyName.isNotEmpty) {
