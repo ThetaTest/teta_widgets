@@ -5,6 +5,7 @@ import 'package:collection/collection.dart';
 
 // Flutter imports:
 import 'package:flutter/material.dart';
+import 'package:teta_cms/teta_cms.dart';
 
 // Package imports:
 import 'package:teta_core/teta_core.dart';
@@ -88,14 +89,16 @@ class FActionStripeCartRemoveProductsListItemFromCart {
     return '''
     try {
       final cart =
-      globalDatasets['cart'] as List?;
+      datasets['cart'] as List?;
       if (cart != null &&
           cart.length > index) {
+        await TetaCMS.instance.store.cart.delete(cart[index]['id']);
         cart.remove(
           cart.firstWhere(
             (e) => e['id'] == cart[index]['id'],
           ),
         );
+        setState((){});
       }
     } catch (e) {
       print(e.toString());

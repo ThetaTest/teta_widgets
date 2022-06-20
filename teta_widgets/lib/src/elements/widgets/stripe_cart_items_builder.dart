@@ -7,8 +7,11 @@ import 'dart:convert';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:http/http.dart' as http;
+import 'package:teta_cms/teta_cms.dart';
+
 // Package imports:
 import 'package:teta_core/teta_core.dart';
+
 // Project imports:
 import 'package:teta_widgets/src/elements/index.dart';
 
@@ -41,7 +44,8 @@ class WStripeCartItemsBuilder extends StatefulWidget {
   final List<DatasetObject> dataset;
 
   @override
-  _WStripeCartItemsBuilderState createState() => _WStripeCartItemsBuilderState();
+  _WStripeCartItemsBuilderState createState() =>
+      _WStripeCartItemsBuilderState();
 }
 
 class _WStripeCartItemsBuilderState extends State<WStripeCartItemsBuilder> {
@@ -49,13 +53,14 @@ class _WStripeCartItemsBuilderState extends State<WStripeCartItemsBuilder> {
 
   @override
   void initState() {
-    _getStripeProducts();
+    _getStripeProducts().whenComplete(() {
+      setState(() {});
+    });
     super.initState();
   }
 
   @override
   Widget build(final BuildContext context) {
-    _getStripeProducts();
     return NodeSelectionBuilder(
       node: widget.node,
       forPlay: widget.forPlay,
@@ -87,31 +92,17 @@ class _WStripeCartItemsBuilderState extends State<WStripeCartItemsBuilder> {
   }
 
   Future _getStripeProducts() async {
-    final prj =
-        (BlocProvider.of<FocusProjectBloc>(context).state as ProjectLoaded).prj;
-
-    final baseUrl = 'https://builder.teta.so:8402/product/${prj.id}/list';
-
-    final response = await http.get(
-      Uri.parse(baseUrl),
-      headers: <String, String>{
-        'stripe-api-key': prj.config!.stripePrivateKey!,
-      },
-    );
-
-    if (response.statusCode == 200) {
-      final jsonData = json.decode(response.body) as List<dynamic>;
-      final map =
-          jsonData.map((final dynamic e) => e as Map<String, dynamic>).toList();
+    try {
+      final tetaCms = TetaCMS.instance;
+      final products = await tetaCms.store.products.all();
 
       final datasetObject = DatasetObject(
         name: 'cart',
-        map: map,
+        map: products.data!.map((final e) => e.toJson()).toList(growable: true),
       );
-
-      addDataset(context, [], datasetObject);
-    } else {
-      debugPrint('Error in calc WStripeProductsList -> ${response.body}');
+      addDataset(context, widget.dataset, datasetObject);
+    } catch (e) {
+      debugPrint('Error in calc WStripeProductsList -> ${e}');
     }
   }
 }

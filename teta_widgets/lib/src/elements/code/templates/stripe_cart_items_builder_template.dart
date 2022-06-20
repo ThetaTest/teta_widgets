@@ -41,16 +41,33 @@ class StripeCartItemsBuilderTemplate {
     if (child != null) {
       childCode = child.toCode(context);
     }
-    return
-    '''
-      ListView.builder(
-        $_scrollDirection
-        shrinkWrap: $shrinkWrap,
-        itemCount: (globalDatasets['cart'] as List? ?? []).length,
-        itemBuilder: (context, index) {
-          return $childCode;
-        },
-      )
+    return '''
+   FutureBuilder<TetaProductsResponse>(
+      future: TetaCMS.instance.store.getCartProducts(),
+      builder: ((context, snapshot) {
+        if (!snapshot.hasData) {
+          return Center(
+            child: CircularProgressIndicator(),
+          );
+        } else {
+          final r = snapshot.data?.data;
+          if(r != null) {
+          this.datasets['cart'] = r.map((final e) => e.toJson()).toList(growable: true);
+          return ListView.builder(
+            $_scrollDirection
+            shrinkWrap: $shrinkWrap,
+            itemCount: this.datasets['cart'].length,
+            itemBuilder: (context, index) {
+              return $childCode;
+            },
+          );
+          } else {
+          return Container();
+        }
+      }
+      }
+      ),
+    )
     ''';
   }
 }

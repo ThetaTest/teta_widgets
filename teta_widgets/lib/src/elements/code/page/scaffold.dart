@@ -149,7 +149,6 @@ String pageCodeTemplate(
   final stripeImport = isStripeIntegrated
       ? '''
       import 'package:flutter_stripe/flutter_stripe.dart';
-      import 'package:myapp/global_variables.dart';
       '''
       : '';
 
