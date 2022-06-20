@@ -95,16 +95,21 @@ class _WTextFieldState extends State<WTextField> {
       node: widget.node,
       forPlay: widget.forPlay,
       child: Center(
-        child: TContainer(
+        child: Container(
           margin: widget.margins.get(context),
-          decoration: TetaBoxDecoration.get(
-            context: context,
-            fill: widget.fill.get(context),
-            borderRadius: widget.borderRadius,
+          decoration: BoxDecoration(
+            borderRadius: widget.borderRadius.get,
           ),
           child: TextField(
             controller: textEditingController,
             decoration: InputDecoration(
+              filled: true,
+              fillColor: HexColor(widget.fill.levels!.first.color)
+                  .withOpacity(widget.fill.levels!.first.opacity ?? 1),
+              counterStyle: TextStyle(
+                color: HexColor(widget.fill.levels!.first.color)
+                    .withOpacity(widget.fill.levels!.first.opacity ?? 1),
+              ),
               border: OutlineInputBorder(
                 borderRadius: borderRadius,
               ),

@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:teta_widgets/src/elements/code/snippets.dart';
 import 'package:teta_widgets/src/elements/controls/key_constants.dart';
 import 'package:teta_widgets/src/elements/features/actions/enums/gestures.dart';
+import 'package:teta_widgets/src/elements/features/fill.dart';
 import 'package:teta_widgets/src/elements/features/text_type_input.dart';
 import 'package:teta_widgets/src/elements/nodes/node.dart';
 import 'package:teta_widgets/src/elements/nodes/node_body.dart';
@@ -31,11 +32,20 @@ String textFieldCodeTemplate(
   final obscureText = body.attributes[DBKeys.obscureText] as bool? ?? false;
   final showCursor = body.attributes[DBKeys.showCursor] as bool? ?? false;
   final autoCorrect = body.attributes[DBKeys.autoCorrect] as bool? ?? false;
+  final fill = body.attributes[DBKeys.fill] as FFill;
+  final fillToCodeColor = FFill.toCode(
+    body.attributes[DBKeys.fill] as FFill,
+    context,
+    flagConst: false,
+  );
+
   return """
   Container(
     ${CS.margin(context, body, isMargin: true)}
     ${CS.size(context, body, isWidth: true)}
-    ${CS.boxDecoration(context, body, DBKeys.fill)}
+    decoration: BoxDecoration(
+      ${CS.borderRadius(context, body)}
+    ),
     child: TextField(
       ${CS.action(
     pageId,
@@ -57,7 +67,12 @@ String textFieldCodeTemplate(
     isRequired: false,
     loop: loop,
   )}
-      decoration: const InputDecoration(
+      decoration: InputDecoration(
+        filled: true,
+        fillColor: Color(0xFF${fill.levels!.first.color.toUpperCase()})
+                  .withOpacity(${fill.levels!.first.opacity}),
+        counterStyle: TextStyle(
+                $fillToCodeColor),
         border: OutlineInputBorder(
           ${CS.borderRadius(context, body)}
         ),
