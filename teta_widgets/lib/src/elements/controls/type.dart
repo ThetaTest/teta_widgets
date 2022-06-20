@@ -19,6 +19,7 @@ import 'package:teta_widgets/src/elements/controls/atoms/borders.dart';
 import 'package:teta_widgets/src/elements/controls/atoms/box_fit.dart';
 import 'package:teta_widgets/src/elements/controls/atoms/camera_controller.dart';
 import 'package:teta_widgets/src/elements/controls/atoms/cms_collections.dart';
+import 'package:teta_widgets/src/elements/controls/atoms/code_field.dart';
 import 'package:teta_widgets/src/elements/controls/atoms/cross_axis_alignment.dart';
 import 'package:teta_widgets/src/elements/controls/atoms/dataset.dart';
 import 'package:teta_widgets/src/elements/controls/atoms/fill.dart';
@@ -140,6 +141,7 @@ enum ControlType {
   mapController,
 
   cmsCollections,
+  cmsCustomQuery,
 }
 
 /// Set of funcs to generate the focused widget' controls.
@@ -246,6 +248,28 @@ class ControlBuilder {
     required final BuildContext context,
     required final ControlObject control,
   }) {
+    if (control.type == ControlType.cmsCustomQuery) {
+      return CodeFieldControl(
+        key: ValueKey(
+          '${node.nid} ${(control.value as FTextTypeInput).value}',
+        ),
+        value: control.value.runtimeType == FTextTypeInput
+            ? control.value as FTextTypeInput
+            : FTextTypeInput(),
+        callBack: (final value, final old) {
+          ControlBuilder.toDB(
+            prj,
+            page,
+            node,
+            context,
+            control.key,
+            value.toJson(),
+            old.toJson(),
+          );
+          BlocProvider.of<RefreshCubit>(context).change();
+        },
+      );
+    }
     if (control.type == ControlType.cmsCollections) {
       return descriptionControlWidget(
         description: control.description,

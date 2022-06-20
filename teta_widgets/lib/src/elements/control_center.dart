@@ -100,6 +100,7 @@ import 'package:teta_widgets/src/elements/bodies/supabase/logged_user.dart';
 import 'package:teta_widgets/src/elements/bodies/tcard.dart';
 import 'package:teta_widgets/src/elements/bodies/tcard_builder.dart';
 import 'package:teta_widgets/src/elements/bodies/teta_cms/count.dart';
+import 'package:teta_widgets/src/elements/bodies/teta_cms/custom_query.dart';
 import 'package:teta_widgets/src/elements/bodies/teta_cms/fetch.dart';
 import 'package:teta_widgets/src/elements/bodies/teta_cms/logged_user.dart';
 import 'package:teta_widgets/src/elements/bodies/teta_cms/stream.dart';
@@ -228,6 +229,7 @@ final stateTypes = <IntrinsicStates>[
   cmsStreamIntrinsicStates,
   cmsLoggedUserIntrinsicStates,
   cmsCountIntrinsicStates,
+  cmsCustomQueryStates,
   animationConfigListIntrinsicStates,
   animationConfigGridIntrinsicStates,
   fadeInAnimationIntrinsicStates,
@@ -466,6 +468,8 @@ NodeBody getBody(final NType type) {
       return ScaleAnimationBody();
     case NType.slideAnimation:
       return SlideAnimationBody();
+    case NType.cmsCustomQuery:
+      return CmsCustomQueryBody();
     case NType.listViewSeparated:
       break;
     case NType.nil:
