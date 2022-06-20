@@ -25,7 +25,7 @@ const _globalType = NType.loginWithGoogle;
 
 /// Instrict State of Google Login
 final loginGoogleIntrinsicStates = IntrinsicStates(
-  nodeIcon: Assets.wIcons.button,
+  nodeIcon: Assets.wIcons.loginGoogle,
   nodeVideo: null,
   nodeDescription: null,
   advicedChildren: [

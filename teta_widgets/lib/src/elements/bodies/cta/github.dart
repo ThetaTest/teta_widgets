@@ -25,7 +25,7 @@ const _globalType = NType.loginWithGitHub;
 
 /// Instrict State of GitHub Login
 final loginGitHubIntrinsicStates = IntrinsicStates(
-  nodeIcon: Assets.wIcons.button,
+  nodeIcon: Assets.wIcons.loginGitHub,
   nodeVideo: null,
   nodeDescription: null,
   advicedChildren: [

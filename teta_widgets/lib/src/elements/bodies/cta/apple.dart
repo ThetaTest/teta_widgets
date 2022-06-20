@@ -25,7 +25,7 @@ const _globalType = NType.loginWithApple;
 
 /// Instrict State of Login Apple
 final loginAppleIntrinsicStates = IntrinsicStates(
-  nodeIcon: Assets.wIcons.button,
+  nodeIcon: Assets.wIcons.loginApple,
   nodeVideo: null,
   nodeDescription: null,
   advicedChildren: [

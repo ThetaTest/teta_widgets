@@ -25,7 +25,7 @@ const _globalType = NType.loginWithFacebook;
 
 /// Instrict State of Facebook Login
 final loginFacebookIntrinsicStates = IntrinsicStates(
-  nodeIcon: Assets.wIcons.button,
+  nodeIcon: Assets.wIcons.loginFacebook,
   nodeVideo: null,
   nodeDescription: null,
   advicedChildren: [

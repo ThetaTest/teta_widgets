@@ -25,7 +25,7 @@ const _globalType = NType.loginWithTwitter;
 
 /// Instrict State of Twitter Login
 final loginTwitterIntrinsicStates = IntrinsicStates(
-  nodeIcon: Assets.wIcons.button,
+  nodeIcon: Assets.wIcons.loginTwitter,
   nodeVideo: null,
   nodeDescription: null,
   advicedChildren: [
