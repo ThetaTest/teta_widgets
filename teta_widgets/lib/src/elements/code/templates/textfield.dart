@@ -19,15 +19,15 @@ String textFieldCodeTemplate(
   final int loop,
 ) {
   final labelText =
-      (body.attributes[DBKeys.labelText] as FTextTypeInput).toCode(loop);
+      (body.attributes[DBKeys.labelText] as FTextTypeInput).getRawToCode(loop);
   final valueMaxLines =
-      (body.attributes[DBKeys.maxLines] as FTextTypeInput).toCode(loop);
+      (body.attributes[DBKeys.maxLines] as FTextTypeInput).getRawToCode(loop);
   final maxLines = int.tryParse(valueMaxLines) ?? '1';
   final valueMinLines =
-      (body.attributes[DBKeys.minLines] as FTextTypeInput).toCode(loop);
+      (body.attributes[DBKeys.minLines] as FTextTypeInput).getRawToCode(loop);
   final minLines = int.tryParse(valueMinLines) ?? 1;
   final valueMaxLenght =
-      (body.attributes[DBKeys.maxLenght] as FTextTypeInput).toCode(loop);
+      (body.attributes[DBKeys.maxLenght] as FTextTypeInput).getRawToCode(loop);
   final maxLenght = int.tryParse(valueMaxLenght);
   final obscureText = body.attributes[DBKeys.obscureText] as bool? ?? false;
   final showCursor = body.attributes[DBKeys.showCursor] as bool? ?? false;

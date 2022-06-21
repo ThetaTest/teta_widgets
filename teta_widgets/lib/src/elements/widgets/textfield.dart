@@ -95,7 +95,7 @@ class _WTextFieldState extends State<WTextField> {
       node: widget.node,
       forPlay: widget.forPlay,
       child: Center(
-        child: Container(
+        child: TContainer(
           margin: widget.margins.get(context),
           decoration: BoxDecoration(
             borderRadius: widget.borderRadius.get,
