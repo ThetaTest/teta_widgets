@@ -4,9 +4,11 @@
 // Flutter imports:
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 // Package imports:
 import 'package:sizer/sizer.dart';
 import 'package:teta_core/src/utils/expression/expression.dart';
+import 'package:teta_core/teta_core.dart';
 
 enum SizeUnit {
   pixel,
@@ -51,10 +53,9 @@ class FSize {
         }
       }
       if (value != null && unit == SizeUnit.percent) {
-        /*final screen =
+        final screen =
             BlocProvider.of<DeviceModeCubit>(context).state.screenSize;
-        value = isWidth ? screen.width : screen.height * (value / 100);*/
-        value = isWidth ? value.w : value.h;
+        value = isWidth ? screen.width : screen.height * (value / 100);
       }
       if (value != null && unit == SizeUnit.width) {
         value = isWidth ? value.w : value.h;
