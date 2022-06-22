@@ -101,9 +101,7 @@ class FActionStripeCartBuyAll {
           paymentIntentClientSecret: pi,
         ));
         
-    await Stripe.instance.presentPaymentSheet(
-        parameters: PresentPaymentSheetParameters(
-            clientSecret: pi ?? '', confirmPayment: true,),);
+    await Stripe.instance.presentPaymentSheet();
     ''';
   }
 }
