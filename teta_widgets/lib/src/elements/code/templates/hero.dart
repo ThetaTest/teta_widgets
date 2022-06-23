@@ -15,7 +15,7 @@ String heroCodeTemplate(
   final int? loop,
 ) {
   final abstract = body.attributes[DBKeys.value] as FTextTypeInput;
-  final value = abstract.toCode(loop);
+  final value = abstract.getRawToCode(loop);
   return '''
   Hero(
     tag: '$value',
