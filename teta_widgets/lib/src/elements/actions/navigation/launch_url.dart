@@ -43,8 +43,8 @@ class FActionNavigationLaunchURL {
     final str = code.contains(r'${')
         ? code
         : code.contains('this.datasets')
-            ? "'''\${$code}'''"
-            : "'''$code'''";
+            ? '\${$code}'
+            : code;
     return '''
     if (await canLaunchUrlString($str)) {
       await launchUrlString(
