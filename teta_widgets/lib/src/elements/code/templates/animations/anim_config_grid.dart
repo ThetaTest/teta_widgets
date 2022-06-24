@@ -22,18 +22,18 @@ String animConfigGridCodeTemplate(
   return '''
     AnimationConfiguration.staggeredGrid(
       columnCount: int.tryParse(
-            ${numCols.contains(r"${") ? numCols : "'''$numCols'''"} 
+          $numCols
           ) ??
           2,
       position: int.tryParse(
-            ${position.contains(r"${") ? position : "'''$position'''"} 
+          $position
           ) ??
           0,
       duration: Duration(
         milliseconds: int.tryParse(
-              ${duration.contains(r"${") ? duration : "'''$duration'''"}
-            ) ??
-            375,
+          $duration
+          ) ??
+          375,
       ),
       ${CS.child(context, child, comma: true)}
     )

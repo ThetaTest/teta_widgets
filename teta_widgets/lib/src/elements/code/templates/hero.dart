@@ -18,7 +18,7 @@ String heroCodeTemplate(
   final value = abstract.toCode(loop);
   return '''
   Hero(
-    tag: '$value',
+    tag: $value,
     ${CS.child(context, child, comma: true)}
   )
   ''';

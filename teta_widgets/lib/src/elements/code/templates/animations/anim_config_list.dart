@@ -20,12 +20,12 @@ String animConfigListCodeTemplate(
   return '''
     AnimationConfiguration.staggeredList(
       position: int.tryParse(
-            ${position.contains(r"${") ? position : "'''$position'''"} 
+          $position 
           ) ??
           0,
       duration: Duration(
         milliseconds: int.tryParse(
-              ${duration.contains(r"${") ? duration : "'''$duration'''"}
+            $duration
             ) ??
             375,
       ),
