@@ -22,7 +22,7 @@ const _globalType = NType.animationConfigList;
 
 /// Instrict State of Align
 final animationConfigListIntrinsicStates = IntrinsicStates(
-  nodeIcon: Assets.wIcons.align,
+  nodeIcon: Assets.wIcons.anim_config_list,
   nodeVideo: null,
   nodeDescription: null,
   advicedChildren: [],

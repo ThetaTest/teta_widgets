@@ -21,7 +21,7 @@ const _globalType = NType.wrapper;
 
 /// Instrict State of Align
 final wrapperIntrinsicStates = IntrinsicStates(
-  nodeIcon: Assets.wIcons.align,
+  nodeIcon: Assets.wIcons.wrapper,
   nodeVideo: null,
   nodeDescription: null,
   advicedChildren: [],
@@ -35,7 +35,7 @@ final wrapperIntrinsicStates = IntrinsicStates(
   canHave: ChildrenEnum.child,
   addChildLabels: [],
   gestures: [],
-  permissions:[],
+  permissions: [],
 );
 
 /// Set of funcs to use Align widget

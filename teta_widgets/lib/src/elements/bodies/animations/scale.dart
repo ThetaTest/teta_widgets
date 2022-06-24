@@ -20,7 +20,7 @@ const _globalType = NType.scaleAnimation;
 
 /// Instrict State of Align
 final scaleAnimationIntrinsicStates = IntrinsicStates(
-  nodeIcon: Assets.wIcons.align,
+  nodeIcon: Assets.wIcons.scale,
   nodeVideo: null,
   nodeDescription: null,
   advicedChildren: [],

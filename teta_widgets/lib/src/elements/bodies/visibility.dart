@@ -22,7 +22,7 @@ const _globalType = NType.visibility;
 
 /// IS
 final visibilityIntrinsicStates = IntrinsicStates(
-  nodeIcon: Assets.wIcons.opacity,
+  nodeIcon: Assets.wIcons.visibility,
   nodeVideo: null,
   nodeDescription: null,
   advicedChildren: [
@@ -40,7 +40,7 @@ final visibilityIntrinsicStates = IntrinsicStates(
   canHave: ChildrenEnum.child,
   addChildLabels: [],
   gestures: [],
-  permissions:[],
+  permissions: [],
 );
 
 /// Body

@@ -24,7 +24,7 @@ const _globalType = NType.bouncingWidget;
 
 /// Instrict State of Bouncing Widget
 final bouncingWidgetIntrinsicStates = IntrinsicStates(
-  nodeIcon: Assets.wIcons.box,
+  nodeIcon: Assets.wIcons.bouncing_widget,
   nodeVideo: 'c1xLMaTUWCY',
   nodeDescription: '''''',
   advicedChildren: [

@@ -22,7 +22,7 @@ const _globalType = NType.constrainedBox;
 
 /// Intrinsic States of Center node type
 final constrainedBoxIntrinsicStates = IntrinsicStates(
-  nodeIcon: Assets.wIcons.sizedBox,
+  nodeIcon: Assets.wIcons.constrained_box,
   nodeVideo: null,
   nodeDescription: 'A widget that centers its child within itself.',
   advicedChildren: [
@@ -40,7 +40,7 @@ final constrainedBoxIntrinsicStates = IntrinsicStates(
   canHave: ChildrenEnum.child,
   addChildLabels: [],
   gestures: [],
-  permissions:[],
+  permissions: [],
 );
 
 /// Set of funcs of Center node
