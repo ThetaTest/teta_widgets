@@ -42,7 +42,7 @@ class FFillElement {
     return FFillElement(
       color: json['color'] as String,
       stop: double.tryParse('${json['stop']}') ?? 0,
-      opacity: json['opacity'] as double? ?? 1,
+      opacity: (json['opacity'] as num? ?? 1).toDouble(),
     );
   }
 
