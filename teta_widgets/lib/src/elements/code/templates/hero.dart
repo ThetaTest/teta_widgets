@@ -15,10 +15,10 @@ String heroCodeTemplate(
   final int? loop,
 ) {
   final abstract = body.attributes[DBKeys.value] as FTextTypeInput;
-  final value = abstract.getRawToCode(loop);
+  final value = abstract.toCode(loop);
   return '''
   Hero(
-    tag: '$value',
+    tag: $value,
     ${CS.child(context, child, comma: true)}
   )
   ''';
