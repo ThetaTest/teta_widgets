@@ -25,7 +25,7 @@ const _globalType = NType.textButton;
 
 /// IntrinsicStates for [TextButton] widget
 final textButtonIntrinsicStates = IntrinsicStates(
-  nodeIcon: Assets.wIcons.button,
+  nodeIcon: Assets.wIcons.textbutton,
   nodeVideo: null,
   nodeDescription: null,
   advicedChildren: [

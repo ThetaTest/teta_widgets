@@ -20,7 +20,7 @@ const _globalType = NType.slideAnimation;
 
 /// Instrict State of Align
 final slideAnimationIntrinsicStates = IntrinsicStates(
-  nodeIcon: Assets.wIcons.align,
+  nodeIcon: Assets.wIcons.slide,
   nodeVideo: null,
   nodeDescription: null,
   advicedChildren: [],

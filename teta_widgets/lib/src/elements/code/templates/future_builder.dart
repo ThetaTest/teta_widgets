@@ -1,6 +1,5 @@
 // Flutter imports:
 import 'package:flutter/material.dart';
-
 // Project imports:
 import 'package:teta_widgets/src/elements/controls/key_constants.dart';
 import 'package:teta_widgets/src/elements/features/text_type_input.dart';
@@ -56,9 +55,9 @@ String supabaseFutureBuilderCodeTemplate(
   return '''
   FutureBuilder(
     future: Supabase.instance.client
-    .from('$from')
-    .select('$select')
-    .order('$order')
+    .from($from)
+    .select($select)
+    .order($order)
     .range(($numberPage * $rangeFrom) - 1, $numberPage * $rangeTo)
     .execute(),
     builder: (context, snapshot) {

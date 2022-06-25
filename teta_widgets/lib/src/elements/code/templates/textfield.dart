@@ -19,10 +19,10 @@ String textFieldCodeTemplate(
   final int loop,
 ) {
   final labelText =
-      (body.attributes[DBKeys.labelText] as FTextTypeInput).getRawToCode(loop);
+      (body.attributes[DBKeys.labelText] as FTextTypeInput).toCode(loop);
   final valueMaxLines =
       (body.attributes[DBKeys.maxLines] as FTextTypeInput).getRawToCode(loop);
-  final maxLines = int.tryParse(valueMaxLines) ?? '1';
+  final maxLines = int.tryParse(valueMaxLines) ?? 1;
   final valueMinLines =
       (body.attributes[DBKeys.minLines] as FTextTypeInput).getRawToCode(loop);
   final minLines = int.tryParse(valueMinLines) ?? 1;

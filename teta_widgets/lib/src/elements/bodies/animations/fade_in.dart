@@ -20,7 +20,7 @@ const _globalType = NType.fadeInAnimation;
 
 /// Instrict State of Align
 final fadeInAnimationIntrinsicStates = IntrinsicStates(
-  nodeIcon: Assets.wIcons.align,
+  nodeIcon: Assets.wIcons.fade_in,
   nodeVideo: null,
   nodeDescription: null,
   advicedChildren: [],
