@@ -125,6 +125,7 @@ dependencies:
   gap: ^2.0.0
   uni_links: ^0.5.1
   sizer: ^2.0.15
+  qr_flutter: ^4.0.0
 
   # Storage
   hive:
