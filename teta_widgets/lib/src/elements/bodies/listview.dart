@@ -81,7 +81,7 @@ class ListViewBody extends NodeBody {
           title: 'Reverse',
           key: DBKeys.isFullWidth,
           value: attributes[DBKeys.isFullWidth],
-          description: '',
+          description: 'Inverse children order',
         ),
       ];
 

@@ -20,7 +20,7 @@ String listViewCodeTemplate(
   final NodeBody body,
   final List<CNode> children,
 ) {
-  final reverse = body.attributes[DBKeys.isPrimary] as bool;
+  final reverse = body.attributes[DBKeys.isFullWidth] as bool;
   final primary = body.attributes[DBKeys.isPrimary] as bool;
   final _scrollDirection =
       !(body.attributes[DBKeys.isVertical] as bool? ?? false)
