@@ -42,7 +42,7 @@ final textIntrinsicStates = IntrinsicStates(
   addChildLabels: [],
   gestures: [],
   permissions: [],
-  packages: ['google_fonts'],
+  packages: [],
 );
 
 /// Body for [Text] widget

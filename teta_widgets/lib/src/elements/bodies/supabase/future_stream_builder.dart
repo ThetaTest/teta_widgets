@@ -46,8 +46,8 @@ final supabaseStreamBuilderIntrinsicStates = IntrinsicStates(
   canHave: ChildrenEnum.children,
   addChildLabels: [],
   gestures: [],
-  permissions:[],
-  packages: [],
+  permissions: [],
+  packages: ['supabase', 'supabase_flutter'],
 );
 
 /// Body

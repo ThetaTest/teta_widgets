@@ -39,8 +39,8 @@ final concentricPageViewIntrinsicStates = IntrinsicStates(
   canHave: ChildrenEnum.children,
   addChildLabels: [],
   gestures: [],
-  permissions:[],
-  packages: [],
+  permissions: [],
+  packages: ['concentric_transition'],
 );
 
 /// Concentric PageView's body

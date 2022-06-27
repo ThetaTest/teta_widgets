@@ -51,7 +51,7 @@ final cmsCountIntrinsicStates = IntrinsicStates(
   addChildLabels: [],
   gestures: [],
   permissions: [],
-  packages: [],
+  packages: ['teta_cms'],
 );
 
 /// Body

@@ -125,18 +125,22 @@ String pageCodeTemplate(
     }
   }
 
-  //packages configuration -----------------------------------------------------
+  //TODO: ERROR this need to be recursive for each node and each children
+  //packages configuration
   final tempPagePackages = <String>[];
 
-  //brute: copy of all packages
+  //brute check all childrens, and their childrens for each node in the page
   for (var i = 0; i < children.length; i++) {
+    //scaffold level childrens (4: appbar, drawer, bottom, single_child)
     final firstLayerFather = children[i];
     if (firstLayerFather.children != null) {
       for (var k = 0; k < firstLayerFather.children!.length; k++) {
+        //each childrens for all 4 above
         final secondLayerFather = firstLayerFather.children![k];
         for (var j = 0;
             j < secondLayerFather.intrinsicState.packages.length;
             j++) {
+          //check if already exist
           if (!tempPagePackages
               .contains(secondLayerFather.intrinsicState.packages[j])) {
             tempPagePackages.add(secondLayerFather.intrinsicState.packages[j]);
@@ -145,18 +149,21 @@ String pageCodeTemplate(
       }
     }
   }
-  //tempPagePackages now have all the packages we need in this page but
-  //they are returned only by name so we neet to operate on each items
-  //in order to have this structure:
-  //import "package:<item>/<item>.dart"
+  
+
+  //todo: add the possibility to add as or hide: needed
+  //todo: for package:map/map.dart > as map
+  //todo: for package:http/http.dart > as http
+  //todo: for package:intl/intl.dart >  hide TextDirection
+  //tempPagePackages now have all the packages we need in this page.
+  //change them to have this structure: import "package:<item>/<item>.dart"
   final pagePackages = <String>[];
   for (var i = 0; i < tempPagePackages.length; i++) {
     pagePackages.add(
       "import 'package:${tempPagePackages[i]}/${tempPagePackages[i]}.dart';",
     );
   }
-  //pagePackages new have the final form to import in our code
-  //last thing is to make a single string joined with a \n
+  //final form for code
   final packages = pagePackages.join('\n');
   Logger.printWarning(packages);
   //----------------------------------------------------------------------------
@@ -189,7 +196,7 @@ String pageCodeTemplate(
       : '';
 
   final adMobImports = isAdMobIntegrated
-      ? "import 'package:google_mobile_ads/google_mobile_ads.dart'; \n import 'dart:io';"
+      ? "import 'package:google_mobile_ads/google_mobile_ads.dart';"
       : '';
 
   final isARState = isSupabaseIntegrated
@@ -200,6 +207,7 @@ String pageCodeTemplate(
 
   return '''
     import 'dart:ui';
+    import 'dart:io';
     import 'dart:convert';
     import 'package:flutter/material.dart';
     ${page.isPage ? "import 'package:myapp/src/components/index.dart';" : ''}

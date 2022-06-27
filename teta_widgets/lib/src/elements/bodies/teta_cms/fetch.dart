@@ -51,7 +51,7 @@ final cmsFetchIntrinsicStates = IntrinsicStates(
   addChildLabels: [],
   gestures: [],
   permissions: [],
-  packages: [],
+  packages: ['teta_cms'],
 );
 
 /// Body

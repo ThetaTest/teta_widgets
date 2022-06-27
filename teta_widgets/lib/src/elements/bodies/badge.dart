@@ -38,8 +38,8 @@ final badgeIntrinsicStates = IntrinsicStates(
   canHave: ChildrenEnum.child,
   addChildLabels: [],
   gestures: [],
-  permissions:[],
-  packages: [],
+  permissions: [],
+  packages: ['badges'],
 );
 
 /// Sets of funcs to use Badge widget

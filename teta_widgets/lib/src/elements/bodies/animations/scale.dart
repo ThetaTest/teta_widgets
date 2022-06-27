@@ -35,7 +35,7 @@ final scaleAnimationIntrinsicStates = IntrinsicStates(
   addChildLabels: [],
   gestures: [],
   permissions: [],
-  packages: [],
+  packages: ['flutter_staggered_animations'],
 );
 
 /// Set of funcs to use Align widget

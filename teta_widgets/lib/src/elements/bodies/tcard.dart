@@ -51,7 +51,7 @@ final tcardIntrinsicStates = IntrinsicStates(
     ActionGesture.onEnd,
   ],
   permissions: [],
-  packages: [],
+  packages: ['tcard'],
 );
 
 /// Body

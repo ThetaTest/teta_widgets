@@ -50,7 +50,7 @@ final calendarIntrinsicStates = IntrinsicStates(
   permissions: [
     Permissions.calendar,
   ],
-  packages: [],
+  packages: ['paged_vertical_calendar'],
 );
 
 /// Set of funcs to use Align widget

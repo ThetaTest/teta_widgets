@@ -37,7 +37,7 @@ final qrIntrinsicStates = IntrinsicStates(
   addChildLabels: [],
   gestures: [],
   permissions: [],
-  packages: [],
+  packages: ['qr_flutter'],
 );
 
 /// Set of funcs to use Align widget

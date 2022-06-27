@@ -45,7 +45,7 @@ final bouncingWidgetIntrinsicStates = IntrinsicStates(
     ActionGesture.onTap,
   ],
   permissions: [],
-  packages: [],
+  packages: ['bouncing_widget'],
 );
 
 /// Set of funcs to use Container widget

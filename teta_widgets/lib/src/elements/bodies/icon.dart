@@ -41,8 +41,8 @@ final iconIntrinsicStates = IntrinsicStates(
   canHave: ChildrenEnum.none,
   addChildLabels: [],
   gestures: [],
-  permissions:[],
-  packages: [],
+  permissions: [],
+  packages: ['material_design_icons_flutter'],
 );
 
 /// Icon's body

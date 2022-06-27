@@ -44,7 +44,7 @@ final loginTwitterIntrinsicStates = IntrinsicStates(
   addChildLabels: [],
   gestures: [ActionGesture.onTap, ActionGesture.onLongPress],
   permissions: [],
-  packages: [],
+  packages: ['auth_buttons'],
 );
 
 /// Instrict State of Twitter Login

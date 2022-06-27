@@ -39,7 +39,7 @@ final stripeCartItemsBuilderBodyIntrinsicStates = IntrinsicStates(
   addChildLabels: [],
   gestures: [],
   permissions: [],
-  packages: [],
+  packages: ['flutter_stripe'],
 );
 
 /// ListView Builder's body
