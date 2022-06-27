@@ -130,13 +130,18 @@ String pageCodeTemplate(
 
   //brute: copy of all packages
   for (var i = 0; i < children.length; i++) {
-    Logger.printSuccess('$i: ${children[i].intrinsicState.toString()}');
-    for (var j = 0; j < children[i].intrinsicState.packages.length; j++) {
-      if (!tempPagePackages.contains(children[i].intrinsicState.packages[j])) {
-        tempPagePackages.add(children[i].intrinsicState.packages[j]);
-        Logger.printWarning(
-          'added this: ${children[i].intrinsicState.packages[j]}',
-        );
+    final firstLayerFather = children[i];
+    if (firstLayerFather.children != null) {
+      for (var k = 0; k < firstLayerFather.children!.length; k++) {
+        final secondLayerFather = firstLayerFather.children![k];
+        for (var j = 0;
+            j < secondLayerFather.intrinsicState.packages.length;
+            j++) {
+          if (!tempPagePackages
+              .contains(secondLayerFather.intrinsicState.packages[j])) {
+            tempPagePackages.add(secondLayerFather.intrinsicState.packages[j]);
+          }
+        }
       }
     }
   }
@@ -146,14 +151,14 @@ String pageCodeTemplate(
   //import "package:<item>/<item>.dart"
   final pagePackages = <String>[];
   for (var i = 0; i < tempPagePackages.length; i++) {
-    pagePackages
-        .add("import 'package:$tempPagePackages/$tempPagePackages.dart';");
+    pagePackages.add(
+      "import 'package:${tempPagePackages[i]}/${tempPagePackages[i]}.dart';",
+    );
   }
   //pagePackages new have the final form to import in our code
   //last thing is to make a single string joined with a \n
   final packages = pagePackages.join('\n');
-  //todo: test
-  Logger.printWarning('pack -------> $packages');
+  Logger.printWarning(packages);
   //----------------------------------------------------------------------------
 
   final isSupabaseIntegrated = prj.config?.supabaseEnabled ?? false;
