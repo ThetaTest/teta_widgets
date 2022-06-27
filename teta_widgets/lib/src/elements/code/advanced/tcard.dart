@@ -18,6 +18,7 @@ import 'package:teta_widgets/src/elements/nodes/node.dart';
 /// ```
 String tCardCodeTemplate(
   final BuildContext context,
+  final int pageId,
   final CNode node,
   final List<CNode> children,
   final int? loop,
@@ -35,14 +36,28 @@ String tCardCodeTemplate(
   return '''
   TCard(
     onForward: (index, info) {
-      if (info.direction == SwipDirection.Right) {
-        print('Like');
-      } else {
-        print('Dislike');
-      }
-    },
-    onEnd: () {
-
+      if ${CS.action(
+    pageId,
+    context,
+    node,
+    ActionGesture.swipeRight,
+    '(info.direction == SwipDirection.Right)',
+    null,
+    loop: loop,
+    isRequired: false,
+    endsWithComma: false,
+  )}
+      ${CS.action(
+    pageId,
+    context,
+    node,
+    ActionGesture.swipeRight,
+    'else',
+    null,
+    loop: loop,
+    isRequired: false,
+    endsWithComma: false,
+  )}
     },
     lockYAxis: $lockYAxis,
     slideSpeed: $slideSpeed,

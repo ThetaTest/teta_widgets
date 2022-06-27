@@ -58,7 +58,7 @@ final tcardBuilderIntrinsicStates = IntrinsicStates(
     ActionGesture.swipeRight,
     ActionGesture.onEnd,
   ],
-  permissions:[],
+  permissions: [],
 );
 
 /// Body
@@ -158,5 +158,5 @@ class TCardBuilderBody extends NodeBody {
     final int pageId,
     final int? loop,
   ) =>
-      tCardBuilderCodeTemplate(context, node, child, loop);
+      tCardBuilderCodeTemplate(context, pageId, node, child, loop);
 }

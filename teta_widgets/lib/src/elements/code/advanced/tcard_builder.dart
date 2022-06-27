@@ -1,12 +1,9 @@
 // Flutter imports:
 import 'package:flutter/material.dart';
-// Project imports:
 import 'package:teta_widgets/src/elements/code/snippets.dart';
+// Project imports:
 import 'package:teta_widgets/src/elements/controls/key_constants.dart';
-import 'package:teta_widgets/src/elements/features/actions/enums/index.dart';
-import 'package:teta_widgets/src/elements/features/dataset.dart';
-import 'package:teta_widgets/src/elements/features/text_type_input.dart';
-import 'package:teta_widgets/src/elements/nodes/node.dart';
+import 'package:teta_widgets/src/elements/index.dart';
 
 /// Generates the code for ListView widget
 ///
@@ -19,6 +16,7 @@ import 'package:teta_widgets/src/elements/nodes/node.dart';
 /// ```
 String tCardBuilderCodeTemplate(
   final BuildContext context,
+  final int pageId,
   final CNode node,
   final CNode? child,
   final int? loop,
@@ -33,24 +31,43 @@ String tCardBuilderCodeTemplate(
       ) ??
       500;
   final lockYAxis = node.body.attributes[DBKeys.flag] as bool? ?? false;
-  final childString = child != null ? child.toCode(context) : '';
+  final childString =
+      child != null ? child.toCode(context) : 'const SizedBox()';
   final dataset =
       (node.body.attributes[DBKeys.datasetInput] as FDataset).datasetName;
+
   return '''
   Builder(
     builder: (context) {
       return TCard(
-        onForward: (index, info) async {
-          if (info.direction == SwipDirection.Right) {
-            print('Like');
-          } else {
-            print('Dislike');
-          }
+        onForward: (index, info) {
+          if ${CS.action(
+    pageId,
+    context,
+    node,
+    ActionGesture.swipeRight,
+    '(info.direction == SwipDirection.Right)',
+    null,
+    loop: loop,
+    isRequired: false,
+    endsWithComma: false,
+  )}
+          ${CS.action(
+    pageId,
+    context,
+    node,
+    ActionGesture.swipeRight,
+    'else',
+    null,
+    loop: loop,
+    isRequired: false,
+    endsWithComma: false,
+  )}
         },
         lockYAxis: $lockYAxis,
         slideSpeed: $slideSpeed,
         delaySlideFor: $delaySlideFor,
-        cards: (datasets['$dataset'] as List<dynamic> ?? <dynamic>[]).map((e) => $childString).toList(),
+        cards: (datasets['$dataset'] as List<dynamic>? ?? <dynamic>[]).map((e) => $childString).toList(),
       );
     }
   )

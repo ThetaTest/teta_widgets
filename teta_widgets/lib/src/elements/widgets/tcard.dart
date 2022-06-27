@@ -48,6 +48,7 @@ class WTCard extends StatefulWidget {
 class _WTCardState extends State<WTCard> {
   final _controller = TCardController();
   List<Widget> list = <Widget>[];
+  Timer? _timer;
 
   @override
   void initState() {
@@ -64,7 +65,7 @@ class _WTCardState extends State<WTCard> {
         )
         .toList();
     if (!widget.forPlay) {
-      Timer.periodic(const Duration(seconds: 1), (final timer) {
+      _timer = Timer.periodic(const Duration(seconds: 1), (final timer) {
         list = widget.children
             .map(
               (final e) => e.toWidget(
@@ -86,6 +87,7 @@ class _WTCardState extends State<WTCard> {
   @override
   void dispose() {
     _controller.dispose();
+    _timer?.cancel();
     super.dispose();
   }
 

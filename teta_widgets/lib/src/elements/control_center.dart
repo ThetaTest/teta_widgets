@@ -80,6 +80,7 @@ import 'package:teta_widgets/src/elements/bodies/page_view.dart';
 import 'package:teta_widgets/src/elements/bodies/parallax.dart';
 import 'package:teta_widgets/src/elements/bodies/placeholder.dart';
 import 'package:teta_widgets/src/elements/bodies/positioned.dart';
+import 'package:teta_widgets/src/elements/bodies/qr.dart';
 import 'package:teta_widgets/src/elements/bodies/radio.dart';
 import 'package:teta_widgets/src/elements/bodies/refresh_indicator.dart';
 import 'package:teta_widgets/src/elements/bodies/responsive/wrapper.dart';
@@ -235,6 +236,7 @@ final stateTypes = <IntrinsicStates>[
   fadeInAnimationIntrinsicStates,
   scaleAnimationIntrinsicStates,
   slideAnimationIntrinsicStates,
+  qrIntrinsicStates,
 ];
 
 /// Method to return any body
@@ -468,6 +470,8 @@ NodeBody getBody(final NType type) {
       return ScaleAnimationBody();
     case NType.slideAnimation:
       return SlideAnimationBody();
+    case NType.qrCode:
+      return QRBody();
     case NType.cmsCustomQuery:
       return CmsCustomQueryBody();
     case NType.listViewSeparated:

@@ -177,6 +177,7 @@ String pageCodeTemplate(
     $adMobImports
     import 'package:bouncing_widget/bouncing_widget.dart';
     import 'package:intl/intl.dart' hide TextDirection;
+    import 'package:tcard/tcard.dart';
     import 'package:collection/collection.dart';
     import 'package:myapp/src/pages/index.dart';
     import 'package:google_fonts/google_fonts.dart';

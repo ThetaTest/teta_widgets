@@ -50,7 +50,7 @@ final tcardIntrinsicStates = IntrinsicStates(
     ActionGesture.swipeRight,
     ActionGesture.onEnd,
   ],
-  permissions:[],
+  permissions: [],
 );
 
 /// Body
@@ -142,5 +142,5 @@ class TCardBody extends NodeBody {
     final int pageId,
     final int? loop,
   ) =>
-      tCardCodeTemplate(context, node, children ?? [], loop);
+      tCardCodeTemplate(context, pageId, node, children ?? [], loop);
 }
