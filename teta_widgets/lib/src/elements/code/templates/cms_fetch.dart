@@ -50,7 +50,7 @@ String cmsFetchCodeTemplate(
   final func = '''
   final list = snapshot.data as List<dynamic>?;
   datasets['${node.name ?? node.intrinsicState.displayName}'] = list ?? const <dynamic>[];
-  const index = 0;
+  var index = 0;
   ''';
 
   return '''
