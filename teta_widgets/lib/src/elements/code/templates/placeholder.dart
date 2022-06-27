@@ -23,10 +23,10 @@ String placeholderCodeTemplate(
   final hex = fill.getHexColor(context);
   return '''
     Placeholder(
-      stroke: $strokeWidth,
+      strokeWidth: $strokeWidth,
       color: Color(0xFF$hex).withOpacity(${fill.levels?.first.opacity ?? '1'}),
-      ${CS.size(context, body, isWidth: true)}
-      ${CS.size(context, body, isWidth: false)}
+      fallbackWidth: ${body.attributes[DBKeys.width]},
+      fallbackHeight: ${body.attributes[DBKeys.height]},
       ${CS.child(context, child, comma: true)}
     )
   ''';
