@@ -77,7 +77,6 @@ class IntrinsicStates {
 
   ///List of all packages required for this node to work
   final List<String> packages;
- 
 
   bool get canHaveChildren => canHave == ChildrenEnum.children;
   bool get canHaveChild => canHave == ChildrenEnum.child;
@@ -110,5 +109,10 @@ class IntrinsicStates {
       }
     }
     return result;
+  }
+
+  @override
+  String toString() {
+    return 'IntrinsicState: ntype: $type  packages: $packages';
   }
 }

@@ -41,8 +41,8 @@ final textIntrinsicStates = IntrinsicStates(
   canHave: ChildrenEnum.none,
   addChildLabels: [],
   gestures: [],
-  permissions:[],
-  packages: [],
+  permissions: [],
+  packages: ['google_fonts'],
 );
 
 /// Body for [Text] widget
