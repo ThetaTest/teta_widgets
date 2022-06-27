@@ -22,7 +22,7 @@ const _globalType = NType.barcode;
 
 /// Instrict State of Align
 final barcodeIntrinsicStates = IntrinsicStates(
-  nodeIcon: Assets.wIcons.box,
+  nodeIcon: Assets.wIcons.barcode,
   nodeVideo: null,
   nodeDescription: null,
   advicedChildren: [],

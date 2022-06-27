@@ -22,7 +22,7 @@ const _globalType = NType.qrCode;
 
 /// Instrict State of Align
 final qrIntrinsicStates = IntrinsicStates(
-  nodeIcon: Assets.wIcons.box,
+  nodeIcon: Assets.wIcons.qrcode,
   nodeVideo: null,
   nodeDescription: null,
   advicedChildren: [],
