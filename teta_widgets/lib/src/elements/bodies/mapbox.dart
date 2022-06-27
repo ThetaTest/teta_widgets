@@ -43,10 +43,10 @@ final mapBoxIntrinsicStates = IntrinsicStates(
   gestures: [
     ActionGesture.onDoubleTap,
   ],
-  permissions:[
+  permissions: [
     Permissions.location,
   ],
-  packages: ['map'],
+  packages: ['map', 'latlng'],
 );
 
 /// Body of Map

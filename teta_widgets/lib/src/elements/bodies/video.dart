@@ -40,8 +40,8 @@ final videoIntrinsicStates = IntrinsicStates(
   canHave: ChildrenEnum.none,
   addChildLabels: [],
   gestures: [],
-  permissions:[],
-  packages: [],
+  permissions: [],
+  packages: ['youtube_player_iframe'],
 );
 
 /// Body for Video widget
