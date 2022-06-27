@@ -41,6 +41,7 @@ final animatedOpacityIntrinsicStates = IntrinsicStates(
   addChildLabels: [],
   gestures: [],
   permissions:[],
+  packages: [],
 );
 
 /// AnimatedOpacity's body

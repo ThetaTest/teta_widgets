@@ -45,6 +45,7 @@ final gridViewBuilderIntrinsicStates = IntrinsicStates(
   addChildLabels: [],
   gestures: [],
   permissions:[],
+  packages: [],
 );
 
 /// GridView Builder's body

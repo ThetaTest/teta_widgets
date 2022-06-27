@@ -42,6 +42,7 @@ final dividerIntrinsicStates = IntrinsicStates(
   addChildLabels: [],
   gestures: [],
   permissions:[],
+  packages: [],
 );
 
 /// Divider's body

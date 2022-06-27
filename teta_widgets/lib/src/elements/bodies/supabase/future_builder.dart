@@ -49,6 +49,7 @@ final supabaseFutureBuilderIntrinsicStates = IntrinsicStates(
   addChildLabels: [],
   gestures: [],
   permissions: [],
+  packages: [],
 );
 
 /// Body

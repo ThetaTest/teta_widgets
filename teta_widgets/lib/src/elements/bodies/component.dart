@@ -41,6 +41,7 @@ final componentIntrinsicStates = IntrinsicStates(
   addChildLabels: [],
   gestures: [],
   permissions: [],
+  packages: [],
 );
 
 /// Set of funcs to use a Component widget

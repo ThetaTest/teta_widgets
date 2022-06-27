@@ -46,6 +46,7 @@ final firebaseIsAuthenticatedIntrinsicStates = IntrinsicStates(
   addChildLabels: [],
   gestures: [],
   permissions:[],
+  packages: [],
 );
 
 /// Firebase Authenticated's Body

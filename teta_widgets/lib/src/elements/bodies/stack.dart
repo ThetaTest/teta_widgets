@@ -34,6 +34,7 @@ final stackIntrinsicStates = IntrinsicStates(
   addChildLabels: [],
   gestures: [],
   permissions:[],
+  packages: [],
 );
 
 /// Body for Stack widget

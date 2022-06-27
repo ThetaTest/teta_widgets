@@ -46,6 +46,7 @@ final radioIntrinsicStates = IntrinsicStates(
   addChildLabels: [],
   gestures: [ActionGesture.onChange],
   permissions: [],
+  packages: [],
 );
 
 /// Set of funcs to use Align widget

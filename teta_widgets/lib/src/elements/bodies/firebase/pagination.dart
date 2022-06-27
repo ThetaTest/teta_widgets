@@ -47,6 +47,7 @@ final firebasePaginationIntrinsicStates = IntrinsicStates(
   addChildLabels: [],
   gestures: [],
   permissions:[],
+  packages: [],
 );
 
 /// Firebase Pagination's body

@@ -44,6 +44,7 @@ final rowIntrinsicStates = IntrinsicStates(
   addChildLabels: [],
   gestures: [],
   permissions: [],
+  packages: [],
 );
 
 /// Body

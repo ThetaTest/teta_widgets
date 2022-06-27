@@ -43,6 +43,7 @@ final listTileIntrinsicStates = IntrinsicStates(
   ],
   gestures: [],
   permissions:[],
+  packages: [],
 );
 
 /// ListTile's body

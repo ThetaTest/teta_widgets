@@ -41,6 +41,7 @@ final markerIntrinsicStates = IntrinsicStates(
   addChildLabels: [],
   gestures: [],
   permissions: [],
+  packages: [],
 );
 
 /// Body of Marker

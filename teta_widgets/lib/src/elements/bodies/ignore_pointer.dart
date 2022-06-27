@@ -39,6 +39,7 @@ final ignorePointIntrinsicStates = IntrinsicStates(
   addChildLabels: [],
   gestures: [],
   permissions:[],
+  packages: [],
 );
 
 /// IgnorePointer's body

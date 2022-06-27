@@ -42,6 +42,7 @@ final cameraIntrinsicStates = IntrinsicStates(
   permissions:[
     Permissions.camera,
   ],
+  packages: [],
 );
 
 /// Set of funcs to use Align widget

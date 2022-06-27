@@ -47,6 +47,7 @@ final firebaseFutureBuilderIntrinsicStates = IntrinsicStates(
   addChildLabels: [],
   gestures: [],
   permissions:[],
+  packages: [],
 );
 
 /// Firebase FB's body

@@ -34,6 +34,7 @@ final spacerIntrinsicStates = IntrinsicStates(
   addChildLabels: [],
   gestures: [],
   permissions:[],
+  packages: [],
 );
 
 /// Body for Spacer widget

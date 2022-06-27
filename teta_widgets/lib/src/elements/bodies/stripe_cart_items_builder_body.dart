@@ -39,6 +39,7 @@ final stripeCartItemsBuilderBodyIntrinsicStates = IntrinsicStates(
   addChildLabels: [],
   gestures: [],
   permissions: [],
+  packages: [],
 );
 
 /// ListView Builder's body

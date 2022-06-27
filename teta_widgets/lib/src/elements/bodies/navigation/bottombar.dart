@@ -34,6 +34,7 @@ final bottomBarIntrinsicStates = IntrinsicStates(
   addChildLabels: ['Add BottomBar Widget'],
   gestures: [],
   permissions:[],
+  packages: [],
 );
 
 /// Body

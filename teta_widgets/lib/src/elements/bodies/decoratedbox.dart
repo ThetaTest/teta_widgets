@@ -43,6 +43,7 @@ final decoratedBoxIntrinsicStates = IntrinsicStates(
   addChildLabels: [],
   gestures: [],
   permissions:[],
+  packages: [],
 );
 
 /// Set of funcs to use DecoratedBox widget

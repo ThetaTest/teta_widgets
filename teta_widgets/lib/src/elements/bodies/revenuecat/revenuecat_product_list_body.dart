@@ -52,6 +52,7 @@ final revenueCatProductsListIntrinsicStates = IntrinsicStates(
   permissions:[
     Permissions.billing,
   ],
+  packages: [],
 );
 
 /// Body

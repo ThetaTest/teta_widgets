@@ -43,6 +43,7 @@ final textButtonIntrinsicStates = IntrinsicStates(
   addChildLabels: [],
   gestures: [ActionGesture.onTap],
   permissions: [],
+  packages: [],
 );
 
 /// Body for [TextButton] widget

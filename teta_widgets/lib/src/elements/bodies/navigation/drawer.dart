@@ -34,6 +34,7 @@ final drawerIntrinsicStates = IntrinsicStates(
   addChildLabels: ['Add Widget To Drawer'],
   gestures: [],
   permissions:[],
+  packages: [],
 );
 
 /// Body

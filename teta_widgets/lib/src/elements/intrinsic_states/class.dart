@@ -28,6 +28,7 @@ class IntrinsicStates {
     required this.addChildLabels,
     required this.gestures,
     required this.permissions,
+    required this.packages,
   });
 
   /// Icon of the node.
@@ -74,6 +75,10 @@ class IntrinsicStates {
   /// List of permissions to support in the released app -> dynamic based on node needs
   final List<Permissions> permissions;
 
+  ///List of all packages required for this node to work
+  final List<String> packages;
+ 
+
   bool get canHaveChildren => canHave == ChildrenEnum.children;
   bool get canHaveChild => canHave == ChildrenEnum.child;
 
@@ -93,6 +98,7 @@ class IntrinsicStates {
         addChildLabels: [],
         gestures: <ActionGesture>[],
         permissions: <Permissions>[],
+        packages: <String>[],
       );
 
   static IntrinsicStates get(final NType type) {

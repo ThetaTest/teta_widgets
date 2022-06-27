@@ -39,6 +39,7 @@ final materialBottomBarIntrinsicStates = IntrinsicStates(
   ],
   gestures: [],
   permissions:[],
+  packages: [],
 );
 
 /// ```dart

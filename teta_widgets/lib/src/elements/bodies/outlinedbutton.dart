@@ -40,6 +40,7 @@ final outlinedButtonIntrinsicStates = IntrinsicStates(
   addChildLabels: [],
   gestures: [ActionGesture.onTap],
   permissions: [],
+  packages: [],
 );
 
 /// Body

@@ -45,6 +45,7 @@ final cmsLoggedUserIntrinsicStates = IntrinsicStates(
   addChildLabels: [],
   gestures: [],
   permissions: [],
+  packages: [],
 );
 
 /// Body

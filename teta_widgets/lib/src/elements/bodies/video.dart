@@ -41,6 +41,7 @@ final videoIntrinsicStates = IntrinsicStates(
   addChildLabels: [],
   gestures: [],
   permissions:[],
+  packages: [],
 );
 
 /// Body for Video widget

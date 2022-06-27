@@ -41,6 +41,7 @@ final sizedBoxIntrinsicStates = IntrinsicStates(
   addChildLabels: [],
   gestures: [],
   permissions:[],
+  packages: [],
 );
 
 /// Body for SizedBox widget

@@ -49,6 +49,7 @@ final textFieldIntrinsicStates = IntrinsicStates(
   addChildLabels: [],
   gestures: [ActionGesture.onChange, ActionGesture.onSubmitted],
   permissions: [],
+  packages: [],
 );
 
 /// Body for TextField widget

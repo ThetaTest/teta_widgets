@@ -44,6 +44,7 @@ final mapIntrinsicStates = IntrinsicStates(
   permissions:[
     Permissions.location,
   ],
+  packages: [],
 );
 
 /// Body of MapBox

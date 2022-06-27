@@ -48,6 +48,7 @@ final dotsIndicatorIntrinsicStates = IntrinsicStates(
   addChildLabels: [],
   gestures: [],
   permissions:[],
+  packages: [],
 );
 
 /// Expanded's body

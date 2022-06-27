@@ -53,6 +53,7 @@ final gestureDetectorIntrinsicStates = IntrinsicStates(
     ActionGesture.onDoubleTap
   ],
   permissions: [],
+  packages: [],
 );
 
 /// GestureDetector's body

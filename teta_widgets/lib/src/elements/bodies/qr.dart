@@ -37,6 +37,7 @@ final qrIntrinsicStates = IntrinsicStates(
   addChildLabels: [],
   gestures: [],
   permissions: [],
+  packages: [],
 );
 
 /// Set of funcs to use Align widget

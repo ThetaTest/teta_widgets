@@ -53,6 +53,7 @@ final containerIntrinsicStates = IntrinsicStates(
   addChildLabels: [],
   gestures: [],
   permissions:[],
+  packages: [],
 );
 
 /// Set of funcs to use Container widget

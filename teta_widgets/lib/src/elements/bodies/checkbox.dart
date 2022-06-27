@@ -32,13 +32,13 @@ final checkBoxIntrinsicStates = IntrinsicStates(
   advicedChildrenCanHaveAtLeastAChild: [],
   displayName: NodeType.name(_globalType),
   type: _globalType,
-  //todo: reset to input when fixed
   category: NodeCategories.input,
   maxChildren: 0,
   canHave: ChildrenEnum.none,
   addChildLabels: [],
   gestures: [ActionGesture.onChange],
   permissions: [],
+  packages: [],
 );
 
 /// Set of funcs to use CheckBox widget

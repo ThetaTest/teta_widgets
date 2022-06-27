@@ -45,6 +45,7 @@ final firebaseStreamBuilderIntrinsicStates = IntrinsicStates(
   addChildLabels: [],
   gestures: [],
   permissions:[],
+  packages: [],
 );
 
 /// Firebase Stream Builder's body

@@ -56,6 +56,7 @@ final cupertinoSegmentedControlIntrinsicStates = IntrinsicStates(
     ActionGesture.onTap,
   ],
   permissions: [],
+  packages: [],
 );
 
 /// Cupertino Segmented Control's body

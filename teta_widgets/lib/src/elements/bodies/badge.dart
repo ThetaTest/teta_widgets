@@ -39,6 +39,7 @@ final badgeIntrinsicStates = IntrinsicStates(
   addChildLabels: [],
   gestures: [],
   permissions:[],
+  packages: [],
 );
 
 /// Sets of funcs to use Badge widget

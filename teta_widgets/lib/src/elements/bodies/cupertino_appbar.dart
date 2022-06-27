@@ -40,6 +40,7 @@ final cupertinoAppBarIntrinsicStates = IntrinsicStates(
   ],
   gestures: [],
   permissions:[],
+  packages: [],
 );
 
 /// ```dart

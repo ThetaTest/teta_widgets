@@ -38,6 +38,7 @@ final expandedIntrinsicStates = IntrinsicStates(
   addChildLabels: [],
   gestures: [],
   permissions:[],
+  packages: [],
 );
 
 /// Expanded's body

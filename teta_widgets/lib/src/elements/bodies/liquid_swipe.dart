@@ -38,6 +38,7 @@ final liquidSwipeIntrinsicStates = IntrinsicStates(
   addChildLabels: [],
   gestures: [],
   permissions:[],
+  packages: [],
 );
 
 /// LiquidSwipe's body

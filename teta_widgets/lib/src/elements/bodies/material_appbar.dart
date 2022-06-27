@@ -42,6 +42,7 @@ final materialAppBarIntrinsicStates = IntrinsicStates(
   ],
   gestures: [],
   permissions:[],
+  packages: [],
 );
 
 /// ```dart

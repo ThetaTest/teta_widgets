@@ -46,6 +46,7 @@ final conditionIntrinsicStates = IntrinsicStates(
   addChildLabels: ['Add Widget If True', 'Add Widget If False'],
   gestures: [],
   permissions:[],
+  packages: [],
 );
 
 /// Set of funcs to use Condition widget

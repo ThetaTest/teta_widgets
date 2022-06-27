@@ -37,7 +37,8 @@ final wrapIntrinsicStates = IntrinsicStates(
   canHave: ChildrenEnum.children,
   addChildLabels: [],
   gestures: [],
-  permissions:[],
+  permissions: [],
+  packages: [],
 );
 
 /// Body for Wrap widget

@@ -40,6 +40,7 @@ final concentricPageViewIntrinsicStates = IntrinsicStates(
   addChildLabels: [],
   gestures: [],
   permissions:[],
+  packages: [],
 );
 
 /// Concentric PageView's body

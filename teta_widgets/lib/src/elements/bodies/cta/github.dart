@@ -44,6 +44,7 @@ final loginGitHubIntrinsicStates = IntrinsicStates(
   addChildLabels: [],
   gestures: [ActionGesture.onTap, ActionGesture.onLongPress],
   permissions: [],
+  packages: [],
 );
 
 /// Instrict State of GitHub Login

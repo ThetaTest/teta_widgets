@@ -41,6 +41,7 @@ final aspectRatioIntrinsicStates = IntrinsicStates(
   addChildLabels: [],
   gestures: [],
   permissions:[],
+  packages: [],
 );
 
 /// Set of funcs of Center node

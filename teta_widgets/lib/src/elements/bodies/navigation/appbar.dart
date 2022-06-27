@@ -34,6 +34,7 @@ final appBarIntrinsicStates = IntrinsicStates(
   addChildLabels: ['Add AppBar Widget'],
   gestures: [],
   permissions:[],
+  packages: [],
 );
 
 /// Body

@@ -43,6 +43,7 @@ final columnIntrinsicStates = IntrinsicStates(
   addChildLabels: [],
   gestures: [],
   permissions: [],
+  packages: [],
 );
 
 /// Set of funcs to use Column widget

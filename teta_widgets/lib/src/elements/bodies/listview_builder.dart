@@ -44,6 +44,7 @@ final listViewBuilderIntrinsicStates = IntrinsicStates(
   addChildLabels: [],
   gestures: [],
   permissions: [],
+  packages: [],
 );
 
 /// ListView Builder's body

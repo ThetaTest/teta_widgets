@@ -7,7 +7,6 @@ import 'package:teta_core/src/models/dataset.dart';
 import 'package:teta_core/src/models/variable.dart';
 
 // Project imports:
-import 'package:teta_widgets/src/elements/code/templates/align.dart';
 import 'package:teta_widgets/src/elements/code/templates/web_view_x_template.dart';
 import 'package:teta_widgets/src/elements/controls/control_model.dart';
 import 'package:teta_widgets/src/elements/controls/key_constants.dart';
@@ -42,6 +41,7 @@ final webviewIntrinsicStates = IntrinsicStates(
   addChildLabels: [],
   gestures: [],
   permissions: [],
+  packages: [],
 );
 
 /// Set of funcs to use Align widget
