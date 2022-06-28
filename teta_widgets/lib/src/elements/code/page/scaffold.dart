@@ -133,27 +133,26 @@ String pageCodeTemplate(
   //----end states----
 
   //----start Packages----
-  final tempPagePackages = <String>[];
+  //this is a list i use for checks
+  final tempCheckPackages = <String>[];
+  final pagePackages = <String>[];
   for (final item in page.flatList!) {
     for (final package in item.intrinsicState.packages) {
-      if (!tempPagePackages.contains(package)) {
-        tempPagePackages.add(package);
+      //this will split in 2 or 3 part the string
+      final lp = package.split('|');
+      final packageName = lp[0];
+      var packageExtra = '';
+      if (lp.length >= 2) {
+        //this will and the extra field
+        packageExtra = lp[2];
+      }
+      if (!tempCheckPackages.contains(packageName)) {
+        tempCheckPackages.add(packageName);
+        pagePackages.add(
+          "import 'package:$packageName/$packageName.dart'$packageExtra;",
+        );
       }
     }
-  }
-
-  //todo: add the possibility to add as or hide:
-  /*To Consider:
-    for package:map/map.dart > as map | conflict with package:collection/collection.dart
-    for package:http/http.dart > as http | convetion
-    for package:intl/intl.dart > hide TextDirection | conflict with dart ui
-  */
-  //change to have this structure: import "package:<item>/<item>.dart"
-  final pagePackages = <String>[];
-  for (var i = 0; i < tempPagePackages.length; i++) {
-    pagePackages.add(
-      "import 'package:${tempPagePackages[i]}/${tempPagePackages[i]}.dart';",
-    );
   }
 
   final localPackages = pagePackages.join('\n');

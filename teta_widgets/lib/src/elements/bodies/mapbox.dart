@@ -21,6 +21,7 @@ import 'package:teta_widgets/src/elements/nodes/children_enum.dart';
 import 'package:teta_widgets/src/elements/nodes/enum.dart';
 import 'package:teta_widgets/src/elements/nodes/node.dart';
 import 'package:teta_widgets/src/elements/nodes/node_body.dart';
+import 'package:teta_widgets/src/elements/packages.dart';
 import 'package:teta_widgets/src/elements/widgets/mapbox.dart';
 
 const _globalType = NType.mapBox;
@@ -46,7 +47,7 @@ final mapBoxIntrinsicStates = IntrinsicStates(
   permissions: [
     Permissions.location,
   ],
-  packages: ['map', 'latlng'],
+  packages: [pMap, pLatLang],
 );
 
 /// Body of Map

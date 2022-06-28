@@ -17,6 +17,7 @@ import 'package:teta_widgets/src/elements/nodes/children_enum.dart';
 import 'package:teta_widgets/src/elements/nodes/enum.dart';
 import 'package:teta_widgets/src/elements/nodes/node.dart';
 import 'package:teta_widgets/src/elements/nodes/node_body.dart';
+import 'package:teta_widgets/src/elements/packages.dart';
 import 'package:teta_widgets/src/elements/widgets/icon.dart';
 
 const _globalType = NType.fontAwesome;
@@ -42,7 +43,7 @@ final fontAwesomeIntrinsicStates = IntrinsicStates(
   addChildLabels: [],
   gestures: [],
   permissions: [],
-  packages: ['material_design_icons_flutter'],
+  packages: [pMaterialDesignIconsFlutter],
 );
 
 /// Icon's body

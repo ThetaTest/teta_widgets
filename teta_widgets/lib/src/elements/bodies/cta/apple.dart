@@ -19,6 +19,7 @@ import 'package:teta_widgets/src/elements/nodes/children_enum.dart';
 import 'package:teta_widgets/src/elements/nodes/enum.dart';
 import 'package:teta_widgets/src/elements/nodes/node.dart';
 import 'package:teta_widgets/src/elements/nodes/node_body.dart';
+import 'package:teta_widgets/src/elements/packages.dart';
 import 'package:teta_widgets/src/elements/widgets/cta/apple.dart';
 
 const _globalType = NType.loginWithApple;
@@ -44,7 +45,7 @@ final loginAppleIntrinsicStates = IntrinsicStates(
   addChildLabels: [],
   gestures: <ActionGesture>[ActionGesture.onTap, ActionGesture.onLongPress],
   permissions: [],
-  packages: ['auth_buttons'],
+  packages: [pAuthButton],
 );
 
 /// Login Apple's body

@@ -16,6 +16,7 @@ import 'package:teta_widgets/src/elements/intrinsic_states/class.dart';
 import 'package:teta_widgets/src/elements/nodes/categories.dart';
 import 'package:teta_widgets/src/elements/nodes/children_enum.dart';
 import 'package:teta_widgets/src/elements/nodes/node_body.dart';
+import 'package:teta_widgets/src/elements/packages.dart';
 import 'package:teta_widgets/src/elements/widgets/qr.dart';
 
 const _globalType = NType.qrCode;
@@ -37,7 +38,7 @@ final qrIntrinsicStates = IntrinsicStates(
   addChildLabels: [],
   gestures: [],
   permissions: [],
-  packages: ['qr_flutter'],
+  packages: [pQrFlutter],
 );
 
 /// Set of funcs to use Align widget

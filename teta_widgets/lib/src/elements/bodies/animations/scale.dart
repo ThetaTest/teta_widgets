@@ -14,6 +14,7 @@ import 'package:teta_widgets/src/elements/intrinsic_states/class.dart';
 import 'package:teta_widgets/src/elements/nodes/categories.dart';
 import 'package:teta_widgets/src/elements/nodes/children_enum.dart';
 import 'package:teta_widgets/src/elements/nodes/node_body.dart';
+import 'package:teta_widgets/src/elements/packages.dart';
 import 'package:teta_widgets/src/elements/widgets/animations/scale.dart';
 
 const _globalType = NType.scaleAnimation;
@@ -35,7 +36,7 @@ final scaleAnimationIntrinsicStates = IntrinsicStates(
   addChildLabels: [],
   gestures: [],
   permissions: [],
-  packages: ['flutter_staggered_animations'],
+  packages: [pFlutterStaggeredAnimations],
 );
 
 /// Set of funcs to use Align widget
