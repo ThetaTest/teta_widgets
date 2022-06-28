@@ -6,8 +6,8 @@ import 'package:flutter/material.dart';
 import 'package:teta_core/gen/assets.gen.dart';
 import 'package:teta_core/src/models/dataset.dart';
 import 'package:teta_core/src/models/variable.dart';
-import 'package:teta_widgets/src/elements/code/templates/qr.dart';
 // Project imports:
+import 'package:teta_widgets/src/elements/code/templates/align.dart';
 import 'package:teta_widgets/src/elements/controls/control_model.dart';
 import 'package:teta_widgets/src/elements/controls/key_constants.dart';
 import 'package:teta_widgets/src/elements/controls/type.dart';
@@ -16,28 +16,27 @@ import 'package:teta_widgets/src/elements/intrinsic_states/class.dart';
 import 'package:teta_widgets/src/elements/nodes/categories.dart';
 import 'package:teta_widgets/src/elements/nodes/children_enum.dart';
 import 'package:teta_widgets/src/elements/nodes/node_body.dart';
-import 'package:teta_widgets/src/elements/widgets/qr.dart';
+import 'package:teta_widgets/src/elements/widgets/barcode.dart';
 
-const _globalType = NType.qrCode;
+const _globalType = NType.barcode;
 
 /// Instrict State of Align
-final qrIntrinsicStates = IntrinsicStates(
-  nodeIcon: Assets.wIcons.qrcode,
+final barcodeIntrinsicStates = IntrinsicStates(
+  nodeIcon: Assets.wIcons.barcode,
   nodeVideo: null,
   nodeDescription: null,
   advicedChildren: [],
   blockedTypes: [],
-  synonymous: [NodeType.name(_globalType), 'baseline', 'bottom'],
+  synonymous: [NodeType.name(_globalType), 'qrcode', 'code'],
   advicedChildrenCanHaveAtLeastAChild: [],
   displayName: NodeType.name(_globalType),
   type: _globalType,
-  category: NodeCategories.advanced,
+  category: NodeCategories.basic,
   maxChildren: 0,
   canHave: ChildrenEnum.none,
   addChildLabels: [],
   gestures: [],
   permissions: [],
-  packages: ['qr_flutter'],
 );
 
 /// Set of funcs to use Align widget
@@ -50,14 +49,14 @@ final qrIntrinsicStates = IntrinsicStates(
 ///   Widget? child
 /// })
 /// ```
-class QRBody extends NodeBody {
+class BarcodeBody extends NodeBody {
   @override
   // ignore: overridden_fields
   Map<String, dynamic> attributes = <String, dynamic>{
     DBKeys.value: FTextTypeInput(),
     DBKeys.image: FTextTypeInput(),
-    DBKeys.flag: false,
-    DBKeys.width: FSize(size: '250'),
+    DBKeys.width: FSize(size: '200'),
+    DBKeys.height: FSize(size: '200'),
     DBKeys.fill: FFill(
       levels: [
         FFillElement(
@@ -71,17 +70,25 @@ class QRBody extends NodeBody {
   @override
   List<ControlModel> get controls => [
         ControlObject(
-          title: 'Content',
+          title: 'Data',
           type: ControlType.value,
           key: DBKeys.value,
           value: attributes[DBKeys.value],
         ),
-        SizeControlObject(
-          type: ControlType.size,
-          key: DBKeys.width,
-          title: 'Size',
-          isWidth: true,
-          value: attributes[DBKeys.width] as FSize,
+        ControlObject(
+          type: ControlType.barcode,
+          key: DBKeys.image,
+          value: attributes[DBKeys.image],
+        ),
+        SizesControlObject(
+          keys: const [
+            DBKeys.width,
+            DBKeys.height,
+          ],
+          values: [
+            attributes[DBKeys.width] as FSize,
+            attributes[DBKeys.height] as FSize,
+          ],
         ),
         FillControlObject(
           title: 'Color',
@@ -105,24 +112,25 @@ class QRBody extends NodeBody {
     final CNode? child,
     final List<CNode>? children,
   }) =>
-      WQR(
+      WBarcode(
         ValueKey(
           '''
           ${node.nid}
           $loop
-          ${child ?? children}
+            ${child ?? children}
           ${(attributes[DBKeys.value] as FTextTypeInput).toJson()}
           ${(attributes[DBKeys.image] as FTextTypeInput).toJson()}
-          ${attributes[DBKeys.flag] as bool}
           ${(attributes[DBKeys.width] as FSize).toJson()}
+          ${(attributes[DBKeys.height] as FSize).toJson()}
           ${(attributes[DBKeys.fill] as FFill).toJson()}
         ''',
         ),
         node: node,
-        content: attributes[DBKeys.value] as FTextTypeInput,
-        image: attributes[DBKeys.image] as FTextTypeInput,
-        withImage: attributes[DBKeys.flag] as bool,
-        size: attributes[DBKeys.width] as FSize,
+        child: child,
+        data: attributes[DBKeys.value] as FTextTypeInput,
+        barcodeType: attributes[DBKeys.image] as FTextTypeInput,
+        width: attributes[DBKeys.width] as FSize,
+        height: attributes[DBKeys.height] as FSize,
         fill: attributes[DBKeys.fill] as FFill,
         forPlay: forPlay,
         loop: loop,
@@ -140,5 +148,5 @@ class QRBody extends NodeBody {
     final int pageId,
     final int? loop,
   ) =>
-      qrCodeTemplate(context, this, child, loop);
+      alignCodeTemplate(context, this, child);
 }

@@ -14,6 +14,7 @@ import 'package:teta_core/teta_core.dart';
 import 'package:teta_widgets/src/elements/controls/atoms/action.dart';
 import 'package:teta_widgets/src/elements/controls/atoms/aligns.dart';
 import 'package:teta_widgets/src/elements/controls/atoms/audio_controller.dart';
+import 'package:teta_widgets/src/elements/controls/atoms/barcode.dart';
 import 'package:teta_widgets/src/elements/controls/atoms/border_radius.dart';
 import 'package:teta_widgets/src/elements/controls/atoms/borders.dart';
 import 'package:teta_widgets/src/elements/controls/atoms/box_fit.dart';
@@ -132,6 +133,8 @@ enum ControlType {
   /// Made to select dataset only
   datasetType,
 
+  barcode,
+
   params,
   states,
 
@@ -248,6 +251,29 @@ class ControlBuilder {
     required final BuildContext context,
     required final ControlObject control,
   }) {
+    if (control.type == ControlType.barcode) {
+      return BarcodeControl(
+        node: node,
+        key: ValueKey(
+          '${node.nid} ${(control.value as FTextTypeInput).value}',
+        ),
+        value: control.value.runtimeType == FTextTypeInput
+            ? control.value as FTextTypeInput
+            : FTextTypeInput(),
+        callBack: (final value, final old) {
+          ControlBuilder.toDB(
+            prj,
+            page,
+            node,
+            context,
+            control.key,
+            value.toJson(),
+            old.toJson(),
+          );
+          BlocProvider.of<RefreshCubit>(context).change();
+        },
+      );
+    }
     if (control.type == ControlType.cmsCustomQuery) {
       return CodeFieldControl(
         key: ValueKey(

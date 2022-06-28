@@ -107,6 +107,7 @@ enum NType {
   wrapper,
   fontAwesome,
   qrCode,
+  barcode,
 
   // Transform
   transformRotate,
