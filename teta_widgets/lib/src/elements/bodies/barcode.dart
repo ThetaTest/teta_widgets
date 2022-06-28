@@ -37,18 +37,9 @@ final barcodeIntrinsicStates = IntrinsicStates(
   addChildLabels: [],
   gestures: [],
   permissions: [],
+  packages: [],
 );
 
-/// Set of funcs to use Align widget
-/// ```dart
-/// Align({
-///   Key? key,
-///   AlignmentGeometry alignment,
-///   double? widthFactor,
-///   double? heightFactor,
-///   Widget? child
-/// })
-/// ```
 class BarcodeBody extends NodeBody {
   @override
   // ignore: overridden_fields

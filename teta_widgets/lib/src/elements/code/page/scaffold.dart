@@ -124,48 +124,31 @@ String pageCodeTemplate(
       initStateString.write(element.initStateCode());
     }
   }
-  //todo: study how code export works with all nodes in order to do this
-  //todo: i think we need to fetch all node from pages id with the query here
-  //todo: and use the .then but i dont think is the most performant what
-  //todo: but this should works
-  //packages configuration
+
+  //----start Packages----
   final tempPagePackages = <String>[];
-  //brute check all childrens, and their childrens for each node in the page
-  for (var i = 0; i < children.length; i++) {
-    //scaffold level childrens (4: appbar, drawer, bottom, single_child)
-    final firstLayerFather = children[i];
-    if (firstLayerFather.children != null) {
-      for (var k = 0; k < firstLayerFather.children!.length; k++) {
-        //each childrens for all 4 above
-        final secondLayerFather = firstLayerFather.children![k];
-        for (var j = 0;
-            j < secondLayerFather.intrinsicState.packages.length;
-            j++) {
-          //check if already exist
-          if (!tempPagePackages
-              .contains(secondLayerFather.intrinsicState.packages[j])) {
-            tempPagePackages.add(secondLayerFather.intrinsicState.packages[j]);
-          }
-        }
+  for (final item in page.flatList!) {
+    for (final package in item.intrinsicState.packages) {
+      if (!tempPagePackages.contains(package)) {
+        tempPagePackages.add(package);
       }
     }
   }
+
   //todo: add the possibility to add as or hide: needed
-  //todo: for package:map/map.dart > as map
-  //todo: for package:http/http.dart > as http
-  //todo: for package:intl/intl.dart >  hide TextDirection
-  //tempPagePackages now have all the packages we need in this page.
-  //change them to have this structure: import "package:<item>/<item>.dart"
+  //for package:map/map.dart > as map
+  //for package:http/http.dart > as http
+  //for package:intl/intl.dart >  hide TextDirection
+  //change to have this structure: import "package:<item>/<item>.dart"
   final pagePackages = <String>[];
   for (var i = 0; i < tempPagePackages.length; i++) {
     pagePackages.add(
       "import 'package:${tempPagePackages[i]}/${tempPagePackages[i]}.dart';",
     );
   }
-  //final form for code
+
   final packages = pagePackages.join('\n');
-  Logger.printWarning(packages);
-  //----------------------------------------------------------------------------
+  //----end packages----
 
   final isSupabaseIntegrated = prj.config?.supabaseEnabled ?? false;
   final isStripeIntegrated = prj.config?.isStripeEnabled ?? false;
@@ -235,6 +218,7 @@ String pageCodeTemplate(
     import 'package:http/http.dart' as http;
     import 'package:teta_cms/teta_cms.dart';
     import 'package:webviewx/webviewx.dart';
+    $packages
 
 
     class Page${pageNameRC.pascalCase} extends StatefulWidget {
@@ -252,7 +236,7 @@ String pageCodeTemplate(
       int index = 0;
 
       @override
-      void initState() { 
+      void initState() {
         super.initState();
         $initStateString
         TetaCMS.instance.analytics.insertEvent(
