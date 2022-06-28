@@ -56,6 +56,7 @@ String textFieldCodeTemplate(
     null,
     isRequired: true,
     loop: loop,
+    withValue: true,
   )}
       ${CS.action(
     pageId,
@@ -66,6 +67,7 @@ String textFieldCodeTemplate(
     null,
     isRequired: false,
     loop: loop,
+    withValue: true,
   )}
       decoration: InputDecoration(
         filled: true,
