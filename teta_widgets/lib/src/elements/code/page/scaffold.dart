@@ -46,7 +46,11 @@ String pageCodeTemplate(
   var bottomBarString = '';
   var drawerString = '';
 
+  //----local properties for this page----
   final flag = node.body.attributes[DBKeys.flag] as bool;
+  final backgroundColor =
+      (node.body.attributes[DBKeys.fill] as FFill).getHexColor(context);
+  //----local properties end----
 
   for (final e in children) {
     if (e.globalType == NType.appBar) {
@@ -67,7 +71,6 @@ String pageCodeTemplate(
           (node.body.attributes[DBKeys.showBottomBar] as bool? ?? false)
               ? child != ''
                   ? '''
-      // BottomBar
       Positioned(
         left: 0,
         right: 0,
@@ -93,6 +96,7 @@ String pageCodeTemplate(
     }
   }
 
+  //----start parameters----
   final paramsString = StringBuffer()..write('');
   final parametersString = StringBuffer()..write('');
   for (final element in page.params) {
@@ -107,7 +111,9 @@ String pageCodeTemplate(
     );
     parametersString.write('this.${rc.camelCase} = $value, ');
   }
+  //----end parameters----
 
+  //----start states----
   final statesString = StringBuffer()..write('');
   final initStateString = StringBuffer()..write('');
   for (final element in page.states) {
@@ -124,6 +130,7 @@ String pageCodeTemplate(
       initStateString.write(element.initStateCode());
     }
   }
+  //----end states----
 
   //----start Packages----
   final tempPagePackages = <String>[];
@@ -135,10 +142,12 @@ String pageCodeTemplate(
     }
   }
 
-  //todo: add the possibility to add as or hide: needed
-  //for package:map/map.dart > as map
-  //for package:http/http.dart > as http
-  //for package:intl/intl.dart >  hide TextDirection
+  //todo: add the possibility to add as or hide:
+  /*To Consider:
+    for package:map/map.dart > as map | conflict with package:collection/collection.dart
+    for package:http/http.dart > as http | convetion
+    for package:intl/intl.dart > hide TextDirection | conflict with dart ui
+  */
   //change to have this structure: import "package:<item>/<item>.dart"
   final pagePackages = <String>[];
   for (var i = 0; i < tempPagePackages.length; i++) {
@@ -147,17 +156,18 @@ String pageCodeTemplate(
     );
   }
 
-  final packages = pagePackages.join('\n');
+  final localPackages = pagePackages.join('\n');
   //----end packages----
 
   final isSupabaseIntegrated = prj.config?.supabaseEnabled ?? false;
-  final isStripeIntegrated = prj.config?.isStripeEnabled ?? false;
-  final isAdMobIntegrated = prj.config?.isGoogleAdMobEnabled ?? false;
-  final isMapBoxIntegrated = prj.config?.mapboxKey != null ? true : false;
 
-  final backgroundColor =
-      (node.body.attributes[DBKeys.fill] as FFill).getHexColor(context);
+  /*Old bools for integrations
+   final isStripeIntegrated = prj.config?.isStripeEnabled ?? false;
+   final isAdMobIntegrated = prj.config?.isGoogleAdMobEnabled ?? false;
+   final isMapBoxIntegrated = prj.config?.mapboxKey != null ? true : false;
+  */
 
+  /*Old auth buttons
   final authSocialButtonsImport = (page.flatList ?? <CNode>[])
           .where(
             (final element) =>
@@ -169,17 +179,19 @@ String pageCodeTemplate(
           )
           .isNotEmpty
       ? "import 'package:auth_buttons/auth_buttons.dart';"
-      : '';
-
+      : '';*/
+  /*Old stripe import
   final stripeImport = isStripeIntegrated
       ? '''
       import 'package:flutter_stripe/flutter_stripe.dart';
       '''
       : '';
-
+   */
+  /*old adMob import
   final adMobImports = isAdMobIntegrated
       ? "import 'package:google_mobile_ads/google_mobile_ads.dart';"
       : '';
+  */
 
   final isARState = isSupabaseIntegrated
       ? page.isAuthenticatedRequired
@@ -192,33 +204,16 @@ String pageCodeTemplate(
     import 'dart:ui';
     import 'dart:convert';
     import 'package:flutter/material.dart';
-    ${page.isPage ? "import 'package:myapp/src/components/index.dart';" : ''}
-    ${isSupabaseIntegrated ? "import 'package:supabase/supabase.dart';" : ''}
-    ${isSupabaseIntegrated ? "import 'package:supabase_flutter/supabase_flutter.dart';" : ''}
-    ${page.isAuthenticatedRequired ? "import 'package:myapp/auth/auth_required_state.dart';" : "import 'package:myapp/auth/auth_state.dart';"}
-    ${isMapBoxIntegrated ? "import 'package:map/map.dart' as map;" : ''}
-    import 'package:url_launcher/url_launcher_string.dart';
-    import 'package:auth_buttons/auth_buttons.dart';
-    $stripeImport
-    $adMobImports
-    import 'package:bouncing_widget/bouncing_widget.dart';
-    import 'package:intl/intl.dart' hide TextDirection;
-    import 'package:tcard/tcard.dart';
-    import 'package:collection/collection.dart';
     import 'package:myapp/src/pages/index.dart';
+    ${page.isPage ? "import 'package:myapp/src/components/index.dart';" : ''}
+    ${page.isAuthenticatedRequired ? "import 'package:myapp/auth/auth_required_state.dart';" : "import 'package:myapp/auth/auth_state.dart';"}
+    import 'package:url_launcher/url_launcher_string.dart';
+    import 'package:intl/intl.dart' hide TextDirection;
+    import 'package:http/http.dart' as http;
     import 'package:google_fonts/google_fonts.dart';
     import 'package:sizer/sizer.dart';
-    import 'package:lottie/lottie.dart';
-    import 'package:latlng/latlng.dart';
-    import 'package:badges/badges.dart';
-    import 'package:paged_vertical_calendar/paged_vertical_calendar.dart';
-    import 'package:youtube_player_iframe/youtube_player_iframe.dart';
-    import 'package:material_design_icons_flutter/material_design_icons_flutter.dart';
-    import 'package:flutter_staggered_animations/flutter_staggered_animations.dart';
-    import 'package:http/http.dart' as http;
     import 'package:teta_cms/teta_cms.dart';
-    import 'package:webviewx/webviewx.dart';
-    $packages
+    $localPackages
 
 
     class Page${pageNameRC.pascalCase} extends StatefulWidget {

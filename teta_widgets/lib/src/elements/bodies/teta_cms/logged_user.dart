@@ -45,7 +45,7 @@ final cmsLoggedUserIntrinsicStates = IntrinsicStates(
   addChildLabels: [],
   gestures: [],
   permissions: [],
-  packages: ['teta_cms'],
+  packages: [],
 );
 
 /// Body
