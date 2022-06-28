@@ -124,11 +124,12 @@ String pageCodeTemplate(
       initStateString.write(element.initStateCode());
     }
   }
-
-  //TODO: ERROR this need to be recursive for each node and each children
+  //todo: study how code export works with all nodes in order to do this
+  //todo: i think we need to fetch all node from pages id with the query here
+  //todo: and use the .then but i dont think is the most performant what
+  //todo: but this should works
   //packages configuration
   final tempPagePackages = <String>[];
-
   //brute check all childrens, and their childrens for each node in the page
   for (var i = 0; i < children.length; i++) {
     //scaffold level childrens (4: appbar, drawer, bottom, single_child)
@@ -149,8 +150,6 @@ String pageCodeTemplate(
       }
     }
   }
-  
-
   //todo: add the possibility to add as or hide: needed
   //todo: for package:map/map.dart > as map
   //todo: for package:http/http.dart > as http
@@ -206,8 +205,8 @@ String pageCodeTemplate(
       : 'State<Page${pageNameRC.pascalCase}>';
 
   return '''
-    import 'dart:ui';
     import 'dart:io';
+    import 'dart:ui';
     import 'dart:convert';
     import 'package:flutter/material.dart';
     ${page.isPage ? "import 'package:myapp/src/components/index.dart';" : ''}
