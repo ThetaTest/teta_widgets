@@ -42,6 +42,7 @@ import 'package:teta_widgets/src/elements/controls/atoms/states.dart';
 import 'package:teta_widgets/src/elements/controls/atoms/text.dart';
 import 'package:teta_widgets/src/elements/controls/atoms/webview_controller.dart';
 import 'package:teta_widgets/src/elements/controls/control_model.dart';
+import 'package:teta_widgets/src/elements/controls/current_song_controll.dart';
 import 'package:teta_widgets/src/elements/controls/key_constants.dart';
 import 'package:teta_widgets/src/elements/controls/prefabs/sizes_prefab_control.dart';
 import 'package:teta_widgets/src/elements/controls/prefabs/text_prefab_control.dart';
@@ -154,6 +155,7 @@ enum ControlType {
   cameraController,
   webViewController,
   audioController,
+  audioPlayerCurrentDataset,
   mapController,
 
   cmsCollections,
@@ -331,6 +333,27 @@ class ControlBuilder {
             );
             BlocProvider.of<RefreshCubit>(context).change();
           },
+        ),
+      );
+    }
+    if (control.type == ControlType.audioPlayerCurrentDataset) {
+      return descriptionControlWidget(
+        description: control.description,
+        control: CurrentSongControl(
+          key: ValueKey('${node.nid}'),
+          node: node,
+          page: page,
+          title: control.title ?? 'Current audio player data set',
+          value: control.value as FTextTypeInput,
+          callBack: (final value, final old) => ControlBuilder.toDB(
+            prj,
+            page,
+            node,
+            context,
+            control.key,
+            value.toJson(),
+            old.toJson(),
+          ),
         ),
       );
     }

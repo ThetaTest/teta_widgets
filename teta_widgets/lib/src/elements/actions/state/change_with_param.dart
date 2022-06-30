@@ -31,7 +31,7 @@ class FActionStateChangeWithParam {
           params[indexParam].value ?? params[indexParam].defaultValue;
       states[index].controller = params[index].controller;
       states[index].file = params[index].file;
-      states[index].audioController = params[index].audioController;
+      // states[index].audioController = params[index].audioController;
       states[index].webViewController = params[index].webViewController;
       update(context);
     } catch (e) {

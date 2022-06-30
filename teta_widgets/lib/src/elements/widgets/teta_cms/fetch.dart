@@ -67,19 +67,13 @@ class WCmsFetch extends StatefulWidget {
 }
 
 class _WCmsFetchState extends State<WCmsFetch> {
+  bool isInitialized = false;
   DatasetObject _map = DatasetObject(
     name: 'Collection Query',
     map: [<String, dynamic>{}],
   );
-  late final Future<List<dynamic>> _future;
 
-  @override
-  void initState() {
-    super.initState();
-    calc();
-  }
-
-  Future calc() async {
+  Future<void> getDbElements() async {
     final collectionId = widget.collection.get(
       widget.params,
       widget.states,
@@ -118,8 +112,7 @@ class _WCmsFetchState extends State<WCmsFetch> {
     Logger.printWarning(
       '$collectionId, keyName: $keyName, keyValue: $keyValue',
     );
-    setState(() {
-      _future = TetaCMS.instance.client.getCollection(
+    final dbElements = await TetaCMS.instance.client.getCollection(
         collectionId,
         filters: [
           if (keyName.isNotEmpty && keyValue.isNotEmpty)
@@ -129,60 +122,55 @@ class _WCmsFetchState extends State<WCmsFetch> {
         page: int.tryParse(page) ?? 0,
         showDrafts: widget.showDrafts,
       );
+
+    setState((){
+      _addFetchDataToDataset(dbElements);
+      isInitialized = true;
     });
+  }
+
+
+  @override
+  void initState() {
+    super.initState();
+    getDbElements();
   }
 
   @override
   Widget build(final BuildContext context) {
+    Widget? child;
+    if(isInitialized) {
+      if (widget.children.isNotEmpty) {
+        child = widget.children.first.toWidget(
+          params: widget.params,
+          states: widget.states,
+          dataset: widget.dataset,
+          forPlay: widget.forPlay,
+        );
+      } else {
+        child = const SizedBox();
+      }
+    }
+
     return NodeSelectionBuilder(
       node: widget.node,
       forPlay: widget.forPlay,
       child: RepaintBoundary(
-        child: FutureBuilder(
-          future: _future,
-          builder: (final context, final snapshot) {
-            if (!snapshot.hasData) {
-              if (widget.children.isNotEmpty) {
-                return widget.children.last.toWidget(
-                  params: widget.params,
-                  states: widget.states,
-                  dataset: widget.dataset,
-                  forPlay: widget.forPlay,
-                );
-              } else {
-                return const Center(
-                  child: CircularProgressIndicator(),
-                );
-              }
-            }
-            if (snapshot.error != null) {
-              // TODO: Returns a error widget
-            }
-
-            final list = snapshot.data as List<dynamic>?;
-            Logger.printWarning('list: $list');
-            _map = _map.copyWith(
-              name: widget.node.name ?? widget.node.intrinsicState.displayName,
-              map: (list ?? const <dynamic>[])
-                  .map((final dynamic e) => e as Map<String, dynamic>)
-                  .toList(),
-            );
-            final datasets = addDataset(context, widget.dataset, _map);
-
-            // Returns child
-            if (widget.children.isNotEmpty) {
-              return widget.children.first.toWidget(
-                params: widget.params,
-                states: widget.states,
-                dataset: widget.dataset.isEmpty ? datasets : widget.dataset,
-                forPlay: widget.forPlay,
-              );
-            } else {
-              return const SizedBox();
-            }
-          },
-        ),
+        child: child,
       ),
     );
+  }
+
+  List<DatasetObject> _addFetchDataToDataset(final List<dynamic>? list) {
+    _map = _map.copyWith(
+      name: widget.node.name ?? widget.node.intrinsicState.displayName,
+      map: (list ?? const <dynamic>[])
+          .map((final dynamic e) => e as Map<String, dynamic>)
+          .toList(),
+    );
+
+    final datasets = addDataset(context, widget.dataset, _map);
+
+    return widget.dataset.isEmpty ? datasets : widget.dataset;
   }
 }

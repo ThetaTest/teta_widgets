@@ -9,7 +9,9 @@ import 'package:teta_widgets/src/elements/bodies/animations/fade_in.dart';
 import 'package:teta_widgets/src/elements/bodies/animations/scale.dart';
 import 'package:teta_widgets/src/elements/bodies/animations/slide.dart';
 import 'package:teta_widgets/src/elements/bodies/aspect_ratio.dart';
-import 'package:teta_widgets/src/elements/bodies/audio_player.dart';
+import 'package:teta_widgets/src/elements/bodies/audio_player_body.dart';
+import 'package:teta_widgets/src/elements/bodies/audio_player_progress_indicator_body.dart';
+import 'package:teta_widgets/src/elements/bodies/audio_player_volume_indicator_body.dart';
 import 'package:teta_widgets/src/elements/bodies/badge.dart';
 import 'package:teta_widgets/src/elements/bodies/barcode.dart';
 import 'package:teta_widgets/src/elements/bodies/bottombaritem.dart';
@@ -219,6 +221,8 @@ final stateTypes = <IntrinsicStates>[
   cameraIntrinsicStates,
   webviewIntrinsicStates,
   audioPlayerIntrinsicStates,
+  audioPlayerProgressIndicatorIntrinsicStates,
+  audioPlayerVolumeIndicatorIntrinsicStates,
   supabaseLoggedUserIntrinsicStates,
   httpRequestFutureBuilderIntrinsicStates,
   cupertinoSegmentedControlIntrinsicStates,
@@ -444,6 +448,10 @@ NodeBody getBody(final NType type) {
       return WebViewBody();
     case NType.audioPlayer:
       return AudioPlayerBody();
+    case NType.audioPlayerProgressIndicator:
+      return AudioPlayerProgressIndicatorBody();
+    case NType.audioPlayerVolumeIndicator:
+      return AudioPlayerVolumeIndicatorBody();
     case NType.supabaseLoggedUser:
       return SupabaseLoggedUserBody();
     case NType.httpRequest:
