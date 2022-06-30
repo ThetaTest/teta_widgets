@@ -133,28 +133,17 @@ String pageCodeTemplate(
   //----end states----
 
   //----start Packages----
-  //this is a list i use for checks
+  //list for checks
   final tempCheckPackages = <String>[];
   final pagePackages = <String>[];
   for (final item in page.flatList!) {
     for (final package in item.intrinsicState.packages) {
-      //this will split in 2 or 3 part the string
-      final lp = package.split('|');
-      final packageName = lp[0];
-      var packageExtra = '';
-      if (lp.length >= 2) {
-        //this will and the extra field
-        packageExtra = lp[2];
-      }
-      if (!tempCheckPackages.contains(packageName)) {
-        tempCheckPackages.add(packageName);
-        pagePackages.add(
-          "import 'package:$packageName/$packageName.dart'$packageExtra;",
-        );
+      if (!tempCheckPackages.contains(package.packageName)) {
+        tempCheckPackages.add(package.packageName);
+        pagePackages.add(package.getPackageToCode);
       }
     }
   }
-
   final localPackages = pagePackages.join('\n');
   //----end packages----
 
@@ -165,7 +154,6 @@ String pageCodeTemplate(
    final isAdMobIntegrated = prj.config?.isGoogleAdMobEnabled ?? false;
    final isMapBoxIntegrated = prj.config?.mapboxKey != null ? true : false;
   */
-
   /*Old auth buttons
   final authSocialButtonsImport = (page.flatList ?? <CNode>[])
           .where(

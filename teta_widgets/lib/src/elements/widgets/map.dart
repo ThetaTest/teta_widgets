@@ -194,9 +194,6 @@ class _WMapState extends State<WMap> {
                   }
                 }
 
-                final markerPositions =
-                    markers.map(transformer.fromLatLngToXYCoords).toList();
-
                 final markersChildren = widget.children
                     .where((final e) => e.intrinsicState.type == NType.marker)
                     .toList();
@@ -216,15 +213,11 @@ class _WMapState extends State<WMap> {
                   if ((widget.children[i] as NDynamic).intrinsicState.type ==
                       NType.marker) {
                     markersWidgets.add(
-                      Positioned(
-                        left: markerPositions[i].dx - 24,
-                        top: markerPositions[i].dy - 24,
-                        child: widget.children[i].toWidget(
-                          params: widget.params,
-                          states: widget.states,
-                          dataset: widget.dataset,
-                          forPlay: widget.forPlay,
-                        ),
+                      widget.children[i].toWidget(
+                        params: widget.params,
+                        states: widget.states,
+                        dataset: widget.dataset,
+                        forPlay: widget.forPlay,
                       ),
                     );
                   }

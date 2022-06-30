@@ -12,7 +12,6 @@ import 'package:teta_widgets/src/elements/nodes/children_enum.dart';
 import 'package:teta_widgets/src/elements/nodes/enum.dart';
 import 'package:teta_widgets/src/elements/nodes/node.dart';
 import 'package:teta_widgets/src/elements/nodes/node_body.dart';
-import 'package:teta_widgets/src/elements/packages.dart';
 import 'package:teta_widgets/src/elements/widgets/supabase/logged_user.dart';
 
 const _globalType = NType.supabaseLoggedUser;
@@ -45,7 +44,7 @@ final supabaseLoggedUserIntrinsicStates = IntrinsicStates(
   addChildLabels: [],
   gestures: [],
   permissions: [],
-  packages: [pSupabase, pFlutterSupabase],
+  packages: [],
 );
 
 /// Body

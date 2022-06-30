@@ -16,7 +16,7 @@ dependencies:
     git:
       url: git@github.com:andreabuttarelli/Teta.git
       path: teta_core
-      ref: develop
+      ref: feat/opt_code
 
   teta_cms:
     git:

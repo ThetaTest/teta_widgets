@@ -50,7 +50,7 @@ final supabaseFutureBuilderIntrinsicStates = IntrinsicStates(
   addChildLabels: [],
   gestures: [],
   permissions: [],
-  packages: [pSupabase, pFlutterSupabase],
+  packages: [],
 );
 
 /// Body

@@ -30,6 +30,6 @@ String markerCodeTemplate(
       child: GestureDetector(
         ${CS.child(context, child, comma: true)}
       ),
-    ); 
+    )
   ''';
 }

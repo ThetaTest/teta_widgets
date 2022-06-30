@@ -1,8 +1,8 @@
-// Project imports:
 // ignore_for_file: public_member_api_docs
 
 // Package imports:
 import 'package:teta_core/gen/assets.gen.dart';
+import 'package:teta_core/src/models/package.dart';
 // Project imports:
 import 'package:teta_widgets/src/elements/control_center.dart';
 import 'package:teta_widgets/src/elements/features/actions/enums/gestures.dart';
@@ -76,7 +76,7 @@ class IntrinsicStates {
   final List<Permissions> permissions;
 
   ///List of all packages required for this node to work
-  final List<String> packages;
+  final List<PackageModel> packages;
 
   bool get canHaveChildren => canHave == ChildrenEnum.children;
   bool get canHaveChild => canHave == ChildrenEnum.child;
@@ -97,7 +97,7 @@ class IntrinsicStates {
         addChildLabels: [],
         gestures: <ActionGesture>[],
         permissions: <Permissions>[],
-        packages: <String>[],
+        packages: <PackageModel>[],
       );
 
   static IntrinsicStates get(final NType type) {

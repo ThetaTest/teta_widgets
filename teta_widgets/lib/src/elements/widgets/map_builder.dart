@@ -229,9 +229,6 @@ class _WMapBuilderState extends State<WMapBuilder> {
                   }
                 }
 
-                final markerPositions =
-                    markers.map(transformer.fromLatLngToXYCoords).toList();
-
                 final markersChildren = db.getMap;
                 final markersWidgets = <Widget>[];
                 final normalWidgets = db.getMap
@@ -252,15 +249,11 @@ class _WMapBuilderState extends State<WMapBuilder> {
                   if ((widget.child as NDynamic?)?.intrinsicState.type ==
                       NType.marker) {
                     markersWidgets.add(
-                      Positioned(
-                        left: markerPositions[i].dx - 24,
-                        top: markerPositions[i].dy - 24,
-                        child: widget.child!.toWidget(
-                          params: widget.params,
-                          states: widget.states,
-                          dataset: widget.dataset,
-                          forPlay: widget.forPlay,
-                        ),
+                      widget.child!.toWidget(
+                        params: widget.params,
+                        states: widget.states,
+                        dataset: widget.dataset,
+                        forPlay: widget.forPlay,
                       ),
                     );
                   }
