@@ -337,6 +337,7 @@ class CS {
     required final int? loop,
     required final bool isRequired,
     final String? additionalCode,
+    final bool withValue = false,
     final bool endsWithComma = true,
   }) {
     final code = StringBuffer()..write('');
@@ -351,6 +352,7 @@ class CS {
             context: context,
             body: node,
             loop: loop ?? 0,
+            withValue: withValue,
           ),
         );
       }

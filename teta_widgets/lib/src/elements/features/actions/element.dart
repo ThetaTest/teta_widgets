@@ -1338,6 +1338,7 @@ class FActionElement extends Equatable {
     required final BuildContext context,
     required final CNode body,
     final String? value,
+    final bool withValue = false,
     final int loop = 0,
   }) {
     switch (actionType) {
@@ -1512,6 +1513,7 @@ class FActionElement extends Equatable {
                 stateName: stateName,
                 valueToChangeWith: valueTextTypeInput,
                 loop: loop,
+                isValueDefault: withValue,
               ),
               context,
             );

@@ -45,6 +45,7 @@ class FActionStateChangeWith {
     required final BuildContext context,
     required final String? stateName,
     required final FTextTypeInput? valueToChangeWith,
+    final bool isValueDefault = false,
     final int loop = 0,
   }) {
     if (valueToChangeWith != null && stateName != null) {
@@ -56,6 +57,14 @@ class FActionStateChangeWith {
       final varName = ReCase(stateName).camelCase;
 
       final value = valueToChangeWith.toCode(loop);
+
+      if (isValueDefault) {
+        return '''
+          setState(() {
+            $varName = value;
+          });
+        ''';
+      }
 
       final buffer = StringBuffer()..write('');
       //this will be inserted in a onChange (string value) method so this should work like this
