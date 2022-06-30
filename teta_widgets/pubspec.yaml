@@ -69,7 +69,7 @@ dependencies:
   expandable: ^5.0.1
   custom_refresh_indicator: ^1.0.0
   liquid_swipe: ^2.1.1
-  map: ^1.0.0
+  map: 1.1.0
   latlng: ^0.1.0
   webview_windows: ^0.1.6
   badges: ^2.0.1
