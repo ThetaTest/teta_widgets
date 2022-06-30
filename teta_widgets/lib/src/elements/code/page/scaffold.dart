@@ -133,18 +133,21 @@ String pageCodeTemplate(
   //----end states----
 
   //----start Packages----
+  var localPackages = '';
   //list for checks
-  final tempCheckPackages = <String>[];
-  final pagePackages = <String>[];
-  for (final item in page.flatList!) {
-    for (final package in item.intrinsicState.packages) {
-      if (!tempCheckPackages.contains(package.packageName)) {
-        tempCheckPackages.add(package.packageName);
-        pagePackages.add(package.getPackageToCode);
+  if (page.isPage) {
+    final tempCheckPackages = <String>[];
+    final pagePackages = <String>[];
+    for (final item in page.flatList!) {
+      for (final package in item.intrinsicState.packages) {
+        if (!tempCheckPackages.contains(package.packageName)) {
+          tempCheckPackages.add(package.packageName);
+          pagePackages.add(package.getPackageToCode);
+        }
       }
     }
+    localPackages = pagePackages.join('\n');
   }
-  final localPackages = pagePackages.join('\n');
   //----end packages----
 
   final isSupabaseIntegrated = prj.config?.supabaseEnabled ?? false;
