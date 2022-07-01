@@ -51,7 +51,7 @@ final calendarIntrinsicStates = IntrinsicStates(
   permissions: [
     Permissions.calendar,
   ],
-  packages: [pPagedVerticalCalendar],
+  packages: [pPagedVerticalCalendar,pIntl],
 );
 
 /// Set of funcs to use Align widget

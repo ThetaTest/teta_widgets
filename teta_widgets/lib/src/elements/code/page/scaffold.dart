@@ -156,7 +156,6 @@ String pageCodeTemplate(
     import 'package:myapp/src/pages/index.dart';
     ${page.isPage ? "import 'package:myapp/src/components/index.dart';" : ''}
     ${page.isAuthenticatedRequired ? "import 'package:myapp/auth/auth_required_state.dart';" : "import 'package:myapp/auth/auth_state.dart';"}
-    import 'package:intl/intl.dart' hide TextDirection;
     import 'package:http/http.dart' as http;
     import 'package:google_fonts/google_fonts.dart';
     import 'package:sizer/sizer.dart';
