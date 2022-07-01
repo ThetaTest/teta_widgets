@@ -134,7 +134,7 @@ String pageCodeTemplate(
   //----end states----
 
   //packages
-  if (page.isPage) {
+  if (page.isPage && page.flatList != null) {
     for (final item in page.flatList!) {
       PackagesService.instance.insertPackages(item.intrinsicState.packages);
     }
@@ -149,9 +149,6 @@ String pageCodeTemplate(
       : 'State<Page${pageNameRC.pascalCase}>';
 
   return '''
-    import 'dart:io';
-    import 'dart:ui';
-    import 'dart:convert';
     import 'package:flutter/material.dart';
     import 'package:myapp/src/pages/index.dart';
     ${page.isPage ? "import 'package:myapp/src/components/index.dart';" : ''}
