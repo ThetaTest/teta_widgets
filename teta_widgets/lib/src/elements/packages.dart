@@ -83,3 +83,8 @@ const PackageModel pWebviewX = PackageModel(
   packageName: 'webviewx',
   packageVersion: '^0.2.1',
 );
+const PackageModel pUrlLauncher = PackageModel(
+  packageName: 'url_launcher',
+  packageVersion: '^6.1.2',
+  customPath: "import 'package:url_launcher/url_launcher_string.dart';",
+);

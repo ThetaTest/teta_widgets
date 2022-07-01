@@ -5,10 +5,14 @@
 import 'package:flutter/material.dart';
 import 'package:teta_core/teta_core.dart';
 import 'package:teta_widgets/src/elements/index.dart';
+import 'package:teta_widgets/src/elements/packages.dart';
 // Package imports:
 import 'package:url_launcher/url_launcher_string.dart';
 
 class FActionNavigationLaunchURL {
+  //list of packages needed for this action
+  static List<PackageModel> packages = [pUrlLauncher];
+
   static Future action({
     required final BuildContext context,
     required final List<VariableObject> params,
