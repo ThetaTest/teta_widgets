@@ -40,7 +40,7 @@ final stripeProductsBuilder = IntrinsicStates(
   addChildLabels: [],
   gestures: [],
   permissions: [],
-  packages: [pFlutterStripe],
+  packages: [],
 );
 
 /// ListView Builder's body

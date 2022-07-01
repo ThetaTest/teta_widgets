@@ -14,7 +14,6 @@ import 'package:teta_widgets/src/elements/intrinsic_states/class.dart';
 import 'package:teta_widgets/src/elements/nodes/categories.dart';
 import 'package:teta_widgets/src/elements/nodes/children_enum.dart';
 import 'package:teta_widgets/src/elements/nodes/node_body.dart';
-import 'package:teta_widgets/src/elements/packages.dart';
 import 'package:teta_widgets/src/elements/widgets/w_google_ad_mob_banner_ad_body.dart';
 
 /// GlobalType for [] widget
@@ -37,7 +36,7 @@ final googleAdMobBannerAdIntrinsicStates = IntrinsicStates(
   addChildLabels: [],
   gestures: [],
   permissions: [],
-  packages: [pGoogleMobileAds],
+  packages: [],
 );
 
 /// Body for [] widget
