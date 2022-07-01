@@ -15,6 +15,7 @@ import 'package:teta_core/src/models/map_element.dart';
 import 'package:teta_core/src/models/page.dart';
 import 'package:teta_core/src/models/project.dart';
 import 'package:teta_core/src/models/variable.dart';
+import 'package:teta_core/src/services/packages_service.dart';
 // Project imports:
 import 'package:teta_widgets/src/elements/actions/audio_player/loop_all.dart';
 import 'package:teta_widgets/src/elements/actions/audio_player/loop_off.dart';
@@ -867,6 +868,8 @@ class FActionElement extends Equatable {
             );
             break;
           case ActionNavigation.launchURL:
+            PackagesService.instance
+                .insertPackages(FActionNavigationLaunchURL.packages);
             await actionS(
               () => FActionNavigationLaunchURL.action(
                 context: context,
@@ -1554,6 +1557,8 @@ class FActionElement extends Equatable {
               context,
             );
           case ActionNavigation.launchURL:
+            PackagesService.instance
+                .insertPackages(FActionNavigationLaunchURL.packages);
             return codeS(
               FActionNavigationLaunchURL.toCode(
                 context,

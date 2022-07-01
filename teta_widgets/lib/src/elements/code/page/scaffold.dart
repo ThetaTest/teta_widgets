@@ -7,6 +7,7 @@ import 'package:diacritic/diacritic.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:recase/recase.dart';
+import 'package:teta_core/src/services/packages_service.dart';
 import 'package:teta_core/teta_core.dart';
 // Project imports:
 import 'package:teta_widgets/src/elements/controls/key_constants.dart';
@@ -132,56 +133,14 @@ String pageCodeTemplate(
   }
   //----end states----
 
-  //----start Packages----
-  var localPackages = '';
-  //list for checks
+  //packages
   if (page.isPage) {
-    final tempCheckPackages = <String>[];
-    final pagePackages = <String>[];
     for (final item in page.flatList!) {
-      for (final package in item.intrinsicState.packages) {
-        if (!tempCheckPackages.contains(package.packageName)) {
-          tempCheckPackages.add(package.packageName);
-          pagePackages.add(package.getPackageImport);
-        }
-      }
+      PackagesService.instance.insertPackages(item.intrinsicState.packages);
     }
-    localPackages = pagePackages.join('\n');
   }
-  //----end packages----
 
   final isSupabaseIntegrated = prj.config?.supabaseEnabled ?? false;
-
-  /*Old bools for integrations
-   final isStripeIntegrated = prj.config?.isStripeEnabled ?? false;
-   final isAdMobIntegrated = prj.config?.isGoogleAdMobEnabled ?? false;
-   final isMapBoxIntegrated = prj.config?.mapboxKey != null ? true : false;
-  */
-  /*Old auth buttons
-  final authSocialButtonsImport = (page.flatList ?? <CNode>[])
-          .where(
-            (final element) =>
-                element.intrinsicState.type == NType.loginWithGoogle ||
-                element.intrinsicState.type == NType.loginWithApple ||
-                element.intrinsicState.type == NType.loginWithFacebook ||
-                element.intrinsicState.type == NType.loginWithGitHub ||
-                element.intrinsicState.type == NType.loginWithTwitter,
-          )
-          .isNotEmpty
-      ? "import 'package:auth_buttons/auth_buttons.dart';"
-      : '';*/
-  /*Old stripe import
-  final stripeImport = isStripeIntegrated
-      ? '''
-      import 'package:flutter_stripe/flutter_stripe.dart';
-      '''
-      : '';
-   */
-  /*old adMob import
-  final adMobImports = isAdMobIntegrated
-      ? "import 'package:google_mobile_ads/google_mobile_ads.dart';"
-      : '';
-  */
 
   final isARState = isSupabaseIntegrated
       ? page.isAuthenticatedRequired
@@ -197,13 +156,12 @@ String pageCodeTemplate(
     import 'package:myapp/src/pages/index.dart';
     ${page.isPage ? "import 'package:myapp/src/components/index.dart';" : ''}
     ${page.isAuthenticatedRequired ? "import 'package:myapp/auth/auth_required_state.dart';" : "import 'package:myapp/auth/auth_state.dart';"}
-    import 'package:url_launcher/url_launcher_string.dart';
     import 'package:intl/intl.dart' hide TextDirection;
     import 'package:http/http.dart' as http;
     import 'package:google_fonts/google_fonts.dart';
     import 'package:sizer/sizer.dart';
     import 'package:teta_cms/teta_cms.dart';
-    $localPackages
+    ${PackagesService.instance.getToCodePackages()}
 
 
     class Page${pageNameRC.pascalCase} extends StatefulWidget {
