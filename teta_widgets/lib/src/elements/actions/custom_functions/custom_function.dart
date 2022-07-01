@@ -41,7 +41,7 @@ class FActionCustomFunction {
             .firstWhere((final element) => element.id == customFunctionId);
         code = func.code!;
       } else {
-        code = '''print('default custom function')''';
+        code = '''print('default custom function');''';
       }
       return '''
       $code
