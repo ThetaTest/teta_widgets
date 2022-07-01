@@ -57,7 +57,7 @@ String calendarCodeTemplate(
       dayBuilder: (context, date) {
         final dataset = datasets['${dataset.datasetName}'];
          final element =
-                            (dataset as List<dynamic>).firstWhere(
+                            (dataset as List<dynamic>).firstWhereOrNull(
                           (e) {
                             final d = DateTime.tryParse(e['${dataset.datasetAttrName}']);
                             return d?.year == date.year &&
