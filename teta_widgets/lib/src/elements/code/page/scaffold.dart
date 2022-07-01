@@ -142,7 +142,7 @@ String pageCodeTemplate(
       for (final package in item.intrinsicState.packages) {
         if (!tempCheckPackages.contains(package.packageName)) {
           tempCheckPackages.add(package.packageName);
-          pagePackages.add(package.getPackageToCode);
+          pagePackages.add(package.getPackageImport);
         }
       }
     }
