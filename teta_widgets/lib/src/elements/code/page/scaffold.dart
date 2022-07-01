@@ -151,6 +151,7 @@ String pageCodeTemplate(
   return '''
     import 'package:flutter/material.dart';
     import 'package:myapp/src/pages/index.dart';
+    import 'package:collection/collection.dart';
     ${page.isPage ? "import 'package:myapp/src/components/index.dart';" : ''}
     ${page.isAuthenticatedRequired ? "import 'package:myapp/auth/auth_required_state.dart';" : "import 'package:myapp/auth/auth_state.dart';"}
     import 'package:http/http.dart' as http;
