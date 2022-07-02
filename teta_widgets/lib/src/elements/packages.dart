@@ -33,6 +33,7 @@ const PackageModel pGoogleMobileAds = PackageModel(
   packageName: 'google_mobile_ads',
   packageVersion: '1.2.0',
   isDart: false,
+  customPath: "import 'package:google_mobile_ads/google_mobile_ads.dart';"
 );
 //todo: optimize later - unused - right now is a default import
 const PackageModel pFlutterStripe = PackageModel(
