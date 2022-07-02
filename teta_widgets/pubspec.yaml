@@ -130,7 +130,7 @@ dependencies:
   sizer: 2.0.15
 
   # Storage
-  hive: 3.3.0
+  hive: 2.2.1
   shared_preferences: 2.0.15
 
   # Code
