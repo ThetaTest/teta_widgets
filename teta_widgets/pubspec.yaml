@@ -41,7 +41,7 @@ dependencies:
   google_fonts: 2.3.3
   flutter_feather_icons: 2.0.0+1
   material_design_icons_flutter: 5.0.6595
-  flutter_svg: 1.1.1
+  flutter_svg: 1.1.1+1
   fluentui_system_icons: 1.1.173
   font_awesome_flutter_named: 1.1.1
   line_icons: 2.0.1
