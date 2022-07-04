@@ -69,7 +69,7 @@ String textFieldCodeTemplate(
   )}
       decoration: InputDecoration(
         filled: true,
-        ${fillToCodeColor != null ? fillToCodeColor.replaceAll('color:', 'fillColor:') : ''}
+        ${fillToCodeColor != null ? fillToCodeColor.replaceAll('color', 'fillColor') : ''}
         counterStyle: TextStyle(
                 $fillToCodeColor),
         border: OutlineInputBorder(

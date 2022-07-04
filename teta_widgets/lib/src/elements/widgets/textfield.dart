@@ -104,10 +104,11 @@ class _WTextFieldState extends State<WTextField> {
             controller: textEditingController,
             decoration: InputDecoration(
               filled: true,
-              fillColor:
-                  HexColor(widget.fill.get(context).getHexColor(context)),
+              fillColor: HexColor(widget.fill.get(context).getHexColor(context))
+                  .withOpacity(widget.fill.levels!.first.opacity ?? 1),
               counterStyle: TextStyle(
-                color: HexColor(widget.fill.get(context).getHexColor(context)),
+                color: HexColor(widget.fill.get(context).getHexColor(context))
+                    .withOpacity(widget.fill.levels!.first.opacity ?? 1),
               ),
               border: OutlineInputBorder(
                 borderRadius: borderRadius,

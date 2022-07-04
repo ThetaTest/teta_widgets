@@ -2,6 +2,7 @@
 // ignore_for_file: public_member_api_docs
 
 // Flutter imports:
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 // Package imports:
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -226,13 +227,14 @@ class ColorControlState extends State<LinearFillControl> {
                 ),
               ),
             ),
-            const SizedBox(
-              width: double.maxFinite,
-              height: 300,
-              child: GradientSwiper(
-                child: THeadline3('Ciao'),
+            if (kDebugMode)
+              const SizedBox(
+                width: double.maxFinite,
+                height: 300,
+                child: GradientSwiper(
+                  child: THeadline3('Ciao'),
+                ),
               ),
-            ),
             Row(
               children: [
                 Expanded(
