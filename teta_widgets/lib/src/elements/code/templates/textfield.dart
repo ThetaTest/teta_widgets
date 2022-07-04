@@ -43,9 +43,7 @@ String textFieldCodeTemplate(
   Container(
     ${CS.margin(context, body, isMargin: true)}
     ${CS.size(context, body, isWidth: true)}
-    decoration: BoxDecoration(
-      ${CS.borderRadius(context, body)}
-    ),
+    ${CS.boxDecoration(context, body, DBKeys.fill)}
     child: TextField(
       ${CS.action(
     pageId,
@@ -71,8 +69,7 @@ String textFieldCodeTemplate(
   )}
       decoration: InputDecoration(
         filled: true,
-        fillColor: Color(0xFF${fill.levels!.first.color.toUpperCase()})
-                  .withOpacity(${fill.levels!.first.opacity}),
+        ${fillToCodeColor != null ? fillToCodeColor.replaceAll('color:', 'fillColor:') : ''}
         counterStyle: TextStyle(
                 $fillToCodeColor),
         border: OutlineInputBorder(
