@@ -32,6 +32,10 @@ class WTextField extends StatefulWidget {
     required this.autoCorrect,
     required this.obscureText,
     required this.borderRadius,
+    required this.showBorders,
+    required this.bordersSize,
+    required this.enabledBorderColor,
+    required this.focusedBorderColor,
     required this.action,
     required this.params,
     required this.states,
@@ -59,6 +63,11 @@ class WTextField extends StatefulWidget {
   final bool obscureText;
   final FTextStyle textStyle;
   final FBorderRadius borderRadius;
+  final bool showBorders;
+  final FTextTypeInput bordersSize;
+
+  final FFill enabledBorderColor;
+  final FFill focusedBorderColor;
   final FAction action;
 
   final List<VariableObject> params;
@@ -114,9 +123,51 @@ class _WTextFieldState extends State<WTextField> {
                 borderRadius: borderRadius,
               ),
               enabledBorder: OutlineInputBorder(
+                borderSide: BorderSide(
+                  color: widget.showBorders
+                      ? HexColor(
+                          widget.enabledBorderColor
+                              .get(context)
+                              .getHexColor(context),
+                        ).withOpacity(
+                          widget.enabledBorderColor.levels!.first.opacity ?? 1,
+                        )
+                      : Colors.transparent,
+                  width: double.tryParse(
+                        widget.bordersSize.get(
+                          widget.params,
+                          widget.states,
+                          widget.dataset,
+                          widget.forPlay,
+                          widget.loop,
+                        ),
+                      ) ??
+                      1,
+                ),
                 borderRadius: borderRadius,
               ),
               focusedBorder: OutlineInputBorder(
+                borderSide: BorderSide(
+                  color: widget.showBorders
+                      ? HexColor(
+                          widget.focusedBorderColor
+                              .get(context)
+                              .getHexColor(context),
+                        ).withOpacity(
+                          widget.focusedBorderColor.levels!.first.opacity ?? 1,
+                        )
+                      : Colors.transparent,
+                  width: double.tryParse(
+                        widget.bordersSize.get(
+                          widget.params,
+                          widget.states,
+                          widget.dataset,
+                          widget.forPlay,
+                          widget.loop,
+                        ),
+                      ) ??
+                      1,
+                ),
                 borderRadius: borderRadius,
               ),
               hintText: widget.labelText.get(

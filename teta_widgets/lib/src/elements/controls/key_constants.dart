@@ -108,6 +108,12 @@ class DBKeys {
   static const String showCursor = 'shCrs';
   static const String autoCorrect = 'autoC';
   static const String obscureText = 'obT';
+  //
+  static const String showBorders = 'bEnb';
+  static const String enabledBorderColor = 'ebc';
+  static const String focusedBorderColor = 'fbc';
+  static const String bordersSize = 'bs';
+  //
   static const String hintTextColor = 'hintTC';
   static const String cursorColor = 'cursorC';
 
@@ -386,6 +392,14 @@ class DynamicAttributes {
           return value;
         case DBKeys.obscureText:
           return value;
+        case DBKeys.showBorders:
+          return value;
+        case DBKeys.bordersSize:
+          return FTextTypeInput.fromJson(value as Map<String, dynamic>);
+        case DBKeys.enabledBorderColor:
+          return FFill().fromJson(value as Map<String, dynamic>);
+        case DBKeys.focusedBorderColor:
+          return FFill().fromJson(value as Map<String, dynamic>);
         case DBKeys.cursorColor:
           return FFill().fromJson(value as Map<String, dynamic>);
         case DBKeys.hintTextColor:
@@ -617,6 +631,14 @@ class DynamicAttributes {
         return value;
       case DBKeys.obscureText:
         return value;
+      case DBKeys.showBorders:
+        return value;
+      case DBKeys.bordersSize:
+        return value != null ? value.toJson() : FTextTypeInput().toJson();
+      case DBKeys.enabledBorderColor:
+        return value != null ? value.toJson() : FFill().toJson();
+      case DBKeys.focusedBorderColor:
+        return value != null ? value.toJson() : FFill().toJson();
       case DBKeys.cursorColor:
         return value != null ? value.toJson() : FFill().toJson();
       case DBKeys.hintTextColor:
