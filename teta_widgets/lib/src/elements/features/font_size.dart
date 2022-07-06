@@ -40,7 +40,7 @@ class FFontSize {
       if (double.tryParse('$json') != null) {
         size = double.tryParse('$json') ?? 16;
       } else {
-        size = json['s'] as double? ?? 16;
+        size = double.parse('${json['s']}');
       }
       return FFontSize(
         size: size,
