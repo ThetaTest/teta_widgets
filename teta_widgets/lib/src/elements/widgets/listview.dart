@@ -5,6 +5,7 @@
 import 'package:flutter/material.dart';
 // Package imports:
 import 'package:teta_core/teta_core.dart';
+import 'package:teta_widgets/src/elements/features/physic.dart';
 // Project imports:
 import 'package:teta_widgets/src/elements/index.dart';
 
@@ -17,6 +18,7 @@ class WListView extends StatelessWidget {
     required this.forPlay,
     required this.flagValue,
     required this.value,
+    required this.physic,
     required this.isVertical,
     required this.isReverse,
     required this.params,
@@ -33,6 +35,7 @@ class WListView extends StatelessWidget {
   final bool isVertical;
   final bool flagValue;
   final FTextTypeInput value;
+  final FPhysic physic;
   final bool isPrimary;
   final bool isReverse;
   final int? loop;
@@ -49,6 +52,7 @@ class WListView extends StatelessWidget {
       forPlay: forPlay,
       child: ListView.builder(
         reverse: isReverse,
+        physics: physic.physics,
         addAutomaticKeepAlives: false,
         addRepaintBoundaries: false,
         scrollDirection: isVertical ? Axis.vertical : Axis.horizontal,

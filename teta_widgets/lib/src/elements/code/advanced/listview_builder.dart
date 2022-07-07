@@ -1,5 +1,6 @@
 // Flutter imports:
 import 'package:flutter/material.dart';
+import 'package:teta_widgets/src/elements/code/snippets.dart';
 // Project imports:
 import 'package:teta_widgets/src/elements/controls/key_constants.dart';
 import 'package:teta_widgets/src/elements/features/dataset.dart';
@@ -43,6 +44,7 @@ String listViewBuilderCodeTemplate(
         return ListView.builder(
           $_scrollDirection
           reverse: $reverse,
+          physics: ${CS.physic(context, body)},
           shrinkWrap: $shrinkWrap,
           itemCount: this.datasets['$dataset'].length > 0 ? this.datasets['$dataset'].length : 0,
           itemBuilder: (context, index) {

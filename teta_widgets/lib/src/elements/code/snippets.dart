@@ -14,6 +14,7 @@ import 'package:teta_widgets/src/elements/features/firestore_path.dart';
 import 'package:teta_widgets/src/elements/features/main_axis_alignment.dart';
 import 'package:teta_widgets/src/elements/features/main_axis_size.dart';
 import 'package:teta_widgets/src/elements/features/margins.dart';
+import 'package:teta_widgets/src/elements/features/physic.dart';
 import 'package:teta_widgets/src/elements/features/sizes.dart';
 import 'package:teta_widgets/src/elements/features/text_style.dart';
 import 'package:teta_widgets/src/elements/features/wrap_alignment.dart';
@@ -377,6 +378,21 @@ class CS {
         ? (body.attributes[DBKeys.align] as FAlign).toCode()
         : null;
     return avoidRedundantValue(value, 'alignment', 'Alignment.center');
+  }
+
+  /// Returns ScrollPhysics for ListView
+  ///
+  /// ```dart
+  /// physics: const AlwaysScrollableScrollPhysics()
+  ///          const NeverScrollableScrollPhysics()
+  ///          const BouncingScrollPhysics()
+  /// ```
+  ///
+  static String physic(final BuildContext context, final NodeBody body) {
+    final value = body.attributes[DBKeys.physic] != null
+        ? (body.attributes[DBKeys.physic] as FPhysic).toCode()
+        : null;
+    return value!;
   }
 
   /// Returns mainAxisAlignment: MainAxisAlignment code

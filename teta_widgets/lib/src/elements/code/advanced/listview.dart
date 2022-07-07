@@ -30,18 +30,9 @@ String listViewCodeTemplate(
     ListView(
       reverse: $reverse,
       primary: $primary,
+      physics: ${CS.physic(context, body)},
       $_scrollDirection
       ${CS.children(context, children)}
     )
   ''';
-}
-
-// ignore: unused_element
-Widget _example() {
-  return ListView(
-    // ignore: avoid_redundant_argument_values
-    scrollDirection: Axis.vertical, // isVertical (vertical is dedundant!)
-    // ignore: avoid_redundant_argument_values
-    children: const [], // All children.toCode
-  );
 }

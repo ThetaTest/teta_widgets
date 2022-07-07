@@ -116,6 +116,7 @@ class ListViewBody extends NodeBody {
       ${attributes[DBKeys.isPrimary] as bool}
       ${attributes[DBKeys.isVertical] as bool}
       ${attributes[DBKeys.flag] as bool}
+      ${attributes[DBKeys.physic] as FPhysic}
       ${attributes[DBKeys.isFullWidth] as bool}
       ''',
         ),
@@ -123,6 +124,7 @@ class ListViewBody extends NodeBody {
         children: children ?? [],
         flagValue: false, //Check
         value: FTextTypeInput(),
+        physic: attributes[DBKeys.physic] as FPhysic,
         isPrimary: attributes[DBKeys.isPrimary] as bool, //Check
         isVertical: attributes[DBKeys.isVertical] as bool,
         shrinkWrap: attributes[DBKeys.flag] as bool,

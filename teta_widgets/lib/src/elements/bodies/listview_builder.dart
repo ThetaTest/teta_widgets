@@ -13,6 +13,7 @@ import 'package:teta_widgets/src/elements/controls/control_model.dart';
 import 'package:teta_widgets/src/elements/controls/key_constants.dart';
 import 'package:teta_widgets/src/elements/controls/type.dart';
 import 'package:teta_widgets/src/elements/features/dataset.dart';
+import 'package:teta_widgets/src/elements/features/physic.dart';
 import 'package:teta_widgets/src/elements/intrinsic_states/class.dart';
 import 'package:teta_widgets/src/elements/nodes/categories.dart';
 import 'package:teta_widgets/src/elements/nodes/children_enum.dart';
@@ -57,6 +58,7 @@ class ListViewBuilderBody extends NodeBody {
     DBKeys.flag: true,
     DBKeys.isPrimary: true,
     DBKeys.isFullWidth: false,
+    DBKeys.physic: FPhysic(),
   };
 
   @override
@@ -83,7 +85,14 @@ class ListViewBuilderBody extends NodeBody {
           title: 'Reverse',
           key: DBKeys.isFullWidth,
           value: attributes[DBKeys.isFullWidth],
-          description: '',
+          description: 'Inverse children order',
+        ),
+        ControlObject(
+          type: ControlType.physics,
+          key: DBKeys.physic,
+          value: attributes[DBKeys.physic],
+          description:
+              'Use the physics in order to have different scrolling behaviours',
         ),
       ];
 
@@ -108,6 +117,7 @@ class ListViewBuilderBody extends NodeBody {
       ${attributes[DBKeys.isVertical] as bool}
       ${attributes[DBKeys.flag] as bool}
       ${attributes[DBKeys.isFullWidth] as bool}
+      ${attributes[DBKeys.physic] as FPhysic}
       ''',
         ),
         node: node,
@@ -116,6 +126,8 @@ class ListViewBuilderBody extends NodeBody {
         isVertical: attributes[DBKeys.isVertical] as bool,
         shrinkWrap: attributes[DBKeys.flag] as bool,
         isReverse: attributes[DBKeys.isFullWidth] as bool,
+        physic: attributes[DBKeys.physic] as FPhysic,
+
         forPlay: forPlay,
         loop: loop,
         params: params,
