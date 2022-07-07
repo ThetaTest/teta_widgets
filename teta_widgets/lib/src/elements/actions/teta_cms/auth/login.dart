@@ -44,7 +44,7 @@ class FATetaCMSLogin {
 
     await TetaCMS.instance.auth.signIn(
       provider: provider,
-      onSuccess: () async {
+      onSuccess: (final isFirstTime) async {
         await FActionNavigationOpenPage.action(
           node,
           context,
@@ -75,7 +75,7 @@ class FATetaCMSLogin {
     return '''
       await TetaCMS.instance.auth.signIn(
         provider: $providerStr,
-        onSuccess: () async {
+        onSuccess: (final isFirstTime) async {
           ${FActionNavigationOpenPage.toCode(context, nameOfPage, paramsToSend)}
         }
       );
