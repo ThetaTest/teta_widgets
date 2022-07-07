@@ -52,63 +52,6 @@ final textFieldIntrinsicStates = IntrinsicStates(
   packages: [],
 );
 
-/// Body for TextField widget
-/// Original widget for Flutter:
-/// ```dart
-/// TextField({
-///   Key? key,
-///   TextEditingController? controller,
-///   FocusNode? focusNode,
-///   InputDecoration? decoration,
-///   TextInputType? keyboardType,
-///   TextInputAction? textInputAction,
-///   TextCapitalization textCapitalization,
-///   TextStyle? style,
-///   StrutStyle? strutStyle,
-///   TextAlign textAlign,
-///   TextAlignVertical? textAlignVertical,
-///   TextDirection? textDirection,
-///   bool readOnly,
-///   ToolbarOptions? toolbarOptions,
-///   bool? showCursor,
-///   bool autofocus,
-///   String obscuringCharacter,
-///   bool obscureText,
-///   bool autocorrect,
-///   SmartDashesType? smartDashesType,
-///   SmartQuotesType? smartQuotesType,
-///   bool enableSuggestions,
-///   int? maxLines,
-///   int? minLines,
-///   bool expands,
-///   int? maxLength,
-///   MaxLengthEnforcement? maxLengthEnforcement,
-///   ValueChanged<String>? onChanged,
-///   VoidCallback? onEditingComplete,
-///   ValueChanged<String>? onSubmitted,
-///   AppPrivateCommandCallback? onAppPrivateCommand,
-///   List<TextInputFormatter>? inputFormatters,
-///   bool? enabled,
-///   double cursorWidth,
-///   double? cursorHeight,
-///   Radius? cursorRadius,
-///   Color? cursorColor,
-///   BoxHeightStyle selectionHeightStyle,
-///   BoxWidthStyle selectionWidthStyle,
-///   Brightness? keyboardAppearance,
-///   EdgeInsets scrollPadding,
-///   DragStartBehavior dragStartBehavior,
-///   bool enableInteractiveSelection,
-///   TextSelectionControls? selectionControls,
-///   GestureTapCallback? onTap,
-///   MouseCursor? mouseCursor,
-///   InputCounterWidgetBuilder? buildCounter,
-///   ScrollController? scrollController,
-///   ScrollPhysics? scrollPhysics,
-///   Iterable<String>? autofillHints,
-///   String? restorationId
-/// })
-/// ```
 class TextFieldBody extends NodeBody {
   @override
   // ignore: overridden_fields
@@ -123,11 +66,15 @@ class TextFieldBody extends NodeBody {
     DBKeys.maxLines: FTextTypeInput(value: '1'),
     DBKeys.minLines: FTextTypeInput(value: '1'),
     DBKeys.maxLenght: FTextTypeInput(),
+    DBKeys.bordersSize: FTextTypeInput(value: '1'),
     DBKeys.keyboardType: FKeyboardType(),
     DBKeys.borderRadius: FBorderRadius(),
     DBKeys.showCursor: true,
     DBKeys.autoCorrect: false,
     DBKeys.obscureText: false,
+    DBKeys.showBorders: false,
+    DBKeys.enabledBorderColor: FFill(),
+    DBKeys.focusedBorderColor: FFill(),
     DBKeys.action: FAction(),
     DBKeys.cursorColor: FFill(),
     DBKeys.hintTextColor: FFill(),
@@ -168,13 +115,6 @@ class TextFieldBody extends NodeBody {
           key: DBKeys.textStyle,
           value: attributes[DBKeys.textStyle],
         ),
-        /*SizeControlObject(
-          type: ControlType.size,
-          key: DBKeys.width,
-          title: 'Size',
-          isWidth: true,
-          value: attributes[DBKeys.width] as FSize,
-        ),*/
         FillControlObject(
           title: 'Background',
           key: DBKeys.fill,
@@ -188,6 +128,37 @@ class TextFieldBody extends NodeBody {
           type: ControlType.borderRadius,
           key: DBKeys.borderRadius,
           value: attributes[DBKeys.borderRadius],
+        ),
+        FlagControlObject(
+          title: 'Enable Borders',
+          key: DBKeys.showBorders,
+          value: attributes[DBKeys.showBorders] as bool,
+          description: 'Show borders around the textfield',
+        ),
+        ControlObject(
+          type: ControlType.value,
+          title: 'Borders Size',
+          key: DBKeys.bordersSize,
+          value: attributes[DBKeys.bordersSize],
+          description: 'Borders thickness',
+        ),
+        FillControlObject(
+          title: 'Enabled Border Color',
+          key: DBKeys.enabledBorderColor,
+          value: attributes[DBKeys.enabledBorderColor] as FFill,
+          isStyled: false,
+          isImageEnabled: false,
+          isNoneEnabled: false,
+          isOnlySolid: true,
+        ),
+        FillControlObject(
+          title: 'Focused Border Color',
+          key: DBKeys.focusedBorderColor,
+          value: attributes[DBKeys.focusedBorderColor] as FFill,
+          isStyled: false,
+          isImageEnabled: false,
+          isNoneEnabled: false,
+          isOnlySolid: true,
         ),
         FlagControlObject(
           title: 'Obscure Text',
@@ -265,10 +236,13 @@ class TextFieldBody extends NodeBody {
             ${(attributes[DBKeys.maxLines] as FTextTypeInput?)?.toJson()}
             ${(attributes[DBKeys.minLines] as FTextTypeInput?)?.toJson()}
             ${(attributes[DBKeys.cursorColor] as FFill?)?.toJson()}
+            ${(attributes[DBKeys.enabledBorderColor] as FFill?)?.toJson()}
+            ${(attributes[DBKeys.focusedBorderColor] as FFill?)?.toJson()}
             ${(attributes[DBKeys.hintTextColor] as FFill?)?.toJson()}
             ${attributes[DBKeys.showCursor] as bool? ?? false}
             ${attributes[DBKeys.autoCorrect] as bool? ?? false}
             ${attributes[DBKeys.obscureText] as bool? ?? false}
+            ${attributes[DBKeys.showBorders] as bool? ?? false}
             ''',
         ),
         node: node,
@@ -291,6 +265,10 @@ class TextFieldBody extends NodeBody {
         obscureText: attributes[DBKeys.obscureText] as bool? ?? false,
         cursorColor: attributes[DBKeys.cursorColor] as FFill,
         hintTextColor: attributes[DBKeys.hintTextColor] as FFill,
+        enabledBorderColor: attributes[DBKeys.enabledBorderColor] as FFill,
+        focusedBorderColor: attributes[DBKeys.focusedBorderColor] as FFill,
+        showBorders: attributes[DBKeys.showBorders] as bool? ?? false,
+        bordersSize: attributes[DBKeys.bordersSize] as FTextTypeInput,
         forPlay: forPlay,
         loop: loop,
         params: params,

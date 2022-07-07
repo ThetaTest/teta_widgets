@@ -221,7 +221,7 @@ class TextPrefabControl extends StatelessWidget {
           ),
         const Gap(16),
         FillControl(
-          title: 'Fill',
+          title: 'Text Color',
           fill: textStyle.fill ?? FFill(),
           node: node,
           isImageEnabled: false,

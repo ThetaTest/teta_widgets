@@ -32,12 +32,26 @@ String textFieldCodeTemplate(
   final obscureText = body.attributes[DBKeys.obscureText] as bool? ?? false;
   final showCursor = body.attributes[DBKeys.showCursor] as bool? ?? false;
   final autoCorrect = body.attributes[DBKeys.autoCorrect] as bool? ?? false;
-  final fill = body.attributes[DBKeys.fill] as FFill;
   final fillToCodeColor = FFill.toCode(
     body.attributes[DBKeys.fill] as FFill,
     context,
     flagConst: false,
   );
+  final bordersEnabled = body.attributes[DBKeys.showBorders] as bool? ?? false;
+  final enabledBorderToCodeColor = FFill.toCode(
+    body.attributes[DBKeys.enabledBorderColor] as FFill,
+    context,
+    flagConst: false,
+  );
+  final focusedBorderToCodeColor = FFill.toCode(
+    body.attributes[DBKeys.focusedBorderColor] as FFill,
+    context,
+    flagConst: false,
+  );
+  final valueBordersSize =
+      (body.attributes[DBKeys.bordersSize] as FTextTypeInput)
+          .getRawToCode(loop);
+  final borderSize = double.tryParse(valueBordersSize) ?? 1;
 
   return """
   Container(
@@ -76,9 +90,11 @@ String textFieldCodeTemplate(
           ${CS.borderRadius(context, body)}
         ),
         enabledBorder: OutlineInputBorder(
+          borderSide: BorderSide(${bordersEnabled ? enabledBorderToCodeColor ?? 'color: Colors.transparent,' : 'color: Colors.transparent,'} width: $borderSize),
           ${CS.borderRadius(context, body)}
         ),
         focusedBorder: OutlineInputBorder(
+          borderSide: BorderSide(${bordersEnabled ? focusedBorderToCodeColor ?? 'color: Colors.transparent,' : 'color: Colors.transparent,'} width: $borderSize),
           ${CS.borderRadius(context, body)}
         ),  
         hintText: r$labelText,
