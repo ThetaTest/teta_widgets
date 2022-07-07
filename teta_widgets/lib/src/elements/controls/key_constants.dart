@@ -7,6 +7,7 @@ import 'package:flutter/foundation.dart';
 import 'package:teta_core/src/models/variable.dart';
 // Project imports:
 import 'package:teta_widgets/src/elements/features/font_weight.dart';
+import 'package:teta_widgets/src/elements/features/physic.dart';
 import 'package:teta_widgets/src/elements/index.dart';
 
 class DBKeys {
@@ -57,6 +58,7 @@ class DBKeys {
   static const String image = 'img';
   static const String value = 'v';
   static const String align = 'al';
+  static const String physic = 'ph';
   static const String textStyleModel = 'txtSM';
   static const String pageTransition = 'pgTrn';
   static const String componentName = 'cmp';
@@ -186,6 +188,8 @@ class DynamicAttributes {
           return FTextTypeInput.fromJson(value as Map<String, dynamic>);
         case DBKeys.align:
           return FAlign.fromJson(value as String);
+        case DBKeys.physic:
+          return FPhysic.fromJson(value as String);
         case DBKeys.bgFill:
           return FFill().fromJson(value as Map<String, dynamic>);
         case DBKeys.borderRadius:
@@ -441,6 +445,8 @@ class DynamicAttributes {
         return value != null ? value.toJson() : FTextTypeInput().toJson();
       case DBKeys.align:
         return value != null ? value.toJson() : FAlign().toJson();
+      case DBKeys.physic:
+        return value != null ? value.toJson() : FPhysic().toJson();
       case DBKeys.bgFill:
         return value != null ? value.toJson() : FFill().toJson();
       case DBKeys.borderRadius:

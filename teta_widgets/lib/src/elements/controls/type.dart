@@ -33,6 +33,7 @@ import 'package:teta_widgets/src/elements/controls/atoms/map_controller.dart';
 import 'package:teta_widgets/src/elements/controls/atoms/margins.dart';
 import 'package:teta_widgets/src/elements/controls/atoms/navigation/component.dart';
 import 'package:teta_widgets/src/elements/controls/atoms/page_params.dart';
+import 'package:teta_widgets/src/elements/controls/atoms/physics.dart';
 import 'package:teta_widgets/src/elements/controls/atoms/size.dart';
 import 'package:teta_widgets/src/elements/controls/atoms/src_image.dart';
 import 'package:teta_widgets/src/elements/controls/atoms/states.dart';
@@ -42,6 +43,7 @@ import 'package:teta_widgets/src/elements/controls/control_model.dart';
 import 'package:teta_widgets/src/elements/controls/key_constants.dart';
 import 'package:teta_widgets/src/elements/controls/prefabs/sizes_prefab_control.dart';
 import 'package:teta_widgets/src/elements/controls/prefabs/text_prefab_control.dart';
+import 'package:teta_widgets/src/elements/features/physic.dart';
 import 'package:teta_widgets/src/elements/index.dart';
 
 enum ControlType {
@@ -59,6 +61,9 @@ enum ControlType {
 
   /// Made to use padding.
   padding,
+
+  /// Made to use physics behaviours in listviews
+  physics,
 
   /// Made to use textStyle and all the text properties of Text() and similar.
   ///
@@ -433,6 +438,25 @@ class ControlBuilder {
           key: ValueKey('${node.nid}'),
           node: node,
           align: control.value as FAlign,
+          callBack: (final value, final old) => ControlBuilder.toDB(
+            prj,
+            page,
+            node,
+            context,
+            control.key,
+            value.toJson(),
+            old.toJson(),
+          ),
+        ),
+      );
+    }
+    if (control.type == ControlType.physics) {
+      return descriptionControlWidget(
+        description: control.description,
+        control: PhysicsControl(
+          key: ValueKey('${node.nid}'),
+          node: node,
+          physic: control.value as FPhysic,
           callBack: (final value, final old) => ControlBuilder.toDB(
             prj,
             page,
