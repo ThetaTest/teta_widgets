@@ -37,7 +37,7 @@ final loginAppleIntrinsicStates = IntrinsicStates(
   blockedTypes: [],
   synonymous: ['apple', 'login', 'cta', 'button'],
   advicedChildrenCanHaveAtLeastAChild: [],
-  displayName: NodeType.name(_globalType),
+  displayName: 'Login with Apple',
   type: _globalType,
   category: NodeCategories.input,
   maxChildren: 0,

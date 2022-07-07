@@ -55,7 +55,7 @@ class _WCMSLoggedUserState extends State<WCMSLoggedUser> {
     name: 'Teta Auth User',
     map: [<String, dynamic>{}],
   );
-  late final Future<Map<String, dynamic>>? _future;
+  late final Future<TetaUser?>? _future;
 
   @override
   void initState() {
@@ -93,14 +93,14 @@ class _WCMSLoggedUserState extends State<WCMSLoggedUser> {
               }
             }
 
-            final data = snapshot.data as Map<String, dynamic>?;
+            final data = snapshot.data as TetaUser?;
             final map = <String, dynamic>{
-              'isLogged': data?.keys.isNotEmpty,
-              'uid': data?['uid'],
-              'name': data?['name'],
-              'email': data?['email'],
-              'provider': data?['provider'],
-              'created_at': data?['created_at'],
+              'isLogged': data?.isLogged,
+              'uid': data?.uid,
+              'name': data?.name,
+              'email': data?.email,
+              'provider': data?.provider,
+              'created_at': data?.createdAt,
             };
             _map = _map.copyWith(
               name: 'Teta Auth User',

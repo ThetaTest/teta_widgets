@@ -24,12 +24,12 @@ class FATetaCMSLogout {
       prjId: prjId,
     );
 
-    await TetaCMS.instance.auth.logout();
+    await TetaCMS.instance.auth.signOut();
   }
 
   static String toCode() {
     return '''
-      await TetaCMS.instance.auth.logout();
+      await TetaCMS.instance.auth.signOut();
     ''';
   }
 }

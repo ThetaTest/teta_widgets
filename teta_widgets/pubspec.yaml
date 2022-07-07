@@ -158,6 +158,8 @@ dev_dependencies:
 dependency_overrides:
   teta_core:
     path: ../../Teta/teta_core
+  teta_cms:
+    path: ../../teta-db/teta_cms
 
 
 # For information on the generic Dart part of this file, see the

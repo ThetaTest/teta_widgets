@@ -37,7 +37,7 @@ final loginTwitterIntrinsicStates = IntrinsicStates(
   blockedTypes: [],
   synonymous: ['twitter', 'login', 'cta', 'button'],
   advicedChildrenCanHaveAtLeastAChild: [],
-  displayName: NodeType.name(_globalType),
+  displayName: 'Login with Twitter',
   type: _globalType,
   category: NodeCategories.input,
   maxChildren: 0,

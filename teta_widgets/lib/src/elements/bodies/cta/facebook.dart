@@ -37,7 +37,7 @@ final loginFacebookIntrinsicStates = IntrinsicStates(
   blockedTypes: [],
   synonymous: ['facebook', 'login', 'cta', 'button'],
   advicedChildrenCanHaveAtLeastAChild: [],
-  displayName: NodeType.name(_globalType),
+  displayName: 'Login with Facebook',
   type: _globalType,
   category: NodeCategories.input,
   maxChildren: 0,

@@ -37,7 +37,7 @@ final loginGoogleIntrinsicStates = IntrinsicStates(
   blockedTypes: [],
   synonymous: ['google', 'login', 'cta', 'button'],
   advicedChildrenCanHaveAtLeastAChild: [],
-  displayName: NodeType.name(_globalType),
+  displayName: 'Login with Google',
   type: _globalType,
   category: NodeCategories.input,
   maxChildren: 0,

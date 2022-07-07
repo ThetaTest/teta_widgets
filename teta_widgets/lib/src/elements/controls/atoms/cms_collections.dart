@@ -90,9 +90,15 @@ class CMSCollectionControlState extends State<CMSCollectionControl> {
                                     ?.value),
                       )
                       ?.name;
+                  final list = snapshot.data!
+                      .where(
+                        (final element) =>
+                            element.schema == CollectionSchema.public,
+                      )
+                      .toList();
                   return CDropdown(
                     value: dropdown,
-                    items: snapshot.data!.map((final e) => e.name).toList(),
+                    items: list.map((final e) => e.name).toList(),
                     onChange: (final newValue) {
                       if (newValue != null) {
                         setState(() {
@@ -100,7 +106,7 @@ class CMSCollectionControlState extends State<CMSCollectionControl> {
                         });
 
                         final old = widget.collectionId;
-                        final nw = snapshot.data!
+                        final nw = list
                             .firstWhereOrNull(
                               (final element) => element.name == dropdown,
                             )

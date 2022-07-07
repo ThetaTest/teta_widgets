@@ -32,7 +32,7 @@ String cmsCustomQueryCodeTemplate(
 
   return '''
   TetaFutureBuilder(
-    future: TetaCMS.instance.client.customQuery(
+    future: TetaCMS.instance.client.query(
       $query,
     ),
     builder: (context, snapshot) {

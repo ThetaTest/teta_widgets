@@ -80,7 +80,7 @@ class _WCmsCustomQueryState extends State<WCmsCustomQuery> {
 
     if (query.isNotEmpty) {
       setState(() {
-        _future = TetaCMS.instance.client.customQuery(
+        _future = TetaCMS.instance.client.query(
           query,
         );
       });
