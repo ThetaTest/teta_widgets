@@ -48,7 +48,6 @@ import 'package:teta_widgets/src/elements/bodies/firebase/is_authenticated.dart'
 import 'package:teta_widgets/src/elements/bodies/firebase/pagination.dart';
 import 'package:teta_widgets/src/elements/bodies/firebase/stream_builder.dart';
 import 'package:teta_widgets/src/elements/bodies/fitted_box.dart';
-import 'package:teta_widgets/src/elements/bodies/font_awesome.dart';
 import 'package:teta_widgets/src/elements/bodies/gesture_detector.dart';
 import 'package:teta_widgets/src/elements/bodies/google_ad_mob_banner_ad_body.dart';
 import 'package:teta_widgets/src/elements/bodies/gridview.dart';
@@ -56,6 +55,8 @@ import 'package:teta_widgets/src/elements/bodies/gridview_builder.dart';
 import 'package:teta_widgets/src/elements/bodies/hero.dart';
 import 'package:teta_widgets/src/elements/bodies/https_requests/future_builder.dart';
 import 'package:teta_widgets/src/elements/bodies/icon.dart';
+import 'package:teta_widgets/src/elements/bodies/icon_feather.dart';
+import 'package:teta_widgets/src/elements/bodies/icon_font_awesome.dart';
 import 'package:teta_widgets/src/elements/bodies/ignore_pointer.dart';
 import 'package:teta_widgets/src/elements/bodies/image.dart';
 import 'package:teta_widgets/src/elements/bodies/index_stack.dart';
@@ -139,6 +140,7 @@ final stateTypes = <IntrinsicStates>[
   gridIntrinsicStates,
   gridViewBuilderIntrinsicStates,
   fontAwesomeIntrinsicStates,
+  featherIconIntrinsicStates,
   heroIntrinsicStates,
   iconIntrinsicStates,
   ignorePointIntrinsicStates,
@@ -300,6 +302,8 @@ NodeBody getBody(final NType type) {
       return IconBody();
     case NType.fontAwesomeIcon:
       return FontAwesomeBody();
+     case NType.featherIcon:
+      return FeatherIconBody();
     case NType.ignorePointer:
       return IgnorePointerBody();
     case NType.image:

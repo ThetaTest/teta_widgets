@@ -4,8 +4,8 @@ import 'package:flutter/material.dart';
 import 'package:teta_core/gen/assets.gen.dart';
 import 'package:teta_core/src/models/dataset.dart';
 import 'package:teta_core/src/models/variable.dart';
+import 'package:teta_widgets/src/elements/code/templates/icon_feather.dart';
 // Project imports:
-import 'package:teta_widgets/src/elements/code/templates/font_awesome.dart';
 import 'package:teta_widgets/src/elements/controls/control_model.dart';
 import 'package:teta_widgets/src/elements/controls/key_constants.dart';
 import 'package:teta_widgets/src/elements/controls/type.dart';
@@ -18,14 +18,14 @@ import 'package:teta_widgets/src/elements/nodes/enum.dart';
 import 'package:teta_widgets/src/elements/nodes/node.dart';
 import 'package:teta_widgets/src/elements/nodes/node_body.dart';
 import 'package:teta_widgets/src/elements/packages.dart';
-import 'package:teta_widgets/src/elements/widgets/font_awesome.dart';
+import 'package:teta_widgets/src/elements/widgets/icon_feather.dart';
 
-const _globalType = NType.fontAwesomeIcon;
+const _globalType = NType.featherIcon;
 
-/// Intrinsic States of Icon
-final fontAwesomeIntrinsicStates = IntrinsicStates(
+/// Intrinsic States of featherIcon node
+final featherIconIntrinsicStates = IntrinsicStates(
   nodeIcon: Assets.wIcons.icon,
-  nodeVideo: '7oIAs-0G4mw', //Check
+  nodeVideo: '',
   nodeDescription: null,
   advicedChildren: [
     NodeType.name(NType.container),
@@ -33,9 +33,9 @@ final fontAwesomeIntrinsicStates = IntrinsicStates(
     NodeType.name(NType.image),
   ],
   blockedTypes: [],
-  synonymous: ['font awesome', 'icon', 'font'],
+  synonymous: ['feather', 'icon', 'font'],
   advicedChildrenCanHaveAtLeastAChild: [],
-  displayName: 'FontAwesome Icon',
+  displayName: 'Feather Icon',
   type: _globalType,
   category: NodeCategories.basic,
   maxChildren: 0,
@@ -43,11 +43,11 @@ final fontAwesomeIntrinsicStates = IntrinsicStates(
   addChildLabels: [],
   gestures: [],
   permissions: [],
-  packages: [pFontAwesomeNamed],
+  packages: [pFeatherIcons],
 );
 
-/// Icon's body
-class FontAwesomeBody extends NodeBody {
+/// Feather Icon's body
+class FeatherIconBody extends NodeBody {
   @override
   // ignore: overridden_fields
   Map<String, dynamic> attributes = <String, dynamic>{
@@ -59,7 +59,7 @@ class FontAwesomeBody extends NodeBody {
   @override
   List<ControlModel> get controls => [
         ControlObject(
-          type: ControlType.fontAwesomeIcon,
+          type: ControlType.featherIcon,
           key: DBKeys.icon,
           value: attributes[DBKeys.icon],
         ),
@@ -92,7 +92,7 @@ class FontAwesomeBody extends NodeBody {
     final CNode? child,
     final List<CNode>? children,
   }) =>
-      WFontAwesome(
+      WFeatherIcon(
         ValueKey(
           '''
       ${node.nid}
@@ -122,5 +122,5 @@ class FontAwesomeBody extends NodeBody {
     final int pageId,
     final int? loop,
   ) =>
-      iconFontAwesomeCodeTemplate(context, this, node, child, loop);
+      iconFeatherCodeTemplate(context, this, node, child, loop);
 }

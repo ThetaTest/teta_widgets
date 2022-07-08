@@ -122,6 +122,11 @@ const PackageModel pFontAwesomeNamed = PackageModel(
   packageVersion: '1.1.1',
   isDart: false,
 );
+const PackageModel pFeatherIcons = PackageModel(
+  packageName: 'feather_icons',
+  packageVersion: '1.2.0',
+  isDart: false,
+);
 const PackageModel pUrlLauncher = PackageModel(
   packageName: 'url_launcher',
   packageVersion: '6.1.4',
