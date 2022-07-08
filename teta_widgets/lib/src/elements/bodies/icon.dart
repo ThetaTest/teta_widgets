@@ -25,7 +25,7 @@ const _globalType = NType.icon;
 /// Intrinsic States of Icon
 final iconIntrinsicStates = IntrinsicStates(
   nodeIcon: Assets.wIcons.icon,
-  nodeVideo: '7oIAs-0G4mw', //Check
+  nodeVideo: '',
   nodeDescription: null,
   advicedChildren: [
     NodeType.name(NType.container),
@@ -37,7 +37,7 @@ final iconIntrinsicStates = IntrinsicStates(
   advicedChildrenCanHaveAtLeastAChild: [],
   displayName: 'Material Icon',
   type: _globalType,
-  category: NodeCategories.basic,
+  category: NodeCategories.icon,
   maxChildren: 0,
   canHave: ChildrenEnum.none,
   addChildLabels: [],
