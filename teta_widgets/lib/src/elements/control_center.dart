@@ -48,6 +48,7 @@ import 'package:teta_widgets/src/elements/bodies/firebase/is_authenticated.dart'
 import 'package:teta_widgets/src/elements/bodies/firebase/pagination.dart';
 import 'package:teta_widgets/src/elements/bodies/firebase/stream_builder.dart';
 import 'package:teta_widgets/src/elements/bodies/fitted_box.dart';
+import 'package:teta_widgets/src/elements/bodies/font_awesome.dart';
 import 'package:teta_widgets/src/elements/bodies/gesture_detector.dart';
 import 'package:teta_widgets/src/elements/bodies/google_ad_mob_banner_ad_body.dart';
 import 'package:teta_widgets/src/elements/bodies/gridview.dart';
@@ -137,6 +138,7 @@ final stateTypes = <IntrinsicStates>[
   gestureDetectorIntrinsicStates,
   gridIntrinsicStates,
   gridViewBuilderIntrinsicStates,
+  fontAwesomeIntrinsicStates,
   heroIntrinsicStates,
   iconIntrinsicStates,
   ignorePointIntrinsicStates,
@@ -296,6 +298,8 @@ NodeBody getBody(final NType type) {
       return HeroBody();
     case NType.icon:
       return IconBody();
+     case NType.fontAwesome:
+      return FontAwesomeBody();
     case NType.ignorePointer:
       return IgnorePointerBody();
     case NType.image:

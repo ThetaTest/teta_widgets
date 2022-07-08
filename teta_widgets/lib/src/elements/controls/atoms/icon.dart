@@ -3,7 +3,6 @@
 // ignore_for_file: import_of_legacy_library_into_null_safe, public_member_api_docs, avoid_equals_and_hash_code_on_mutable_classes, lines_longer_than_80_chars
 
 // Flutter imports:
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 // Package imports:
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -94,7 +93,6 @@ class IconControlState extends State<IconControl> {
         var after = 0;
         var query = '';
         final scrollController = ScrollController();
-        var index = 0;
 
         final cubit = GoogleFontsCubit()..updateTextToFind('');
         return StatefulBuilder(
@@ -103,17 +101,6 @@ class IconControlState extends State<IconControl> {
             create: (final context) => cubit,
             child: AlertDialog(
               backgroundColor: const Color(0xFF222222),
-              // title: CupertinoSegmentedControl(
-              //   children: const <int, Widget>{
-              //     0: THeadline3(
-              //       'Material',
-              //     ),
-              //     1: THeadline3(
-              //       'Material',
-              //     ),
-              //   },
-              //   onValueChanged: (final i) {},
-              // ),
               content: BlocBuilder<GoogleFontsCubit, String>(
                 bloc: cubit,
                 builder: (final context, final state) {
@@ -189,10 +176,11 @@ class IconControlState extends State<IconControl> {
                                   height: 32,
                                   width: 32,
                                   padding: EI.smA,
-                                  decoration:const BoxDecoration(
+                                  decoration: const BoxDecoration(
                                     color: Palette.bgGrey,
-                                    borderRadius: BorderRadius.all(Radius.circular(16)),
-                                    ),
+                                    borderRadius:
+                                        BorderRadius.all(Radius.circular(16)),
+                                  ),
                                   child: Center(
                                     child: Icon(
                                       icon.iconData,

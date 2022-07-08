@@ -43,7 +43,7 @@ final fontAwesomeIntrinsicStates = IntrinsicStates(
   addChildLabels: [],
   gestures: [],
   permissions: [],
-  packages: [pMaterialDesignIconsFlutter],
+  packages: [pFontAwesomeNamed],
 );
 
 /// Icon's body

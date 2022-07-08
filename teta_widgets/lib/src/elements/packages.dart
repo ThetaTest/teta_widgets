@@ -33,7 +33,7 @@ const PackageModel pGoogleMobileAds = PackageModel(
   packageName: 'google_mobile_ads',
   packageVersion: '1.2.0',
   isDart: false,
-  customPath: "import 'package:google_mobile_ads/google_mobile_ads.dart';"
+  customPath: "import 'package:google_mobile_ads/google_mobile_ads.dart';",
 );
 //todo: optimize later - unused - right now is a default import
 const PackageModel pFlutterStripe = PackageModel(
@@ -115,6 +115,11 @@ const PackageModel pYoutubePlayerIframe = PackageModel(
 const PackageModel pWebviewX = PackageModel(
   packageName: 'webviewx',
   packageVersion: '0.2.1',
+  isDart: false,
+);
+const PackageModel pFontAwesomeNamed = PackageModel(
+  packageName: 'font_awesome_flutter_named',
+  packageVersion: '1.1.1',
   isDart: false,
 );
 const PackageModel pUrlLauncher = PackageModel(
