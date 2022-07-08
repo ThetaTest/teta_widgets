@@ -241,24 +241,11 @@ class FontAwesomeIconDefinition
     implements Comparable<FontAwesomeIconDefinition> {
   FontAwesomeIconDefinition(final String key) {
     iconData = _iconLib[key];
-    title = toKebabCase(key);
+    title = key;
   }
 
   IconData? iconData;
   String? title;
-
-  String toKebabCase(final String str) {
-    return str
-        .replaceAllMapped(
-          RegExp(
-            r'[A-Z]{2,}(?=[A-Z][a-z]+[0-9]*|\b)|[A-Z]?[a-z]+[0-9]*|[A-Z]|[0-9]+',
-          ),
-          (final Match m) => '${m[0]!.toLowerCase()}_',
-        )
-        .split(RegExp(r'(_|\s)+'))
-        .takeWhile((final value) => value != '')
-        .join('-');
-  }
 
   @override
   String toString() =>

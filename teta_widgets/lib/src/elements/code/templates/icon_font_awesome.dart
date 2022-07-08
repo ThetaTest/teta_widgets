@@ -15,7 +15,7 @@ String iconFontAwesomeCodeTemplate(
   final CNode? child,
   final int? loop,
 ) {
-  final icon = body.attributes[DBKeys.icon] as String;
+  final icon = body.attributes[DBKeys.faIcon] as String;
   final fill = body.attributes[DBKeys.fill] as FFill;
   final hex = fill.getHexColor(context);
   return '''

@@ -51,7 +51,7 @@ class FeatherIconBody extends NodeBody {
   @override
   // ignore: overridden_fields
   Map<String, dynamic> attributes = <String, dynamic>{
-    DBKeys.icon: 'plus',
+    DBKeys.featherIcon: 'plus',
     DBKeys.width: FSize(size: '24', unit: SizeUnit.pixel),
     DBKeys.fill: FFill(),
   };
@@ -60,8 +60,8 @@ class FeatherIconBody extends NodeBody {
   List<ControlModel> get controls => [
         ControlObject(
           type: ControlType.featherIcon,
-          key: DBKeys.icon,
-          value: attributes[DBKeys.icon],
+          key: DBKeys.featherIcon,
+          value: attributes[DBKeys.featherIcon],
         ),
         SizeControlObject(
           type: ControlType.size,
@@ -98,13 +98,13 @@ class FeatherIconBody extends NodeBody {
       ${node.nid}
       $loop
       ${(attributes[DBKeys.width] as FSize).toJson()}
-      ${attributes[DBKeys.icon]}
+      ${attributes[DBKeys.featherIcon]}
       ${(attributes[DBKeys.fill] as FFill).toJson()}
       ''',
         ),
         node: node,
         width: attributes[DBKeys.width] as FSize,
-        icon: attributes[DBKeys.icon] as String? ?? 'plus',
+        icon: attributes[DBKeys.featherIcon] as String? ?? 'plus',
         fill: attributes[DBKeys.fill] as FFill,
         forPlay: forPlay,
         loop: loop,
