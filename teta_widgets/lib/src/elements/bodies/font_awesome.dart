@@ -5,7 +5,7 @@ import 'package:teta_core/gen/assets.gen.dart';
 import 'package:teta_core/src/models/dataset.dart';
 import 'package:teta_core/src/models/variable.dart';
 // Project imports:
-import 'package:teta_widgets/src/elements/code/templates/icon_fontawesome.dart';
+import 'package:teta_widgets/src/elements/code/templates/font_awesome.dart';
 import 'package:teta_widgets/src/elements/controls/control_model.dart';
 import 'package:teta_widgets/src/elements/controls/key_constants.dart';
 import 'package:teta_widgets/src/elements/controls/type.dart';

@@ -95,6 +95,9 @@ enum ControlType {
   /// Made to use FontAwsome icon.
   fontAwesomeIcon,
 
+  /// Made to use Feather icon.
+  featherIcon,
+
   /// Made to use a flag / bool value.
   flag,
 
