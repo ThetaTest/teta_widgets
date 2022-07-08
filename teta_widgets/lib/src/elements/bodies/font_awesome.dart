@@ -5,7 +5,7 @@ import 'package:teta_core/gen/assets.gen.dart';
 import 'package:teta_core/src/models/dataset.dart';
 import 'package:teta_core/src/models/variable.dart';
 // Project imports:
-import 'package:teta_widgets/src/elements/code/templates/icon.dart';
+import 'package:teta_widgets/src/elements/code/templates/icon_fontawesome.dart';
 import 'package:teta_widgets/src/elements/controls/control_model.dart';
 import 'package:teta_widgets/src/elements/controls/key_constants.dart';
 import 'package:teta_widgets/src/elements/controls/type.dart';
@@ -18,9 +18,9 @@ import 'package:teta_widgets/src/elements/nodes/enum.dart';
 import 'package:teta_widgets/src/elements/nodes/node.dart';
 import 'package:teta_widgets/src/elements/nodes/node_body.dart';
 import 'package:teta_widgets/src/elements/packages.dart';
-import 'package:teta_widgets/src/elements/widgets/icon.dart';
+import 'package:teta_widgets/src/elements/widgets/font_awesome.dart';
 
-const _globalType = NType.fontAwesome;
+const _globalType = NType.fontAwesomeIcon;
 
 /// Intrinsic States of Icon
 final fontAwesomeIntrinsicStates = IntrinsicStates(
@@ -33,9 +33,9 @@ final fontAwesomeIntrinsicStates = IntrinsicStates(
     NodeType.name(NType.image),
   ],
   blockedTypes: [],
-  synonymous: ['font awesome', 'icon'],
+  synonymous: ['font awesome', 'icon', 'font'],
   advicedChildrenCanHaveAtLeastAChild: [],
-  displayName: NodeType.name(_globalType),
+  displayName: 'FontAwesome Icon',
   type: _globalType,
   category: NodeCategories.basic,
   maxChildren: 0,
@@ -59,7 +59,7 @@ class FontAwesomeBody extends NodeBody {
   @override
   List<ControlModel> get controls => [
         ControlObject(
-          type: ControlType.icon,
+          type: ControlType.fontAwesomeIcon,
           key: DBKeys.icon,
           value: attributes[DBKeys.icon],
         ),
@@ -92,7 +92,7 @@ class FontAwesomeBody extends NodeBody {
     final CNode? child,
     final List<CNode>? children,
   }) =>
-      WIcon(
+      WFontAwesome(
         ValueKey(
           '''
       ${node.nid}
@@ -122,5 +122,5 @@ class FontAwesomeBody extends NodeBody {
     final int pageId,
     final int? loop,
   ) =>
-      iconCodeTemplate(context, this, node, child, loop);
+      iconFontAwesomeCodeTemplate(context, this, node, child, loop);
 }

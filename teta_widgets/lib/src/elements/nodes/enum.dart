@@ -105,7 +105,7 @@ enum NType {
   parallax,
   dotsIndicator,
   wrapper,
-  fontAwesome,
+  fontAwesomeIcon,
   qrCode,
   barcode,
 

@@ -298,7 +298,7 @@ NodeBody getBody(final NType type) {
       return HeroBody();
     case NType.icon:
       return IconBody();
-     case NType.fontAwesome:
+    case NType.fontAwesomeIcon:
       return FontAwesomeBody();
     case NType.ignorePointer:
       return IgnorePointerBody();

@@ -35,7 +35,7 @@ final iconIntrinsicStates = IntrinsicStates(
   blockedTypes: [],
   synonymous: ['icon', 'menu'],
   advicedChildrenCanHaveAtLeastAChild: [],
-  displayName: NodeType.name(_globalType),
+  displayName: 'Material Icon',
   type: _globalType,
   category: NodeCategories.basic,
   maxChildren: 0,
