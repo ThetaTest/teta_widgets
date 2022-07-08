@@ -27,6 +27,7 @@ import 'package:teta_widgets/src/elements/controls/atoms/fill.dart';
 import 'package:teta_widgets/src/elements/controls/atoms/firebase/path.dart';
 import 'package:teta_widgets/src/elements/controls/atoms/flag.dart';
 import 'package:teta_widgets/src/elements/controls/atoms/icon.dart';
+import 'package:teta_widgets/src/elements/controls/atoms/icon_feather.dart';
 import 'package:teta_widgets/src/elements/controls/atoms/icon_fontawesome.dart';
 import 'package:teta_widgets/src/elements/controls/atoms/main_axis_alignment.dart';
 import 'package:teta_widgets/src/elements/controls/atoms/main_axis_size.dart';
@@ -608,6 +609,28 @@ class ControlBuilder {
       return descriptionControlWidget(
         description: control.description,
         control: IconFontAwesomeControl(
+          key: ValueKey('${node.nid}'),
+          node: node,
+          icon: control.value as String,
+          callBack: (final value, final old) {
+            node.body.attributes[DBKeys.icon] = value;
+            ControlBuilder.toDB(
+              prj,
+              page,
+              node,
+              context,
+              control.key,
+              value,
+              old,
+            );
+          },
+        ),
+      );
+    }
+    if (control.type == ControlType.featherIcon) {
+      return descriptionControlWidget(
+        description: control.description,
+        control: IconFeatherControl(
           key: ValueKey('${node.nid}'),
           node: node,
           icon: control.value as String,
