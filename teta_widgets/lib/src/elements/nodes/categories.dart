@@ -8,6 +8,7 @@ enum NodeCategories {
   list,
   input,
   map,
+  icon,
   firebase,
   supabase,
   revenueCat,

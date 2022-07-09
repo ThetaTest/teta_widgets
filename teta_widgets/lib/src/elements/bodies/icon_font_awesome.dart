@@ -5,7 +5,7 @@ import 'package:teta_core/gen/assets.gen.dart';
 import 'package:teta_core/src/models/dataset.dart';
 import 'package:teta_core/src/models/variable.dart';
 // Project imports:
-import 'package:teta_widgets/src/elements/code/templates/icon.dart';
+import 'package:teta_widgets/src/elements/code/templates/icon_font_awesome.dart';
 import 'package:teta_widgets/src/elements/controls/control_model.dart';
 import 'package:teta_widgets/src/elements/controls/key_constants.dart';
 import 'package:teta_widgets/src/elements/controls/type.dart';
@@ -18,14 +18,14 @@ import 'package:teta_widgets/src/elements/nodes/enum.dart';
 import 'package:teta_widgets/src/elements/nodes/node.dart';
 import 'package:teta_widgets/src/elements/nodes/node_body.dart';
 import 'package:teta_widgets/src/elements/packages.dart';
-import 'package:teta_widgets/src/elements/widgets/icon.dart';
+import 'package:teta_widgets/src/elements/widgets/icon_font_awesome.dart';
 
-const _globalType = NType.fontAwesome;
+const _globalType = NType.fontAwesomeIcon;
 
-/// Intrinsic States of Icon
+/// Intrinsic States of FontAwesome Icon
 final fontAwesomeIntrinsicStates = IntrinsicStates(
   nodeIcon: Assets.wIcons.icon,
-  nodeVideo: '7oIAs-0G4mw', //Check
+  nodeVideo: '',
   nodeDescription: null,
   advicedChildren: [
     NodeType.name(NType.container),
@@ -33,25 +33,25 @@ final fontAwesomeIntrinsicStates = IntrinsicStates(
     NodeType.name(NType.image),
   ],
   blockedTypes: [],
-  synonymous: ['font awesome', 'icon'],
+  synonymous: ['fontawesome', 'fa', 'icon', 'font'],
   advicedChildrenCanHaveAtLeastAChild: [],
-  displayName: NodeType.name(_globalType),
+  displayName: 'FA Icon',
   type: _globalType,
-  category: NodeCategories.basic,
+  category: NodeCategories.icon,
   maxChildren: 0,
   canHave: ChildrenEnum.none,
   addChildLabels: [],
   gestures: [],
   permissions: [],
-  packages: [pMaterialDesignIconsFlutter],
+  packages: [pFontAwesomeNamed],
 );
 
-/// Icon's body
+/// FontAwesome Icon's body
 class FontAwesomeBody extends NodeBody {
   @override
   // ignore: overridden_fields
   Map<String, dynamic> attributes = <String, dynamic>{
-    DBKeys.icon: 'plus',
+    DBKeys.faIcon: 'plus',
     DBKeys.width: FSize(size: '24', unit: SizeUnit.pixel),
     DBKeys.fill: FFill(),
   };
@@ -59,9 +59,9 @@ class FontAwesomeBody extends NodeBody {
   @override
   List<ControlModel> get controls => [
         ControlObject(
-          type: ControlType.icon,
-          key: DBKeys.icon,
-          value: attributes[DBKeys.icon],
+          type: ControlType.fontAwesomeIcon,
+          key: DBKeys.faIcon,
+          value: attributes[DBKeys.faIcon],
         ),
         SizeControlObject(
           type: ControlType.size,
@@ -92,19 +92,19 @@ class FontAwesomeBody extends NodeBody {
     final CNode? child,
     final List<CNode>? children,
   }) =>
-      WIcon(
+      WFontAwesome(
         ValueKey(
           '''
       ${node.nid}
       $loop
       ${(attributes[DBKeys.width] as FSize).toJson()}
-      ${attributes[DBKeys.icon]}
+      ${attributes[DBKeys.faIcon]}
       ${(attributes[DBKeys.fill] as FFill).toJson()}
       ''',
         ),
         node: node,
         width: attributes[DBKeys.width] as FSize,
-        icon: attributes[DBKeys.icon] as String? ?? 'plus',
+        icon: attributes[DBKeys.faIcon] as String? ?? 'plus',
         fill: attributes[DBKeys.fill] as FFill,
         forPlay: forPlay,
         loop: loop,
@@ -122,5 +122,5 @@ class FontAwesomeBody extends NodeBody {
     final int pageId,
     final int? loop,
   ) =>
-      iconCodeTemplate(context, this, node, child, loop);
+      iconFontAwesomeCodeTemplate(context, this, node, child, loop);
 }

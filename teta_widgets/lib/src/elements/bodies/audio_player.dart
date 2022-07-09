@@ -22,7 +22,7 @@ const _globalType = NType.audioPlayer;
 
 /// Audio Player Instrinsic State
 final audioPlayerIntrinsicStates = IntrinsicStates(
-  nodeIcon: Assets.wIcons.video,
+  nodeIcon: Assets.wIcons.audioPlayer,
   nodeVideo: null,
   nodeDescription: null,
   advicedChildren: [],
@@ -38,7 +38,7 @@ final audioPlayerIntrinsicStates = IntrinsicStates(
   canHave: ChildrenEnum.child,
   addChildLabels: [],
   gestures: [],
-  permissions:[],
+  permissions: [],
   packages: [],
 );
 

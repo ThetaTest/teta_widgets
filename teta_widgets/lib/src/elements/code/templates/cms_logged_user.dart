@@ -29,12 +29,12 @@ String cmsLoggedUserCodeTemplate(
       }
       final user = snapshot.data as TetaUser?;
       final data = <String, dynamic>{
-        'isLogged': data?.isLogged,
-        'uid': data?.uid,
-        'name': data?.name,
-        'email': data?.email,
-        'provider': data?.provider,
-        'created_at': data?.createdAt,
+        'isLogged': user?.isLogged,
+        'uid': user?.uid,
+        'name': user?.name,
+        'email': user?.email,
+        'provider': user?.provider,
+        'created_at': user?.createdAt,
       };
       datasets['Teta Auth User'] = [
         if (data != null) data,

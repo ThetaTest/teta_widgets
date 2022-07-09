@@ -2,20 +2,19 @@
 
 // ignore_for_file: import_of_legacy_library_into_null_safe, public_member_api_docs, avoid_equals_and_hash_code_on_mutable_classes, lines_longer_than_80_chars
 
+import 'package:feather_icons/feather_icons.dart';
 // Flutter imports:
 import 'package:flutter/material.dart';
 // Package imports:
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:gap/gap.dart';
-import 'package:material_design_icons_flutter/icon_map.dart';
-import 'package:material_design_icons_flutter/material_design_icons_flutter.dart';
 import 'package:teta_core/src/design_system/textfield/minitextfield.dart';
 import 'package:teta_core/teta_core.dart';
 // Project imports:
 import 'package:teta_widgets/src/elements/nodes/node.dart';
 
-class IconControl extends StatefulWidget {
-  const IconControl({
+class IconFeatherControl extends StatefulWidget {
+  const IconFeatherControl({
     required this.node,
     required this.icon,
     required this.callBack,
@@ -27,10 +26,10 @@ class IconControl extends StatefulWidget {
   final Function(String, String) callBack;
 
   @override
-  IconControlState createState() => IconControlState();
+  IconFeatherControlState createState() => IconFeatherControlState();
 }
 
-class IconControlState extends State<IconControl> {
+class IconFeatherControlState extends State<IconFeatherControl> {
   double? height;
   String? iconState;
   String textToFind = '';
@@ -48,7 +47,7 @@ class IconControlState extends State<IconControl> {
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
         const THeadline3(
-          'Icon',
+          'Feather Icon',
         ),
         TextButton(
           onPressed: showPicker,
@@ -62,7 +61,7 @@ class IconControlState extends State<IconControl> {
             ),
             child: Center(
               child: Icon(
-                MdiIcons.fromString(widget.icon),
+                FeatherIconsMap[widget.icon],
                 color: Colors.white,
               ),
             ),
@@ -87,7 +86,8 @@ class IconControlState extends State<IconControl> {
     showDialog<void>(
       context: context,
       builder: (final context) {
-        final icons = iconMap.keys.map(IconDefinition.new).toList();
+        final icons =
+            FeatherIconsMap.keys.map(FeatherIconDefinition.new).toList();
         final editingController = TextEditingController();
         var filteredIcons = icons.sublist(0, 64);
         var after = 0;
@@ -120,7 +120,7 @@ class IconControlState extends State<IconControl> {
                               ),
                             );
                           },
-                        ); // Load next documents
+                        );
                       }
                     }
                   });
@@ -216,11 +216,11 @@ class IconControlState extends State<IconControl> {
   }
 }
 
-List<IconDefinition> loadIcons(
+List<FeatherIconDefinition> loadIcons(
   final String query,
   final int limit,
   final int after,
-  final Iterable<IconDefinition> icons,
+  final Iterable<FeatherIconDefinition> icons,
 ) {
   var list = icons
       .where(
@@ -235,37 +235,25 @@ List<IconDefinition> loadIcons(
   return list;
 }
 
-final _iconLib = MdiIcons();
+const _iconLib = FeatherIconsMap;
 
-class IconDefinition implements Comparable<IconDefinition> {
-  IconDefinition(final String key) {
+class FeatherIconDefinition implements Comparable<FeatherIconDefinition> {
+  FeatherIconDefinition(final String key) {
     iconData = _iconLib[key];
-    title = toKebabCase(key);
+    title = key;
   }
 
   IconData? iconData;
   String? title;
 
-  String toKebabCase(final String str) {
-    return str
-        .replaceAllMapped(
-          RegExp(
-            r'[A-Z]{2,}(?=[A-Z][a-z]+[0-9]*|\b)|[A-Z]?[a-z]+[0-9]*|[A-Z]|[0-9]+',
-          ),
-          (final Match m) => '${m[0]!.toLowerCase()}_',
-        )
-        .split(RegExp(r'(_|\s)+'))
-        .takeWhile((final value) => value != '')
-        .join('-');
-  }
-
   @override
-  String toString() => 'IconDefinition{iconData: $iconData, title: $title}';
+  String toString() =>
+      'FeatherIconDefinition{iconData: $iconData, title: $title}';
 
   @override
   bool operator ==(final Object other) =>
       identical(this, other) ||
-      other is IconDefinition &&
+      other is FeatherIconDefinition &&
           runtimeType == other.runtimeType &&
           iconData == other.iconData &&
           title == other.title;
@@ -274,6 +262,6 @@ class IconDefinition implements Comparable<IconDefinition> {
   int get hashCode => iconData.hashCode ^ title.hashCode;
 
   @override
-  int compareTo(final IconDefinition other) =>
+  int compareTo(final FeatherIconDefinition other) =>
       title!.compareTo(other.title ?? '');
 }

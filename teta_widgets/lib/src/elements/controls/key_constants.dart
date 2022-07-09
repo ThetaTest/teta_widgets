@@ -68,6 +68,8 @@ class DBKeys {
   static const String conditionType = 'cndT';
   static const String isVertical = 'isV';
   static const String icon = 'icn';
+  static const String featherIcon = 'fiicn';
+  static const String faIcon = 'faicn';
   static const String boxFit = 'bxF';
   static const String xRotation = 'xR';
   static const String yRotation = 'yR';
@@ -241,6 +243,10 @@ class DynamicAttributes {
         case DBKeys.maxHeight:
           return FSize.fromJson(value as Map<String, dynamic>);
         case DBKeys.icon:
+          return value;
+        case DBKeys.faIcon:
+          return value;
+        case DBKeys.featherIcon:
           return value;
         case DBKeys.image:
           return FTextTypeInput.fromJson(value as Map<String, dynamic>);
@@ -490,6 +496,10 @@ class DynamicAttributes {
       case DBKeys.maxHeight:
         return value != null ? value.toJson() : FSize().toJson();
       case DBKeys.icon:
+        return value;
+      case DBKeys.faIcon:
+        return value;
+      case DBKeys.featherIcon:
         return value;
       case DBKeys.image:
         return value != null ? value.toJson() : FTextTypeInput().toJson();

@@ -4,8 +4,8 @@ import 'package:flutter/material.dart';
 import 'package:teta_core/gen/assets.gen.dart';
 import 'package:teta_core/src/models/dataset.dart';
 import 'package:teta_core/src/models/variable.dart';
+import 'package:teta_widgets/src/elements/code/templates/icon_feather.dart';
 // Project imports:
-import 'package:teta_widgets/src/elements/code/templates/icon.dart';
 import 'package:teta_widgets/src/elements/controls/control_model.dart';
 import 'package:teta_widgets/src/elements/controls/key_constants.dart';
 import 'package:teta_widgets/src/elements/controls/type.dart';
@@ -18,12 +18,12 @@ import 'package:teta_widgets/src/elements/nodes/enum.dart';
 import 'package:teta_widgets/src/elements/nodes/node.dart';
 import 'package:teta_widgets/src/elements/nodes/node_body.dart';
 import 'package:teta_widgets/src/elements/packages.dart';
-import 'package:teta_widgets/src/elements/widgets/icon.dart';
+import 'package:teta_widgets/src/elements/widgets/icon_feather.dart';
 
-const _globalType = NType.icon;
+const _globalType = NType.featherIcon;
 
-/// Intrinsic States of Icon
-final iconIntrinsicStates = IntrinsicStates(
+/// Intrinsic States of featherIcon node
+final featherIconIntrinsicStates = IntrinsicStates(
   nodeIcon: Assets.wIcons.icon,
   nodeVideo: '',
   nodeDescription: null,
@@ -33,9 +33,9 @@ final iconIntrinsicStates = IntrinsicStates(
     NodeType.name(NType.image),
   ],
   blockedTypes: [],
-  synonymous: ['icon', 'menu'],
+  synonymous: ['feather', 'icon', 'font'],
   advicedChildrenCanHaveAtLeastAChild: [],
-  displayName: 'Material Icon',
+  displayName: 'Feather Icon',
   type: _globalType,
   category: NodeCategories.icon,
   maxChildren: 0,
@@ -43,15 +43,15 @@ final iconIntrinsicStates = IntrinsicStates(
   addChildLabels: [],
   gestures: [],
   permissions: [],
-  packages: [pMaterialDesignIconsFlutter],
+  packages: [pFeatherIcons],
 );
 
-/// Icon's body
-class IconBody extends NodeBody {
+/// Feather Icon's body
+class FeatherIconBody extends NodeBody {
   @override
   // ignore: overridden_fields
   Map<String, dynamic> attributes = <String, dynamic>{
-    DBKeys.icon: 'plus',
+    DBKeys.featherIcon: 'plus',
     DBKeys.width: FSize(size: '24', unit: SizeUnit.pixel),
     DBKeys.fill: FFill(),
   };
@@ -59,9 +59,9 @@ class IconBody extends NodeBody {
   @override
   List<ControlModel> get controls => [
         ControlObject(
-          type: ControlType.icon,
-          key: DBKeys.icon,
-          value: attributes[DBKeys.icon],
+          type: ControlType.featherIcon,
+          key: DBKeys.featherIcon,
+          value: attributes[DBKeys.featherIcon],
         ),
         SizeControlObject(
           type: ControlType.size,
@@ -92,20 +92,19 @@ class IconBody extends NodeBody {
     final CNode? child,
     final List<CNode>? children,
   }) =>
-      WIcon(
+      WFeatherIcon(
         ValueKey(
           '''
       ${node.nid}
       $loop
-            ${child ?? children}
       ${(attributes[DBKeys.width] as FSize).toJson()}
-      ${attributes[DBKeys.icon]}
+      ${attributes[DBKeys.featherIcon]}
       ${(attributes[DBKeys.fill] as FFill).toJson()}
       ''',
         ),
         node: node,
         width: attributes[DBKeys.width] as FSize,
-        icon: attributes[DBKeys.icon] as String? ?? 'plus',
+        icon: attributes[DBKeys.featherIcon] as String? ?? 'plus',
         fill: attributes[DBKeys.fill] as FFill,
         forPlay: forPlay,
         loop: loop,
@@ -123,5 +122,5 @@ class IconBody extends NodeBody {
     final int pageId,
     final int? loop,
   ) =>
-      iconCodeTemplate(context, this, node, child, loop);
+      iconFeatherCodeTemplate(context, this, node, child, loop);
 }

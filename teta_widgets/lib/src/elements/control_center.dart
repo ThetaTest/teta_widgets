@@ -55,6 +55,8 @@ import 'package:teta_widgets/src/elements/bodies/gridview_builder.dart';
 import 'package:teta_widgets/src/elements/bodies/hero.dart';
 import 'package:teta_widgets/src/elements/bodies/https_requests/future_builder.dart';
 import 'package:teta_widgets/src/elements/bodies/icon.dart';
+import 'package:teta_widgets/src/elements/bodies/icon_feather.dart';
+import 'package:teta_widgets/src/elements/bodies/icon_font_awesome.dart';
 import 'package:teta_widgets/src/elements/bodies/ignore_pointer.dart';
 import 'package:teta_widgets/src/elements/bodies/image.dart';
 import 'package:teta_widgets/src/elements/bodies/index_stack.dart';
@@ -137,6 +139,8 @@ final stateTypes = <IntrinsicStates>[
   gestureDetectorIntrinsicStates,
   gridIntrinsicStates,
   gridViewBuilderIntrinsicStates,
+  fontAwesomeIntrinsicStates,
+  featherIconIntrinsicStates,
   heroIntrinsicStates,
   iconIntrinsicStates,
   ignorePointIntrinsicStates,
@@ -296,6 +300,10 @@ NodeBody getBody(final NType type) {
       return HeroBody();
     case NType.icon:
       return IconBody();
+    case NType.fontAwesomeIcon:
+      return FontAwesomeBody();
+     case NType.featherIcon:
+      return FeatherIconBody();
     case NType.ignorePointer:
       return IgnorePointerBody();
     case NType.image:
