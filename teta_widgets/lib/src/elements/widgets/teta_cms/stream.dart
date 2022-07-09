@@ -3,6 +3,8 @@
 // ignore_for_file: avoid_dynamic_calls
 
 // Flutter imports:
+import 'dart:async';
+
 import 'package:flutter/material.dart';
 // Package imports:
 import 'package:supabase/supabase.dart';
@@ -73,7 +75,7 @@ class _WCmsStreamState extends State<WCmsStream> {
     map: [<String, dynamic>{}],
   );
   bool isLoaded = true;
-  late final Stream<List<dynamic>> _stream;
+  late final StreamController<List<dynamic>> _stream;
   SupabaseClient? client;
 
   @override
@@ -142,7 +144,7 @@ class _WCmsStreamState extends State<WCmsStream> {
       forPlay: widget.forPlay,
       child: RepaintBoundary(
         child: StreamBuilder(
-          stream: _stream,
+          stream: _stream.stream,
           builder: (final context, final snapshot) {
             if (!snapshot.hasData) {
               if (widget.children.isNotEmpty) {
