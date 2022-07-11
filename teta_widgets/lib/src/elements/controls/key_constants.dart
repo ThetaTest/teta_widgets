@@ -70,6 +70,7 @@ class DBKeys {
   static const String icon = 'icn';
   static const String featherIcon = 'fiicn';
   static const String faIcon = 'faicn';
+  static const String lineIcon = 'lnicn';
   static const String boxFit = 'bxF';
   static const String xRotation = 'xR';
   static const String yRotation = 'yR';
@@ -247,6 +248,8 @@ class DynamicAttributes {
         case DBKeys.faIcon:
           return value;
         case DBKeys.featherIcon:
+          return value;
+        case DBKeys.lineIcon:
           return value;
         case DBKeys.image:
           return FTextTypeInput.fromJson(value as Map<String, dynamic>);
@@ -500,6 +503,8 @@ class DynamicAttributes {
       case DBKeys.faIcon:
         return value;
       case DBKeys.featherIcon:
+        return value;
+      case DBKeys.lineIcon:
         return value;
       case DBKeys.image:
         return value != null ? value.toJson() : FTextTypeInput().toJson();

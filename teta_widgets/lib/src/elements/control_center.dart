@@ -57,6 +57,7 @@ import 'package:teta_widgets/src/elements/bodies/https_requests/future_builder.d
 import 'package:teta_widgets/src/elements/bodies/icon.dart';
 import 'package:teta_widgets/src/elements/bodies/icon_feather.dart';
 import 'package:teta_widgets/src/elements/bodies/icon_font_awesome.dart';
+import 'package:teta_widgets/src/elements/bodies/icon_line.dart';
 import 'package:teta_widgets/src/elements/bodies/ignore_pointer.dart';
 import 'package:teta_widgets/src/elements/bodies/image.dart';
 import 'package:teta_widgets/src/elements/bodies/index_stack.dart';
@@ -143,6 +144,7 @@ final stateTypes = <IntrinsicStates>[
   featherIconIntrinsicStates,
   heroIntrinsicStates,
   iconIntrinsicStates,
+  lineIconIntrinsicStates,
   ignorePointIntrinsicStates,
   imageIntrinsicStates,
   liquidSwipeIntrinsicStates,
@@ -302,8 +304,10 @@ NodeBody getBody(final NType type) {
       return IconBody();
     case NType.fontAwesomeIcon:
       return FontAwesomeBody();
-     case NType.featherIcon:
+    case NType.featherIcon:
       return FeatherIconBody();
+    case NType.lineIcon:
+      return LineIconBody();
     case NType.ignorePointer:
       return IgnorePointerBody();
     case NType.image:

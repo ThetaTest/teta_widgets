@@ -107,6 +107,7 @@ enum NType {
   wrapper,
   fontAwesomeIcon,
   featherIcon,
+  lineIcon,
   qrCode,
   barcode,
 

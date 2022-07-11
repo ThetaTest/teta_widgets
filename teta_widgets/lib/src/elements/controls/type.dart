@@ -29,6 +29,7 @@ import 'package:teta_widgets/src/elements/controls/atoms/flag.dart';
 import 'package:teta_widgets/src/elements/controls/atoms/icon.dart';
 import 'package:teta_widgets/src/elements/controls/atoms/icon_feather.dart';
 import 'package:teta_widgets/src/elements/controls/atoms/icon_fontawesome.dart';
+import 'package:teta_widgets/src/elements/controls/atoms/icon_line.dart';
 import 'package:teta_widgets/src/elements/controls/atoms/main_axis_alignment.dart';
 import 'package:teta_widgets/src/elements/controls/atoms/main_axis_size.dart';
 import 'package:teta_widgets/src/elements/controls/atoms/map_controller.dart';
@@ -98,6 +99,9 @@ enum ControlType {
 
   /// Made to use Feather icon.
   featherIcon,
+
+  /// Made to use Line icon.
+  lineIcon,
 
   /// Made to use a flag / bool value.
   flag,
@@ -631,6 +635,28 @@ class ControlBuilder {
       return descriptionControlWidget(
         description: control.description,
         control: IconFeatherControl(
+          key: ValueKey('${node.nid}'),
+          node: node,
+          icon: control.value as String,
+          callBack: (final value, final old) {
+            node.body.attributes[DBKeys.icon] = value;
+            ControlBuilder.toDB(
+              prj,
+              page,
+              node,
+              context,
+              control.key,
+              value,
+              old,
+            );
+          },
+        ),
+      );
+    }
+    if (control.type == ControlType.lineIcon) {
+      return descriptionControlWidget(
+        description: control.description,
+        control: IconLineControl(
           key: ValueKey('${node.nid}'),
           node: node,
           icon: control.value as String,

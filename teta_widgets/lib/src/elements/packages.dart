@@ -127,6 +127,11 @@ const PackageModel pFeatherIcons = PackageModel(
   packageVersion: '1.2.0',
   isDart: false,
 );
+const PackageModel pLineIcons = PackageModel(
+  packageName: 'line_icons',
+  packageVersion: '2.0.1',
+  isDart: false,
+);
 const PackageModel pUrlLauncher = PackageModel(
   packageName: 'url_launcher',
   packageVersion: '6.1.4',
