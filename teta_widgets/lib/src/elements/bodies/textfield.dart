@@ -133,7 +133,7 @@ class TextFieldBody extends NodeBody {
           title: 'Enable Borders',
           key: DBKeys.showBorders,
           value: attributes[DBKeys.showBorders] as bool,
-          description: 'Show borders around the textfield',
+          description: 'Show borders around the textfield (only in play mode)',
         ),
         ControlObject(
           type: ControlType.value,
