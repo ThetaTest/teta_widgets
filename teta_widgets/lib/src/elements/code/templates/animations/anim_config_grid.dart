@@ -16,7 +16,7 @@ String animConfigGridCodeTemplate(
   final position =
       (body.attributes[DBKeys.value] as FTextTypeInput).toCode(loop);
   final duration =
-      (body.attributes[DBKeys.value] as FTextTypeInput).toCode(loop);
+      (body.attributes[DBKeys.duration] as FTextTypeInput).toCode(loop);
   final numCols =
       (body.attributes[DBKeys.valueOfCondition] as FTextTypeInput).toCode(loop);
   return '''
