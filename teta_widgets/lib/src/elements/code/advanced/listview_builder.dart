@@ -34,7 +34,7 @@ String listViewBuilderCodeTemplate(
           ? 'scrollDirection: Axis.horizontal,'
           : '';
   final shrinkWrap = body.attributes[DBKeys.flag] as bool? ?? false;
-  final reverse = body.attributes[DBKeys.isPrimary] as bool;
+  final reverse = body.attributes[DBKeys.isFullWidth] as bool;
   final childString = child != null ? child.toCode(context) : '';
   final dataset =
       (body.attributes[DBKeys.datasetInput] as FDataset).datasetName;
