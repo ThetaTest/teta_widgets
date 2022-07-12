@@ -61,7 +61,7 @@ class IconLineControlState extends State<IconLineControl> {
             ),
             child: Center(
               child: Icon(
-                LineIcons.byName(widget.icon),
+                LineIcons.byName(iconState ?? 'plus'),
                 color: Colors.white,
               ),
             ),
@@ -245,8 +245,7 @@ class LineIconDefinition implements Comparable<LineIconDefinition> {
   String? title;
 
   @override
-  String toString() =>
-      'LineIconDefinition{iconData: $iconData, title: $title}';
+  String toString() => 'LineIconDefinition{iconData: $iconData, title: $title}';
 
   @override
   bool operator ==(final Object other) =>

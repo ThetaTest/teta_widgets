@@ -62,7 +62,7 @@ class IconControlState extends State<IconControl> {
             ),
             child: Center(
               child: Icon(
-                MdiIcons.fromString(widget.icon),
+                MdiIcons.fromString(iconState ?? 'plus'),
                 color: Colors.white,
               ),
             ),

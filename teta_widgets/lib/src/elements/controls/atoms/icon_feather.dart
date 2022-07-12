@@ -61,7 +61,7 @@ class IconFeatherControlState extends State<IconFeatherControl> {
             ),
             child: Center(
               child: Icon(
-                FeatherIconsMap[widget.icon],
+                FeatherIconsMap[iconState ?? 'plus'],
                 color: Colors.white,
               ),
             ),

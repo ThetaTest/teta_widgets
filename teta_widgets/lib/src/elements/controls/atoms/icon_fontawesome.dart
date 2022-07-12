@@ -61,7 +61,7 @@ class IconFontAwesomeControlState extends State<IconFontAwesomeControl> {
             ),
             child: Center(
               child: Icon(
-                faIconNameMapping[widget.icon],
+                faIconNameMapping[iconState ?? 'plus'],
                 color: Colors.white,
               ),
             ),
