@@ -116,7 +116,6 @@ class ParameterState extends State<FirestoreParameterControl> {
             ),
             if (widget.value.type == FTextTypeEnum.text)
               CTextField(
-                hpadding: 0,
                 //text: text,
                 controller: controller,
                 callBack: (final value) {
@@ -182,40 +181,41 @@ class ParameterState extends State<FirestoreParameterControl> {
                 widget.value.datasetName != null)
               Padding(
                 padding: EI.smT,
-                child:CDropdown(
-                value: widget.page.datasets
-                        .firstWhere(
-                          (final element) =>
-                              element.getName == widget.value.datasetName,
-                        )
-                        .getMap
-                        .first
-                        .keys
-                        .map((final key) => key)
-                        .toSet()
-                        .contains(widget.value.datasetAttr)
-                    ? widget.value.datasetAttr
-                    : null,
-                items: widget.page.datasets
-                    .firstWhere(
-                      (final element) =>
-                          element.getName == widget.value.datasetName,
-                    )
-                    .getMap
-                    .first
-                    .keys
-                    .map((final key) => key)
-                    .toSet()
-                    .toList(),
-                onChange: (final newValue) {
-                  setState(() {
-                    databaseAttribute = newValue!;
-                  });
-                  final old = widget.value;
-                  widget.value.datasetAttr = newValue;
-                  widget.callBack(widget.value, old);
-                },
-              ),),
+                child: CDropdown(
+                  value: widget.page.datasets
+                          .firstWhere(
+                            (final element) =>
+                                element.getName == widget.value.datasetName,
+                          )
+                          .getMap
+                          .first
+                          .keys
+                          .map((final key) => key)
+                          .toSet()
+                          .contains(widget.value.datasetAttr)
+                      ? widget.value.datasetAttr
+                      : null,
+                  items: widget.page.datasets
+                      .firstWhere(
+                        (final element) =>
+                            element.getName == widget.value.datasetName,
+                      )
+                      .getMap
+                      .first
+                      .keys
+                      .map((final key) => key)
+                      .toSet()
+                      .toList(),
+                  onChange: (final newValue) {
+                    setState(() {
+                      databaseAttribute = newValue!;
+                    });
+                    final old = widget.value;
+                    widget.value.datasetAttr = newValue;
+                    widget.callBack(widget.value, old);
+                  },
+                ),
+              ),
           ],
         ),
       ),

@@ -123,7 +123,6 @@ class FontFamilyState extends State<FontFamilyControl> {
                           child: CMiniTextField(
                             controller: editingController,
                             placeholder: widget.textStyle.fontFamily,
-                            color: Colors.white,
                             callBack: (final text) {
                               cubit.updateTextToFind(text);
                               setState(() {

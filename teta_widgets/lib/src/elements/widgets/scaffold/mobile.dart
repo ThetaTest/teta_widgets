@@ -64,7 +64,8 @@ class ScaffoldMobile extends StatelessWidget {
     final isPage = BlocProvider.of<FocusPageBloc>(context).state.isPage;
     if (!isPage ||
         children.indexWhere(
-                (final element) => element.globalType == NType.appBar) ==
+              (final element) => element.globalType == NType.appBar,
+            ) ==
             -1) {
       return forPlay
           ? SizedBox(

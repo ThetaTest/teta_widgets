@@ -175,6 +175,9 @@ String pageCodeTemplate(
       var datasets = <String, dynamic>{};
       int index = 0;
 
+      final GlobalKey<ScaffoldState> _scaffoldKey = GlobalKey<ScaffoldState>();
+
+
       @override
       void initState() {
         super.initState();
@@ -193,6 +196,7 @@ String pageCodeTemplate(
       Widget build(BuildContext context) {
         return ${page.isPage ? '''
         Scaffold(
+          key: _scaffoldKey,
           resizeToAvoidBottomInset: $flag,
           $appBarString
           $drawerString

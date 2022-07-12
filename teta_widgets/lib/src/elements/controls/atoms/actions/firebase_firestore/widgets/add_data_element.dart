@@ -53,7 +53,6 @@ class AddDataElementState extends State<AddDataElement> {
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           CTextField(
-            hpadding: 0,
             controller: nameController,
             callBack: (final v) {
               final old = widget.value;
@@ -96,7 +95,6 @@ class AddDataElementState extends State<AddDataElement> {
           ),
           if (value.type == FTextTypeEnum.text)
             CTextField(
-              hpadding: 0,
               //text: text,
               controller: valueController,
               callBack: (final v) {

@@ -11,8 +11,8 @@ class FActionNavigationOpenDrawer {
 
   static String toCode() {
     return '''
-    if (!Scaffold.of(context).isDrawerOpen) {
-      Scaffold.of(context).openDrawer();
+    if (_scaffoldKey.currentState != null) {
+      _scaffoldKey.currentState!.openDrawer();
     }
     ''';
   }

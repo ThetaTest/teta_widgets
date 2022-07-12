@@ -1,4 +1,3 @@
-// Flutter imports:
 // ignore_for_file: public_member_api_docs
 
 // Flutter imports:
@@ -43,7 +42,6 @@ class FActionNavigationLaunchURL {
   ) {
     final code = value.toCode(loop);
 
-    final buffer = StringBuffer()..write('');
     final str = code.contains(r'${')
         ? code
         : code.contains('this.datasets')
