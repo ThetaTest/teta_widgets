@@ -40,7 +40,7 @@ String tCardBuilderCodeTemplate(
   Builder(
     builder: (context) {
       return TCard(
-        onForward: (index, info) {
+        onForward: (index, info) async {
           if ${CS.action(
     pageId,
     context,
@@ -52,11 +52,11 @@ String tCardBuilderCodeTemplate(
     isRequired: false,
     endsWithComma: false,
   )}
-          ${CS.action(
+  ${CS.action(
     pageId,
     context,
     node,
-    ActionGesture.swipeRight,
+    ActionGesture.swipeLeft,
     'else',
     null,
     loop: loop,

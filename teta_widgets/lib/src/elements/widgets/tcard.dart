@@ -65,7 +65,7 @@ class _WTCardState extends State<WTCard> {
         )
         .toList();
     if (!widget.forPlay) {
-      _timer = Timer.periodic(const Duration(seconds: 1), (final timer) {
+      _timer = Timer.periodic(const Duration(seconds: 2), (final timer) {
         list = widget.children
             .map(
               (final e) => e.toWidget(
@@ -118,7 +118,7 @@ class _WTCardState extends State<WTCard> {
           controller: _controller,
           onForward: (final index, final info) {
             if (info.direction == SwipDirection.Right) {
-              // like
+              // swipe right
               GestureBuilder.get(
                 context: context,
                 node: widget.node,
@@ -132,7 +132,7 @@ class _WTCardState extends State<WTCard> {
                 loop: widget.loop,
               );
             } else {
-              // dislike
+              // swipe left
               GestureBuilder.get(
                 context: context,
                 node: widget.node,

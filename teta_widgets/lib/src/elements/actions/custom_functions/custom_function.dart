@@ -13,15 +13,15 @@ class FActionCustomFunction {
     await showDialog<void>(
       context: context,
       builder: (final context) {
-        return const AlertDialog(
-          title: Text('Custom Function'),
-          titleTextStyle: TextStyle(
+        return AlertDialog(
+          title: Text('Custom Function $customFunctionId'),
+          titleTextStyle: const TextStyle(
             fontWeight: FontWeight.bold,
             color: Colors.white,
             fontSize: 20,
           ),
-          backgroundColor: Color(0xFF333333),
-          shape: RoundedRectangleBorder(
+          backgroundColor: const Color(0xFF333333),
+          shape: const RoundedRectangleBorder(
             borderRadius: BorderRadius.all(Radius.circular(20)),
           ),
         );

@@ -2,9 +2,10 @@
 // ignore_for_file: public_member_api_docs, avoid_dynamic_calls
 
 // Dart imports:
-import 'dart:async';
 
 // Flutter imports:
+import 'dart:async';
+
 import 'package:flutter/material.dart';
 // Package imports:
 import 'package:tcard/tcard.dart';
@@ -54,22 +55,26 @@ class _WTCardState extends State<WTCardBuilder> {
     const Center(child: CircularProgressIndicator())
   ];
   bool isLoaded = false;
+  Timer? _timer;
 
   @override
   void initState() {
     super.initState();
     _fetch();
-    Timer.periodic(const Duration(seconds: 1), (final timer) {
-      _fetch();
-      if (!isLoaded) {
-        _controller.reset(cards: list);
-      }
-    });
+    if (!widget.forPlay) {
+      _timer = Timer.periodic(const Duration(seconds: 2), (final timer) {
+        _fetch();
+        if (!widget.forPlay) {
+          _controller.reset(cards: list);
+        }
+      });
+    }
   }
 
   @override
   void dispose() {
     _controller.dispose();
+    _timer?.cancel();
     super.dispose();
   }
 
@@ -100,7 +105,7 @@ class _WTCardState extends State<WTCardBuilder> {
           controller: _controller,
           onForward: (final index, final info) {
             if (info.direction == SwipDirection.Right) {
-              // like
+              // swipe right
               GestureBuilder.get(
                 context: context,
                 node: widget.node,
@@ -114,7 +119,7 @@ class _WTCardState extends State<WTCardBuilder> {
                 loop: widget.loop,
               );
             } else {
-              // dislike
+              // swipe left
               GestureBuilder.get(
                 context: context,
                 node: widget.node,

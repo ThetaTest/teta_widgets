@@ -35,7 +35,7 @@ String tCardCodeTemplate(
   final lockYAxis = node.body.attributes[DBKeys.flag] as bool? ?? false;
   return '''
   TCard(
-    onForward: (index, info) {
+    onForward: (index, info) async {
       if ${CS.action(
     pageId,
     context,
@@ -51,7 +51,7 @@ String tCardCodeTemplate(
     pageId,
     context,
     node,
-    ActionGesture.swipeRight,
+    ActionGesture.swipeLeft,
     'else',
     null,
     loop: loop,

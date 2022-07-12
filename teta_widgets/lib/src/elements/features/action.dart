@@ -43,20 +43,4 @@ class FAction extends Equatable {
 
   @override
   List<Object?> get props => [actions];
-
-  /*String toCode(BuildContext context, CNode node, String value) {
-    String actionsString = "";
-    if (actions != null) {
-      actions!.forEach((element) {
-        actionsString += "${element.toCode(context, node)},";
-      });
-    }
-    return """
-      FAction(
-        actions: [
-          $actionsString
-        ],
-      )
-    """;
-  }*/
 }
