@@ -31,20 +31,18 @@ class _GradientSwiperSFWState extends State<GradientSwiper> {
         _key.currentContext?.findRenderObject() as RenderBox?;
     final offset = renderBoxWidget?.localToGlobal(Offset.zero);
 
-    print('offset: $offset');
     yOff = offset?.dy ?? 0;
     xOff = offset?.dx ?? 0;
   }
 
-  void _afterLayout(final dynamic _) {
-    _getRenderOffsets();
-  }
+  // void _afterLayout(final dynamic _) {
+  //   _getRenderOffsets();
+  // }
 
   void updatePosition(final Offset newPosition) {
     setState(
       () => position = Offset(newPosition.dx - xOff, newPosition.dx - yOff),
     );
-    print(position);
   }
 
   @override

@@ -5,10 +5,8 @@
 
 import 'package:flutter/material.dart';
 import 'package:teta_cms/teta_cms.dart';
-
 // Package imports:
 import 'package:teta_core/teta_core.dart';
-
 // Project imports:
 import 'package:teta_widgets/src/elements/index.dart';
 
@@ -50,7 +48,7 @@ class WStripeProductsBuilderState extends State<WStripeProductsBuilder> {
   @override
   void initState() {
     _getStripeProducts().whenComplete(() {
-      setState((){});
+      setState(() {});
     });
     super.initState();
   }
@@ -101,7 +99,7 @@ class WStripeProductsBuilderState extends State<WStripeProductsBuilder> {
         debugPrint('Error in calc WStripeProductsList -> ${r.error}');
       }
     } catch (e) {
-      debugPrint('Error in calc WStripeProductsList -> ${e}');
+      debugPrint('Error in calc WStripeProductsList -> $e');
     }
   }
 }

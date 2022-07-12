@@ -1,17 +1,10 @@
 // Flutter imports:
 // ignore_for_file: public_member_api_docs
 
-// Flutter imports:
-import 'dart:convert';
-
 import 'package:flutter/material.dart';
-import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:http/http.dart' as http;
 import 'package:teta_cms/teta_cms.dart';
-
 // Package imports:
 import 'package:teta_core/teta_core.dart';
-
 // Project imports:
 import 'package:teta_widgets/src/elements/index.dart';
 
@@ -102,7 +95,7 @@ class _WStripeCartItemsBuilderState extends State<WStripeCartItemsBuilder> {
       );
       addDataset(context, widget.dataset, datasetObject);
     } catch (e) {
-      debugPrint('Error in calc WStripeProductsList -> ${e}');
+      debugPrint('Error in calc WStripeProductsList -> $e');
     }
   }
 }

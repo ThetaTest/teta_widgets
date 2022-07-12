@@ -88,7 +88,6 @@ class ImageFillControlState extends State<ImageFillControl> {
                         placeholder: controller.text,
                         controller: controller,
                         title: 'IMAGE URL',
-                        hpadding: 0,
                         callBack: (final text) {
                           final old = FFill().fromJson(widget.fill.toJson());
                           widget.fill.get(context).levels!.first.color = text;
