@@ -46,7 +46,7 @@ final cmsFetchIntrinsicStates = IntrinsicStates(
   displayName: NodeType.name(_globalType),
   type: _globalType,
   category: NodeCategories.basic,
-  maxChildren: 2,
+  maxChildren: 1,
   canHave: ChildrenEnum.children,
   addChildLabels: [],
   gestures: [],

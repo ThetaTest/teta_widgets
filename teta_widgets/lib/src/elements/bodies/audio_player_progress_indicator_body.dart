@@ -1,11 +1,14 @@
 // Flutter imports:
 import 'package:flutter/material.dart';
+
 // Package imports:
 import 'package:teta_core/gen/assets.gen.dart';
 import 'package:teta_core/src/models/dataset.dart';
 import 'package:teta_core/src/models/variable.dart';
+import 'package:teta_widgets/src/elements/code/templates/audio_player_progress_indicator_template.dart';
+
 // Project imports:
-import 'package:teta_widgets/src/elements/code/templates/align.dart';
+import 'package:teta_widgets/src/elements/code/templates/audio_player_template.dart';
 import 'package:teta_widgets/src/elements/controls/control_model.dart';
 import 'package:teta_widgets/src/elements/controls/key_constants.dart';
 import 'package:teta_widgets/src/elements/controls/type.dart';
@@ -16,13 +19,14 @@ import 'package:teta_widgets/src/elements/nodes/children_enum.dart';
 import 'package:teta_widgets/src/elements/nodes/enum.dart';
 import 'package:teta_widgets/src/elements/nodes/node.dart';
 import 'package:teta_widgets/src/elements/nodes/node_body.dart';
-import 'package:teta_widgets/src/elements/widgets/audio_player.dart';
+import 'package:teta_widgets/src/elements/packages.dart';
+import 'package:teta_widgets/src/elements/widgets/w_audio_player_progress_indicator.dart';
 
-const _globalType = NType.audioPlayer;
+const _globalType = NType.audioPlayerProgressIndicator;
 
 /// Audio Player Instrinsic State
-final audioPlayerIntrinsicStates = IntrinsicStates(
-  nodeIcon: Assets.wIcons.audioPlayer,
+final audioPlayerProgressIndicatorIntrinsicStates = IntrinsicStates(
+  nodeIcon: Assets.wIcons.video,
   nodeVideo: null,
   nodeDescription: null,
   advicedChildren: [],
@@ -33,13 +37,13 @@ final audioPlayerIntrinsicStates = IntrinsicStates(
   advicedChildrenCanHaveAtLeastAChild: [],
   displayName: NodeType.name(_globalType),
   type: _globalType,
-  category: NodeCategories.unclassified,
-  maxChildren: 1,
-  canHave: ChildrenEnum.child,
+  category: NodeCategories.advanced,
+  maxChildren: 0,
+  canHave: ChildrenEnum.none,
   addChildLabels: [],
   gestures: [],
   permissions: [],
-  packages: [],
+  packages: [pRxDart],
 );
 
 /// Set of funcs to use Align widget
@@ -52,14 +56,11 @@ final audioPlayerIntrinsicStates = IntrinsicStates(
 ///   Widget? child
 /// })
 /// ```
-class AudioPlayerBody extends NodeBody {
+class AudioPlayerProgressIndicatorBody extends NodeBody {
   @override
   // ignore: overridden_fields
   Map<String, dynamic> attributes = <String, dynamic>{
     DBKeys.value: FTextTypeInput(type: FTextTypeEnum.state),
-    DBKeys.valueOfCondition: FTextTypeInput(
-      value: 'https://foo.com/bar.mp3',
-    ),
   };
 
   @override
@@ -68,12 +69,6 @@ class AudioPlayerBody extends NodeBody {
           type: ControlType.audioController,
           key: DBKeys.value,
           value: attributes[DBKeys.value] as FTextTypeInput,
-        ),
-        ControlObject(
-          type: ControlType.value,
-          key: DBKeys.valueOfCondition,
-          value: attributes[DBKeys.valueOfCondition] as FTextTypeInput,
-          title: 'Url',
         ),
       ];
 
@@ -88,18 +83,16 @@ class AudioPlayerBody extends NodeBody {
     final CNode? child,
     final List<CNode>? children,
   }) =>
-      WAudioPlayer(
+      WAudioPlayerProgressIndicator(
         ValueKey(
           '''
           ${node.nid}
           $loop
             ${child ?? children}
           ${(attributes[DBKeys.value] as FTextTypeInput).get(params, states, dataset, forPlay, loop)}, 
-          ${(attributes[DBKeys.valueOfCondition] as FTextTypeInput).get(params, states, dataset, forPlay, loop)}, 
         ''',
         ),
         controller: attributes[DBKeys.value] as FTextTypeInput,
-        url: attributes[DBKeys.valueOfCondition] as FTextTypeInput,
         node: node,
         child: child,
         forPlay: forPlay,
@@ -117,6 +110,5 @@ class AudioPlayerBody extends NodeBody {
     final List<CNode>? children,
     final int pageId,
     final int? loop,
-  ) =>
-      alignCodeTemplate(context, this, child);
+  ) => AudioPlayerProgressIndicatorTemplate.toCode(context: context, audioPlayerName: (attributes[DBKeys.value] as FTextTypeInput).stateName ?? '');
 }

@@ -178,6 +178,10 @@ class DBKeys {
 
   static const String adMobAdAndroidUnitId = 'adMobAndroidUnitId';
   static const String adMobAdIosUnitId = 'adMobIosUnitId';
+
+  static const audioPlayerUrl = 'aopurl';
+
+  static const String audioPlayerCurrentDataset = 'apcd';
 }
 
 class DynamicAttributes {
@@ -298,6 +302,8 @@ class DynamicAttributes {
         case DBKeys.top:
           return value;
         case DBKeys.value:
+          return FTextTypeInput.fromJson(value as Map<String, dynamic>);
+        case DBKeys.audioPlayerCurrentDataset:
           return FTextTypeInput.fromJson(value as Map<String, dynamic>);
         case DBKeys.rotateX:
           return FTextTypeInput.fromJson(value as Map<String, dynamic>);
@@ -553,6 +559,8 @@ class DynamicAttributes {
       case DBKeys.top:
         return value;
       case DBKeys.value:
+        return value != null ? value.toJson() : FTextTypeInput().toJson();
+      case DBKeys.audioPlayerCurrentDataset:
         return value != null ? value.toJson() : FTextTypeInput().toJson();
       case DBKeys.rotateX:
         return value != null ? value.toJson() : FTextTypeInput().toJson();

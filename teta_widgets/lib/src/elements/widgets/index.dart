@@ -3,7 +3,7 @@ export './animated_align.dart';
 export './animated_container.dart';
 export './animated_opacity.dart';
 export './aspect_ratio.dart';
-export './audio_player.dart';
+export './w_audio_player.dart';
 export './badge.dart';
 export './bottombaritem.dart';
 export './bouncing_widget.dart';
