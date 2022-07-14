@@ -16,17 +16,25 @@ class FAudioPlayerPlay {
     final BuildContext context,
     final List<VariableObject> states,
     final String? stateName,
+      final int loop,
   ) async {
     final variable =
         states.firstWhereOrNull((final element) => element.name == stateName);
-    if (variable?.audioController != null) {
-      await variable?.audioController?.play();
-      await variable?.audioController?.load();
+    final audioPlayer = variable?.audioController;
+    try {
+      if (audioPlayer != null) {
+        if (audioPlayer.currentIndex != loop) {
+          await audioPlayer.seek(Duration.zero, index: loop);
+        }
+        await audioPlayer.play();
+      }
+    } catch(e){
+      print("Play exception->: ${e}");
     }
   }
 
   static String toCode(
-      final int pageId, final BuildContext context, final String? stateName) {
+      final int pageId, final BuildContext context, final String? stateName, final String url, final int? loop,) {
     final page = getPageOnToCode(pageId, context);
     if (page == null) return '';
     final variable = takeStateFrom(page, '$stateName');
@@ -35,9 +43,10 @@ class FAudioPlayerPlay {
     final varName = ReCase(stateName).camelCase;
 
     return '''
-    if ($varName != null) { 
-      await $varName.play();
-      await $varName.load();
-    }''';
+         if($varName?.currentIndex! != index) {
+            await $varName?.seek(Duration.zero, index: index);
+          }
+          $varName?.play();
+    ''';
   }
 }

@@ -22,6 +22,8 @@ import 'package:teta_widgets/src/elements/actions/audio_player/loop_off.dart';
 import 'package:teta_widgets/src/elements/actions/audio_player/loop_one.dart';
 import 'package:teta_widgets/src/elements/actions/audio_player/pause.dart';
 import 'package:teta_widgets/src/elements/actions/audio_player/play.dart';
+import 'package:teta_widgets/src/elements/actions/audio_player/player_next_track.dart';
+import 'package:teta_widgets/src/elements/actions/audio_player/player_previous_track.dart';
 import 'package:teta_widgets/src/elements/actions/audio_player/reload.dart';
 import 'package:teta_widgets/src/elements/actions/camera/always_flash.dart';
 import 'package:teta_widgets/src/elements/actions/camera/auto_flash.dart';
@@ -67,7 +69,8 @@ import 'package:teta_widgets/src/elements/actions/teta_cms/database/update.dart'
 import 'package:teta_widgets/src/elements/actions/webview/back.dart';
 import 'package:teta_widgets/src/elements/actions/webview/forward.dart';
 import 'package:teta_widgets/src/elements/actions/webview/reload.dart';
-import 'package:teta_widgets/src/elements/features/actions/enums/audio_player.dart';
+import 'package:teta_widgets/src/elements/controls/key_constants.dart';
+import 'package:teta_widgets/src/elements/features/actions/enums/audio_player_actions.dart';
 import 'package:teta_widgets/src/elements/features/actions/enums/camera.dart';
 import 'package:teta_widgets/src/elements/features/actions/enums/index.dart';
 import 'package:teta_widgets/src/elements/features/actions/enums/revenue_cat.dart';
@@ -102,6 +105,7 @@ class FActionElement extends Equatable {
     this.paramsToSend,
     this.value,
     this.delay,
+    this.audioPlayerUrl,
     this.dbFrom,
     this.cmsCollectionId,
     this.dbData,
@@ -115,6 +119,7 @@ class FActionElement extends Equatable {
   }) {
     id ??= const Uuid().v1();
     delay ??= FTextTypeInput(value: '0');
+    audioPlayerUrl ??= FTextTypeInput(value: 'no_url');
     withLoop ??= false;
     everyMilliseconds ??= FTextTypeInput(value: '0');
     withCondition ??= false;
@@ -155,8 +160,8 @@ class FActionElement extends Equatable {
         convertDropdownToValue(ActionWebView.values, doc['aW'] as String?)
             as ActionWebView?;
     actionAudioPlayer =
-        convertDropdownToValue(ActionAudioPlayer.values, doc['aAP'] as String?)
-            as ActionAudioPlayer?;
+        convertDropdownToValue(ActionAudioPlayerActions.values, doc['aAP'] as String?)
+            as ActionAudioPlayerActions?;
     actionTetaDB =
         convertDropdownToValue(ActionTetaCmsDB.values, doc['aTDb'] as String?)
             as ActionTetaCmsDB?;
@@ -190,6 +195,9 @@ class FActionElement extends Equatable {
     delay = doc['delay'] != null
         ? FTextTypeInput.fromJson(doc['delay'] as Map<String, dynamic>)
         : FTextTypeInput(value: '0');
+    audioPlayerUrl = doc['audioPlayerUrl'] != null
+        ? FTextTypeInput.fromJson(doc['audioPlayerUrl'] as Map<String, dynamic>)
+        : FTextTypeInput(value: 'no_url');
     withCondition =
         doc['wCond'] != null ? doc['wCond'] as bool? ?? false : false;
     condition = doc['cond'] != null
@@ -216,10 +224,11 @@ class FActionElement extends Equatable {
   ActionSupabaseDB? actionSupabaseDB;
   ActionCamera? actionCamera;
   ActionWebView? actionWebView;
-  ActionAudioPlayer? actionAudioPlayer;
+  ActionAudioPlayerActions? actionAudioPlayer;
   ActionTetaCmsDB? actionTetaDB;
   ActionTetaCmsAuth? actionTetaAuth;
   FTextTypeInput? delay;
+  FTextTypeInput? audioPlayerUrl = FTextTypeInput(value: 'url');
   bool? withCondition;
   FTextTypeInput? condition;
   FTextTypeInput? valueOfCondition;
@@ -390,7 +399,7 @@ class FActionElement extends Equatable {
   }
 
   static List<String> getAudioPlayer() {
-    return enumsToListString(ActionAudioPlayer.values);
+    return enumsToListString(ActionAudioPlayerActions.values);
   }
 
   static String? convertValueToDropdown(final dynamic type) {
@@ -463,6 +472,7 @@ class FActionElement extends Equatable {
             : null,
         'sEq': dbEq != null ? dbEq!.toJson() : null,
         'delay': delay != null ? delay!.toJson() : null,
+        'audioPlayerUrl': audioPlayerUrl != null ? audioPlayerUrl!.toJson() : null,
         'wCond': withCondition,
         'cond': condition != null ? condition!.toJson() : null,
         'vCond': valueOfCondition != null ? valueOfCondition!.toJson() : null,
@@ -1232,12 +1242,13 @@ class FActionElement extends Equatable {
         break;
       case ActionType.audioPlayer:
         switch (actionAudioPlayer) {
-          case ActionAudioPlayer.play:
+          case ActionAudioPlayerActions.play:
             await actionS(
               () => FAudioPlayerPlay.action(
                 context,
                 states,
                 stateName,
+                loop ?? 0,
               ),
               context: context,
               params: params,
@@ -1246,7 +1257,37 @@ class FActionElement extends Equatable {
               loop: loop,
             );
             break;
-          case ActionAudioPlayer.pause:
+          case ActionAudioPlayerActions.playNextTrack:
+            await actionS(
+                  () => FAudioPlayerPlayNextTrack.action(
+                context,
+                states,
+                stateName,
+                audioPlayerUrl!.get(params, states, dataset, true, loop),
+              ),
+              context: context,
+              params: params,
+              states: states,
+              dataset: dataset,
+              loop: loop,
+            );
+            break;
+          case ActionAudioPlayerActions.playPreviousTrack:
+            await actionS(
+                  () => FAudioPlayerPlayPreviousTrack.action(
+                context,
+                states,
+                stateName,
+                audioPlayerUrl!.get(params, states, dataset, true, loop),
+              ),
+              context: context,
+              params: params,
+              states: states,
+              dataset: dataset,
+              loop: loop,
+            );
+            break;
+          case ActionAudioPlayerActions.pause:
             await actionS(
               () => FAudioPlayerPause.action(
                 context,
@@ -1260,7 +1301,7 @@ class FActionElement extends Equatable {
               loop: loop,
             );
             break;
-          case ActionAudioPlayer.reload:
+          case ActionAudioPlayerActions.reload:
             await actionS(
               () => FAudioPlayerReload.action(
                 context,
@@ -1274,7 +1315,7 @@ class FActionElement extends Equatable {
               loop: loop,
             );
             break;
-          case ActionAudioPlayer.loopOff:
+          case ActionAudioPlayerActions.loopOff:
             await actionS(
               () => FAudioPlayerLoopOff.action(
                 context,
@@ -1289,7 +1330,7 @@ class FActionElement extends Equatable {
             );
 
             break;
-          case ActionAudioPlayer.loopOne:
+          case ActionAudioPlayerActions.loopOne:
             await actionS(
               () => FAudioPlayerLoopOne.action(
                 context,
@@ -1304,7 +1345,7 @@ class FActionElement extends Equatable {
             );
 
             break;
-          case ActionAudioPlayer.loopAll:
+          case ActionAudioPlayerActions.loopAll:
             await actionS(
               () => FAudioPlayerLoopAll.action(
                 context,
@@ -1771,37 +1812,57 @@ class FActionElement extends Equatable {
         }
       case ActionType.audioPlayer:
         switch (actionAudioPlayer) {
-          case ActionAudioPlayer.pause:
+          case ActionAudioPlayerActions.pause:
             return codeS(
               FAudioPlayerPause.toCode(pageId, context, stateName),
               context,
             );
 
-          case ActionAudioPlayer.play:
+          case ActionAudioPlayerActions.play:
             return codeS(
-              FAudioPlayerPlay.toCode(pageId, context, stateName),
+              FAudioPlayerPlay.toCode(pageId, context, stateName,
+                audioPlayerUrl!.toCode(loop),
+                null,
+              ),
               context,
             );
 
-          case ActionAudioPlayer.reload:
+          case ActionAudioPlayerActions.playNextTrack:
+            return codeS(
+              FAudioPlayerPlayNextTrack.toCode(pageId, context, stateName,
+                audioPlayerUrl!.toCode(loop),
+                loop,
+              ),
+              context,
+            );
+
+          case ActionAudioPlayerActions.playPreviousTrack:
+            return codeS(
+              FAudioPlayerPlayPreviousTrack.toCode(pageId, context, stateName,
+                audioPlayerUrl!.toCode(loop),
+                loop,
+              ),
+              context,
+            );
+          case ActionAudioPlayerActions.reload:
             return codeS(
               FAudioPlayerReload.toCode(pageId, context, stateName),
               context,
             );
 
-          case ActionAudioPlayer.loopOff:
+          case ActionAudioPlayerActions.loopOff:
             return codeS(
               FAudioPlayerLoopOff.toCode(pageId, context, stateName),
               context,
             );
 
-          case ActionAudioPlayer.loopOne:
+          case ActionAudioPlayerActions.loopOne:
             return codeS(
               FAudioPlayerLoopOne.toCode(pageId, context, stateName),
               context,
             );
 
-          case ActionAudioPlayer.loopAll:
+          case ActionAudioPlayerActions.loopAll:
             return codeS(
               FAudioPlayerLoopAll.toCode(pageId, context, stateName),
               context,

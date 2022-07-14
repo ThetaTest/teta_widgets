@@ -156,3 +156,15 @@ const PackageModel pConvert = PackageModel(
   packageVersion: '3.0.2',
   isDart: true,
 );
+const PackageModel pJustAudio = PackageModel(
+  packageName: 'just_audio',
+  packageVersion: '0.9.27',
+  isDart: false,
+  customPath: "import 'package:just_audio/just_audio.dart';",
+);
+const PackageModel pRxDart = PackageModel(
+  packageName: 'rxdart',
+  packageVersion: '0.27.4',
+  isDart: false,
+  customPath: "import 'package:rxdart/rxdart.dart';",
+);

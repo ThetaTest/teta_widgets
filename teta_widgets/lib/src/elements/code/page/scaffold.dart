@@ -121,7 +121,7 @@ String pageCodeTemplate(
     final rc = ReCase(element.name);
     final value = element.typeDeclaration(rc.camelCase) == 'String'
         ? "'${element.get}'"
-        : '${element.get}';
+        : element.getInitialization();
     statesString.write(
       '''
       ${element.typeDeclaration(rc.camelCase)} ${rc.camelCase} = $value;

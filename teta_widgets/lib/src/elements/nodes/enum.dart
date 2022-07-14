@@ -101,6 +101,8 @@ enum NType {
   calendar,
   camera,
   audioPlayer,
+  audioPlayerProgressIndicator,
+  audioPlayerVolumeIndicator,
   webview,
   parallax,
   dotsIndicator,
