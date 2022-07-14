@@ -8,10 +8,10 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 // Package imports:
 import 'package:teta_cms/teta_cms.dart';
+import 'package:teta_core/src/design_system/dialogs/privacy_terms_dialog.dart';
 import 'package:teta_core/src/services/track_service.dart';
 import 'package:teta_core/teta_core.dart';
 import 'package:teta_widgets/src/elements/actions/navigation/open_page.dart';
-import 'package:teta_widgets/src/elements/actions/snippets/take_state_from.dart';
 import 'package:teta_widgets/src/elements/index.dart';
 // Project imports:
 
@@ -27,19 +27,26 @@ class FATetaCMSLogin {
     final int? loop,
     final TetaProvider provider,
   ) async {
-    final prjId =
-        (BlocProvider.of<FocusProjectBloc>(context).state as ProjectLoaded)
-            .prj
-            .id;
-    final page = BlocProvider.of<FocusPageBloc>(context).state;
-    final status = takeStateFrom(page, 'status');
+    final prj =
+        (BlocProvider.of<FocusProjectBloc>(context).state as ProjectLoaded).prj;
+
+    // final page = BlocProvider.of<FocusPageBloc>(context).state;
+    // final status = takeStateFrom(page, 'status');
+
+    await showDialog<void>(
+      barrierDismissible: false,
+      context: context,
+      builder: (final context) => PrivacyTermsDialog(
+        config: prj.config!,
+      ),
+    );
 
     await TrackService.instance.track(
       eventName: 'Teta Auth: login in Teta',
       eventProperties: <String, String>{
         'provider': EnumToString.convertToString(provider),
       },
-      prjId: prjId,
+      prjId: prj.id,
     );
 
     await TetaCMS.instance.auth.signIn(
