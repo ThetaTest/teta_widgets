@@ -6,10 +6,12 @@
 import 'dart:async';
 
 import 'package:flutter/material.dart';
+
 // Package imports:
 import 'package:supabase/supabase.dart';
 import 'package:teta_cms/teta_cms.dart';
 import 'package:teta_core/teta_core.dart';
+
 // Project imports:
 import 'package:teta_widgets/src/elements/index.dart';
 
@@ -70,6 +72,7 @@ class WCmsStream extends StatefulWidget {
 }
 
 class _WCmsStreamState extends State<WCmsStream> {
+  bool isInitialized = false;
   DatasetObject _map = DatasetObject(
     name: 'Collection Stream',
     map: [<String, dynamic>{}],
@@ -123,66 +126,80 @@ class _WCmsStreamState extends State<WCmsStream> {
     Logger.printWarning(
       '$collectionId, keyName: $keyName, keyValue: $keyValue, limit: $limit, page: $page ',
     );
+    _stream = TetaCMS.instance.realtime.streamCollection(
+      collectionId,
+      filters: [
+        if (keyName.isNotEmpty && keyValue.isNotEmpty)
+          Filter(keyName, keyValue),
+      ],
+      limit: int.tryParse(limit) ?? 20,
+      page: int.tryParse(page) ?? 0,
+      showDrafts: widget.showDrafts,
+    );
+
     setState(() {
-      _stream = TetaCMS.instance.realtime.streamCollection(
-        collectionId,
-        filters: [
-          if (keyName.isNotEmpty && keyValue.isNotEmpty)
-            Filter(keyName, keyValue),
-        ],
-        limit: int.tryParse(limit) ?? 20,
-        page: int.tryParse(page) ?? 0,
-        showDrafts: widget.showDrafts,
-      );
+      isInitialized = true;
     });
   }
 
   @override
   Widget build(final BuildContext context) {
+    Widget? child;
+    if (isInitialized) {
+      if (widget.children.isNotEmpty) {
+        child = StreamBuilder<List<dynamic>>(
+          stream: _stream.stream,
+          builder: (final BuildContext context,
+              final AsyncSnapshot<List<dynamic>> snapshot) {
+            if (snapshot.hasData) {
+              // Append new data
+              _addFetchDataToDataset(snapshot.data);
+
+              // show widget with new data
+              return widget.children.first.toWidget(
+                params: widget.params,
+                states: widget.states,
+                dataset: widget.dataset,
+                forPlay: widget.forPlay,
+              );
+            } else {
+              // Show the widget as before
+              return widget.children.first.toWidget(
+                params: widget.params,
+                states: widget.states,
+                dataset: widget.dataset,
+                forPlay: widget.forPlay,
+              );
+            }
+          },
+        );
+      } else {
+        child = const SizedBox();
+      }
+    }
+
     return NodeSelectionBuilder(
       node: widget.node,
       forPlay: widget.forPlay,
       child: RepaintBoundary(
-        child: StreamBuilder(
-          stream: _stream.stream,
-          builder: (final context, final snapshot) {
-            if (!snapshot.hasData) {
-              if (widget.children.isNotEmpty) {
-                return widget.children.last.toWidget(
-                  params: widget.params,
-                  states: widget.states,
-                  dataset: widget.dataset,
-                  forPlay: widget.forPlay,
-                );
-              } else {
-                return const Center(
-                  child: CircularProgressIndicator(),
-                );
-              }
-            }
-            final list = snapshot.data as List<dynamic>?;
-            _map = _map.copyWith(
-              name: widget.node.name ?? widget.node.intrinsicState.displayName,
-              map: (list ?? const <dynamic>[])
-                  .map((final dynamic e) => e as Map<String, dynamic>)
-                  .toList(),
-            );
-            final datasets = addDataset(context, widget.dataset, _map);
-
-            // Returns child
-            if (widget.children.isNotEmpty) {
-              return widget.children.first.toWidget(
-                params: widget.params,
-                states: widget.states,
-                dataset: widget.dataset.isEmpty ? datasets : widget.dataset,
-                forPlay: widget.forPlay,
-              );
-            } else {
-              return const SizedBox();
-            }
-          },
-        ),
+        child: child,
       ),
     );
+  }
+
+  List<DatasetObject> _addFetchDataToDataset(final List<dynamic>? list) {
+    _map.getMap.addAll(
+      (list ?? const <dynamic>[])
+          .map((final dynamic e) => e as Map<String, dynamic>),
+    );
+
+    _map = _map.copyWith(
+      name: widget.node.name ?? widget.node.intrinsicState.displayName,
+      map: _map.getMap,
+    );
+
+    final datasets = addDataset(context, widget.dataset, _map);
+
+    return widget.dataset.isEmpty ? datasets : widget.dataset;
   }
 }

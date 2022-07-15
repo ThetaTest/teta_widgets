@@ -67,11 +67,11 @@ class WCmsCount extends StatefulWidget {
 }
 
 class _WCmsCountState extends State<WCmsCount> {
+  bool isInitialized = false;
   DatasetObject _map = DatasetObject(
     name: 'Collection Query',
     map: [<String, dynamic>{}],
   );
-  late final Future<int>? _future;
 
   @override
   void initState() {
@@ -115,8 +115,7 @@ class _WCmsCountState extends State<WCmsCount> {
       widget.forPlay,
       widget.loop,
     );
-    setState(() {
-      _future = TetaCMS.instance.client.getCollectionCount(
+      final dbElementsCount = await TetaCMS.instance.client.getCollectionCount(
         collectionId,
         filters: [
           if (keyName.isNotEmpty && keyValue.isNotEmpty)
@@ -125,61 +124,50 @@ class _WCmsCountState extends State<WCmsCount> {
         limit: int.tryParse(limit) ?? 20,
         page: int.tryParse(page) ?? 0,
       );
+    setState(() {
+      _addFetchDataToDataset(dbElementsCount);
+      isInitialized = true;
     });
   }
 
   @override
   Widget build(final BuildContext context) {
+    Widget? child;
+    if(isInitialized) {
+      if (widget.children.isNotEmpty) {
+        child = widget.children.first.toWidget(
+          params: widget.params,
+          states: widget.states,
+          dataset: widget.dataset,
+          forPlay: widget.forPlay,
+        );
+      } else {
+        child = const SizedBox();
+      }
+    }
+
     return NodeSelectionBuilder(
       node: widget.node,
       forPlay: widget.forPlay,
       child: RepaintBoundary(
-        child: FutureBuilder<int>(
-          future: _future,
-          builder: (final context, final snapshot) {
-            if (!snapshot.hasData) {
-              if (widget.children.isNotEmpty) {
-                return widget.children.last.toWidget(
-                  params: widget.params,
-                  states: widget.states,
-                  dataset: widget.dataset,
-                  forPlay: widget.forPlay,
-                );
-              } else {
-                return const Center(
-                  child: CircularProgressIndicator(),
-                );
-              }
-            }
-            if (snapshot.error != null) {
-              // TODO: Returns a error widget
-            }
-
-            final count = snapshot.data ?? 0;
-            _map = _map.copyWith(
-              name: widget.node.name ?? widget.node.intrinsicState.displayName,
-              map: [
-                <String, int>{
-                  'count': count,
-                },
-              ],
-            );
-            final datasets = addDataset(context, widget.dataset, _map);
-
-            // Returns child
-            if (widget.children.isNotEmpty) {
-              return widget.children.first.toWidget(
-                params: widget.params,
-                states: widget.states,
-                dataset: widget.dataset.isEmpty ? datasets : widget.dataset,
-                forPlay: widget.forPlay,
-              );
-            } else {
-              return const SizedBox();
-            }
-          },
-        ),
+        child: child,
       ),
     );
+  }
+
+  List<DatasetObject> _addFetchDataToDataset(final int count) {
+
+    _map = _map.copyWith(
+      name: widget.node.name ?? widget.node.intrinsicState.displayName,
+      map: [
+        <String, int>{
+          'count': count,
+        },
+      ],
+    );
+
+    final datasets = addDataset(context, widget.dataset, _map);
+
+    return widget.dataset.isEmpty ? datasets : widget.dataset;
   }
 }
