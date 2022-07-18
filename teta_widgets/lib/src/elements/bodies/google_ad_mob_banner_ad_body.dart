@@ -37,7 +37,7 @@ final googleAdMobBannerAdIntrinsicStates = IntrinsicStates(
   addChildLabels: [],
   gestures: [],
   permissions: [],
-  packages: [pGoogleMobileAds],
+  packages: [pGoogleMobileAds,pIO],
 );
 
 /// Body for [] widget
