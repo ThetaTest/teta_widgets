@@ -182,6 +182,24 @@ class DBKeys {
   static const audioPlayerUrl = 'aopurl';
 
   static const String audioPlayerCurrentDataset = 'apcd';
+
+  static const String markerLatitude = 'googleMapsMarkerLatitudeKey';
+
+  static const String markerLongitude = 'googleMapsMarkerLongitudeKey';
+
+  static const String markerIconUrl = 'googleMapsMarkerIconUrlKey';
+
+  static const String markerIconWidth = 'googleMapsMarkerIconWidthKey';
+
+  static const String markerId = 'googleMapsMarkerIdKey';
+
+  static const String mapConfig = 'googleMapsDatasetConfigNameKey';
+
+  static const String googleMapsController = 'googleMapsControllerName';
+
+  static const String mapCustomStyle = 'googleMapsCustomStyle';
+  static const String mapInitialPositionLat = 'googleMapsInitialPositionLat';
+  static const String mapInitialPositionLng = 'googleMapsInitialPositionLng';
 }
 
 class DynamicAttributes {
@@ -305,6 +323,8 @@ class DynamicAttributes {
           return FTextTypeInput.fromJson(value as Map<String, dynamic>);
         case DBKeys.audioPlayerCurrentDataset:
           return FTextTypeInput.fromJson(value as Map<String, dynamic>);
+        case DBKeys.googleMapsController:
+          return FTextTypeInput.fromJson(value as Map<String, dynamic>);
         case DBKeys.rotateX:
           return FTextTypeInput.fromJson(value as Map<String, dynamic>);
         case DBKeys.rotateY:
@@ -318,6 +338,24 @@ class DynamicAttributes {
         case DBKeys.duration:
           return FTextTypeInput.fromJson(value as Map<String, dynamic>);
         case DBKeys.datasetInput:
+          return FDataset.fromJson(value as Map<String, dynamic>);
+        case DBKeys.mapConfig:
+          return FDataset.fromJson(value as Map<String, dynamic>);
+        case DBKeys.markerId:
+          return FDataset.fromJson(value as Map<String, dynamic>);
+        case DBKeys.markerLatitude:
+          return FDataset.fromJson(value as Map<String, dynamic>);
+        case DBKeys.markerLongitude:
+          return FDataset.fromJson(value as Map<String, dynamic>);
+        case DBKeys.markerIconUrl:
+          return FDataset.fromJson(value as Map<String, dynamic>);
+        case DBKeys.markerIconWidth:
+          return FDataset.fromJson(value as Map<String, dynamic>);
+        case DBKeys.mapInitialPositionLng:
+          return FDataset.fromJson(value as Map<String, dynamic>);
+        case DBKeys.mapCustomStyle:
+          return FDataset.fromJson(value as Map<String, dynamic>);
+        case DBKeys.mapInitialPositionLat:
           return FDataset.fromJson(value as Map<String, dynamic>);
         case DBKeys.valueOfCondition:
           return FTextTypeInput.fromJson(value as Map<String, dynamic>);
@@ -562,6 +600,8 @@ class DynamicAttributes {
         return value != null ? value.toJson() : FTextTypeInput().toJson();
       case DBKeys.audioPlayerCurrentDataset:
         return value != null ? value.toJson() : FTextTypeInput().toJson();
+      case DBKeys.googleMapsController:
+        return value != null ? value.toJson() : FTextTypeInput().toJson();
       case DBKeys.rotateX:
         return value != null ? value.toJson() : FTextTypeInput().toJson();
       case DBKeys.rotateY:
@@ -573,6 +613,24 @@ class DynamicAttributes {
       case DBKeys.tranY:
         return value != null ? value.toJson() : FTextTypeInput().toJson();
       case DBKeys.datasetInput:
+        return value != null ? value.toJson() : FDataset().toJson();
+      case DBKeys.mapConfig:
+        return value != null ? value.toJson() : FDataset().toJson();
+      case DBKeys.markerId:
+        return value != null ? value.toJson() : FDataset().toJson();
+      case DBKeys.markerLatitude:
+        return value != null ? value.toJson() : FDataset().toJson();
+      case DBKeys.markerLongitude:
+        return value != null ? value.toJson() : FDataset().toJson();
+      case DBKeys.markerIconUrl:
+        return value != null ? value.toJson() : FDataset().toJson();
+      case DBKeys.markerIconWidth:
+        return value != null ? value.toJson() : FDataset().toJson();
+      case DBKeys.mapCustomStyle:
+        return value != null ? value.toJson() : FDataset().toJson();
+      case DBKeys.mapInitialPositionLat:
+        return value != null ? value.toJson() : FDataset().toJson();
+      case DBKeys.mapInitialPositionLng:
         return value != null ? value.toJson() : FDataset().toJson();
       case DBKeys.valueOfCondition:
         return value != null ? value.toJson() : FTextTypeInput().toJson();
