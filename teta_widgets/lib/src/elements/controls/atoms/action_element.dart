@@ -16,7 +16,6 @@ import 'package:hovering/hovering.dart';
 import 'package:teta_core/src/design_system/textfield/minitextfield.dart';
 import 'package:teta_core/src/repositories/node.dart';
 import 'package:teta_core/teta_core.dart';
-import 'package:teta_widgets/src/elements/controls/atoms/dataset.dart';
 // Project imports:
 import 'package:teta_widgets/src/elements/controls/atoms/flag.dart';
 import 'package:teta_widgets/src/elements/controls/atoms/subapase/delete.dart';
@@ -26,13 +25,9 @@ import 'package:teta_widgets/src/elements/controls/atoms/teta_cms/delete.dart';
 import 'package:teta_widgets/src/elements/controls/atoms/teta_cms/insert.dart';
 import 'package:teta_widgets/src/elements/controls/atoms/teta_cms/update.dart';
 import 'package:teta_widgets/src/elements/controls/atoms/text.dart';
-import 'package:teta_widgets/src/elements/controls/control_model.dart';
-import 'package:teta_widgets/src/elements/controls/key_constants.dart';
 import 'package:teta_widgets/src/elements/controls/type.dart';
-import 'package:teta_widgets/src/elements/features/actions/element.dart';
 import 'package:teta_widgets/src/elements/features/actions/enums/audio_player_actions.dart';
 import 'package:teta_widgets/src/elements/features/actions/enums/camera.dart';
-import 'package:teta_widgets/src/elements/features/actions/enums/gestures.dart';
 import 'package:teta_widgets/src/elements/features/actions/enums/navigation.dart';
 import 'package:teta_widgets/src/elements/features/actions/enums/revenue_cat.dart';
 import 'package:teta_widgets/src/elements/features/actions/enums/state.dart';
@@ -41,11 +36,8 @@ import 'package:teta_widgets/src/elements/features/actions/enums/supabase.dart';
 import 'package:teta_widgets/src/elements/features/actions/enums/teta_cms.dart';
 import 'package:teta_widgets/src/elements/features/actions/enums/type.dart';
 import 'package:teta_widgets/src/elements/features/actions/enums/webview.dart';
-import 'package:teta_widgets/src/elements/features/text_type_input.dart';
 import 'package:teta_widgets/src/elements/index.dart';
 import 'package:teta_widgets/src/elements/nodes/dynamic.dart';
-import 'package:teta_widgets/src/elements/nodes/enum.dart';
-import 'package:teta_widgets/src/elements/nodes/node.dart';
 import 'package:uuid/uuid.dart';
 
 /// Widget to control a single action
@@ -525,6 +517,9 @@ class ActionElementControlState extends State<ActionElementControl> {
                         }
                       },
                     ),
+                    const Gap(Grid.medium),
+                    const TParagraph('Which controller?'),
+                    const Gap(Grid.small),
                     CDropdown(
                       value: widget.page.states
                                   .where(
@@ -909,7 +904,9 @@ class ActionElementControlState extends State<ActionElementControl> {
                               NType.cupertinoSwitch)) ||
                   (widget.element.actionType == ActionType.navigation &&
                       widget.element.actionNavigation ==
-                          ActionNavigation.launchURL))
+                          ActionNavigation.launchURL) ||
+                  (widget.element.actionType == ActionType.webview &&
+                      widget.element.actionWebView == ActionWebView.navigateTo))
                 Padding(
                   padding: const EdgeInsets.only(top: 8),
                   child: SizedBox(

@@ -68,8 +68,8 @@ import 'package:teta_widgets/src/elements/actions/teta_cms/database/insert.dart'
 import 'package:teta_widgets/src/elements/actions/teta_cms/database/update.dart';
 import 'package:teta_widgets/src/elements/actions/webview/back.dart';
 import 'package:teta_widgets/src/elements/actions/webview/forward.dart';
+import 'package:teta_widgets/src/elements/actions/webview/navigate_to.dart';
 import 'package:teta_widgets/src/elements/actions/webview/reload.dart';
-import 'package:teta_widgets/src/elements/controls/key_constants.dart';
 import 'package:teta_widgets/src/elements/features/actions/enums/audio_player_actions.dart';
 import 'package:teta_widgets/src/elements/features/actions/enums/camera.dart';
 import 'package:teta_widgets/src/elements/features/actions/enums/index.dart';
@@ -159,9 +159,10 @@ class FActionElement extends Equatable {
     actionWebView =
         convertDropdownToValue(ActionWebView.values, doc['aW'] as String?)
             as ActionWebView?;
-    actionAudioPlayer =
-        convertDropdownToValue(ActionAudioPlayerActions.values, doc['aAP'] as String?)
-            as ActionAudioPlayerActions?;
+    actionAudioPlayer = convertDropdownToValue(
+      ActionAudioPlayerActions.values,
+      doc['aAP'] as String?,
+    ) as ActionAudioPlayerActions?;
     actionTetaDB =
         convertDropdownToValue(ActionTetaCmsDB.values, doc['aTDb'] as String?)
             as ActionTetaCmsDB?;
@@ -472,7 +473,8 @@ class FActionElement extends Equatable {
             : null,
         'sEq': dbEq != null ? dbEq!.toJson() : null,
         'delay': delay != null ? delay!.toJson() : null,
-        'audioPlayerUrl': audioPlayerUrl != null ? audioPlayerUrl!.toJson() : null,
+        'audioPlayerUrl':
+            audioPlayerUrl != null ? audioPlayerUrl!.toJson() : null,
         'wCond': withCondition,
         'cond': condition != null ? condition!.toJson() : null,
         'vCond': valueOfCondition != null ? valueOfCondition!.toJson() : null,
@@ -1194,6 +1196,24 @@ class FActionElement extends Equatable {
         break;
       case ActionType.webview:
         switch (actionWebView) {
+          case ActionWebView.navigateTo:
+            await actionS(
+              () => FActionWebViewNavigateTo.action(
+                context: context,
+                params: params,
+                states: states,
+                datasets: dataset,
+                stateName: stateName,
+                valueToChangeWith: valueTextTypeInput ?? FTextTypeInput(),
+                loop: loop ?? 0,
+              ),
+              context: context,
+              params: params,
+              states: states,
+              dataset: dataset,
+              loop: loop,
+            );
+            break;
           case ActionWebView.goBack:
             await actionS(
               () => FActionWebViewBack.action(
@@ -1259,7 +1279,7 @@ class FActionElement extends Equatable {
             break;
           case ActionAudioPlayerActions.playNextTrack:
             await actionS(
-                  () => FAudioPlayerPlayNextTrack.action(
+              () => FAudioPlayerPlayNextTrack.action(
                 context,
                 states,
                 stateName,
@@ -1274,7 +1294,7 @@ class FActionElement extends Equatable {
             break;
           case ActionAudioPlayerActions.playPreviousTrack:
             await actionS(
-                  () => FAudioPlayerPlayPreviousTrack.action(
+              () => FAudioPlayerPlayPreviousTrack.action(
                 context,
                 states,
                 stateName,
@@ -1789,6 +1809,18 @@ class FActionElement extends Equatable {
         break;
       case ActionType.webview:
         switch (actionWebView) {
+          case ActionWebView.navigateTo:
+            return codeS(
+              FActionWebViewNavigateTo.toCode(
+                pageId,
+                context,
+                stateName,
+                valueTextTypeInput ?? FTextTypeInput(),
+                loop,
+              ),
+              context,
+            );
+
           case ActionWebView.goBack:
             return codeS(
               FActionWebViewBack.toCode(pageId, context, stateName),
@@ -1820,7 +1852,10 @@ class FActionElement extends Equatable {
 
           case ActionAudioPlayerActions.play:
             return codeS(
-              FAudioPlayerPlay.toCode(pageId, context, stateName,
+              FAudioPlayerPlay.toCode(
+                pageId,
+                context,
+                stateName,
                 audioPlayerUrl!.toCode(loop),
                 null,
               ),
@@ -1829,7 +1864,10 @@ class FActionElement extends Equatable {
 
           case ActionAudioPlayerActions.playNextTrack:
             return codeS(
-              FAudioPlayerPlayNextTrack.toCode(pageId, context, stateName,
+              FAudioPlayerPlayNextTrack.toCode(
+                pageId,
+                context,
+                stateName,
                 audioPlayerUrl!.toCode(loop),
                 loop,
               ),
@@ -1838,7 +1876,10 @@ class FActionElement extends Equatable {
 
           case ActionAudioPlayerActions.playPreviousTrack:
             return codeS(
-              FAudioPlayerPlayPreviousTrack.toCode(pageId, context, stateName,
+              FAudioPlayerPlayPreviousTrack.toCode(
+                pageId,
+                context,
+                stateName,
                 audioPlayerUrl!.toCode(loop),
                 loop,
               ),

@@ -5,4 +5,5 @@ enum ActionWebView {
   reload,
   goBack,
   goForward,
+  navigateTo,
 }
