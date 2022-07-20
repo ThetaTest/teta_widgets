@@ -27,8 +27,8 @@ class AdMobBannerAdTemplate {
           final ad = BannerAd(
             request: const AdRequest(),
             adUnitId: Platform.isIOS
-                ? '$iosKey'
-                : '$androidKey',
+                ? $iosKey
+                : $androidKey,
             listener: const BannerAdListener(),
             size: AdSize.fluid,
           );

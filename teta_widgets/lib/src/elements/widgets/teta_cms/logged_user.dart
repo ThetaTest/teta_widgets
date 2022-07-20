@@ -8,8 +8,6 @@ import 'package:teta_core/teta_core.dart';
 // Project imports:
 import 'package:teta_widgets/src/elements/index.dart';
 
-// ignore_for_file: public_member_api_docs
-
 class WCMSLoggedUser extends StatefulWidget {
   /// Construct
   const WCMSLoggedUser(
@@ -55,70 +53,55 @@ class _WCMSLoggedUserState extends State<WCMSLoggedUser> {
     name: 'Teta Auth User',
     map: [<String, dynamic>{}],
   );
-  late final Future<TetaUser?>? _future;
-
-  @override
-  void initState() {
-    super.initState();
-    load();
-  }
-
-  Future load() async {
-    setState(() {
-      _future = TetaCMS.instance.auth.user.get;
-    });
-  }
 
   @override
   Widget build(final BuildContext context) {
     return NodeSelectionBuilder(
       node: widget.node,
       forPlay: widget.forPlay,
-      child: RepaintBoundary(
-        child: FutureBuilder(
-          future: _future,
-          builder: (final context, final snapshot) {
-            if (!snapshot.hasData) {
-              if (widget.children.isNotEmpty) {
-                return widget.children.last.toWidget(
-                  params: widget.params,
-                  states: widget.states,
-                  dataset: widget.dataset,
-                  forPlay: widget.forPlay,
-                );
-              } else {
-                return const Center(
-                  child: CircularProgressIndicator(),
-                );
-              }
-            }
-
-            final data = snapshot.data as TetaUser?;
-            final map = <String, dynamic>{
-              'isLogged': data?.isLogged,
-              'uid': data?.uid,
-              'name': data?.name,
-              'email': data?.email,
-              'provider': data?.provider,
-              'created_at': data?.createdAt,
-            };
-            _map = _map.copyWith(
-              name: 'Teta Auth User',
-              map: [map],
-            );
-            final datasets = addDataset(context, widget.dataset, _map);
+      child: TetaFutureBuilder(
+        future: TetaCMS.instance.auth.user.get,
+        builder: (final context, final snapshot) {
+          if (!snapshot.hasData) {
             if (widget.children.isNotEmpty) {
-              return widget.children.first.toWidget(
+              return widget.children.last.toWidget(
                 params: widget.params,
                 states: widget.states,
-                dataset: widget.dataset.isEmpty ? datasets : widget.dataset,
+                dataset: widget.dataset,
                 forPlay: widget.forPlay,
               );
             } else {
-              return const SizedBox();
+              return const Center(
+                child: CircularProgressIndicator(),
+              );
             }
-          },
-        ),
+          }
+
+          final data = snapshot.data as TetaUser?;
+          final map = <String, dynamic>{
+            'isLogged': data?.isLogged,
+            'uid': data?.uid,
+            'name': data?.name,
+            'email': data?.email,
+            'provider': data?.provider,
+            'created_at': data?.createdAt,
+          };
+          _map = _map.copyWith(
+            name: 'Teta Auth User',
+            map: [map],
+          );
+          final datasets = addDataset(context, widget.dataset, _map);
+          if (widget.children.isNotEmpty) {
+            return widget.children.first.toWidget(
+              params: widget.params,
+              states: widget.states,
+              dataset: widget.dataset.isEmpty ? datasets : widget.dataset,
+              forPlay: widget.forPlay,
+            );
+          } else {
+            return const SizedBox();
+          }
+        },
       ),
     );
   }

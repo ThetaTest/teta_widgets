@@ -32,13 +32,11 @@ class CMSCollectionControlState extends State<CMSCollectionControl> {
   int? nodeId;
   bool? isUpdated;
   String? dropdown;
-  late final Future<List<CollectionObject>> _future;
 
   @override
   void initState() {
     super.initState();
     nodeId = widget.node.nid;
-    _future = TetaCMS.instance.client.getCollections();
   }
 
   @override
@@ -72,7 +70,7 @@ class CMSCollectionControlState extends State<CMSCollectionControl> {
                 ),
               ),
               FutureBuilder<List<CollectionObject>>(
-                future: _future,
+                future: TetaCMS.instance.client.getCollections(),
                 builder: (final context, final snapshot) {
                   if (!snapshot.hasData) {
                     return const Center(
