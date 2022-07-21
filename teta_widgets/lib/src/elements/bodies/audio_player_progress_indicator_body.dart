@@ -1,14 +1,10 @@
 // Flutter imports:
 import 'package:flutter/material.dart';
-
 // Package imports:
 import 'package:teta_core/gen/assets.gen.dart';
 import 'package:teta_core/src/models/dataset.dart';
 import 'package:teta_core/src/models/variable.dart';
 import 'package:teta_widgets/src/elements/code/templates/audio_player_progress_indicator_template.dart';
-
-// Project imports:
-import 'package:teta_widgets/src/elements/code/templates/audio_player_template.dart';
 import 'package:teta_widgets/src/elements/controls/control_model.dart';
 import 'package:teta_widgets/src/elements/controls/key_constants.dart';
 import 'package:teta_widgets/src/elements/controls/type.dart';
@@ -26,7 +22,7 @@ const _globalType = NType.audioPlayerProgressIndicator;
 
 /// Audio Player Instrinsic State
 final audioPlayerProgressIndicatorIntrinsicStates = IntrinsicStates(
-  nodeIcon: Assets.wIcons.video,
+  nodeIcon: Assets.wIcons.audioPlayerProgressIndicator,
   nodeVideo: null,
   nodeDescription: null,
   advicedChildren: [],
@@ -110,5 +106,9 @@ class AudioPlayerProgressIndicatorBody extends NodeBody {
     final List<CNode>? children,
     final int pageId,
     final int? loop,
-  ) => AudioPlayerProgressIndicatorTemplate.toCode(context: context, audioPlayerName: (attributes[DBKeys.value] as FTextTypeInput).stateName ?? '');
+  ) =>
+      AudioPlayerProgressIndicatorTemplate.toCode(
+          context: context,
+          audioPlayerName:
+              (attributes[DBKeys.value] as FTextTypeInput).stateName ?? '');
 }
