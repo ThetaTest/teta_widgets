@@ -177,6 +177,13 @@ class _WTextFieldState extends State<WTextField> {
                 widget.forPlay,
                 widget.loop,
               ),
+              hintStyle: TextStyle(
+                color: HexColor(
+                  widget.hintTextColor.get(context).getHexColor(context),
+                ).withOpacity(
+                  widget.hintTextColor.levels!.first.opacity ?? 1,
+                ),
+              ),
               contentPadding: widget.paddings.get(context),
             ),
             style: widget.textStyle.get(context, model),

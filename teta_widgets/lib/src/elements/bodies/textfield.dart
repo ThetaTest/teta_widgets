@@ -110,6 +110,15 @@ class TextFieldBody extends NodeBody {
           description:
               'Text that suggests what sort of input the field accepts.',
         ),
+        FillControlObject(
+          title: 'Hint text color',
+          key: DBKeys.hintTextColor,
+          value: attributes[DBKeys.hintTextColor] as FFill,
+          isStyled: false,
+          isImageEnabled: false,
+          isNoneEnabled: false,
+          isOnlySolid: true,
+        ),
         ControlObject(
           type: ControlType.text,
           key: DBKeys.textStyle,
