@@ -37,6 +37,11 @@ String textFieldCodeTemplate(
     context,
     flagConst: false,
   );
+  final fillHintToCodeColor = FFill.toCode(
+    body.attributes[DBKeys.hintTextColor] as FFill,
+    context,
+    flagConst: false,
+  );
   final bordersEnabled = body.attributes[DBKeys.showBorders] as bool? ?? false;
   final enabledBorderToCodeColor = FFill.toCode(
     body.attributes[DBKeys.enabledBorderColor] as FFill,
@@ -98,6 +103,8 @@ String textFieldCodeTemplate(
           ${CS.borderRadius(context, body)}
         ),  
         hintText: r$labelText,
+        hintStyle: TextStyle(
+                $fillHintToCodeColor),
         ${CS.margin(context, body, isMargin: false).replaceAll('padding', 'contentPadding')}
       ),
       ${CS.textStyle(context, body, DBKeys.textStyle)}

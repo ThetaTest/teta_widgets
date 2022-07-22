@@ -1,11 +1,9 @@
 // Flutter imports:
 import 'package:flutter/material.dart';
-
 // Package imports:
 import 'package:teta_core/gen/assets.gen.dart';
 import 'package:teta_core/src/models/dataset.dart';
 import 'package:teta_core/src/models/variable.dart';
-
 // Project imports:
 import 'package:teta_widgets/src/elements/code/templates/audio_player_volume_indicator_template.dart';
 import 'package:teta_widgets/src/elements/controls/control_model.dart';
@@ -25,7 +23,7 @@ const _globalType = NType.audioPlayerVolumeIndicator;
 
 /// Audio Player Instrinsic State
 final audioPlayerVolumeIndicatorIntrinsicStates = IntrinsicStates(
-  nodeIcon: Assets.wIcons.video,
+  nodeIcon: Assets.wIcons.audioPlayerVolumeIndicator,
   nodeVideo: null,
   nodeDescription: null,
   advicedChildren: [],
@@ -109,5 +107,9 @@ class AudioPlayerVolumeIndicatorBody extends NodeBody {
     final List<CNode>? children,
     final int pageId,
     final int? loop,
-  ) => AudioPlayerVolumeIndicatorTemplate.toCode(context: context, audioPlayerName: (attributes[DBKeys.value] as FTextTypeInput).stateName ?? '');
+  ) =>
+      AudioPlayerVolumeIndicatorTemplate.toCode(
+          context: context,
+          audioPlayerName:
+              (attributes[DBKeys.value] as FTextTypeInput).stateName ?? '');
 }
