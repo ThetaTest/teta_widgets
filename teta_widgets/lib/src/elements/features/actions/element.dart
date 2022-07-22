@@ -1268,7 +1268,7 @@ class FActionElement extends Equatable {
                 context,
                 states,
                 stateName,
-                loop ?? 0,
+                loop,
               ),
               context: context,
               params: params,
