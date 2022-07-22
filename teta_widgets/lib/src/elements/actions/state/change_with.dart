@@ -75,7 +75,7 @@ class FActionStateChangeWith {
           );
         } else {
           buffer.write(
-            "$varName = ${value.isNotEmpty ? value.contains('this.datasets') ? "'''\${$value}'''" : "'''$value'''" : 'value'};",
+            "$varName = ${value.isNotEmpty ? value : 'value'};",
           );
         }
       } else {
