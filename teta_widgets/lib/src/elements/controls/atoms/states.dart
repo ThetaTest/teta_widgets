@@ -353,7 +353,8 @@ class StatesControlState extends State<StatesControl> {
                                   .where(
                                     (final element) =>
                                         element !=
-                                        VariableType.cameraController,
+                                            VariableType.cameraController &&
+                                        element != VariableType.currentSongData,
                                   )
                                   .toList(),
                               camelCase: true,
