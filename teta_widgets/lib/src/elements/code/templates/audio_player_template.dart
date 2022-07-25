@@ -21,7 +21,7 @@ class AudioPlayerTemplate {
     return '''
     FutureBuilder<bool>(
       future: Future.delayed(Duration(milliseconds: 0), () async {
-                            if(audioController!.currentIndex == null) {
+                            if($audioPlayerName!.currentIndex == null) {
 
         final List<AudioSource> audioList = [];
         final songsDts = ((datasets['$songsDataSetToCode'] as List<dynamic>?) ?? <dynamic>[]);
@@ -47,7 +47,7 @@ class AudioPlayerTemplate {
         
                                 this.datasets['$currentSongDatasetName'] = songsDts;
 
-                        audioController?.currentIndexStream.listen((
+                        $audioPlayerName?.currentIndexStream.listen((
                             final int? position) {
                           if (position != null && position < songsDts.length) {
                             if (this.index != position) {

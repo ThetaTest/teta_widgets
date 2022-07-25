@@ -16,15 +16,17 @@ class FAudioPlayerPlay {
     final BuildContext context,
     final List<VariableObject> states,
     final String? stateName,
-      final int loop,
+      final int? loop,
   ) async {
     final variable =
         states.firstWhereOrNull((final element) => element.name == stateName);
     final audioPlayer = variable?.audioController;
     try {
       if (audioPlayer != null) {
-        if (audioPlayer.currentIndex != loop) {
-          await audioPlayer.seek(Duration.zero, index: loop);
+        if(loop != null) {
+          if (audioPlayer.currentIndex != loop) {
+            await audioPlayer.seek(Duration.zero, index: loop);
+          }
         }
         await audioPlayer.play();
       }
