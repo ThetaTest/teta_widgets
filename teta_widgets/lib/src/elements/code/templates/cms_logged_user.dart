@@ -39,7 +39,6 @@ String cmsLoggedUserCodeTemplate(
       datasets['Teta Auth User'] = [
         if (data != null) data,
       ];
-      var index = 0;
       return $child;
     }
   )

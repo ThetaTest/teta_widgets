@@ -6,7 +6,7 @@ class WebViewXTemplate {
     return '''
 LayoutBuilder(builder: (context, constraints) {
       return WebViewX(
-        initialContent: '$initialUrl',
+        initialContent: $initialUrl,
         initialSourceType: SourceType.url,
         width: constraints.maxWidth,
         height: constraints.maxHeight,
