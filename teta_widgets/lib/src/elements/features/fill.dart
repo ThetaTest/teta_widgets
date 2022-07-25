@@ -5,10 +5,7 @@
 import 'package:flutter/material.dart';
 // Package imports:
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:teta_core/src/blocs/palette/index.dart';
-import 'package:teta_core/src/cubits/index.dart';
-import 'package:teta_core/src/models/asset_file.dart';
-import 'package:teta_core/src/models/palette.dart';
+import 'package:teta_core/teta_core.dart';
 // Project imports:
 import 'package:teta_widgets/src/elements/features/box_fit.dart';
 
@@ -321,15 +318,24 @@ class FFill {
     final bool? flagConst,
   }) {
     final state = BlocProvider.of<PaletteBloc>(context).state;
-    FFill? finalFill;
+    late PaletteModel currentPaletteElement;
+    // FFill? finalFill;
     if (state.isNotEmpty) {
       for (final e in state) {
-        if (e.id == fill.paletteStyle) finalFill = e.fill;
+        if (e.id == fill.paletteStyle) {
+          currentPaletteElement = e;
+          // finalFill = e.fill;
+        }
       }
     }
-    finalFill ??= fill;
+    // finalFill ??= fill;
 
     if (fill.type == FFillType.none) return null;
+
+    if (fill.paletteStyle != null) {
+      return "color: context.watch<ThemeCubit>().state ? TetaThemes.lightTheme['${currentPaletteElement.name}'] : TetaThemes.darkTheme['${currentPaletteElement.name}'],";
+    }
+
     if (fill.type == FFillType.solid) {
       return 'color: ${flagConst ?? false ? 'const' : ''} Color(0xFF${fill.getHexColor(context)}).withOpacity(${fill.levels!.first.opacity}),';
     }
