@@ -16,7 +16,7 @@ class FAudioPlayerPlayNextTrack {
     final BuildContext context,
     final List<VariableObject> states,
     final String? stateName,
-      final String url,
+    final String url,
   ) async {
     final variable =
         states.firstWhereOrNull((final element) => element.name == stateName);
@@ -27,7 +27,12 @@ class FAudioPlayerPlayNextTrack {
   }
 
   static String toCode(
-      final int pageId, final BuildContext context, final String? stateName, final String url, final int loop,) {
+    final int pageId,
+    final BuildContext context,
+    final String? stateName,
+    final String url,
+    final int loop,
+  ) {
     final page = getPageOnToCode(pageId, context);
     if (page == null) return '';
     final variable = takeStateFrom(page, '$stateName');
@@ -36,8 +41,8 @@ class FAudioPlayerPlayNextTrack {
     final varName = ReCase(stateName).camelCase;
 
     return '''
-          await $varName?.seekToNext();
-          await $varName?.play();
+          $varName?.seekToNext();
+          $varName?.play();
     ''';
   }
 }
