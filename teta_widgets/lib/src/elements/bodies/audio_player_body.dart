@@ -1,5 +1,6 @@
 // Flutter imports:
 import 'package:flutter/material.dart';
+import 'package:recase/recase.dart';
 // Package imports:
 import 'package:teta_core/gen/assets.gen.dart';
 import 'package:teta_core/src/models/dataset.dart';
@@ -128,7 +129,7 @@ class AudioPlayerBody extends NodeBody {
         body: this,
         child: child,
         audioPlayerName:
-            (attributes[DBKeys.value] as FTextTypeInput).stateName ?? '',
+        ((attributes[DBKeys.value] as FTextTypeInput).stateName ?? '').camelCase,
         songsDataSetToCode:
             (attributes[DBKeys.datasetInput] as FDataset).datasetName ?? '',
         urlKey:
