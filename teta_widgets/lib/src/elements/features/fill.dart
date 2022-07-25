@@ -6,6 +6,7 @@ import 'package:flutter/material.dart';
 // Package imports:
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:teta_core/src/blocs/palette/index.dart';
+import 'package:teta_core/src/cubits/index.dart';
 import 'package:teta_core/src/models/asset_file.dart';
 import 'package:teta_core/src/models/palette.dart';
 // Project imports:
@@ -93,11 +94,16 @@ class FFill {
         paletteStyle: paletteStyle,
       );
     } else {
+      final isLight = BlocProvider.of<PaletteDarkLightCubit>(context).state;
       PaletteModel? model;
       BlocProvider.of<PaletteBloc>(context).state.forEach((final element) {
         if (element.id == paletteStyle) model = element;
       });
-      return (model != null) ? model!.fill! : FFill().ready(FFillType.solid);
+      if (model != null) {
+        return isLight ? model!.light! : model!.fill!;
+      } else {
+        return FFill().ready(FFillType.solid);
+      }
     }
   }
 
