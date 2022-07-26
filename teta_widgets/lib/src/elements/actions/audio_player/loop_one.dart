@@ -26,7 +26,10 @@ class FAudioPlayerLoopOne {
   }
 
   static String toCode(
-      final int pageId, final BuildContext context, final String? stateName) {
+    final int pageId,
+    final BuildContext context,
+    final String? stateName,
+  ) {
     final page = getPageOnToCode(pageId, context);
     if (page == null) return '';
     final variable = takeStateFrom(page, '$stateName');

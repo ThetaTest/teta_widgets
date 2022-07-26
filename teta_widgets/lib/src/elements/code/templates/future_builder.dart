@@ -49,7 +49,6 @@ String supabaseFutureBuilderCodeTemplate(
   
   final datasets = this.datasets;
   datasets['Supabase future builder'] = doc.data as List<dynamic>? ?? <dynamic>[];
-  var index = 0;
   ''';
 
   return '''

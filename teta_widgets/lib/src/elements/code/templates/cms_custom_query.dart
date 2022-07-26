@@ -27,7 +27,6 @@ String cmsCustomQueryCodeTemplate(
   final func = '''
   final list = (snapshot.data as TetaResponse?)?.data as List<dynamic>? ?? <dynamic>[];
   datasets['${node.name ?? node.intrinsicState.displayName}'] = list ?? const <dynamic>[];
-  var index = 0;
   ''';
 
   return '''

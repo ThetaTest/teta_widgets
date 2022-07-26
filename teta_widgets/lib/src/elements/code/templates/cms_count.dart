@@ -48,7 +48,6 @@ String cmsCountCodeTemplate(
   final func = '''
   final list = snapshot.data as List<dynamic>?;
   datasets['${node.name ?? node.intrinsicState.displayName}'] = list ?? const <dynamic>[];
-  var index = 0;
   ''';
 
   return '''
@@ -58,8 +57,8 @@ String cmsCountCodeTemplate(
       filters: [
         $filter
       ], 
-      ${limit.isNotEmpty ? 'limit: $limit,' : ''}
-      ${page.isNotEmpty ? 'page: $page,' : ''}
+      ${limit.replaceAll("'", "").isNotEmpty ? 'limit: ${limit..replaceAll("'", "")},' : ''}
+      ${page.replaceAll("'", "").isNotEmpty ? 'page: ${page..replaceAll("'", "")},' : ''}
     ),
     builder: (context, snapshot) {
       if (!snapshot.hasData) {

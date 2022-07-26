@@ -50,7 +50,6 @@ String cmsStreamCodeTemplate(
   final func = '''
   final list = snapshot.data as List<dynamic>?;
   datasets['${node.name ?? node.intrinsicState.displayName}'] = list ?? const <dynamic>[];
-  var index = 0;
   ''';
 
   return '''

@@ -1,5 +1,6 @@
 // Flutter imports:
 import 'package:flutter/material.dart';
+import 'package:recase/recase.dart';
 // Package imports:
 import 'package:teta_core/gen/assets.gen.dart';
 import 'package:teta_core/src/models/dataset.dart';
@@ -110,5 +111,5 @@ class AudioPlayerProgressIndicatorBody extends NodeBody {
       AudioPlayerProgressIndicatorTemplate.toCode(
           context: context,
           audioPlayerName:
-              (attributes[DBKeys.value] as FTextTypeInput).stateName ?? '');
+          ((attributes[DBKeys.value] as FTextTypeInput).stateName ?? '').camelCase,);
 }
