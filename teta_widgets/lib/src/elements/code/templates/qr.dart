@@ -26,7 +26,7 @@ String qrCodeTemplate(
     QrImage(
       data: $content,
       size: $size,
-      foregroundColor: Colors(0xff$hex).withOpacity(${fill.levels?.first.opacity ?? 1}),
+      foregroundColor: Color(0xff$hex).withOpacity(${fill.levels?.first.opacity ?? 1}),
       ${withImage ? 'embeddedImage: NetworkImage($image),' : ''}
       gapless: false,
     )
