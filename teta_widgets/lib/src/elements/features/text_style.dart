@@ -167,7 +167,6 @@ class FTextStyle {
     final rc = ReCase((model?.fontFamily ?? fontFamily) ?? 'Poppins');
 
     final align = textAlign?.toCode();
-    final color = fill?.getHexColor(context);
     final size = (model?.fontSize ?? fontSize)?.toCode();
     final weight = (model?.fontWeight ?? fontWeight)?.toCode();
     final style = fontStyle?.toCode();
@@ -177,7 +176,7 @@ class FTextStyle {
     return '''
     style: GoogleFonts.${rc.camelCase}(
       textStyle: TextStyle(
-        color: Color(0xFF$color).withOpacity(${fill?.levels?.first.opacity ?? '1'}),
+        ${FFill.toCode(fill!, context)}
         fontWeight: $weight,
         fontSize: $size,
         fontStyle: $style,
