@@ -66,6 +66,7 @@ import 'package:teta_widgets/src/elements/actions/teta_cms/auth/logout.dart';
 import 'package:teta_widgets/src/elements/actions/teta_cms/database/delete.dart';
 import 'package:teta_widgets/src/elements/actions/teta_cms/database/insert.dart';
 import 'package:teta_widgets/src/elements/actions/teta_cms/database/update.dart';
+import 'package:teta_widgets/src/elements/actions/theme/change_theme.dart';
 import 'package:teta_widgets/src/elements/actions/webview/back.dart';
 import 'package:teta_widgets/src/elements/actions/webview/forward.dart';
 import 'package:teta_widgets/src/elements/actions/webview/navigate_to.dart';
@@ -76,6 +77,7 @@ import 'package:teta_widgets/src/elements/features/actions/enums/index.dart';
 import 'package:teta_widgets/src/elements/features/actions/enums/revenue_cat.dart';
 import 'package:teta_widgets/src/elements/features/actions/enums/stripe.dart';
 import 'package:teta_widgets/src/elements/features/actions/enums/teta_cms.dart';
+import 'package:teta_widgets/src/elements/features/actions/enums/theme.dart';
 import 'package:teta_widgets/src/elements/features/actions/enums/webview.dart';
 import 'package:teta_widgets/src/elements/features/actions/snippets.dart';
 import 'package:teta_widgets/src/elements/features/text_type_input.dart';
@@ -88,6 +90,7 @@ class FActionElement extends Equatable {
   FActionElement({
     this.id,
     this.actionRevenueCat,
+    this.actionTheme,
     this.actionStripe,
     this.actionType,
     this.actionGesture,
@@ -138,6 +141,9 @@ class FActionElement extends Equatable {
     actionRevenueCat =
         convertDropdownToValue(ActionRevenueCat.values, doc['aRC'] as String?)
             as ActionRevenueCat?;
+    actionTheme =
+        convertDropdownToValue(ActionTheme.values, doc['aTh'] as String?)
+            as ActionTheme?;
     actionStripe =
         convertDropdownToValue(ActionStripe.values, doc['sPK'] as String?)
             as ActionStripe?;
@@ -219,6 +225,7 @@ class FActionElement extends Equatable {
   ActionNavigation? actionNavigation;
   ActionState? actionState;
   ActionRevenueCat? actionRevenueCat;
+  ActionTheme? actionTheme;
   ActionStripe? actionStripe;
   int? customFunctionId;
   ActionSupabaseAuth? actionSupabaseAuth;
@@ -286,6 +293,7 @@ class FActionElement extends Equatable {
           'Navigation',
           'Teta database',
           'Teta auth',
+          'Theme',
           if (kDebugMode) 'Custom Functions',
           if (config.supabaseEnabled ?? false) 'Supabase auth',
           if (config.supabaseEnabled ?? false) 'Supabase database',
@@ -365,6 +373,10 @@ class FActionElement extends Equatable {
     return [];
   }
 
+  static List<String> getTheme() {
+    return enumsToListString(ActionTheme.values);
+  }
+
   static List<String> getSupabaseAuth(final ProjectConfig? config) {
     if (config != null) {
       if (config.supabaseEnabled ?? false) {
@@ -413,6 +425,9 @@ class FActionElement extends Equatable {
     if (type == ActionType.customFunctions) {
       return 'Custom Functions';
     }
+    if (type == ActionType.theme) {
+      return 'Theme';
+    }
     if (type != null) {
       return EnumToString.convertToString(type, camelCase: true);
     }
@@ -431,6 +446,9 @@ class FActionElement extends Equatable {
     }
     if (value == 'Custom Functions') {
       return ActionType.customFunctions;
+    }
+    if (value == 'Theme') {
+      return ActionType.theme;
     }
     if (value != null) {
       return EnumToString.fromString<dynamic>(list, value, camelCase: true);
@@ -451,6 +469,7 @@ class FActionElement extends Equatable {
         'aT': convertValueToDropdown(actionType),
         'cFid': customFunctionId,
         'aN': convertValueToDropdown(actionNavigation),
+        'aTh': convertValueToDropdown(actionTheme),
         'aS': convertValueToDropdown(actionState),
         'g': convertValueToDropdown(actionGesture),
         'sA': convertValueToDropdown(actionSupabaseAuth),
@@ -496,6 +515,22 @@ class FActionElement extends Equatable {
     final int? loop,
   ) async {
     switch (actionType) {
+      case ActionType.theme:
+        switch (actionTheme) {
+          case ActionTheme.changeTheme:
+            await actionS(
+              () => FActionChangeTheme.action(context),
+              context: context,
+              params: params,
+              states: states,
+              dataset: dataset,
+              loop: loop,
+            );
+            break;
+          default:
+            break;
+        }
+        break;
       case ActionType.customFunctions:
         if (withCondition == true) {
           if (condition?.get(params, states, dataset, true, loop) !=
@@ -814,7 +849,6 @@ class FActionElement extends Equatable {
               dataset: dataset,
               loop: loop,
             );
-
             break;
           case ActionState.changeWithParams:
             await actionS(
@@ -831,7 +865,6 @@ class FActionElement extends Equatable {
               dataset: dataset,
               loop: loop,
             );
-
             break;
           case null:
             break;
@@ -848,7 +881,6 @@ class FActionElement extends Equatable {
               dataset: dataset,
               loop: loop,
             );
-
             break;
           case ActionNavigation.openDrawer:
             await actionS(
@@ -915,7 +947,6 @@ class FActionElement extends Equatable {
               dataset: dataset,
               loop: loop,
             );
-
             break;
           case ActionNavigation.openSnackBar:
             await actionS(
@@ -1407,6 +1438,17 @@ class FActionElement extends Equatable {
     final int loop = 0,
   }) {
     switch (actionType) {
+      case ActionType.theme:
+        switch (actionTheme) {
+          case ActionTheme.changeTheme:
+            return codeS(
+              FActionChangeTheme.toCode(
+                context,
+              ),
+              context,
+            );
+        }
+        break;
       case ActionType.customFunctions:
         return FCondition.toCode(
               context,
@@ -1556,7 +1598,6 @@ class FActionElement extends Equatable {
             break;
         }
         break;
-
       case ActionType.state:
         switch (actionState) {
           case ActionState.increment:

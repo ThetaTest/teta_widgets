@@ -5,6 +5,7 @@ enum ActionType {
   navigation,
   state,
   shopify,
+  theme,
   revenueCat,
   stripe,
   firebase,

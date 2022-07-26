@@ -34,6 +34,7 @@ import 'package:teta_widgets/src/elements/features/actions/enums/state.dart';
 import 'package:teta_widgets/src/elements/features/actions/enums/stripe.dart';
 import 'package:teta_widgets/src/elements/features/actions/enums/supabase.dart';
 import 'package:teta_widgets/src/elements/features/actions/enums/teta_cms.dart';
+import 'package:teta_widgets/src/elements/features/actions/enums/theme.dart';
 import 'package:teta_widgets/src/elements/features/actions/enums/type.dart';
 import 'package:teta_widgets/src/elements/features/actions/enums/webview.dart';
 import 'package:teta_widgets/src/elements/index.dart';
@@ -432,6 +433,24 @@ class ActionElementControlState extends State<ActionElementControl> {
                       },
                     ),
                   ],
+                ),
+              if (widget.element.actionType == ActionType.theme)
+                CDropdown(
+                  value: FActionElement.convertValueToDropdown(
+                    widget.element.actionTheme,
+                  ),
+                  items: FActionElement.getTheme(),
+                  onChange: (final newValue) {
+                    if (newValue != null) {
+                      final old = widget.element;
+                      widget.element.actionTheme =
+                          FActionElement.convertDropdownToValue(
+                        ActionTheme.values,
+                        newValue,
+                      ) as ActionTheme?;
+                      widget.callBack(widget.element, old);
+                    }
+                  },
                 ),
               if (widget.element.actionType == ActionType.audioPlayer)
                 Column(
