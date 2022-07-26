@@ -81,6 +81,7 @@ class FActionStateChangeWith {
       } else {
         if (variable.type == VariableType.int) {
           final v = value.replaceAll("'", '');
+          Logger.printWarning(v);
           buffer.write(
             '$varName = ${int.tryParse(v) ?? v};',
           );
