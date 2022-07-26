@@ -20,7 +20,7 @@ String concentricPageViewCodeTemplate(
     flagConst: false,
   );
   final childrenStr =
-      CS.children(context, children).replaceAll('children:', '');
+      CS.children(context, children).replaceFirst('children:', '');
   return '''
     ConcentricPageView(
       colors: [
