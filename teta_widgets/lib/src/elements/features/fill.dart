@@ -319,21 +319,18 @@ class FFill {
   }) {
     final state = BlocProvider.of<PaletteBloc>(context).state;
     late PaletteModel currentPaletteElement;
-    // FFill? finalFill;
     if (state.isNotEmpty) {
       for (final e in state) {
         if (e.id == fill.paletteStyle) {
           currentPaletteElement = e;
-          // finalFill = e.fill;
         }
       }
     }
-    // finalFill ??= fill;
 
     if (fill.type == FFillType.none) return null;
 
     if (fill.paletteStyle != null) {
-      return "color: context.watch<ThemeCubit>().state ? TetaThemes.lightTheme['${currentPaletteElement.name}'] : TetaThemes.darkTheme['${currentPaletteElement.name}'],";
+      return "color: context.watch<ThemeCubit>().state ? TetaThemes.lightTheme['${currentPaletteElement.name}'] as Color : TetaThemes.darkTheme['${currentPaletteElement.name}'] as Color,";
     }
 
     if (fill.type == FFillType.solid) {
