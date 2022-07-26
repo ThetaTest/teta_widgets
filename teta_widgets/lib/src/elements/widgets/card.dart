@@ -1,5 +1,6 @@
 // Flutter imports:
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 // Package imports:
 import 'package:teta_core/teta_core.dart';
 // Project imports:
@@ -37,12 +38,16 @@ class WCard extends StatelessWidget {
   @override
   Widget build(final BuildContext context) {
     final val = elevation.get(params, states, dataset, forPlay, loop);
+    final isLight = BlocProvider.of<PaletteDarkLightCubit>(context).state;
+    PaletteModel? model;
+    BlocProvider.of<PaletteBloc>(context).state.forEach((final element) {
+      if (element.id == color.paletteStyle) model = element;
+    });
     return NodeSelectionBuilder(
       node: node,
       forPlay: forPlay,
       child: Card(
-        color: HexColor(color.getHexColor(context))
-            .withOpacity(color.levels?.first.opacity ?? 1),
+        color: _getCardColor(model, isLight),
         elevation: double.tryParse(val) != null ? double.parse(val) : 1,
         shape: TetaShapeCard.get(context: context, borderRadius: borderRadius),
         child: ChildConditionBuilder(
@@ -57,5 +62,16 @@ class WCard extends StatelessWidget {
         ),
       ),
     );
+  }
+
+  // ignore: avoid_positional_boolean_parameters
+  HexColor _getCardColor(final PaletteModel? model, final bool isLight) {
+    if (model != null) {
+      return isLight
+          ? HexColor(model.light!.levels!.first.color)
+          : HexColor(model.fill!.levels!.first.color);
+    } else {
+      return HexColor(color.levels!.first.color);
+    }
   }
 }

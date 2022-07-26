@@ -16,13 +16,16 @@ String iconLineCodeTemplate(
   final int? loop,
 ) {
   final icon = body.attributes[DBKeys.lineIcon] as String;
-  final fill = body.attributes[DBKeys.fill] as FFill;
-  final hex = fill.getHexColor(context);
+  final fill = FFill.toCode(
+    body.attributes[DBKeys.fill] as FFill,
+    context,
+    flagConst: false,
+  );
   return '''
     Icon (
       LineIcons.byName('$icon'),
       ${CS.size(context, body, isWidth: true).replaceAll('width', 'size')}
-      color: Color(0xFF$hex).withOpacity(${fill.levels?.first.opacity ?? '1'}),
+      $fill
     )
   ''';
 }

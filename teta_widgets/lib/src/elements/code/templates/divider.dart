@@ -13,13 +13,15 @@ String dividerCodeTemplate(
   final NodeBody body,
   final CNode? child,
 ) {
-  final fill = body.attributes[DBKeys.fill] as FFill;
-  final hex = fill.getHexColor(context);
-
+  final fill = FFill.toCode(
+    body.attributes[DBKeys.fill] as FFill,
+    context,
+    flagConst: false,
+  );
   return '''
     Divider(
       ${CS.size(context, body, isWidth: false)}
-      color: Color(0xFF$hex).withOpacity(${fill.levels?.first.opacity ?? '1'}),
+      $fill
     )
   ''';
 }

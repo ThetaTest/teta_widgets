@@ -4,6 +4,7 @@
 import 'package:badges/badges.dart';
 // Flutter imports:
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:teta_core/teta_core.dart';
 // Project imports:
 import 'package:teta_widgets/src/elements/index.dart';
@@ -40,6 +41,11 @@ class WBadge extends StatelessWidget {
 
   @override
   Widget build(final BuildContext context) {
+    final isLight = BlocProvider.of<PaletteDarkLightCubit>(context).state;
+    PaletteModel? model;
+    BlocProvider.of<PaletteBloc>(context).state.forEach((final element) {
+      if (element.id == fill.paletteStyle) model = element;
+    });
     return NodeSelectionBuilder(
       node: node,
       forPlay: forPlay,
@@ -52,7 +58,7 @@ class WBadge extends StatelessWidget {
           dataset: dataset,
           forPlay: forPlay,
         ),
-        badgeColor: HexColor(fill.getHexColor(context)),
+        badgeColor: _getbadgeColor(model, isLight),
         child: ChildConditionBuilder(
           ValueKey('${node.nid} $loop'),
           name: node.intrinsicState.displayName,
@@ -65,5 +71,16 @@ class WBadge extends StatelessWidget {
         ),
       ),
     );
+  }
+
+  // ignore: avoid_positional_boolean_parameters
+  HexColor _getbadgeColor(final PaletteModel? model, final bool isLight) {
+    if (model != null) {
+      return isLight
+          ? HexColor(model.light!.levels!.first.color)
+          : HexColor(model.fill!.levels!.first.color);
+    } else {
+      return HexColor(fill.levels!.first.color);
+    }
   }
 }

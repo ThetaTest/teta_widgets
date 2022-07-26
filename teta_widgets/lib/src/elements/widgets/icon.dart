@@ -1,7 +1,4 @@
 // Flutter imports:
-// ignore_for_file: public_member_api_docs, import_of_legacy_library_into_null_safe, lines_longer_than_80_chars
-
-// Flutter imports:
 import 'package:flutter/material.dart';
 // Package imports:
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -38,26 +35,30 @@ class WIcon extends StatelessWidget {
 
   @override
   Widget build(final BuildContext context) {
-    return BlocBuilder<PaletteBloc, List<PaletteModel>>(
-      builder: (final context, final state) {
-        FFill? finalFill;
-        if (state.isNotEmpty) {
-          for (final e in state) {
-            if (e.id == fill.paletteStyle) finalFill = e.fill;
-          }
-        }
-        finalFill ??= fill;
-
-        return NodeSelectionBuilder(
-          node: node,
-          forPlay: forPlay,
-          child: Icon(
-            MdiIcons.fromString(icon),
-            color: HexColor(finalFill.levels!.first.color),
-            size: width!.get(context: context, isWidth: true),
-          ),
-        );
-      },
+    final isLight = BlocProvider.of<PaletteDarkLightCubit>(context).state;
+    PaletteModel? model;
+    BlocProvider.of<PaletteBloc>(context).state.forEach((final element) {
+      if (element.id == fill.paletteStyle) model = element;
+    });
+    return NodeSelectionBuilder(
+      node: node,
+      forPlay: forPlay,
+      child: Icon(
+        MdiIcons.fromString(icon),
+        color: _getIconColor(model, isLight),
+        size: width!.get(context: context, isWidth: true),
+      ),
     );
+  }
+
+  // ignore: avoid_positional_boolean_parameters
+  HexColor _getIconColor(final PaletteModel? model, final bool isLight) {
+    if (model != null) {
+      return isLight
+          ? HexColor(model.light!.levels!.first.color)
+          : HexColor(model.fill!.levels!.first.color);
+    } else {
+      return HexColor(fill.levels!.first.color);
+    }
   }
 }

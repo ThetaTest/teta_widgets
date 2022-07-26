@@ -5,6 +5,7 @@
 import 'package:concentric_transition/concentric_transition.dart';
 // Flutter imports:
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:teta_core/teta_core.dart';
 // Project imports:
 import 'package:teta_widgets/src/elements/index.dart';
@@ -47,20 +48,19 @@ class _WConcentricPageViewState extends State<WConcentricPageView> {
 
   @override
   Widget build(final BuildContext context) {
+    final isLight = BlocProvider.of<PaletteDarkLightCubit>(context).state;
+    PaletteModel? model;
+    BlocProvider.of<PaletteBloc>(context).state.forEach((final element) {
+      if (element.id == widget.fill.paletteStyle) model = element;
+    });
     return NodeSelectionBuilder(
       node: widget.node,
       forPlay: widget.forPlay,
       child: ConcentricPageView(
-        colors: widget.children.length >= 2
-            ? widget.children
-                .map(
-                  (final e) => HexColor(widget.fill.getHexColor(context)),
-                )
-                .toList()
-            : [
-                HexColor(widget.fill.getHexColor(context)),
-                HexColor(widget.fill.getHexColor(context))
-              ],
+        colors: [
+          _getConcentricPageColor(model, isLight),
+          _getConcentricPageColor(model, isLight)
+        ],
         itemCount: widget.children.length,
         itemBuilder: (final int index) {
           return widget.children[index].toWidget(
@@ -72,5 +72,19 @@ class _WConcentricPageViewState extends State<WConcentricPageView> {
         },
       ),
     );
+  }
+
+  // ignore: avoid_positional_boolean_parameters
+  HexColor _getConcentricPageColor(
+    final PaletteModel? model,
+    final bool isLight,
+  ) {
+    if (model != null) {
+      return isLight
+          ? HexColor(model.light!.levels!.first.color)
+          : HexColor(model.fill!.levels!.first.color);
+    } else {
+      return HexColor(widget.fill.levels!.first.color);
+    }
   }
 }
