@@ -17,16 +17,19 @@ String badgeCodeTemplate(
 ) {
   final abstract = body.attributes[DBKeys.value] as FTextTypeInput;
   final value = abstract.toCode(loop);
-  final fill = body.attributes[DBKeys.fill] as FFill;
-  final hex = fill.getHexColor(context);
+  final fill = FFill.toCode(
+    body.attributes[DBKeys.fill] as FFill,
+    context,
+    flagConst: false,
+  );
   return '''
     Badge(
       badgeContent: Text( 
         $value,
         ${CS.textStyle(context, body, DBKeys.textStyle)}
         ),
-      badgeColor:Color(0xFF$hex).withOpacity(${fill.levels?.first.opacity ?? '1'}),
-      ${CS.child(context, child, comma: true)}
+        ${fill!.replaceAll('color:', 'badgeColor:')}
+        ${CS.child(context, child, comma: true)}
     )
   ''';
 }
