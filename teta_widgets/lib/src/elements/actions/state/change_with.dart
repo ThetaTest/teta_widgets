@@ -80,12 +80,15 @@ class FActionStateChangeWith {
         }
       } else {
         if (variable.type == VariableType.int) {
+          final v = value.replaceAll("'", '');
+          Logger.printWarning(v);
           buffer.write(
-            '$varName = ${int.tryParse(value) ?? value};',
+            '$varName = ${int.tryParse(v) ?? v};',
           );
         } else if (variable.type == VariableType.double) {
+          final v = value.replaceAll("'", '');
           buffer.write(
-            '$varName = ${double.tryParse(value) ?? value};',
+            '$varName = ${double.tryParse(v) ?? v};',
           );
         } else {
           return '';
