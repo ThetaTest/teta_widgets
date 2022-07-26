@@ -21,8 +21,11 @@ String bottomBarItemCodeTemplate(
   final abstract = body.attributes[DBKeys.value] as FTextTypeInput;
   final value = abstract.toCode(loop);
   final icon = body.attributes[DBKeys.icon] as String;
-  final fill = body.attributes[DBKeys.fill] as FFill;
-  final hex = fill.getHexColor(context);
+  final fill = FFill.toCode(
+    body.attributes[DBKeys.fill] as FFill,
+    context,
+    flagConst: false,
+  );
   return '''
     GestureDetector(
       ${CS.action(
@@ -50,7 +53,7 @@ String bottomBarItemCodeTemplate(
           Icon(
             MdiIcons.fromString('$icon'),
             ${CS.size(context, body, isWidth: true).replaceAll('width', 'size')}
-            color: Color(0xFF$fill).withOpacity(${fill.levels?.first.opacity ?? '1'}),
+            $fill
           ),
           Text($value,
             ${CS.textStyle(context, body, DBKeys.textStyle)}
