@@ -53,9 +53,12 @@ class CS {
     final bool? comma,
   }) {
     var strChild = '';
-    if (child != null) strChild = child.toCode(context);
-    if (strChild.isEmpty) return '';
-    return strChild != '' ? 'child: $strChild${comma ?? true ? ',' : ''}' : '';
+    if (child != null) {
+      strChild = child.toCode(context);
+    }
+    return strChild != ''
+        ? 'child: $strChild${comma ?? true ? ',' : ''}'
+        : 'child: const SizedBox(),';
   }
 
   /// Returns eventualy children' code
