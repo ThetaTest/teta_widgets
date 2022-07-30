@@ -32,7 +32,7 @@ We are an international team, where 50% of the team identifies as female, and we
 
 ## Community & Support
 [Discord](http://discord.gg/z9MjHSMaSX)<br>
-GitHub Issues<br>
+[GitHub Issues](https://github.com/TetaBuilder/teta_widgets/issues)<br>
 [Instagram](http://instagram.com/teta.so)<br>
 <br>
 
