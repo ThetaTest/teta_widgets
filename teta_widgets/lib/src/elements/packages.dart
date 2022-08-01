@@ -92,6 +92,26 @@ const PackageModel pMap = PackageModel(
   isDart: false,
   extraCode: 'as map',
 );
+const PackageModel pGoogleMaps = PackageModel(
+  packageName: 'google_maps_flutter',
+  packageVersion: '2.1.9',
+  isDart: false,
+  customPath: '''
+  import 'package:google_maps_flutter/google_maps_flutter.dart';
+  import 'dart:async';
+  import 'dart:typed_data';
+  import 'dart:ui';
+  ''',
+);
+const PackageModel pFlutterCacheManager = PackageModel(
+  packageName: 'flutter_cache_manager',
+  packageVersion: '3.3.0',
+  isDart: false,
+  customPath: '''
+    import 'package:flutter_cache_manager/flutter_cache_manager.dart';
+    import 'package:flutter_cache_manager/file.dart';
+    ''',
+);
 const PackageModel pLatLang = PackageModel(
   packageName: 'latlng',
   packageVersion: '0.1.0',
