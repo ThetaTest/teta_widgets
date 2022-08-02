@@ -67,6 +67,8 @@ class GoogleMapsBody extends NodeBody {
     DBKeys.mapCustomStyle: FDataset(),
     DBKeys.mapInitialPositionLat: FDataset(),
     DBKeys.mapInitialPositionLng: FDataset(),
+    DBKeys.markerDrawPathToUserCurrentLocation: FDataset(),
+    DBKeys.mapDrawPathToBetweenMarkersAndUserCurrentLocation: false,
   };
 
   @override
@@ -103,6 +105,13 @@ class GoogleMapsBody extends NodeBody {
           key: DBKeys.mapInitialPositionLng,
           value: attributes[DBKeys.mapInitialPositionLng] as FDataset,
           flag: true,
+        ),
+        FlagControlObject(
+          title: 'Draw path to markers',
+          key: DBKeys.mapDrawPathToBetweenMarkersAndUserCurrentLocation,
+          value: attributes[
+              DBKeys.mapDrawPathToBetweenMarkersAndUserCurrentLocation],
+          description: null,
         ),
         ControlObject(
           title: 'Markers Dataset',
@@ -143,6 +152,14 @@ class GoogleMapsBody extends NodeBody {
           type: ControlType.datasetType,
           key: DBKeys.markerIconWidth,
           value: attributes[DBKeys.markerIconWidth] as FDataset,
+          flag: true,
+        ),
+        ControlObject(
+          title:
+              'Marker draw Path field name',
+          type: ControlType.datasetType,
+          key: DBKeys.markerDrawPathToUserCurrentLocation,
+          value: attributes[DBKeys.markerDrawPathToUserCurrentLocation],
           flag: true,
         ),
       ];

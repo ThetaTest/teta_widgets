@@ -193,6 +193,8 @@ class DBKeys {
 
   static const String markerId = 'googleMapsMarkerIdKey';
 
+  static const String markerDrawPathToUserCurrentLocation = 'markerDrawPathToUserCurrentLocation';
+
   static const String mapConfig = 'googleMapsDatasetConfigNameKey';
 
   static const String googleMapsController = 'googleMapsControllerName';
@@ -200,6 +202,8 @@ class DBKeys {
   static const String mapCustomStyle = 'googleMapsCustomStyle';
   static const String mapInitialPositionLat = 'googleMapsInitialPositionLat';
   static const String mapInitialPositionLng = 'googleMapsInitialPositionLng';
+  static const String mapDrawPathToBetweenMarkersAndUserCurrentLocation = 'mapDrawPathToBetweenMarkersAndUserCurrentLocation';
+
 }
 
 class DynamicAttributes {
@@ -246,6 +250,10 @@ class DynamicAttributes {
         case DBKeys.firestorePath:
           return FFirestorePath.fromJson(value as List<Map<String, dynamic>>);
         case DBKeys.flag:
+          return value;
+        case DBKeys.markerDrawPathToUserCurrentLocation:
+          return FDataset.fromJson(value as Map<String, dynamic>);
+        case DBKeys.mapDrawPathToBetweenMarkersAndUserCurrentLocation:
           return value;
         case DBKeys.fontFamily:
           return value;
@@ -523,6 +531,10 @@ class DynamicAttributes {
       case DBKeys.firestorePath:
         return value != null ? value.toJson() : FFirestorePath().toJson();
       case DBKeys.flag:
+        return value;
+      case DBKeys.markerDrawPathToUserCurrentLocation:
+        return value != null ? value.toJson() : FDataset().toJson();
+      case DBKeys.mapDrawPathToBetweenMarkersAndUserCurrentLocation:
         return value;
       case DBKeys.fontFamily:
         return value;
