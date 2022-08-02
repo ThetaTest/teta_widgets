@@ -3,6 +3,7 @@
 
 // Dart imports:
 import 'dart:async';
+import 'dart:collection';
 import 'dart:math';
 import 'dart:typed_data';
 import 'dart:ui';
@@ -15,7 +16,6 @@ import 'package:flutter_cache_manager/file.dart';
 import 'package:flutter_cache_manager/flutter_cache_manager.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:google_maps_flutter_web/google_maps_flutter_web.dart';
-import 'package:map/map.dart';
 import 'package:teta_core/teta_core.dart';
 import 'package:download_assets/download_assets.dart';
 
@@ -34,8 +34,17 @@ class WGoogleMaps extends StatefulWidget {
     required this.params,
     required this.states,
     required this.dataset,
+    required this.mapControllerName,
+    required this.mapConfigDatasetName,
     required this.markersDatasetName,
-    // required this.controller,
+    required this.markerId,
+    required this.markerLatitude,
+    required this.markerLongitude,
+    required this.markerIconUrl,
+    required this.markerIconWidth,
+    required this.customMapStyle,
+    required this.initialPositionLng,
+    required this.initialPositionLat,
     this.child,
     this.loop,
   }) : super(key: key);
@@ -49,8 +58,17 @@ class WGoogleMaps extends StatefulWidget {
   final List<VariableObject> states;
   final List<DatasetObject> dataset;
 
-  // final FTextTypeInput controller;
   final String markersDatasetName;
+  final String mapControllerName;
+  final String mapConfigDatasetName;
+  final String markerId;
+  final String markerLatitude;
+  final String markerLongitude;
+  final String markerIconUrl;
+  final String markerIconWidth;
+  final String customMapStyle;
+  final String initialPositionLng;
+  final String initialPositionLat;
 
   @override
   State<WGoogleMaps> createState() => _WGoogleMapsState();
@@ -73,44 +91,61 @@ class _WGoogleMapsState extends State<WGoogleMaps> {
 
   @override
   Widget build(final BuildContext context) {
-    if (UniversalPlatform.isAndroid || UniversalPlatform.isIOS) {
-      return _mobileMap();
-    } else if (UniversalPlatform.isWeb) {
-      return _webMap();
+    if (isInitialized) {
+      if (UniversalPlatform.isAndroid || UniversalPlatform.isIOS) {
+        return _appMap(context);
+      } else if (UniversalPlatform.isWeb) {
+        return _appMap(context);
+      } else {
+        return _elseMap();
+      }
     } else {
-      return _elseMap();
+      return const Center(
+        child: CircularProgressIndicator.adaptive(),
+      );
     }
   }
 
-  Widget _webMap() => GoogleMap(
-        zoomControlsEnabled: false,
-        myLocationButtonEnabled: false,
-        initialCameraPosition: const CameraPosition(
-          target: LatLng(
-            41.9028,
-            12.4964,
-          ),
-          zoom: 15,
-        ),
-        markers: markers,
-      );
+  Widget _appMap(final BuildContext context) {
+    Map<String, dynamic> mapConfig;
+    try {
+      mapConfig = widget.dataset
+          .firstWhere(
+            (final element) => element.getName == widget.mapConfigDatasetName,
+      )
+          .getMap[0];
+    } catch (e) {
+      mapConfig = <String, dynamic> {};
+    }
 
-  Widget _mobileMap() => GoogleMap(
-        zoomControlsEnabled: false,
-        myLocationButtonEnabled: false,
-        initialCameraPosition: const CameraPosition(
-          target: LatLng(
-            41.9028,
-            12.4964,
-          ),
-          zoom: 15,
+    final initialPositionLat =
+        num.parse(mapConfig[widget.initialPositionLat] as String? ?? '41.889221');
+    final initialPositionLng =
+        num.parse(mapConfig[widget.initialPositionLng] as String? ?? '12.493421');
+
+    return GoogleMap(
+      zoomControlsEnabled: false,
+      myLocationButtonEnabled: false,
+      initialCameraPosition: CameraPosition(
+        target: LatLng(
+          initialPositionLat.toDouble(),
+          initialPositionLng.toDouble(),
         ),
-        markers: markers,
-      );
+        zoom: 15,
+      ),
+      markers: markers,
+      onMapCreated: (cnt) {
+        // $mapControllerName.complete(cnt);
+        cnt.setMapStyle(mapConfig[widget.customMapStyle] as String?);
+      },
+    );
+  }
 
   Widget _elseMap() => const Center(
-      child: THeadline3(
-          'This platform does not support this Google map plugin, yet.'));
+        child: THeadline3(
+          'This platform does not support this Google map plugin, yet.',
+        ),
+      );
 
   Future<void> initMap() async {
     try {
@@ -130,12 +165,12 @@ class _WGoogleMapsState extends State<WGoogleMaps> {
       final mapMarkers = <Marker>{};
 
       for (final element in markersDataset) {
-        final markerId = element['_id'] as String;
-        final markerLatitude = num.parse(element['lat'] as String? ?? '0');
-        final markerLongitude = num.parse(element['lng'] as String? ?? '0');
-        final markerIconUrl = element['icon'] as String?;
+        final markerId = element[widget.markerId] as String;
+        final markerLatitude = num.parse(element[widget.markerLatitude] as String? ?? '0');
+        final markerLongitude = num.parse(element[widget.markerLongitude] as String? ?? '0');
+        final markerIconUrl = element[widget.markerIconUrl] as String?;
         final markerIconWidth =
-            num.parse(element['iconWidth'] as String? ?? '70');
+            num.parse(element[widget.markerIconWidth] as String? ?? '70');
         BitmapDescriptor? markerIcon;
 
         // if (markerIconUrl != null) {
@@ -173,15 +208,14 @@ class _WGoogleMapsState extends State<WGoogleMaps> {
           ),
         );
       }
-      print('Markers -> $mapMarkers');
       setState(() {
         markers = mapMarkers;
         isInitialized = true;
       });
     } catch (e) {
-      print('Markers error -> $e');
       setState(() {
         markers = <Marker>{};
+        isInitialized = true;
       });
     }
     // if (widget.controller.type == FTextTypeEnum.param) {

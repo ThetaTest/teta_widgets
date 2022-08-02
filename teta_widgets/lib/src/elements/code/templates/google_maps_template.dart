@@ -100,7 +100,7 @@ class GoogleMapsTemplate {
                     onMapCreated: (cnt) {
                               $mapControllerName.complete(cnt);
                               cnt.setMapStyle(mapConfig['$customMapStyle'] ?? '');
-                            },
+                     },
                   );
                 })
  ''';

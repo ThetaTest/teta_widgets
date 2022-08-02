@@ -166,8 +166,39 @@ class GoogleMapsBody extends NodeBody {
         ),
         node: node,
         child: child,
+        mapControllerName:
+            (attributes[DBKeys.googleMapsController] as FTextTypeInput)
+                    .stateName ??
+                '',
+        mapConfigDatasetName:
+            (attributes[DBKeys.mapConfig] as FDataset).datasetName ?? '',
         markersDatasetName:
             (attributes[DBKeys.datasetInput] as FDataset).datasetName ?? '',
+        markerId:
+            (attributes[DBKeys.markerId] as FDataset).datasetAttrName ?? '',
+        markerLatitude:
+            (attributes[DBKeys.markerLatitude] as FDataset).datasetAttrName ??
+                '',
+        markerLongitude:
+            (attributes[DBKeys.markerLongitude] as FDataset).datasetAttrName ??
+                '',
+        markerIconUrl:
+            (attributes[DBKeys.markerIconUrl] as FDataset).datasetAttrName ??
+                '',
+        markerIconWidth:
+            (attributes[DBKeys.markerIconWidth] as FDataset).datasetAttrName ??
+                '',
+        customMapStyle:
+            (attributes[DBKeys.mapCustomStyle] as FDataset).datasetAttrName ??
+                '',
+        initialPositionLat:
+            (attributes[DBKeys.mapInitialPositionLat] as FDataset)
+                    .datasetAttrName ??
+                '',
+        initialPositionLng:
+            (attributes[DBKeys.mapInitialPositionLng] as FDataset)
+                    .datasetAttrName ??
+                '',
         forPlay: forPlay,
         loop: loop,
         params: params,
@@ -211,10 +242,12 @@ class GoogleMapsBody extends NodeBody {
             (attributes[DBKeys.mapCustomStyle] as FDataset).datasetAttrName ??
                 '',
         initialPositionLat:
-            (attributes[DBKeys.mapInitialPositionLat] as FDataset).datasetAttrName ??
+            (attributes[DBKeys.mapInitialPositionLat] as FDataset)
+                    .datasetAttrName ??
                 '',
         initialPositionLng:
-            (attributes[DBKeys.mapInitialPositionLng] as FDataset).datasetAttrName ??
+            (attributes[DBKeys.mapInitialPositionLng] as FDataset)
+                    .datasetAttrName ??
                 '',
       );
 }
