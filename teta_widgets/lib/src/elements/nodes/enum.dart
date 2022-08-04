@@ -92,6 +92,7 @@ enum NType {
   cupertinoSegmentedControl,
   map,
   mapBuilder,
+  googleMaps,
   mapBox,
   marker,
   tcard,

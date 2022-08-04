@@ -26,6 +26,7 @@ import 'package:teta_widgets/src/elements/controls/atoms/dataset.dart';
 import 'package:teta_widgets/src/elements/controls/atoms/fill.dart';
 import 'package:teta_widgets/src/elements/controls/atoms/firebase/path.dart';
 import 'package:teta_widgets/src/elements/controls/atoms/flag.dart';
+import 'package:teta_widgets/src/elements/controls/atoms/google_maps_control.dart';
 import 'package:teta_widgets/src/elements/controls/atoms/icon.dart';
 import 'package:teta_widgets/src/elements/controls/atoms/icon_feather.dart';
 import 'package:teta_widgets/src/elements/controls/atoms/icon_fontawesome.dart';
@@ -161,6 +162,7 @@ enum ControlType {
   audioController,
   audioPlayerCurrentDataset,
   mapController,
+  googleMapsController,
 
   cmsCollections,
   cmsCustomQuery,
@@ -403,6 +405,29 @@ class ControlBuilder {
         ),
       );
     }
+
+    if (control.type == ControlType.googleMapsController) {
+      return descriptionControlWidget(
+        description: control.description,
+        control: GoogleMapsControl(
+          key: ValueKey('${node.nid}'),
+          node: node,
+          page: page,
+          title: control.title ?? 'Google Maps Controller',
+          value: control.value as FTextTypeInput,
+          callBack: (final value, final old) => ControlBuilder.toDB(
+            prj,
+            page,
+            node,
+            context,
+            control.key,
+            value.toJson(),
+            old.toJson(),
+          ),
+        ),
+      );
+    }
+
     if (control.type == ControlType.cameraController) {
       return descriptionControlWidget(
         description: control.description,

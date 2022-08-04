@@ -84,6 +84,11 @@ dependencies:
   qr_flutter: 4.0.0
   barcode: 2.1.0
   barcode_widget: 2.0.1
+  google_maps_flutter_web: 0.4.0+1
+  google_maps_flutter: 2.1.9
+  flutter_cache_manager: 3.3.0
+  download_assets: 3.0.0
+
 
   # Utils
   uuid: 3.0.6

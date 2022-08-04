@@ -59,23 +59,19 @@ class AudioPlayerBody extends NodeBody {
   // ignore: overridden_fields
   Map<String, dynamic> attributes = <String, dynamic>{
     DBKeys.value: FTextTypeInput(type: FTextTypeEnum.state),
-    // DBKeys.audioPlayerCurrentDataset: FTextTypeInput(type: FTextTypeEnum.state),
     DBKeys.datasetInput: FDataset(),
   };
 
   @override
   List<ControlModel> get controls => [
         ControlObject(
+          title: 'Audio controller',
           type: ControlType.audioController,
           key: DBKeys.value,
           value: attributes[DBKeys.value] as FTextTypeInput,
         ),
-        // ControlObject(
-        //   type: ControlType.audioPlayerCurrentDataset,
-        //   key: DBKeys.audioPlayerCurrentDataset,
-        //   value: attributes[DBKeys.audioPlayerCurrentDataset] as FTextTypeInput,
-        // ),
         ControlObject(
+          title: 'Dataset song url field',
           type: ControlType.datasetType,
           key: DBKeys.datasetInput,
           value: attributes[DBKeys.datasetInput] as FDataset,
