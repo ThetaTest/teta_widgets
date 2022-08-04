@@ -3,12 +3,18 @@
 
 // Dart imports:
 import 'dart:async';
+import 'dart:ui';
+import 'package:http/http.dart' as http;
 
 // Flutter imports:
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:flutter_polyline_points/flutter_polyline_points.dart';
 
 import 'package:google_maps_flutter/google_maps_flutter.dart';
+import 'package:location/location.dart';
+import 'package:teta_cms/teta_cms.dart';
 import 'package:teta_core/teta_core.dart';
 
 // Project imports:
@@ -35,9 +41,14 @@ class WGoogleMaps extends WGoogleMapsBase {
     required this.markerLongitude,
     required this.markerIconUrl,
     required this.markerIconWidth,
+    required this.markerIconHeight,
+    required this.markerDrawPath,
     required this.customMapStyle,
     required this.initialPositionLng,
     required this.initialPositionLat,
+    required this.showMyLocationMarker,
+    required this.trackMyLocation,
+    required this.initialZoomLevel,
     this.child,
     this.loop,
   }) : super(key: key);
@@ -59,9 +70,14 @@ class WGoogleMaps extends WGoogleMapsBase {
   final String markerLongitude;
   final String markerIconUrl;
   final String markerIconWidth;
+  final String markerIconHeight;
+  final String markerDrawPath;
   final String customMapStyle;
   final String initialPositionLng;
   final String initialPositionLat;
+  final bool showMyLocationMarker;
+  final bool trackMyLocation;
+  final String initialZoomLevel;
 
   @override
   State<WGoogleMaps> createState() => _WGoogleMapsState();
@@ -75,6 +91,7 @@ class _WGoogleMapsState extends State<WGoogleMaps> {
     map: [<String, dynamic>{}],
   );
   Set<Marker> markers = <Marker>{};
+  Set<Polyline> polyLines = <Polyline>{};
 
   @override
   void initState() {
@@ -105,19 +122,19 @@ class _WGoogleMapsState extends State<WGoogleMaps> {
       mapConfig = widget.dataset
           .firstWhere(
             (final element) => element.getName == widget.mapConfigDatasetName,
-      )
+          )
           .getMap[0];
     } catch (e) {
-      mapConfig = <String, dynamic> {};
+      mapConfig = <String, dynamic>{};
     }
 
     final initialPositionLat =
-        num.parse(mapConfig[widget.initialPositionLat] as String? ?? '41.889221');
+        num.parse(mapConfig[widget.initialPositionLat] as String? ?? '41.9027');
     final initialPositionLng =
-        num.parse(mapConfig[widget.initialPositionLng] as String? ?? '12.493421');
+        num.parse(mapConfig[widget.initialPositionLng] as String? ?? '12.4962');
 
     return GoogleMap(
-      zoomControlsEnabled: false,
+      zoomControlsEnabled: true,
       myLocationButtonEnabled: false,
       initialCameraPosition: CameraPosition(
         target: LatLng(
@@ -126,8 +143,9 @@ class _WGoogleMapsState extends State<WGoogleMaps> {
         ),
         zoom: 15,
       ),
+      polylines: polyLines,
       markers: markers,
-      onMapCreated: (cnt) {
+      onMapCreated: (final cnt) {
         // $mapControllerName.complete(cnt);
         cnt.setMapStyle(mapConfig[widget.customMapStyle] as String?);
       },
@@ -156,58 +174,146 @@ class _WGoogleMapsState extends State<WGoogleMaps> {
           .getMap;
 
       final mapMarkers = <Marker>{};
+      final mapPolyLines = <Polyline>{};
+      final showMyLocationMarker = widget.showMyLocationMarker;
+      final trackMyLocation = widget.trackMyLocation;
+      try {
+        final location = Location();
+        final userLocation = await location.getLocation();
 
+        if (showMyLocationMarker) {
+          mapMarkers.add(
+            Marker(
+              markerId: const MarkerId('myLocation'),
+              position: LatLng(
+                userLocation.latitude!,
+                userLocation.longitude!,
+              ),
+            ),
+          );
+        }
+
+        if (trackMyLocation) {
+          location.onLocationChanged.listen((final event) {
+            setState(() {});
+          });
+        }
+      } catch (e, st) {
+        print(e);
+        print(st);
+      }
       for (final element in markersDataset) {
-        final markerId = element[widget.markerId] as String;
-        final markerLatitude = num.parse(element[widget.markerLatitude] as String? ?? '0');
-        final markerLongitude = num.parse(element[widget.markerLongitude] as String? ?? '0');
-        final markerIconUrl = element[widget.markerIconUrl] as String?;
-        final markerIconWidth =
-            num.parse(element[widget.markerIconWidth] as String? ?? '70');
-        BitmapDescriptor? markerIcon;
+        try {
+          final markerDrawPath =
+              ((element[widget.markerDrawPath] as String?) ?? 'false')
+                      .toLowerCase() ==
+                  'true';
+          final markerId = element[widget.markerId] as String;
+          final markerLatitude =
+              num.parse(element[widget.markerLatitude] as String? ?? '0');
+          final markerLongitude =
+              num.parse(element[widget.markerLongitude] as String? ?? '0');
+          final markerIconUrl = element[widget.markerIconUrl] as String?;
+          final markerIconWidth =
+              num.parse(element[widget.markerIconWidth] as String? ?? '64');
+          final markerIconHeight =
+              num.parse(element[widget.markerIconHeight] as String? ?? '64');
+          BitmapDescriptor? markerIcon;
 
-        // if (markerIconUrl != null) {
-        //   print('Markers0');
-        //   final markerImageFile =
-        //   await NetworkAssetBundle(Uri.parse(markerIconUrl)).load(markerIconUrl);
-        //   print('Markers1');
-        //
-        //   final codec = await instantiateImageCodec(
-        //     markerImageFile.buffer.asUint8List(),
-        //     targetWidth: markerIconWidth.toInt(),
-        //   );
-        //   print('Markers2');
-        //
-        //   final frameInfo = await codec.getNextFrame();
-        //   final byteData = await frameInfo.image.toByteData(
-        //     format: ImageByteFormat.png,
-        //   );
-        //   print('Markers3');
-        //
-        //   final resizedMarkerImageBytes = byteData!.buffer.asUint8List();
-        //   print('Markers4');
-        //
-        //   markerIcon = BitmapDescriptor.fromBytes(resizedMarkerImageBytes);
-        //   print('Markers5');
-        // }
+          try {
+            if (markerIconUrl != null) {
+              print('Markers0');
+              final markerImageFile =
+                  await http.get(Uri.parse(markerIconUrl));
+              print('Markers1');
 
-        mapMarkers.add(
-          Marker(
-            markerId: MarkerId(markerId),
-            position:
-                LatLng(markerLatitude.toDouble(), markerLongitude.toDouble()),
-            icon: markerIcon ?? BitmapDescriptor.defaultMarker,
-            onTap: () {},
-          ),
-        );
+              final codec = await instantiateImageCodec(
+                markerImageFile.bodyBytes,
+                targetWidth: markerIconWidth.toInt(),
+                targetHeight: markerIconHeight.toInt(),
+              );
+              print('Markers2');
+
+              final frameInfo = await codec.getNextFrame();
+              final byteData = await frameInfo.image.toByteData(
+                format: ImageByteFormat.png,
+              );
+              print('Markers3');
+
+              final resizedMarkerImageBytes = byteData!.buffer.asUint8List();
+              print('Markers4');
+
+              markerIcon = BitmapDescriptor.fromBytes(resizedMarkerImageBytes);
+              print('Markers5');
+            }
+          } catch (e, stack) {
+            print('OnChangeMarkerIconFailed: $e $stack');
+          }
+
+          if (markerDrawPath) {
+            final location = Location();
+            final userLocation = await location.getLocation();
+
+            final mLat = markerLatitude.toDouble();
+            final mLon = markerLongitude.toDouble();
+            final cms = TetaCMS.instance.client;
+            final polylinePoints = PolylinePoints();
+            final googleMapsKey = (BlocProvider.of<FocusProjectBloc>(context)
+                        .state as ProjectLoaded)
+                    .prj
+                    .config
+                    ?.googleMapsKey ??
+                '';
+            final result = await polylinePoints.getRouteBetweenCoordinates(
+              googleMapsKey,
+              PointLatLng(userLocation.latitude!, userLocation.longitude!),
+              PointLatLng(
+                mLat,
+                mLon,
+              ),
+              requestProxy: (final String url, final Map<String, String> headers) async {
+                return cms.proxy(url, headers);
+              },
+            );
+
+            if (result.points.isNotEmpty) {
+              mapPolyLines.add(
+                Polyline(
+                  polylineId: PolylineId(markerId),
+                  points: result.points
+                      .map(
+                        (final e) => LatLng(
+                          e.latitude,
+                          e.longitude,
+                        ),
+                      )
+                      .toList(),
+                ),
+              );
+            }
+          }
+          mapMarkers.add(
+            Marker(
+              markerId: MarkerId(markerId),
+              position:
+                  LatLng(markerLatitude.toDouble(), markerLongitude.toDouble()),
+              icon: markerIcon ?? BitmapDescriptor.defaultMarker,
+              onTap: () {},
+            ),
+          );
+        } catch (e, stack) {
+          print('GoogleMapsFailure: $e $stack');
+        }
       }
       setState(() {
         markers = mapMarkers;
+        polyLines = mapPolyLines;
         isInitialized = true;
       });
     } catch (e) {
       setState(() {
         markers = <Marker>{};
+        polyLines = <Polyline>{};
         isInitialized = true;
       });
     }

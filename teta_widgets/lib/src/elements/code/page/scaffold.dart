@@ -133,6 +133,12 @@ String pageCodeTemplate(
   }
   //----end states----
 
+  // Append toCodeOnInit for all widgets
+  for(final childWidget in children) {
+    initStateString.write(childWidget.toCodeOnInit(context));
+  }
+
+
   //packages
   if (page.isPage && page.flatList != null) {
     for (final item in page.flatList!) {

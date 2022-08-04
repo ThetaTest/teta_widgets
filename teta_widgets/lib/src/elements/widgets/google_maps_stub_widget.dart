@@ -27,9 +27,14 @@ class WGoogleMaps extends WGoogleMapsBase {
     required this.markerLongitude,
     required this.markerIconUrl,
     required this.markerIconWidth,
+    required this.markerIconHeight,
     required this.customMapStyle,
     required this.initialPositionLng,
     required this.initialPositionLat,
+    required this.markerDrawPath,
+    required this.showMyLocationMarker,
+    required this.trackMyLocation,
+    required this.initialZoomLevel,
     this.child,
     this.loop,
   }) : super(key: key);
@@ -51,9 +56,14 @@ class WGoogleMaps extends WGoogleMapsBase {
   final String markerLongitude;
   final String markerIconUrl;
   final String markerIconWidth;
+  final String markerIconHeight;
+  final String markerDrawPath;
   final String customMapStyle;
   final String initialPositionLng;
   final String initialPositionLat;
+  final bool showMyLocationMarker;
+  final bool trackMyLocation;
+  final String initialZoomLevel;
 
   @override
   State<WGoogleMaps> createState() => _WGoogleMapsState();

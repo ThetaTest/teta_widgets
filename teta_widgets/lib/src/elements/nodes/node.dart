@@ -126,6 +126,15 @@ abstract class CNode extends Equatable {
     ).toCode(context);
   }
 
+  String toCodeOnInit(final BuildContext context) {
+    return NDynamic(
+      globalType: intrinsicState.type,
+      body: NDynamic.getBody(intrinsicState.type),
+      childrenIds: FChildrenIds(),
+      inSpawned: false,
+    ).toCodeOnInit(context);
+  }
+
   /// Instantiate new node by display name
   static CNode toNodeFromName(
     final String displayName,
@@ -139,4 +148,5 @@ abstract class CNode extends Equatable {
       inSpawned: false,
     );
   }
+
 }
