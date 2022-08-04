@@ -3,9 +3,8 @@ import 'package:flutter/material.dart';
 import 'package:teta_widgets/src/elements/code/snippets.dart';
 // Project imports:
 import 'package:teta_widgets/src/elements/controls/key_constants.dart';
-import 'package:teta_widgets/src/elements/features/dataset.dart';
-import 'package:teta_widgets/src/elements/nodes/node.dart';
-import 'package:teta_widgets/src/elements/nodes/node_body.dart';
+import 'package:teta_widgets/src/elements/index.dart';
+import 'package:teta_widgets/src/elements/nodes/dynamic.dart';
 
 /// Generates the code for ListView.builder widget
 ///
@@ -26,33 +25,62 @@ import 'package:teta_widgets/src/elements/nodes/node_body.dart';
 /// ```
 String listViewBuilderCodeTemplate(
   final BuildContext context,
-  final NodeBody body,
+  final NDynamic node,
+  final int pageId,
   final CNode? child,
+  final int? loop,
 ) {
   final _scrollDirection =
-      !(body.attributes[DBKeys.isVertical] as bool? ?? false)
+      !(node.body.attributes[DBKeys.isVertical] as bool? ?? false)
           ? 'scrollDirection: Axis.horizontal,'
           : '';
-  final shrinkWrap = body.attributes[DBKeys.flag] as bool? ?? false;
-  final reverse = body.attributes[DBKeys.isFullWidth] as bool;
+  final shrinkWrap = node.body.attributes[DBKeys.flag] as bool? ?? false;
+  final reverse = node.body.attributes[DBKeys.isFullWidth] as bool;
   final childString = child != null ? child.toCode(context) : '';
   final dataset =
-      (body.attributes[DBKeys.datasetInput] as FDataset).datasetName;
+      (node.body.attributes[DBKeys.datasetInput] as FDataset).datasetName;
   return '''
-    Builder(
-      builder: (context) {
-        return ListView.builder(
-          $_scrollDirection
-          reverse: $reverse,
-          physics: ${CS.physic(context, body)},
-          shrinkWrap: $shrinkWrap,
-          itemCount: this.datasets['$dataset'].length > 0 ? this.datasets['$dataset'].length : 0,
-          itemBuilder: (context, index) {
-            return $childString;
-          },
-        );
-      },
-    )
+    NotificationListener<ScrollEndNotification>(
+          onNotification: (final scrollEnd) {
+          final metrics = scrollEnd.metrics;
+          if (metrics.atEdge) { 
+            final isTop = metrics.pixels == 0;
+            if ${CS.action(
+    pageId,
+    context,
+    node,
+    ActionGesture.scrollToTop,
+    '(isTop)',
+    null,
+    loop: loop,
+    isRequired: false,
+    endsWithComma: false,
+  )}
+            ${CS.action(
+    pageId,
+    context,
+    node,
+    ActionGesture.scrollToBottom,
+    'else',
+    null,
+    loop: loop,
+    isRequired: false,
+    endsWithComma: false,
+  )}
+          }
+          return true;
+        },
+          child: ListView.builder(
+            $_scrollDirection
+            reverse: $reverse,
+            physics: ${CS.physic(context, node.body)},
+            shrinkWrap: $shrinkWrap,
+            itemCount: this.datasets['$dataset'].length > 0 ? this.datasets['$dataset'].length : 0,
+            itemBuilder: (context, index) {
+              return $childString;
+            },
+          ),
+        )
   ''';
 }
 

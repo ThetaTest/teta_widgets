@@ -12,15 +12,13 @@ import 'package:teta_widgets/src/elements/code/advanced/listview_builder.dart';
 import 'package:teta_widgets/src/elements/controls/control_model.dart';
 import 'package:teta_widgets/src/elements/controls/key_constants.dart';
 import 'package:teta_widgets/src/elements/controls/type.dart';
-import 'package:teta_widgets/src/elements/features/dataset.dart';
 import 'package:teta_widgets/src/elements/features/physic.dart';
+import 'package:teta_widgets/src/elements/index.dart';
 import 'package:teta_widgets/src/elements/intrinsic_states/class.dart';
 import 'package:teta_widgets/src/elements/nodes/categories.dart';
 import 'package:teta_widgets/src/elements/nodes/children_enum.dart';
-import 'package:teta_widgets/src/elements/nodes/enum.dart';
-import 'package:teta_widgets/src/elements/nodes/node.dart';
+import 'package:teta_widgets/src/elements/nodes/dynamic.dart';
 import 'package:teta_widgets/src/elements/nodes/node_body.dart';
-import 'package:teta_widgets/src/elements/widgets/listview_builder.dart';
 
 const _globalType = NType.listViewBuilder;
 
@@ -43,7 +41,10 @@ final listViewBuilderIntrinsicStates = IntrinsicStates(
   maxChildren: 1,
   canHave: ChildrenEnum.child,
   addChildLabels: [],
-  gestures: [],
+  gestures: <ActionGesture>[
+    ActionGesture.scrollToTop,
+    ActionGesture.scrollToBottom,
+  ],
   permissions: [],
   packages: [],
 );
@@ -59,10 +60,16 @@ class ListViewBuilderBody extends NodeBody {
     DBKeys.isPrimary: true,
     DBKeys.isFullWidth: false,
     DBKeys.physic: FPhysic(),
+    DBKeys.action: FAction(),
   };
 
   @override
   List<ControlModel> get controls => [
+        ControlObject(
+          type: ControlType.action,
+          key: DBKeys.action,
+          value: attributes[DBKeys.action],
+        ),
         FlagControlObject(
           title: 'Is Vertical',
           key: DBKeys.isVertical,
@@ -117,7 +124,8 @@ class ListViewBuilderBody extends NodeBody {
       ${attributes[DBKeys.isVertical] as bool}
       ${attributes[DBKeys.flag] as bool}
       ${attributes[DBKeys.isFullWidth] as bool}
-      ${attributes[DBKeys.physic] as FPhysic}
+      ${(attributes[DBKeys.physic] as FPhysic).toJson()}
+      ${(attributes[DBKeys.action] as FAction).toJson()}
       ''',
         ),
         node: node,
@@ -127,7 +135,7 @@ class ListViewBuilderBody extends NodeBody {
         shrinkWrap: attributes[DBKeys.flag] as bool,
         isReverse: attributes[DBKeys.isFullWidth] as bool,
         physic: attributes[DBKeys.physic] as FPhysic,
-
+        action: attributes[DBKeys.action] as FAction,
         forPlay: forPlay,
         loop: loop,
         params: params,
@@ -144,5 +152,11 @@ class ListViewBuilderBody extends NodeBody {
     final int pageId,
     final int? loop,
   ) =>
-      listViewBuilderCodeTemplate(context, this, child);
+      listViewBuilderCodeTemplate(
+        context,
+        node as NDynamic,
+        pageId,
+        child,
+        loop,
+      );
 }

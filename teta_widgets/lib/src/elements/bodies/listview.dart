@@ -13,14 +13,12 @@ import 'package:teta_widgets/src/elements/controls/control_model.dart';
 import 'package:teta_widgets/src/elements/controls/key_constants.dart';
 import 'package:teta_widgets/src/elements/controls/type.dart';
 import 'package:teta_widgets/src/elements/features/physic.dart';
-import 'package:teta_widgets/src/elements/features/text_type_input.dart';
+import 'package:teta_widgets/src/elements/index.dart';
 import 'package:teta_widgets/src/elements/intrinsic_states/class.dart';
 import 'package:teta_widgets/src/elements/nodes/categories.dart';
 import 'package:teta_widgets/src/elements/nodes/children_enum.dart';
-import 'package:teta_widgets/src/elements/nodes/enum.dart';
-import 'package:teta_widgets/src/elements/nodes/node.dart';
+import 'package:teta_widgets/src/elements/nodes/dynamic.dart';
 import 'package:teta_widgets/src/elements/nodes/node_body.dart';
-import 'package:teta_widgets/src/elements/widgets/listview.dart';
 
 const _globalType = NType.listView;
 
@@ -58,10 +56,16 @@ class ListViewBody extends NodeBody {
     DBKeys.isPrimary: true,
     DBKeys.isFullWidth: false,
     DBKeys.physic: FPhysic(),
+    DBKeys.action: FAction(),
   };
 
   @override
   List<ControlModel> get controls => [
+        ControlObject(
+          type: ControlType.action,
+          key: DBKeys.action,
+          value: attributes[DBKeys.action],
+        ),
         FlagControlObject(
           title: 'Is Vertical',
           key: DBKeys.isVertical,
@@ -116,8 +120,9 @@ class ListViewBody extends NodeBody {
       ${attributes[DBKeys.isPrimary] as bool}
       ${attributes[DBKeys.isVertical] as bool}
       ${attributes[DBKeys.flag] as bool}
-      ${attributes[DBKeys.physic] as FPhysic}
       ${attributes[DBKeys.isFullWidth] as bool}
+      ${(attributes[DBKeys.physic] as FPhysic).toJson()}
+      ${(attributes[DBKeys.action] as FAction).toJson()}
       ''',
         ),
         node: node,
@@ -129,6 +134,7 @@ class ListViewBody extends NodeBody {
         isVertical: attributes[DBKeys.isVertical] as bool,
         shrinkWrap: attributes[DBKeys.flag] as bool,
         isReverse: attributes[DBKeys.isFullWidth] as bool,
+        action: attributes[DBKeys.action] as FAction,
         forPlay: forPlay,
         loop: loop,
         params: params,
@@ -145,5 +151,11 @@ class ListViewBody extends NodeBody {
     final int pageId,
     final int? loop,
   ) =>
-      listViewCodeTemplate(context, this, children ?? []);
+      listViewCodeTemplate(
+        context,
+        node as NDynamic,
+        pageId,
+        children ?? [],
+        loop,
+      );
 }
