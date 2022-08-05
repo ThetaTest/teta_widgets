@@ -380,7 +380,9 @@ class CS {
     final value = body.attributes[DBKeys.align] != null
         ? (body.attributes[DBKeys.align] as FAlign).toCode()
         : null;
-    return avoidRedundantValue(value, 'alignment', 'Alignment.center');
+    return value != null
+        ? avoidRedundantValue(value, 'alignment', 'Alignment.center')
+        : '';
   }
 
   /// Returns ScrollPhysics for ListView
