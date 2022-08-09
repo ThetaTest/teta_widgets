@@ -105,7 +105,7 @@ dependencies:
   screenshot: 1.2.3
   feedback: 2.5.0
   cryptography: 2.0.5
-  catcher: 0.6.9
+#  catcher: 0.6.9
   encrypt: 5.0.1
   after_layout: 1.2.0
   recase: 4.0.0
@@ -120,9 +120,9 @@ dependencies:
   cross_file: 0.3.3+1
   shake: 2.1.0
   profanity_filter: 2.0.0
-  device_info_plus: 3.2.4
-  file_picker: 4.6.1
-  package_info_plus: 1.4.2
+  device_info_plus: 4.0.2
+  file_picker: 5.0.1
+  package_info_plus: 1.4.3
   cross_connectivity: 3.0.5
   linked_scroll_controller: 0.2.0
   just_audio: 0.9.27
@@ -147,7 +147,10 @@ dependencies:
 
   # Web
   js: 0.6.4
-  flutter_js: 0.5.0+6
+  flutter_js:
+    git:
+      url: https://github.com/AndreiCosmaTeta/flutter_js
+      ref: fix/upgrade_dependencies
 
   # Payments
   purchases_flutter: 3.10.0
