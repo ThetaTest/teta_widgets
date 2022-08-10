@@ -3,29 +3,22 @@
 
 // Dart imports:
 import 'dart:async';
-import 'dart:collection';
-import 'dart:math';
-import 'dart:typed_data';
-import 'dart:ui';
 
 // Flutter imports:
 import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:flutter_cache_manager/file.dart';
-import 'package:flutter_cache_manager/flutter_cache_manager.dart';
+
 import 'package:google_maps_flutter/google_maps_flutter.dart';
-import 'package:google_maps_flutter_web/google_maps_flutter_web.dart';
 import 'package:teta_core/teta_core.dart';
-import 'package:download_assets/download_assets.dart';
 
 // Project imports:
 import 'package:teta_widgets/src/elements/nodes/node.dart';
+import 'package:teta_widgets/src/elements/widgets/google_maps_base_widget.dart';
 import 'package:universal_platform/universal_platform.dart';
 
 // ignore_for_file: public_member_api_docs
 
-class WGoogleMaps extends StatefulWidget {
+class WGoogleMaps extends WGoogleMapsBase {
   /// Returns a [Map] widget in Teta
   const WGoogleMaps(
     final Key? key, {
