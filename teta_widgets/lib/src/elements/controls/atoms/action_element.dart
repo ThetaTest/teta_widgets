@@ -27,6 +27,7 @@ import 'package:teta_widgets/src/elements/controls/atoms/teta_cms/update.dart';
 import 'package:teta_widgets/src/elements/controls/atoms/text.dart';
 import 'package:teta_widgets/src/elements/controls/type.dart';
 import 'package:teta_widgets/src/elements/features/actions/enums/audio_player_actions.dart';
+import 'package:teta_widgets/src/elements/features/actions/enums/braintree.dart';
 import 'package:teta_widgets/src/elements/features/actions/enums/camera.dart';
 import 'package:teta_widgets/src/elements/features/actions/enums/navigation.dart';
 import 'package:teta_widgets/src/elements/features/actions/enums/revenue_cat.dart';
@@ -286,6 +287,8 @@ class ActionElementControlState extends State<ActionElementControl> {
               ),
               FlagControl(
                 title: 'Is loop',
+                node: widget.node as NDynamic,
+                keyValue: null,
                 value: widget.element.withLoop ?? false,
                 callBack: (final flag, final old) {
                   final old = widget.element;
@@ -344,6 +347,8 @@ class ActionElementControlState extends State<ActionElementControl> {
               ),
               FlagControl(
                 title: 'By condition',
+                node: widget.node as NDynamic,
+                keyValue: null,
                 value: widget.element.withCondition ?? false,
                 callBack: (final flag, final old) {
                   final old = widget.element;
@@ -818,6 +823,26 @@ class ActionElementControlState extends State<ActionElementControl> {
                     }
                   },
                 ),
+              if (widget.element.actionType == ActionType.braintree)
+                CDropdown(
+                  value: FActionElement.convertValueToDropdown(
+                    widget.element.actionBraintree,
+                  ),
+                  items: FActionElement.getBraintree(widget.prj.config)
+                      .toSet()
+                      .toList(),
+                  onChange: (final newValue) {
+                    if (newValue != null) {
+                      final old = widget.element;
+                      widget.element.actionBraintree =
+                          FActionElement.convertDropdownToValue(
+                        ActionBraintree.values,
+                        newValue,
+                      ) as ActionBraintree?;
+                      widget.callBack(widget.element, old);
+                    }
+                  },
+                ),
               if (widget.element.actionType == ActionType.stripe)
                 CDropdown(
                   value: FActionElement.convertValueToDropdown(
@@ -1200,6 +1225,7 @@ class ActionElementControlState extends State<ActionElementControl> {
                                   if (flag) {
                                     NodeRepository.change(
                                       nodeId: widget.page.scaffold!.nid,
+                                      node: widget.page.scaffold! as NDynamic,
                                       pageId: widget.page.id,
                                       key: 'states',
                                       value: widget.page.states

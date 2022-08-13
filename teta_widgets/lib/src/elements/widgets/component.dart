@@ -54,14 +54,13 @@ class _WComponentState extends State<WComponent> {
 
   @override
   void initState() {
-     prjState =
-         BlocProvider.of<FocusProjectBloc>(context).state as ProjectLoaded;
+    prjState =
+        BlocProvider.of<FocusProjectBloc>(context).state as ProjectLoaded;
     if (componentName != widget.componentName) {
       calc();
     }
     super.initState();
   }
-
 
   Future<void> calc() async {
     prjState =
@@ -80,8 +79,7 @@ class _WComponentState extends State<WComponent> {
               .toList()
         ],
       );
-        final nodes = await fetch(_component, context);
-
+      final nodes = await fetch(_component, context);
     }
     if (_component != null && !_component.isHardCoded) {
       print('enter here');
@@ -96,8 +94,7 @@ class _WComponentState extends State<WComponent> {
           isLoaded = true;
         });
       }
-    }
-     else {
+    } else {
       if (mounted) {
         setState(() {
           component = _component;
@@ -136,8 +133,6 @@ class _WComponentState extends State<WComponent> {
     return nodes;
   }
 
-  
-
   Widget body(final BuildContext context) {
     return component != null
         ? BlocProvider<FocusPageBloc>(
@@ -155,14 +150,22 @@ class _WComponentState extends State<WComponent> {
               builder: (final context, final page) {
                 return (page.scaffold == null)
                     ? const SizedBox()
-                    : page.scaffold!.toWidget(
-                        params: (widget.paramsToSend != null)
-                            ? getVariableObjectsFromParams(page)
-                            : page.params,
-                        states: page.states,
-                        dataset: page.datasets,
+                    : NodeSelection(
+                        node: widget.node,
                         forPlay: widget.forPlay,
-                        loop: widget.loop,
+                        nid: widget.node.nid,
+                        child: IgnorePointer(
+                          ignoring: !widget.forPlay,
+                          child: page.scaffold!.toWidget(
+                            params: (widget.paramsToSend != null)
+                                ? getVariableObjectsFromParams(page)
+                                : page.params,
+                            states: page.states,
+                            dataset: page.datasets,
+                            forPlay: widget.forPlay,
+                            loop: widget.loop,
+                          ),
+                        ),
                       );
               },
             ),
@@ -280,6 +283,7 @@ class _WComponentState extends State<WComponent> {
       return e;
     }).toList();
   }
+
   //! this in the editor need to be in a sizedBox
   Widget hardCoded(final PageObject page) {
     final _paramsString =

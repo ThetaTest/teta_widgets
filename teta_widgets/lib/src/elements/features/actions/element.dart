@@ -25,6 +25,7 @@ import 'package:teta_widgets/src/elements/actions/audio_player/play.dart';
 import 'package:teta_widgets/src/elements/actions/audio_player/player_next_track.dart';
 import 'package:teta_widgets/src/elements/actions/audio_player/player_previous_track.dart';
 import 'package:teta_widgets/src/elements/actions/audio_player/reload.dart';
+import 'package:teta_widgets/src/elements/actions/braintree/pay.dart';
 import 'package:teta_widgets/src/elements/actions/camera/always_flash.dart';
 import 'package:teta_widgets/src/elements/actions/camera/auto_flash.dart';
 import 'package:teta_widgets/src/elements/actions/camera/off_flash.dart';
@@ -72,6 +73,7 @@ import 'package:teta_widgets/src/elements/actions/webview/forward.dart';
 import 'package:teta_widgets/src/elements/actions/webview/navigate_to.dart';
 import 'package:teta_widgets/src/elements/actions/webview/reload.dart';
 import 'package:teta_widgets/src/elements/features/actions/enums/audio_player_actions.dart';
+import 'package:teta_widgets/src/elements/features/actions/enums/braintree.dart';
 import 'package:teta_widgets/src/elements/features/actions/enums/camera.dart';
 import 'package:teta_widgets/src/elements/features/actions/enums/index.dart';
 import 'package:teta_widgets/src/elements/features/actions/enums/revenue_cat.dart';
@@ -138,6 +140,10 @@ class FActionElement extends Equatable {
         convertDropdownToValue(ActionNavigation.values, doc['aN'] as String?)
             as ActionNavigation?;
     customFunctionId = doc['cFid'] as int?;
+    actionBraintree = convertDropdownToValue(
+      ActionBraintree.values,
+      doc['aBrain'] as String?,
+    ) as ActionBraintree?;
     actionRevenueCat =
         convertDropdownToValue(ActionRevenueCat.values, doc['aRC'] as String?)
             as ActionRevenueCat?;
@@ -225,6 +231,7 @@ class FActionElement extends Equatable {
   ActionNavigation? actionNavigation;
   ActionState? actionState;
   ActionRevenueCat? actionRevenueCat;
+  ActionBraintree? actionBraintree;
   ActionTheme? actionTheme;
   ActionStripe? actionStripe;
   int? customFunctionId;
@@ -270,6 +277,7 @@ class FActionElement extends Equatable {
         actionState,
         actionWebView,
         stateName,
+        actionBraintree,
         nameOfPage,
         paramsToSend,
         value,
@@ -297,10 +305,11 @@ class FActionElement extends Equatable {
           if (kDebugMode) 'Custom Functions',
           if (config.supabaseEnabled ?? false) 'Supabase auth',
           if (config.supabaseEnabled ?? false) 'Supabase database',
-          if (kDebugMode)
-            if (config.isRevenueCatEnabled) 'RevenueCat',
-          if (kDebugMode)
-            if (config.isStripeEnabled) 'Stripe',
+          if (config.braintreeClientToken != null ||
+              (config.braintreeClientToken?.isNotEmpty ?? false))
+            'Braintree',
+          if (config.isRevenueCatEnabled) 'RevenueCat',
+          if (config.isStripeEnabled) 'Stripe',
           if ((page.flatList ?? <CNode>[]).indexWhere(
                 (final element) => element.intrinsicState.type == NType.camera,
               ) !=
@@ -359,6 +368,16 @@ class FActionElement extends Equatable {
     if (config != null) {
       if (config.isRevenueCatEnabled) {
         return enumsToListString(ActionRevenueCat.values);
+      }
+    }
+    return [];
+  }
+
+  static List<String> getBraintree(final ProjectConfig? config) {
+    if (config != null) {
+      if (config.braintreeClientToken != null &&
+          (config.braintreeClientToken?.isNotEmpty ?? false)) {
+        return enumsToListString(ActionBraintree.values);
       }
     }
     return [];
@@ -478,6 +497,7 @@ class FActionElement extends Equatable {
         'aW': convertValueToDropdown(actionWebView),
         'aAP': convertValueToDropdown(actionAudioPlayer),
         'aRC': convertValueToDropdown(actionRevenueCat),
+        'aBrain': convertValueToDropdown(actionBraintree),
         'sPK': convertValueToDropdown(actionStripe),
         'aTDb': convertValueToDropdown(actionTetaDB),
         'aTAu': convertValueToDropdown(actionTetaAuth),
@@ -709,6 +729,22 @@ class FActionElement extends Equatable {
           case ActionRevenueCat.buy:
             await actionS(
               () => FActionRevenueCatBuy.action(context, states, stateName),
+              context: context,
+              params: params,
+              states: states,
+              dataset: dataset,
+              loop: loop,
+            );
+            break;
+          default:
+            break;
+        }
+        break;
+      case ActionType.braintree:
+        switch (actionBraintree) {
+          case ActionBraintree.pay:
+            await actionS(
+              () => FActionBraintreeBuy.action(context, states, stateName),
               context: context,
               params: params,
               states: states,
@@ -1549,6 +1585,17 @@ class FActionElement extends Equatable {
           case ActionRevenueCat.buy:
             return codeS(
               FActionRevenueCatBuy.toCode(context, stateName),
+              context,
+            );
+          default:
+            break;
+        }
+        break;
+      case ActionType.braintree:
+        switch (actionBraintree) {
+          case ActionBraintree.pay:
+            return codeS(
+              FActionBraintreeBuy.toCode(context, stateName),
               context,
             );
           default:

@@ -32,6 +32,7 @@ class NDynamic extends CNode {
     this.index,
     this.pageId,
     this.context,
+    this.isUsingBody = false,
   })  : intrinsicState = getIntrinsicStates(globalType),
         super(
           childrenIds: childrenIds,
@@ -83,6 +84,8 @@ class NDynamic extends CNode {
   String? name;
   String? description;
 
+  bool isUsingBody = false;
+
   /// Get intrinsic states by node type
   static IntrinsicStates getIntrinsicStates(final NType globalType) {
     return types.putIfAbsent(
@@ -128,24 +131,50 @@ class NDynamic extends CNode {
     }
 
     final map = <String, dynamic>{};
-    for (final e
-        in doc[DBKeys.attributes] as List<dynamic>? ?? const <dynamic>[]) {
-      final key = (e as Map<String, dynamic>)['name'] as String;
-      dynamic value = e['value'] as dynamic;
-      if (key == 'params' && globalType == NType.scaffold) {
-        // for page params
-        for (final e in value ?? <dynamic>[]) {
-          params!.add(VariableObject.fromJson(e as Map<String, dynamic>));
+    var isUsingBody = false;
+    if (doc['body'] != null) {
+      for (final entity in (doc['body'] as Map<String, dynamic>).entries) {
+        dynamic value = entity.value;
+        if (entity.key == 'params' && globalType == NType.scaffold) {
+          // for page params
+          for (final element in entity.value ?? <dynamic>[]) {
+            params!
+                .add(VariableObject.fromJson(element as Map<String, dynamic>));
+          }
+        } else if (entity.key == 'states' && globalType == NType.scaffold) {
+          // for page states
+          for (final element in entity.value ?? <dynamic>[]) {
+            states!
+                .add(VariableObject.fromJson(element as Map<String, dynamic>));
+          }
+        } else {
+          // for any attribute
+          Logger.printMessage('${entity.key}: ${entity.value}');
+          value = DynamicAttributes.fromJson(entity.key, entity.value);
+          if (value != null) map[entity.key] = value;
         }
-      } else if (key == 'states' && globalType == NType.scaffold) {
-        // for page states
-        for (final e in value ?? <dynamic>[]) {
-          states!.add(VariableObject.fromJson(e as Map<String, dynamic>));
+      }
+      isUsingBody = true;
+    } else {
+      for (final e
+          in doc[DBKeys.attributes] as List<dynamic>? ?? const <dynamic>[]) {
+        final key = (e as Map<String, dynamic>)['name'] as String;
+        dynamic value = e['value'] as dynamic;
+        if (key == 'params' && globalType == NType.scaffold) {
+          // for page params
+          for (final e in value ?? <dynamic>[]) {
+            params!.add(VariableObject.fromJson(e as Map<String, dynamic>));
+          }
+        } else if (key == 'states' && globalType == NType.scaffold) {
+          // for page states
+          for (final e in value ?? <dynamic>[]) {
+            states!.add(VariableObject.fromJson(e as Map<String, dynamic>));
+          }
+        } else {
+          // for any attribute
+          value = DynamicAttributes.fromJson(key, value);
+          if (value != null) map[key] = value;
         }
-      } else {
-        // for any attribute
-        value = DynamicAttributes.fromJson(key, value);
-        if (value != null) map[key] = value;
       }
     }
 
@@ -161,6 +190,7 @@ class NDynamic extends CNode {
       childrenIds: ids,
       pageId: pageId,
       inSpawned: true,
+      isUsingBody: isUsingBody,
     );
   }
 
@@ -181,6 +211,7 @@ class NDynamic extends CNode {
   Map<String, dynamic> toJson() => <String, dynamic>{
         DBKeys.type: NodeType.type(intrinsicState.type),
         DBKeys.childrenIds: childrenIds.toJson(),
+        'body': body.toJson(),
       };
 
   /// Returns attributes json map

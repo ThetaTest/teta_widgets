@@ -20,4 +20,5 @@ enum ActionType {
   tetaDatabase,
   tetaAuth,
   customFunctions,
+  braintree,
 }

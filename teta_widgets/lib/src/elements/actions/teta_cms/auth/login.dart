@@ -72,6 +72,9 @@ class FATetaCMSLogin {
     final String? nameOfPage,
     final Map<String, dynamic>? paramsToSend,
   ) {
+    final prj =
+        (BlocProvider.of<FocusProjectBloc>(context).state as ProjectLoaded).prj;
+    final isRevenueCatEnabled = prj.config?.isRevenueCatEnabled ?? false;
     final providerStr = provider == TetaProvider.google
         ? 'TetaProvider.google'
         : provider == TetaProvider.twitter
@@ -83,6 +86,8 @@ class FATetaCMSLogin {
       await TetaCMS.instance.auth.signIn(
         provider: $providerStr,
         onSuccess: (final isFirstTime) async {
+          final user = await TetaCMS.instance.auth.user.get;
+          ${isRevenueCatEnabled ? r"LogInResult result = await Purchases.logIn('${user.uid}');" : ''}
           ${FActionNavigationOpenPage.toCode(context, nameOfPage, paramsToSend)}
         }
       );

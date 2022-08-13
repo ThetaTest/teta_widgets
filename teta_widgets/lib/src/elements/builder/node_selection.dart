@@ -6,9 +6,8 @@ import 'package:collection/collection.dart';
 // Flutter imports:
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:teta_core/src/blocs/flat_list/index.dart';
-import 'package:teta_core/src/blocs/focus/index.dart';
-import 'package:teta_core/src/blocs/hover/index.dart';
+import 'package:teta_core/src/blocs/index.dart';
+import 'package:teta_core/src/cubits/jump_to.dart';
 import 'package:teta_core/src/design_system/palette.dart';
 import 'package:teta_core/src/rendering/find.dart';
 // Project imports:
@@ -63,6 +62,10 @@ class NodeSelectionState extends State<NodeSelection> {
       child: GestureDetector(
         onTap: () {
           BlocProvider.of<FocusBloc>(context).add(OnFocus(node: widget.node));
+        },
+        onDoubleTap: () {
+          BlocProvider.of<FocusBloc>(context).add(OnFocus(node: widget.node));
+          BlocProvider.of<JumpToCubit>(context).jumpTo(context, widget.node);
         },
         child: body(),
       ),

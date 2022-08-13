@@ -50,6 +50,7 @@ import 'package:teta_widgets/src/elements/controls/prefabs/sizes_prefab_control.
 import 'package:teta_widgets/src/elements/controls/prefabs/text_prefab_control.dart';
 import 'package:teta_widgets/src/elements/features/physic.dart';
 import 'package:teta_widgets/src/elements/index.dart';
+import 'package:teta_widgets/src/elements/nodes/dynamic.dart';
 
 enum ControlType {
   /// Made for colors, gradients and images.
@@ -183,6 +184,7 @@ class ControlBuilder {
     try {
       NodeRepository.change(
         nodeId: node.nid,
+        node: node as NDynamic,
         pageId: page.id,
         key: key,
         value: value,
@@ -923,6 +925,8 @@ class ControlBuilder {
       control: FlagControl(
         key: ValueKey('${node.nid}'),
         title: control.title,
+        node: node as NDynamic,
+        keyValue: control.key,
         value: control.value as bool,
         callBack: (final value, final old) => ControlBuilder.toDB(
           prj,
