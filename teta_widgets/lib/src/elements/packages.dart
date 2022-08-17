@@ -112,6 +112,30 @@ const PackageModel pFlutterCacheManager = PackageModel(
     import 'package:flutter_cache_manager/file.dart';
     ''',
 );
+const PackageModel pDartz = PackageModel(
+  packageName: 'dartz',
+  packageVersion: '0.10.1',
+  isDart: false,
+  customPath: '''
+    import 'package:dartz/dartz.dart' as fp;
+    ''',
+);
+const PackageModel pPolyLinesPoints = PackageModel(
+  packageName: 'flutter_polyline_points',
+  packageVersion: '1.0.0',
+  isDart: false,
+  customPath: '''
+    import 'package:flutter_polyline_points/flutter_polyline_points.dart';
+    ''',
+);
+const PackageModel pLocation = PackageModel(
+  packageName: 'location',
+  packageVersion: '4.4.0',
+  isDart: false,
+  customPath: '''
+    import 'package:location/location.dart';
+    ''',
+);
 const PackageModel pLatLang = PackageModel(
   packageName: 'latlng',
   packageVersion: '0.1.0',

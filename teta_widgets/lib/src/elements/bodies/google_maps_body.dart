@@ -1,14 +1,16 @@
 // Flutter imports:
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 
 import 'package:teta_widgets/src/elements/widgets/google_maps_stub_widget.dart'
-  if (dart.library.io) 'package:teta_widgets/src/elements/widgets/google_maps_web_mobile_widget.dart'
-  if (dart.library.html) 'package:teta_widgets/src/elements/widgets/google_maps_web_mobile_widget.dart';
+    if (dart.library.io) 'package:teta_widgets/src/elements/widgets/google_maps_web_mobile_widget.dart'
+    if (dart.library.html) 'package:teta_widgets/src/elements/widgets/google_maps_web_mobile_widget.dart';
 
 // Package imports:
 import 'package:teta_core/gen/assets.gen.dart';
 import 'package:teta_core/src/models/dataset.dart';
 import 'package:teta_core/src/models/variable.dart';
+import 'package:teta_core/teta_core.dart';
 import 'package:teta_widgets/src/elements/code/templates/google_maps_template.dart';
 
 // Project imports:
@@ -47,7 +49,13 @@ final googleMapsIntrinsicStates = IntrinsicStates(
   permissions: [
     Permissions.location,
   ],
-  packages: [pGoogleMaps, pFlutterCacheManager],
+  packages: [
+    pGoogleMaps,
+    pFlutterCacheManager,
+    pLocation,
+    pDartz,
+    pPolyLinesPoints
+  ],
 );
 
 /// Body of MapBox
@@ -63,11 +71,14 @@ class GoogleMapsBody extends NodeBody {
     DBKeys.markerLongitude: FDataset(),
     DBKeys.markerIconUrl: FDataset(),
     DBKeys.markerIconWidth: FDataset(),
+    DBKeys.markerIconHeight: FDataset(),
     DBKeys.mapCustomStyle: FDataset(),
+    DBKeys.mapCustomInitialZoomLevel: FDataset(),
     DBKeys.mapInitialPositionLat: FDataset(),
     DBKeys.mapInitialPositionLng: FDataset(),
     DBKeys.markerDrawPathToUserCurrentLocation: FDataset(),
-    DBKeys.mapDrawPathToBetweenMarkersAndUserCurrentLocation: false,
+    DBKeys.mapConfigShowMyLocationMarker: false,
+    DBKeys.mapConfigTrackMyLocation: false,
   };
 
   @override
@@ -105,12 +116,24 @@ class GoogleMapsBody extends NodeBody {
           value: attributes[DBKeys.mapInitialPositionLng] as FDataset,
           flag: true,
         ),
+        ControlObject(
+          title: 'Initial map zoom level',
+          type: ControlType.datasetType,
+          key: DBKeys.mapCustomInitialZoomLevel,
+          value: attributes[DBKeys.mapCustomInitialZoomLevel] as FDataset,
+          flag: true,
+        ),
         FlagControlObject(
-          title: 'Draw path to markers',
-          key: DBKeys.mapDrawPathToBetweenMarkersAndUserCurrentLocation,
-          value: attributes[
-              DBKeys.mapDrawPathToBetweenMarkersAndUserCurrentLocation],
-          description: null,
+          title: 'Show my location marker',
+          key: DBKeys.mapConfigShowMyLocationMarker,
+          value: attributes[DBKeys.mapConfigShowMyLocationMarker],
+          description: 'Show my location marker.',
+        ),
+        FlagControlObject(
+          title: 'Track my location',
+          key: DBKeys.mapConfigTrackMyLocation,
+          value: attributes[DBKeys.mapConfigTrackMyLocation],
+          description: 'Track my location.',
         ),
         ControlObject(
           title: 'Markers Dataset',
@@ -154,8 +177,14 @@ class GoogleMapsBody extends NodeBody {
           flag: true,
         ),
         ControlObject(
-          title:
-              'Marker draw Path field name',
+          title: 'Marker Icon Height Field Name',
+          type: ControlType.datasetType,
+          key: DBKeys.markerIconHeight,
+          value: attributes[DBKeys.markerIconHeight] as FDataset,
+          flag: true,
+        ),
+        ControlObject(
+          title: 'Marker draw Path field name',
           type: ControlType.datasetType,
           key: DBKeys.markerDrawPathToUserCurrentLocation,
           value: attributes[DBKeys.markerDrawPathToUserCurrentLocation],
@@ -204,6 +233,13 @@ class GoogleMapsBody extends NodeBody {
         markerIconWidth:
             (attributes[DBKeys.markerIconWidth] as FDataset).datasetAttrName ??
                 '',
+        markerIconHeight:
+            (attributes[DBKeys.markerIconHeight] as FDataset).datasetAttrName ??
+                '',
+        markerDrawPath:
+            (attributes[DBKeys.markerDrawPathToUserCurrentLocation] as FDataset)
+                    .datasetAttrName ??
+                '',
         customMapStyle:
             (attributes[DBKeys.mapCustomStyle] as FDataset).datasetAttrName ??
                 '',
@@ -220,10 +256,17 @@ class GoogleMapsBody extends NodeBody {
         params: params,
         states: states,
         dataset: dataset,
+        showMyLocationMarker:
+            attributes[DBKeys.mapConfigShowMyLocationMarker] as bool,
+        initialZoomLevel:
+            (attributes[DBKeys.mapCustomInitialZoomLevel] as FDataset)
+                    .datasetAttrName ??
+                '',
+        trackMyLocation: attributes[DBKeys.mapConfigTrackMyLocation] as bool,
       );
 
   @override
-  String toCode(
+  String toCodeOnInit(
     final BuildContext context,
     final CNode node,
     final CNode? child,
@@ -231,7 +274,8 @@ class GoogleMapsBody extends NodeBody {
     final int pageId,
     final int? loop,
   ) =>
-      GoogleMapsTemplate.toCode(
+      GoogleMapsTemplate.toCodeOnInit(
+        context: context,
         mapControllerName:
             (attributes[DBKeys.googleMapsController] as FTextTypeInput)
                     .stateName ??
@@ -254,6 +298,10 @@ class GoogleMapsBody extends NodeBody {
         markerIconWidth:
             (attributes[DBKeys.markerIconWidth] as FDataset).datasetAttrName ??
                 '',
+        markerDrawPath:
+            (attributes[DBKeys.markerDrawPathToUserCurrentLocation] as FDataset)
+                    .datasetAttrName ??
+                '',
         customMapStyle:
             (attributes[DBKeys.mapCustomStyle] as FDataset).datasetAttrName ??
                 '',
@@ -265,5 +313,69 @@ class GoogleMapsBody extends NodeBody {
             (attributes[DBKeys.mapInitialPositionLng] as FDataset)
                     .datasetAttrName ??
                 '',
+        showMyLocationMarker:
+            attributes[DBKeys.mapConfigShowMyLocationMarker] as bool,
+        initialZoomLevel:
+            (attributes[DBKeys.mapCustomInitialZoomLevel] as FDataset)
+                    .datasetAttrName ??
+                '',
+        trackMyLocation: attributes[DBKeys.mapConfigTrackMyLocation] as bool,
+      );
+
+  @override
+  String toCode(
+    final BuildContext context,
+    final CNode node,
+    final CNode? child,
+    final List<CNode>? children,
+    final int pageId,
+    final int? loop,
+  ) =>
+      GoogleMapsTemplate.toCode(
+        context: context,
+        mapControllerName:
+            (attributes[DBKeys.googleMapsController] as FTextTypeInput)
+                    .stateName ??
+                '',
+        mapConfigDatasetName:
+            (attributes[DBKeys.mapConfig] as FDataset).datasetName ?? '',
+        markersDatasetName:
+            (attributes[DBKeys.datasetInput] as FDataset).datasetName ?? '',
+        markerId:
+            (attributes[DBKeys.markerId] as FDataset).datasetAttrName ?? '',
+        markerLatitude:
+            (attributes[DBKeys.markerLatitude] as FDataset).datasetAttrName ??
+                '',
+        markerLongitude:
+            (attributes[DBKeys.markerLongitude] as FDataset).datasetAttrName ??
+                '',
+        markerIconUrl:
+            (attributes[DBKeys.markerIconUrl] as FDataset).datasetAttrName ??
+                '',
+        markerIconWidth:
+            (attributes[DBKeys.markerIconWidth] as FDataset).datasetAttrName ??
+                '',
+        markerDrawPath:
+            (attributes[DBKeys.markerDrawPathToUserCurrentLocation] as FDataset)
+                    .datasetAttrName ??
+                '',
+        customMapStyle:
+            (attributes[DBKeys.mapCustomStyle] as FDataset).datasetAttrName ??
+                '',
+        initialPositionLat:
+            (attributes[DBKeys.mapInitialPositionLat] as FDataset)
+                    .datasetAttrName ??
+                '',
+        initialPositionLng:
+            (attributes[DBKeys.mapInitialPositionLng] as FDataset)
+                    .datasetAttrName ??
+                '',
+        showMyLocationMarker:
+            attributes[DBKeys.mapConfigShowMyLocationMarker] as bool,
+        initialZoomLevel:
+            (attributes[DBKeys.mapCustomInitialZoomLevel] as FDataset)
+                    .datasetAttrName ??
+                '',
+        trackMyLocation: attributes[DBKeys.mapConfigTrackMyLocation] as bool,
       );
 }

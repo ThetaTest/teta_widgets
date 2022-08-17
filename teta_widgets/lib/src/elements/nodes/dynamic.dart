@@ -247,6 +247,11 @@ class NDynamic extends CNode {
       ${body.toCode(context, this, child, children, pageId!, null)}
       ''';
 
+  @override
+  String toCodeOnInit(final BuildContext context) => '''
+      ${body.toCodeOnInit(context, this, child, children, pageId!, null)}
+      ''';
+
   /// Returns if node can have at least one child (or more the one)
   bool get canHaveAtLeastOneChild =>
       (intrinsicState.canHave == ChildrenEnum.child && child == null) ||
