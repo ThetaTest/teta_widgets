@@ -20,7 +20,7 @@ String visibilityCodeTemplate(
 
   return '''
     Visibility(
-      visibile: $visibility,
+      visible: $visibility,
       ${CS.child(context, child, comma: true)}
     )
   ''';
