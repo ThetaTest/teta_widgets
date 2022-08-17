@@ -44,7 +44,11 @@ class WLiquidSwipe extends StatelessWidget {
       itemCount: children.isNotEmpty ? children.length : 3,
       itemBuilder: (final context, final index) {
         if (children.isEmpty) {
-          return PlaceholderChildBuilder(name: node.intrinsicState.displayName);
+          return PlaceholderChildBuilder(
+            name: node.intrinsicState.displayName,
+            node: node,
+            forPlay: forPlay,
+          );
         }
         return children[index].toWidget(
           loop: index,

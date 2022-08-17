@@ -116,6 +116,8 @@ class WListViewBuilderState extends State<WListViewBuilder> {
                 )
               : PlaceholderChildBuilder(
                   name: widget.node.intrinsicState.displayName,
+                  node: widget.node,
+                  forPlay: widget.forPlay,
                 ),
         ),
       ),

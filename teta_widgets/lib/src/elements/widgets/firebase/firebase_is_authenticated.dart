@@ -86,6 +86,7 @@ class WFirebaseIsAuthenticatedBuilderState
                     ChildConditionBuilder(
                       ValueKey('${widget.node.nid} ${widget.loop}'),
                       name: widget.node.intrinsicState.displayName,
+                      node: widget.node,
                       child: widget.child,
                       params: widget.params,
                       states: widget.states,
@@ -100,6 +101,7 @@ class WFirebaseIsAuthenticatedBuilderState
             : ChildConditionBuilder(
                 ValueKey('${widget.node.nid} ${widget.loop}'),
                 name: widget.node.intrinsicState.displayName,
+                node: widget.node,
                 child: widget.child,
                 params: widget.params,
                 states: widget.states,

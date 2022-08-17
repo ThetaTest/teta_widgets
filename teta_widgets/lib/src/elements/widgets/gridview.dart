@@ -96,7 +96,11 @@ class WGridView extends StatelessWidget {
               states: states,
               dataset: dataset,
             )
-          : PlaceholderChildBuilder(name: node.intrinsicState.displayName),
+          : PlaceholderChildBuilder(
+              name: node.intrinsicState.displayName,
+              node: node,
+              forPlay: forPlay,
+            ),
     );
   }
 }

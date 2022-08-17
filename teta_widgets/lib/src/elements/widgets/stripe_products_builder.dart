@@ -80,6 +80,8 @@ class WStripeProductsBuilderState extends State<WStripeProductsBuilder> {
               )
             : PlaceholderChildBuilder(
                 name: widget.node.intrinsicState.displayName,
+                node: widget.node,
+                forPlay: widget.forPlay,
               ),
       ),
     );

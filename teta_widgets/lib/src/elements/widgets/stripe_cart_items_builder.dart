@@ -79,6 +79,8 @@ class _WStripeCartItemsBuilderState extends State<WStripeCartItemsBuilder> {
               )
             : PlaceholderChildBuilder(
                 name: widget.node.intrinsicState.displayName,
+                node: widget.node,
+                forPlay: widget.forPlay,
               ),
       ),
     );

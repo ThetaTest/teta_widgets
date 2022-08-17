@@ -284,23 +284,10 @@ class _WScaffoldState extends State<WScaffold> {
 
   Widget _placeholder(final BuildContext context) {
     return Center(
-      child: Column(
-        mainAxisAlignment: MainAxisAlignment.center,
-        children: [
-          Container(
-            margin: const EdgeInsets.only(bottom: 8),
-            width: 48,
-            height: 48,
-            decoration: BoxDecoration(
-              color: const Color(0xFF0A84FF),
-              borderRadius: BorderRadius.circular(24),
-            ),
-            child: const Icon(
-              Icons.add,
-              color: Colors.white,
-            ),
-          ),
-        ],
+      child: PlaceholderChildBuilder(
+        name: widget.node.intrinsicState.displayName,
+        node: widget.node,
+        forPlay: widget.forPlay,
       ),
     );
   }

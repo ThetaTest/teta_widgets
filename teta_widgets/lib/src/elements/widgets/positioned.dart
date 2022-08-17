@@ -67,6 +67,7 @@ class WPositioned extends StatelessWidget {
         child: ChildConditionBuilder(
           ValueKey('${_node.nid} $_loop'),
           name: _node.intrinsicState.displayName,
+          node: _node,
           child: _child,
           params: _params,
           states: _states,

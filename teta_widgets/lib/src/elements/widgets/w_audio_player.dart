@@ -5,7 +5,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:just_audio/just_audio.dart';
 import 'package:teta_core/teta_core.dart';
-
 // Project imports:
 import 'package:teta_widgets/src/elements/index.dart';
 
@@ -60,10 +59,12 @@ class _WAudioPlayerState extends State<WAudioPlayer> {
 
       if (widget.controller.type == FTextTypeEnum.param) {
         variable = page.params.firstWhereOrNull(
-            (final e) => e.name == widget.controller.paramName);
+          (final e) => e.name == widget.controller.paramName,
+        );
       } else {
         variable = page.states.firstWhereOrNull(
-            (final e) => e.name == widget.controller.stateName);
+          (final e) => e.name == widget.controller.stateName,
+        );
       }
       await variable?.audioController?.dispose();
 
@@ -152,6 +153,7 @@ class _WAudioPlayerState extends State<WAudioPlayer> {
           return ChildConditionBuilder(
             ValueKey('${widget.node.nid} ${widget.loop}'),
             name: widget.node.intrinsicState.displayName,
+            node: widget.node,
             child: widget.child,
             params: widget.params,
             states: widget.states,

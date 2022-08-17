@@ -38,7 +38,6 @@ final scaffoldIntrinsicStates = IntrinsicStates(
   advicedChildren: [
     NodeType.name(NType.listView),
     NodeType.name(NType.column),
-    NodeType.name(NType.center),
   ],
   blockedTypes: [],
   synonymous: ['safearea', 'padding'],

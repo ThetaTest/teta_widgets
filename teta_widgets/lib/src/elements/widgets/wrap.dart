@@ -49,7 +49,11 @@ class WWrap extends StatelessWidget {
                 )
                 .toList()
             : [
-                PlaceholderChildBuilder(name: node.intrinsicState.displayName),
+                PlaceholderChildBuilder(
+                  name: node.intrinsicState.displayName,
+                  node: node,
+                  forPlay: forPlay,
+                ),
               ],
       ),
     );

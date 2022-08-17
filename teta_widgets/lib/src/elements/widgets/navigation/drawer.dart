@@ -37,6 +37,7 @@ class WDrawer extends StatelessWidget {
       child: ChildConditionBuilder(
         ValueKey('${node.nid} $loop'),
         name: node.intrinsicState.displayName,
+        node: node,
         child: child,
         params: params,
         states: states,

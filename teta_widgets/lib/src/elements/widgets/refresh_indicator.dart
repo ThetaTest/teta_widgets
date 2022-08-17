@@ -54,7 +54,11 @@ class WRefreshIndicator extends StatelessWidget {
                 dataset: dataset,
                 forPlay: forPlay,
               )
-            : PlaceholderChildBuilder(name: node.intrinsicState.displayName),
+            : PlaceholderChildBuilder(
+                name: node.intrinsicState.displayName,
+                node: node,
+                forPlay: forPlay,
+              ),
 
         /// Custom indicator builder function
         builder: (

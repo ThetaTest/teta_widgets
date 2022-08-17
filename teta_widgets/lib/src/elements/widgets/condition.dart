@@ -59,7 +59,11 @@ class WCondition extends StatelessWidget {
                 dataset: dataset,
                 forPlay: forPlay,
               )
-            : PlaceholderChildBuilder(name: node.intrinsicState.displayName)
+            : PlaceholderChildBuilder(
+                name: node.intrinsicState.displayName,
+                node: node,
+                forPlay: forPlay,
+              )
         : children.isNotEmpty
             ? children.length > 1
                 ? children.last.toWidget(

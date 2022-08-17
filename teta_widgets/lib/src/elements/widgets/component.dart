@@ -170,7 +170,11 @@ class _WComponentState extends State<WComponent> {
               },
             ),
           )
-        : PlaceholderChildBuilder(name: widget.node.intrinsicState.displayName);
+        : PlaceholderChildBuilder(
+            name: widget.node.intrinsicState.displayName,
+            node: widget.node,
+            forPlay: widget.forPlay,
+          );
   }
 
   String initializeParamsForUri(

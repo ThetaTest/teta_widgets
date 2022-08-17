@@ -134,6 +134,8 @@ class _WGridViewState extends State<WGridViewBuilder> {
             )
           : PlaceholderChildBuilder(
               name: widget.node.intrinsicState.displayName,
+              node: widget.node,
+              forPlay: widget.forPlay,
             ),
     );
   }

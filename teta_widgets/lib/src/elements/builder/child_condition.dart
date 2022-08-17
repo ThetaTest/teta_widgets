@@ -12,6 +12,7 @@ class ChildConditionBuilder extends StatelessWidget {
   /// Returns the [child] widget or a placeholder with the name of the widget
   const ChildConditionBuilder(
     final Key? key, {
+    required this.node,
     required this.name,
     required this.child,
     required this.params,
@@ -23,6 +24,8 @@ class ChildConditionBuilder extends StatelessWidget {
 
   /// The CNode's name
   final String name;
+
+  final CNode node;
 
   /// The optional child
   final CNode? child;
@@ -53,7 +56,11 @@ class ChildConditionBuilder extends StatelessWidget {
             dataset: dataset,
           )
         : !forPlay
-            ? PlaceholderChildBuilder(name: name)
+            ? PlaceholderChildBuilder(
+                name: name,
+                node: node,
+                forPlay: forPlay,
+              )
             : const SizedBox();
   }
 }

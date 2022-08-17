@@ -67,7 +67,11 @@ class WRow extends StatelessWidget {
                 )
                 .toList()
             : [
-                PlaceholderChildBuilder(name: _node.intrinsicState.displayName),
+                PlaceholderChildBuilder(
+                  name: _node.intrinsicState.displayName,
+                  node: _node,
+                  forPlay: _forPlay,
+                ),
               ],
       ),
     );

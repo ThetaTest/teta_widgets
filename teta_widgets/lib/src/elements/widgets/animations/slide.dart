@@ -40,7 +40,8 @@ class WSlideAnimation extends StatelessWidget {
       child: SlideAnimation(
         child: ChildConditionBuilder(
           ValueKey('${node.nid} $loop'),
-          name: NodeType.name(NType.align),
+          name: node.intrinsicState.displayName,
+          node: node,
           child: child,
           params: params,
           states: states,

@@ -50,6 +50,7 @@ class WWrapperContainer extends StatelessWidget {
                 child: ChildConditionBuilder(
                   ValueKey('${node.nid} $loop desktop'),
                   name: node.intrinsicState.displayName,
+                  node: node,
                   child: child,
                   params: params,
                   states: states,
@@ -66,6 +67,7 @@ class WWrapperContainer extends StatelessWidget {
               child: ChildConditionBuilder(
                 ValueKey('${node.nid} $loop tablet'),
                 name: node.intrinsicState.displayName,
+                node: node,
                 child: child,
                 params: params,
                 states: states,
@@ -80,6 +82,7 @@ class WWrapperContainer extends StatelessWidget {
             child: ChildConditionBuilder(
               ValueKey('${node.nid} $loop mobile'),
               name: node.intrinsicState.displayName,
+              node: node,
               child: child,
               params: params,
               states: states,

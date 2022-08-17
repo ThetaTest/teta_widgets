@@ -68,6 +68,7 @@ class _WDeviceInfoState extends State<WDeviceInfo> {
       child: ChildConditionBuilder(
         ValueKey('${widget.node.nid} ${widget.loop}'),
         name: widget.node.intrinsicState.displayName,
+        node: widget.node,
         child: widget.child,
         params: widget.params,
         states: widget.states,
