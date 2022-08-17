@@ -3,8 +3,10 @@
 
 // Flutter imports:
 import 'package:flutter/foundation.dart';
+
 // Package imports:
 import 'package:teta_core/src/models/variable.dart';
+
 // Project imports:
 import 'package:teta_widgets/src/elements/features/font_weight.dart';
 import 'package:teta_widgets/src/elements/features/physic.dart';
@@ -113,11 +115,13 @@ class DBKeys {
   static const String showCursor = 'shCrs';
   static const String autoCorrect = 'autoC';
   static const String obscureText = 'obT';
+
   //
   static const String showBorders = 'bEnb';
   static const String enabledBorderColor = 'ebc';
   static const String focusedBorderColor = 'fbc';
   static const String bordersSize = 'bs';
+
   //
   static const String hintTextColor = 'hintTC';
   static const String cursorColor = 'cursorC';
@@ -191,19 +195,24 @@ class DBKeys {
 
   static const String markerIconWidth = 'googleMapsMarkerIconWidthKey';
 
+  static const String markerIconHeight = 'googleMapsMarkerIconHeightKey';
+
   static const String markerId = 'googleMapsMarkerIdKey';
 
-  static const String markerDrawPathToUserCurrentLocation = 'markerDrawPathToUserCurrentLocation';
+  static const String markerDrawPathToUserCurrentLocation =
+      'markerDrawPathToUserCurrentLocation';
 
   static const String mapConfig = 'googleMapsDatasetConfigNameKey';
 
   static const String googleMapsController = 'googleMapsControllerName';
 
   static const String mapCustomStyle = 'googleMapsCustomStyle';
+  static const String mapCustomInitialZoomLevel = 'googleMapsInitialZoomLevel';
   static const String mapInitialPositionLat = 'googleMapsInitialPositionLat';
   static const String mapInitialPositionLng = 'googleMapsInitialPositionLng';
-  static const String mapDrawPathToBetweenMarkersAndUserCurrentLocation = 'mapDrawPathToBetweenMarkersAndUserCurrentLocation';
-
+  static const String mapConfigShowMyLocationMarker =
+      'mapDrawPathToBetweenMarkersAndUserCurrentLocation';
+  static const String mapConfigTrackMyLocation = 'mapConfigShowTrackMyLocation';
 }
 
 class DynamicAttributes {
@@ -253,7 +262,9 @@ class DynamicAttributes {
           return value;
         case DBKeys.markerDrawPathToUserCurrentLocation:
           return FDataset.fromJson(value as Map<String, dynamic>);
-        case DBKeys.mapDrawPathToBetweenMarkersAndUserCurrentLocation:
+        case DBKeys.mapConfigShowMyLocationMarker:
+          return value;
+        case DBKeys.mapConfigTrackMyLocation:
           return value;
         case DBKeys.fontFamily:
           return value;
@@ -359,9 +370,13 @@ class DynamicAttributes {
           return FDataset.fromJson(value as Map<String, dynamic>);
         case DBKeys.markerIconWidth:
           return FDataset.fromJson(value as Map<String, dynamic>);
+        case DBKeys.markerIconHeight:
+          return FDataset.fromJson(value as Map<String, dynamic>);
         case DBKeys.mapInitialPositionLng:
           return FDataset.fromJson(value as Map<String, dynamic>);
         case DBKeys.mapCustomStyle:
+          return FDataset.fromJson(value as Map<String, dynamic>);
+        case DBKeys.mapCustomInitialZoomLevel:
           return FDataset.fromJson(value as Map<String, dynamic>);
         case DBKeys.mapInitialPositionLat:
           return FDataset.fromJson(value as Map<String, dynamic>);
@@ -534,7 +549,9 @@ class DynamicAttributes {
         return value;
       case DBKeys.markerDrawPathToUserCurrentLocation:
         return value != null ? value.toJson() : FDataset().toJson();
-      case DBKeys.mapDrawPathToBetweenMarkersAndUserCurrentLocation:
+      case DBKeys.mapConfigShowMyLocationMarker:
+        return value;
+      case DBKeys.mapConfigTrackMyLocation:
         return value;
       case DBKeys.fontFamily:
         return value;
@@ -638,7 +655,11 @@ class DynamicAttributes {
         return value != null ? value.toJson() : FDataset().toJson();
       case DBKeys.markerIconWidth:
         return value != null ? value.toJson() : FDataset().toJson();
+      case DBKeys.markerIconHeight:
+        return value != null ? value.toJson() : FDataset().toJson();
       case DBKeys.mapCustomStyle:
+        return value != null ? value.toJson() : FDataset().toJson();
+      case DBKeys.mapCustomInitialZoomLevel:
         return value != null ? value.toJson() : FDataset().toJson();
       case DBKeys.mapInitialPositionLat:
         return value != null ? value.toJson() : FDataset().toJson();

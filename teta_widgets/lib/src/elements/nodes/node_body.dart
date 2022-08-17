@@ -84,6 +84,17 @@ class NodeBody {
   ) =>
       '';
 
+  /// Initialization code representation
+  String toCodeOnInit(
+      final BuildContext context,
+      final CNode node,
+      final CNode? child,
+      final List<CNode>? children,
+      final int pageId,
+      final int? loop,
+      ) =>
+      '';
+
   /// Get body
   static NodeBody get(final NType type) => getBody(type);
 }
