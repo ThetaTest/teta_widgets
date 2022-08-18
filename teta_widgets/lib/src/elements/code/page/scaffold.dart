@@ -134,10 +134,9 @@ String pageCodeTemplate(
   //----end states----
 
   // Append toCodeOnInit for all widgets
-  for(final childWidget in children) {
+  for (final childWidget in children) {
     initStateString.write(childWidget.toCodeOnInit(context));
   }
-
 
   //packages
   if (page.isPage && page.flatList != null) {
@@ -167,6 +166,7 @@ String pageCodeTemplate(
     import 'package:google_fonts/google_fonts.dart';
     import 'package:sizer/sizer.dart';
     import 'package:teta_cms/teta_cms.dart';
+    import 'package:xfile/xfile.dart';
     ${PackagesService.instance.getToCodePackages()}
 
 
