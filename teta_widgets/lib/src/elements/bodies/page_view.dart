@@ -43,7 +43,7 @@ final pageViewIntrinsicStates = IntrinsicStates(
   gestures: [
     ActionGesture.onChange,
   ],
-  permissions:[],
+  permissions: [],
   packages: [],
 );
 
@@ -113,5 +113,5 @@ class PageViewBody extends NodeBody {
     final int pageId,
     final int? loop,
   ) =>
-      pageViewCodeTemplate(context, this, node, children ?? []);
+      pageViewCodeTemplate(context, pageId, this, node, children ?? [], loop);
 }
