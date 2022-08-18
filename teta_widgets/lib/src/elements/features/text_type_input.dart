@@ -317,6 +317,9 @@ class FTextTypeInput {
 
   String convertType(final String original) {
     var code = original;
+    if (original.contains("'")) {
+      code = '$original ';
+    }
     if ((type == FTextTypeEnum.dataset ||
             type == FTextTypeEnum.param ||
             type == FTextTypeEnum.state) &&
