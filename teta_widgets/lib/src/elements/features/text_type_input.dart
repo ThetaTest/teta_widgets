@@ -332,9 +332,9 @@ class FTextTypeInput {
       case ResultTypeEnum.string:
         return code;
       case ResultTypeEnum.int:
-        return "'\${int.tryParse($code)}'";
+        return 'int.tryParse($code) ?? 0';
       case ResultTypeEnum.double:
-        return "'\${double.tryParse($code)}'";
+        return 'double.tryParse($code) ?? 0';
       case ResultTypeEnum.bool:
         return "'''\${$code == 'true'}";
       case ResultTypeEnum.dateTime:
