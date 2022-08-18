@@ -100,21 +100,24 @@ class GoogleMapsBody extends NodeBody {
           type: ControlType.datasetType,
           key: DBKeys.mapCustomStyle,
           value: attributes[DBKeys.mapCustomStyle] as FDataset,
+          description:
+              'JSON String. See more at https://mapstyle.withgoogle.com/ .',
           flag: true,
         ),
         ControlObject(
-          title: 'Initial Position Latitude Field Name',
-          type: ControlType.datasetType,
-          key: DBKeys.mapInitialPositionLat,
-          value: attributes[DBKeys.mapInitialPositionLat] as FDataset,
-          flag: true,
-        ),
+            title: 'Initial Position Latitude Field Name',
+            type: ControlType.datasetType,
+            key: DBKeys.mapInitialPositionLat,
+            value: attributes[DBKeys.mapInitialPositionLat] as FDataset,
+            flag: true,
+            description: 'Double. Ex: 41.889221'),
         ControlObject(
           title: 'Initial Position Longitude Field Name',
           type: ControlType.datasetType,
           key: DBKeys.mapInitialPositionLng,
           value: attributes[DBKeys.mapInitialPositionLng] as FDataset,
           flag: true,
+          description: 'Double. Ex: 12.493421',
         ),
         ControlObject(
           title: 'Initial map zoom level',
@@ -122,6 +125,7 @@ class GoogleMapsBody extends NodeBody {
           key: DBKeys.mapCustomInitialZoomLevel,
           value: attributes[DBKeys.mapCustomInitialZoomLevel] as FDataset,
           flag: true,
+          description: 'Integer. Ex: 13',
         ),
         FlagControlObject(
           title: 'Show my location marker',
@@ -147,6 +151,8 @@ class GoogleMapsBody extends NodeBody {
           key: DBKeys.markerId,
           value: attributes[DBKeys.markerId] as FDataset,
           flag: true,
+          description:
+              'String UUID. Generate https://www.uuidgenerator.net/version4',
         ),
         ControlObject(
           title: 'Marker Latitude Field Name',
@@ -154,6 +160,7 @@ class GoogleMapsBody extends NodeBody {
           key: DBKeys.markerLatitude,
           value: attributes[DBKeys.markerLatitude] as FDataset,
           flag: true,
+          description: 'Double. Ex: 41.889221',
         ),
         ControlObject(
           title: 'Marker Longitude Field Name',
@@ -161,20 +168,22 @@ class GoogleMapsBody extends NodeBody {
           key: DBKeys.markerLongitude,
           value: attributes[DBKeys.markerLongitude] as FDataset,
           flag: true,
+          description: 'Double. Ex: 12.493421',
         ),
         ControlObject(
-          title: 'Marker Icon Url Field Name',
-          type: ControlType.datasetType,
-          key: DBKeys.markerIconUrl,
-          value: attributes[DBKeys.markerIconUrl] as FDataset,
-          flag: true,
-        ),
+            title: 'Marker Icon Url Field Name',
+            type: ControlType.datasetType,
+            key: DBKeys.markerIconUrl,
+            value: attributes[DBKeys.markerIconUrl] as FDataset,
+            flag: true,
+            description: 'String. Ex: https://yourwebsite/image.png'),
         ControlObject(
           title: 'Marker Icon Width Field Name',
           type: ControlType.datasetType,
           key: DBKeys.markerIconWidth,
           value: attributes[DBKeys.markerIconWidth] as FDataset,
           flag: true,
+          description: 'Must respect original aspect ratio. Integer. Ex: 512',
         ),
         ControlObject(
           title: 'Marker Icon Height Field Name',
@@ -182,6 +191,7 @@ class GoogleMapsBody extends NodeBody {
           key: DBKeys.markerIconHeight,
           value: attributes[DBKeys.markerIconHeight] as FDataset,
           flag: true,
+          description: 'Must respect original aspect ratio. Integer. Ex: 512',
         ),
         ControlObject(
           title: 'Marker draw Path field name',
