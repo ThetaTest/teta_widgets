@@ -166,10 +166,10 @@ String pageCodeTemplate(
     import 'package:google_fonts/google_fonts.dart';
     import 'package:sizer/sizer.dart';
     import 'package:teta_cms/teta_cms.dart';
-    import 'package:xfile/xfile.dart';
+    import 'package:cross_file/cross_file.dart';
     ${PackagesService.instance.getToCodePackages()}
 
-
+s
     class Page${pageNameRC.pascalCase} extends StatefulWidget {
       const Page${pageNameRC.pascalCase}({Key? key, ${parametersString.toString()}}) : super(key: key);
 
