@@ -169,7 +169,7 @@ String pageCodeTemplate(
     import 'package:cross_file/cross_file.dart';
     ${PackagesService.instance.getToCodePackages()}
 
-s
+
     class Page${pageNameRC.pascalCase} extends StatefulWidget {
       const Page${pageNameRC.pascalCase}({Key? key, ${parametersString.toString()}}) : super(key: key);
 
