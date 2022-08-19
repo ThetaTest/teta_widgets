@@ -38,7 +38,7 @@ const PackageModel pGoogleMobileAds = PackageModel(
 //todo: optimize later - unused - right now is a default import
 const PackageModel pFlutterStripe = PackageModel(
   packageName: 'flutter_stripe',
-  packageVersion: '3.1.0',
+  packageVersion: '4.0.0',
   isDart: false,
 );
 //todo: optimize later - unused - right now is a default import

@@ -950,24 +950,182 @@ class ActionElementControlState extends State<ActionElementControl> {
                   callback: widget.callBack,
                 ),
               if (widget.element.actionType == ActionType.stripe)
-                CDropdown(
-                  value: FActionElement.convertValueToDropdown(
-                    widget.element.actionStripe,
-                  ),
-                  items: FActionElement.getStripe(widget.prj.config)
-                      .toSet()
-                      .toList(),
-                  onChange: (final newValue) {
-                    if (newValue != null) {
-                      final old = widget.element;
-                      widget.element.actionStripe =
+                Column(
+                  children: [
+                    CDropdown(
+                      value: FActionElement.convertValueToDropdown(
+                        widget.element.actionStripe,
+                      ),
+                      items: FActionElement.getStripe(widget.prj.config)
+                          .toSet()
+                          .toList(),
+                      onChange: (final newValue) {
+                        if (newValue != null) {
+                          final old = widget.element;
+                          widget.element.actionStripe =
                           FActionElement.convertDropdownToValue(
-                        ActionStripe.values,
-                        newValue,
-                      ) as ActionStripe?;
-                      widget.callBack(widget.element, old);
-                    }
-                  },
+                            ActionStripe.values,
+                            newValue,
+                          ) as ActionStripe?;
+                          widget.callBack(widget.element, old);
+                        }
+                      },
+                    ),
+                    Padding(
+                      padding: const EdgeInsets.only(top: 8),
+                      child: SizedBox(
+                        width: double.maxFinite,
+                        child: descriptionControlWidget(
+                          description: 'Billing email',
+                          control: TextControl(
+                            node: widget.node,
+                            value: widget.element.stripeBillingInfoEmail ??
+                                FTextTypeInput(),
+                            page: widget.page,
+                            title: 'Billing email',
+                            callBack: (final value, final old) {
+                              final old = widget.element;
+                              widget.element.stripeBillingInfoEmail = value;
+                              widget.element.valueOfCondition = value;
+                              widget.callBack(widget.element, old);
+                            },
+                          ),
+                        ),
+                      ),
+                    ),
+                    Padding(
+                      padding: const EdgeInsets.only(top: 8),
+                      child: SizedBox(
+                        width: double.maxFinite,
+                        child: descriptionControlWidget(
+                          description: 'Billing phone',
+                          control: TextControl(
+                            node: widget.node,
+                            value: widget.element.stripeBillingInfoPhone ??
+                                FTextTypeInput(),
+                            page: widget.page,
+                            title: 'Billing phone',
+                            callBack: (final value, final old) {
+                              final old = widget.element;
+                              widget.element.stripeBillingInfoPhone = value;
+                              widget.element.valueOfCondition = value;
+                              widget.callBack(widget.element, old);
+                            },
+                          ),
+                        ),
+                      ),
+                    ),
+                    Padding(
+                      padding: const EdgeInsets.only(top: 8),
+                      child: SizedBox(
+                        width: double.maxFinite,
+                        child: descriptionControlWidget(
+                          description: 'Billing city',
+                          control: TextControl(
+                            node: widget.node,
+                            value: widget.element.stripeBillingInfoCity ??
+                                FTextTypeInput(),
+                            page: widget.page,
+                            title: 'Billing city',
+                            callBack: (final value, final old) {
+                              final old = widget.element;
+                              widget.element.stripeBillingInfoCity = value;
+                              widget.element.valueOfCondition = value;
+                              widget.callBack(widget.element, old);
+                            },
+                          ),
+                        ),
+                      ),
+                    ),
+                    Padding(
+                      padding: const EdgeInsets.only(top: 8),
+                      child: SizedBox(
+                        width: double.maxFinite,
+                        child: descriptionControlWidget(
+                          description: 'Billing state',
+                          control: TextControl(
+                            node: widget.node,
+                            value: widget.element.stripeBillingInfoState ??
+                                FTextTypeInput(),
+                            page: widget.page,
+                            title: 'Billing state',
+                            callBack: (final value, final old) {
+                              final old = widget.element;
+                              widget.element.stripeBillingInfoState = value;
+                              widget.element.valueOfCondition = value;
+                              widget.callBack(widget.element, old);
+                            },
+                          ),
+                        ),
+                      ),
+                    ),
+                    Padding(
+                      padding: const EdgeInsets.only(top: 8),
+                      child: SizedBox(
+                        width: double.maxFinite,
+                        child: descriptionControlWidget(
+                          description: 'Billing line',
+                          control: TextControl(
+                            node: widget.node,
+                            value: widget.element.stripeBillingInfoLine ??
+                                FTextTypeInput(),
+                            page: widget.page,
+                            title: 'Billing line',
+                            callBack: (final value, final old) {
+                              final old = widget.element;
+                              widget.element.stripeBillingInfoLine = value;
+                              widget.element.valueOfCondition = value;
+                              widget.callBack(widget.element, old);
+                            },
+                          ),
+                        ),
+                      ),
+                    ),
+                    Padding(
+                      padding: const EdgeInsets.only(top: 8),
+                      child: SizedBox(
+                        width: double.maxFinite,
+                        child: descriptionControlWidget(
+                          description: 'Billing Postal Code',
+                          control: TextControl(
+                            node: widget.node,
+                            value: widget.element.stripeBillingInfoPostalCode ??
+                                FTextTypeInput(),
+                            page: widget.page,
+                            title: 'Billing postal code',
+                            callBack: (final value, final old) {
+                              final old = widget.element;
+                              widget.element.stripeBillingInfoPostalCode = value;
+                              widget.element.valueOfCondition = value;
+                              widget.callBack(widget.element, old);
+                            },
+                          ),
+                        ),
+                      ),
+                    ),
+                    Padding(
+                      padding: const EdgeInsets.only(top: 8),
+                      child: SizedBox(
+                        width: double.maxFinite,
+                        child: descriptionControlWidget(
+                          description: 'Billing country',
+                          control: TextControl(
+                            node: widget.node,
+                            value: widget.element.stripeBillingInfoCountry ??
+                                FTextTypeInput(),
+                            page: widget.page,
+                            title: 'Billing country',
+                            callBack: (final value, final old) {
+                              final old = widget.element;
+                              widget.element.stripeBillingInfoCountry = value;
+                              widget.element.valueOfCondition = value;
+                              widget.callBack(widget.element, old);
+                            },
+                          ),
+                        ),
+                      ),
+                    ),
+                  ],
                 ),
               if (widget.element.actionType == ActionType.tetaAuth)
                 CDropdown(

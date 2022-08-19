@@ -203,6 +203,42 @@ class FActionElement extends Equatable {
         (doc['vTTI'] != null
             ? FTextTypeInput.fromJson(doc['vTTI'] as Map<String, dynamic>)
             : FTextTypeInput());
+    //email, phone, city, state, line1, postalCode, country
+    stripeBillingInfoEmail = stripeBillingInfoEmail ??
+        (doc['stripeBillingInfoEmail'] != null
+            ? FTextTypeInput.fromJson(
+                doc['stripeBillingInfoEmail'] as Map<String, dynamic>)
+            : FTextTypeInput());
+    stripeBillingInfoPhone = stripeBillingInfoPhone ??
+        (doc['stripeBillingInfoPhone'] != null
+            ? FTextTypeInput.fromJson(
+                doc['stripeBillingInfoPhone'] as Map<String, dynamic>)
+            : FTextTypeInput());
+    stripeBillingInfoCity = stripeBillingInfoCity ??
+        (doc['stripeBillingInfoCity'] != null
+            ? FTextTypeInput.fromJson(
+                doc['stripeBillingInfoCity'] as Map<String, dynamic>)
+            : FTextTypeInput());
+    stripeBillingInfoState = stripeBillingInfoState ??
+        (doc['stripeBillingInfoState'] != null
+            ? FTextTypeInput.fromJson(
+                doc['stripeBillingInfoState'] as Map<String, dynamic>)
+            : FTextTypeInput());
+    stripeBillingInfoLine = stripeBillingInfoLine ??
+        (doc['stripeBillingInfoLine'] != null
+            ? FTextTypeInput.fromJson(
+                doc['stripeBillingInfoLine'] as Map<String, dynamic>)
+            : FTextTypeInput());
+    stripeBillingInfoPostalCode = stripeBillingInfoPostalCode ??
+        (doc['stripeBillingInfoPostalCode'] != null
+            ? FTextTypeInput.fromJson(
+                doc['stripeBillingInfoPostalCode'] as Map<String, dynamic>)
+            : FTextTypeInput());
+    stripeBillingInfoCountry = stripeBillingInfoCountry ??
+        (doc['stripeBillingInfoCountry'] != null
+            ? FTextTypeInput.fromJson(
+                doc['stripeBillingInfoCountry'] as Map<String, dynamic>)
+            : FTextTypeInput());
     dbFrom = FTextTypeInput.fromJson(doc['sFrom'] as Map<String, dynamic>?);
     cmsCollectionId = doc['cmsCId'] as String?;
     dbData = (doc['sData'] as List<dynamic>? ?? <dynamic>[])
@@ -284,6 +320,15 @@ class FActionElement extends Equatable {
   Map<String, dynamic>? paramsToSend;
   String? value;
   FTextTypeInput? valueTextTypeInput;
+
+  //email, phone, city, state, line1, postalCode, country
+  FTextTypeInput? stripeBillingInfoEmail;
+  FTextTypeInput? stripeBillingInfoPhone;
+  FTextTypeInput? stripeBillingInfoCity;
+  FTextTypeInput? stripeBillingInfoState;
+  FTextTypeInput? stripeBillingInfoLine;
+  FTextTypeInput? stripeBillingInfoPostalCode;
+  FTextTypeInput? stripeBillingInfoCountry;
 
   /// Supabase from
   FTextTypeInput? dbFrom;
@@ -560,6 +605,28 @@ class FActionElement extends Equatable {
             everyMilliseconds != null ? everyMilliseconds!.toJson() : null,
         'vTTI':
             valueTextTypeInput != null ? valueTextTypeInput!.toJson() : null,
+        //email, phone, city, state, line1, postalCode, country
+        'stripeBillingInfoEmail': stripeBillingInfoEmail != null
+            ? stripeBillingInfoEmail!.toJson()
+            : null,
+        'stripeBillingInfoPhone': stripeBillingInfoPhone != null
+            ? stripeBillingInfoPhone!.toJson()
+            : null,
+        'stripeBillingInfoCity': stripeBillingInfoCity != null
+            ? stripeBillingInfoCity!.toJson()
+            : null,
+        'stripeBillingInfoState': stripeBillingInfoState != null
+            ? stripeBillingInfoState!.toJson()
+            : null,
+        'stripeBillingInfoLine': stripeBillingInfoLine != null
+            ? stripeBillingInfoLine!.toJson()
+            : null,
+        'stripeBillingInfoPostalCode': stripeBillingInfoPostalCode != null
+            ? stripeBillingInfoPostalCode!.toJson()
+            : null,
+        'stripeBillingInfoCountry': stripeBillingInfoCountry != null
+            ? stripeBillingInfoCountry!.toJson()
+            : null,
         'revenueCatEntitle': revenueCatEntitlement != null
             ? revenueCatEntitlement!.toJson()
             : null,
@@ -1799,7 +1866,18 @@ class FActionElement extends Equatable {
             );
           case ActionStripe.buyCartItems:
             return codeS(
-              FActionStripeCartBuyAll.toCode(context, stateName, body),
+              FActionStripeCartBuyAll.toCode(
+                context,
+                stateName,
+                body,
+                email: stripeBillingInfoEmail?.toCode(null) ?? '',
+                phone: stripeBillingInfoPhone?.toCode(null) ?? '',
+                city: stripeBillingInfoCity?.toCode(null) ?? '',
+                state: stripeBillingInfoState?.toCode(null) ?? '',
+                line: stripeBillingInfoLine?.toCode(null) ?? '',
+                postalCode: stripeBillingInfoPostalCode?.toCode(null) ?? '',
+                country: stripeBillingInfoCountry?.toCode(null) ?? '',
+              ),
               context,
             );
           case ActionStripe.addProductsListItemToCart:
