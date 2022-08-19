@@ -349,6 +349,9 @@ class FTextTypeInput {
 
   String convertType(final String original) {
     var code = original;
+    if (original.contains("'")) {
+      code = '$original ';
+    }
     if ((type == FTextTypeEnum.dataset ||
             type == FTextTypeEnum.param ||
             type == FTextTypeEnum.state) &&
@@ -364,9 +367,9 @@ class FTextTypeInput {
       case ResultTypeEnum.string:
         return code;
       case ResultTypeEnum.int:
-        return "'\${int.tryParse($code)}'";
+        return 'int.tryParse($code) ?? 0';
       case ResultTypeEnum.double:
-        return "'\${double.tryParse($code)}'";
+        return 'double.tryParse($code) ?? 0';
       case ResultTypeEnum.bool:
         return "'''\${$code == 'true'}";
       case ResultTypeEnum.dateTime:

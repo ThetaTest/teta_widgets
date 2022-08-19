@@ -701,7 +701,8 @@ class ActionElementControlState extends State<ActionElementControl> {
                           .where(
                             (final element) =>
                                 element.type == VariableType.int ||
-                                element.type == VariableType.double,
+                                element.type == VariableType.double ||
+                                element.type == VariableType.string,
                           )
                           .map((final e) => e.name)
                           .where((final element) => element != 'null')
@@ -717,7 +718,7 @@ class ActionElementControlState extends State<ActionElementControl> {
                     const Padding(
                       padding: EdgeInsets.only(bottom: 8),
                       child: TDetailLabel(
-                        "It requires 'int' or 'double' variables",
+                        "It requires an'int','double' or 'string' variable",
                       ),
                     ),
                   ],

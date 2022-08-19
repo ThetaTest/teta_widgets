@@ -51,7 +51,7 @@ class FActionStateIncrement {
     return '''
     if (double.tryParse($varName) != null) { 
       setState(() {
-        $varName = '\${double.parse($varName) - 1}';
+        $varName = '\${double.parse($varName) + 1}';
       });
     }''';
   }

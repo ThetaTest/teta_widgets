@@ -107,7 +107,7 @@ class FActionNavigationOpenBottomSheet {
                 ?['label'] as String? ??
             'null';
         final rc = ReCase(valueToSend);
-        stringParamsToSend.write('${rc.camelCase}, ');
+        stringParamsToSend.write('widget.${rc.camelCase}, ');
       }
 
       return '''
