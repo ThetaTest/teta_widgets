@@ -41,11 +41,25 @@ class WTransformScale extends StatelessWidget {
       child: Transform.translate(
         offset: Offset(
           double.tryParse(
-                valueX.get(params, states, dataset, forPlay, loop),
+                valueX.get(
+                  params,
+                  states,
+                  dataset,
+                  forPlay,
+                  loop,
+                  context,
+                ),
               ) ??
               0,
           double.tryParse(
-                valueY.get(params, states, dataset, forPlay, loop),
+                valueY.get(
+                  params,
+                  states,
+                  dataset,
+                  forPlay,
+                  loop,
+                  context,
+                ),
               ) ??
               0,
         ),

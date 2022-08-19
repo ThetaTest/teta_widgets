@@ -86,6 +86,7 @@ class _WWebViewXPageState extends State<WWebViewXPage> {
         widget.dataset,
         widget.forPlay,
         widget.loop,
+        context,
       ),
       SourceType.url,
     );

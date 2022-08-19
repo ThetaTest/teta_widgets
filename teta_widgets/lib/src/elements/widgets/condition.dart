@@ -47,9 +47,22 @@ class WCondition extends StatelessWidget {
   }
 
   Widget _body(final BuildContext context) {
-    final finalValue = value.get(params, states, dataset, forPlay, loop);
-    final finalValueOfCond =
-        valueOfCond.get(params, states, dataset, forPlay, loop);
+    final finalValue = value.get(
+      params,
+      states,
+      dataset,
+      forPlay,
+      loop,
+      context,
+    );
+    final finalValueOfCond = valueOfCond.get(
+      params,
+      states,
+      dataset,
+      forPlay,
+      loop,
+      context,
+    );
 
     return (finalValue == finalValueOfCond)
         ? children.isNotEmpty

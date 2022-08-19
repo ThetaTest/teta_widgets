@@ -86,7 +86,7 @@ class AudioPlayerProgressIndicatorBody extends NodeBody {
           ${node.nid}
           $loop
             ${child ?? children}
-          ${(attributes[DBKeys.value] as FTextTypeInput).get(params, states, dataset, forPlay, loop)}, 
+          ${(attributes[DBKeys.value] as FTextTypeInput).toJson()}, 
         ''',
         ),
         controller: attributes[DBKeys.value] as FTextTypeInput,
@@ -109,7 +109,9 @@ class AudioPlayerProgressIndicatorBody extends NodeBody {
     final int? loop,
   ) =>
       AudioPlayerProgressIndicatorTemplate.toCode(
-          context: context,
-          audioPlayerName:
-          ((attributes[DBKeys.value] as FTextTypeInput).stateName ?? '').camelCase,);
+        context: context,
+        audioPlayerName:
+            ((attributes[DBKeys.value] as FTextTypeInput).stateName ?? '')
+                .camelCase,
+      );
 }

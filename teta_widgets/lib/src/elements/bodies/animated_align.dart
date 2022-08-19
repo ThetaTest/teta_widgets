@@ -42,7 +42,7 @@ final animatedAlignIntrinsicStates = IntrinsicStates(
   canHave: ChildrenEnum.child,
   addChildLabels: [],
   gestures: [],
-  permissions:[],
+  permissions: [],
   packages: [],
 );
 
@@ -98,7 +98,7 @@ class AnimatedAlignBody extends NodeBody {
           $loop
             ${child ?? children}
           ${(attributes[DBKeys.align] as FAlign).align}
-          ${(attributes[DBKeys.duration] as FTextTypeInput).get(params, states, dataset, forPlay, loop)}
+          ${(attributes[DBKeys.duration] as FTextTypeInput).toJson()}
         ''',
         ),
         node: node,

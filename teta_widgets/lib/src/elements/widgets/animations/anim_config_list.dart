@@ -43,12 +43,26 @@ class WAnimationConfigurationListView extends StatelessWidget {
       forPlay: forPlay,
       child: AnimationConfiguration.staggeredList(
         position: int.tryParse(
-              index.get(params, states, dataset, forPlay, loop),
+              index.get(
+                params,
+                states,
+                dataset,
+                forPlay,
+                loop,
+                context,
+              ),
             ) ??
             0,
         duration: Duration(
           milliseconds: int.tryParse(
-                duration.get(params, states, dataset, forPlay, loop),
+                duration.get(
+                  params,
+                  states,
+                  dataset,
+                  forPlay,
+                  loop,
+                  context,
+                ),
               ) ??
               375,
         ),

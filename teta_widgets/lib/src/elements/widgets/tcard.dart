@@ -99,6 +99,7 @@ class _WTCardState extends State<WTCard> {
       widget.dataset,
       widget.forPlay,
       widget.loop,
+      context,
     );
     final slideSpeed = double.tryParse(slideSpeedStr) ?? 20;
     final delayStr = widget.delaySlideFor.get(
@@ -107,6 +108,7 @@ class _WTCardState extends State<WTCard> {
       widget.dataset,
       widget.forPlay,
       widget.loop,
+      context,
     );
     final delay = int.tryParse(delayStr) ?? 500;
     return NodeSelectionBuilder(

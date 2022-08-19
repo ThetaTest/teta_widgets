@@ -52,6 +52,7 @@ class WQR extends StatelessWidget {
           dataset,
           forPlay,
           loop,
+          context,
         ),
         gapless: false,
         size: size.get(context: context, isWidth: true),
@@ -65,6 +66,7 @@ class WQR extends StatelessWidget {
                   dataset,
                   forPlay,
                   loop,
+                  context,
                 ),
               )
             : null,

@@ -137,6 +137,7 @@ class _WTextFieldState extends State<WTextField> {
                           widget.dataset,
                           widget.forPlay,
                           widget.loop,
+                          context,
                         ),
                       ) ??
                       1,
@@ -161,6 +162,7 @@ class _WTextFieldState extends State<WTextField> {
                           widget.dataset,
                           widget.forPlay,
                           widget.loop,
+                          context,
                         ),
                       ) ??
                       1,
@@ -173,6 +175,7 @@ class _WTextFieldState extends State<WTextField> {
                 widget.dataset,
                 widget.forPlay,
                 widget.loop,
+                context,
               ),
               hintStyle: TextStyle(
                 color: HexColor(
@@ -195,6 +198,7 @@ class _WTextFieldState extends State<WTextField> {
                 widget.dataset,
                 widget.forPlay,
                 widget.loop,
+                context,
               ),
             ),
             maxLines: int.tryParse(
@@ -204,6 +208,7 @@ class _WTextFieldState extends State<WTextField> {
                     widget.dataset,
                     widget.forPlay,
                     widget.loop,
+                    context,
                   ),
                 ) ??
                 1,
@@ -214,6 +219,7 @@ class _WTextFieldState extends State<WTextField> {
                 widget.dataset,
                 widget.forPlay,
                 widget.loop,
+                context,
               ),
             ),
             onChanged: (final text) => GestureBuilder.get(

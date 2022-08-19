@@ -36,14 +36,36 @@ class FASupabaseDelete {
     if (client != null) {
       dynamic eqValue;
       if (supabaseEq.key.toLowerCase() != 'id') {
-        eqValue = supabaseEq.value.get(params, states, dataset, true, loop);
+        eqValue = supabaseEq.value.get(
+          params,
+          states,
+          dataset,
+          true,
+          loop,
+          context,
+        );
       } else {
         eqValue = int.tryParse(
-          supabaseEq.value.get(params, states, dataset, true, loop),
+          supabaseEq.value.get(
+            params,
+            states,
+            dataset,
+            true,
+            loop,
+            context,
+          ),
         );
       }
       final response = await client
-          .from(supabaseFrom?.get(params, states, dataset, true, loop) ?? '')
+          .from(supabaseFrom?.get(
+                params,
+                states,
+                dataset,
+                true,
+                loop,
+                context,
+              ) ??
+              '')
           .delete()
           .eq(supabaseEq.key, eqValue)
           .execute();

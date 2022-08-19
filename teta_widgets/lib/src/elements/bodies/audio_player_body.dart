@@ -9,16 +9,12 @@ import 'package:teta_widgets/src/elements/code/templates/audio_player_template.d
 import 'package:teta_widgets/src/elements/controls/control_model.dart';
 import 'package:teta_widgets/src/elements/controls/key_constants.dart';
 import 'package:teta_widgets/src/elements/controls/type.dart';
-import 'package:teta_widgets/src/elements/features/text_type_input.dart';
 import 'package:teta_widgets/src/elements/index.dart';
 import 'package:teta_widgets/src/elements/intrinsic_states/class.dart';
 import 'package:teta_widgets/src/elements/nodes/categories.dart';
 import 'package:teta_widgets/src/elements/nodes/children_enum.dart';
-import 'package:teta_widgets/src/elements/nodes/enum.dart';
-import 'package:teta_widgets/src/elements/nodes/node.dart';
 import 'package:teta_widgets/src/elements/nodes/node_body.dart';
 import 'package:teta_widgets/src/elements/packages.dart';
-import 'package:teta_widgets/src/elements/widgets/w_audio_player.dart';
 
 const _globalType = NType.audioPlayer;
 
@@ -96,7 +92,7 @@ class AudioPlayerBody extends NodeBody {
           ${node.nid}
           $loop
             ${child ?? children}
-          ${(attributes[DBKeys.value] as FTextTypeInput).get(params, states, dataset, forPlay, loop)}, 
+          ${(attributes[DBKeys.value] as FTextTypeInput).toJson()}, 
         ''',
       ),
       controller: attributes[DBKeys.value] as FTextTypeInput,
@@ -125,7 +121,8 @@ class AudioPlayerBody extends NodeBody {
         body: this,
         child: child,
         audioPlayerName:
-        ((attributes[DBKeys.value] as FTextTypeInput).stateName ?? '').camelCase,
+            ((attributes[DBKeys.value] as FTextTypeInput).stateName ?? '')
+                .camelCase,
         songsDataSetToCode:
             (attributes[DBKeys.datasetInput] as FDataset).datasetName ?? '',
         urlKey:

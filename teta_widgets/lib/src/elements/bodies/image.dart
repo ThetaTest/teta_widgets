@@ -45,7 +45,7 @@ final imageIntrinsicStates = IntrinsicStates(
   canHave: ChildrenEnum.none,
   addChildLabels: [],
   gestures: [],
-  permissions:[],
+  permissions: [],
   packages: [],
 );
 
@@ -104,7 +104,7 @@ class ImageBody extends NodeBody {
             ${node.nid}
             $loop
             ${child ?? children}
-            ${(attributes[DBKeys.image] as FTextTypeInput).get(params, states, dataset, forPlay, loop)} 
+            ${(attributes[DBKeys.image] as FTextTypeInput).toJson()} 
             ${(attributes[DBKeys.width] as FSize).size}
             ${(attributes[DBKeys.height] as FSize).size}
             ${(attributes[DBKeys.boxFit] as FBoxFit).fit}

@@ -68,8 +68,14 @@ class TextBuilder extends StatelessWidget {
           });
         }
 
-        final maxLines =
-            _maxLines?.get(_params, _states, _dataset, _forPlay, _loop);
+        final maxLines = _maxLines?.get(
+          _params,
+          _states,
+          _dataset,
+          _forPlay,
+          _loop,
+          context,
+        );
         var intValue = int.tryParse(maxLines ?? '');
         if (intValue != null && intValue <= 0) {
           intValue = 1;
@@ -77,7 +83,14 @@ class TextBuilder extends StatelessWidget {
         final filter = ProfanityFilter();
         return Text(
           filter.censor(
-            _value.get(_params, _states, _dataset, _forPlay, _loop),
+            _value.get(
+              _params,
+              _states,
+              _dataset,
+              _forPlay,
+              _loop,
+              context,
+            ),
           ),
           style: _textStyle.get(context, model),
           textAlign: _textStyle.textAlign!.get,

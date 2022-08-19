@@ -32,7 +32,15 @@ class FASupabaseOnUpdate {
     final state = takeStateFrom(page, stateName ?? '');
     if (client != null) {
       client
-          .from(supabaseFrom?.get(params, states, dataset, true, loop) ?? '')
+          .from(supabaseFrom?.get(
+                params,
+                states,
+                dataset,
+                true,
+                loop,
+                context,
+              ) ??
+              '')
           .on(SupabaseEventTypes.update, (final payload) {
         if (state != null && state.type == VariableType.json) {
           state.value = payload.newRecord ?? payload.oldRecord;

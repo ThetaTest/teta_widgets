@@ -57,14 +57,38 @@ class WGridView extends StatelessWidget {
   /// Returns a MouseRegion to disable the zoom on editor screen
   /// and provides a StaggeredGridView
   Widget _body(final BuildContext context) {
-    final crossAxisCountString =
-        crossAxisCount.get(params, states, dataset, forPlay, loop);
-    final mainAxisSpacingString =
-        mainAxisSpacing.get(params, states, dataset, forPlay, loop);
-    final crossAxisSpacingString =
-        crossAxisSpacing.get(params, states, dataset, forPlay, loop);
-    final childAspectRatioString =
-        childAspectRatio.get(params, states, dataset, forPlay, loop);
+    final crossAxisCountString = crossAxisCount.get(
+      params,
+      states,
+      dataset,
+      forPlay,
+      loop,
+      context,
+    );
+    final mainAxisSpacingString = mainAxisSpacing.get(
+      params,
+      states,
+      dataset,
+      forPlay,
+      loop,
+      context,
+    );
+    final crossAxisSpacingString = crossAxisSpacing.get(
+      params,
+      states,
+      dataset,
+      forPlay,
+      loop,
+      context,
+    );
+    final childAspectRatioString = childAspectRatio.get(
+      params,
+      states,
+      dataset,
+      forPlay,
+      loop,
+      context,
+    );
     return GridView.builder(
       gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
         crossAxisCount: int.tryParse(crossAxisCountString) != null &&

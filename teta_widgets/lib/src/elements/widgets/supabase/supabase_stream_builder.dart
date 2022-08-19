@@ -84,6 +84,7 @@ class _WSupabaseStreamBuilderState extends State<WSupabaseStreamBuilder> {
       widget.dataset,
       widget.forPlay,
       widget.loop,
+      context,
     );
     final order = widget.order.get(
       widget.params,
@@ -91,6 +92,7 @@ class _WSupabaseStreamBuilderState extends State<WSupabaseStreamBuilder> {
       widget.dataset,
       widget.forPlay,
       widget.loop,
+      context,
     );
     final fromRange = widget.fromRange.get(
       widget.params,
@@ -98,6 +100,7 @@ class _WSupabaseStreamBuilderState extends State<WSupabaseStreamBuilder> {
       widget.dataset,
       widget.forPlay,
       widget.loop,
+      context,
     );
     final valueFromRange =
         int.tryParse(fromRange) != null ? int.parse(fromRange) : 0;

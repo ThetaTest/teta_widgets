@@ -73,6 +73,9 @@ class PaddingsState extends State<TextControl> {
 
   @override
   Widget build(final BuildContext context) {
+    Logger.printMessage(
+      '''${(BlocProvider.of<FocusProjectBloc>(context).state as ProjectLoaded).prj.config?.appLanguage?.languages}''',
+    );
     final index = widget.page.datasets.indexWhere(
       (final element) => element.getName == widget.value.datasetName,
     );
@@ -145,13 +148,16 @@ class PaddingsState extends State<TextControl> {
                               ? 'param'
                               : widget.value.type == FTextTypeEnum.combined
                                   ? 'combined'
-                                  : 'text',
+                                  : widget.value.type == FTextTypeEnum.languages
+                                      ? 'languages'
+                                      : 'text',
                   items: [
                     'text',
                     'param',
                     'state',
                     'dataset',
-                    if (!widget.isSubControl) 'combined'
+                    if (!widget.isSubControl) 'combined',
+                    'languages',
                   ],
                   onChange: (final value) {
                     var typeOfInput = FTextTypeEnum.text;
@@ -169,6 +175,9 @@ class PaddingsState extends State<TextControl> {
                     }
                     if (value == 'combined') {
                       typeOfInput = FTextTypeEnum.combined;
+                    }
+                    if (value == 'languages') {
+                      typeOfInput = FTextTypeEnum.languages;
                     }
                     final old = widget.value;
                     final newValue = widget.value..type = typeOfInput;
@@ -282,6 +291,26 @@ class PaddingsState extends State<TextControl> {
                       },
                     ),
                 ],
+              ),
+            if (widget.value.type == FTextTypeEnum.languages)
+              CDropdown(
+                value: widget.value.keyTranslator,
+                items: ((BlocProvider.of<FocusProjectBloc>(context).state
+                                as ProjectLoaded)
+                            .prj
+                            .config
+                            ?.appLanguage
+                            ?.terms ??
+                        <String, dynamic>{})
+                    .entries
+                    .map((final e) => e.key)
+                    .toList(),
+                onChange: (final value) {
+                  final old = widget.value;
+                  widget.value.keyTranslator = value;
+                  widget.callBack(widget.value, old);
+                  setState(() {});
+                },
               ),
             if (widget.value.type == FTextTypeEnum.dataset &&
                 widget.page.datasets.isNotEmpty)

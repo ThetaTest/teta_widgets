@@ -34,7 +34,14 @@ class WOpacity extends StatelessWidget {
 
   @override
   Widget build(final BuildContext context) {
-    final opacityString = value.get(params, states, dataset, forPlay, loop);
+    final opacityString = value.get(
+      params,
+      states,
+      dataset,
+      forPlay,
+      loop,
+      context,
+    );
     return NodeSelectionBuilder(
       node: node,
       forPlay: forPlay,

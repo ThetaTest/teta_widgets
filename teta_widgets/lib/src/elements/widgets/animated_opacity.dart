@@ -44,7 +44,14 @@ class WAnimatedOpacity extends StatelessWidget {
   }
 
   Widget _body(final BuildContext context) {
-    final opacityString = value.get(params, states, dataset, forPlay, loop);
+    final opacityString = value.get(
+      params,
+      states,
+      dataset,
+      forPlay,
+      loop,
+      context,
+    );
     final rawDouble = double.tryParse(opacityString.replaceAll('-', '')) != null
         ? double.parse(opacityString.replaceAll('-', ''))
         : 1.0;

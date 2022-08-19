@@ -108,6 +108,7 @@ class _WSupabaseFutureBuilderState extends State<WSupabaseFutureBuilder> {
       widget.dataset,
       widget.forPlay,
       widget.loop,
+      context,
     );
     final select = widget.select.get(
       widget.params,
@@ -115,6 +116,7 @@ class _WSupabaseFutureBuilderState extends State<WSupabaseFutureBuilder> {
       widget.dataset,
       widget.forPlay,
       widget.loop,
+      context,
     );
     final order = widget.order.get(
       widget.params,
@@ -122,6 +124,7 @@ class _WSupabaseFutureBuilderState extends State<WSupabaseFutureBuilder> {
       widget.dataset,
       widget.forPlay,
       widget.loop,
+      context,
     );
     final fromRange = widget.fromRange.get(
       widget.params,
@@ -129,6 +132,7 @@ class _WSupabaseFutureBuilderState extends State<WSupabaseFutureBuilder> {
       widget.dataset,
       widget.forPlay,
       widget.loop,
+      context,
     );
     final valueFromRange =
         int.tryParse(fromRange) != null ? int.parse(fromRange) : 0;
@@ -138,6 +142,7 @@ class _WSupabaseFutureBuilderState extends State<WSupabaseFutureBuilder> {
       widget.dataset,
       widget.forPlay,
       widget.loop,
+      context,
     );
     final valueToRange =
         int.tryParse(toRange) != null ? int.parse(toRange) : 15;
@@ -147,6 +152,7 @@ class _WSupabaseFutureBuilderState extends State<WSupabaseFutureBuilder> {
       widget.dataset,
       widget.forPlay,
       widget.loop,
+      context,
     );
     final valueToPage =
         int.tryParse(numberPage) != null ? int.parse(numberPage) : 1;
@@ -157,6 +163,7 @@ class _WSupabaseFutureBuilderState extends State<WSupabaseFutureBuilder> {
       widget.dataset,
       widget.forPlay,
       widget.loop,
+      context,
     );
     final searchValue = widget.searchValue.get(
       widget.params,
@@ -164,6 +171,7 @@ class _WSupabaseFutureBuilderState extends State<WSupabaseFutureBuilder> {
       widget.dataset,
       widget.forPlay,
       widget.loop,
+      context,
     );
 
     final eqName = widget.eqName.get(
@@ -172,6 +180,7 @@ class _WSupabaseFutureBuilderState extends State<WSupabaseFutureBuilder> {
       widget.dataset,
       widget.forPlay,
       widget.loop,
+      context,
     );
     final eqValue = widget.eqValue.get(
       widget.params,
@@ -179,6 +188,7 @@ class _WSupabaseFutureBuilderState extends State<WSupabaseFutureBuilder> {
       widget.dataset,
       widget.forPlay,
       widget.loop,
+      context,
     );
 
     client = BlocProvider.of<SupabaseCubit>(context).state;

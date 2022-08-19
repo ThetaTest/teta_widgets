@@ -210,6 +210,7 @@ class _WMapBuilderState extends State<WMapBuilder> {
                       widget.dataset,
                       widget.forPlay,
                       i,
+                      context,
                     );
                     final lng = (widget.child!.body.attributes[DBKeys.longitude]
                             as FTextTypeInput)
@@ -219,6 +220,7 @@ class _WMapBuilderState extends State<WMapBuilder> {
                       widget.dataset,
                       widget.forPlay,
                       i,
+                      context,
                     );
                     markers.add(
                       LatLng(

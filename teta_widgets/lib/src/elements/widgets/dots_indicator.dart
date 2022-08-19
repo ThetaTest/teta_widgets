@@ -70,6 +70,7 @@ class WDotsIndicator extends StatelessWidget {
                         dataset,
                         forPlay,
                         loop,
+                        context,
                       ),
                     ) ??
                     3);
@@ -88,6 +89,7 @@ class WDotsIndicator extends StatelessWidget {
                               dataset,
                               forPlay,
                               loop,
+                              context,
                             ),
                           ) ??
                           1)

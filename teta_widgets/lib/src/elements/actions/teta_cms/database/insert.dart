@@ -4,6 +4,7 @@
 
 // Flutter imports:
 // Package imports:
+import 'package:flutter/material.dart';
 import 'package:teta_cms/teta_cms.dart';
 import 'package:teta_core/teta_core.dart';
 import 'package:teta_widgets/src/elements/index.dart';
@@ -11,6 +12,7 @@ import 'package:teta_widgets/src/elements/index.dart';
 
 class FATetaCMSInsert {
   static Future action(
+    final BuildContext context,
     final String? collectionId,
     final List<MapElement>? dbData,
     final List<VariableObject> params,
@@ -20,7 +22,14 @@ class FATetaCMSInsert {
   ) async {
     final map = <String, dynamic>{};
     for (final e in dbData ?? <MapElement>[]) {
-      map[e.key] = e.value.get(params, states, dataset, true, loop);
+      map[e.key] = e.value.get(
+        params,
+        states,
+        dataset,
+        true,
+        loop,
+        context,
+      );
     }
     await TetaCMS.instance.client.insertDocument(collectionId!, map);
   }

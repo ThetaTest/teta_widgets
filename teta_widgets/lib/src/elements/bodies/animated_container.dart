@@ -51,7 +51,7 @@ final animatedContainerIntrinsicStates = IntrinsicStates(
   canHave: ChildrenEnum.child,
   addChildLabels: [],
   gestures: [],
-  permissions:[],
+  permissions: [],
   packages: [],
 );
 
@@ -140,8 +140,8 @@ class AnimatedContainerBody extends NodeBody {
           ${(attributes[DBKeys.padding] as FMargins).margins}
           ${(attributes[DBKeys.borderRadius] as FBorderRadius).radius}
           ${(attributes[DBKeys.fill] as FFill).levels}
-          ${(attributes[DBKeys.value] as FTextTypeInput).get(params, states, dataset, forPlay, loop)}
-          ${(attributes[DBKeys.duration] as FTextTypeInput).get(params, states, dataset, forPlay, loop)}
+          ${(attributes[DBKeys.value] as FTextTypeInput).toJson()}
+          ${(attributes[DBKeys.duration] as FTextTypeInput).toJson()}
         ''',
       ),
       node: node,

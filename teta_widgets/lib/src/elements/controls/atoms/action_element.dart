@@ -36,6 +36,7 @@ import 'package:teta_widgets/src/elements/features/actions/enums/stripe.dart';
 import 'package:teta_widgets/src/elements/features/actions/enums/supabase.dart';
 import 'package:teta_widgets/src/elements/features/actions/enums/teta_cms.dart';
 import 'package:teta_widgets/src/elements/features/actions/enums/theme.dart';
+import 'package:teta_widgets/src/elements/features/actions/enums/translator.dart';
 import 'package:teta_widgets/src/elements/features/actions/enums/type.dart';
 import 'package:teta_widgets/src/elements/features/actions/enums/webview.dart';
 import 'package:teta_widgets/src/elements/index.dart';
@@ -198,9 +199,19 @@ class ActionElementControlState extends State<ActionElementControl> {
                 ),
               ),
               CDropdown(
-                value: FActionElement.convertValueToDropdown(
-                  widget.element.actionType,
-                ),
+                value: FActionElement()
+                        .getTypes(widget.prj.config, widget.page)
+                        .toSet()
+                        .toList()
+                        .contains(
+                          FActionElement.convertValueToDropdown(
+                            widget.element.actionType,
+                          ),
+                        )
+                    ? FActionElement.convertValueToDropdown(
+                        widget.element.actionType,
+                      )
+                    : null,
                 items: FActionElement()
                     .getTypes(widget.prj.config, widget.page)
                     .toSet()
@@ -596,6 +607,30 @@ class ActionElementControlState extends State<ActionElementControl> {
                     }
                   },
                 ),
+              if (widget.element.actionType == ActionType.translator)
+                CDropdown(
+                  value: FActionElement.getTranslator().contains(
+                    FActionElement.convertValueToDropdown(
+                      widget.element.actionTranslator,
+                    ),
+                  )
+                      ? FActionElement.convertValueToDropdown(
+                          widget.element.actionTranslator,
+                        )
+                      : null,
+                  items: FActionElement.getTranslator(),
+                  onChange: (final newValue) {
+                    if (newValue != null) {
+                      final old = widget.element;
+                      widget.element.actionTranslator =
+                          FActionElement.convertDropdownToValue(
+                        ActionTranslator.values,
+                        newValue,
+                      ) as ActionTranslator?;
+                      widget.callBack(widget.element, old);
+                    }
+                  },
+                ),
               const Gap(Grid.small),
               if (widget.element.actionType == ActionType.navigation)
                 CDropdown(
@@ -616,8 +651,11 @@ class ActionElementControlState extends State<ActionElementControl> {
                   },
                 ),
               const Gap(Grid.small),
-              if (widget.element.actionType == ActionType.state &&
-                  widget.element.actionState == ActionState.changeWith)
+              if ((widget.element.actionType == ActionType.state &&
+                      widget.element.actionState == ActionState.changeWith) ||
+                  (widget.element.actionType == ActionType.translator &&
+                      widget.element.actionTranslator ==
+                          ActionTranslator.translate))
                 CDropdown(
                   value: widget.page.states
                               .map((final e) => e.name)

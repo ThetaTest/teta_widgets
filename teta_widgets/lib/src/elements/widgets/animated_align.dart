@@ -35,7 +35,14 @@ class WAnimatedAlign extends StatelessWidget {
 
   @override
   Widget build(final BuildContext context) {
-    final val = duration.get(params, states, dataset, forPlay, loop);
+    final val = duration.get(
+      params,
+      states,
+      dataset,
+      forPlay,
+      loop,
+      context,
+    );
     return NodeSelectionBuilder(
       node: node,
       forPlay: forPlay,

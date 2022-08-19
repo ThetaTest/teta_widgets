@@ -54,30 +54,33 @@ class _WImageState extends State<WImage> {
 
   @override
   void initState() {
+    super.initState();
+  }
+
+  Future<void> calc() async {
+    if (bytes != null) {
+      final b = await (result as XFile).readAsBytes();
+      if (mounted) {
+        setState(() {
+          bytes = b;
+        });
+      }
+    }
+  }
+
+  @override
+  Widget build(final BuildContext context) {
     result = widget.image.getForImages(
       widget.params,
       widget.states,
       widget.dataset,
       widget.loop,
       forPlay: widget.forPlay,
+      context: context,
     );
     if (result is XFile) {
       calc();
     }
-    super.initState();
-  }
-
-  Future<void> calc() async {
-    final b = await (result as XFile).readAsBytes();
-    if (mounted) {
-      setState(() {
-        bytes = b;
-      });
-    }
-  }
-
-  @override
-  Widget build(final BuildContext context) {
     return NodeSelectionBuilder(
       node: widget.node,
       forPlay: widget.forPlay,

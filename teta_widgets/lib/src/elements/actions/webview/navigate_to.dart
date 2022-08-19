@@ -28,7 +28,14 @@ class FActionWebViewNavigateTo {
         states.firstWhereOrNull((final element) => element.name == stateName);
     TetaCMS.log('webview controller: ${variable?.webViewController}');
     if (variable?.webViewController != null) {
-      final url = valueToChangeWith.get(params, states, datasets, true, loop);
+      final url = valueToChangeWith.get(
+        params,
+        states,
+        datasets,
+        true,
+        loop,
+        context,
+      );
       TetaCMS.log('webview navigate to: $url');
       await variable?.webViewController?.loadContent(url, SourceType.url);
     }

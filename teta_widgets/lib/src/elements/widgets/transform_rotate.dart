@@ -38,7 +38,14 @@ class WTransformRotate extends StatelessWidget {
       forPlay: forPlay,
       child: Transform.rotate(
         angle: double.tryParse(
-              value.get(params, states, dataset, forPlay, loop),
+              value.get(
+                params,
+                states,
+                dataset,
+                forPlay,
+                loop,
+                context,
+              ),
             ) ??
             0,
         child: ChildConditionBuilder(

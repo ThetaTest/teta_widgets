@@ -45,16 +45,37 @@ class WAnimationConfigGridView extends StatelessWidget {
       forPlay: forPlay,
       child: AnimationConfiguration.staggeredGrid(
         columnCount: int.tryParse(
-              numberColumns.get(params, states, dataset, forPlay, loop),
+              numberColumns.get(
+                params,
+                states,
+                dataset,
+                forPlay,
+                loop,
+                context,
+              ),
             ) ??
             2,
         position: int.tryParse(
-              index.get(params, states, dataset, forPlay, loop),
+              index.get(
+                params,
+                states,
+                dataset,
+                forPlay,
+                loop,
+                context,
+              ),
             ) ??
             0,
         duration: Duration(
           milliseconds: int.tryParse(
-                duration.get(params, states, dataset, forPlay, loop),
+                duration.get(
+                  params,
+                  states,
+                  dataset,
+                  forPlay,
+                  loop,
+                  context,
+                ),
               ) ??
               375,
         ),

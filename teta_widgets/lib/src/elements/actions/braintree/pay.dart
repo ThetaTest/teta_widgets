@@ -4,8 +4,11 @@
 // Flutter imports:
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:recase/recase.dart';
 // Package imports:
 import 'package:teta_core/teta_core.dart';
+import 'package:teta_widgets/src/elements/actions/snippets/get_page_on_code.dart';
+import 'package:teta_widgets/src/elements/actions/snippets/take_state_from.dart';
 
 class FActionBraintreeBuy {
   static Future action(
@@ -31,7 +34,7 @@ class FActionBraintreeBuy {
             width: 400,
             height: 400,
             child: Text(
-              'Revenue cat will be activated in your released app.',
+              'Braintree will be activated in your released app.',
               style: TextStyle(
                 color: Colors.white,
               ),
@@ -42,7 +45,11 @@ class FActionBraintreeBuy {
     );
   }
 
-  static String toCode(final BuildContext context, final String? stateName) {
+  static String toCode(
+    final BuildContext context,
+    final int pageId,
+    final String? stateName,
+  ) {
     final prj =
         (BlocProvider.of<FocusProjectBloc>(context).state as ProjectLoaded).prj;
     final token = prj.config?.braintreeClientToken;
@@ -55,34 +62,41 @@ class FActionBraintreeBuy {
     String? googlePay;
     String? applePay;
 
-    if (true) {
-      paypal = '''BraintreePayPalRequest(
+    final page = getPageOnToCode(pageId, context);
+    if (page == null) return '';
+    final variable = takeStateFrom(page, stateName!);
+    if (variable == null) return '';
+
+    final varName = ReCase(stateName).camelCase;
+
+    paypal = '''
+      BraintreePayPalRequest(
         amount: '$amount',
         displayName: '$companyName',
       ),''';
-    }
-    if (true) {
+
+    if (prj.config?.googlePayFlag ?? false) {
       googlePay = '''
-BraintreeGooglePaymentRequest(
-                  totalPrice: '$amount',
-                  currencyCode: 'USD',
-                  billingAddressRequired: false,
-                ),''';
+        BraintreeGooglePaymentRequest(
+          totalPrice: '$amount',
+          currencyCode: 'USD',
+          billingAddressRequired: false,
+        ),''';
     }
-    if (true) {
+    if (prj.config?.isApplePayReady ?? false) {
       applePay = '''
         BraintreeApplePayRequest(
-                  displayName: 'Example company',
-                  paymentSummaryItems: <ApplePaySummaryItem>[
-                    ApplePaySummaryItem(
-                        label: '$companyName',
-                        amount: $amount,
-                        type: ApplePaySummaryItemType.final_),
-                  ],
-                  currencyCode: '$currencyCode',
-                  countryCode: '$countryCode',
-                  merchantIdentifier: '$appleMerchantId',
-                ),''';
+          displayName: 'Example company',
+          paymentSummaryItems: <ApplePaySummaryItem>[
+            ApplePaySummaryItem(
+                label: '$companyName',
+                amount: $amount,
+                type: ApplePaySummaryItemType.final_),
+          ],
+          currencyCode: '$currencyCode',
+          countryCode: '$countryCode',
+          merchantIdentifier: '$appleMerchantId',
+        ),''';
     }
 
     return '''
@@ -99,7 +113,7 @@ BraintreeGooglePaymentRequest(
       collectDeviceData: true,
       ${googlePay != null ? 'googlePaymentRequest: $googlePay' : ''}
       ${applePay != null ? 'applePayRequest: $applePay' : ''}
-      ${paypal != null ? 'paypalRequest: $paypal' : ''}
+      paypalRequest: $paypal
     );
     final result = await BraintreeDropIn.start(request);
     if (result != null) {
@@ -110,10 +124,14 @@ BraintreeGooglePaymentRequest(
       );
       if (resp.error == null && resp.data == true) {
         // Success
-        print('Success');
+        setState(() {
+          $varName = 'Success';
+        });
       } else {
         // Failed
-        print('Failed');
+        setState(() {
+          $varName = 'Failed';
+        });
       }
     }
     ''';

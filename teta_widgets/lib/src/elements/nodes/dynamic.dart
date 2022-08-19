@@ -149,7 +149,6 @@ class NDynamic extends CNode {
           }
         } else {
           // for any attribute
-          Logger.printMessage('${entity.key}: ${entity.value}');
           value = DynamicAttributes.fromJson(entity.key, entity.value);
           if (value != null) map[entity.key] = value;
         }

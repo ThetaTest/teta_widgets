@@ -65,7 +65,14 @@ class WVideo extends StatelessWidget {
       );
     }
     final controller = YoutubePlayerController(
-      initialVideoId: value.get(params, states, dataset, forPlay, loop),
+      initialVideoId: value.get(
+        params,
+        states,
+        dataset,
+        forPlay,
+        loop,
+        context,
+      ),
       params: YoutubePlayerParams(
         startAt: Duration(seconds: startAt),
         showControls: showControls,

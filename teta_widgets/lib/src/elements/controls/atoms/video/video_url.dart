@@ -40,8 +40,14 @@ class PaddingsState extends State<VideoUrlControl> {
 
   @override
   void initState() {
-    text =
-        'https://www.youtube.com/watch?v=${widget.value.get(BlocProvider.of<FocusPageBloc>(context).state.params, BlocProvider.of<FocusPageBloc>(context).state.states, BlocProvider.of<FocusPageBloc>(context).state.datasets, false, null)}';
+    text = 'https://www.youtube.com/watch?v=${widget.value.get(
+      BlocProvider.of<FocusPageBloc>(context).state.params,
+      BlocProvider.of<FocusPageBloc>(context).state.states,
+      BlocProvider.of<FocusPageBloc>(context).state.datasets,
+      false,
+      null,
+      context,
+    )}';
     tempNode = widget.node;
     controller.text = text!;
     urlState = widget.value.get(
@@ -50,6 +56,7 @@ class PaddingsState extends State<VideoUrlControl> {
       BlocProvider.of<FocusPageBloc>(context).state.datasets,
       false,
       null,
+      context,
     );
     controllerVideo = YoutubePlayerController(
       initialVideoId: urlState!,

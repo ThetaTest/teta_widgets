@@ -174,6 +174,7 @@ class _WMapState extends State<WMap> {
                       widget.dataset,
                       widget.forPlay,
                       widget.loop,
+                      context,
                     );
                     final lng = (child.body.attributes[DBKeys.longitude]
                             as FTextTypeInput)
@@ -183,6 +184,7 @@ class _WMapState extends State<WMap> {
                       widget.dataset,
                       widget.forPlay,
                       widget.loop,
+                      context,
                     );
 
                     markers.add(

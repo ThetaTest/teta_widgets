@@ -38,14 +38,35 @@ class FASupabaseInsert {
       final map = <String, dynamic>{};
       for (final e in supabaseData ?? <MapElement>[]) {
         if (e.key.toLowerCase() != 'id') {
-          map[e.key] = e.value.get(params, states, dataset, true, loop);
+          map[e.key] = e.value.get(
+            params,
+            states,
+            dataset,
+            true,
+            loop,
+            context,
+          );
         } else {
-          map[e.key] =
-              int.tryParse(e.value.get(params, states, dataset, true, loop));
+          map[e.key] = int.tryParse(e.value.get(
+            params,
+            states,
+            dataset,
+            true,
+            loop,
+            context,
+          ));
         }
       }
       final response = await client
-          .from(supabaseFrom?.get(params, states, dataset, true, loop) ?? '')
+          .from(supabaseFrom?.get(
+                params,
+                states,
+                dataset,
+                true,
+                loop,
+                context,
+              ) ??
+              '')
           .insert(
             map,
             returning: ReturningOption.minimal,

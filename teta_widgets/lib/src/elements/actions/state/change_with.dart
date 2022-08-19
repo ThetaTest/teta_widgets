@@ -29,7 +29,8 @@ class FActionStateChangeWith {
           states.indexWhere((final element) => element.name == stateName);
       if (index >= 0) {
         states[index].value = value ??
-            valueToChangeWith.get(params, states, datasets, true, loop);
+            valueToChangeWith.get(
+                params, states, datasets, true, loop, context);
         update(context);
       }
     } catch (e) {

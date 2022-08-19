@@ -80,6 +80,7 @@ class _WCmsFetchState extends State<WCmsFetch> {
       widget.dataset,
       widget.forPlay,
       widget.loop,
+      context,
     );
     final limit = widget.limit.get(
       widget.params,
@@ -87,6 +88,7 @@ class _WCmsFetchState extends State<WCmsFetch> {
       widget.dataset,
       widget.forPlay,
       widget.loop,
+      context,
     );
     final page = widget.page.get(
       widget.params,
@@ -94,6 +96,7 @@ class _WCmsFetchState extends State<WCmsFetch> {
       widget.dataset,
       widget.forPlay,
       widget.loop,
+      context,
     );
     final keyName = widget.keyName.get(
       widget.params,
@@ -101,6 +104,7 @@ class _WCmsFetchState extends State<WCmsFetch> {
       widget.dataset,
       widget.forPlay,
       widget.loop,
+      context,
     );
     final keyValue = widget.keyValue.get(
       widget.params,
@@ -108,27 +112,27 @@ class _WCmsFetchState extends State<WCmsFetch> {
       widget.dataset,
       widget.forPlay,
       widget.loop,
+      context,
     );
     Logger.printWarning(
       '$collectionId, keyName: $keyName, keyValue: $keyValue',
     );
     final dbElements = await TetaCMS.instance.client.getCollection(
-        collectionId,
-        filters: [
-          if (keyName.isNotEmpty && keyValue.isNotEmpty)
-            Filter(keyName, keyValue),
-        ],
-        limit: int.tryParse(limit) ?? 20,
-        page: int.tryParse(page) ?? 0,
-        showDrafts: widget.showDrafts,
-      );
+      collectionId,
+      filters: [
+        if (keyName.isNotEmpty && keyValue.isNotEmpty)
+          Filter(keyName, keyValue),
+      ],
+      limit: int.tryParse(limit) ?? 20,
+      page: int.tryParse(page) ?? 0,
+      showDrafts: widget.showDrafts,
+    );
 
-    setState((){
+    setState(() {
       _addFetchDataToDataset(dbElements);
       isInitialized = true;
     });
   }
-
 
   @override
   void initState() {
@@ -139,7 +143,7 @@ class _WCmsFetchState extends State<WCmsFetch> {
   @override
   Widget build(final BuildContext context) {
     Widget? child;
-    if(isInitialized) {
+    if (isInitialized) {
       if (widget.children.isNotEmpty) {
         child = widget.children.first.toWidget(
           params: widget.params,

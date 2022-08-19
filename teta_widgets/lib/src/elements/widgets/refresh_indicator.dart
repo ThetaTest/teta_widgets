@@ -100,7 +100,14 @@ class WRefreshIndicator extends StatelessWidget {
         /// far enough to demonstrate that they want the app to refresh.
         /// Should return [Future].
         onRefresh: () async {
-          final val = duration.get(params, states, dataset, forPlay, loop);
+          final val = duration.get(
+            params,
+            states,
+            dataset,
+            forPlay,
+            loop,
+            context,
+          );
           await Future<void>.delayed(
             Duration(
               milliseconds: int.tryParse(val) != null ? int.parse(val) : 1000,

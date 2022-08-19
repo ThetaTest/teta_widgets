@@ -45,19 +45,40 @@ class WTransform extends StatelessWidget {
           ..setEntry(1, 1, 1)
           ..rotateX(
             double.tryParse(
-                  valueX.get(params, states, dataset, forPlay, loop),
+                  valueX.get(
+                    params,
+                    states,
+                    dataset,
+                    forPlay,
+                    loop,
+                    context,
+                  ),
                 ) ??
                 0,
           )
           ..rotateY(
             double.tryParse(
-                  valueY.get(params, states, dataset, forPlay, loop),
+                  valueY.get(
+                    params,
+                    states,
+                    dataset,
+                    forPlay,
+                    loop,
+                    context,
+                  ),
                 ) ??
                 0,
           )
           ..rotateZ(
             double.tryParse(
-                  valueZ.get(params, states, dataset, forPlay, loop),
+                  valueZ.get(
+                    params,
+                    states,
+                    dataset,
+                    forPlay,
+                    loop,
+                    context,
+                  ),
                 ) ??
                 0,
           ),

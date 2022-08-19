@@ -34,7 +34,14 @@ class WIndexedStack extends StatelessWidget {
 
   @override
   Widget build(final BuildContext context) {
-    final val = index.get(params, states, dataset, forPlay, loop);
+    final val = index.get(
+      params,
+      states,
+      dataset,
+      forPlay,
+      loop,
+      context,
+    );
     return NodeSelectionBuilder(
       node: node,
       forPlay: forPlay,

@@ -91,6 +91,7 @@ class _WCmsStreamState extends State<WCmsStream> {
       widget.dataset,
       widget.forPlay,
       widget.loop,
+      context,
     );
     final limit = widget.limit.get(
       widget.params,
@@ -98,6 +99,7 @@ class _WCmsStreamState extends State<WCmsStream> {
       widget.dataset,
       widget.forPlay,
       widget.loop,
+      context,
     );
     final page = widget.page.get(
       widget.params,
@@ -105,6 +107,7 @@ class _WCmsStreamState extends State<WCmsStream> {
       widget.dataset,
       widget.forPlay,
       widget.loop,
+      context,
     );
     final keyName = widget.keyName.get(
       widget.params,
@@ -112,6 +115,7 @@ class _WCmsStreamState extends State<WCmsStream> {
       widget.dataset,
       widget.forPlay,
       widget.loop,
+      context,
     );
     final keyValue = widget.keyValue.get(
       widget.params,
@@ -119,6 +123,7 @@ class _WCmsStreamState extends State<WCmsStream> {
       widget.dataset,
       widget.forPlay,
       widget.loop,
+      context,
     );
     Logger.printWarning(
       '$collectionId, keyName: $keyName, keyValue: $keyValue, limit: $limit, page: $page ',

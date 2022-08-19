@@ -123,11 +123,11 @@ class CmsCountBody extends NodeBody {
         ${node.nid}
         $loop
         ${child ?? children}
-        ${(attributes[DBKeys.cmsCollection] as FTextTypeInput).get(params, states, dataset, forPlay, loop)}
-        ${(attributes[DBKeys.cmsLimit] as FTextTypeInput).get(params, states, dataset, forPlay, loop)}
-        ${(attributes[DBKeys.cmsPage] as FTextTypeInput).get(params, states, dataset, forPlay, loop)}
-        ${(attributes[DBKeys.cmsLikeKey] as FTextTypeInput).get(params, states, dataset, forPlay, loop)}
-        ${(attributes[DBKeys.cmsLikeValue] as FTextTypeInput).get(params, states, dataset, forPlay, loop)}
+        ${(attributes[DBKeys.cmsCollection] as FTextTypeInput).toJson()}
+        ${(attributes[DBKeys.cmsLimit] as FTextTypeInput).toJson()}
+        ${(attributes[DBKeys.cmsPage] as FTextTypeInput).toJson()}
+        ${(attributes[DBKeys.cmsLikeKey] as FTextTypeInput).toJson()}
+        ${(attributes[DBKeys.cmsLikeValue] as FTextTypeInput).toJson()}
         ${attributes[DBKeys.flag] as bool}
       ''',
       ),

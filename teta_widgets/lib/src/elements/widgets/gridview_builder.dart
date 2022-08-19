@@ -72,6 +72,7 @@ class _WGridViewState extends State<WGridViewBuilder> {
       widget.dataset,
       widget.forPlay,
       widget.loop,
+      context,
     );
     final mainAxisSpacingString = widget.mainAxisSpacing.get(
       widget.params,
@@ -79,6 +80,7 @@ class _WGridViewState extends State<WGridViewBuilder> {
       widget.dataset,
       widget.forPlay,
       widget.loop,
+      context,
     );
     final crossAxisSpacingString = widget.crossAxisSpacing.get(
       widget.params,
@@ -86,6 +88,7 @@ class _WGridViewState extends State<WGridViewBuilder> {
       widget.dataset,
       widget.forPlay,
       widget.loop,
+      context,
     );
     final childAspectRatioString = widget.childAspectRatio.get(
       widget.params,
@@ -93,6 +96,7 @@ class _WGridViewState extends State<WGridViewBuilder> {
       widget.dataset,
       widget.forPlay,
       widget.loop,
+      context,
     );
     _setDataset();
     final index = widget.value.datasetName != null

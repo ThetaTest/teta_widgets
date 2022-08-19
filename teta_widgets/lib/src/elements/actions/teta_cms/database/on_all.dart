@@ -36,6 +36,7 @@ class FATetaCMSOnAll {
         dataset,
         true,
         loop,
+        context,
       );
       await TetaCMS.instance.realtime.on(
         collectionId: collectionId,

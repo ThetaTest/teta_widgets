@@ -38,7 +38,14 @@ class WTransformScale extends StatelessWidget {
       forPlay: forPlay,
       child: Transform.scale(
         scale: double.tryParse(
-              value.get(params, states, dataset, forPlay, loop),
+              value.get(
+                params,
+                states,
+                dataset,
+                forPlay,
+                loop,
+                context,
+              ),
             ) ??
             1,
         child: ChildConditionBuilder(

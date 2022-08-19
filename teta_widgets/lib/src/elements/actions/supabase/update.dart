@@ -38,15 +38,35 @@ class FASupabaseUpdate {
       final map = <String, dynamic>{};
       for (final e in supabaseData ?? <MapElement>[]) {
         if (e.key.toLowerCase() != 'id') {
-          map[e.key] = e.value.get(params, states, dataset, true, loop);
+          map[e.key] = e.value.get(
+            params,
+            states,
+            dataset,
+            true,
+            loop,
+            context,
+          );
         } else {
-          map[e.key] =
-              int.tryParse(e.value.get(params, states, dataset, true, loop));
+          map[e.key] = int.tryParse(e.value.get(
+            params,
+            states,
+            dataset,
+            true,
+            loop,
+            context,
+          ));
         }
       }
       dynamic eqValue;
       if (supabaseEq.key.toLowerCase() != 'id') {
-        eqValue = supabaseEq.value.get(params, states, dataset, true, loop);
+        eqValue = supabaseEq.value.get(
+          params,
+          states,
+          dataset,
+          true,
+          loop,
+          context,
+        );
       } else {
         eqValue = int.tryParse(
           supabaseEq.value.get(
@@ -55,11 +75,20 @@ class FASupabaseUpdate {
             dataset,
             true,
             loop,
+            context,
           ),
         );
       }
       final response = await client
-          .from(supabaseFrom?.get(params, states, dataset, true, loop) ?? '')
+          .from(supabaseFrom?.get(
+                params,
+                states,
+                dataset,
+                true,
+                loop,
+                context,
+              ) ??
+              '')
           .update(map)
           .eq(supabaseEq.key, eqValue)
           .execute();

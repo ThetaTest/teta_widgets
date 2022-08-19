@@ -51,6 +51,7 @@ class _WRadioState extends State<WRadio> {
           widget.dataset,
           widget.forPlay,
           widget.loop,
+          context,
         ),
         value: widget.value.get(
           widget.params,
@@ -58,6 +59,7 @@ class _WRadioState extends State<WRadio> {
           widget.dataset,
           widget.forPlay,
           widget.loop,
+          context,
         ),
         onChanged: (final value) {
           GestureBuilder.get(

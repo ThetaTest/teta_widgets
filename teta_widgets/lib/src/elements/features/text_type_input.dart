@@ -6,11 +6,22 @@
 import 'package:camera/camera.dart';
 import 'package:collection/collection.dart';
 import 'package:enum_to_string/enum_to_string.dart';
+import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:intl/intl.dart';
 import 'package:recase/recase.dart';
 import 'package:teta_core/teta_core.dart';
 
-enum FTextTypeEnum { text, imageUrl, param, state, dataset, asset, combined }
+enum FTextTypeEnum {
+  text,
+  imageUrl,
+  param,
+  state,
+  dataset,
+  asset,
+  combined,
+  languages
+}
 
 enum ResultTypeEnum {
   string,
@@ -34,6 +45,7 @@ class FTextTypeInput {
     this.stateName,
     this.datasetName,
     this.datasetAttr,
+    this.keyTranslator,
     this.file,
     this.mapKey,
     this.combination,
@@ -47,6 +59,7 @@ class FTextTypeInput {
   String? stateName;
   String? datasetName;
   String? datasetAttr;
+  String? keyTranslator;
   AssetFile? file;
   String? mapKey;
   List<FTextTypeInput>? combination;
@@ -60,8 +73,9 @@ class FTextTypeInput {
     final List<DatasetObject> dataset,
     final bool forPlay,
     final int? loop,
+    final BuildContext context,
   ) =>
-      '${calc(params, states, dataset, forPlay, loop, datasetAttr ?? '')}';
+      '${calc(params, states, dataset, forPlay, loop, datasetAttr ?? '', context)}';
 
   /// Returns value for images
   dynamic getForImages(
@@ -70,6 +84,7 @@ class FTextTypeInput {
     final List<DatasetObject> dataset,
     final int? loop, {
     required final bool forPlay,
+    required final BuildContext context,
   }) =>
       calc(
         params,
@@ -78,6 +93,7 @@ class FTextTypeInput {
         forPlay,
         loop,
         'https://source.unsplash.com/random',
+        context,
       );
 
   /// Returns the value calculated based on params, states and dataset
@@ -88,6 +104,7 @@ class FTextTypeInput {
     final bool forPlay,
     final int? loop,
     final String placeholder,
+    final BuildContext context,
   ) {
     final dynamic result = getRaw(
       params,
@@ -96,6 +113,7 @@ class FTextTypeInput {
       forPlay,
       loop,
       placeholder,
+      context,
     );
     if (result.runtimeType == XFile) {
       return result;
@@ -137,6 +155,7 @@ class FTextTypeInput {
     final bool forPlay,
     final int? loop,
     final String placeholder,
+    final BuildContext context,
   ) {
     if (type == FTextTypeEnum.param) {
       try {
@@ -173,10 +192,17 @@ class FTextTypeInput {
       final string = StringBuffer();
       for (final element in combination ?? <FTextTypeInput>[]) {
         string.write(
-          element.get(params, states, dataset, forPlay, loop),
+          element.get(params, states, dataset, forPlay, loop, context),
         );
       }
       return string.toString();
+    }
+    if (type == FTextTypeEnum.languages) {
+      if (keyTranslator != null) {
+        return BlocProvider.of<TranslatorGeneratorCubit>(
+          context,
+        ).state.getString(keyTranslator!);
+      }
     }
     return value ?? '';
   }
@@ -198,12 +224,15 @@ class FTextTypeInput {
                                 ? FTextTypeEnum.asset
                                 : json?['t'] == 'combined'
                                     ? FTextTypeEnum.combined
-                                    : FTextTypeEnum.text,
+                                    : json?['t'] == 'languages'
+                                        ? FTextTypeEnum.languages
+                                        : FTextTypeEnum.text,
         value: json?['v'] as String?,
         paramName: json?['pN'] as String?,
         stateName: json?['sN'] as String?,
         datasetName: json?['dN'] as String?,
         datasetAttr: json?['dA'] as String?,
+        keyTranslator: json?['kTrans'] as String?,
         file: json?['f'] != null
             ? AssetFile.fromJson(json?['f'] as Map<String, dynamic>?)
             : null,
@@ -246,12 +275,15 @@ class FTextTypeInput {
                             ? 'imageUrl'
                             : type == FTextTypeEnum.combined
                                 ? 'combined'
-                                : 'text',
+                                : type == FTextTypeEnum.languages
+                                    ? 'languages'
+                                    : 'text',
         'v': value,
         'pN': paramName,
         'sN': stateName,
         'dN': datasetName,
         'dA': datasetAttr,
+        'kTrans': keyTranslator,
         'mK': mapKey,
         'cmb': combination?.map((final e) => e.toJson()).toList(),
         'rType': EnumToString.convertToString(resultType),

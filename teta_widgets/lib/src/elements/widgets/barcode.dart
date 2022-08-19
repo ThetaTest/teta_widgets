@@ -52,11 +52,25 @@ class WBarcode extends StatelessWidget {
         barcode: Barcode.fromType(
           EnumToString.fromString(
                 BarcodeType.values,
-                barcodeType.get(params, states, dataset, forPlay, loop),
+                barcodeType.get(
+                  params,
+                  states,
+                  dataset,
+                  forPlay,
+                  loop,
+                  context,
+                ),
               ) ??
               BarcodeType.Code128,
         ),
-        data: data.get(params, states, dataset, forPlay, loop),
+        data: data.get(
+          params,
+          states,
+          dataset,
+          forPlay,
+          loop,
+          context,
+        ),
         width: width.get(context: context, isWidth: true),
         height: height.get(context: context, isWidth: false),
         color: HexColor(fill.getHexColor(context))

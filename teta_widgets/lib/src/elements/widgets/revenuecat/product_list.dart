@@ -45,7 +45,7 @@ class _WRevenueCatSingleSubStatusState
     final offerings = await Purchases.getOfferings();
     if (offerings.current != null &&
         (offerings.current?.availablePackages ?? []).isNotEmpty) {
-      offerings.current?.availablePackages.first.
+      offerings.current?.availablePackages.first.product;
     }
   }
 

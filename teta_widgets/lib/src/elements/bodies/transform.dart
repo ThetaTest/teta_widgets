@@ -35,7 +35,7 @@ final transformPerspectiveIntrinsicStates = IntrinsicStates(
   canHave: ChildrenEnum.child,
   addChildLabels: [],
   gestures: [],
-  permissions:[],
+  permissions: [],
   packages: [],
 );
 
@@ -106,27 +106,9 @@ class TransformPerspectiveBody extends NodeBody {
             ${node.nid}
             $loop
             ${child ?? children}
-            ${(attributes[DBKeys.rotateX] as FTextTypeInput).get(
-            params,
-            states,
-            dataset,
-            forPlay,
-            loop,
-          )}
-            ${(attributes[DBKeys.rotateY] as FTextTypeInput).get(
-            params,
-            states,
-            dataset,
-            forPlay,
-            loop,
-          )}
-            ${(attributes[DBKeys.rotateZ] as FTextTypeInput).get(
-            params,
-            states,
-            dataset,
-            forPlay,
-            loop,
-          )}
+            ${(attributes[DBKeys.rotateX] as FTextTypeInput).toJson()}
+            ${(attributes[DBKeys.rotateY] as FTextTypeInput).toJson()}
+            ${(attributes[DBKeys.rotateZ] as FTextTypeInput).toJson()}
             ''',
         ),
         node: node,

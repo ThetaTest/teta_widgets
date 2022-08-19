@@ -97,7 +97,7 @@ LIMIT 10;''',
         ${node.nid}
         $loop
         ${child ?? children}
-        ${(attributes[DBKeys.value] as FTextTypeInput).get(params, states, dataset, forPlay, loop)}
+        ${(attributes[DBKeys.value] as FTextTypeInput).toJson()}
       ''',
       ),
       node: node,

@@ -51,7 +51,14 @@ class WAnimatedContainer extends StatelessWidget {
 
   @override
   Widget build(final BuildContext context) {
-    final val = value.get(params, states, dataset, forPlay, loop);
+    final val = value.get(
+      params,
+      states,
+      dataset,
+      forPlay,
+      loop,
+      context,
+    );
     return NodeSelectionBuilder(
       node: node,
       forPlay: forPlay,

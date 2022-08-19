@@ -29,7 +29,14 @@ class GestureBuilder {
     if (forPlay) {
       String? finalValue;
       if (actionValue != null) {
-        finalValue = actionValue.get(params, states, dataset, forPlay, loop);
+        finalValue = actionValue.get(
+          params,
+          states,
+          dataset,
+          forPlay,
+          loop,
+          context,
+        );
       }
       if (action != null) {
         action.actions!

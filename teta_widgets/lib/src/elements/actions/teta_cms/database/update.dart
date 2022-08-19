@@ -4,6 +4,7 @@
 
 // Flutter imports:
 // Package imports:
+import 'package:flutter/material.dart';
 import 'package:teta_cms/teta_cms.dart';
 import 'package:teta_core/teta_core.dart';
 import 'package:teta_widgets/src/elements/index.dart';
@@ -11,6 +12,7 @@ import 'package:teta_widgets/src/elements/index.dart';
 
 class FATetaCMSUpdate {
   static Future action(
+    final BuildContext context,
     final String? collectionId,
     final List<MapElement>? list,
     final FTextTypeInput? documentId,
@@ -24,7 +26,14 @@ class FATetaCMSUpdate {
       map[e.key] = e.value;
     }
     String? eqValue;
-    eqValue = documentId?.get(params, states, dataset, true, loop);
+    eqValue = documentId?.get(
+      params,
+      states,
+      dataset,
+      true,
+      loop,
+      context,
+    );
     if (collectionId != null && eqValue != null) {
       await TetaCMS.instance.client.updateDocument(
         collectionId,

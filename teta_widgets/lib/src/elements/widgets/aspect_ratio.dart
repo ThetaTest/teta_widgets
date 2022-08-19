@@ -33,7 +33,14 @@ class WAspectRatio extends StatelessWidget {
 
   @override
   Widget build(final BuildContext context) {
-    final val = aspectRatio.get(params, states, dataset, forPlay, loop);
+    final val = aspectRatio.get(
+      params,
+      states,
+      dataset,
+      forPlay,
+      loop,
+      context,
+    );
     final rawDouble = double.tryParse(val) != null ? double.parse(val) : 0.5;
     return NodeSelectionBuilder(
       node: node,

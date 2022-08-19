@@ -86,6 +86,7 @@ class _WCmsCountState extends State<WCmsCount> {
       widget.dataset,
       widget.forPlay,
       widget.loop,
+      context,
     );
     final limit = widget.limit.get(
       widget.params,
@@ -93,6 +94,7 @@ class _WCmsCountState extends State<WCmsCount> {
       widget.dataset,
       widget.forPlay,
       widget.loop,
+      context,
     );
     final page = widget.page.get(
       widget.params,
@@ -100,6 +102,7 @@ class _WCmsCountState extends State<WCmsCount> {
       widget.dataset,
       widget.forPlay,
       widget.loop,
+      context,
     );
     final keyName = widget.keyName.get(
       widget.params,
@@ -107,6 +110,7 @@ class _WCmsCountState extends State<WCmsCount> {
       widget.dataset,
       widget.forPlay,
       widget.loop,
+      context,
     );
     final keyValue = widget.keyValue.get(
       widget.params,
@@ -114,6 +118,7 @@ class _WCmsCountState extends State<WCmsCount> {
       widget.dataset,
       widget.forPlay,
       widget.loop,
+      context,
     );
     setState(() {
       _future = TetaCMS.instance.client.getCollectionCount(

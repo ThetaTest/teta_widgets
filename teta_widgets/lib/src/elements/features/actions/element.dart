@@ -68,6 +68,7 @@ import 'package:teta_widgets/src/elements/actions/teta_cms/database/delete.dart'
 import 'package:teta_widgets/src/elements/actions/teta_cms/database/insert.dart';
 import 'package:teta_widgets/src/elements/actions/teta_cms/database/update.dart';
 import 'package:teta_widgets/src/elements/actions/theme/change_theme.dart';
+import 'package:teta_widgets/src/elements/actions/translator/translate.dart';
 import 'package:teta_widgets/src/elements/actions/webview/back.dart';
 import 'package:teta_widgets/src/elements/actions/webview/forward.dart';
 import 'package:teta_widgets/src/elements/actions/webview/navigate_to.dart';
@@ -80,6 +81,7 @@ import 'package:teta_widgets/src/elements/features/actions/enums/revenue_cat.dar
 import 'package:teta_widgets/src/elements/features/actions/enums/stripe.dart';
 import 'package:teta_widgets/src/elements/features/actions/enums/teta_cms.dart';
 import 'package:teta_widgets/src/elements/features/actions/enums/theme.dart';
+import 'package:teta_widgets/src/elements/features/actions/enums/translator.dart';
 import 'package:teta_widgets/src/elements/features/actions/enums/webview.dart';
 import 'package:teta_widgets/src/elements/features/actions/snippets.dart';
 import 'package:teta_widgets/src/elements/features/text_type_input.dart';
@@ -144,6 +146,10 @@ class FActionElement extends Equatable {
       ActionBraintree.values,
       doc['aBrain'] as String?,
     ) as ActionBraintree?;
+    actionTranslator = convertDropdownToValue(
+      ActionTranslator.values,
+      doc['aTrans'] as String?,
+    ) as ActionTranslator?;
     actionRevenueCat =
         convertDropdownToValue(ActionRevenueCat.values, doc['aRC'] as String?)
             as ActionRevenueCat?;
@@ -232,6 +238,7 @@ class FActionElement extends Equatable {
   ActionState? actionState;
   ActionRevenueCat? actionRevenueCat;
   ActionBraintree? actionBraintree;
+  ActionTranslator? actionTranslator;
   ActionTheme? actionTheme;
   ActionStripe? actionStripe;
   int? customFunctionId;
@@ -278,6 +285,7 @@ class FActionElement extends Equatable {
         actionWebView,
         stateName,
         actionBraintree,
+        actionTranslator,
         nameOfPage,
         paramsToSend,
         value,
@@ -302,6 +310,7 @@ class FActionElement extends Equatable {
           'Teta database',
           'Teta auth',
           'Theme',
+          'Languages',
           if (kDebugMode) 'Custom Functions',
           if (config.supabaseEnabled ?? false) 'Supabase auth',
           if (config.supabaseEnabled ?? false) 'Supabase database',
@@ -383,6 +392,10 @@ class FActionElement extends Equatable {
     return [];
   }
 
+  static List<String> getTranslator() {
+    return enumsToListString(ActionTranslator.values);
+  }
+
   static List<String> getStripe(final ProjectConfig? config) {
     if (config != null) {
       if (config.isStripeEnabled) {
@@ -447,6 +460,9 @@ class FActionElement extends Equatable {
     if (type == ActionType.theme) {
       return 'Theme';
     }
+    if (type == ActionType.translator) {
+      return 'Languages';
+    }
     if (type != null) {
       return EnumToString.convertToString(type, camelCase: true);
     }
@@ -468,6 +484,9 @@ class FActionElement extends Equatable {
     }
     if (value == 'Theme') {
       return ActionType.theme;
+    }
+    if (value == 'Languages') {
+      return ActionType.translator;
     }
     if (value != null) {
       return EnumToString.fromString<dynamic>(list, value, camelCase: true);
@@ -498,6 +517,7 @@ class FActionElement extends Equatable {
         'aAP': convertValueToDropdown(actionAudioPlayer),
         'aRC': convertValueToDropdown(actionRevenueCat),
         'aBrain': convertValueToDropdown(actionBraintree),
+        'aTrans': convertValueToDropdown(actionTranslator),
         'sPK': convertValueToDropdown(actionStripe),
         'aTDb': convertValueToDropdown(actionTetaDB),
         'aTAu': convertValueToDropdown(actionTetaAuth),
@@ -553,8 +573,15 @@ class FActionElement extends Equatable {
         break;
       case ActionType.customFunctions:
         if (withCondition == true) {
-          if (condition?.get(params, states, dataset, true, loop) !=
-              valueOfCondition?.get(params, states, dataset, true, loop)) {
+          if (condition?.get(params, states, dataset, true, loop, context) !=
+              valueOfCondition?.get(
+                params,
+                states,
+                dataset,
+                true,
+                loop,
+                context,
+              )) {
             break;
           }
         }
@@ -575,6 +602,7 @@ class FActionElement extends Equatable {
           case ActionTetaCmsDB.insert:
             await actionS(
               () => FATetaCMSInsert.action(
+                context,
                 cmsCollectionId,
                 dbData,
                 params,
@@ -592,6 +620,7 @@ class FActionElement extends Equatable {
           case ActionTetaCmsDB.update:
             await actionS(
               () => FATetaCMSUpdate.action(
+                context,
                 cmsCollectionId,
                 dbData,
                 dbFrom,
@@ -610,6 +639,7 @@ class FActionElement extends Equatable {
           case ActionTetaCmsDB.delete:
             await actionS(
               () => FATetaCMSDelete.action(
+                context,
                 cmsCollectionId,
                 dbFrom,
                 params,
@@ -745,6 +775,23 @@ class FActionElement extends Equatable {
           case ActionBraintree.pay:
             await actionS(
               () => FActionBraintreeBuy.action(context, states, stateName),
+              context: context,
+              params: params,
+              states: states,
+              dataset: dataset,
+              loop: loop,
+            );
+            break;
+          default:
+            break;
+        }
+        break;
+      case ActionType.translator:
+        switch (actionTranslator) {
+          case ActionTranslator.translate:
+            await actionS(
+              () =>
+                  FActionTranslatorTranslate.action(context, states, stateName),
               context: context,
               params: params,
               states: states,
@@ -1350,7 +1397,8 @@ class FActionElement extends Equatable {
                 context,
                 states,
                 stateName,
-                audioPlayerUrl!.get(params, states, dataset, true, loop),
+                audioPlayerUrl!
+                    .get(params, states, dataset, true, loop, context),
               ),
               context: context,
               params: params,
@@ -1365,7 +1413,8 @@ class FActionElement extends Equatable {
                 context,
                 states,
                 stateName,
-                audioPlayerUrl!.get(params, states, dataset, true, loop),
+                audioPlayerUrl!
+                    .get(params, states, dataset, true, loop, context),
               ),
               context: context,
               params: params,
@@ -1595,7 +1644,18 @@ class FActionElement extends Equatable {
         switch (actionBraintree) {
           case ActionBraintree.pay:
             return codeS(
-              FActionBraintreeBuy.toCode(context, stateName),
+              FActionBraintreeBuy.toCode(context, pageId, stateName),
+              context,
+            );
+          default:
+            break;
+        }
+        break;
+      case ActionType.translator:
+        switch (actionTranslator) {
+          case ActionTranslator.translate:
+            return codeS(
+              FActionTranslatorTranslate.toCode(context, pageId, stateName),
               context,
             );
           default:
@@ -2023,8 +2083,8 @@ class FActionElement extends Equatable {
     required final int? loop,
   }) async {
     if (withCondition == true) {
-      if (condition?.get(params, states, dataset, true, loop) !=
-          valueOfCondition?.get(params, states, dataset, true, loop)) {
+      if (condition?.get(params, states, dataset, true, loop, context) !=
+          valueOfCondition?.get(params, states, dataset, true, loop, context)) {
         return;
       }
     }

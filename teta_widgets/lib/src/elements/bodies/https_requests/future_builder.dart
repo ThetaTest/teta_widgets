@@ -77,15 +77,7 @@ class HTTPRequestFutureBuilderBody extends NodeBody {
     final List<CNode>? children,
   }) {
     final str = StringBuffer()
-      ..write(
-        (attributes[DBKeys.supabaseFrom] as FTextTypeInput).get(
-          params,
-          states,
-          dataset,
-          forPlay,
-          loop,
-        ),
-      );
+      ..write((attributes[DBKeys.supabaseFrom] as FTextTypeInput).toJson());
     return WHTTPRequestFutureBuilder(
       ValueKey(str.toString()),
       node: node,

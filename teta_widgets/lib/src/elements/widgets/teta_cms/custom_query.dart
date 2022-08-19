@@ -76,6 +76,7 @@ class _WCmsCustomQueryState extends State<WCmsCustomQuery> {
       widget.dataset,
       widget.forPlay,
       widget.loop,
+      context,
     );
 
     if (query.isNotEmpty) {

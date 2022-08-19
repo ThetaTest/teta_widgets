@@ -38,7 +38,14 @@ class WHero extends StatelessWidget {
       node: node,
       forPlay: forPlay,
       child: Hero(
-        tag: value.get(params, states, dataset, forPlay, loop),
+        tag: value.get(
+          params,
+          states,
+          dataset,
+          forPlay,
+          loop,
+          context,
+        ),
         child: ChildConditionBuilder(
           ValueKey('${node.nid} $loop'),
           name: node.intrinsicState.displayName,

@@ -37,7 +37,14 @@ class WTooltip extends StatelessWidget {
       node: node,
       forPlay: forPlay,
       child: Tooltip(
-        message: value.get(params, states, dataset, forPlay, loop),
+        message: value.get(
+          params,
+          states,
+          dataset,
+          forPlay,
+          loop,
+          context,
+        ),
         child: ChildConditionBuilder(
           ValueKey('${node.nid} $loop'),
           name: node.intrinsicState.displayName,
