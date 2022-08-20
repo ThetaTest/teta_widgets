@@ -13,6 +13,16 @@ String ignorePointerCodeTemplate(
   final CNode? child,
 ) {
   final flag = body.attributes[DBKeys.flag] as bool;
+
+  if (!flag) {
+    return CS.child(
+      context,
+      child,
+      comma: false,
+      withChild: false,
+    );
+  }
+
   return '''
     IgnorePointer(
       ignoring: $flag,

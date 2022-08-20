@@ -51,10 +51,16 @@ class CS {
     final BuildContext context,
     final CNode? child, {
     final bool? comma,
+    final bool withChild = true,
   }) {
     var strChild = '';
     if (child != null) {
       strChild = child.toCode(context);
+    }
+    if (!withChild) {
+      return strChild != ''
+          ? '$strChild${comma ?? true ? ',' : ''}'
+          : 'const SizedBox(),';
     }
     return strChild != ''
         ? 'child: $strChild${comma ?? true ? ',' : ''}'
@@ -278,6 +284,7 @@ class CS {
     final value = body.attributes[DBKeys.borders] != null
         ? (body.attributes[DBKeys.borders] as FBorder).toCode(context)
         : null;
+    if (value != null && value != '') return '';
     return avoidRedundantValue(value, 'border', '');
   }
 
@@ -360,6 +367,9 @@ class CS {
           ),
         );
       }
+    }
+    if (code.toString().isEmpty && additionalCode == null && !isRequired) {
+      return '';
     }
     return '''
     $func {

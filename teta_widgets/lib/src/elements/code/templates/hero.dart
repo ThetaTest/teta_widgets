@@ -16,6 +16,14 @@ String heroCodeTemplate(
 ) {
   final abstract = body.attributes[DBKeys.value] as FTextTypeInput;
   final value = abstract.toCode(loop);
+  if (value.isEmpty) {
+    return CS.child(
+      context,
+      child,
+      comma: false,
+      withChild: false,
+    );
+  }
   return '''
   Hero(
     tag: $value,

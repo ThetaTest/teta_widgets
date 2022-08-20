@@ -305,6 +305,10 @@ class FTextTypeInput {
   String toCode(
     final int? loop,
   ) {
+    if (type == FTextTypeEnum.languages) {
+      return "TranslatorGenerator.instance.getString('''$keyTranslator''')";
+    }
+
     final code = getRawToCode(loop);
 
     if (type == FTextTypeEnum.combined) {

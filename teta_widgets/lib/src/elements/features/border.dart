@@ -105,6 +105,7 @@ class FBorder {
   String toCode(final BuildContext context) {
     final values = width!.margins!;
     final color = fill!.getHexColor(context);
+    if (style?.get != BorderStyle.none) return '';
     return '''
     Border(
       left:

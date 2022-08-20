@@ -9,6 +9,7 @@ import 'package:recase/recase.dart';
 import 'package:teta_core/teta_core.dart';
 import 'package:teta_widgets/src/elements/actions/snippets/get_page_on_code.dart';
 import 'package:teta_widgets/src/elements/actions/snippets/take_state_from.dart';
+import 'package:teta_widgets/src/elements/index.dart';
 
 class FActionBraintreeBuy {
   static Future action(
@@ -19,26 +20,11 @@ class FActionBraintreeBuy {
     await showDialog<void>(
       context: context,
       builder: (final context) {
-        return const AlertDialog(
-          title: TAlertTitle('Braintree'),
-          titleTextStyle: TextStyle(
-            fontWeight: FontWeight.bold,
-            color: Colors.white,
-            fontSize: 20,
-          ),
-          backgroundColor: Color(0xFF333333),
-          shape: RoundedRectangleBorder(
-            borderRadius: BorderRadius.all(Radius.circular(20)),
-          ),
-          content: SizedBox(
-            width: 400,
-            height: 400,
-            child: Text(
-              'Braintree will be activated in your released app.',
-              style: TextStyle(
-                color: Colors.white,
-              ),
-            ),
+        return AlertDialog(
+          title: const TAlertTitle('Braintree'),
+          backgroundColor: Palette.bgDialog,
+          content: const TParagraph(
+            'Braintree will be activated in your released app.',
           ),
         );
       },
@@ -48,59 +34,64 @@ class FActionBraintreeBuy {
   static String toCode(
     final BuildContext context,
     final int pageId,
-    final String? stateName,
-  ) {
+    final FTextTypeInput? valueToChangeWith,
+    final String? stateName, {
+    final int loop = 0,
+  }) {
     final prj =
         (BlocProvider.of<FocusProjectBloc>(context).state as ProjectLoaded).prj;
     final token = prj.config?.braintreeClientToken;
-    const companyName = '';
-    const currencyCode = '';
-    const countryCode = '';
-    const amount = '4.20';
-    const appleMerchantId = '';
+    final companyName = prj.config?.companyName ?? '';
+    final currencyCode = prj.config?.braintreeCurrencyCode ?? '';
+    final countryCode = prj.config?.countryCode ?? '';
+    final amount = valueToChangeWith!.toCode(loop);
+    final appleMerchantId = prj.config?.appleMerchantId;
     String? paypal;
     String? googlePay;
     String? applePay;
 
+    if (stateName == null) return '';
+    if (amount.isEmpty) return '';
+
     final page = getPageOnToCode(pageId, context);
     if (page == null) return '';
-    final variable = takeStateFrom(page, stateName!);
+    final variable = takeStateFrom(page, stateName);
     if (variable == null) return '';
 
     final varName = ReCase(stateName).camelCase;
 
     paypal = '''
       BraintreePayPalRequest(
-        amount: '$amount',
+        amount: $amount,
         displayName: '$companyName',
       ),''';
 
     if (prj.config?.googlePayFlag ?? false) {
       googlePay = '''
         BraintreeGooglePaymentRequest(
-          totalPrice: '$amount',
-          currencyCode: 'USD',
+          totalPrice: $amount,
+          currencyCode: '$currencyCode',
           billingAddressRequired: false,
         ),''';
     }
     if (prj.config?.isApplePayReady ?? false) {
       applePay = '''
         BraintreeApplePayRequest(
-          displayName: 'Example company',
+          displayName: '$companyName',
           paymentSummaryItems: <ApplePaySummaryItem>[
             ApplePaySummaryItem(
                 label: '$companyName',
-                amount: $amount,
-                type: ApplePaySummaryItemType.final_),
+                amount: double.parse($amount),
+                type: ApplePaySummaryItemType.Final),
           ],
           currencyCode: '$currencyCode',
           countryCode: '$countryCode',
-          merchantIdentifier: '$appleMerchantId',
+          appleMerchantID: '$appleMerchantId',
         ),''';
     }
 
     return '''
-    if (kIsWeb) {
+    if (UniversalPlatform.isWeb) {
       ScaffoldMessenger.of(context).showSnackBar(
         const SnackBar(
           content: Text('Payments are not yet supported on web.'),
@@ -108,6 +99,9 @@ class FActionBraintreeBuy {
       );
       return;
     }
+    setState(() {
+      $varName = 'Loading';
+    });
     final request = BraintreeDropInRequest(
       clientToken: '$token',
       collectDeviceData: true,
@@ -120,20 +114,20 @@ class FActionBraintreeBuy {
       final resp = await TetaCMS.instance.utils.braintreePay(
         result.paymentMethodNonce.nonce,
         result.deviceData,
-        amount,
+        $amount,
       );
       if (resp.error == null && resp.data == true) {
         // Success
         setState(() {
           $varName = 'Success';
         });
-      } else {
-        // Failed
-        setState(() {
-          $varName = 'Failed';
-        });
+        return;
       }
     }
+    // Failed
+    setState(() {
+      $varName = 'Failed';
+    });
     ''';
   }
 }

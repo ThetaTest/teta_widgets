@@ -79,6 +79,7 @@ class MapElementControlState extends State<MapElementControl> {
             node: widget.node,
             value: widget.value.value,
             page: widget.page,
+            withConvertTo: false,
             title: 'Value',
             callBack: (final value, final old) {
               final newValue = widget.value.copyWith(value: value);

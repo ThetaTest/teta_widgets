@@ -16,6 +16,7 @@ import 'package:hovering/hovering.dart';
 import 'package:teta_core/src/design_system/textfield/minitextfield.dart';
 import 'package:teta_core/src/repositories/node.dart';
 import 'package:teta_core/teta_core.dart';
+import 'package:teta_widgets/src/elements/controls/atoms/actions/validator.dart';
 // Project imports:
 import 'package:teta_widgets/src/elements/controls/atoms/flag.dart';
 import 'package:teta_widgets/src/elements/controls/atoms/subapase/delete.dart';
@@ -372,6 +373,7 @@ class ActionElementControlState extends State<ActionElementControl> {
                   node: widget.node,
                   value: widget.element.condition ?? FTextTypeInput(),
                   page: widget.page,
+                  withConvertTo: false,
                   title: 'Condition',
                   callBack: (final value, final old) {
                     final old = widget.element;
@@ -387,6 +389,7 @@ class ActionElementControlState extends State<ActionElementControl> {
                     node: widget.node,
                     value: widget.element.valueOfCondition ?? FTextTypeInput(),
                     page: widget.page,
+                    withConvertTo: false,
                     title: 'Value',
                     callBack: (final value, final old) {
                       final old = widget.element;
@@ -651,6 +654,20 @@ class ActionElementControlState extends State<ActionElementControl> {
                   },
                 ),
               const Gap(Grid.small),
+              if (widget.element.actionType == ActionType.state &&
+                  (widget.element.actionState == ActionState.emailValidator ||
+                      widget.element.actionState ==
+                          ActionState.passwordValidator ||
+                      widget.element.actionState ==
+                          ActionState.websiteValidator ||
+                      widget.element.actionState == ActionState.phoneValidator))
+                AValidatorControl(
+                  page: widget.page,
+                  action: widget.element,
+                  callback: (final value, final old) {
+                    widget.callBack(value, old);
+                  },
+                ),
               if ((widget.element.actionType == ActionType.state &&
                       widget.element.actionState == ActionState.changeWith) ||
                   (widget.element.actionType == ActionType.translator &&
@@ -673,16 +690,18 @@ class ActionElementControlState extends State<ActionElementControl> {
                       .toList(),
                   onChange: (final newValue) {
                     if (newValue != null) {
-                      final old = widget.element;
-                      widget.element.stateName = newValue;
-                      widget.callBack(widget.element, old);
+                      try {
+                        final old = widget.element;
+                        widget.element.stateName = newValue;
+                        widget.callBack(widget.element, old);
+                      } catch (e) {}
                     }
                   },
                 ),
               const Gap(Grid.small),
               if (widget.element.actionType == ActionType.state &&
-                  widget.element.actionState != ActionState.changeWith &&
-                  widget.element.actionState != ActionState.changeWithParams)
+                  widget.element.actionState == ActionState.increment &&
+                  widget.element.actionState == ActionState.decrement)
                 Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
@@ -863,24 +882,83 @@ class ActionElementControlState extends State<ActionElementControl> {
                   },
                 ),
               if (widget.element.actionType == ActionType.braintree)
-                CDropdown(
-                  value: FActionElement.convertValueToDropdown(
-                    widget.element.actionBraintree,
-                  ),
-                  items: FActionElement.getBraintree(widget.prj.config)
-                      .toSet()
-                      .toList(),
-                  onChange: (final newValue) {
-                    if (newValue != null) {
-                      final old = widget.element;
-                      widget.element.actionBraintree =
-                          FActionElement.convertDropdownToValue(
-                        ActionBraintree.values,
-                        newValue,
-                      ) as ActionBraintree?;
-                      widget.callBack(widget.element, old);
-                    }
-                  },
+                Column(
+                  children: [
+                    CDropdown(
+                      value: FActionElement.convertValueToDropdown(
+                        widget.element.actionBraintree,
+                      ),
+                      items: FActionElement.getBraintree(widget.prj.config)
+                          .toSet()
+                          .toList(),
+                      onChange: (final newValue) {
+                        if (newValue != null) {
+                          final old = widget.element;
+                          widget.element.actionBraintree =
+                              FActionElement.convertDropdownToValue(
+                            ActionBraintree.values,
+                            newValue,
+                          ) as ActionBraintree?;
+                          widget.callBack(widget.element, old);
+                        }
+                      },
+                    ),
+                    const Gap(Grid.medium),
+                    SizedBox(
+                      width: double.maxFinite,
+                      child: descriptionControlWidget(
+                        description: 'e.g. 4.20',
+                        control: TextControl(
+                          node: widget.node,
+                          value: widget.element.valueTextTypeInput ??
+                              FTextTypeInput(),
+                          page: widget.page,
+                          title: 'Amount',
+                          withConvertTo: false,
+                          callBack: (final value, final old) {
+                            final old = widget.element;
+                            widget.element.valueTextTypeInput = value;
+                            widget.element.valueOfCondition = value;
+                            widget.callBack(widget.element, old);
+                          },
+                        ),
+                      ),
+                    ),
+                    const Gap(Grid.medium),
+                    const THeadline3(
+                      'Choose a variable to save the status of the operation',
+                    ),
+                    TDetailLabel(
+                      "The selected variable is set to 'Loading' during the operation, to 'Successful' if the payment is successful and to 'Failed' if it is not successful. The variable must be of String type.",
+                      color: Palette.txtPrimary.withOpacity(0.6),
+                    ),
+                    const Gap(Grid.small),
+                    CDropdown(
+                      value: widget.page.states
+                                  .map((final e) => e.name)
+                                  .where((final element) => element != 'null')
+                                  .toList()
+                                  .indexWhere(
+                                    (final e) => e == widget.element.stateName,
+                                  ) !=
+                              -1
+                          ? widget.element.stateName
+                          : null,
+                      items: widget.page.states
+                          .map((final e) => e.name)
+                          .where((final element) => element != 'null')
+                          .toList(),
+                      onChange: (final newValue) {
+                        if (newValue != null) {
+                          try {
+                            final old = widget.element;
+                            widget.element.stateName = newValue;
+                            widget.callBack(widget.element, old);
+                          } catch (e) {}
+                        }
+                      },
+                    ),
+                  ],
                 ),
               if (widget.element.actionType == ActionType.stripe)
                 CDropdown(
@@ -1002,6 +1080,7 @@ class ActionElementControlState extends State<ActionElementControl> {
                             FTextTypeInput(),
                         page: widget.page,
                         title: 'Value',
+                        withConvertTo: false,
                         callBack: (final value, final old) {
                           final old = widget.element;
                           widget.element.valueTextTypeInput = value;

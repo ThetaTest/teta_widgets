@@ -18,6 +18,15 @@ String visibilityCodeTemplate(
   final value = abstract.toCode(loop);
   final visibility = value == 'true' ? 'true' : 'false';
 
+  if (visibility == 'true') {
+    return CS.child(
+      context,
+      child,
+      comma: false,
+      withChild: false,
+    );
+  }
+
   return '''
     Visibility(
       visible: $visibility,

@@ -49,7 +49,7 @@ String tCardBuilderCodeTemplate(
     '(info.direction == SwipDirection.Right)',
     null,
     loop: loop,
-    isRequired: false,
+    isRequired: true,
     endsWithComma: false,
   )}
   ${CS.action(
@@ -60,7 +60,7 @@ String tCardBuilderCodeTemplate(
     'else',
     null,
     loop: loop,
-    isRequired: false,
+    isRequired: true,
     endsWithComma: false,
   )}
         },

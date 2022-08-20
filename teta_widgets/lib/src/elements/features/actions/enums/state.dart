@@ -5,4 +5,8 @@ enum ActionState {
   decrement,
   changeWith,
   changeWithParams,
+  emailValidator,
+  phoneValidator,
+  websiteValidator,
+  passwordValidator,
 }

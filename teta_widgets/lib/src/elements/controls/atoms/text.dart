@@ -25,6 +25,7 @@ class TextControl extends StatefulWidget {
     required this.page,
     required this.title,
     required this.callBack,
+    required this.withConvertTo,
     this.isSubControl = false,
     this.remove,
     final Key? key,
@@ -35,6 +36,7 @@ class TextControl extends StatefulWidget {
   final PageObject page;
   final String title;
   final bool isSubControl;
+  final bool withConvertTo;
   final Function(FTextTypeInput, FTextTypeInput) callBack;
   final Function()? remove;
 
@@ -73,9 +75,6 @@ class PaddingsState extends State<TextControl> {
 
   @override
   Widget build(final BuildContext context) {
-    Logger.printMessage(
-      '''${(BlocProvider.of<FocusProjectBloc>(context).state as ProjectLoaded).prj.config?.appLanguage?.languages}''',
-    );
     final index = widget.page.datasets.indexWhere(
       (final element) => element.getName == widget.value.datasetName,
     );
@@ -462,6 +461,7 @@ class PaddingsState extends State<TextControl> {
                         page: widget.page,
                         title: '',
                         isSubControl: true,
+                        withConvertTo: true,
                         callBack: (final value, final old) {
                           final old = widget.value;
                           element = value;
@@ -476,7 +476,7 @@ class PaddingsState extends State<TextControl> {
                   ],
                 ),
               )
-            else
+            else if (widget.withConvertTo)
               Column(
                 mainAxisSize: MainAxisSize.min,
                 crossAxisAlignment: CrossAxisAlignment.start,

@@ -48,7 +48,11 @@ import 'package:teta_widgets/src/elements/actions/revenue_cat/buy.dart';
 import 'package:teta_widgets/src/elements/actions/state/change_with.dart';
 import 'package:teta_widgets/src/elements/actions/state/change_with_param.dart';
 import 'package:teta_widgets/src/elements/actions/state/decrement.dart';
+import 'package:teta_widgets/src/elements/actions/state/email_validator.dart';
 import 'package:teta_widgets/src/elements/actions/state/increment.dart';
+import 'package:teta_widgets/src/elements/actions/state/password_validator.dart';
+import 'package:teta_widgets/src/elements/actions/state/phone_validator.dart';
+import 'package:teta_widgets/src/elements/actions/state/website_validator.dart';
 import 'package:teta_widgets/src/elements/actions/stripe/buy.dart';
 import 'package:teta_widgets/src/elements/actions/stripe/stripe_add_list_item_to_cart.dart';
 import 'package:teta_widgets/src/elements/actions/stripe/stripe_cart_buy_all.dart';
@@ -108,6 +112,7 @@ class FActionElement extends Equatable {
     this.actionAudioPlayer,
     this.prodId,
     this.stateName,
+    this.stateName2,
     this.nameOfPage,
     this.paramsToSend,
     this.value,
@@ -188,6 +193,7 @@ class FActionElement extends Equatable {
         convertDropdownToValue(ActionTetaCmsAuth.values, doc['aTAu'] as String?)
             as ActionTetaCmsAuth?;
     stateName = doc['sN'] as String?;
+    stateName2 = doc['sN2'] as String?;
     nameOfPage = doc['pN'] as String?;
     paramsToSend = doc['pTS'] as Map<String, dynamic>?;
     valueTextTypeInput =
@@ -259,6 +265,7 @@ class FActionElement extends Equatable {
 
   String? prodId;
   String? stateName;
+  String? stateName2;
   String? nameOfPage;
   String? nameOfDataset;
   Map<String, dynamic>? paramsToSend;
@@ -314,9 +321,7 @@ class FActionElement extends Equatable {
           if (kDebugMode) 'Custom Functions',
           if (config.supabaseEnabled ?? false) 'Supabase auth',
           if (config.supabaseEnabled ?? false) 'Supabase database',
-          if (config.braintreeClientToken != null ||
-              (config.braintreeClientToken?.isNotEmpty ?? false))
-            'Braintree',
+          if (config.isBraintreeReady) 'Braintree',
           if (config.isRevenueCatEnabled) 'RevenueCat',
           if (config.isStripeEnabled) 'Stripe',
           if ((page.flatList ?? <CNode>[]).indexWhere(
@@ -384,8 +389,7 @@ class FActionElement extends Equatable {
 
   static List<String> getBraintree(final ProjectConfig? config) {
     if (config != null) {
-      if (config.braintreeClientToken != null &&
-          (config.braintreeClientToken?.isNotEmpty ?? false)) {
+      if (config.isBraintreeReady) {
         return enumsToListString(ActionBraintree.values);
       }
     }
@@ -522,6 +526,7 @@ class FActionElement extends Equatable {
         'aTDb': convertValueToDropdown(actionTetaDB),
         'aTAu': convertValueToDropdown(actionTetaAuth),
         'sN': stateName,
+        'sN2': stateName2,
         'pTS': paramsToSend,
         'pN': nameOfPage,
         'v': value,
@@ -941,6 +946,66 @@ class FActionElement extends Equatable {
                 params,
                 stateName,
                 this.value,
+              ),
+              context: context,
+              params: params,
+              states: states,
+              dataset: dataset,
+              loop: loop,
+            );
+            break;
+          case ActionState.emailValidator:
+            await actionS(
+              () => FActionEmailValidator.action(
+                context: context,
+                states: states,
+                stateName: stateName,
+                stateName2: stateName2,
+              ),
+              context: context,
+              params: params,
+              states: states,
+              dataset: dataset,
+              loop: loop,
+            );
+            break;
+          case ActionState.passwordValidator:
+            await actionS(
+              () => FActionPasswordValidator.action(
+                context: context,
+                states: states,
+                stateName: stateName,
+                stateName2: stateName2,
+              ),
+              context: context,
+              params: params,
+              states: states,
+              dataset: dataset,
+              loop: loop,
+            );
+            break;
+          case ActionState.websiteValidator:
+            await actionS(
+              () => FActionWebsiteValidator.action(
+                context: context,
+                states: states,
+                stateName: stateName,
+                stateName2: stateName2,
+              ),
+              context: context,
+              params: params,
+              states: states,
+              dataset: dataset,
+              loop: loop,
+            );
+            break;
+          case ActionState.phoneValidator:
+            await actionS(
+              () => FActionPhoneValidator.action(
+                context: context,
+                states: states,
+                stateName: stateName,
+                stateName2: stateName2,
               ),
               context: context,
               params: params,
@@ -1644,7 +1709,13 @@ class FActionElement extends Equatable {
         switch (actionBraintree) {
           case ActionBraintree.pay:
             return codeS(
-              FActionBraintreeBuy.toCode(context, pageId, stateName),
+              FActionBraintreeBuy.toCode(
+                context,
+                pageId,
+                valueTextTypeInput,
+                stateName,
+                loop: loop,
+              ),
               context,
             );
           default:
@@ -1740,7 +1811,49 @@ class FActionElement extends Equatable {
               ),
               context,
             );
+          case ActionState.emailValidator:
+            return codeS(
+              FActionEmailValidator.toCode(
+                pageId: pageId,
+                context: context,
+                stateName: stateName,
+                stateName2: stateName2,
+              ),
+              context,
+            );
+          case ActionState.passwordValidator:
+            return codeS(
+              FActionPasswordValidator.toCode(
+                pageId: pageId,
+                context: context,
+                stateName: stateName,
+                stateName2: stateName2,
+              ),
+              context,
+            );
+          case ActionState.websiteValidator:
+            return codeS(
+              FActionWebsiteValidator.toCode(
+                pageId: pageId,
+                context: context,
+                stateName: stateName,
+                stateName2: stateName2,
+              ),
+              context,
+            );
+          case ActionState.phoneValidator:
+            return codeS(
+              FActionPhoneValidator.toCode(
+                pageId: pageId,
+                context: context,
+                stateName: stateName,
+                stateName2: stateName2,
+              ),
+              context,
+            );
           case null:
+            return '';
+          default:
             return '';
         }
       case ActionType.navigation:

@@ -11,10 +11,20 @@ String sizedBoxCodeTemplate(
   final NodeBody body,
   final CNode? child,
 ) {
+  final width = CS.size(context, body, isWidth: true);
+  final height = CS.size(context, body, isWidth: false);
+  if (width.isEmpty && height.isEmpty) {
+    return CS.child(
+      context,
+      child,
+      comma: false,
+      withChild: false,
+    );
+  }
   return '''
     SizedBox(
-      ${CS.size(context, body, isWidth: true)}
-      ${CS.size(context, body, isWidth: false)}
+      $width
+      $height
       ${CS.child(context, child, comma: true)}
     )
   ''';

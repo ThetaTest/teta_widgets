@@ -19,11 +19,9 @@ class FActionTranslatorTranslate {
     final index =
         states.indexWhere((final element) => element.name == stateName);
     if (index != -1) {
-      if (states[index].value is String) {
-        BlocProvider.of<TranslatorGeneratorCubit>(context)
-            .state
-            .translate(states[index].value as String);
-      }
+      BlocProvider.of<TranslatorGeneratorCubit>(context)
+          .state
+          .translate(states[index].get as String? ?? 'en');
     }
   }
 
@@ -32,15 +30,17 @@ class FActionTranslatorTranslate {
     final int pageId,
     final String? stateName,
   ) {
+    if (stateName == null) return '';
+
     final page = getPageOnToCode(pageId, context);
     if (page == null) return '';
-    final variable = takeStateFrom(page, stateName!);
+    final variable = takeStateFrom(page, stateName);
     if (variable == null) return '';
 
     final varName = ReCase(stateName).camelCase;
 
     return '''
-    BlocProvider.of<TranslatorGeneratorCubit>(context).state.translate($varName);
+    TranslatorGenerator.instance.translate($varName);
     ''';
   }
 }

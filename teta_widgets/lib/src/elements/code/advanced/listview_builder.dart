@@ -53,7 +53,7 @@ String listViewBuilderCodeTemplate(
     '(isTop)',
     null,
     loop: loop,
-    isRequired: false,
+    isRequired: true,
     endsWithComma: false,
   )}
             ${CS.action(
@@ -64,7 +64,7 @@ String listViewBuilderCodeTemplate(
     'else',
     null,
     loop: loop,
-    isRequired: false,
+    isRequired: true,
     endsWithComma: false,
   )}
           }

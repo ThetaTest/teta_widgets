@@ -813,6 +813,7 @@ class ControlBuilder {
           page: page,
           title: control.title ?? 'Value',
           value: control.value as FTextTypeInput,
+          withConvertTo: false,
           callBack: (final value, final old) => ControlBuilder.toDB(
             prj,
             page,

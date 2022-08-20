@@ -154,21 +154,10 @@ String pageCodeTemplate(
       : 'State<Page${pageNameRC.pascalCase}>';
 
   return '''
-    import 'package:flutter/material.dart';
-    import 'package:myapp/src/pages/index.dart';
-    import 'package:myapp/src/teta_files/teta_theme.dart';
-    import 'package:myapp/src/teta_files/theme_cubit.dart';
-    import 'package:flutter_bloc/flutter_bloc.dart';
-    import 'package:collection/collection.dart';
-    ${page.isPage ? "import 'package:myapp/src/components/index.dart';" : ''}
+    import 'package:myapp/src/teta_files/imports.dart';
     ${page.isAuthenticatedRequired ? "import 'package:myapp/auth/auth_required_state.dart';" : "import 'package:myapp/auth/auth_state.dart';"}
-    import 'package:http/http.dart' as http;
-    import 'package:google_fonts/google_fonts.dart';
-    import 'package:sizer/sizer.dart';
-    import 'package:teta_cms/teta_cms.dart';
-    import 'package:cross_file/cross_file.dart';
+    
     ${PackagesService.instance.getToCodePackages()}
-
 
     class Page${pageNameRC.pascalCase} extends StatefulWidget {
       const Page${pageNameRC.pascalCase}({Key? key, ${parametersString.toString()}}) : super(key: key);

@@ -47,26 +47,30 @@ class FASupabaseInsert {
             context,
           );
         } else {
-          map[e.key] = int.tryParse(e.value.get(
-            params,
-            states,
-            dataset,
-            true,
-            loop,
-            context,
-          ));
+          map[e.key] = int.tryParse(
+            e.value.get(
+              params,
+              states,
+              dataset,
+              true,
+              loop,
+              context,
+            ),
+          );
         }
       }
       final response = await client
-          .from(supabaseFrom?.get(
-                params,
-                states,
-                dataset,
-                true,
-                loop,
-                context,
-              ) ??
-              '')
+          .from(
+            supabaseFrom?.get(
+                  params,
+                  states,
+                  dataset,
+                  true,
+                  loop,
+                  context,
+                ) ??
+                '',
+          )
           .insert(
             map,
             returning: ReturningOption.minimal,

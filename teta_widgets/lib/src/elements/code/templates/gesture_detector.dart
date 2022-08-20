@@ -13,9 +13,7 @@ String gestureDetectorCodeTemplate(
   final CNode? child,
   final int loop,
 ) {
-  return '''
-  GestureDetector(
-    ${CS.action(
+  final onTap = CS.action(
     pageId,
     context,
     node,
@@ -24,8 +22,8 @@ String gestureDetectorCodeTemplate(
     null,
     isRequired: false,
     loop: loop,
-  )}
-    ${CS.action(
+  );
+  final onDoubleTap = CS.action(
     pageId,
     context,
     node,
@@ -34,8 +32,8 @@ String gestureDetectorCodeTemplate(
     null,
     isRequired: false,
     loop: loop,
-  )}
-    ${CS.action(
+  );
+  final onLongPress = CS.action(
     pageId,
     context,
     node,
@@ -44,7 +42,20 @@ String gestureDetectorCodeTemplate(
     null,
     isRequired: false,
     loop: loop,
-  )}
+  );
+  if (onTap.isEmpty && onDoubleTap.isEmpty && onLongPress.isEmpty) {
+    return CS.child(
+      context,
+      child,
+      comma: false,
+      withChild: false,
+    );
+  }
+  return '''
+  GestureDetector(
+    $onTap
+    $onDoubleTap
+    $onLongPress
     ${CS.child(context, child, comma: true)}
   )
   ''';

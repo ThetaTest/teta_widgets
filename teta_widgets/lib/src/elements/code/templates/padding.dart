@@ -12,8 +12,13 @@ String paddingCodeTemplate(
   final CNode? child,
 ) {
   final padding = CS.margin(context, body, isMargin: false);
-  if (padding == '' && CS.child(context, child, comma: true) == '') {
-    return '';
+  if (padding == 'padding: EdgeInsets.zero,') {
+    return CS.child(
+      context,
+      child,
+      comma: false,
+      withChild: false,
+    );
   }
   return '''
     Padding(

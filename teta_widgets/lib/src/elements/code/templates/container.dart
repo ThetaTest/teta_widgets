@@ -12,10 +12,14 @@ String containerCodeTemplate(
   final NodeBody body,
   final CNode? child,
 ) {
+  var margin = CS.margin(context, body, isMargin: true);
+  if (margin == 'margin: EdgeInsets.zero,') margin = '';
+  var padding = CS.margin(context, body, isMargin: false);
+  if (padding == 'padding: EdgeInsets.zero,') padding = '';
   return '''
     Container(
-      ${CS.margin(context, body, isMargin: true)}
-      ${CS.margin(context, body, isMargin: false)}
+      $margin
+      $padding
       ${CS.size(context, body, isWidth: true)}
       ${CS.size(context, body, isWidth: false)}
       ${CS.boxDecoration(context, body, DBKeys.fill)}

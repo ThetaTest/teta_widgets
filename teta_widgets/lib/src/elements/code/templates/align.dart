@@ -11,6 +11,15 @@ String alignCodeTemplate(
   final NodeBody body,
   final CNode? child,
 ) {
+  final align = CS.align(context, body);
+  if (align.isEmpty) {
+    return CS.child(
+      context,
+      child,
+      comma: false,
+      withChild: false,
+    );
+  }
   return '''
     Align(
       ${CS.align(context, body)}

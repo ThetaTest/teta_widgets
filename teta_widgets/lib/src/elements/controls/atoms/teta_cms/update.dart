@@ -84,6 +84,7 @@ class TetaCmsUpdateControl extends StatelessWidget {
             value: action.dbFrom ?? FTextTypeInput(),
             page: page,
             title: 'Document Id',
+            withConvertTo: false,
             callBack: (final value, final old) {
               action.dbFrom = value;
               callback();

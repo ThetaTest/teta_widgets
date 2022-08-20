@@ -16,7 +16,16 @@ String rotatedBoxCodeTemplate(
 ) {
   final abstract = body.attributes[DBKeys.value] as FTextTypeInput;
   final value = abstract.toCode(loop);
-  final rotation = int.tryParse(value) != null ? int.parse(value) : '1';
+  final rotation = int.tryParse(value) != null ? int.parse(value) : 1;
+
+  if (rotation == 1) {
+    return CS.child(
+      context,
+      child,
+      comma: false,
+      withChild: false,
+    );
+  }
 
   return '''
     RotatedBox(
