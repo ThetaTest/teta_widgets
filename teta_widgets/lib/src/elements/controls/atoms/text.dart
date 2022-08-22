@@ -180,6 +180,7 @@ class PaddingsState extends State<TextControl> {
                     }
                     final old = widget.value;
                     final newValue = widget.value..type = typeOfInput;
+                    widget.value.type = typeOfInput;
                     widget.callBack(newValue, old);
                   },
                 ),
@@ -214,6 +215,7 @@ class PaddingsState extends State<TextControl> {
                       final old = widget.value;
                       widget.value.value =
                           controller.text.replaceAll(r'\', r'\\');
+
                       widget.callBack(widget.value, old);
                       setState(() {
                         isChanged = false;
@@ -311,8 +313,7 @@ class PaddingsState extends State<TextControl> {
                   setState(() {});
                 },
               ),
-            if (widget.value.type == FTextTypeEnum.dataset &&
-                widget.page.datasets.isNotEmpty)
+            if (widget.value.type == FTextTypeEnum.dataset)
               CDropdown(
                 value: widget.page.datasets
                         .map((final e) => e.getName)

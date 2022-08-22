@@ -190,6 +190,7 @@ class ControlBuilder {
         value: value,
         old: old,
       );
+      BlocProvider.of<RefreshCubit>(context).change();
     } catch (e) {
       if (kDebugMode) {
         // ignore: avoid_print
@@ -324,12 +325,13 @@ class ControlBuilder {
         description: control.description,
         control: CMSCollectionControl(
           key: ValueKey(
-            '${node.nid} ${(control.value as FTextTypeInput).value}',
+            '${node.nid} ${(node.body.attributes[control.key] as FTextTypeInput).value}',
           ),
           node: node,
-          collectionId: (control.value as FTextTypeInput).value ?? '',
+          collectionId:
+              (node.body.attributes[control.key] as FTextTypeInput).value ?? '',
           callBack: (final value, final old) {
-            Logger.printWarning('value: $value, old: $old');
+            node.body.attributes[control.key] = FTextTypeInput(value: value);
             ControlBuilder.toDB(
               prj,
               page,
@@ -339,7 +341,6 @@ class ControlBuilder {
               FTextTypeInput(value: value).toJson(),
               FTextTypeInput(value: old).toJson(),
             );
-            BlocProvider.of<RefreshCubit>(context).change();
           },
         ),
       );

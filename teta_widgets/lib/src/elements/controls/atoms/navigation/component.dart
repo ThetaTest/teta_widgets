@@ -95,6 +95,8 @@ class ComponentControlState extends State<ComponentControl> {
                     as String?;
                 pageObject = components
                     .firstWhere((final element) => element.name == newValue);
+                widget.node.body.attributes[DBKeys.componentName] =
+                    pageObject!.name;
                 setState(() {
                   dropdown = newValue;
                   name = '${pageObject!.id}';
@@ -127,7 +129,10 @@ class ComponentControlState extends State<ComponentControl> {
                               variable: variable,
                               page: widget.page,
                               map: map,
-                              callBackParameters: widget.callBackParameters,
+                              callBackParameters: (final map) {
+                                widget.node.body
+                                    .attributes[DBKeys.paramsToSend] = map;
+                              },
                             ),
                           )
                           .toList(),
