@@ -334,6 +334,7 @@ class ColorControlState extends State<LinearFillControl> {
         return ColorPickerDialog(
           context: context,
           color: tempColor!,
+          fill: widget.fill,
           callback: (final color) {
             controller.text = color.value.toRadixString(16).substring(2, 8);
             _updateColor(color);

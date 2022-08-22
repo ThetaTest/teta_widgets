@@ -96,19 +96,13 @@ class WListView extends StatelessWidget {
           itemCount: children.isEmpty ? 1 : children.length + 1,
           itemBuilder: (final context, final index) {
             return children.isNotEmpty
-                ? index == children.length
-                    ? PlaceholderChildBuilder(
-                        name: node.intrinsicState.displayName,
-                        node: node,
-                        forPlay: forPlay,
-                      )
-                    : children[index].toWidget(
-                        loop: loop,
-                        forPlay: forPlay,
-                        params: params,
-                        states: states,
-                        dataset: dataset,
-                      )
+                ? children[index].toWidget(
+                    loop: loop,
+                    forPlay: forPlay,
+                    params: params,
+                    states: states,
+                    dataset: dataset,
+                  )
                 : PlaceholderChildBuilder(
                     name: node.intrinsicState.displayName,
                     node: node,

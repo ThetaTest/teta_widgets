@@ -8,7 +8,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 // Package imports:
 import 'package:teta_cms/teta_cms.dart';
-import 'package:teta_core/src/design_system/dialogs/privacy_terms_dialog.dart';
 import 'package:teta_core/src/services/track_service.dart';
 import 'package:teta_core/teta_core.dart';
 import 'package:teta_widgets/src/elements/actions/navigation/open_page.dart';
@@ -33,6 +32,7 @@ class FATetaCMSLogin {
     // final page = BlocProvider.of<FocusPageBloc>(context).state;
     // final status = takeStateFrom(page, 'status');
 
+    /*
     await showDialog<void>(
       barrierDismissible: false,
       context: context,
@@ -40,6 +40,7 @@ class FATetaCMSLogin {
         config: prj.config!,
       ),
     );
+    */
 
     await TrackService.instance.track(
       eventName: 'Teta Auth: login in Teta',

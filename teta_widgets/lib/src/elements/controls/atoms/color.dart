@@ -195,6 +195,7 @@ class SingleColorControlState extends State<SingleColorControl> {
         return ColorPickerDialog(
           context: context,
           color: tempColor!,
+          fill: null,
           callback: updateColor,
         );
       },

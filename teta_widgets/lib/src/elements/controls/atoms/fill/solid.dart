@@ -258,11 +258,16 @@ class SolidFillControlState extends State<SolidFillControl> {
   void showPicker(final BuildContext context) {
     showDialog<void>(
       context: context,
-      builder: (final context) {
-        return ColorPickerDialog(
-          context: context,
-          color: tempColor!,
-          callback: updateColor,
+      builder: (final c) {
+        final bloc = BlocProvider.of<PaletteBloc>(context);
+        return BlocProvider.value(
+          value: bloc,
+          child: ColorPickerDialog(
+            context: context,
+            color: tempColor!,
+            fill: widget.fill!,
+            callback: updateColor,
+          ),
         );
       },
     );

@@ -45,24 +45,17 @@ class WColumn extends StatelessWidget {
         mainAxisAlignment: mainAxisAlignment.get,
         crossAxisAlignment: crossAxisAlignment.get,
         children: children.isNotEmpty
-            ? [
-                ...children
-                    .map(
-                      (final e) => e.toWidget(
-                        loop: loop,
-                        forPlay: forPlay,
-                        params: params,
-                        states: states,
-                        dataset: dataset,
-                      ),
-                    )
-                    .toList(),
-                PlaceholderChildBuilder(
-                  name: node.intrinsicState.displayName,
-                  node: node,
-                  forPlay: forPlay,
-                ),
-              ]
+            ? children
+                .map(
+                  (final e) => e.toWidget(
+                    loop: loop,
+                    forPlay: forPlay,
+                    params: params,
+                    states: states,
+                    dataset: dataset,
+                  ),
+                )
+                .toList()
             : [
                 PlaceholderChildBuilder(
                   name: node.intrinsicState.displayName,
