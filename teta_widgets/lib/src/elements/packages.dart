@@ -75,11 +75,6 @@ const PackageModel pConcentricTransition = PackageModel(
   packageVersion: '1.0.3',
   isDart: false,
 );
-const PackageModel pMaterialDesignIconsFlutter = PackageModel(
-  packageName: 'material_design_icons_flutter',
-  packageVersion: '5.0.6595',
-  isDart: false,
-);
 //unused
 const PackageModel pLiquidSwipe = PackageModel(
   packageName: 'liquid_swipe',
