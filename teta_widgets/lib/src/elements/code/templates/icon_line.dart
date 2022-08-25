@@ -15,7 +15,7 @@ String iconLineCodeTemplate(
   final CNode? child,
   final int? loop,
 ) {
-  final icon = body.attributes[DBKeys.lineIcon] as String;
+  final icon = node.body.attributes[DBKeys.lineIcon] as String;
   final fill = FFill.toCode(
     body.attributes[DBKeys.fill] as FFill,
     context,

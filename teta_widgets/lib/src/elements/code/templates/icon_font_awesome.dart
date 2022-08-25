@@ -15,7 +15,7 @@ String iconFontAwesomeCodeTemplate(
   final CNode? child,
   final int? loop,
 ) {
-  final icon = body.attributes[DBKeys.faIcon] as String;
+  final icon = node.body.attributes[DBKeys.faIcon] as String;
   final fill = FFill.toCode(
     body.attributes[DBKeys.fill] as FFill,
     context,

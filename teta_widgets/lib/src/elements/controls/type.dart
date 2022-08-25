@@ -646,7 +646,7 @@ class ControlBuilder {
           node: node,
           icon: control.value as String,
           callBack: (final value, final old) {
-            node.body.attributes[DBKeys.icon] = value;
+            node.body.attributes[control.key] = value;
             ControlBuilder.toDB(
               prj,
               page,
@@ -668,7 +668,7 @@ class ControlBuilder {
           node: node,
           icon: control.value as String,
           callBack: (final value, final old) {
-            node.body.attributes[DBKeys.icon] = value;
+            node.body.attributes[control.key] = value;
             ControlBuilder.toDB(
               prj,
               page,
@@ -690,7 +690,7 @@ class ControlBuilder {
           node: node,
           icon: control.value as String,
           callBack: (final value, final old) {
-            node.body.attributes[DBKeys.icon] = value;
+            node.body.attributes[control.key] = value;
             ControlBuilder.toDB(
               prj,
               page,
@@ -712,7 +712,7 @@ class ControlBuilder {
           node: node,
           icon: control.value as String,
           callBack: (final value, final old) {
-            node.body.attributes[DBKeys.icon] = value;
+            node.body.attributes[control.key] = value;
             ControlBuilder.toDB(
               prj,
               page,
