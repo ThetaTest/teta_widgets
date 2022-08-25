@@ -501,15 +501,18 @@ class ControlBuilder {
           key: ValueKey('${node.nid}'),
           node: node,
           align: control.value as FAlign,
-          callBack: (final value, final old) => ControlBuilder.toDB(
-            prj,
-            page,
-            node,
-            context,
-            control.key,
-            value.toJson(),
-            old.toJson(),
-          ),
+          callBack: (final value, final old) {
+            node.body.attributes[control.key] = value;
+            ControlBuilder.toDB(
+              prj,
+              page,
+              node,
+              context,
+              control.key,
+              value.toJson(),
+              old.toJson(),
+            );
+          },
         ),
       );
     }
