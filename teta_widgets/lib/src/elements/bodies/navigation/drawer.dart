@@ -26,14 +26,14 @@ final drawerIntrinsicStates = IntrinsicStates(
   blockedTypes: [],
   synonymous: [],
   advicedChildrenCanHaveAtLeastAChild: [],
-  displayName: NodeType.name(_globalType),
+  displayName: 'Menu (Drawer)',
   type: _globalType,
   category: NodeCategories.unclassified,
   maxChildren: 1,
   canHave: ChildrenEnum.child,
   addChildLabels: ['Add Widget To Drawer'],
   gestures: [],
-  permissions:[],
+  permissions: [],
   packages: [],
 );
 

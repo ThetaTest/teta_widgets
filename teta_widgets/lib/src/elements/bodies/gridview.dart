@@ -38,12 +38,12 @@ final gridIntrinsicStates = IntrinsicStates(
   advicedChildrenCanHaveAtLeastAChild: [],
   displayName: NodeType.name(_globalType),
   type: _globalType,
-  category: NodeCategories.list,
+  category: NodeCategories.basic,
   maxChildren: null,
   canHave: ChildrenEnum.children,
   addChildLabels: [],
   gestures: [],
-  permissions:[],
+  permissions: [],
   packages: [],
 );
 

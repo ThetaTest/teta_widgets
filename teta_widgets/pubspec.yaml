@@ -20,8 +20,7 @@ dependencies:
 
   teta_cms:
     git:
-      url: https://github.com/teta-so/cms.git
-      path: teta_cms
+      url: https://github.com/teta-so/cms-dart.git
       ref: main
 
   flutter_polyline_points:
@@ -171,10 +170,10 @@ dev_dependencies:
   import_sorter: 4.6.0
 
 dependency_overrides:
-  teta_core:
-    path: ../../Teta/teta_core
-  teta_cms:
-    path: ../../teta-db
+#  teta_core:
+#    path: ../../Teta/teta_core
+#  teta_cms:
+#    path: ../../teta-db
 
 
 

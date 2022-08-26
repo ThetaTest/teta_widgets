@@ -12,6 +12,7 @@ import 'package:teta_widgets/src/elements/bodies/aspect_ratio.dart';
 import 'package:teta_widgets/src/elements/bodies/audio_player_body.dart';
 import 'package:teta_widgets/src/elements/bodies/audio_player_progress_indicator_body.dart';
 import 'package:teta_widgets/src/elements/bodies/audio_player_volume_indicator_body.dart';
+import 'package:teta_widgets/src/elements/bodies/auto_appbar.dart';
 import 'package:teta_widgets/src/elements/bodies/badge.dart';
 import 'package:teta_widgets/src/elements/bodies/barcode.dart';
 import 'package:teta_widgets/src/elements/bodies/bottombaritem.dart';
@@ -251,6 +252,7 @@ final stateTypes = <IntrinsicStates>[
   slideAnimationIntrinsicStates,
   qrIntrinsicStates,
   barcodeIntrinsicStates,
+  autoAppBarIntrinsicStates,
 ];
 
 /// Method to return any body
@@ -502,6 +504,8 @@ NodeBody getBody(final NType type) {
       return BarcodeBody();
     case NType.cmsCustomQuery:
       return CmsCustomQueryBody();
+    case NType.autoAppBar:
+      return AutoAppBarBody();
     case NType.listViewSeparated:
       break;
     case NType.nil:

@@ -47,7 +47,7 @@ final buttonIntrinsicStates = IntrinsicStates(
   advicedChildrenCanHaveAtLeastAChild: [],
   displayName: NodeType.name(_globalType),
   type: _globalType,
-  category: NodeCategories.input,
+  category: NodeCategories.basic,
   maxChildren: 0,
   canHave: ChildrenEnum.none,
   addChildLabels: [],

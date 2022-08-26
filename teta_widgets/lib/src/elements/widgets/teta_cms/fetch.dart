@@ -68,6 +68,7 @@ class WCmsFetch extends StatefulWidget {
 
 class _WCmsFetchState extends State<WCmsFetch> {
   bool isInitialized = false;
+  List<dynamic> list = <dynamic>[];
   DatasetObject _map = DatasetObject(
     name: 'Collection Query',
     map: [<String, dynamic>{}],
@@ -128,10 +129,12 @@ class _WCmsFetchState extends State<WCmsFetch> {
       showDrafts: widget.showDrafts,
     );
 
-    setState(() {
-      _addFetchDataToDataset(dbElements);
-      isInitialized = true;
-    });
+    if (mounted) {
+      setState(() {
+        list = dbElements;
+        isInitialized = true;
+      });
+    }
   }
 
   @override
@@ -143,6 +146,7 @@ class _WCmsFetchState extends State<WCmsFetch> {
   @override
   Widget build(final BuildContext context) {
     Widget? child;
+    _addFetchDataToDataset(list);
     if (isInitialized) {
       if (widget.children.isNotEmpty) {
         child = widget.children.first.toWidget(

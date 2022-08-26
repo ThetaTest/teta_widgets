@@ -3,6 +3,7 @@
 
 // Flutter imports:
 import 'package:flutter/material.dart';
+import 'package:gap/gap.dart';
 // Package imports:
 import 'package:teta_core/teta_core.dart';
 // Project imports:
@@ -12,59 +13,105 @@ class WAutoAppBar extends StatelessWidget {
   /// Constructor
   const WAutoAppBar(
     final Key? key, {
-    required final List<CNode> children,
-    required final CNode node,
-    required final bool forPlay,
-    required final List<VariableObject> params,
-    required final List<VariableObject> states,
-    required final List<DatasetObject> dataset,
-    final int? loop,
-  })  : _children = children,
-        _node = node,
-        _forPlay = forPlay,
-        _loop = loop,
-        _params = params,
-        _states = states,
-        _dataset = dataset,
-        super(key: key);
+    required final this.value,
+    required final this.style,
+    required final this.fill,
+    required final this.children,
+    required final this.node,
+    required final this.forPlay,
+    required final this.params,
+    required final this.states,
+    required final this.dataset,
+    required final this.loop,
+  }) : super(key: key);
 
-  final CNode _node;
-  final List<CNode> _children;
-  final bool _forPlay;
-  final int? _loop;
-  final List<VariableObject> _params;
-  final List<VariableObject> _states;
-  final List<DatasetObject> _dataset;
+  final FTextTypeInput value;
+  final FTextStyle style;
+  final FFill fill;
+  final CNode node;
+  final List<CNode> children;
+  final bool forPlay;
+  final int? loop;
+  final List<VariableObject> params;
+  final List<VariableObject> states;
+  final List<DatasetObject> dataset;
 
   @override
   Widget build(final BuildContext context) {
+    final childrenWidgets = children.isNotEmpty
+        ? children
+            .map(
+              (final e) => e.toWidget(
+                loop: loop,
+                forPlay: forPlay,
+                params: params,
+                states: states,
+                dataset: dataset,
+              ),
+            )
+            .toList()
+        : [
+            PlaceholderChildBuilder(
+              name: node.intrinsicState.displayName,
+              node: node,
+              forPlay: forPlay,
+            ),
+          ];
     return NodeSelectionBuilder(
-      node: _node,
-      forPlay: _forPlay,
-      child: Container(
+      node: node,
+      forPlay: forPlay,
+      child: TContainer(
         width: double.maxFinite,
         padding: EI.mdA,
+        decoration: TetaBoxDecoration.get(
+          context: context,
+          fill: fill.get(context),
+        ),
         child: SafeArea(
           child: Row(
-            children: _children.isNotEmpty
-                ? _children
-                    .map(
-                      (final e) => e.toWidget(
-                        loop: _loop,
-                        forPlay: _forPlay,
-                        params: _params,
-                        states: _states,
-                        dataset: _dataset,
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            children: [
+              Row(
+                children: [
+                  if (Navigator.canPop(context))
+                    GestureDetector(
+                      onTap: () {
+                        Navigator.pop(context);
+                      },
+                      child: Icon(
+                        Icons.chevron_left,
+                        color: HexColor(style.fill!.getHexColor(context)),
                       ),
                     )
-                    .toList()
-                : [
-                    PlaceholderChildBuilder(
-                      name: _node.intrinsicState.displayName,
-                      node: _node,
-                      forPlay: _forPlay,
+                  else
+                    GestureDetector(
+                      onTap: () {
+                        if (!Scaffold.of(context).isDrawerOpen) {
+                          Scaffold.of(context).openDrawer();
+                        }
+                      },
+                      child: Icon(
+                        Icons.menu,
+                        color: HexColor(style.fill!.getHexColor(context)),
+                      ),
                     ),
-                  ],
+                  const Gap(Grid.small),
+                  WText(
+                    this.key,
+                    value: value,
+                    node: node,
+                    textStyle: style,
+                    forPlay: forPlay,
+                    isFullWidth: false,
+                    params: params,
+                    states: states,
+                    dataset: dataset,
+                    maxLines: FTextTypeInput(value: '1'),
+                  ),
+                ],
+              ),
+              ...childrenWidgets,
+            ],
           ),
         ),
       ),

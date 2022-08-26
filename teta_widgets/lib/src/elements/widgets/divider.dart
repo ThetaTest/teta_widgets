@@ -46,7 +46,7 @@ class WDivider extends StatelessWidget {
       node: node,
       forPlay: forPlay,
       child: Divider(
-        height: height.get(context: context, isWidth: false),
+        thickness: height.get(context: context, isWidth: false),
         color: _getDividerColor(model, isLight),
       ),
     );

@@ -7,24 +7,21 @@ import 'package:teta_core/gen/assets.gen.dart';
 import 'package:teta_core/src/models/dataset.dart';
 import 'package:teta_core/src/models/variable.dart';
 // Project imports:
-import 'package:teta_widgets/src/elements/code/templates/align.dart';
 import 'package:teta_widgets/src/elements/controls/control_model.dart';
 import 'package:teta_widgets/src/elements/controls/key_constants.dart';
 import 'package:teta_widgets/src/elements/controls/type.dart';
-import 'package:teta_widgets/src/elements/features/align.dart';
+import 'package:teta_widgets/src/elements/index.dart';
 import 'package:teta_widgets/src/elements/intrinsic_states/class.dart';
 import 'package:teta_widgets/src/elements/nodes/categories.dart';
 import 'package:teta_widgets/src/elements/nodes/children_enum.dart';
-import 'package:teta_widgets/src/elements/nodes/enum.dart';
-import 'package:teta_widgets/src/elements/nodes/node.dart';
 import 'package:teta_widgets/src/elements/nodes/node_body.dart';
-import 'package:teta_widgets/src/elements/widgets/align.dart';
+import 'package:teta_widgets/src/elements/widgets/auto_appbar.dart';
 
-const _globalType = NType.align;
+const _globalType = NType.autoAppBar;
 
 /// Instrict State of Align
-final alignIntrinsicStates = IntrinsicStates(
-  nodeIcon: Assets.wIcons.align,
+final autoAppBarIntrinsicStates = IntrinsicStates(
+  nodeIcon: Assets.wIcons.appbar,
   nodeVideo: null,
   nodeDescription: null,
   advicedChildren: [],
@@ -33,9 +30,9 @@ final alignIntrinsicStates = IntrinsicStates(
   advicedChildrenCanHaveAtLeastAChild: [],
   displayName: NodeType.name(_globalType),
   type: _globalType,
-  category: NodeCategories.advanced,
-  maxChildren: 1,
-  canHave: ChildrenEnum.child,
+  category: NodeCategories.basic,
+  maxChildren: 3,
+  canHave: ChildrenEnum.children,
   addChildLabels: [],
   gestures: [],
   permissions: [],
@@ -52,19 +49,36 @@ final alignIntrinsicStates = IntrinsicStates(
 ///   Widget? child
 /// })
 /// ```
-class AlignBody extends NodeBody {
+class AutoAppBarBody extends NodeBody {
   @override
   // ignore: overridden_fields
   Map<String, dynamic> attributes = <String, dynamic>{
-    DBKeys.align: FAlign(),
+    DBKeys.value: FTextTypeInput(value: 'text'),
+    DBKeys.textStyle: FTextStyle(),
+    DBKeys.fill: FFill(),
   };
 
   @override
   List<ControlModel> get controls => [
+        FillControlObject(
+          title: 'Background',
+          key: DBKeys.fill,
+          value: attributes[DBKeys.fill] as FFill,
+          isImageEnabled: false,
+          isNoneEnabled: true,
+          isOnlySolid: false,
+          isStyled: true,
+        ),
         ControlObject(
-          type: ControlType.align,
-          key: DBKeys.align,
-          value: attributes[DBKeys.align],
+          title: 'Page title',
+          type: ControlType.value,
+          key: DBKeys.value,
+          value: attributes[DBKeys.value],
+        ),
+        ControlObject(
+          type: ControlType.text,
+          key: DBKeys.textStyle,
+          value: attributes[DBKeys.textStyle],
         ),
       ];
 
@@ -79,18 +93,22 @@ class AlignBody extends NodeBody {
     final CNode? child,
     final List<CNode>? children,
   }) =>
-      WAlign(
+      WAutoAppBar(
         ValueKey(
           '''
           ${node.nid}
           $loop
             ${child ?? children}
-          ${(attributes[DBKeys.align] as FAlign).align}
+          ${(attributes[DBKeys.textStyle] as FTextStyle).toJson()}
+          ${(attributes[DBKeys.value] as FTextTypeInput).toJson()}
+          ${(attributes[DBKeys.fill] as FFill).toJson()}
         ''',
         ),
+        style: attributes[DBKeys.textStyle] as FTextStyle,
+        value: attributes[DBKeys.value] as FTextTypeInput,
+        fill: attributes[DBKeys.fill] as FFill,
         node: node,
-        child: child,
-        align: attributes[DBKeys.align] as FAlign,
+        children: children ?? <CNode>[],
         forPlay: forPlay,
         loop: loop,
         params: params,
@@ -107,5 +125,5 @@ class AlignBody extends NodeBody {
     final int pageId,
     final int? loop,
   ) =>
-      alignCodeTemplate(context, this, child);
+      '';
 }

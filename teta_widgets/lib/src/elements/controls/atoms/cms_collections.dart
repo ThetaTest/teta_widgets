@@ -47,7 +47,7 @@ class CMSCollectionControlState extends State<CMSCollectionControl> {
       listener: (final context, final state) {
         if (state.isNotEmpty) {
           if (state.first.nid != nodeId) {
-            setState(() async {
+            setState(() {
               isUpdated = true;
             });
             nodeId = state.first.nid;

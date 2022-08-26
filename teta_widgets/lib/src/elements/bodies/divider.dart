@@ -36,12 +36,12 @@ final dividerIntrinsicStates = IntrinsicStates(
   advicedChildrenCanHaveAtLeastAChild: [],
   displayName: NodeType.name(_globalType),
   type: _globalType,
-  category: NodeCategories.space,
+  category: NodeCategories.basic,
   maxChildren: 0,
   canHave: ChildrenEnum.none,
   addChildLabels: [],
   gestures: [],
-  permissions:[],
+  permissions: [],
   packages: [],
 );
 
@@ -50,7 +50,9 @@ class DividerBody extends NodeBody {
   @override
   // ignore: overridden_fields
   Map<String, dynamic> attributes = <String, dynamic>{
-    DBKeys.height: FSize(),
+    DBKeys.height: FSize(
+      size: '1.0',
+    ),
     DBKeys.fill: FFill(),
   };
 

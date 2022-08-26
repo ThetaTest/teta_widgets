@@ -190,7 +190,6 @@ class ControlBuilder {
         value: value,
         old: old,
       );
-      BlocProvider.of<RefreshCubit>(context).change();
     } catch (e) {
       if (kDebugMode) {
         // ignore: avoid_print

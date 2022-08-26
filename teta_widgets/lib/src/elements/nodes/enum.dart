@@ -6,6 +6,7 @@ import 'package:enum_to_string/enum_to_string.dart';
 
 enum NType {
   align,
+  autoAppBar,
   badge,
   button,
   center,

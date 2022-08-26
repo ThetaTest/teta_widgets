@@ -1,18 +1,20 @@
 // Flutter imports:
 import 'package:flutter/material.dart';
 // Package imports:
-import 'package:teta_core/gen/assets.gen.dart';
-import 'package:teta_core/src/models/dataset.dart';
-import 'package:teta_core/src/models/variable.dart';
+import 'package:teta_core/src/repositories/node.dart';
+import 'package:teta_core/teta_core.dart';
 // Project imports:
 import 'package:teta_widgets/src/elements/code/templates/navigation/appbar.dart';
 import 'package:teta_widgets/src/elements/controls/control_model.dart';
+import 'package:teta_widgets/src/elements/controls/key_constants.dart';
 import 'package:teta_widgets/src/elements/intrinsic_states/class.dart';
 import 'package:teta_widgets/src/elements/nodes/categories.dart';
 import 'package:teta_widgets/src/elements/nodes/children_enum.dart';
+import 'package:teta_widgets/src/elements/nodes/dynamic.dart';
 import 'package:teta_widgets/src/elements/nodes/enum.dart';
 import 'package:teta_widgets/src/elements/nodes/node.dart';
 import 'package:teta_widgets/src/elements/nodes/node_body.dart';
+import 'package:teta_widgets/src/elements/tips/schema.dart';
 import 'package:teta_widgets/src/elements/widgets/navigation/appbar.dart';
 
 const _globalType = NType.appBar;
@@ -33,7 +35,7 @@ final appBarIntrinsicStates = IntrinsicStates(
   canHave: ChildrenEnum.child,
   addChildLabels: ['Add AppBar Widget'],
   gestures: [],
-  permissions:[],
+  permissions: [],
   packages: [],
 );
 
@@ -45,6 +47,31 @@ class AppBarBody extends NodeBody {
 
   @override
   List<ControlModel> get controls => [];
+
+  List<TipObject> tips(
+    final BuildContext context,
+    final PageObject page,
+    final CNode node,
+  ) =>
+      [
+        TipObject(
+          isVisible: node.child == null,
+          title: 'Add Automatic AppBar',
+          description: 'Automatic AppBar is the default AppBar',
+          networkImage: '',
+          onTap: () {
+            NodeRepository.change(
+              nodeId: page.scaffold!.nid,
+              node: page.scaffold! as NDynamic,
+              pageId: page.id,
+              key: DBKeys.showAppBar,
+              value: true,
+              old: page.scaffold!.body.attributes[DBKeys.showAppBar] as bool,
+            );
+            page.scaffold!.body.attributes[DBKeys.showAppBar] = true;
+          },
+        )
+      ];
 
   @override
   Widget toWidget({

@@ -4,7 +4,6 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_feather_icons/flutter_feather_icons.dart';
 import 'package:gap/gap.dart';
 import 'package:hovering/hovering.dart';
-import 'package:teta_core/src/cubits/add_in_flag.dart';
 // Package imports:
 import 'package:teta_core/teta_core.dart';
 import 'package:teta_widgets/src/elements/index.dart';
@@ -31,7 +30,7 @@ class PlaceholderChildBuilder extends StatelessWidget {
     return BlocBuilder<AddInFlagCubit, bool>(
       builder: (final context, final state) {
         if (forPlay) return const SizedBox();
-        if (!state) return THeadline3(name);
+        //if (!state) return THeadline3(name);
         return Padding(
           padding: const EdgeInsets.all(16),
           child: BounceLarge(
