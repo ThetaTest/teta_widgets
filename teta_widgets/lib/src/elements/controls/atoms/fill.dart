@@ -152,7 +152,8 @@ class FillControlState extends State<FillControl> {
                         try {
                           final model =
                               BlocProvider.of<PaletteBloc>(context).state.first;
-                          final palette = widget.fill..paletteStyle = model.id;
+                          final palette = widget.fill
+                            ..paletteStyle = model.name;
                           widget.callBack(palette, false, widget.fill);
                         } catch (_) {}
                       }
@@ -175,6 +176,7 @@ class FillControlState extends State<FillControl> {
         if (widget.fill.paletteStyle != null) {
           BlocProvider.of<PaletteBloc>(context).state.forEach((final element) {
             if (element.id == widget.fill.paletteStyle) model = element;
+            if (element.name == widget.fill.paletteStyle) model = element;
           });
         }
         return model != null

@@ -981,9 +981,11 @@ class ControlBuilder {
             old.toJson(),
           );
         } else {
-          ColorStyleQueries.update(
-            PaletteModel(id: value.paletteStyle!, fill: value),
-          );
+          if (value.paletteStyle is int) {
+            ColorStyleQueries.update(
+              PaletteModel(id: value.paletteStyle! as int, fill: value),
+            );
+          }
         }
       },
     );

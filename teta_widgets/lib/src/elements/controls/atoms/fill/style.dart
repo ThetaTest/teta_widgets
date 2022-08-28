@@ -66,7 +66,7 @@ class StyleFillControlState extends State<StyleFillControl> {
                         if (element.name == value) model = element;
                       });
                       final old = FFill().fromJson(widget.fill.toJson());
-                      widget.fill.paletteStyle = model!.id;
+                      widget.fill.paletteStyle = model!.name;
                       widget.callBack(
                         widget.fill,
                         false,

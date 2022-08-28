@@ -241,9 +241,14 @@ class TextPrefabControl extends StatelessWidget {
                 old,
               );
             } else {
-              ColorStyleQueries.update(
-                PaletteModel(id: textStyle.fill!.paletteStyle!, fill: color),
-              );
+              if (textStyle.fill!.paletteStyle is int) {
+                ColorStyleQueries.update(
+                  PaletteModel(
+                    id: textStyle.fill!.paletteStyle! as int,
+                    fill: color,
+                  ),
+                );
+              }
             }
           },
         ),

@@ -75,7 +75,7 @@ class FFill {
   Alignment? center;
   double? radius;
   FBoxFit? boxFit;
-  int? paletteStyle;
+  dynamic paletteStyle;
   AssetFile? file;
 
   FFill get(final BuildContext context) {
@@ -95,6 +95,7 @@ class FFill {
       PaletteModel? model;
       BlocProvider.of<PaletteBloc>(context).state.forEach((final element) {
         if (element.id == paletteStyle) model = element;
+        if (element.name == paletteStyle) model = element;
       });
       if (model != null) {
         return isLight ? model!.light! : model!.fill!;
@@ -123,6 +124,7 @@ class FFill {
       PaletteModel? model;
       BlocProvider.of<PaletteBloc>(context).state.forEach((final element) {
         if (element.id == paletteStyle) model = element;
+        if (element.name == paletteStyle) model = element;
       });
       fill = (model != null) ? model!.fill! : FFill().ready(FFillType.solid);
     }
@@ -230,7 +232,7 @@ class FFill {
       );
     } else {
       return FFill(
-        paletteStyle: json['pltt'] as int,
+        paletteStyle: json['pltt'],
       );
     }
   }
@@ -321,7 +323,7 @@ class FFill {
     late PaletteModel currentPaletteElement;
     if (state.isNotEmpty) {
       for (final e in state) {
-        if (e.id == fill.paletteStyle) {
+        if (e.id == fill.paletteStyle || e.name == fill.paletteStyle) {
           currentPaletteElement = e;
         }
       }
