@@ -1,7 +1,6 @@
 // Flutter imports:
 // ignore_for_file: lines_longer_than_80_chars
 
-// Flutter imports:
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:purchases_flutter/purchases_flutter.dart';
@@ -11,21 +10,14 @@ import 'package:teta_core/teta_core.dart';
 import 'package:teta_widgets/src/elements/actions/snippets/get_page_on_code.dart';
 import 'package:teta_widgets/src/elements/actions/snippets/take_state_from.dart';
 import 'package:teta_widgets/src/elements/actions/snippets/update.dart';
-import 'package:teta_widgets/src/elements/index.dart';
 import 'package:universal_platform/universal_platform.dart';
 
-class FActionRevenueCatBuy {
+class FActionRevenueCatRestorePurchases {
   static Future action(
     final BuildContext context,
-    final FTextTypeInput? productIdentifier,
-    final List<VariableObject> params,
     final List<VariableObject> states,
-    final List<DatasetObject> datasets,
     final String? stateName,
-    final bool forPlay,
-    final int loop,
   ) async {
-    if (productIdentifier == null) return;
     if (!UniversalPlatform.isIOS && !UniversalPlatform.isAndroid) {
       await showDialog<void>(
         context: context,
@@ -56,42 +48,27 @@ class FActionRevenueCatBuy {
       );
     } else {
       try {
-        final purchaserInfo = await Purchases.purchaseProduct(
-          productIdentifier.get(
-            params,
-            states,
-            datasets,
-            forPlay,
-            loop,
-            context,
-          ),
-        );
+        final restoredInfo = await Purchases.restoreTransactions();
         final index =
             states.indexWhere((final element) => element.name == stateName);
         if (index >= 0) {
           states[index].value =
-              purchaserInfo.entitlements.active.isEmpty ? 'Success' : 'Failed';
+              restoredInfo.entitlements.active.isEmpty ? 'Success' : 'Failed';
           update(context);
         }
       } on PlatformException catch (e) {
-        final errorCode = PurchasesErrorHelper.getErrorCode(e);
-        if (errorCode != PurchasesErrorCode.purchaseCancelledError) {
-          debugPrint('$e');
-        }
+        // Error restoring purchases
+        Logger.printError('$e');
       }
     }
   }
 
   static String toCode(
     final BuildContext context,
-    final FTextTypeInput? productIdentifier,
     final String? stateName,
     final int pageId,
-    final int loop,
   ) {
-    if (productIdentifier == null || stateName == null) {
-      return '';
-    }
+    if (stateName == null) return '';
 
     final page = getPageOnToCode(pageId, context);
     if (page == null) return '';
@@ -102,13 +79,14 @@ class FActionRevenueCatBuy {
 
     return '''
     try {
-      final purchaserInfo = await Purchases.purchaseProduct(${productIdentifier.toCode(loop)}');
-      setState(() {
-        $varName = purchaserInfo.entitlements.active.isEmpty ? 'Success' : 'Failed';
-      });
-    } catch (e) {
-      debugPrint('\$e');
-    }
+        final restoredInfo = await Purchases.restoreTransactions();
+        setState(() {
+          $varName = restoredInfo.entitlements.active.isEmpty ? 'Success' : 'Failed';
+        });
+      } catch (e) {
+        // Error restoring purchases
+        Logger.printError('\$e');
+      }
     ''';
   }
 }

@@ -1,5 +1,7 @@
 // Flutter imports:
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:teta_core/teta_core.dart';
 // Project imports:
 import 'package:teta_widgets/src/elements/nodes/dynamic.dart';
 import 'package:teta_widgets/src/elements/nodes/node.dart';
@@ -20,9 +22,19 @@ String cmsLoggedUserCodeTemplate(
     loader = children[1].toCode(context);
   }
 
+  final revenueCatFlag =
+      (BlocProvider.of<FocusProjectBloc>(context).state as ProjectLoaded)
+              .prj
+              .config
+              ?.isRevenueCatEnabled ??
+          false;
   return '''
   TetaFutureBuilder(
-    future: TetaCMS.instance.auth.user.get,
+    future: Future<TetaUser>.value(() {
+      final user = await TetaCMS.instance.auth.user.get;
+      ${revenueCatFlag ? 'await Purchases.logIn(user.uid!);' : ''}
+      return user;
+    }),
     builder: (context, snapshot) {
       if (!snapshot.hasData) {
         return $loader;

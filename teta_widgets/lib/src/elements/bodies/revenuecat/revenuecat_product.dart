@@ -8,16 +8,18 @@ import 'package:teta_core/gen/assets.gen.dart';
 import 'package:teta_core/src/models/dataset.dart';
 import 'package:teta_core/src/models/variable.dart';
 // Project imports:
-import 'package:teta_widgets/src/elements/code/templates/revenuecat_products_list.dart';
+import 'package:teta_widgets/src/elements/code/templates/revenuecat/revenuecat_products.dart';
 import 'package:teta_widgets/src/elements/features/actions/enums/permissions.dart';
 import 'package:teta_widgets/src/elements/intrinsic_states/class.dart';
 import 'package:teta_widgets/src/elements/nodes/categories.dart';
 import 'package:teta_widgets/src/elements/nodes/children_enum.dart';
+import 'package:teta_widgets/src/elements/nodes/dynamic.dart';
 import 'package:teta_widgets/src/elements/nodes/enum.dart';
 import 'package:teta_widgets/src/elements/nodes/node.dart';
 import 'package:teta_widgets/src/elements/nodes/node_body.dart';
+import 'package:teta_widgets/src/elements/widgets/revenuecat/product_list.dart';
 
-const _globalType = NType.revenueCatProductsList;
+const _globalType = NType.revenueCatProducts;
 
 /// IS
 final revenueCatProductsListIntrinsicStates = IntrinsicStates(
@@ -42,14 +44,14 @@ final revenueCatProductsListIntrinsicStates = IntrinsicStates(
     'payment'
   ],
   advicedChildrenCanHaveAtLeastAChild: [],
-  displayName: NodeType.name(_globalType),
+  displayName: 'RevenueCat Products',
   type: _globalType,
   category: NodeCategories.unclassified,
-  maxChildren: 2,
-  canHave: ChildrenEnum.children,
+  maxChildren: 1,
+  canHave: ChildrenEnum.child,
   addChildLabels: [],
   gestures: [],
-  permissions:[
+  permissions: [
     Permissions.billing,
   ],
   packages: [],
@@ -68,7 +70,16 @@ class RevenueCatProductListBody extends NodeBody {
     final CNode? child,
     final List<CNode>? children,
   }) {
-    return const SizedBox();
+    return WRevenueCatProductsList(
+      ValueKey('RevenueCat ProductList $child'),
+      node: node,
+      forPlay: forPlay,
+      params: params,
+      states: states,
+      dataset: dataset,
+      loop: loop,
+      child: child,
+    );
   }
 
   @override
@@ -80,5 +91,10 @@ class RevenueCatProductListBody extends NodeBody {
     final int pageId,
     final int? loop,
   ) =>
-      revenueCatProductsListCodeTemplate(context, this, children ?? [], loop);
+      revenueCatProductsListCodeTemplate(
+        context,
+        node as NDynamic,
+        child,
+        loop,
+      );
 }

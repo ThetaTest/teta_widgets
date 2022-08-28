@@ -36,7 +36,8 @@ String listViewBuilderCodeTemplate(
           : '';
   final shrinkWrap = node.body.attributes[DBKeys.flag] as bool? ?? false;
   final reverse = node.body.attributes[DBKeys.isFullWidth] as bool;
-  final childString = child != null ? child.toCode(context) : '';
+  final childString =
+      child != null ? child.toCode(context) : 'const SizedBox()';
   final dataset =
       (node.body.attributes[DBKeys.datasetInput] as FDataset).datasetName;
   return '''

@@ -93,7 +93,7 @@ import 'package:teta_widgets/src/elements/bodies/radio.dart';
 import 'package:teta_widgets/src/elements/bodies/refresh_indicator.dart';
 import 'package:teta_widgets/src/elements/bodies/responsive/wrapper.dart';
 import 'package:teta_widgets/src/elements/bodies/responsive_condition.dart';
-import 'package:teta_widgets/src/elements/bodies/revenuecat/revenuecat_product_list_body.dart';
+import 'package:teta_widgets/src/elements/bodies/revenuecat/revenuecat_product.dart';
 import 'package:teta_widgets/src/elements/bodies/rotatedbox.dart';
 import 'package:teta_widgets/src/elements/bodies/row.dart';
 import 'package:teta_widgets/src/elements/bodies/safearea.dart';
@@ -264,7 +264,7 @@ NodeBody getBody(final NType type) {
       return AppBarBody();
     case NType.badge:
       return BadgeBody();
-    case NType.revenueCatProductsList:
+    case NType.revenueCatProducts:
       return RevenueCatProductListBody();
     case NType.bottomBar:
       return BottomBarBody();

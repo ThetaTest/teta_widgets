@@ -5,17 +5,17 @@ import 'package:purchases_flutter/purchases_flutter.dart';
 import 'package:teta_core/teta_core.dart';
 // Project imports:
 import 'package:teta_widgets/src/elements/index.dart';
+import 'package:universal_platform/universal_platform.dart';
 
 // Project imports:
 
 // ignore_for_file: public_member_api_docs
 
-class WRevenueCatSingleSubStatus extends StatefulWidget {
-  /// Returns a [WRevenueCatSingleSubStatus] widget in Teta
-  const WRevenueCatSingleSubStatus(
+class WRevenueCatProductsList extends StatefulWidget {
+  /// Returns a [WRevenueCatProductsList] widget in Teta
+  const WRevenueCatProductsList(
     final Key? key, {
     required this.node,
-    required this.entitlementInfo,
     required this.forPlay,
     required this.params,
     required this.states,
@@ -26,7 +26,6 @@ class WRevenueCatSingleSubStatus extends StatefulWidget {
 
   final CNode node;
   final CNode? child;
-  final FTextTypeInput entitlementInfo;
   final bool forPlay;
   final int? loop;
 
@@ -35,34 +34,101 @@ class WRevenueCatSingleSubStatus extends StatefulWidget {
   final List<DatasetObject> dataset;
 
   @override
-  State<WRevenueCatSingleSubStatus> createState() =>
-      _WRevenueCatSingleSubStatusState();
+  State<WRevenueCatProductsList> createState() =>
+      _WRevenueCatProductsListState();
 }
 
-class _WRevenueCatSingleSubStatusState
-    extends State<WRevenueCatSingleSubStatus> {
-  Future<dynamic> getOffering() async {
-    final offerings = await Purchases.getOfferings();
-    if (offerings.current != null &&
-        (offerings.current?.availablePackages ?? []).isNotEmpty) {
-      offerings.current?.availablePackages.first.product;
+class _WRevenueCatProductsListState extends State<WRevenueCatProductsList> {
+  List<Product> products = [];
+  bool isLoading = true;
+  late DatasetObject _map;
+
+  @override
+  void initState() {
+    getProducts();
+    _map = DatasetObject(
+      name: widget.node.name ?? widget.node.intrinsicState.displayName,
+      map: [<String, dynamic>{}],
+    );
+    super.initState();
+  }
+
+  Future<void> getProducts() async {
+    if (UniversalPlatform.isIOS || UniversalPlatform.isAndroid) {
+      try {
+        final offerings = await Purchases.getOfferings();
+        if (offerings.current != null &&
+            (offerings.current?.availablePackages ?? []).isNotEmpty) {
+          final prods = <Product>[];
+          for (final product
+              in offerings.current?.availablePackages ?? <Package>[]) {
+            prods.add(product.product);
+          }
+          products = prods;
+        }
+      } catch (e) {
+        Logger.printError('$e');
+      }
+    } else {
+      products = [
+        const Product(
+          'identifier',
+          'This is just a mockup',
+          'Mockup',
+          9.99,
+          'priceString',
+          'currencyCode',
+        ),
+        const Product(
+          'identifier',
+          'This is just a mockup',
+          'Mockup',
+          9.99,
+          'priceString',
+          'currencyCode',
+        ),
+        const Product(
+          'identifier',
+          'This is just a mockup',
+          'Mockup',
+          9.99,
+          'priceString',
+          'currencyCode',
+        ),
+      ];
     }
+    setState(() {
+      isLoading = false;
+    });
   }
 
   @override
   Widget build(final BuildContext context) {
+    if (isLoading) {
+      return const Center(
+        child: CircularProgressIndicator(),
+      );
+    }
+    _map = _map.copyWith(
+      name: widget.node.name ?? widget.node.intrinsicState.displayName,
+      map: products.map((final e) => e.toJson()).toList(),
+    );
+    final datasets = addDataset(context, widget.dataset, _map);
+
     return NodeSelectionBuilder(
       node: widget.node,
       forPlay: widget.forPlay,
-      child: FutureBuilder(
-        future: getOffering(),
-        child: ChildConditionBuilder(
+      child: ListView.builder(
+        shrinkWrap: true,
+        itemCount: widget.child == null ? 1 : products.length,
+        itemBuilder: (final context, final index) => ChildConditionBuilder(
           ValueKey('${widget.node.nid} ${widget.loop}'),
           name: NodeType.name(NType.align),
+          node: widget.node,
           child: widget.child,
           params: widget.params,
           states: widget.states,
-          dataset: widget.dataset,
+          dataset: widget.dataset.isEmpty ? datasets : widget.dataset,
           forPlay: widget.forPlay,
           loop: widget.loop,
         ),

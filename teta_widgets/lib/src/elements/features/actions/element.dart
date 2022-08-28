@@ -45,6 +45,7 @@ import 'package:teta_widgets/src/elements/actions/navigation/open_drawer.dart';
 import 'package:teta_widgets/src/elements/actions/navigation/open_page.dart';
 import 'package:teta_widgets/src/elements/actions/navigation/open_snack.dart';
 import 'package:teta_widgets/src/elements/actions/revenue_cat/buy.dart';
+import 'package:teta_widgets/src/elements/actions/revenue_cat/restore.dart';
 import 'package:teta_widgets/src/elements/actions/state/change_with.dart';
 import 'package:teta_widgets/src/elements/actions/state/change_with_param.dart';
 import 'package:teta_widgets/src/elements/actions/state/decrement.dart';
@@ -235,6 +236,16 @@ class FActionElement extends Equatable {
     everyMilliseconds = doc['evrMll'] != null
         ? FTextTypeInput.fromJson(doc['evrMll'] as Map<String, dynamic>)
         : FTextTypeInput();
+    revenueCatProductIdentifier = doc['revenueCatProdId'] != null
+        ? FTextTypeInput.fromJson(
+            doc['revenueCatProdId'] as Map<String, dynamic>,
+          )
+        : FTextTypeInput();
+    revenueCatEntitlement = doc['revenueCatEntitle'] != null
+        ? FTextTypeInput.fromJson(
+            doc['revenueCatEntitle'] as Map<String, dynamic>,
+          )
+        : FTextTypeInput();
   }
 
   String? id;
@@ -262,6 +273,8 @@ class FActionElement extends Equatable {
   FTextTypeInput? valueOfCondition;
   bool? withLoop;
   FTextTypeInput? everyMilliseconds;
+  FTextTypeInput? revenueCatProductIdentifier;
+  FTextTypeInput? revenueCatEntitlement;
 
   String? prodId;
   String? stateName;
@@ -547,6 +560,12 @@ class FActionElement extends Equatable {
             everyMilliseconds != null ? everyMilliseconds!.toJson() : null,
         'vTTI':
             valueTextTypeInput != null ? valueTextTypeInput!.toJson() : null,
+        'revenueCatEntitle': revenueCatEntitlement != null
+            ? revenueCatEntitlement!.toJson()
+            : null,
+        'revenueCatProdId': revenueCatProductIdentifier != null
+            ? revenueCatProductIdentifier!.toJson()
+            : null,
       }..removeWhere((final String key, final dynamic value) => value == null);
 
   Future getAction(
@@ -763,7 +782,30 @@ class FActionElement extends Equatable {
         switch (actionRevenueCat) {
           case ActionRevenueCat.buy:
             await actionS(
-              () => FActionRevenueCatBuy.action(context, states, stateName),
+              () => FActionRevenueCatBuy.action(
+                context,
+                revenueCatProductIdentifier,
+                params,
+                states,
+                dataset,
+                stateName,
+                true,
+                loop ?? 0,
+              ),
+              context: context,
+              params: params,
+              states: states,
+              dataset: dataset,
+              loop: loop,
+            );
+            break;
+          case ActionRevenueCat.restorePurchases:
+            await actionS(
+              () => FActionRevenueCatRestorePurchases.action(
+                context,
+                states,
+                stateName,
+              ),
               context: context,
               params: params,
               states: states,
@@ -1698,7 +1740,22 @@ class FActionElement extends Equatable {
         switch (actionRevenueCat) {
           case ActionRevenueCat.buy:
             return codeS(
-              FActionRevenueCatBuy.toCode(context, stateName),
+              FActionRevenueCatBuy.toCode(
+                context,
+                revenueCatProductIdentifier,
+                stateName,
+                pageId,
+                -loop,
+              ),
+              context,
+            );
+          case ActionRevenueCat.restorePurchases:
+            return codeS(
+              FActionRevenueCatRestorePurchases.toCode(
+                context,
+                stateName,
+                pageId,
+              ),
               context,
             );
           default:

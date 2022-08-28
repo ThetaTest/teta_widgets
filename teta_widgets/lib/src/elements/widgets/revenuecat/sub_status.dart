@@ -1,20 +1,22 @@
 // Flutter imports:
-
-// Flutter imports:
 import 'package:flutter/material.dart';
-import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:purchases_flutter/purchases_flutter.dart';
-// Package imports:
 import 'package:teta_cms/teta_cms.dart';
+// Package imports:
 import 'package:teta_core/teta_core.dart';
 // Project imports:
 import 'package:teta_widgets/src/elements/index.dart';
 
-class WCMSLoggedUser extends StatefulWidget {
-  /// Construct
-  const WCMSLoggedUser(
+// Project imports:
+
+// ignore_for_file: public_member_api_docs
+
+class WRevenueCatSingleSubStatus extends StatefulWidget {
+  /// Returns a [WRevenueCatSingleSubStatus] widget in Teta
+  const WRevenueCatSingleSubStatus(
     final Key? key, {
     required this.node,
+    required this.entitlementInfo,
     required this.forPlay,
     required this.params,
     required this.states,
@@ -23,49 +25,36 @@ class WCMSLoggedUser extends StatefulWidget {
     this.loop,
   }) : super(key: key);
 
-  /// The original CNode
   final CNode node;
-
-  /// The opzional child of this widget
   final List<CNode> children;
-
-  /// Are we in Play Mode?
+  final FTextTypeInput entitlementInfo;
   final bool forPlay;
-
-  /// The optional position inside a loop
-  /// Widgets can be instantiate inside ListView.builder and other list widgets
-  /// [loop] indicates the index position inside them
   final int? loop;
 
-  /// The params of Scaffold
   final List<VariableObject> params;
-
-  /// The states of Scaffold
   final List<VariableObject> states;
-
-  /// The dataset list created by other widgets inside the same page
   final List<DatasetObject> dataset;
 
   @override
-  _WCMSLoggedUserState createState() => _WCMSLoggedUserState();
+  State<WRevenueCatSingleSubStatus> createState() =>
+      _WRevenueCatSingleSubStatusState();
 }
 
-class _WCMSLoggedUserState extends State<WCMSLoggedUser> {
+class _WRevenueCatSingleSubStatusState
+    extends State<WRevenueCatSingleSubStatus> {
+  static const mapTitle = 'RevenueCat Sub Status';
   DatasetObject _map = DatasetObject(
-    name: 'Teta Auth User',
+    name: mapTitle,
     map: [<String, dynamic>{}],
   );
 
-  Future<TetaUser> load() async {
-    final user = await TetaCMS.instance.auth.user.get;
-    if ((BlocProvider.of<FocusProjectBloc>(context).state as ProjectLoaded)
-            .prj
-            .config
-            ?.isRevenueCatEnabled ??
-        false) {
-      await Purchases.logIn(user.uid!);
+  Future<PurchaserInfo?> loadStatus() async {
+    try {
+      return Purchases.getPurchaserInfo();
+    } catch (e) {
+      // Error fetching purchaser info
     }
-    return user;
+    return null;
   }
 
   @override
@@ -73,21 +62,10 @@ class _WCMSLoggedUserState extends State<WCMSLoggedUser> {
     return NodeSelectionBuilder(
       node: widget.node,
       forPlay: widget.forPlay,
-      child: TetaFutureBuilder(
-        future: Future.value(() async {
-          final user = await TetaCMS.instance.auth.user.get;
-          if ((BlocProvider.of<FocusProjectBloc>(context).state
-                      as ProjectLoaded)
-                  .prj
-                  .config
-                  ?.isRevenueCatEnabled ??
-              false) {
-            await Purchases.logIn(user.uid!);
-          }
-          return user;
-        }),
-        builder: (final context, final snapshot) {
-          if (!snapshot.hasData) {
+      child: TetaFutureBuilder<void>(
+        future: loadStatus(),
+        builder: (final context, final snap) {
+          if (!snap.hasData) {
             if (widget.children.isNotEmpty) {
               return widget.children.last.toWidget(
                 params: widget.params,
@@ -101,18 +79,20 @@ class _WCMSLoggedUserState extends State<WCMSLoggedUser> {
               );
             }
           }
-
-          final data = snapshot.data as TetaUser?;
+          final entitlement = widget.entitlementInfo.get(
+            widget.params,
+            widget.states,
+            widget.dataset,
+            widget.forPlay,
+            widget.loop,
+            context,
+          );
+          final info = snap.data as PurchaserInfo?;
           final map = <String, dynamic>{
-            'isLogged': data?.isLogged,
-            'uid': data?.uid,
-            'name': data?.name,
-            'email': data?.email,
-            'provider': data?.provider,
-            'created_at': data?.createdAt,
+            'isActive': info?.entitlements.all[entitlement]?.isActive ?? false,
           };
           _map = _map.copyWith(
-            name: 'Teta Auth User',
+            name: mapTitle,
             map: [map],
           );
           final datasets = addDataset(context, widget.dataset, _map);

@@ -130,7 +130,7 @@ enum NType {
   stripeCartItemsBuilder,
 
   // RevenueCat
-  revenueCatProductsList,
+  revenueCatProducts,
 
   // HTTP Requests
   httpRequest,

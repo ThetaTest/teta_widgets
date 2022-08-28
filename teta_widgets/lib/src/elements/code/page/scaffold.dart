@@ -156,6 +156,7 @@ String pageCodeTemplate(
   return '''
     import 'package:myapp/src/teta_files/imports.dart';
     ${page.isAuthenticatedRequired ? "import 'package:myapp/auth/auth_required_state.dart';" : "import 'package:myapp/auth/auth_state.dart';"}
+    ${prj.config?.isAdaptyReady ?? false ? "import 'package:adapty_flutter/adapty_flutter.dart';" : ''}
     
     ${PackagesService.instance.getToCodePackages()}
 

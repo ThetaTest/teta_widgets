@@ -2,4 +2,5 @@
 
 enum ActionRevenueCat {
   buy,
+  restorePurchases,
 }
