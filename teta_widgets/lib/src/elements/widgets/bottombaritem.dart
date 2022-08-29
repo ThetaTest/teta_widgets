@@ -50,6 +50,7 @@ class WBottomBarItem extends StatelessWidget {
     PaletteModel? model;
     BlocProvider.of<PaletteBloc>(context).state.forEach((final element) {
       if (element.id == fill.paletteStyle) model = element;
+      if (element.name == fill.paletteStyle) model = element;
     });
     return NodeSelectionBuilder(
       node: node,

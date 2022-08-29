@@ -30,7 +30,7 @@ final autoAppBarIntrinsicStates = IntrinsicStates(
   advicedChildrenCanHaveAtLeastAChild: [],
   displayName: NodeType.name(_globalType),
   type: _globalType,
-  category: NodeCategories.basic,
+  category: NodeCategories.unclassified,
   maxChildren: 3,
   canHave: ChildrenEnum.children,
   addChildLabels: [],
