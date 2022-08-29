@@ -17,7 +17,7 @@ String iconFeatherCodeTemplate(
 ) {
   final icon = node.body.attributes[DBKeys.featherIcon] as String;
   final fill = FFill.toCode(
-    body.attributes[DBKeys.fill] as FFill,
+    node.body.attributes[DBKeys.fill] as FFill,
     context,
     flagConst: false,
   );

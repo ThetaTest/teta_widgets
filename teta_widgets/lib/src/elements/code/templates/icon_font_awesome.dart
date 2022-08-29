@@ -17,7 +17,7 @@ String iconFontAwesomeCodeTemplate(
 ) {
   final icon = node.body.attributes[DBKeys.faIcon] as String;
   final fill = FFill.toCode(
-    body.attributes[DBKeys.fill] as FFill,
+    node.body.attributes[DBKeys.fill] as FFill,
     context,
     flagConst: false,
   );
