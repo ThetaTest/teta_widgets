@@ -94,6 +94,7 @@ import 'package:teta_widgets/src/elements/bodies/refresh_indicator.dart';
 import 'package:teta_widgets/src/elements/bodies/responsive/wrapper.dart';
 import 'package:teta_widgets/src/elements/bodies/responsive_condition.dart';
 import 'package:teta_widgets/src/elements/bodies/revenuecat/revenuecat_product.dart';
+import 'package:teta_widgets/src/elements/bodies/revenuecat/revenuecat_sub_status.dart';
 import 'package:teta_widgets/src/elements/bodies/rotatedbox.dart';
 import 'package:teta_widgets/src/elements/bodies/row.dart';
 import 'package:teta_widgets/src/elements/bodies/safearea.dart';
@@ -237,6 +238,7 @@ final stateTypes = <IntrinsicStates>[
   googleMapsIntrinsicStates,
   wrapperIntrinsicStates,
   revenueCatProductsListIntrinsicStates,
+  revenueCatSubStatusIntrinsicStates,
   stripeProductsBuilder,
   stripeCartItemsBuilderBodyIntrinsicStates,
   transformPerspectiveIntrinsicStates,
@@ -266,6 +268,8 @@ NodeBody getBody(final NType type) {
       return BadgeBody();
     case NType.revenueCatProducts:
       return RevenueCatProductListBody();
+    case NType.revenueCatSubStatus:
+      return RevenueCatSubStatusBody();
     case NType.bottomBar:
       return BottomBarBody();
     case NType.button:

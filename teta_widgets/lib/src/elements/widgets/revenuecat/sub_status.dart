@@ -21,12 +21,12 @@ class WRevenueCatSingleSubStatus extends StatefulWidget {
     required this.params,
     required this.states,
     required this.dataset,
-    required this.children,
+    this.child,
     this.loop,
   }) : super(key: key);
 
   final CNode node;
-  final List<CNode> children;
+  final CNode? child;
   final FTextTypeInput entitlementInfo;
   final bool forPlay;
   final int? loop;
@@ -66,18 +66,9 @@ class _WRevenueCatSingleSubStatusState
         future: loadStatus(),
         builder: (final context, final snap) {
           if (!snap.hasData) {
-            if (widget.children.isNotEmpty) {
-              return widget.children.last.toWidget(
-                params: widget.params,
-                states: widget.states,
-                dataset: widget.dataset,
-                forPlay: widget.forPlay,
-              );
-            } else {
-              return const Center(
-                child: CircularProgressIndicator(),
-              );
-            }
+            return const Center(
+              child: CircularProgressIndicator(),
+            );
           }
           final entitlement = widget.entitlementInfo.get(
             widget.params,
@@ -96,8 +87,8 @@ class _WRevenueCatSingleSubStatusState
             map: [map],
           );
           final datasets = addDataset(context, widget.dataset, _map);
-          if (widget.children.isNotEmpty) {
-            return widget.children.first.toWidget(
+          if (widget.child != null) {
+            return widget.child!.toWidget(
               params: widget.params,
               states: widget.states,
               dataset: widget.dataset.isEmpty ? datasets : widget.dataset,

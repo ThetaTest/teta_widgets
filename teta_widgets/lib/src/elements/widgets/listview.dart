@@ -93,7 +93,7 @@ class WListView extends StatelessWidget {
           addAutomaticKeepAlives: false,
           addRepaintBoundaries: false,
           scrollDirection: isVertical ? Axis.vertical : Axis.horizontal,
-          itemCount: children.isEmpty ? 1 : children.length + 1,
+          itemCount: children.isEmpty ? 1 : children.length,
           itemBuilder: (final context, final index) {
             return children.isNotEmpty
                 ? children[index].toWidget(

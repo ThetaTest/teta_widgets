@@ -131,6 +131,7 @@ enum NType {
 
   // RevenueCat
   revenueCatProducts,
+  revenueCatSubStatus,
 
   // HTTP Requests
   httpRequest,
