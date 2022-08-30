@@ -23,9 +23,7 @@ String bouncingWidgetCodeTemplate(
   final valueOfCondition =
       (body.attributes[DBKeys.valueOfCondition] as FTextTypeInput).toCode(loop);
   final scale = double.tryParse(valueOfCondition) ?? 1;
-  return '''
-    BouncingWidget(
-      ${CS.action(
+  final actionString = CS.action(
     pageId,
     context,
     node,
@@ -34,7 +32,10 @@ String bouncingWidgetCodeTemplate(
     null,
     isRequired: false,
     loop: loop,
-  )}
+  );
+  return '''
+    BouncingWidget(
+      ${actionString != '' ? actionString : 'onPressed: () async {},'}
       duration: const Duration(milliseconds: $duration),
       scaleFactor: $scale,
       ${CS.child(context, child, comma: true)}
