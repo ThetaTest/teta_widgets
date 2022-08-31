@@ -85,7 +85,7 @@ class FActionRevenueCatRestorePurchases {
         });
       } catch (e) {
         // Error restoring purchases
-        Logger.printError('\$e');
+        print('\$e');
       }
     ''';
   }

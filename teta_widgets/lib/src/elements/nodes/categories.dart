@@ -12,6 +12,7 @@ enum NodeCategories {
   firebase,
   supabase,
   revenueCat,
+  subscriptions,
   wordpress,
   logic,
   navigation,

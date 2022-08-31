@@ -29,10 +29,14 @@ String cmsLoggedUserCodeTemplate(
               ?.isRevenueCatEnabled ??
           false;
   return '''
-  TetaFutureBuilder(
-    future: Future<TetaUser>.value(() {
+  TetaFutureBuilder<TetaUser>(
+    future: Future.sync(() async {
       final user = await TetaCMS.instance.auth.user.get;
-      ${revenueCatFlag ? r"await Purchases.logIn('${user.uid}');" : ''}
+      ${revenueCatFlag ? r"""
+if (UniversalPlatform.isIOS || UniversalPlatform.isAndroid || UniversalPlatform.isMacOS) {
+  await Purchases.logIn('${user.uid}');
+}
+""" : ''}
       return user;
     }),
     builder: (context, snapshot) {

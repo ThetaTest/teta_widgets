@@ -157,7 +157,7 @@ String pageCodeTemplate(
     import 'package:myapp/src/teta_files/imports.dart';
     ${page.isAuthenticatedRequired ? "import 'package:myapp/auth/auth_required_state.dart';" : "import 'package:myapp/auth/auth_state.dart';"}
     ${prj.config?.isAdaptyReady ?? false ? "import 'package:adapty_flutter/adapty_flutter.dart';" : ''}
-    ${prj.config?.isRevenueCatEnabled ?? false ? "import 'package:purchases_flutter/purchases_flutter.dart';'" : ''}
+    ${prj.config?.isRevenueCatEnabled ?? false ? "import 'package:purchases_flutter/purchases_flutter.dart';" : ''}
     
     ${PackagesService.instance.getToCodePackages()}
 

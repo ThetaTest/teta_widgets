@@ -107,7 +107,7 @@ class FActionRevenueCatBuy {
         $varName = purchaserInfo.entitlements.active.isEmpty ? 'Success' : 'Failed';
       });
     } catch (e) {
-      debugPrint('\$e');
+      print('\$e');
     }
     ''';
   }

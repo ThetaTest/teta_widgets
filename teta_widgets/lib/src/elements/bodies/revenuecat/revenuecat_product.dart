@@ -3,10 +3,11 @@
 
 // Flutter imports:
 import 'package:flutter/material.dart';
-// Package imports:
 import 'package:teta_core/gen/assets.gen.dart';
+// Package imports:
 import 'package:teta_core/src/models/dataset.dart';
 import 'package:teta_core/src/models/variable.dart';
+import 'package:teta_core/src/pages/assets_constants.dart';
 // Project imports:
 import 'package:teta_widgets/src/elements/code/templates/revenuecat/revenuecat_products.dart';
 import 'package:teta_widgets/src/elements/features/actions/enums/permissions.dart';
@@ -23,7 +24,7 @@ const _globalType = NType.revenueCatProducts;
 
 /// IS
 final revenueCatProductsListIntrinsicStates = IntrinsicStates(
-  nodeIcon: Assets.wIcons.supabaseLogoIcon,
+  nodeIcon: const AssetGenImage(KImages.revenueCatLogo),
   nodeVideo: null,
   nodeDescription: null,
   advicedChildren: [
@@ -46,7 +47,7 @@ final revenueCatProductsListIntrinsicStates = IntrinsicStates(
   advicedChildrenCanHaveAtLeastAChild: [],
   displayName: 'RevenueCat Products',
   type: _globalType,
-  category: NodeCategories.unclassified,
+  category: NodeCategories.subscriptions,
   maxChildren: 1,
   canHave: ChildrenEnum.child,
   addChildLabels: [],

@@ -21,8 +21,8 @@ String revenueCatProductsListCodeTemplate(
 
   return '''
   TetaFutureBuilder<List<Product>>(
-    future: Future<List<Product>>.value(() async {
-      final products = <Product>[];
+    future: Future<List<Product>>.sync(() async {
+      var products = <Product>[];
       if (UniversalPlatform.isIOS || UniversalPlatform.isAndroid) {
         try {
           final offerings = await Purchases.getOfferings();
@@ -36,17 +36,17 @@ String revenueCatProductsListCodeTemplate(
             products = prods;
           }
         } catch (e) {
-          Logger.printError('\$e');
+          print('\$e');
         }
       }
       return products;
     }),
     builder: (context, snapshot) {
       if (snapshot.hasData) {
-        final prods = snapshot.data as List<Product>?;
-        datasets['${node.name ?? node.intrinsicState.displayName}'] = prods != null ? prods!.map((e) => e.toJson()).toList() : const <Product>[];
+        final prods = snapshot.data;
+        datasets['${node.name ?? node.intrinsicState.displayName}'] = prods != null ? prods.map((e) => e.toJson()).toList() : const <Product>[];
         return ListView.builder(
-          itemCount: prods.length ?? 0,
+          itemCount: prods?.length ?? 0,
           itemBuilder: (context, index) {
             return $childString;
           },
