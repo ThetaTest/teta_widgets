@@ -6,6 +6,7 @@ import 'package:teta_cms/teta_cms.dart';
 import 'package:teta_core/teta_core.dart';
 // Project imports:
 import 'package:teta_widgets/src/elements/index.dart';
+import 'package:universal_platform/universal_platform.dart';
 
 // Project imports:
 
@@ -48,13 +49,26 @@ class _WRevenueCatSingleSubStatusState
     map: [<String, dynamic>{}],
   );
 
-  Future<PurchaserInfo?> loadStatus() async {
-    try {
-      return Purchases.getPurchaserInfo();
-    } catch (e) {
-      // Error fetching purchaser info
+  Future<bool> loadStatus() async {
+    if (UniversalPlatform.isAndroid ||
+        UniversalPlatform.isIOS ||
+        UniversalPlatform.isMacOS) {
+      try {
+        final entitlement = widget.entitlementInfo.get(
+          widget.params,
+          widget.states,
+          widget.dataset,
+          widget.forPlay,
+          widget.loop,
+          context,
+        );
+        final res = await Purchases.getPurchaserInfo();
+        return res.entitlements.all[entitlement]?.isActive ?? false;
+      } catch (e) {
+        // Error fetching purchaser info
+      }
     }
-    return null;
+    return false;
   }
 
   @override
@@ -62,7 +76,7 @@ class _WRevenueCatSingleSubStatusState
     return NodeSelectionBuilder(
       node: widget.node,
       forPlay: widget.forPlay,
-      child: TetaFutureBuilder<void>(
+      child: TetaFutureBuilder<bool>(
         future: loadStatus(),
         builder: (final context, final snap) {
           if (!snap.hasData) {
@@ -70,17 +84,10 @@ class _WRevenueCatSingleSubStatusState
               child: CircularProgressIndicator(),
             );
           }
-          final entitlement = widget.entitlementInfo.get(
-            widget.params,
-            widget.states,
-            widget.dataset,
-            widget.forPlay,
-            widget.loop,
-            context,
-          );
-          final info = snap.data as PurchaserInfo?;
+
+          final isActive = snap.data ?? false;
           final map = <String, dynamic>{
-            'isActive': info?.entitlements.all[entitlement]?.isActive ?? false,
+            'isActive': isActive,
           };
           _map = _map.copyWith(
             name: mapTitle,

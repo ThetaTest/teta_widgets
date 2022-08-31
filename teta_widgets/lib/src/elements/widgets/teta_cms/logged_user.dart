@@ -82,7 +82,9 @@ class _WCMSLoggedUserState extends State<WCMSLoggedUser> {
                   .config
                   ?.isRevenueCatEnabled ??
               false) {
-            await Purchases.logIn(user.uid!);
+            if (user.uid != null) {
+              await Purchases.logIn('${user.uid}');
+            }
           }
           return user;
         }),

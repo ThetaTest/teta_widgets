@@ -19,6 +19,7 @@ import 'package:teta_core/teta_core.dart';
 import 'package:teta_widgets/src/elements/controls/atoms/actions/validator.dart';
 // Project imports:
 import 'package:teta_widgets/src/elements/controls/atoms/flag.dart';
+import 'package:teta_widgets/src/elements/controls/atoms/revenuecat/buy.dart';
 import 'package:teta_widgets/src/elements/controls/atoms/subapase/delete.dart';
 import 'package:teta_widgets/src/elements/controls/atoms/subapase/insert.dart';
 import 'package:teta_widgets/src/elements/controls/atoms/subapase/update.dart';
@@ -31,7 +32,6 @@ import 'package:teta_widgets/src/elements/features/actions/enums/audio_player_ac
 import 'package:teta_widgets/src/elements/features/actions/enums/braintree.dart';
 import 'package:teta_widgets/src/elements/features/actions/enums/camera.dart';
 import 'package:teta_widgets/src/elements/features/actions/enums/navigation.dart';
-import 'package:teta_widgets/src/elements/features/actions/enums/revenue_cat.dart';
 import 'package:teta_widgets/src/elements/features/actions/enums/state.dart';
 import 'package:teta_widgets/src/elements/features/actions/enums/stripe.dart';
 import 'package:teta_widgets/src/elements/features/actions/enums/supabase.dart';
@@ -861,26 +861,7 @@ class ActionElementControlState extends State<ActionElementControl> {
                     ),
                   ],
                 ),
-              if (widget.element.actionType == ActionType.revenueCat)
-                CDropdown(
-                  value: FActionElement.convertValueToDropdown(
-                    widget.element.actionRevenueCat,
-                  ),
-                  items: FActionElement.getRevenueCat(widget.prj.config)
-                      .toSet()
-                      .toList(),
-                  onChange: (final newValue) {
-                    if (newValue != null) {
-                      final old = widget.element;
-                      widget.element.actionRevenueCat =
-                          FActionElement.convertDropdownToValue(
-                        ActionRevenueCat.values,
-                        newValue,
-                      ) as ActionRevenueCat?;
-                      widget.callBack(widget.element, old);
-                    }
-                  },
-                ),
+
               if (widget.element.actionType == ActionType.braintree)
                 Column(
                   children: [
@@ -959,6 +940,14 @@ class ActionElementControlState extends State<ActionElementControl> {
                       },
                     ),
                   ],
+                ),
+              if (widget.element.actionType == ActionType.revenueCat)
+                RevenueCatBuyActionWidget(
+                  prj: widget.prj,
+                  page: widget.page,
+                  node: widget.node as NDynamic,
+                  element: widget.element,
+                  callback: widget.callBack,
                 ),
               if (widget.element.actionType == ActionType.stripe)
                 CDropdown(

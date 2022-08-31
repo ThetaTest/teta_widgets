@@ -54,7 +54,9 @@ class _WRevenueCatProductsListState extends State<WRevenueCatProductsList> {
   }
 
   Future<void> getProducts() async {
-    if (UniversalPlatform.isIOS || UniversalPlatform.isAndroid) {
+    if (UniversalPlatform.isIOS ||
+        UniversalPlatform.isAndroid ||
+        UniversalPlatform.isMacOS) {
       try {
         final offerings = await Purchases.getOfferings();
         if (offerings.current != null &&

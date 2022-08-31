@@ -32,7 +32,7 @@ String cmsLoggedUserCodeTemplate(
   TetaFutureBuilder(
     future: Future<TetaUser>.value(() {
       final user = await TetaCMS.instance.auth.user.get;
-      ${revenueCatFlag ? 'await Purchases.logIn(user.uid!);' : ''}
+      ${revenueCatFlag ? r"await Purchases.logIn('${user.uid}');" : ''}
       return user;
     }),
     builder: (context, snapshot) {
