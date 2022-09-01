@@ -963,7 +963,7 @@ class ActionElementControlState extends State<ActionElementControl> {
                         if (newValue != null) {
                           final old = widget.element;
                           widget.element.actionStripe =
-                          FActionElement.convertDropdownToValue(
+                              FActionElement.convertDropdownToValue(
                             ActionStripe.values,
                             newValue,
                           ) as ActionStripe?;
@@ -978,6 +978,7 @@ class ActionElementControlState extends State<ActionElementControl> {
                         child: descriptionControlWidget(
                           description: 'Billing email',
                           control: TextControl(
+                            withConvertTo: false,
                             node: widget.node,
                             value: widget.element.stripeBillingInfoEmail ??
                                 FTextTypeInput(),
@@ -1000,6 +1001,7 @@ class ActionElementControlState extends State<ActionElementControl> {
                         child: descriptionControlWidget(
                           description: 'Billing phone',
                           control: TextControl(
+                            withConvertTo: false,
                             node: widget.node,
                             value: widget.element.stripeBillingInfoPhone ??
                                 FTextTypeInput(),
@@ -1022,6 +1024,7 @@ class ActionElementControlState extends State<ActionElementControl> {
                         child: descriptionControlWidget(
                           description: 'Billing city',
                           control: TextControl(
+                            withConvertTo: false,
                             node: widget.node,
                             value: widget.element.stripeBillingInfoCity ??
                                 FTextTypeInput(),
@@ -1044,6 +1047,7 @@ class ActionElementControlState extends State<ActionElementControl> {
                         child: descriptionControlWidget(
                           description: 'Billing state',
                           control: TextControl(
+                            withConvertTo: false,
                             node: widget.node,
                             value: widget.element.stripeBillingInfoState ??
                                 FTextTypeInput(),
@@ -1066,6 +1070,7 @@ class ActionElementControlState extends State<ActionElementControl> {
                         child: descriptionControlWidget(
                           description: 'Billing line',
                           control: TextControl(
+                            withConvertTo: false,
                             node: widget.node,
                             value: widget.element.stripeBillingInfoLine ??
                                 FTextTypeInput(),
@@ -1088,6 +1093,7 @@ class ActionElementControlState extends State<ActionElementControl> {
                         child: descriptionControlWidget(
                           description: 'Billing Postal Code',
                           control: TextControl(
+                            withConvertTo: false,
                             node: widget.node,
                             value: widget.element.stripeBillingInfoPostalCode ??
                                 FTextTypeInput(),
@@ -1095,7 +1101,8 @@ class ActionElementControlState extends State<ActionElementControl> {
                             title: 'Billing postal code',
                             callBack: (final value, final old) {
                               final old = widget.element;
-                              widget.element.stripeBillingInfoPostalCode = value;
+                              widget.element.stripeBillingInfoPostalCode =
+                                  value;
                               widget.element.valueOfCondition = value;
                               widget.callBack(widget.element, old);
                             },
@@ -1110,6 +1117,7 @@ class ActionElementControlState extends State<ActionElementControl> {
                         child: descriptionControlWidget(
                           description: 'Billing country',
                           control: TextControl(
+                            withConvertTo: false,
                             node: widget.node,
                             value: widget.element.stripeBillingInfoCountry ??
                                 FTextTypeInput(),
