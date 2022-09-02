@@ -111,9 +111,14 @@ class CMSCollectionControlState extends State<CMSCollectionControl> {
                               (final element) => element.name == dropdown,
                             )
                             ?.id;
-                        (widget.node.body.attributes[DBKeys.cmsCollection]
-                                as FTextTypeInput)
-                            .value = nw;
+                        if (widget.node.body.attributes[DBKeys.cmsCollection] !=
+                                null &&
+                            widget.node.body.attributes[DBKeys.cmsCollection]
+                                is FTextTypeInput) {
+                          (widget.node.body.attributes[DBKeys.cmsCollection]
+                                  as FTextTypeInput)
+                              .value = nw;
+                        }
                         if (nw != null) {
                           widget.callBack(nw, old);
                         }
