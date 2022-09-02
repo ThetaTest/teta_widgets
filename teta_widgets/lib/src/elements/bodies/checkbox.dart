@@ -9,8 +9,8 @@ import 'package:teta_widgets/src/elements/code/templates/checkbox.dart';
 import 'package:teta_widgets/src/elements/controls/control_model.dart';
 import 'package:teta_widgets/src/elements/controls/key_constants.dart';
 import 'package:teta_widgets/src/elements/controls/type.dart';
-import 'package:teta_widgets/src/elements/features/action.dart';
 import 'package:teta_widgets/src/elements/features/actions/enums/gestures.dart';
+import 'package:teta_widgets/src/elements/features/text_type_input.dart';
 import 'package:teta_widgets/src/elements/intrinsic_states/class.dart';
 import 'package:teta_widgets/src/elements/nodes/categories.dart';
 import 'package:teta_widgets/src/elements/nodes/children_enum.dart';
@@ -46,15 +46,15 @@ class CheckBoxBody extends NodeBody {
   @override
   // ignore: overridden_fields
   Map<String, dynamic> attributes = <String, dynamic>{
-    DBKeys.action: FAction(),
+    DBKeys.value: FTextTypeInput(),
   };
 
   @override
   List<ControlModel> get controls => [
         ControlObject(
-          type: ControlType.action,
-          key: DBKeys.action,
-          value: attributes[DBKeys.action],
+          type: ControlType.value,
+          key: DBKeys.value,
+          value: attributes[DBKeys.value],
         ),
       ];
 
@@ -75,12 +75,12 @@ class CheckBoxBody extends NodeBody {
             ${node.nid}
             $loop
             ${child ?? children}
-            ${(attributes[DBKeys.action] as FAction).toJson()}, 
+            ${(attributes[DBKeys.value] as FTextTypeInput).toJson()}
             ''',
         ),
         node: node,
         forPlay: forPlay,
-        action: attributes[DBKeys.action] as FAction,
+        value: attributes[DBKeys.value] as FTextTypeInput,
         loop: loop,
         params: params,
         states: states,
