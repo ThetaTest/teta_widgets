@@ -23,7 +23,7 @@ class FATetaCMSUpdate {
   ) async {
     final map = <String, dynamic>{};
     for (final e in list ?? <MapElement>[]) {
-      map[e.key] = e.value;
+      map[e.key] = e.value.value;
     }
     String? eqValue;
     eqValue = documentId?.get(
