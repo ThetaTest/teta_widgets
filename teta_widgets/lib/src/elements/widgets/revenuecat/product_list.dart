@@ -81,22 +81,6 @@ class _WRevenueCatProductsListState extends State<WRevenueCatProductsList> {
           'priceString',
           'currencyCode',
         ),
-        const Product(
-          'identifier',
-          'This is just a mockup',
-          'Mockup',
-          9.99,
-          'priceString',
-          'currencyCode',
-        ),
-        const Product(
-          'identifier',
-          'This is just a mockup',
-          'Mockup',
-          9.99,
-          'priceString',
-          'currencyCode',
-        ),
       ];
     }
     setState(() {

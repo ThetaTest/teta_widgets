@@ -74,20 +74,7 @@ class _WCMSLoggedUserState extends State<WCMSLoggedUser> {
       node: widget.node,
       forPlay: widget.forPlay,
       child: TetaFutureBuilder(
-        future: Future.value(() async {
-          final user = await TetaCMS.instance.auth.user.get;
-          if ((BlocProvider.of<FocusProjectBloc>(context).state
-                      as ProjectLoaded)
-                  .prj
-                  .config
-                  ?.isRevenueCatEnabled ??
-              false) {
-            if (user.uid != null) {
-              await Purchases.logIn('${user.uid}');
-            }
-          }
-          return user;
-        }),
+        future: load(),
         builder: (final context, final snapshot) {
           if (!snapshot.hasData) {
             if (widget.children.isNotEmpty) {
