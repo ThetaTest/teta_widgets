@@ -55,6 +55,7 @@ class _WCMSLoggedUserState extends State<WCMSLoggedUser> {
     name: 'Teta Auth User',
     map: [<String, dynamic>{}],
   );
+  late Future<TetaUser> _future;
 
   Future<TetaUser> load() async {
     final user = await TetaCMS.instance.auth.user.get;
@@ -69,12 +70,18 @@ class _WCMSLoggedUserState extends State<WCMSLoggedUser> {
   }
 
   @override
+  void initState() {
+    _future = load();
+    super.initState();
+  }
+
+  @override
   Widget build(final BuildContext context) {
     return NodeSelectionBuilder(
       node: widget.node,
       forPlay: widget.forPlay,
-      child: TetaFutureBuilder(
-        future: load(),
+      child: FutureBuilder(
+        future: _future,
         builder: (final context, final snapshot) {
           if (!snapshot.hasData) {
             if (widget.children.isNotEmpty) {
