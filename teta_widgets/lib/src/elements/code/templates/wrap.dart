@@ -13,7 +13,6 @@ String wrapCodeTemplate(
 ) {
   return '''
     Wrap(
-      ${CS.wrapAlignment(context, body)}
       ${CS.children(context, children)}
     )
   ''';
