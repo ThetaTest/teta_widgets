@@ -15,7 +15,10 @@ String visibilityCodeTemplate(
   final int? loop,
 ) {
   final abstract = body.attributes[DBKeys.value] as FTextTypeInput;
-  final value = abstract.toCode(loop);
+  final value = abstract.toCode(
+    loop,
+    resultType: ResultTypeEnum.bool,
+  );
   final visibility = value == 'true' ? 'true' : 'false';
 
   if (visibility == 'true') {

@@ -36,7 +36,7 @@ class _InsideDragTargetWidgetState extends State<InsideDragTargetWidget> {
     return BlocBuilder<FocusProjectBloc, FocusProjectState>(
       builder: (context, prjState) {
         if (prjState is ProjectLoaded)
-          return BlocBuilder<FocusPageBloc, PageObject>(
+          return BlocBuilder<PageCubit, PageObject>(
             builder: (context, pageState) {
               return BlocBuilder<FlatListBloc, List<CNode>>(
                 builder: (context, nodesState) {

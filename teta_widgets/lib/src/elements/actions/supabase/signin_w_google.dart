@@ -7,12 +7,9 @@ import 'package:flutter/material.dart';
 // Package imports:
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:supabase_flutter/supabase_flutter.dart';
-import 'package:teta_core/src/blocs/focus_page/index.dart';
-import 'package:teta_core/src/cubits/supabase.dart';
-import 'package:teta_core/src/models/dataset.dart';
-import 'package:teta_core/src/models/variable.dart';
 import 'package:teta_core/src/services/user_social_login/enums/login_provider.dart';
 import 'package:teta_core/src/services/user_social_login/services/social_login_service/index.dart';
+import 'package:teta_core/teta_core.dart';
 // Project imports:
 import 'package:teta_widgets/src/elements/actions/navigation/open_page.dart';
 import 'package:teta_widgets/src/elements/actions/snippets/change_state.dart';
@@ -35,7 +32,7 @@ class FASupabaseSignInWithGoogle {
     final List<DatasetObject> dataset,
     final int? loop,
   ) async {
-    final page = BlocProvider.of<FocusPageBloc>(context).state;
+    final page = BlocProvider.of<PageCubit>(context).state;
 
     // Take status from states
     final status = takeStateFrom(page, 'status');

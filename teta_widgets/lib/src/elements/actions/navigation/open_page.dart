@@ -56,7 +56,7 @@ class FActionNavigationOpenPage {
     try {
       final prj =
           BlocProvider.of<FocusProjectBloc>(context).state as ProjectLoaded;
-      final currentPage = BlocProvider.of<FocusPageBloc>(context).state;
+      final currentPage = BlocProvider.of<PageCubit>(context).state;
       PageObject? page;
       page = prj.prj.pages!
           .firstWhereOrNull((final element) => element.name == nameOfPage);

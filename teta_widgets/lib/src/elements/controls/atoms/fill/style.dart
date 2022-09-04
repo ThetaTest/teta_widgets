@@ -5,10 +5,7 @@
 import 'package:flutter/material.dart';
 // Package imports:
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:teta_core/src/blocs/focus/bloc.dart';
-import 'package:teta_core/src/blocs/palette/index.dart';
-import 'package:teta_core/src/design_system/dropdowns/dropdown.dart';
-import 'package:teta_core/src/models/palette.dart';
+import 'package:teta_core/teta_core.dart';
 // Project imports:
 import 'package:teta_widgets/src/elements/features/features.dart';
 import 'package:teta_widgets/src/elements/nodes/node.dart';
@@ -40,7 +37,7 @@ class StyleFillControlState extends State<StyleFillControl> {
     return BlocBuilder<FocusBloc, List<CNode>>(
       builder: (final context, final state) {
         //updateState(state);
-        return BlocBuilder<PaletteBloc, List<PaletteModel>>(
+        return BlocBuilder<ColorStylesCubit, List<PaletteModel>>(
           builder: (final context, final paletteStyles) {
             //updateState(state);
             return Row(
@@ -60,7 +57,7 @@ class StyleFillControlState extends State<StyleFillControl> {
                         .toList(),
                     onChange: (final value) {
                       PaletteModel? model;
-                      BlocProvider.of<PaletteBloc>(context)
+                      BlocProvider.of<ColorStylesCubit>(context)
                           .state
                           .forEach((final element) {
                         if (element.name == value) model = element;

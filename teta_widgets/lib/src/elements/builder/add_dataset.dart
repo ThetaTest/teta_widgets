@@ -3,9 +3,7 @@ import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 // Package imports:
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:teta_core/src/blocs/focus_page/index.dart';
-import 'package:teta_core/src/blocs/focus_project/index.dart';
-import 'package:teta_core/src/models/dataset.dart';
+import 'package:teta_core/teta_core.dart';
 
 /// Function to add a new dataset to scaffold and widgets' tree
 List<DatasetObject> addDataset(
@@ -15,7 +13,7 @@ List<DatasetObject> addDataset(
 ) {
   final list = <DatasetObject>[...dataset, map];
   final prjState = BlocProvider.of<FocusProjectBloc>(context).state;
-  final pageFocused = BlocProvider.of<FocusPageBloc>(context).state;
+  final pageFocused = BlocProvider.of<PageCubit>(context).state;
   try {
     var flag = true;
     for (final e in pageFocused.datasets) {

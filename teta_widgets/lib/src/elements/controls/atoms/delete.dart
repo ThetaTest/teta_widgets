@@ -35,12 +35,12 @@ class DeleteControlState extends State<DeleteControl> {
   Widget build(final BuildContext context) {
     height = MediaQuery.of(context).size.height;
     final parentOfNode = FindNodeRendering.findParentByChildrenIds(
-      flatList: BlocProvider.of<FlatListBloc>(context).state,
+      flatList: BlocProvider.of<PageCubit>(context).state.flatList ?? [],
       element: widget.node,
     );
     final prjState =
         BlocProvider.of<FocusProjectBloc>(context).state as ProjectLoaded;
-    final pageState = BlocProvider.of<FocusPageBloc>(context).state;
+    final pageState = BlocProvider.of<PageCubit>(context).state;
     if (widget.node.intrinsicState.canHave ==
         parentOfNode!.intrinsicState.canHave) {
       return Padding(
@@ -61,7 +61,8 @@ class DeleteControlState extends State<DeleteControl> {
                 label: 'Delete This Node Only',
                 callback: () async => removeNodeBetweenNodes(
                   context: context,
-                  nodes: BlocProvider.of<FlatListBloc>(context).state,
+                  nodes:
+                      BlocProvider.of<PageCubit>(context).state.flatList ?? [],
                   node: widget.node as NDynamic,
                   prj: prjState.prj,
                   page: pageState,

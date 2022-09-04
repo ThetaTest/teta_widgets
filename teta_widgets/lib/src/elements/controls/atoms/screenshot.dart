@@ -50,7 +50,7 @@ class _ScreenShotControlState extends State<ScreenShotControl> {
               final nodes = BlocProvider.of<NodesBloc>(context).state;
               final prjState = BlocProvider.of<FocusProjectBloc>(context).state
                   as ProjectLoaded;
-              final page = BlocProvider.of<FocusPageBloc>(context).state;
+              final page = BlocProvider.of<PageCubit>(context).state;
               screenshotController
                   .captureFromWidget(
                     MaterialApp(
@@ -64,8 +64,8 @@ class _ScreenShotControlState extends State<ScreenShotControl> {
                           BlocProvider<FocusBloc>(
                             create: (context) => FocusBloc(),
                           ),
-                          BlocProvider<FocusPageBloc>(
-                            create: (context) => FocusPageBloc()
+                          BlocProvider<PageCubit>(
+                            create: (context) => PageCubit()
                               ..add(
                                 OnFocusPage(
                                   prj: prjState.prj,

@@ -3,10 +3,8 @@
 
 // Flutter imports:
 import 'package:flutter/foundation.dart';
-
 // Package imports:
 import 'package:teta_core/src/models/variable.dart';
-
 // Project imports:
 import 'package:teta_widgets/src/elements/features/font_weight.dart';
 import 'package:teta_widgets/src/elements/features/physic.dart';
@@ -313,7 +311,7 @@ class DynamicAttributes {
         case DBKeys.pageTransition:
           return FPageTransition.fromJson(value as String);
         case DBKeys.paramsToSend:
-          return value;
+          return value as Map<String, dynamic>;
         case DBKeys.right:
           return value;
         case DBKeys.shadows:
@@ -600,7 +598,7 @@ class DynamicAttributes {
       case DBKeys.pageTransition:
         return value != null ? value.toJson() : FPageTransition().toJson();
       case DBKeys.paramsToSend:
-        return value;
+        return value as Map<String, dynamic>;
       case DBKeys.right:
         return value;
       case DBKeys.shadows:

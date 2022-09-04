@@ -80,7 +80,7 @@ class _WShopifyCollectionTabarWithProductsGridviewState
     list.add(map);
     if (_isLoading) _fetchCollections(context);
     final prjState = BlocProvider.of<FocusProjectBloc>(context).state;
-    final pageFocused = BlocProvider.of<FocusPageBloc>(context).state;
+    final pageFocused = BlocProvider.of<PageCubit>(context).state;
     if (!_isLoading && mounted) {
       setState(() {
         mapProducts = DatasetObject(

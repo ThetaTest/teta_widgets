@@ -47,7 +47,7 @@ class FirebaseFirestoreAddDataActionElementBody extends StatelessWidget {
                     (e) => AddDataElement(
                       name: e,
                       value: element.paramsToSend![e] as Map<String, dynamic>,
-                      page: BlocProvider.of<FocusPageBloc>(context).state,
+                      page: BlocProvider.of<PageCubit>(context).state,
                       callback: (value, old) {},
                     ),
                   )

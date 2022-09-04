@@ -93,7 +93,7 @@ class _WTextFieldState extends State<WTextField> {
     final borderRadius = widget.borderRadius.get;
     TextStyleModel? model;
     if (widget.textStyle.textStyleModel != null) {
-      BlocProvider.of<TextStylesBloc>(context).state.forEach((final element) {
+      BlocProvider.of<TextStylesCubit>(context).state.forEach((final element) {
         if (element.name == widget.textStyle.textStyleModel) model = element;
       });
     }

@@ -259,7 +259,7 @@ class SolidFillControlState extends State<SolidFillControl> {
     showDialog<void>(
       context: context,
       builder: (final c) {
-        final bloc = BlocProvider.of<PaletteBloc>(context);
+        final bloc = BlocProvider.of<ColorStylesCubit>(context);
         return BlocProvider.value(
           value: bloc,
           child: ColorPickerDialog(

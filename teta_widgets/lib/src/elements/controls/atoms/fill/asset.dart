@@ -69,7 +69,7 @@ class AssetFillControlState extends State<AssetFillControl> {
                                     items: list,
                                     onChange: (final value) {
                                       PaletteModel? model;
-                                      BlocProvider.of<PaletteBloc>(context)
+                                      BlocProvider.of<ColorStylesCubit>(context)
                                           .state
                                           .forEach((final element) {
                                         if (element.name == value.name) {

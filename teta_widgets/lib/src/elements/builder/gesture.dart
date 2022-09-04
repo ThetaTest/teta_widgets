@@ -2,9 +2,7 @@
 import 'package:flutter/material.dart';
 // Package imports:
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:teta_core/src/blocs/focus_page/index.dart';
-import 'package:teta_core/src/models/dataset.dart';
-import 'package:teta_core/src/models/variable.dart';
+import 'package:teta_core/teta_core.dart';
 // Project imports:
 import 'package:teta_widgets/src/elements/features/action.dart';
 import 'package:teta_widgets/src/elements/features/actions/enums/gestures.dart';
@@ -46,7 +44,7 @@ class GestureBuilder {
             element.getAction(
               context,
               finalValue,
-              BlocProvider.of<FocusPageBloc>(context).state.scaffold!,
+              BlocProvider.of<PageCubit>(context).state.scaffold!,
               node,
               params,
               states,

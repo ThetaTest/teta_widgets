@@ -93,7 +93,7 @@ class FFill {
     } else {
       final isLight = BlocProvider.of<PaletteDarkLightCubit>(context).state;
       PaletteModel? model;
-      BlocProvider.of<PaletteBloc>(context).state.forEach((final element) {
+      BlocProvider.of<ColorStylesCubit>(context).state.forEach((final element) {
         if (element.id == paletteStyle) model = element;
         if (element.name == paletteStyle) model = element;
       });
@@ -122,7 +122,7 @@ class FFill {
       );
     } else {
       PaletteModel? model;
-      BlocProvider.of<PaletteBloc>(context).state.forEach((final element) {
+      BlocProvider.of<ColorStylesCubit>(context).state.forEach((final element) {
         if (element.id == paletteStyle) model = element;
         if (element.name == paletteStyle) model = element;
       });
@@ -319,7 +319,7 @@ class FFill {
     final BuildContext context, {
     final bool? flagConst,
   }) {
-    final state = BlocProvider.of<PaletteBloc>(context).state;
+    final state = BlocProvider.of<ColorStylesCubit>(context).state;
     late PaletteModel currentPaletteElement;
     if (state.isNotEmpty) {
       for (final e in state) {

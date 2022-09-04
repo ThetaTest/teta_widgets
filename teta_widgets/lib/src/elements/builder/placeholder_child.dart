@@ -38,28 +38,23 @@ class PlaceholderChildBuilder extends StatelessWidget {
               final prj = (BlocProvider.of<FocusProjectBloc>(context).state
                       as ProjectLoaded)
                   .prj;
-              final focusPageBloc = BlocProvider.of<FocusPageBloc>(context);
-              final flatListBloc = BlocProvider.of<FlatListBloc>(context);
+              final focusPageBloc = BlocProvider.of<PageCubit>(context);
               final refreshCubit = BlocProvider.of<RefreshCubit>(context);
               final focusBloc = BlocProvider.of<FocusBloc>(context);
               showDialog<void>(
                 context: context,
-                barrierDismissible: true,
                 builder: (final c) => BlocProvider.value(
-                  value: flatListBloc,
+                  value: refreshCubit,
                   child: BlocProvider.value(
-                    value: refreshCubit,
+                    value: focusPageBloc,
                     child: BlocProvider.value(
-                      value: focusPageBloc,
-                      child: BlocProvider.value(
-                        value: focusBloc,
-                        child: WidgetDialogDialog(
-                          node: node,
-                          prj: prj,
-                          page: focusPageBloc.state,
-                          forNewNode: true,
-                          betweenNodes: false,
-                        ),
+                      value: focusBloc,
+                      child: WidgetDialogDialog(
+                        node: node,
+                        prj: prj,
+                        page: focusPageBloc.state,
+                        forNewNode: true,
+                        betweenNodes: false,
                       ),
                     ),
                   ),

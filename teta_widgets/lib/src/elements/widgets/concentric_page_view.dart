@@ -50,8 +50,9 @@ class _WConcentricPageViewState extends State<WConcentricPageView> {
   Widget build(final BuildContext context) {
     final isLight = BlocProvider.of<PaletteDarkLightCubit>(context).state;
     PaletteModel? model;
-    BlocProvider.of<PaletteBloc>(context).state.forEach((final element) {
+    BlocProvider.of<ColorStylesCubit>(context).state.forEach((final element) {
       if (element.id == widget.fill.paletteStyle) model = element;
+      if (element.name == widget.fill.paletteStyle) model = element;
     });
     return NodeSelectionBuilder(
       node: widget.node,

@@ -42,7 +42,7 @@ class _DragTargetState extends State<DragTargetWidget> {
     return BlocBuilder<FocusProjectBloc, FocusProjectState>(
       builder: (context, prjState) {
         if (prjState is ProjectLoaded)
-          return BlocBuilder<FocusPageBloc, PageObject>(
+          return BlocBuilder<PageCubit, PageObject>(
             builder: (context, pageState) {
               return BlocBuilder<NodesBloc, List<CNode>>(
                 builder: (context, nodesState) {

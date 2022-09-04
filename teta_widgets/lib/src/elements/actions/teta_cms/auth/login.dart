@@ -29,7 +29,7 @@ class FATetaCMSLogin {
     final prj =
         (BlocProvider.of<FocusProjectBloc>(context).state as ProjectLoaded).prj;
 
-    // final page = BlocProvider.of<FocusPageBloc>(context).state;
+    // final page = BlocProvider.of<PageCubit>(context).state;
     // final status = takeStateFrom(page, 'status');
 
     /*

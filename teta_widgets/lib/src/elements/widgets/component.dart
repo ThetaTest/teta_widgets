@@ -135,18 +135,16 @@ class _WComponentState extends State<WComponent> {
 
   Widget body(final BuildContext context) {
     return component != null
-        ? BlocProvider<FocusPageBloc>(
-            create: (final context) => FocusPageBloc()
-              ..add(
-                OnFocusPage(
-                  prj: prjState!.prj,
-                  page: component!,
-                  context: context,
-                  forPlay: widget.forPlay,
-                  isComponent: true,
-                ),
+        ? BlocProvider<PageCubit>(
+            create: (final context) => PageCubit()
+              ..onFocus(
+                prj: prjState!.prj,
+                page: component!,
+                context: context,
+                forPlay: widget.forPlay,
+                isComponent: true,
               ),
-            child: BlocBuilder<FocusPageBloc, PageObject>(
+            child: BlocBuilder<PageCubit, PageObject>(
               builder: (final context, final page) {
                 return (page.scaffold == null)
                     ? const SizedBox()

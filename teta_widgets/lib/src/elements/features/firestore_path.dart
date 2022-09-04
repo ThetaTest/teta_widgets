@@ -118,7 +118,14 @@ class FFirestorePath {
   }) {
     final fPath = StringBuffer()..write('');
     final temp = values != null
-        ? values!.map((final value) => value.toCode(null)).toList()
+        ? values!
+            .map(
+              (final value) => value.toCode(
+                null,
+                resultType: ResultTypeEnum.string,
+              ),
+            )
+            .toList()
         : <String>[];
     for (final e in temp) {
       if (temp.indexOf(e) != temp.length - 1) {

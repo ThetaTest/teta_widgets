@@ -15,12 +15,9 @@ String conditionCodeTemplate(
   final int? loop,
 ) {
   final abstract = body.attributes[DBKeys.value] as FTextTypeInput;
-  var value = abstract.toCode(loop);
+  final value = abstract.toCode(loop);
   var valueOfCondition =
       (body.attributes[DBKeys.valueOfCondition] as FTextTypeInput).toCode(loop);
-  if (!value.contains("'")) {
-    value = value;
-  }
   if (!valueOfCondition.contains("'")) {
     valueOfCondition = valueOfCondition;
   }

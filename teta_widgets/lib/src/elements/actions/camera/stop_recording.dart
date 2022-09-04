@@ -8,9 +8,9 @@ import 'package:collection/collection.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:recase/recase.dart';
-import 'package:teta_core/src/blocs/focus_page/index.dart';
 import 'package:teta_core/src/models/dataset.dart';
 import 'package:teta_core/src/models/variable.dart';
+import 'package:teta_core/teta_core.dart';
 import 'package:teta_widgets/src/elements/actions/snippets/get_page_on_code.dart';
 
 class FACameraStopRecording {
@@ -22,7 +22,7 @@ class FACameraStopRecording {
     final List<DatasetObject> dataset,
     final int? loop,
   ) async {
-    final page = BlocProvider.of<FocusPageBloc>(context).state;
+    final page = BlocProvider.of<PageCubit>(context).state;
     final state = page.states
         .firstWhereOrNull((final e) => e.type == VariableType.cameraController);
     final controller = state?.controller;

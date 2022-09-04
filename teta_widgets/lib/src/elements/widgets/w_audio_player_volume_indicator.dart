@@ -4,11 +4,10 @@ import 'package:collection/collection.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:just_audio/just_audio.dart';
+import 'package:rxdart/rxdart.dart';
 import 'package:teta_core/teta_core.dart';
-
 // Project imports:
 import 'package:teta_widgets/src/elements/index.dart';
-import 'package:rxdart/rxdart.dart';
 
 // ignore_for_file: public_member_api_docs
 
@@ -53,7 +52,7 @@ class _WAudioPlayerVolumeIndicatorState
   }
 
   Future<void> init() async {
-    final page = BlocProvider.of<FocusPageBloc>(context).state;
+    final page = BlocProvider.of<PageCubit>(context).state;
     VariableObject? variable;
     if (widget.controller.type == FTextTypeEnum.param) {
       variable = page.params
@@ -75,7 +74,7 @@ class _WAudioPlayerVolumeIndicatorState
     if (isInitialized) {
       return progressBar();
     } else {
-      if(audioController == null){
+      if (audioController == null) {
         init();
       }
       return const Center(
@@ -86,48 +85,58 @@ class _WAudioPlayerVolumeIndicatorState
     }
   }
 
-  Widget progressBar() => audioController != null ?
-      StreamBuilder<Map<String, Object>>(
-        stream: Rx.combineLatest3<Duration, Duration, double,
-                Map<String, Object>>(
+  Widget progressBar() => audioController != null
+      ? StreamBuilder<Map<String, Object>>(
+          stream: Rx.combineLatest3<Duration, Duration, double,
+              Map<String, Object>>(
             audioController!.positionStream,
             audioController!.bufferedPositionStream,
             audioController!.volumeStream,
-            (final Duration position, final Duration bufferedPosition,
-                    final double volume,) =>
+            (
+              final Duration position,
+              final Duration bufferedPosition,
+              final double volume,
+            ) =>
                 {
-                  'position': position,
-                  'bufferedPosition': bufferedPosition,
-                  'volume': volume
-                }),
-        builder: (final context, final snapshot) {
-          final positionData = snapshot.data;
-          final volume =
-              positionData?['volume'] ?? 0.5;
+              'position': position,
+              'bufferedPosition': bufferedPosition,
+              'volume': volume
+            },
+          ),
+          builder: (final context, final snapshot) {
+            final positionData = snapshot.data;
+            final volume = positionData?['volume'] ?? 0.5;
 
-          return Column(
-            crossAxisAlignment: CrossAxisAlignment.stretch,
-            mainAxisSize: MainAxisSize.min,
-            children: [
-              Slider(
-                  min: 0,
+            return Column(
+              crossAxisAlignment: CrossAxisAlignment.stretch,
+              mainAxisSize: MainAxisSize.min,
+              children: [
+                Slider(
                   max: 1,
                   value: volume as double,
                   onChanged: (final value) {
                     audioController!.setVolume(value);
-                  }),
-              Padding(
-                padding: const EdgeInsets.symmetric(horizontal: 16),
-                child: Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                  children: const [
-                    Icon(Icons.volume_off, color: Colors.white,),
-                    Icon(Icons.volume_up_rounded, color: Colors.white,)
-                  ],
+                  },
                 ),
-              )
-            ],
-          );
-        },
-      ) : const Text('AudioPlayerVolumeIndicator Controller is null.');
+                Padding(
+                  padding: const EdgeInsets.symmetric(horizontal: 16),
+                  child: Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    children: const [
+                      Icon(
+                        Icons.volume_off,
+                        color: Colors.white,
+                      ),
+                      Icon(
+                        Icons.volume_up_rounded,
+                        color: Colors.white,
+                      )
+                    ],
+                  ),
+                )
+              ],
+            );
+          },
+        )
+      : const Text('AudioPlayerVolumeIndicator Controller is null.');
 }

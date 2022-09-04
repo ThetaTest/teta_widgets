@@ -59,7 +59,7 @@ class TextStylesControlState extends State<TextStylesControl> {
                   GestureDetector(
                     onTap: () => showPicker(
                       context,
-                      BlocProvider.of<TextStylesBloc>(context),
+                      BlocProvider.of<TextStylesCubit>(context),
                     ),
                     child: HoverWidget(
                       hoverChild: Container(
@@ -147,7 +147,7 @@ class TextStylesControlState extends State<TextStylesControl> {
           CButton(
             label: textStyleModel,
             callback: () {
-              showPicker(context, BlocProvider.of<TextStylesBloc>(context));
+              showPicker(context, BlocProvider.of<TextStylesCubit>(context));
             },
           ),
       ],
@@ -168,7 +168,7 @@ class TextStylesControlState extends State<TextStylesControl> {
 
   void showPicker(
     final BuildContext context,
-    final TextStylesBloc textStylesBloc,
+    final TextStylesCubit textStylesBloc,
   ) {
     final editingController = TextEditingController();
 
@@ -200,7 +200,7 @@ class TextStylesControlState extends State<TextStylesControl> {
                     ),
                     SizedBox(
                       height: 326,
-                      child: BlocBuilder<TextStylesBloc, List<TextStyleModel>>(
+                      child: BlocBuilder<TextStylesCubit, List<TextStyleModel>>(
                         bloc: textStylesBloc,
                         builder: (final context, final state) {
                           return ListView(
@@ -260,7 +260,7 @@ class TextStylesControlState extends State<TextStylesControl> {
 
   void newTextStylePicker(
     final BuildContext context,
-    final TextStylesBloc textStylesBloc,
+    final TextStylesCubit textStylesBloc,
   ) {
     final editingController = TextEditingController();
     var title = '';

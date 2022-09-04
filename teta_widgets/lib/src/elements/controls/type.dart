@@ -182,6 +182,7 @@ class ControlBuilder {
     final dynamic old,
   ) {
     try {
+      Logger.printMessage('node.body.toJson(): ${node.body.toJson()}');
       NodeRepository.change(
         nodeId: node.nid,
         node: node as NDynamic,

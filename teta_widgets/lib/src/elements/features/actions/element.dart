@@ -207,37 +207,44 @@ class FActionElement extends Equatable {
     stripeBillingInfoEmail = stripeBillingInfoEmail ??
         (doc['stripeBillingInfoEmail'] != null
             ? FTextTypeInput.fromJson(
-                doc['stripeBillingInfoEmail'] as Map<String, dynamic>)
+                doc['stripeBillingInfoEmail'] as Map<String, dynamic>,
+              )
             : FTextTypeInput());
     stripeBillingInfoPhone = stripeBillingInfoPhone ??
         (doc['stripeBillingInfoPhone'] != null
             ? FTextTypeInput.fromJson(
-                doc['stripeBillingInfoPhone'] as Map<String, dynamic>)
+                doc['stripeBillingInfoPhone'] as Map<String, dynamic>,
+              )
             : FTextTypeInput());
     stripeBillingInfoCity = stripeBillingInfoCity ??
         (doc['stripeBillingInfoCity'] != null
             ? FTextTypeInput.fromJson(
-                doc['stripeBillingInfoCity'] as Map<String, dynamic>)
+                doc['stripeBillingInfoCity'] as Map<String, dynamic>,
+              )
             : FTextTypeInput());
     stripeBillingInfoState = stripeBillingInfoState ??
         (doc['stripeBillingInfoState'] != null
             ? FTextTypeInput.fromJson(
-                doc['stripeBillingInfoState'] as Map<String, dynamic>)
+                doc['stripeBillingInfoState'] as Map<String, dynamic>,
+              )
             : FTextTypeInput());
     stripeBillingInfoLine = stripeBillingInfoLine ??
         (doc['stripeBillingInfoLine'] != null
             ? FTextTypeInput.fromJson(
-                doc['stripeBillingInfoLine'] as Map<String, dynamic>)
+                doc['stripeBillingInfoLine'] as Map<String, dynamic>,
+              )
             : FTextTypeInput());
     stripeBillingInfoPostalCode = stripeBillingInfoPostalCode ??
         (doc['stripeBillingInfoPostalCode'] != null
             ? FTextTypeInput.fromJson(
-                doc['stripeBillingInfoPostalCode'] as Map<String, dynamic>)
+                doc['stripeBillingInfoPostalCode'] as Map<String, dynamic>,
+              )
             : FTextTypeInput());
     stripeBillingInfoCountry = stripeBillingInfoCountry ??
         (doc['stripeBillingInfoCountry'] != null
             ? FTextTypeInput.fromJson(
-                doc['stripeBillingInfoCountry'] as Map<String, dynamic>)
+                doc['stripeBillingInfoCountry'] as Map<String, dynamic>,
+              )
             : FTextTypeInput());
     dbFrom = FTextTypeInput.fromJson(doc['sFrom'] as Map<String, dynamic>?);
     cmsCollectionId = doc['cmsCId'] as String?;
@@ -1870,13 +1877,41 @@ class FActionElement extends Equatable {
                 context,
                 stateName,
                 body,
-                email: stripeBillingInfoEmail?.toCode(null) ?? '',
-                phone: stripeBillingInfoPhone?.toCode(null) ?? '',
-                city: stripeBillingInfoCity?.toCode(null) ?? '',
-                state: stripeBillingInfoState?.toCode(null) ?? '',
-                line: stripeBillingInfoLine?.toCode(null) ?? '',
-                postalCode: stripeBillingInfoPostalCode?.toCode(null) ?? '',
-                country: stripeBillingInfoCountry?.toCode(null) ?? '',
+                email: stripeBillingInfoEmail?.toCode(
+                      null,
+                      resultType: ResultTypeEnum.string,
+                    ) ??
+                    '',
+                phone: stripeBillingInfoPhone?.toCode(
+                      null,
+                      resultType: ResultTypeEnum.string,
+                    ) ??
+                    '',
+                city: stripeBillingInfoCity?.toCode(
+                      null,
+                      resultType: ResultTypeEnum.string,
+                    ) ??
+                    '',
+                state: stripeBillingInfoState?.toCode(
+                      null,
+                      resultType: ResultTypeEnum.string,
+                    ) ??
+                    '',
+                line: stripeBillingInfoLine?.toCode(
+                      null,
+                      resultType: ResultTypeEnum.string,
+                    ) ??
+                    '',
+                postalCode: stripeBillingInfoPostalCode?.toCode(
+                      null,
+                      resultType: ResultTypeEnum.string,
+                    ) ??
+                    '',
+                country: stripeBillingInfoCountry?.toCode(
+                      null,
+                      resultType: ResultTypeEnum.string,
+                    ) ??
+                    '',
               ),
               context,
             );
@@ -2252,7 +2287,10 @@ class FActionElement extends Equatable {
                 pageId,
                 context,
                 stateName,
-                audioPlayerUrl!.toCode(loop),
+                audioPlayerUrl!.toCode(
+                  loop,
+                  resultType: ResultTypeEnum.string,
+                ),
                 null,
               ),
               context,
@@ -2264,7 +2302,10 @@ class FActionElement extends Equatable {
                 pageId,
                 context,
                 stateName,
-                audioPlayerUrl!.toCode(loop),
+                audioPlayerUrl!.toCode(
+                  loop,
+                  resultType: ResultTypeEnum.string,
+                ),
                 loop,
               ),
               context,
@@ -2276,7 +2317,10 @@ class FActionElement extends Equatable {
                 pageId,
                 context,
                 stateName,
-                audioPlayerUrl!.toCode(loop),
+                audioPlayerUrl!.toCode(
+                  loop,
+                  resultType: ResultTypeEnum.string,
+                ),
                 loop,
               ),
               context,

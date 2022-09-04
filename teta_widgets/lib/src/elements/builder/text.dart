@@ -3,12 +3,7 @@ import 'package:flutter/material.dart';
 // Package imports:
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:profanity_filter/profanity_filter.dart';
-import 'package:teta_core/src/blocs/palette/index.dart';
-import 'package:teta_core/src/blocs/text_styles/index.dart';
-import 'package:teta_core/src/models/dataset.dart';
-import 'package:teta_core/src/models/palette.dart';
-import 'package:teta_core/src/models/text_style.dart';
-import 'package:teta_core/src/models/variable.dart';
+import 'package:teta_core/teta_core.dart';
 // Project imports:
 import 'package:teta_widgets/src/elements/features/fill.dart';
 import 'package:teta_widgets/src/elements/features/text_style.dart';
@@ -48,7 +43,7 @@ class TextBuilder extends StatelessWidget {
 
   @override
   Widget build(final BuildContext context) {
-    return BlocBuilder<PaletteBloc, List<PaletteModel>>(
+    return BlocBuilder<ColorStylesCubit, List<PaletteModel>>(
       buildWhen: (final previous, final current) => current != previous,
       builder: (final context, final state) {
         FFill? finalFill;
@@ -61,7 +56,7 @@ class TextBuilder extends StatelessWidget {
 
         TextStyleModel? model;
         if (_textStyle.textStyleModel != null) {
-          BlocProvider.of<TextStylesBloc>(context)
+          BlocProvider.of<TextStylesCubit>(context)
               .state
               .forEach((final element) {
             if (element.name == _textStyle.textStyleModel) model = element;

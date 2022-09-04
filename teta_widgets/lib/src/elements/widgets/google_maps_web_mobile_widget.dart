@@ -4,19 +4,16 @@
 // Dart imports:
 import 'dart:async';
 import 'dart:ui';
-import 'package:http/http.dart' as http;
 
 // Flutter imports:
 import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_polyline_points/flutter_polyline_points.dart';
-
 import 'package:google_maps_flutter/google_maps_flutter.dart';
+import 'package:http/http.dart' as http;
 import 'package:location/location.dart';
 import 'package:teta_cms/teta_cms.dart';
 import 'package:teta_core/teta_core.dart';
-
 // Project imports:
 import 'package:teta_widgets/src/elements/nodes/node.dart';
 import 'package:teta_widgets/src/elements/widgets/google_maps_base_widget.dart';
@@ -134,7 +131,6 @@ class _WGoogleMapsState extends State<WGoogleMaps> {
         num.parse(mapConfig[widget.initialPositionLng] as String? ?? '12.4962');
 
     return GoogleMap(
-      zoomControlsEnabled: true,
       myLocationButtonEnabled: false,
       initialCameraPosition: CameraPosition(
         target: LatLng(
@@ -160,7 +156,7 @@ class _WGoogleMapsState extends State<WGoogleMaps> {
 
   Future<void> initMap() async {
     try {
-      final page = BlocProvider.of<FocusPageBloc>(context).state;
+      final page = BlocProvider.of<PageCubit>(context).state;
 
       _map = DatasetObject(
         name: widget.node.name ?? widget.node.intrinsicState.displayName,
@@ -223,8 +219,7 @@ class _WGoogleMapsState extends State<WGoogleMaps> {
           try {
             if (markerIconUrl != null) {
               print('Markers0');
-              final markerImageFile =
-                  await http.get(Uri.parse(markerIconUrl));
+              final markerImageFile = await http.get(Uri.parse(markerIconUrl));
               print('Markers1');
 
               final codec = await instantiateImageCodec(
@@ -271,7 +266,8 @@ class _WGoogleMapsState extends State<WGoogleMaps> {
                 mLat,
                 mLon,
               ),
-              requestProxy: (final String url, final Map<String, String> headers) async {
+              requestProxy:
+                  (final String url, final Map<String, String> headers) async {
                 return cms.proxy(url, headers);
               },
             );

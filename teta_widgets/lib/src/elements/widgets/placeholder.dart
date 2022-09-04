@@ -49,8 +49,9 @@ class WPlaceholder extends StatelessWidget {
     );
     final isLight = BlocProvider.of<PaletteDarkLightCubit>(context).state;
     PaletteModel? model;
-    BlocProvider.of<PaletteBloc>(context).state.forEach((final element) {
+    BlocProvider.of<ColorStylesCubit>(context).state.forEach((final element) {
       if (element.id == color.paletteStyle) model = element;
+      if (element.name == color.paletteStyle) model = element;
     });
     return NodeSelectionBuilder(
       node: node,

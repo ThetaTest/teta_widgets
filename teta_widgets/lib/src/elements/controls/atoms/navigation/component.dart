@@ -132,6 +132,13 @@ class ComponentControlState extends State<ComponentControl> {
                               callBackParameters: (final map) {
                                 widget.node.body
                                     .attributes[DBKeys.paramsToSend] = map;
+                                Logger.printMessage(
+                                  'paramsToSend: ${widget.node.body.attributes[DBKeys.paramsToSend]}',
+                                );
+                                Logger.printMessage(
+                                  'paramsToSend variable.id: ${widget.node.body.attributes[DBKeys.paramsToSend][variable.id]}',
+                                );
+                                widget.callBackParameters(map);
                               },
                             ),
                           )

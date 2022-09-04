@@ -46,7 +46,7 @@ class _WWebViewXPageState extends State<WWebViewXPage> {
 
   @override
   void initState() {
-    final page = BlocProvider.of<FocusPageBloc>(context).state;
+    final page = BlocProvider.of<PageCubit>(context).state;
 
     if (widget.controller.type == FTextTypeEnum.param) {
       variable = page.params

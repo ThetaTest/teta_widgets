@@ -6,10 +6,8 @@ import 'package:collection/collection.dart';
 // Flutter imports:
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:teta_core/src/blocs/index.dart';
-import 'package:teta_core/src/cubits/jump_to.dart';
-import 'package:teta_core/src/design_system/palette.dart';
 import 'package:teta_core/src/rendering/find.dart';
+import 'package:teta_core/teta_core.dart';
 // Project imports:
 import 'package:teta_widgets/src/elements/nodes/node.dart';
 
@@ -42,7 +40,7 @@ class NodeSelectionState extends State<NodeSelection> {
   @override
   void initState() {
     parent = FindNodeRendering.findParentByChildrenIds(
-      flatList: BlocProvider.of<FlatListBloc>(context).state,
+      flatList: BlocProvider.of<PageCubit>(context).state.flatList ?? [],
       element: widget.node,
     );
     super.initState();
@@ -117,7 +115,7 @@ class NodeSelectionState extends State<NodeSelection> {
                                   .where((element) =>
                                       element.isOnline! &&
                                       element.page ==
-                                          BlocProvider.of<FocusPageBloc>(
+                                          BlocProvider.of<PageCubit>(
                                                   context)
                                               .state
                                               .id)

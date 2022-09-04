@@ -6,8 +6,8 @@ import 'package:flutter/material.dart';
 // Package imports:
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:recase/recase.dart';
-import 'package:teta_core/src/blocs/text_styles/index.dart';
 import 'package:teta_core/src/models/text_style.dart';
+import 'package:teta_core/teta_core.dart';
 // Project imports:
 import 'package:teta_widgets/src/elements/controls/key_constants.dart';
 import 'package:teta_widgets/src/elements/features/font_weight.dart';
@@ -159,7 +159,7 @@ class FTextStyle {
   String toCode(final BuildContext context) {
     TextStyleModel? model;
     if (textStyleModel != null) {
-      BlocProvider.of<TextStylesBloc>(context).state.forEach((final element) {
+      BlocProvider.of<TextStylesCubit>(context).state.forEach((final element) {
         if (element.name == textStyleModel) model = element;
       });
     }

@@ -4,11 +4,10 @@ import 'package:collection/collection.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:just_audio/just_audio.dart';
+import 'package:rxdart/rxdart.dart';
 import 'package:teta_core/teta_core.dart';
-
 // Project imports:
 import 'package:teta_widgets/src/elements/index.dart';
-import 'package:rxdart/rxdart.dart';
 
 // ignore_for_file: public_member_api_docs
 
@@ -53,7 +52,7 @@ class _WAudioPlayerProgressIndicatorState
   }
 
   Future<void> init() async {
-    final page = BlocProvider.of<FocusPageBloc>(context).state;
+    final page = BlocProvider.of<PageCubit>(context).state;
     VariableObject? variable;
     if (widget.controller.type == FTextTypeEnum.param) {
       variable = page.params
@@ -64,8 +63,8 @@ class _WAudioPlayerProgressIndicatorState
     }
     if (variable?.audioController != null) {
       setState(() {
-        if(variable?.audioController != null){
-        audioController = variable?.audioController;
+        if (variable?.audioController != null) {
+          audioController = variable?.audioController;
         }
         isInitialized = true;
       });
@@ -91,20 +90,21 @@ class _WAudioPlayerProgressIndicatorState
   Widget progressBar() => audioController != null
       ? StreamBuilder<Map<String, Duration>>(
           stream: Rx.combineLatest3<Duration, Duration, Duration?,
-                  Map<String, Duration>>(
-              audioController!.positionStream,
-              audioController!.bufferedPositionStream,
-              audioController!.durationStream,
-              (
-                final Duration position,
-                final Duration bufferedPosition,
-                final Duration? duration,
-              ) =>
-                  {
-                    'position': position,
-                    'bufferedPosition': bufferedPosition,
-                    'duration': duration ?? Duration.zero
-                  }),
+              Map<String, Duration>>(
+            audioController!.positionStream,
+            audioController!.bufferedPositionStream,
+            audioController!.durationStream,
+            (
+              final Duration position,
+              final Duration bufferedPosition,
+              final Duration? duration,
+            ) =>
+                {
+              'position': position,
+              'bufferedPosition': bufferedPosition,
+              'duration': duration ?? Duration.zero
+            },
+          ),
           builder: (final context, final snapshot) {
             final positionData = snapshot.data;
             final duration = positionData?['duration'] ?? Duration.zero;
@@ -120,14 +120,14 @@ class _WAudioPlayerProgressIndicatorState
                   max: duration.inSeconds.toDouble(),
                   value: position.inSeconds.toDouble(),
                   onChanged: (final value) {
-                    if(audioController == null) {
+                    if (audioController == null) {
                       init();
                     }
                     audioController?.seek(Duration(seconds: value.toInt()));
                   },
                 ),
                 Padding(
-                  padding: const EdgeInsets.symmetric(horizontal: 16.0),
+                  padding: const EdgeInsets.symmetric(horizontal: 16),
                   child: Row(
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [

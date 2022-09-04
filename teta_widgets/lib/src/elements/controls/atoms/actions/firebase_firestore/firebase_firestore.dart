@@ -51,7 +51,7 @@ class FirebaseFirestoreActionElementBody extends StatelessWidget {
           prj: (BlocProvider.of<FocusProjectBloc>(context).state
                   as ProjectLoaded)
               .prj,
-          page: BlocProvider.of<FocusPageBloc>(context).state,
+          page: BlocProvider.of<PageCubit>(context).state,
           path: element.path ?? FFirestorePath(),
           isForAddData: true,
           callBack: (path, old) {

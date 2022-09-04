@@ -42,7 +42,10 @@ String gridViewBuilderCodeTemplate(
 
   final shrinkWrap = body.attributes[DBKeys.flag] as bool? ?? false;
   final valueMainAxisSpacing =
-      (body.attributes[DBKeys.mainAxisSpacing] as FTextTypeInput).toCode(loop);
+      (body.attributes[DBKeys.mainAxisSpacing] as FTextTypeInput).toCode(
+    loop,
+    resultType: ResultTypeEnum.int,
+  );
   final mainAxisSpacing = double.tryParse(valueMainAxisSpacing) != null &&
           (double.tryParse(valueMainAxisSpacing) ?? 0) > 0.1
       ? double.parse(valueMainAxisSpacing)

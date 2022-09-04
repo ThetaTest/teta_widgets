@@ -50,7 +50,7 @@ class _WAudioPlayerState extends State<WAudioPlayer> {
 
   Future<void> initAudioPlayer() async {
     try {
-      final page = BlocProvider.of<FocusPageBloc>(context).state;
+      final page = BlocProvider.of<PageCubit>(context).state;
 
       _map = DatasetObject(
         name: widget.node.name ?? widget.node.intrinsicState.displayName,

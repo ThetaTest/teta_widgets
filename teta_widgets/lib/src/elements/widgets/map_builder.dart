@@ -77,7 +77,7 @@ class _WMapBuilderState extends State<WMapBuilder> {
   }
 
   Future<void> init() async {
-    final page = BlocProvider.of<FocusPageBloc>(context).state;
+    final page = BlocProvider.of<PageCubit>(context).state;
     if (widget.controller.type == FTextTypeEnum.param) {
       variable = page.params
           .firstWhereOrNull((final e) => e.name == widget.controller.paramName);

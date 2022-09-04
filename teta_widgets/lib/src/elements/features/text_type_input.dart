@@ -303,13 +303,14 @@ class FTextTypeInput {
       calc(params, states, dataset, forPlay, loop, '');*/
 
   String toCode(
-    final int? loop,
-  ) {
+    final int? loop, {
+    final ResultTypeEnum? resultType,
+  }) {
     if (type == FTextTypeEnum.languages) {
       return "TranslatorGenerator.instance.getString('''$keyTranslator''')";
     }
 
-    final code = getRawToCode(loop);
+    final code = getRawToCode(loop, resultType: resultType);
 
     if (type == FTextTypeEnum.combined) {
       return code;
@@ -319,17 +320,38 @@ class FTextTypeInput {
   }
 
   String getRawToCode(
-    final int? loop,
-  ) {
+    final int? loop, {
+    final ResultTypeEnum? resultType,
+  }) {
     if (type == FTextTypeEnum.param) {
       if (paramName?.isEmpty ?? true) return "''";
       final param = ReCase(paramName ?? '');
-      return "'''\${widget.${param.camelCase}}'''";
+      if (resultType == ResultTypeEnum.string) {
+        return "'''\${${param.camelCase}}'''";
+      } else if (resultType == ResultTypeEnum.int) {
+        return "int.tryParse('${param.camelCase}') ?? 0";
+      } else if (resultType == ResultTypeEnum.double) {
+        return "double.tryParse('${param.camelCase}') ?? 0.0";
+      } else if (resultType == ResultTypeEnum.bool) {
+        return "'${param.camelCase}' == 'true'";
+      } else {
+        return "'''\${${param.camelCase}}'''";
+      }
     }
     if (type == FTextTypeEnum.state) {
       if (stateName?.isEmpty ?? true) return "''";
       final state = ReCase(stateName ?? '');
-      return "'''\${${state.camelCase}}'''";
+      if (resultType == ResultTypeEnum.string) {
+        return "'''\${${state.camelCase}}'''";
+      } else if (resultType == ResultTypeEnum.int) {
+        return "int.tryParse('${state.camelCase}') ?? 0";
+      } else if (resultType == ResultTypeEnum.double) {
+        return "double.tryParse('${state.camelCase}') ?? 0.0";
+      } else if (resultType == ResultTypeEnum.bool) {
+        return "'${state.camelCase}' == 'true'";
+      } else {
+        return "'''\${${state.camelCase}}'''";
+      }
     }
     if (type == FTextTypeEnum.dataset) {
       return "this.datasets['$datasetName']?[${datasetName == 'Teta Auth User' ? '0' : 'index'}]?['$datasetAttr']?.toString() ?? ''";
@@ -341,7 +363,7 @@ class FTextTypeInput {
       final string = StringBuffer("'''");
       for (final element in combination ?? <FTextTypeInput>[]) {
         final code = convertType(
-          element.toCode(loop).replaceAll("'''", ''),
+          element.toCode(loop, resultType: resultType).replaceAll("'''", ''),
         ).replaceAll("'''", '');
         string.write(code);
       }

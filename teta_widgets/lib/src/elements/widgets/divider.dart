@@ -39,7 +39,7 @@ class WDivider extends StatelessWidget {
   Widget build(final BuildContext context) {
     final isLight = BlocProvider.of<PaletteDarkLightCubit>(context).state;
     PaletteModel? model;
-    BlocProvider.of<PaletteBloc>(context).state.forEach((final element) {
+    BlocProvider.of<ColorStylesCubit>(context).state.forEach((final element) {
       if (element.id == fill.paletteStyle) model = element;
       if (element.name == fill.paletteStyle) model = element;
     });

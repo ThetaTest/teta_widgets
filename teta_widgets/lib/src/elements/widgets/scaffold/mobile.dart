@@ -61,7 +61,7 @@ class ScaffoldMobile extends StatelessWidget {
 
   @override
   Widget build(final BuildContext context) {
-    final isPage = BlocProvider.of<FocusPageBloc>(context).state.isPage;
+    final isPage = BlocProvider.of<PageCubit>(context).state.isPage;
     if (!isPage ||
         children.indexWhere(
               (final element) => element.globalType == NType.appBar,
@@ -166,7 +166,7 @@ class ScaffoldMobile extends StatelessWidget {
         );
       }
     }
-    final isPage = BlocProvider.of<FocusPageBloc>(context).state.isPage;
+    final isPage = BlocProvider.of<PageCubit>(context).state.isPage;
     if (!isPage) return childWids(context);
     return Stack(
       children: [
