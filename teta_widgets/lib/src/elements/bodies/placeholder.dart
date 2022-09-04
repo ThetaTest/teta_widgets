@@ -42,7 +42,7 @@ final placeholderIntrinsicStates = IntrinsicStates(
   canHave: ChildrenEnum.child,
   addChildLabels: [],
   gestures: [],
-  permissions:[],
+  permissions: [],
   packages: [],
 );
 
@@ -120,7 +120,7 @@ class PlaceholderBody extends NodeBody {
       );
 
   @override
-  String toCode(
+  Future<String> toCode(
     final BuildContext context,
     final CNode node,
     final CNode? child,

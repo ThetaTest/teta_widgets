@@ -33,7 +33,7 @@ final spacerIntrinsicStates = IntrinsicStates(
   canHave: ChildrenEnum.none,
   addChildLabels: [],
   gestures: [],
-  permissions:[],
+  permissions: [],
   packages: [],
 );
 
@@ -73,7 +73,7 @@ class SpacerBody extends NodeBody {
       );
 
   @override
-  String toCode(
+  Future<String> toCode(
     final BuildContext context,
     final CNode node,
     final CNode? child,

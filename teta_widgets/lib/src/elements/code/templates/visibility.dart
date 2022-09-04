@@ -1,5 +1,6 @@
 // Flutter imports:
 import 'package:flutter/material.dart';
+import 'package:teta_widgets/src/elements/code/formatter_test.dart';
 // Project imports:
 import 'package:teta_widgets/src/elements/code/snippets.dart';
 import 'package:teta_widgets/src/elements/controls/key_constants.dart';
@@ -8,12 +9,12 @@ import 'package:teta_widgets/src/elements/nodes/node.dart';
 import 'package:teta_widgets/src/elements/nodes/node_body.dart';
 
 /// Visibility Template
-String visibilityCodeTemplate(
+Future<String> visibilityCodeTemplate(
   final BuildContext context,
   final NodeBody body,
   final CNode? child,
   final int? loop,
-) {
+) async {
   final abstract = body.attributes[DBKeys.value] as FTextTypeInput;
   final value = abstract.toCode(
     loop,
@@ -22,18 +23,31 @@ String visibilityCodeTemplate(
   final visibility = value == 'true' ? 'true' : 'false';
 
   if (visibility == 'true') {
-    return CS.child(
+    final code = await CS.child(
       context,
       child,
       comma: false,
       withChild: false,
     );
+    final res = FormatterTest.format(code);
+    if (res) {
+      return code;
+    } else {
+      return 'const SizedBox()';
+    }
   }
 
-  return '''
+  final childString = await CS.child(context, child, comma: true);
+  final code = '''
     Visibility(
       visible: $visibility,
-      ${CS.child(context, child, comma: true)}
+      $childString
     )
   ''';
+  final res = FormatterTest.format(code);
+  if (res) {
+    return code;
+  } else {
+    return 'const SizedBox()';
+  }
 }

@@ -2,13 +2,9 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:teta_core/teta_core.dart';
+import 'package:teta_widgets/src/elements/code/formatter_test.dart';
 
 // Project imports:
-import 'package:teta_widgets/src/elements/code/snippets.dart';
-import 'package:teta_widgets/src/elements/controls/key_constants.dart';
-import 'package:teta_widgets/src/elements/features/text_type_input.dart';
-import 'package:teta_widgets/src/elements/nodes/node.dart';
-import 'package:teta_widgets/src/elements/nodes/node_body.dart';
 
 /// Map Template
 
@@ -34,7 +30,7 @@ class GoogleMapsTemplate {
     return '';
   }
 
-  static String toCode({
+  static Future<String> toCode({
     required final BuildContext context,
     required final String mapControllerName,
     required final String mapConfigDatasetName,
@@ -51,7 +47,7 @@ class GoogleMapsTemplate {
     required final bool showMyLocationMarker,
     required final bool trackMyLocation,
     required final String initialZoomLevel,
-  }) {
+  }) async {
     final googleMapsKey =
         (BlocProvider.of<FocusProjectBloc>(context).state as ProjectLoaded)
                 .prj
@@ -59,7 +55,7 @@ class GoogleMapsTemplate {
                 ?.googleMapsKey ??
             '';
 
-    return '''
+    final code = '''
     FutureBuilder<fp.Tuple2<Set<Polyline>, Set<Marker>>>(
                 future: Future.delayed(Duration.zero, () async {
                   try {
@@ -209,5 +205,11 @@ class GoogleMapsTemplate {
                   );
                 })
  ''';
+    final res = FormatterTest.format(code);
+    if (res) {
+      return code;
+    } else {
+      return 'const SizedBox()';
+    }
   }
 }

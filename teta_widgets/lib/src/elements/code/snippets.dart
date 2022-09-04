@@ -47,15 +47,15 @@ class CS {
   /// ```dart
   /// child: Center(),
   /// ```
-  static String child(
+  static Future<String> child(
     final BuildContext context,
     final CNode? child, {
     final bool? comma,
     final bool withChild = true,
-  }) {
+  }) async {
     var strChild = '';
     if (child != null) {
-      strChild = child.toCode(context);
+      strChild = await child.toCode(context);
     }
     if (!withChild) {
       return strChild != ''
@@ -77,22 +77,22 @@ class CS {
   ///   Spacer(),
   /// ],
   /// ```
-  static String children(
+  static Future<String> children(
     final BuildContext context,
     final List<CNode> children,
-  ) {
+  ) async {
     final strChildren = StringBuffer()..write('');
     if (children.isNotEmpty) {
       for (final child in children) {
-        if (child
-            .toCode(context)
+        final childString = await child.toCode(context);
+        if (childString
             .replaceAll(' ', '')
             .replaceAll(
               RegExp(r'\n'),
               '',
             )
             .isNotEmpty) {
-          strChildren.write('${child.toCode(context)},');
+          strChildren.write('$childString,');
         }
       }
       return '''
@@ -386,7 +386,7 @@ class CS {
   /// ```
   ///
   /// It returns a empty screen in value is Alignment.center (redundant)
-  static String align(final BuildContext context, final NodeBody body) {
+  static String align(final NodeBody body) {
     final value = body.attributes[DBKeys.align] != null
         ? (body.attributes[DBKeys.align] as FAlign).toCode()
         : null;

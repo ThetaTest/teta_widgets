@@ -33,7 +33,7 @@ final stackIntrinsicStates = IntrinsicStates(
   canHave: ChildrenEnum.children,
   addChildLabels: [],
   gestures: [],
-  permissions:[],
+  permissions: [],
   packages: [],
 );
 
@@ -75,7 +75,7 @@ class StackBody extends NodeBody {
       );
 
   @override
-  String toCode(
+  Future<String> toCode(
     final BuildContext context,
     final CNode node,
     final CNode? child,

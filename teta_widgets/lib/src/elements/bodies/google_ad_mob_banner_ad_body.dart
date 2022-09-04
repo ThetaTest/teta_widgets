@@ -37,7 +37,7 @@ final googleAdMobBannerAdIntrinsicStates = IntrinsicStates(
   addChildLabels: [],
   gestures: [],
   permissions: [],
-  packages: [pGoogleMobileAds,pIO],
+  packages: [pGoogleMobileAds, pIO],
 );
 
 /// Body for [] widget
@@ -103,7 +103,7 @@ class GoogleAdMobBannerAdBody extends NodeBody {
       );
 
   @override
-  String toCode(
+  Future<String> toCode(
     final BuildContext context,
     final CNode node,
     final CNode? child,
@@ -111,6 +111,6 @@ class GoogleAdMobBannerAdBody extends NodeBody {
     final int pageId,
     final int? loop,
   ) {
-    return AdMobBannerAdTemplate.textCodeTemplate(context, this, loop);
+    return AdMobBannerAdTemplate.toCode(context, this, loop);
   }
 }

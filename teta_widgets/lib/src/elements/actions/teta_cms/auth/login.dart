@@ -89,6 +89,7 @@ class FATetaCMSLogin {
         onSuccess: (final isFirstTime) async {
           final user = await TetaCMS.instance.auth.user.get;
           ${isRevenueCatEnabled ? r"LogInResult result = await Purchases.logIn('${user.uid}');" : ''}
+          ${prj.config?.isQonversionReady ?? false ? r"Qonversion.setProperty(QUserProperty.customUserId, '${user.uid}');" : ''}
           ${FActionNavigationOpenPage.toCode(context, nameOfPage, paramsToSend)}
         }
       );

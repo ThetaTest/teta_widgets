@@ -99,7 +99,7 @@ class AlignBody extends NodeBody {
       );
 
   @override
-  String toCode(
+  Future<String> toCode(
     final BuildContext context,
     final CNode node,
     final CNode? child,
@@ -107,5 +107,5 @@ class AlignBody extends NodeBody {
     final int pageId,
     final int? loop,
   ) =>
-      alignCodeTemplate(context, this, child);
+      AlignCodeTemplate.toCode(context, this, child);
 }

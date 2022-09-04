@@ -7,7 +7,6 @@ import 'package:teta_core/gen/assets.gen.dart';
 import 'package:teta_core/src/models/dataset.dart';
 import 'package:teta_core/src/models/variable.dart';
 // Project imports:
-import 'package:teta_widgets/src/elements/code/templates/align.dart';
 import 'package:teta_widgets/src/elements/controls/control_model.dart';
 import 'package:teta_widgets/src/elements/controls/key_constants.dart';
 import 'package:teta_widgets/src/elements/controls/type.dart';
@@ -31,7 +30,7 @@ final barcodeIntrinsicStates = IntrinsicStates(
   advicedChildrenCanHaveAtLeastAChild: [],
   displayName: NodeType.name(_globalType),
   type: _globalType,
-  category: NodeCategories.advanced,
+  category: NodeCategories.unclassified,
   maxChildren: 0,
   canHave: ChildrenEnum.none,
   addChildLabels: [],
@@ -130,8 +129,9 @@ class BarcodeBody extends NodeBody {
         dataset: dataset,
       );
 
+  //! TODO
   @override
-  String toCode(
+  Future<String> toCode(
     final BuildContext context,
     final CNode node,
     final CNode? child,
@@ -139,5 +139,5 @@ class BarcodeBody extends NodeBody {
     final int pageId,
     final int? loop,
   ) =>
-      alignCodeTemplate(context, this, child);
+      Future.value('');
 }

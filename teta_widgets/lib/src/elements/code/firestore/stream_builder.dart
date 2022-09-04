@@ -22,18 +22,20 @@ import 'package:teta_widgets/src/elements/nodes/node_body.dart';
 ///   },
 /// );
 /// ```
-String firestoreFutureBuilderCodeTemplate(
+Future<String> firestoreFutureBuilderCodeTemplate(
   final BuildContext context,
   final NodeBody body,
   final List<CNode> children,
-) {
+) async {
   var child = 'const SizedBox();';
   if (children.isNotEmpty) {
-    child = CS.child(context, children.first, comma: true).replaceAll(',', '');
+    child = await CS.child(context, children.first, comma: true)
+      ..replaceAll(',', '');
   }
   var loader = 'const CircularProgressIndicator();';
   if (children.length >= 2) {
-    loader = CS.child(context, children[1], comma: true).replaceAll(',', '');
+    loader = await CS.child(context, children[1], comma: true)
+      ..replaceAll(',', '');
   }
   return '''
     StreamBuilder(

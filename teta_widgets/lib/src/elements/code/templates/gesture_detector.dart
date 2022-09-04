@@ -1,18 +1,19 @@
 // Flutter imports:
 import 'package:flutter/material.dart';
+import 'package:teta_widgets/src/elements/code/formatter_test.dart';
 // Project imports:
 import 'package:teta_widgets/src/elements/code/snippets.dart';
 import 'package:teta_widgets/src/elements/features/actions/enums/gestures.dart';
 import 'package:teta_widgets/src/elements/nodes/node.dart';
 
 /// GestureDetector Template
-String gestureDetectorCodeTemplate(
+Future<String> gestureDetectorCodeTemplate(
   final int pageId,
   final BuildContext context,
   final CNode node,
   final CNode? child,
   final int loop,
-) {
+) async {
   final onTap = CS.action(
     pageId,
     context,
@@ -51,12 +52,19 @@ String gestureDetectorCodeTemplate(
       withChild: false,
     );
   }
-  return '''
+  final childString = await CS.child(context, child, comma: true);
+  final code = '''
   GestureDetector(
     $onTap
     $onDoubleTap
     $onLongPress
-    ${CS.child(context, child, comma: true)}
+    $childString
   )
   ''';
+  final res = FormatterTest.format(code);
+  if (res) {
+    return code;
+  } else {
+    return 'const SizedBox()';
+  }
 }

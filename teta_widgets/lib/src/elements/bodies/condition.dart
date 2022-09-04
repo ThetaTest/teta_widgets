@@ -45,7 +45,7 @@ final conditionIntrinsicStates = IntrinsicStates(
   canHave: ChildrenEnum.children,
   addChildLabels: ['Add Widget If True', 'Add Widget If False'],
   gestures: [],
-  permissions:[],
+  permissions: [],
   packages: [],
 );
 
@@ -107,7 +107,7 @@ class ConditionBody extends NodeBody {
       );
 
   @override
-  String toCode(
+  Future<String> toCode(
     final BuildContext context,
     final CNode node,
     final CNode? child,

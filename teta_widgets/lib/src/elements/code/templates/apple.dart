@@ -1,19 +1,19 @@
 // Flutter imports:
 import 'package:flutter/material.dart';
+import 'package:teta_widgets/src/elements/code/formatter_test.dart';
 // Project imports:
 import 'package:teta_widgets/src/elements/code/snippets.dart';
-import 'package:teta_widgets/src/elements/features/actions/enums/gestures.dart';
-import 'package:teta_widgets/src/elements/nodes/node.dart';
+import 'package:teta_widgets/src/elements/index.dart';
 
 /// Apple Login Template
-String loginAppleCodeTemplate(
+Future<String> loginAppleCodeTemplate(
   final int pageId,
   final BuildContext context,
   final CNode node,
   final CNode? child,
   final int loop,
-) {
-  return '''
+) async {
+  final code = '''
 SizedBox(
     ${CS.size(context, node.body, isWidth: true)}
     ${CS.size(context, node.body, isWidth: false)}
@@ -41,4 +41,16 @@ SizedBox(
     ),
   )
   ''';
+  final res = FormatterTest.format(code);
+  if (res) {
+    return code;
+  } else {
+    return loginAppleCodeTemplate(
+      pageId,
+      context,
+      node,
+      null,
+      loop,
+    );
+  }
 }

@@ -16,12 +16,12 @@ import 'package:teta_widgets/src/elements/nodes/enum.dart';
 import 'package:teta_widgets/src/elements/nodes/node.dart';
 
 /// Generates the code for a page
-String pageCodeTemplate(
+Future<String> pageCodeTemplate(
   final BuildContext context,
   final CNode node,
   final List<CNode> children,
   final int pageId,
-) {
+) async {
   final prj =
       (BlocProvider.of<FocusProjectBloc>(context).state as ProjectLoaded).prj;
   final page = prj.pages!.firstWhere((final element) => element.id == pageId);
@@ -55,18 +55,19 @@ String pageCodeTemplate(
 
   for (final e in children) {
     if (e.globalType == NType.appBar) {
+      final appToCode = await e.toCode(context);
       appBarString = e.child != null &&
               (node.body.attributes[DBKeys.showAppBar] as bool? ?? false)
           ? '''
           appBar: PreferredSize(
             preferredSize: const Size.fromHeight(120),
-            child: ${e.toCode(context)},
+            child: $appToCode,
           ),'''
           : '';
     } else if (e.globalType == NType.bottomBar) {
       final child = e.child != null &&
               (node.body.attributes[DBKeys.showBottomBar] as bool? ?? false)
-          ? e.toCode(context)
+          ? await e.toCode(context)
           : '';
       bottomBarString =
           (node.body.attributes[DBKeys.showBottomBar] as bool? ?? false)
@@ -82,10 +83,12 @@ String pageCodeTemplate(
                   : ''
               : '';
     } else if (e.globalType == NType.drawer) {
-      drawerString = e.child != null ? 'drawer: ${e.toCode(context)},' : '';
+      final drawerCode = await e.toCode(context);
+      drawerString = e.child != null ? 'drawer: $drawerCode,' : '';
     } else {
       if (strChildren.toString() == '') {
-        strChildren.write(e.toCode(context));
+        final code = await e.toCode(context);
+        strChildren.write(code);
       }
     }
   }
@@ -158,6 +161,8 @@ String pageCodeTemplate(
     ${page.isAuthenticatedRequired ? "import 'package:myapp/auth/auth_required_state.dart';" : "import 'package:myapp/auth/auth_state.dart';"}
     ${prj.config?.isAdaptyReady ?? false ? "import 'package:adapty_flutter/adapty_flutter.dart';" : ''}
     ${prj.config?.isRevenueCatEnabled ?? false ? "import 'package:purchases_flutter/purchases_flutter.dart';" : ''}
+    ${prj.config?.isQonversionReady ?? false ? "import 'package:qonversion_flutter/qonversion_flutter.dart';" : ''}
+    ${prj.config?.isBraintreeReady ?? false ? "import 'package:flutter_braintree/flutter_braintree.dart';" : ''}
     
     ${PackagesService.instance.getToCodePackages()}
 

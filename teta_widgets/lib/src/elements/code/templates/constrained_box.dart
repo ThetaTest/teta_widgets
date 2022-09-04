@@ -1,5 +1,6 @@
 // Flutter imports:
 import 'package:flutter/material.dart';
+import 'package:teta_widgets/src/elements/code/formatter_test.dart';
 // Project imports:
 import 'package:teta_widgets/src/elements/code/snippets.dart';
 import 'package:teta_widgets/src/elements/controls/key_constants.dart';
@@ -8,12 +9,12 @@ import 'package:teta_widgets/src/elements/nodes/node.dart';
 import 'package:teta_widgets/src/elements/nodes/node_body.dart';
 
 /// ConstrainedBox Template
-String constrainedBoxCodeTemplate(
+Future<String> constrainedBoxCodeTemplate(
   final BuildContext context,
   final NodeBody body,
   final CNode? child,
   final int? loop,
-) {
+) async {
   final minWidth = (body.attributes[DBKeys.minWidth] as FSize)
       .toCode(context: context, isWidth: true);
   final maxWidth = (body.attributes[DBKeys.maxWidth] as FSize)
@@ -23,7 +24,8 @@ String constrainedBoxCodeTemplate(
   final maxHeight = (body.attributes[DBKeys.maxHeight] as FSize)
       .toCode(context: context, isWidth: false);
 
-  return '''
+  final childString = await CS.child(context, child, comma: true);
+  final code = '''
     ConstrainedBox(
       constraints: BoxConstraints(
         ${minWidth != 'null' ? 'minWidth: $minWidth,' : ''} 
@@ -31,7 +33,20 @@ String constrainedBoxCodeTemplate(
         ${maxWidth != 'null' ? 'maxWidth: $maxWidth,' : ''} 
         ${maxHeight != 'null' ? 'maxHeight: $maxHeight,' : ''} 
       ),
-      ${CS.child(context, child, comma: true)}
+      $childString
     )
   ''';
+  final res = FormatterTest.format(code);
+  if (res) {
+    return code;
+  } else {
+    final code = await CS.child(context, child, comma: true)
+      ..replaceAll('child:', '');
+    final res = FormatterTest.format(code);
+    if (res) {
+      return code;
+    } else {
+      return 'const SizedBox()';
+    }
+  }
 }

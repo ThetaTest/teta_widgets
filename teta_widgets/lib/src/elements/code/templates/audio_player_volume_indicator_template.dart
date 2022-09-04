@@ -1,26 +1,20 @@
 // Flutter imports:
 import 'package:flutter/material.dart';
-import 'package:just_audio/just_audio.dart';
-
-// Project imports:
-import 'package:teta_widgets/src/elements/code/snippets.dart';
-import 'package:teta_widgets/src/elements/nodes/node.dart';
-import 'package:teta_widgets/src/elements/nodes/node_body.dart';
+import 'package:teta_widgets/src/elements/code/formatter_test.dart';
 
 /// Generates the code for Align widget
 class AudioPlayerVolumeIndicatorTemplate {
-  static String toCode({
+  static Future<String> toCode({
     required final BuildContext context,
     required final String audioPlayerName,
-  }) {
-
-    return '''
+  }) async {
+    final code = '''
 StreamBuilder<Map<String, Object>>(
         stream: Rx.combineLatest3<Duration, Duration, double,
                 Map<String, Object>>(
-            ${audioPlayerName}!.positionStream,
-            ${audioPlayerName}!.bufferedPositionStream,
-            ${audioPlayerName}!.volumeStream,
+            $audioPlayerName!.positionStream,
+            $audioPlayerName!.bufferedPositionStream,
+            $audioPlayerName!.volumeStream,
             (final Duration position, final Duration bufferedPosition,
                     final double volume,) =>
                 {
@@ -42,7 +36,7 @@ StreamBuilder<Map<String, Object>>(
                   max: 1,
                   value: volume as double,
                   onChanged: (final value) {
-                    ${audioPlayerName}!.setVolume(value);
+                    $audioPlayerName!.setVolume(value);
                   }),
               Padding(
                 padding: const EdgeInsets.symmetric(horizontal: 16),
@@ -59,5 +53,11 @@ StreamBuilder<Map<String, Object>>(
         },
       )
 ''';
+    final res = FormatterTest.format(code);
+    if (res) {
+      return code;
+    } else {
+      return 'const SizedBox()';
+    }
   }
 }

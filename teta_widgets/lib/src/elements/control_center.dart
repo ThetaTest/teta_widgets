@@ -88,6 +88,8 @@ import 'package:teta_widgets/src/elements/bodies/page_view.dart';
 import 'package:teta_widgets/src/elements/bodies/parallax.dart';
 import 'package:teta_widgets/src/elements/bodies/placeholder.dart';
 import 'package:teta_widgets/src/elements/bodies/positioned.dart';
+import 'package:teta_widgets/src/elements/bodies/qonversion/qonversion_product.dart';
+import 'package:teta_widgets/src/elements/bodies/qonversion/qonversion_sub_status.dart';
 import 'package:teta_widgets/src/elements/bodies/qr.dart';
 import 'package:teta_widgets/src/elements/bodies/radio.dart';
 import 'package:teta_widgets/src/elements/bodies/refresh_indicator.dart';
@@ -255,6 +257,8 @@ final stateTypes = <IntrinsicStates>[
   qrIntrinsicStates,
   barcodeIntrinsicStates,
   autoAppBarIntrinsicStates,
+  qonversionProductsListIntrinsicStates,
+  qonversionSubStatusIntrinsicStates,
 ];
 
 /// Method to return any body
@@ -270,6 +274,10 @@ NodeBody getBody(final NType type) {
       return RevenueCatProductListBody();
     case NType.revenueCatSubStatus:
       return RevenueCatSubStatusBody();
+    case NType.qonversionProducts:
+      return QonversionProductListBody();
+    case NType.qonversionSubStatus:
+      return QonversionSubStatusBody();
     case NType.bottomBar:
       return BottomBarBody();
     case NType.button:

@@ -1,19 +1,19 @@
 // Flutter imports:
 import 'package:flutter/material.dart';
+import 'package:teta_widgets/src/elements/code/formatter_test.dart';
 // Project imports:
 import 'package:teta_widgets/src/elements/code/snippets.dart';
 import 'package:teta_widgets/src/elements/controls/key_constants.dart';
-import 'package:teta_widgets/src/elements/features/text_type_input.dart';
-import 'package:teta_widgets/src/elements/nodes/node.dart';
+import 'package:teta_widgets/src/elements/index.dart';
 import 'package:teta_widgets/src/elements/nodes/node_body.dart';
 
 /// Generates the code for AnimatedOpacity widget
-String animatedOpacityCodeTemplate(
+Future<String> animatedOpacityCodeTemplate(
   final BuildContext context,
   final NodeBody body,
   final CNode? child,
   final int? loop,
-) {
+) async {
   final abstract = body.attributes[DBKeys.value] as FTextTypeInput;
   final value = abstract.toCode(loop);
   final rawDouble = double.tryParse(value.replaceAll('-', '')) != null
@@ -28,11 +28,23 @@ String animatedOpacityCodeTemplate(
       (body.attributes[DBKeys.duration] as FTextTypeInput).toCode(loop);
   final duration =
       int.tryParse(valueDuration) != null ? int.parse(valueDuration) : '400';
-  return '''
+  final childString = await CS.child(context, child, comma: true);
+  final code = '''
     AnimatedOpacity(
       duration: const Duration(milliseconds: $duration ),
       opacity: $opacity,
-      ${CS.child(context, child, comma: true)}
+      $childString
     )
   ''';
+  final res = FormatterTest.format(code);
+  if (res) {
+    return code;
+  } else {
+    return animatedOpacityCodeTemplate(
+      context,
+      NodeBody.get(NType.animatedOpacity),
+      null,
+      loop,
+    );
+  }
 }

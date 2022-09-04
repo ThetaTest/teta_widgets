@@ -1,17 +1,18 @@
 import 'package:flutter/material.dart';
+import 'package:teta_widgets/src/elements/code/formatter_test.dart';
 import 'package:teta_widgets/src/elements/code/snippets.dart';
 import 'package:teta_widgets/src/elements/index.dart';
 
 class RadioButtonToCode {
-  static String toCode(
+  static Future<String> toCode(
     final int pageId,
     final BuildContext context,
     final CNode node,
     final FTextTypeInput groupValue,
     final FTextTypeInput value,
     final int loop,
-  ) {
-    return '''
+  ) async {
+    final code = '''
     Radio<String>(
       value: '${value.value}',
       groupValue: '${groupValue.value}',
@@ -27,5 +28,11 @@ class RadioButtonToCode {
     )}
     )
   ''';
+    final res = FormatterTest.format(code);
+    if (res) {
+      return code;
+    } else {
+      return 'const SizedBox()';
+    }
   }
 }

@@ -1,5 +1,6 @@
 // Flutter imports:
 import 'package:flutter/material.dart';
+import 'package:teta_widgets/src/elements/code/formatter_test.dart';
 // Project imports:
 import 'package:teta_widgets/src/elements/code/snippets.dart';
 import 'package:teta_widgets/src/elements/controls/key_constants.dart';
@@ -10,14 +11,14 @@ import 'package:teta_widgets/src/elements/nodes/node.dart';
 import 'package:teta_widgets/src/elements/nodes/node_body.dart';
 
 /// TextField Template
-String textFieldCodeTemplate(
+Future<String> textFieldCodeTemplate(
   final int pageId,
   final BuildContext context,
   final NodeBody body,
   final CNode node,
   final CNode? child,
   final int loop,
-) {
+) async {
   final labelText =
       (body.attributes[DBKeys.labelText] as FTextTypeInput).toCode(loop);
   final valueMaxLines =
@@ -58,7 +59,7 @@ String textFieldCodeTemplate(
           .getRawToCode(loop);
   final borderSize = double.tryParse(valueBordersSize) ?? 1;
 
-  return """
+  final code = """
   Container(
     ${CS.margin(context, body, isMargin: true)}
     ${CS.size(context, body, isWidth: true)}
@@ -117,4 +118,10 @@ String textFieldCodeTemplate(
     ),
   )
   """;
+  final res = FormatterTest.format(code);
+  if (res) {
+    return code;
+  } else {
+    return 'const SizedBox()';
+  }
 }

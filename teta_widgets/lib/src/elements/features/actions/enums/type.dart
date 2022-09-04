@@ -7,6 +7,7 @@ enum ActionType {
   shopify,
   theme,
   revenueCat,
+  qonversion,
   stripe,
   firebase,
   firebaseFirestore,

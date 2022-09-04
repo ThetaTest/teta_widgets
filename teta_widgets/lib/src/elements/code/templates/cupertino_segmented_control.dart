@@ -1,5 +1,6 @@
 // Flutter imports:
 import 'package:flutter/material.dart';
+import 'package:teta_widgets/src/elements/code/formatter_test.dart';
 // Project imports:
 import 'package:teta_widgets/src/elements/code/snippets.dart';
 import 'package:teta_widgets/src/elements/controls/key_constants.dart';
@@ -9,14 +10,14 @@ import 'package:teta_widgets/src/elements/nodes/node.dart';
 import 'package:teta_widgets/src/elements/nodes/node_body.dart';
 
 /// Cupertino Segmented Control Template
-String cupertinoSegmentedControlCodeTemplate(
+Future<String> cupertinoSegmentedControlCodeTemplate(
   final int pageId,
   final BuildContext context,
   final NodeBody body,
   final CNode node,
   final List<CNode> children,
   final int loop,
-) {
+) async {
   StringBuffer map;
   if (children.isNotEmpty) {
     //here all the children are passed from tree view and setted
@@ -72,7 +73,7 @@ String cupertinoSegmentedControlCodeTemplate(
     flagConst: true,
   )?.replaceFirst('color:', 'borderColor:');
 
-  return '''
+  final code = '''
     CupertinoSegmentedControl<int>(
       children: $map
       ${CS.action(
@@ -91,4 +92,10 @@ String cupertinoSegmentedControlCodeTemplate(
       $borderColor
     )
   ''';
+  final res = FormatterTest.format(code);
+  if (res) {
+    return code;
+  } else {
+    return 'const SizedBox()';
+  }
 }

@@ -51,7 +51,7 @@ final calendarIntrinsicStates = IntrinsicStates(
   permissions: [
     Permissions.calendar,
   ],
-  packages: [pPagedVerticalCalendar,pIntl],
+  packages: [pPagedVerticalCalendar, pIntl],
 );
 
 /// Set of funcs to use Align widget
@@ -194,7 +194,7 @@ class CalendarBody extends NodeBody {
       );
 
   @override
-  String toCode(
+  Future<String> toCode(
     final BuildContext context,
     final CNode node,
     final CNode? child,
@@ -202,5 +202,5 @@ class CalendarBody extends NodeBody {
     final int pageId,
     final int? loop,
   ) =>
-      calendarCodeTemplate(pageId, context, node, child, loop ?? 0);
+      calendarCodeTemplate(pageId, context, node, loop ?? 0);
 }

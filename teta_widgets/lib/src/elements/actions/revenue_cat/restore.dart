@@ -52,8 +52,9 @@ class FActionRevenueCatRestorePurchases {
         final index =
             states.indexWhere((final element) => element.name == stateName);
         if (index >= 0) {
-          states[index].value =
-              restoredInfo.entitlements.active.isEmpty ? 'Success' : 'Failed';
+          states[index].value = restoredInfo.entitlements.active.isNotEmpty
+              ? 'Success'
+              : 'Failed';
           update(context);
         }
       } on PlatformException catch (e) {
@@ -81,7 +82,7 @@ class FActionRevenueCatRestorePurchases {
     try {
         final restoredInfo = await Purchases.restoreTransactions();
         setState(() {
-          $varName = restoredInfo.entitlements.active.isEmpty ? 'Success' : 'Failed';
+          $varName = restoredInfo.entitlements.active.isNotEmpty ? 'Success' : 'Failed';
         });
       } catch (e) {
         // Error restoring purchases

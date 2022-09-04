@@ -5,7 +5,6 @@ import 'package:teta_core/gen/assets.gen.dart';
 import 'package:teta_core/src/models/dataset.dart';
 import 'package:teta_core/src/models/variable.dart';
 // Project imports:
-import 'package:teta_widgets/src/elements/code/templates/align.dart';
 import 'package:teta_widgets/src/elements/controls/control_model.dart';
 import 'package:teta_widgets/src/elements/controls/key_constants.dart';
 import 'package:teta_widgets/src/elements/controls/type.dart';
@@ -39,7 +38,7 @@ final cameraIntrinsicStates = IntrinsicStates(
   canHave: ChildrenEnum.child,
   addChildLabels: [],
   gestures: [],
-  permissions:[
+  permissions: [
     Permissions.camera,
   ],
   packages: [],
@@ -102,7 +101,7 @@ class CameraBody extends NodeBody {
       );
 
   @override
-  String toCode(
+  Future<String> toCode(
     final BuildContext context,
     final CNode node,
     final CNode? child,
@@ -110,5 +109,5 @@ class CameraBody extends NodeBody {
     final int pageId,
     final int? loop,
   ) =>
-      alignCodeTemplate(context, this, child);
+      Future.value('');
 }

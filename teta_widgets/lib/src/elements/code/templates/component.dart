@@ -8,18 +8,19 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:recase/recase.dart';
 import 'package:teta_core/teta_core.dart';
+import 'package:teta_widgets/src/elements/code/formatter_test.dart';
 // Project imports:
 import 'package:teta_widgets/src/elements/controls/key_constants.dart';
 import 'package:teta_widgets/src/elements/index.dart';
 import 'package:teta_widgets/src/elements/nodes/node_body.dart';
 
 /// Component Template
-String componentCodeTemplate(
+Future<String> componentCodeTemplate(
   final BuildContext context,
   final NodeBody body,
   final List<CNode> children,
   final int pageId,
-) {
+) async {
   final projectLoaded =
       BlocProvider.of<FocusProjectBloc>(context).state as ProjectLoaded;
 
@@ -115,7 +116,14 @@ String componentCodeTemplate(
         stringParamsToSend.write('$valueToSend, ');
       }
     }
-    return 'Page${pageNameRC.pascalCase}(${stringParamsToSend.toString()})';
+    final code =
+        'Page${pageNameRC.pascalCase}(${stringParamsToSend.toString()})';
+    final res = FormatterTest.format(code);
+    if (res) {
+      return code;
+    } else {
+      return 'const SizedBox()';
+    }
   }
 }
 

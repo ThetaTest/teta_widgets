@@ -46,7 +46,7 @@ final firebaseFutureBuilderIntrinsicStates = IntrinsicStates(
   canHave: ChildrenEnum.child,
   addChildLabels: [],
   gestures: [],
-  permissions:[],
+  permissions: [],
   packages: [],
 );
 
@@ -90,7 +90,7 @@ class FirebaseFBBody extends NodeBody {
       );
 
   @override
-  String toCode(
+  Future<String> toCode(
     final BuildContext context,
     final CNode node,
     final CNode? child,
@@ -98,5 +98,6 @@ class FirebaseFBBody extends NodeBody {
     final int pageId,
     final int? loop,
   ) =>
-      firestoreFutureBuilderCodeTemplate(context, this, children ?? []);
+      Future.value(
+          firestoreFutureBuilderCodeTemplate(context, this, children ?? []));
 }

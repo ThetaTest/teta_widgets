@@ -180,7 +180,7 @@ class ButtonBody extends NodeBody {
       );
 
   @override
-  String toCode(
+  Future<String> toCode(
     final BuildContext context,
     final CNode node,
     final CNode? child,
@@ -188,5 +188,5 @@ class ButtonBody extends NodeBody {
     final int pageId,
     final int? loop,
   ) =>
-      buttonCodeTemplate(pageId, context, this, node, child, loop ?? 0);
+      buttonCodeTemplate(pageId, context, this, node, loop ?? 0);
 }

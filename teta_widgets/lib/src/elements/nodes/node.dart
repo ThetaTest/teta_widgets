@@ -64,7 +64,8 @@ abstract class CNode extends Equatable {
   FChildrenIds childrenIds;
 
   @override
-  String toString() => 'Component: GlobalType: $globalType, Name: $name, Index: $index';
+  String toString() =>
+      'Component: GlobalType: $globalType, Name: $name, Index: $index';
 
   /// Returns display name of any node
   static List<String> get nodes => NType.values.map(NodeType.type).toList();
@@ -117,7 +118,7 @@ abstract class CNode extends Equatable {
   Map<String, dynamic> attributesToJson() => body.toJson();
 
   /// Render node to code string
-  String toCode(final BuildContext context) {
+  Future<String> toCode(final BuildContext context) {
     return NDynamic(
       globalType: intrinsicState.type,
       body: NDynamic.getBody(intrinsicState.type),
@@ -148,5 +149,4 @@ abstract class CNode extends Equatable {
       inSpawned: false,
     );
   }
-
 }

@@ -46,7 +46,7 @@ final firebasePaginationIntrinsicStates = IntrinsicStates(
   canHave: ChildrenEnum.child,
   addChildLabels: [],
   gestures: [],
-  permissions:[],
+  permissions: [],
   packages: [],
 );
 
@@ -97,7 +97,7 @@ class FirebasePaginationBody extends NodeBody {
       );
 
   @override
-  String toCode(
+  Future<String> toCode(
     final BuildContext context,
     final CNode node,
     final CNode? child,
@@ -105,8 +105,8 @@ class FirebasePaginationBody extends NodeBody {
     final int pageId,
     final int? loop,
   ) =>
-      '''
+      Future.value('''
     Firebase(
     )
-  ''';
+  ''');
 }

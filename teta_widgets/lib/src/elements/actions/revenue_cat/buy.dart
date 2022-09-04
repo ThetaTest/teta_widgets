@@ -102,7 +102,7 @@ class FActionRevenueCatBuy {
 
     return '''
     try {
-      final purchaserInfo = await Purchases.purchaseProduct(${productIdentifier.toCode(loop)}');
+      final purchaserInfo = await Purchases.purchaseProduct(${productIdentifier.toCode(loop)});
       setState(() {
         $varName = purchaserInfo.entitlements.active.isEmpty ? 'Success' : 'Failed';
       });

@@ -3,27 +3,25 @@
 
 // Flutter imports:
 import 'package:flutter/material.dart';
+import 'package:teta_widgets/src/elements/code/formatter_test.dart';
 // Project imports:
 import 'package:teta_widgets/src/elements/code/snippets.dart';
 import 'package:teta_widgets/src/elements/controls/key_constants.dart';
-import 'package:teta_widgets/src/elements/features/actions/enums/index.dart';
-import 'package:teta_widgets/src/elements/features/dataset.dart';
-import 'package:teta_widgets/src/elements/nodes/node.dart';
+import 'package:teta_widgets/src/elements/index.dart';
 
 /// Generates the code for Padding widget
-String calendarCodeTemplate(
+Future<String> calendarCodeTemplate(
   final int pageId,
   final BuildContext context,
   final CNode node,
-  final CNode? child,
   final int loop,
-) {
+) async {
   final dataset = node.body.attributes[DBKeys.datasetInput] as FDataset;
   var firstDecoration = CS
       .boxDecoration(context, node.body, DBKeys.bgFill)
       .replaceFirst('decoration:', '');
   firstDecoration = firstDecoration.substring(0, firstDecoration.length - 6);
-  return '''
+  final code = '''
   Builder(builder: (context) {
     return PagedVerticalCalendar(
       addAutomaticKeepAlives: true,
@@ -95,4 +93,10 @@ String calendarCodeTemplate(
     },
   )
   ''';
+  final res = FormatterTest.format(code);
+  if (res) {
+    return code;
+  } else {
+    return 'const SizedBox()';
+  }
 }

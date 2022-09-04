@@ -10,12 +10,12 @@ import 'package:teta_core/teta_core.dart';
 import 'package:teta_widgets/src/elements/nodes/node.dart';
 
 /// Generates the code for a page
-String codeComponentTemplate(
+Future<String> codeComponentTemplate(
   final BuildContext context,
   final CNode node,
   final List<CNode> children,
   final int pageId,
-) {
+) async {
   final prj =
       (BlocProvider.of<FocusProjectBloc>(context).state as ProjectLoaded).prj;
 

@@ -38,7 +38,7 @@ final materialBottomBarIntrinsicStates = IntrinsicStates(
     'Add Trailing',
   ],
   gestures: [],
-  permissions:[],
+  permissions: [],
   packages: [],
 );
 
@@ -118,7 +118,7 @@ class MaterialBottomBarBody extends NodeBody {
       );
 
   @override
-  String toCode(
+  Future<String> toCode(
     final BuildContext context,
     final CNode node,
     final CNode? child,
@@ -126,5 +126,5 @@ class MaterialBottomBarBody extends NodeBody {
     final int pageId,
     final int? loop,
   ) =>
-      '';
+      Future.value('');
 }

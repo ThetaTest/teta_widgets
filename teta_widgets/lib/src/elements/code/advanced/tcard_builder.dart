@@ -1,5 +1,6 @@
 // Flutter imports:
 import 'package:flutter/material.dart';
+import 'package:teta_widgets/src/elements/code/formatter_test.dart';
 import 'package:teta_widgets/src/elements/code/snippets.dart';
 // Project imports:
 import 'package:teta_widgets/src/elements/controls/key_constants.dart';
@@ -14,13 +15,13 @@ import 'package:teta_widgets/src/elements/index.dart';
 ///   children: [], // node's children
 /// );
 /// ```
-String tCardBuilderCodeTemplate(
+Future<String> tCardBuilderCodeTemplate(
   final BuildContext context,
   final int pageId,
   final CNode node,
   final CNode? child,
   final int? loop,
-) {
+) async {
   final slideSpeed = double.tryParse(
         (node.body.attributes[DBKeys.value] as FTextTypeInput).toCode(loop),
       ) ??
@@ -36,7 +37,7 @@ String tCardBuilderCodeTemplate(
   final dataset =
       (node.body.attributes[DBKeys.datasetInput] as FDataset).datasetName;
 
-  return '''
+  final code = '''
   Builder(
     builder: (context) {
       return TCard(
@@ -72,4 +73,22 @@ String tCardBuilderCodeTemplate(
     }
   )
   ''';
+  final res = FormatterTest.format(code);
+  if (res) {
+    return code;
+  } else {
+    final code = await tCardBuilderCodeTemplate(
+      context,
+      pageId,
+      node,
+      null,
+      loop,
+    );
+    final res = FormatterTest.format(code);
+    if (res) {
+      return code;
+    } else {
+      return 'const SizedBox()';
+    }
+  }
 }

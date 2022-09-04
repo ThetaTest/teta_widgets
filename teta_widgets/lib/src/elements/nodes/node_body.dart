@@ -74,7 +74,7 @@ class NodeBody {
   String toString() => 'Body { attributes; $attributes }';
 
   /// Render a node to widget thought body
-  String toCode(
+  Future<String> toCode(
     final BuildContext context,
     final CNode node,
     final CNode? child,
@@ -82,17 +82,17 @@ class NodeBody {
     final int pageId,
     final int? loop,
   ) =>
-      '';
+      Future.value('');
 
   /// Initialization code representation
   String toCodeOnInit(
-      final BuildContext context,
-      final CNode node,
-      final CNode? child,
-      final List<CNode>? children,
-      final int pageId,
-      final int? loop,
-      ) =>
+    final BuildContext context,
+    final CNode node,
+    final CNode? child,
+    final List<CNode>? children,
+    final int pageId,
+    final int? loop,
+  ) =>
       '';
 
   /// Get body

@@ -50,5 +50,6 @@ class NTemplate extends CNode {
   String toString() => 'NNull { nid: $nid }';
 
   @override
-  String toCode(final BuildContext context) => 'Container(),';
+  Future<String> toCode(final BuildContext context) =>
+      Future.value('Container(),');
 }

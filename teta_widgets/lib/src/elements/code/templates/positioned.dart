@@ -1,5 +1,6 @@
 // Flutter imports:
 import 'package:flutter/material.dart';
+import 'package:teta_widgets/src/elements/code/formatter_test.dart';
 // Project imports:
 import 'package:teta_widgets/src/elements/code/snippets.dart';
 import 'package:teta_widgets/src/elements/controls/key_constants.dart';
@@ -7,22 +8,29 @@ import 'package:teta_widgets/src/elements/nodes/node.dart';
 import 'package:teta_widgets/src/elements/nodes/node_body.dart';
 
 /// Positioned Template
-String positionedCodeTemplate(
+Future<String> positionedCodeTemplate(
   final BuildContext context,
   final NodeBody body,
   final CNode? child,
-) {
+) async {
   final left = body.attributes[DBKeys.left] as bool;
   final top = body.attributes[DBKeys.top] as bool;
   final right = body.attributes[DBKeys.right] as bool;
   final bottom = body.attributes[DBKeys.bottom] as bool;
-  return '''
+  final childString = await CS.child(context, child, comma: true);
+  final code = '''
     Positioned(
       left: $left,
       top: $top,
       right: $right,
       bottom: $bottom,
-      ${CS.child(context, child, comma: true)}
+      $childString
     )
   ''';
+  final res = FormatterTest.format(code);
+  if (res) {
+    return code;
+  } else {
+    return 'const SizedBox()';
+  }
 }

@@ -30,7 +30,14 @@ final stripeCartItemsBuilderBodyIntrinsicStates = IntrinsicStates(
   nodeDescription: null,
   advicedChildren: [],
   blockedTypes: [],
-  synonymous: ['stripe', 'scroll', 'vertical list', 'products', 'cart', 'checkout'],
+  synonymous: [
+    'stripe',
+    'scroll',
+    'vertical list',
+    'products',
+    'cart',
+    'checkout'
+  ],
   advicedChildrenCanHaveAtLeastAChild: [],
   displayName: NodeType.name(_globalType),
   type: _globalType,
@@ -106,7 +113,7 @@ class StripeCartItemsBuilderBody extends NodeBody {
       );
 
   @override
-  String toCode(
+  Future<String> toCode(
     final BuildContext context,
     final CNode node,
     final CNode? child,

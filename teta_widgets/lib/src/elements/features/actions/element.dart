@@ -44,6 +44,8 @@ import 'package:teta_widgets/src/elements/actions/navigation/open_date_picker.da
 import 'package:teta_widgets/src/elements/actions/navigation/open_drawer.dart';
 import 'package:teta_widgets/src/elements/actions/navigation/open_page.dart';
 import 'package:teta_widgets/src/elements/actions/navigation/open_snack.dart';
+import 'package:teta_widgets/src/elements/actions/qonversion/buy.dart';
+import 'package:teta_widgets/src/elements/actions/qonversion/restore.dart';
 import 'package:teta_widgets/src/elements/actions/revenue_cat/buy.dart';
 import 'package:teta_widgets/src/elements/actions/revenue_cat/restore.dart';
 import 'package:teta_widgets/src/elements/actions/state/change_with.dart';
@@ -82,6 +84,7 @@ import 'package:teta_widgets/src/elements/features/actions/enums/audio_player_ac
 import 'package:teta_widgets/src/elements/features/actions/enums/braintree.dart';
 import 'package:teta_widgets/src/elements/features/actions/enums/camera.dart';
 import 'package:teta_widgets/src/elements/features/actions/enums/index.dart';
+import 'package:teta_widgets/src/elements/features/actions/enums/qonversion.dart';
 import 'package:teta_widgets/src/elements/features/actions/enums/revenue_cat.dart';
 import 'package:teta_widgets/src/elements/features/actions/enums/stripe.dart';
 import 'package:teta_widgets/src/elements/features/actions/enums/teta_cms.dart';
@@ -99,6 +102,7 @@ class FActionElement extends Equatable {
   FActionElement({
     this.id,
     this.actionRevenueCat,
+    this.actionQonversion,
     this.actionTheme,
     this.actionStripe,
     this.actionType,
@@ -159,6 +163,10 @@ class FActionElement extends Equatable {
     actionRevenueCat =
         convertDropdownToValue(ActionRevenueCat.values, doc['aRC'] as String?)
             as ActionRevenueCat?;
+    actionQonversion = convertDropdownToValue(
+      ActionQonversion.values,
+      doc['aQonversion'] as String?,
+    ) as ActionQonversion?;
     actionTheme =
         convertDropdownToValue(ActionTheme.values, doc['aTh'] as String?)
             as ActionTheme?;
@@ -289,6 +297,11 @@ class FActionElement extends Equatable {
             doc['revenueCatEntitle'] as Map<String, dynamic>,
           )
         : FTextTypeInput();
+    qonversionProductIdentifier = doc['qonversionProdId'] != null
+        ? FTextTypeInput.fromJson(
+            doc['qonversionProdId'] as Map<String, dynamic>,
+          )
+        : FTextTypeInput();
   }
 
   String? id;
@@ -297,6 +310,7 @@ class FActionElement extends Equatable {
   ActionNavigation? actionNavigation;
   ActionState? actionState;
   ActionRevenueCat? actionRevenueCat;
+  ActionQonversion? actionQonversion;
   ActionBraintree? actionBraintree;
   ActionTranslator? actionTranslator;
   ActionTheme? actionTheme;
@@ -318,6 +332,7 @@ class FActionElement extends Equatable {
   FTextTypeInput? everyMilliseconds;
   FTextTypeInput? revenueCatProductIdentifier;
   FTextTypeInput? revenueCatEntitlement;
+  FTextTypeInput? qonversionProductIdentifier;
 
   String? prodId;
   String? stateName;
@@ -388,6 +403,7 @@ class FActionElement extends Equatable {
           if (config.supabaseEnabled ?? false) 'Supabase database',
           if (config.isBraintreeReady) 'Braintree',
           if (config.isRevenueCatEnabled) 'RevenueCat',
+          if (config.isQonversionReady) 'Qonversion',
           if (config.isStripeEnabled) 'Stripe',
           if ((page.flatList ?? <CNode>[]).indexWhere(
                 (final element) => element.intrinsicState.type == NType.camera,
@@ -447,6 +463,15 @@ class FActionElement extends Equatable {
     if (config != null) {
       if (config.isRevenueCatEnabled) {
         return enumsToListString(ActionRevenueCat.values);
+      }
+    }
+    return [];
+  }
+
+  static List<String> getQonversion(final ProjectConfig? config) {
+    if (config != null) {
+      if (config.isQonversionReady) {
+        return enumsToListString(ActionQonversion.values);
       }
     }
     return [];
@@ -520,6 +545,9 @@ class FActionElement extends Equatable {
     if (type == ActionType.revenueCat) {
       return 'RevenueCat';
     }
+    if (type == ActionType.qonversion) {
+      return 'Qonversion';
+    }
     if (type == ActionType.stripe) {
       return 'Stripe';
     }
@@ -544,6 +572,9 @@ class FActionElement extends Equatable {
   ) {
     if (value == 'RevenueCat') {
       return ActionType.revenueCat;
+    }
+    if (value == 'Qonversion') {
+      return ActionType.qonversion;
     }
     if (value == 'Stripe') {
       return ActionType.stripe;
@@ -585,6 +616,7 @@ class FActionElement extends Equatable {
         'aW': convertValueToDropdown(actionWebView),
         'aAP': convertValueToDropdown(actionAudioPlayer),
         'aRC': convertValueToDropdown(actionRevenueCat),
+        'aQonversion': convertValueToDropdown(actionRevenueCat),
         'aBrain': convertValueToDropdown(actionBraintree),
         'aTrans': convertValueToDropdown(actionTranslator),
         'sPK': convertValueToDropdown(actionStripe),
@@ -639,6 +671,9 @@ class FActionElement extends Equatable {
             : null,
         'revenueCatProdId': revenueCatProductIdentifier != null
             ? revenueCatProductIdentifier!.toJson()
+            : null,
+        'qonversionProdId': qonversionProductIdentifier != null
+            ? qonversionProductIdentifier!.toJson()
             : null,
       }..removeWhere((final String key, final dynamic value) => value == null);
 
@@ -876,6 +911,45 @@ class FActionElement extends Equatable {
           case ActionRevenueCat.restorePurchases:
             await actionS(
               () => FActionRevenueCatRestorePurchases.action(
+                context,
+                states,
+                stateName,
+              ),
+              context: context,
+              params: params,
+              states: states,
+              dataset: dataset,
+              loop: loop,
+            );
+            break;
+          default:
+            break;
+        }
+        break;
+      case ActionType.qonversion:
+        switch (actionQonversion) {
+          case ActionQonversion.buy:
+            await actionS(
+              () => FActionQonversionBuy.action(
+                context,
+                qonversionProductIdentifier,
+                params,
+                states,
+                dataset,
+                stateName,
+                true,
+                loop ?? 0,
+              ),
+              context: context,
+              params: params,
+              states: states,
+              dataset: dataset,
+              loop: loop,
+            );
+            break;
+          case ActionQonversion.restorePurchases:
+            await actionS(
+              () => FActionQonversionRestorePurchases.action(
                 context,
                 states,
                 stateName,
@@ -1826,6 +1900,32 @@ class FActionElement extends Equatable {
           case ActionRevenueCat.restorePurchases:
             return codeS(
               FActionRevenueCatRestorePurchases.toCode(
+                context,
+                stateName,
+                pageId,
+              ),
+              context,
+            );
+          default:
+            break;
+        }
+        break;
+      case ActionType.qonversion:
+        switch (actionQonversion) {
+          case ActionQonversion.buy:
+            return codeS(
+              FActionQonversionBuy.toCode(
+                context,
+                revenueCatProductIdentifier,
+                stateName,
+                pageId,
+                -loop,
+              ),
+              context,
+            );
+          case ActionQonversion.restorePurchases:
+            return codeS(
+              FActionQonversionRestorePurchases.toCode(
                 context,
                 stateName,
                 pageId,

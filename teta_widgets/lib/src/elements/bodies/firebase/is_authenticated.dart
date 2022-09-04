@@ -45,7 +45,7 @@ final firebaseIsAuthenticatedIntrinsicStates = IntrinsicStates(
   canHave: ChildrenEnum.child,
   addChildLabels: [],
   gestures: [],
-  permissions:[],
+  permissions: [],
   packages: [],
 );
 
@@ -83,7 +83,7 @@ class FirebaseIsAuthenticatedBody extends NodeBody {
       );
 
   @override
-  String toCode(
+  Future<String> toCode(
     final BuildContext context,
     final CNode node,
     final CNode? child,
@@ -91,8 +91,8 @@ class FirebaseIsAuthenticatedBody extends NodeBody {
     final int pageId,
     final int? loop,
   ) =>
-      '''
+      Future.value('''
     Firebase(
     )
-  ''';
+  ''');
 }

@@ -3,23 +3,24 @@
 
 // Flutter imports:
 import 'package:flutter/material.dart';
+import 'package:teta_widgets/src/elements/code/formatter_test.dart';
 import 'package:teta_widgets/src/elements/nodes/dynamic.dart';
 // Project imports:
 import 'package:teta_widgets/src/elements/nodes/node.dart';
 
 /// Generates the code for RevenueCat product list widget, unclassified for now
-String revenueCatProductsListCodeTemplate(
+Future<String> revenueCatProductsListCodeTemplate(
   final BuildContext context,
   final NDynamic node,
   final CNode? child,
   final int? loop,
-) {
+) async {
   var childString = 'const SizedBox()';
   if (child != null) {
-    childString = child.toCode(context);
+    childString = await child.toCode(context);
   }
 
-  return '''
+  final code = '''
   TetaFutureBuilder<List<Product>>(
     future: Future<List<Product>>.sync(() async {
       var products = <Product>[];
@@ -59,4 +60,10 @@ String revenueCatProductsListCodeTemplate(
     }
   )
   ''';
+  final res = FormatterTest.format(code);
+  if (res) {
+    return code;
+  } else {
+    return 'const SizedBox()';
+  }
 }

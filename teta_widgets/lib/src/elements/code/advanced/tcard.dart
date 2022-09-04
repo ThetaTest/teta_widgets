@@ -1,5 +1,6 @@
 // Flutter imports:
 import 'package:flutter/material.dart';
+import 'package:teta_widgets/src/elements/code/formatter_test.dart';
 // Project imports:
 import 'package:teta_widgets/src/elements/code/snippets.dart';
 import 'package:teta_widgets/src/elements/controls/key_constants.dart';
@@ -16,13 +17,13 @@ import 'package:teta_widgets/src/elements/nodes/node.dart';
 ///   children: [], // node's children
 /// );
 /// ```
-String tCardCodeTemplate(
+Future<String> tCardCodeTemplate(
   final BuildContext context,
   final int pageId,
   final CNode node,
   final List<CNode> children,
   final int? loop,
-) {
+) async {
   final slideSpeed = double.tryParse(
         (node.body.attributes[DBKeys.value] as FTextTypeInput).toCode(loop),
       ) ??
@@ -33,7 +34,8 @@ String tCardCodeTemplate(
       ) ??
       500;
   final lockYAxis = node.body.attributes[DBKeys.flag] as bool? ?? false;
-  return '''
+  final childrenString = await CS.children(context, children);
+  final code = '''
   TCard(
     onForward: (index, info) async {
       if ${CS.action(
@@ -62,7 +64,25 @@ String tCardCodeTemplate(
     lockYAxis: $lockYAxis,
     slideSpeed: $slideSpeed,
     delaySlideFor: $delaySlideFor,
-    ${CS.children(context, children).replaceFirst('children', 'cards')}
+    ${childrenString.replaceFirst('children', 'cards')}
   )
   ''';
+  final res = FormatterTest.format(code);
+  if (res) {
+    return code;
+  } else {
+    final code = await tCardCodeTemplate(
+      context,
+      pageId,
+      node,
+      [],
+      loop,
+    );
+    final res = FormatterTest.format(code);
+    if (res) {
+      return code;
+    } else {
+      return 'const SizedBox()';
+    }
+  }
 }

@@ -85,7 +85,7 @@ class SupabaseLoggedUserBody extends NodeBody {
   }
 
   @override
-  String toCode(
+  Future<String> toCode(
     final BuildContext context,
     final CNode node,
     final CNode? child,
@@ -93,5 +93,5 @@ class SupabaseLoggedUserBody extends NodeBody {
     final int pageId,
     final int? loop,
   ) =>
-      '';
+      Future.value('');
 }

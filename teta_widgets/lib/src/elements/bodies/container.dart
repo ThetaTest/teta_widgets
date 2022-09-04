@@ -11,7 +11,6 @@ import 'package:teta_widgets/src/elements/controls/key_constants.dart';
 import 'package:teta_widgets/src/elements/controls/type.dart';
 import 'package:teta_widgets/src/elements/features/border.dart';
 import 'package:teta_widgets/src/elements/features/border_radius.dart';
-import 'package:teta_widgets/src/elements/features/border_style.dart';
 import 'package:teta_widgets/src/elements/features/fill.dart';
 import 'package:teta_widgets/src/elements/features/margins.dart';
 import 'package:teta_widgets/src/elements/features/shadow.dart';
@@ -52,7 +51,7 @@ final containerIntrinsicStates = IntrinsicStates(
   canHave: ChildrenEnum.child,
   addChildLabels: [],
   gestures: [],
-  permissions:[],
+  permissions: [],
   packages: [],
 );
 
@@ -157,7 +156,7 @@ class ContainerBody extends NodeBody {
   }
 
   @override
-  String toCode(
+  Future<String> toCode(
     final BuildContext context,
     final CNode node,
     final CNode? child,

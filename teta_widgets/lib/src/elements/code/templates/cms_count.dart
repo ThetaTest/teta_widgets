@@ -1,5 +1,6 @@
 // Flutter imports:
 import 'package:flutter/material.dart';
+import 'package:teta_widgets/src/elements/code/formatter_test.dart';
 // Project imports:
 import 'package:teta_widgets/src/elements/controls/key_constants.dart';
 import 'package:teta_widgets/src/elements/features/text_type_input.dart';
@@ -7,12 +8,12 @@ import 'package:teta_widgets/src/elements/nodes/dynamic.dart';
 import 'package:teta_widgets/src/elements/nodes/node.dart';
 
 /// Generates the code for Padding widget
-String cmsCountCodeTemplate(
+Future<String> cmsCountCodeTemplate(
   final BuildContext context,
   final NDynamic node,
   final List<CNode> children,
   final int? loop,
-) {
+) async {
   var collectionId =
       (node.body.attributes[DBKeys.cmsCollection] as FTextTypeInput)
           .toCode(loop);
@@ -39,18 +40,18 @@ String cmsCountCodeTemplate(
 
   var child = 'const SizedBox()';
   if (children.isNotEmpty) {
-    child = children.first.toCode(context);
+    child = await children.first.toCode(context);
   }
   var loader = 'const Center(child: CircularProgressIndicator(),)';
   if (children.length >= 2) {
-    loader = children[1].toCode(context);
+    loader = await children[1].toCode(context);
   }
   final func = '''
   final list = snapshot.data as List<dynamic>?;
   datasets['${node.name ?? node.intrinsicState.displayName}'] = list ?? const <dynamic>[];
   ''';
 
-  return '''
+  final code = '''
   TetaFutureBuilder(
     future: TetaCMS.instance.client.getCollectionCount(
       $collectionId,
@@ -69,4 +70,10 @@ String cmsCountCodeTemplate(
     }
   )
   ''';
+  final res = FormatterTest.format(code);
+  if (res) {
+    return code;
+  } else {
+    return 'const SizedBox()';
+  }
 }

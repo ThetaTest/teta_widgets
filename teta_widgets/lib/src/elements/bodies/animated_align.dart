@@ -113,7 +113,7 @@ class AnimatedAlignBody extends NodeBody {
       );
 
   @override
-  String toCode(
+  Future<String> toCode(
     final BuildContext context,
     final CNode node,
     final CNode? child,
@@ -121,5 +121,5 @@ class AnimatedAlignBody extends NodeBody {
     final int pageId,
     final int? loop,
   ) =>
-      animatedAlignCodeTemplate(context, this, child, loop);
+      AnimatedAlignCodeTemplate.toCode(context, this, child, loop);
 }

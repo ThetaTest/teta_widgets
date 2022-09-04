@@ -1,5 +1,6 @@
 // Flutter imports:
 import 'package:flutter/material.dart';
+import 'package:teta_widgets/src/elements/code/formatter_test.dart';
 // Project imports:
 import 'package:teta_widgets/src/elements/controls/key_constants.dart';
 import 'package:teta_widgets/src/elements/features/text_type_input.dart';
@@ -7,12 +8,12 @@ import 'package:teta_widgets/src/elements/nodes/node.dart';
 import 'package:teta_widgets/src/elements/nodes/node_body.dart';
 
 /// Generates the code for Padding widget
-String supabaseFutureBuilderCodeTemplate(
+Future<String> supabaseFutureBuilderCodeTemplate(
   final BuildContext context,
   final NodeBody body,
   final List<CNode> children,
   final int? loop,
-) {
+) async {
   final from =
       (body.attributes[DBKeys.supabaseFrom] as FTextTypeInput).toCode(loop);
   final select =
@@ -37,11 +38,11 @@ String supabaseFutureBuilderCodeTemplate(
 
   var child = 'const SizedBox()';
   if (children.isNotEmpty) {
-    child = children.first.toCode(context);
+    child = await children.first.toCode(context);
   }
   var loader = 'const CircularProgressIndicator()';
   if (children.length >= 2) {
-    loader = children[1].toCode(context);
+    loader = await children[1].toCode(context);
   }
   const func = '''
   final doc = snapshot.data as PostgrestResponse?;
@@ -51,7 +52,7 @@ String supabaseFutureBuilderCodeTemplate(
   datasets['Supabase future builder'] = doc.data as List<dynamic>? ?? <dynamic>[];
   ''';
 
-  return '''
+  final code = '''
   FutureBuilder(
     future: Supabase.instance.client
     .from($from)
@@ -68,4 +69,10 @@ String supabaseFutureBuilderCodeTemplate(
     }
   )
   ''';
+  final res = FormatterTest.format(code);
+  if (res) {
+    return code;
+  } else {
+    return 'const SizedBox()';
+  }
 }

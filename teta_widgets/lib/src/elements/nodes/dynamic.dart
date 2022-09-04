@@ -242,9 +242,8 @@ class NDynamic extends CNode {
   }
 
   @override
-  String toCode(final BuildContext context) => '''
-      ${body.toCode(context, this, child, children, pageId!, null)}
-      ''';
+  Future<String> toCode(final BuildContext context) =>
+      body.toCode(context, this, child, children, pageId!, null);
 
   @override
   String toCodeOnInit(final BuildContext context) => '''

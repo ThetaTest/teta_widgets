@@ -1,5 +1,6 @@
 // Flutter imports:
 import 'package:flutter/material.dart';
+import 'package:teta_widgets/src/elements/code/formatter_test.dart';
 // Project imports:
 import 'package:teta_widgets/src/elements/code/snippets.dart';
 import 'package:teta_widgets/src/elements/controls/key_constants.dart';
@@ -15,20 +16,21 @@ import 'package:teta_widgets/src/elements/nodes/dynamic.dart';
 ///   children: [], // node's children
 /// );
 /// ```
-String listViewCodeTemplate(
+Future<String> listViewCodeTemplate(
   final BuildContext context,
   final NDynamic node,
   final int pageId,
   final List<CNode> children,
   final int? loop,
-) {
+) async {
   final reverse = node.body.attributes[DBKeys.isFullWidth] as bool;
   final primary = node.body.attributes[DBKeys.isPrimary] as bool;
   final _scrollDirection =
       !(node.body.attributes[DBKeys.isVertical] as bool? ?? false)
           ? 'scrollDirection: Axis.horizontal,'
           : '';
-  return '''
+  final childrenString = await CS.children(context, children);
+  final code = '''
     NotificationListener<ScrollEndNotification>(
           onNotification: (final scrollEnd) {
           final metrics = scrollEnd.metrics;
@@ -64,8 +66,26 @@ String listViewCodeTemplate(
         primary: $primary,
         physics: ${CS.physic(context, node.body)},
         $_scrollDirection
-        ${CS.children(context, children)}
+        $childrenString
       ),
     )
   ''';
+  final res = FormatterTest.format(code);
+  if (res) {
+    return code;
+  } else {
+    final code = await listViewCodeTemplate(
+      context,
+      node,
+      pageId,
+      [],
+      loop,
+    );
+    final res = FormatterTest.format(code);
+    if (res) {
+      return code;
+    } else {
+      return 'const SizedBox()';
+    }
+  }
 }

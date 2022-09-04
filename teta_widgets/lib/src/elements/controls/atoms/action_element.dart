@@ -19,6 +19,7 @@ import 'package:teta_core/teta_core.dart';
 import 'package:teta_widgets/src/elements/controls/atoms/actions/validator.dart';
 // Project imports:
 import 'package:teta_widgets/src/elements/controls/atoms/flag.dart';
+import 'package:teta_widgets/src/elements/controls/atoms/qonversion/buy.dart';
 import 'package:teta_widgets/src/elements/controls/atoms/revenuecat/buy.dart';
 import 'package:teta_widgets/src/elements/controls/atoms/subapase/delete.dart';
 import 'package:teta_widgets/src/elements/controls/atoms/subapase/insert.dart';
@@ -943,6 +944,14 @@ class ActionElementControlState extends State<ActionElementControl> {
                 ),
               if (widget.element.actionType == ActionType.revenueCat)
                 RevenueCatBuyActionWidget(
+                  prj: widget.prj,
+                  page: widget.page,
+                  node: widget.node as NDynamic,
+                  element: widget.element,
+                  callback: widget.callBack,
+                ),
+              if (widget.element.actionType == ActionType.qonversion)
+                QonversionActionWidget(
                   prj: widget.prj,
                   page: widget.page,
                   node: widget.node as NDynamic,

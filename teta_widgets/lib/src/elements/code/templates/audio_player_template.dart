@@ -1,7 +1,6 @@
 // Flutter imports:
 import 'package:flutter/material.dart';
-import 'package:just_audio/just_audio.dart';
-
+import 'package:teta_widgets/src/elements/code/formatter_test.dart';
 // Project imports:
 import 'package:teta_widgets/src/elements/code/snippets.dart';
 import 'package:teta_widgets/src/elements/nodes/node.dart';
@@ -9,7 +8,7 @@ import 'package:teta_widgets/src/elements/nodes/node_body.dart';
 
 /// Generates the code for Align widget
 class AudioPlayerTemplate {
-  static String toCode({
+  static Future<String> toCode({
     required final BuildContext context,
     required final NodeBody body,
     required final CNode? child,
@@ -17,8 +16,9 @@ class AudioPlayerTemplate {
     required final String urlKey,
     required final String audioPlayerName,
     required final String currentSongDatasetName,
-  }) {
-    return '''
+  }) async {
+    final childString = await CS.child(context, child, comma: true);
+    final code = '''
     FutureBuilder<bool>(
       future: Future.delayed(Duration(milliseconds: 0), () async {
                             if($audioPlayerName!.currentIndex == null) {
@@ -62,10 +62,16 @@ class AudioPlayerTemplate {
       }),
       builder: (context, songs) {
         return Container(
-            ${CS.child(context, child, comma: true)}
+            $childString
         );
       },
     )
   ''';
+    final res = FormatterTest.format(code);
+    if (res) {
+      return code;
+    } else {
+      return 'const SizedBox()';
+    }
   }
 }

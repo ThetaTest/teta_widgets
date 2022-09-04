@@ -1,5 +1,6 @@
 // Flutter imports:
 import 'package:flutter/material.dart';
+import 'package:teta_widgets/src/elements/code/formatter_test.dart';
 import 'package:teta_widgets/src/elements/code/snippets.dart';
 // Project imports:
 import 'package:teta_widgets/src/elements/controls/key_constants.dart';
@@ -23,13 +24,13 @@ import 'package:teta_widgets/src/elements/nodes/dynamic.dart';
 ///   },
 /// );
 /// ```
-String listViewBuilderCodeTemplate(
+Future<String> listViewBuilderCodeTemplate(
   final BuildContext context,
   final NDynamic node,
   final int pageId,
   final CNode? child,
   final int? loop,
-) {
+) async {
   final _scrollDirection =
       !(node.body.attributes[DBKeys.isVertical] as bool? ?? false)
           ? 'scrollDirection: Axis.horizontal,'
@@ -40,7 +41,7 @@ String listViewBuilderCodeTemplate(
       child != null ? child.toCode(context) : 'const SizedBox()';
   final dataset =
       (node.body.attributes[DBKeys.datasetInput] as FDataset).datasetName;
-  return '''
+  final code = '''
     NotificationListener<ScrollEndNotification>(
           onNotification: (final scrollEnd) {
           final metrics = scrollEnd.metrics;
@@ -83,6 +84,24 @@ String listViewBuilderCodeTemplate(
           ),
         )
   ''';
+  final res = FormatterTest.format(code);
+  if (res) {
+    return code;
+  } else {
+    final code = await listViewBuilderCodeTemplate(
+      context,
+      node,
+      pageId,
+      null,
+      loop,
+    );
+    final res = FormatterTest.format(code);
+    if (res) {
+      return code;
+    } else {
+      return 'const SizedBox()';
+    }
+  }
 }
 
 // ignore: unused_element

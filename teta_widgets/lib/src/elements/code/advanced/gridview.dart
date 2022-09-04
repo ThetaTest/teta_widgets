@@ -1,10 +1,10 @@
 // Flutter imports:
 import 'package:flutter/material.dart';
+import 'package:teta_widgets/src/elements/code/formatter_test.dart';
 // Project imports:
 import 'package:teta_widgets/src/elements/code/snippets.dart';
 import 'package:teta_widgets/src/elements/controls/key_constants.dart';
-import 'package:teta_widgets/src/elements/features/text_type_input.dart';
-import 'package:teta_widgets/src/elements/nodes/node.dart';
+import 'package:teta_widgets/src/elements/index.dart';
 import 'package:teta_widgets/src/elements/nodes/node_body.dart';
 
 /// Generates the code for GridView widget
@@ -24,12 +24,12 @@ import 'package:teta_widgets/src/elements/nodes/node_body.dart';
 ///       <${CS.children(context, children)}>
 //     )
 /// ```
-String gridViewCodeTemplate(
+Future<String> gridViewCodeTemplate(
   final BuildContext context,
   final NodeBody body,
   final List<CNode> children,
   final int? loop,
-) {
+) async {
   final primary = body.attributes[DBKeys.isPrimary] as bool;
   final _scrollDirection =
       !(body.attributes[DBKeys.isVertical] as bool? ?? false)
@@ -53,7 +53,8 @@ String gridViewCodeTemplate(
       (body.attributes[DBKeys.childAspectRatio] as FTextTypeInput).toCode(loop);
   final childAspectRatio = double.tryParse(valueChildAspectRatio) ?? 1;
 
-  return '''
+  final childrenString = await CS.children(context, children);
+  final code = '''
     GridView(
       gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
         mainAxisSpacing: $mainAxisSpacing,
@@ -64,7 +65,24 @@ String gridViewCodeTemplate(
       shrinkWrap: $shrinkWrap,
       primary: $primary,
       $_scrollDirection
-      ${CS.children(context, children)}
+      $childrenString
     )
   ''';
+  final res = FormatterTest.format(code);
+  if (res) {
+    return code;
+  } else {
+    final code = await gridViewCodeTemplate(
+      context,
+      NodeBody.get(NType.gridView),
+      children,
+      loop,
+    );
+    final res = FormatterTest.format(code);
+    if (res) {
+      return code;
+    } else {
+      return 'const SizedBox()';
+    }
+  }
 }

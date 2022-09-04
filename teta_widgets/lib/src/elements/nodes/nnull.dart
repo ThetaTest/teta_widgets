@@ -59,5 +59,6 @@ class NNull extends CNode {
   String toString() => 'NNull { nid: $nid }';
 
   @override
-  String toCode(final BuildContext context) => 'const SizedBox(),';
+  Future<String> toCode(final BuildContext context) =>
+      Future.value('const SizedBox(),');
 }

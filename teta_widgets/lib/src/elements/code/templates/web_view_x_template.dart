@@ -1,10 +1,12 @@
 // Flutter imports:
 // Project imports:
 
+import 'package:teta_widgets/src/elements/code/formatter_test.dart';
+
 class WebViewXTemplate {
-  static String toCode({required final String initialUrl}) {
-    return '''
-LayoutBuilder(builder: (context, constraints) {
+  static Future<String> toCode({required final String initialUrl}) async {
+    final code = '''
+    LayoutBuilder(builder: (context, constraints) {
       return WebViewX(
         initialContent: $initialUrl,
         initialSourceType: SourceType.url,
@@ -13,5 +15,11 @@ LayoutBuilder(builder: (context, constraints) {
       );
     })
   ''';
+    final res = FormatterTest.format(code);
+    if (res) {
+      return code;
+    } else {
+      return 'const SizedBox()';
+    }
   }
 }
