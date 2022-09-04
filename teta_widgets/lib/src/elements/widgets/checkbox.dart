@@ -13,7 +13,7 @@ class WCheckBox extends StatefulWidget {
     final Key? key, {
     required this.node,
     required this.forPlay,
-    required this.action,
+    required this.value,
     required this.params,
     required this.states,
     required this.dataset,
@@ -23,7 +23,7 @@ class WCheckBox extends StatefulWidget {
   final CNode node;
   final bool forPlay;
   final int? loop;
-  final FAction action;
+  final FTextTypeInput value;
 
   final List<VariableObject> params;
   final List<VariableObject> states;
@@ -34,7 +34,22 @@ class WCheckBox extends StatefulWidget {
 }
 
 class _WCheckBoxState extends State<WCheckBox> {
-  bool flag = false;
+  String val = 'false';
+
+  @override
+  void initState() {
+    super.initState();
+    val = widget.value.get(
+      widget.params,
+      widget.states,
+      widget.dataset,
+      widget.forPlay,
+      widget.loop,
+      context,
+    );
+  }
+
+  // bool flag = false;
   @override
   Widget build(final BuildContext context) {
     return NodeSelectionBuilder(
@@ -44,27 +59,18 @@ class _WCheckBoxState extends State<WCheckBox> {
         onChanged: (final value) {
           if (widget.forPlay) {
             setState(() {
-              flag = value ?? false;
+              if (val == 'true') {
+                val = 'false';
+              } else {
+                val = 'true';
+              }
             });
           }
-          GestureBuilder.get(
-            context: context,
-            node: widget.node,
-            action: widget.action,
-            actionValue: FTextTypeInput(value: '$flag'),
-            gesture: ActionGesture.onChange,
-            params: widget.params,
-            states: widget.states,
-            dataset: widget.dataset,
-            forPlay: widget.forPlay,
-          );
         },
-
-        value: flag,
+        value: val == 'true',
         mouseCursor: const FCursor().get(),
         fillColor:
             MaterialStateProperty.resolveWith((final states) => Colors.black),
-        //shape:
       ),
     );
   }
