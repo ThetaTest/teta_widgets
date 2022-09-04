@@ -101,6 +101,12 @@ String componentCodeTemplate(
           final rc = ReCase(valueToSend);
           stringParamsToSend.write('${rc.camelCase}, ');
         }
+      }
+      if ("${paramsToSend?[param.id]?['dataset']}" == 'Text') {
+        final name = ReCase(param.name);
+        stringParamsToSend.write('${name.camelCase}: ');
+        final valueToSend = "'''${paramsToSend?[param.id]?['label']}'''";
+        stringParamsToSend.write('$valueToSend, ');
       } else {
         final name = ReCase(param.name);
         stringParamsToSend.write('${name.camelCase}: ');
