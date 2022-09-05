@@ -9,6 +9,7 @@ import 'package:teta_cms/teta_cms.dart';
 import 'package:teta_core/teta_core.dart';
 // Project imports:
 import 'package:teta_widgets/src/elements/index.dart';
+import 'package:universal_platform/universal_platform.dart';
 
 class WCMSLoggedUser extends StatefulWidget {
   /// Construct
@@ -59,11 +60,12 @@ class _WCMSLoggedUserState extends State<WCMSLoggedUser> {
 
   Future<TetaUser> load() async {
     final user = await TetaCMS.instance.auth.user.get;
-    if ((BlocProvider.of<FocusProjectBloc>(context).state as ProjectLoaded)
-            .prj
-            .config
-            ?.isRevenueCatEnabled ??
-        false) {
+    if (((BlocProvider.of<FocusProjectBloc>(context).state as ProjectLoaded)
+                .prj
+                .config
+                ?.isRevenueCatEnabled ??
+            false) &&
+        UniversalPlatform.isAndroid) {
       await Purchases.logIn(user.uid!);
     }
     return user;

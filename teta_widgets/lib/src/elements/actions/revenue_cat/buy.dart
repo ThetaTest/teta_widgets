@@ -26,7 +26,7 @@ class FActionRevenueCatBuy {
     final int loop,
   ) async {
     if (productIdentifier == null) return;
-    if (!UniversalPlatform.isIOS && !UniversalPlatform.isAndroid) {
+    if (!UniversalPlatform.isAndroid) {
       await showDialog<void>(
         context: context,
         builder: (final context) {

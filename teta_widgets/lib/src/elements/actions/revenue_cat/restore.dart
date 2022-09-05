@@ -18,7 +18,7 @@ class FActionRevenueCatRestorePurchases {
     final List<VariableObject> states,
     final String? stateName,
   ) async {
-    if (!UniversalPlatform.isIOS && !UniversalPlatform.isAndroid) {
+    if (!UniversalPlatform.isAndroid) {
       await showDialog<void>(
         context: context,
         builder: (final context) {

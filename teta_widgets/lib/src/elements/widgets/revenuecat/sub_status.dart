@@ -50,9 +50,7 @@ class _WRevenueCatSingleSubStatusState
   );
 
   Future<bool> loadStatus() async {
-    if (UniversalPlatform.isAndroid ||
-        UniversalPlatform.isIOS ||
-        UniversalPlatform.isMacOS) {
+    if (UniversalPlatform.isAndroid) {
       try {
         final entitlement = widget.entitlementInfo.get(
           widget.params,
