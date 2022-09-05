@@ -48,6 +48,7 @@ class NodeSelectionState extends State<NodeSelection> {
 
   @override
   Widget build(final BuildContext context) {
+    if (widget.forPlay) return body();
     return MouseRegion(
       onEnter: (final e) {
         BlocProvider.of<HoverBloc>(context).add(OnHover(node: widget.node));
