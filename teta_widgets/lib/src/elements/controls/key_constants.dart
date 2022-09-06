@@ -204,6 +204,8 @@ class DBKeys {
 
   static const String googleMapsController = 'googleMapsControllerName';
 
+  static const String googleMapsCubitController = 'googleMapsCubitController';
+
   static const String mapCustomStyle = 'googleMapsCustomStyle';
   static const String mapCustomInitialZoomLevel = 'googleMapsInitialZoomLevel';
   static const String mapInitialPositionLat = 'googleMapsInitialPositionLat';
@@ -341,6 +343,8 @@ class DynamicAttributes {
         case DBKeys.audioPlayerCurrentDataset:
           return FTextTypeInput.fromJson(value as Map<String, dynamic>);
         case DBKeys.googleMapsController:
+          return FTextTypeInput.fromJson(value as Map<String, dynamic>);
+        case DBKeys.googleMapsCubitController:
           return FTextTypeInput.fromJson(value as Map<String, dynamic>);
         case DBKeys.rotateX:
           return FTextTypeInput.fromJson(value as Map<String, dynamic>);
@@ -628,6 +632,8 @@ class DynamicAttributes {
       case DBKeys.audioPlayerCurrentDataset:
         return value != null ? value.toJson() : FTextTypeInput().toJson();
       case DBKeys.googleMapsController:
+        return value != null ? value.toJson() : FTextTypeInput().toJson();
+      case DBKeys.googleMapsCubitController:
         return value != null ? value.toJson() : FTextTypeInput().toJson();
       case DBKeys.rotateX:
         return value != null ? value.toJson() : FTextTypeInput().toJson();
