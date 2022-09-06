@@ -82,7 +82,7 @@ class _WComponentState extends State<WComponent> {
       final nodes = await fetch(_component, context);
     }
     if (_component != null && !_component.isHardCoded) {
-      print('enter here');
+      Logger.printMessage('enter here');
       if (component?.scaffold == null) {
         final nodes = await fetch(_component, context);
         final scaffold = NodeRendering.renderTree(nodes);

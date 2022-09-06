@@ -145,26 +145,18 @@ class _WCmsFetchState extends State<WCmsFetch> {
 
   @override
   Widget build(final BuildContext context) {
-    Widget? child;
-    _addFetchDataToDataset(list);
-    if (isInitialized) {
-      if (widget.children.isNotEmpty) {
-        child = widget.children.first.toWidget(
-          params: widget.params,
-          states: widget.states,
-          dataset: widget.dataset,
-          forPlay: widget.forPlay,
-        );
-      } else {
-        child = const SizedBox();
-      }
-    }
+    final datasets = _addFetchDataToDataset(list);
 
     return NodeSelectionBuilder(
       node: widget.node,
       forPlay: widget.forPlay,
       child: RepaintBoundary(
-        child: child,
+        child: widget.children.first.toWidget(
+          params: widget.params,
+          states: widget.states,
+          dataset: datasets,
+          forPlay: widget.forPlay,
+        ),
       ),
     );
   }

@@ -172,7 +172,7 @@ enum ControlType {
 /// Set of funcs to generate the focused widget' controls.
 class ControlBuilder {
   /// It makes a call to NodeRepository.change.
-  static void toDB(
+  static Future<void> toDB(
     final ProjectObject prj,
     final PageObject page,
     final CNode node,
@@ -180,10 +180,10 @@ class ControlBuilder {
     final String key,
     final dynamic value,
     final dynamic old,
-  ) {
+  ) async {
     try {
       Logger.printMessage('node.body.toJson(): ${node.body.toJson()}');
-      NodeRepository.change(
+      await NodeRepository.change(
         nodeId: node.nid,
         node: node as NDynamic,
         pageId: page.id,

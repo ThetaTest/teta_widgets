@@ -1648,7 +1648,7 @@ class _ElementState extends State<Element> {
   @override
   void initState() {
     super.initState();
-
+    Logger.printMessage('${widget.page.datasets}');
     listDataset = <DatasetObject>[
       DatasetObject(
         name: 'Parameters',

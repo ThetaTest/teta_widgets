@@ -179,9 +179,8 @@ class PaddingsState extends State<TextControl> {
                       typeOfInput = FTextTypeEnum.languages;
                     }
                     final old = widget.value;
-                    final newValue = widget.value..type = typeOfInput;
                     widget.value.type = typeOfInput;
-                    widget.callBack(newValue, old);
+                    widget.callBack(widget.value, old);
                   },
                 ),
               ],

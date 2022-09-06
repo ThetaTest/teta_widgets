@@ -77,6 +77,21 @@ class FTextTypeInput {
   ) =>
       '${calc(params, states, dataset, forPlay, loop, datasetAttr ?? '', context)}';
 
+  String getStateValue(
+    final List<VariableObject> states,
+  ) {
+    if (type == FTextTypeEnum.state) {
+      final state =
+          states.firstWhereOrNull((final element) => element.name == stateName);
+      if (state?.type == VariableType.file) {
+        return '${state?.file}';
+      }
+      return '${state?.get}';
+    } else {
+      return 'null';
+    }
+  }
+
   /// Returns value for images
   dynamic getForImages(
     final List<VariableObject> params,

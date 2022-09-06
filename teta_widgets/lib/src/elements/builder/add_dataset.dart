@@ -43,7 +43,7 @@ List<DatasetObject> addDataset(
   } catch (e) {
     if (kDebugMode) {
       // ignore: avoid_print
-      print(e);
+      Logger.printError('$e');
     }
     return [];
   }

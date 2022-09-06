@@ -51,6 +51,7 @@ class GestureBuilder {
               dataset,
               loop,
             );
+            Logger.printMessage('Action performed');
           },
         );
       }

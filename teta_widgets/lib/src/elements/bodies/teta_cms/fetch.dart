@@ -136,6 +136,10 @@ class CmsFetchBody extends NodeBody {
         ${(attributes[DBKeys.cmsLikeKey] as FTextTypeInput).toJson()}
         ${(attributes[DBKeys.cmsLikeValue] as FTextTypeInput).toJson()}
         ${attributes[DBKeys.flag] as bool}
+        ${(attributes[DBKeys.cmsLikeValue] as FTextTypeInput).getStateValue(states)}
+        ${(attributes[DBKeys.cmsLikeKey] as FTextTypeInput).getStateValue(states)}
+        ${(attributes[DBKeys.cmsLimit] as FTextTypeInput).getStateValue(states)}
+        ${(attributes[DBKeys.cmsPage] as FTextTypeInput).getStateValue(states)}
       ''',
       ),
       node: node,

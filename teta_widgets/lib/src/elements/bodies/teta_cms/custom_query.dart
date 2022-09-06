@@ -98,6 +98,7 @@ LIMIT 10;''',
         $loop
         ${child ?? children}
         ${(attributes[DBKeys.value] as FTextTypeInput).toJson()}
+        ${(attributes[DBKeys.value] as FTextTypeInput).getStateValue(states)}
       ''',
       ),
       node: node,
