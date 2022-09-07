@@ -188,5 +188,5 @@ class ButtonBody extends NodeBody {
     final int pageId,
     final int? loop,
   ) =>
-      buttonCodeTemplate(pageId, context, this, node, loop ?? 0);
+      ButtonCodeTemplate.toCode(pageId, context, this, node, loop ?? 0);
 }

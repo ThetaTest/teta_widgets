@@ -87,5 +87,5 @@ class CenterBody extends NodeBody {
     final int pageId,
     final int? loop,
   ) =>
-      centerCodeTemplate(context, this, child);
+      CenterCodeTemplate.toCode(context, this, child);
 }

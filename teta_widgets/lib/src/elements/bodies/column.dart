@@ -120,5 +120,5 @@ class ColumnBody extends NodeBody {
     final int pageId,
     final int? loop,
   ) =>
-      columnCodeTemplate(context, this, children ?? []);
+      ColumnCodeTemplate.toCode(context, this, children ?? []);
 }

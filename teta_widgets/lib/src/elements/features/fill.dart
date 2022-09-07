@@ -367,6 +367,42 @@ class FFill {
     return null;
   }
 
+  static String? toCodeTests(
+    final FFill fill,
+  ) {
+    if (fill.type == FFillType.none) return null;
+    if (fill.type == FFillType.solid) {
+      return 'color: Color(0xFF${fill.levels!.first.color}).withOpacity(${fill.levels!.first.opacity})';
+    }
+    if (fill.type == FFillType.linearGradient) {
+      return '''
+      gradient: LinearGradient(
+        begin: ${fill.begin},
+        end: ${fill.end},
+        colors: <Color>${fill.levels!.map((final e) => 'Color(0xFF${e.color.toUpperCase()}).withOpacity(${e.opacity})').toList()},
+        stops: ${fill.levels!.map((final e) => e.stop).toList()},
+      ),''';
+    }
+    if (fill.type == FFillType.radialGradient) {
+      return '''
+      gradient: RadialGradient(
+        center: ${fill.center},
+        radius: ${fill.radius},
+        colors: <Color>${fill.levels!.map((final e) => 'Color(0xFF${e.color.toUpperCase()}).withOpacity(${e.opacity})').toList()},
+        stops: ${fill.levels!.map((final e) => e.stop).toList()},
+      ),''';
+    }
+    if (fill.type == FFillType.image) {
+      return '''
+        image: DecorationImage(
+          image: NetworkImage('${fill.levels!.first.color}'), 
+          fit: ${fill.boxFit!.toCode()}
+        ),
+      ''';
+    }
+    return null;
+  }
+
   @override
   String toString() => 'FFill { levels: $levels, type: $type }';
 }
