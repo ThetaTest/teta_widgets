@@ -121,5 +121,5 @@ class RowBody extends NodeBody {
     final int pageId,
     final int? loop,
   ) =>
-      rowCodeTemplate(context, this, children ?? []);
+      RowCodeTemplate.toCode(context, this, children ?? []);
 }

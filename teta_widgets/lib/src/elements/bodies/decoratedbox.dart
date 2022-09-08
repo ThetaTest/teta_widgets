@@ -122,5 +122,5 @@ class DecoratedBoxBody extends NodeBody {
     final int pageId,
     final int? loop,
   ) =>
-      decoratedBoxCodeTemplate(context, this, child);
+      DecoratedBoxCodeTemplate.toCode(context, this, child);
 }

@@ -129,5 +129,5 @@ class SupabaseStreamBuilderBody extends NodeBody {
     final int pageId,
     final int? loop,
   ) =>
-      streamBuilderCodeTemplate(context, this, children ?? [], loop);
+      StreamBuilderCodeTemplate.toCode(context, this, children ?? [], loop);
 }

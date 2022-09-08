@@ -134,5 +134,5 @@ class VideoBody extends NodeBody {
     final int pageId,
     final int? loop,
   ) =>
-      videoCodeTemplate(context, this, loop);
+      VideoCodeTemplate.toCode(context, this, loop);
 }

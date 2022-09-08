@@ -7,21 +7,23 @@ import 'package:teta_widgets/src/elements/nodes/node.dart';
 import 'package:teta_widgets/src/elements/nodes/node_body.dart';
 
 /// Stack Template
-Future<String> stackCodeTemplate(
-  final BuildContext context,
-  final NodeBody body,
-  final List<CNode> children,
-) async {
-  final childrenString = await CS.children(context, children);
-  final code = '''
+class StackCodeTemplate {
+  static Future<String> toCode(
+    final BuildContext context,
+    final NodeBody body,
+    final List<CNode> children,
+  ) async {
+    final childrenString = await CS.children(context, children);
+    final code = '''
     Stack(
       $childrenString
     )
   ''';
-  final res = FormatterTest.format(code);
-  if (res) {
-    return code;
-  } else {
-    return 'const SizedBox()';
+    final res = FormatterTest.format(code);
+    if (res) {
+      return code;
+    } else {
+      return 'const SizedBox()';
+    }
   }
 }

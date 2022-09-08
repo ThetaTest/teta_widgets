@@ -110,5 +110,5 @@ class MarkerBody extends NodeBody {
     final int pageId,
     final int? loop,
   ) =>
-      markerCodeTemplate(context, this, node, child, loop);
+      MarkerCodeTemplate.toCode(context, this, node, child, loop);
 }

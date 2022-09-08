@@ -123,6 +123,6 @@ class ResponsiveBody extends NodeBody {
     final int pageId,
     final int? loop,
   ) {
-    return responsiveConditionCodeTemplate(context, this, child);
+    return ResponsiveConditionCodeTemplate.toCode(context, this, child);
   }
 }

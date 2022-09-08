@@ -101,5 +101,5 @@ class IndexedStackBody extends NodeBody {
     final int pageId,
     final int? loop,
   ) =>
-      indexedStackCodeTemplate(context, this, children ?? [], loop);
+      IndexedStackCodeTemplate.toCode(context, this, children ?? [], loop);
 }

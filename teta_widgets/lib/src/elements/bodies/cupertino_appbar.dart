@@ -119,5 +119,5 @@ class CupertinoAppBarBody extends NodeBody {
     final int pageId,
     final int? loop,
   ) =>
-      cupertinoAppBarCodeTemplate(context, this);
+      CupertinoAppBarCodeTemplate.toCode(context, this);
 }

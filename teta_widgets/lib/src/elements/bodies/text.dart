@@ -129,6 +129,6 @@ class TextBody extends NodeBody {
     final int pageId,
     final int? loop,
   ) {
-    return textCodeTemplate(context, this, loop);
+    return TextCodeTemplate.toCode(context, this, loop);
   }
 }

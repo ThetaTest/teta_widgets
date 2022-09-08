@@ -88,5 +88,5 @@ class LiquidSwipeBody extends NodeBody {
     final int pageId,
     final int? loop,
   ) =>
-      liquidSwipeCodeTemplate(context, this, children ?? []);
+      LiquidSwipeCodeTemplate.toCode(context, this, children ?? []);
 }

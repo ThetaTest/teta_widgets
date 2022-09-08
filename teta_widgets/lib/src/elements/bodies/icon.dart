@@ -122,5 +122,5 @@ class IconBody extends NodeBody {
     final int pageId,
     final int? loop,
   ) =>
-      iconCodeTemplate(context, this, node, child, loop);
+      IconCodeTemplate.toCode(context, this, node, child, loop);
 }

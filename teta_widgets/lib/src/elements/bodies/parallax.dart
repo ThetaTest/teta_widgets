@@ -103,5 +103,5 @@ class ParallaxBoxBody extends NodeBody {
     final int pageId,
     final int? loop,
   ) =>
-      parallaxCodeTemplate(context, this, child);
+      ParallaxCodeTemplate.toCode(context, this, child);
 }

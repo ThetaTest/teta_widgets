@@ -145,7 +145,7 @@ class RadioBody extends NodeBody {
     final int pageId,
     final int? loop,
   ) =>
-      RadioButtonToCode.toCode(
+      RadioButtonTemplate.toCode(
         pageId,
         context,
         node,

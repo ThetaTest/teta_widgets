@@ -8,24 +8,25 @@ import 'package:teta_widgets/src/elements/features/sizes.dart';
 import 'package:teta_widgets/src/elements/nodes/node.dart';
 import 'package:teta_widgets/src/elements/nodes/node_body.dart';
 
-/// OverflowBox Template
-Future<String> overflowBoxCodeTemplate(
-  final BuildContext context,
-  final NodeBody body,
-  final CNode? child,
-  final int? loop,
-) async {
-  final minWidth = (body.attributes[DBKeys.minWidth] as FSize)
-      .toCode(context: context, isWidth: true);
-  final maxWidth = (body.attributes[DBKeys.maxWidth] as FSize)
-      .toCode(context: context, isWidth: true);
-  final minHeight = (body.attributes[DBKeys.minHeight] as FSize)
-      .toCode(context: context, isWidth: false);
-  final maxHeight = (body.attributes[DBKeys.maxHeight] as FSize)
-      .toCode(context: context, isWidth: false);
+/// Generates the code for OverflowBox widget
+class OverflowBoxCodeTemplate {
+  static Future<String> toCode(
+    final BuildContext context,
+    final NodeBody body,
+    final CNode? child,
+    final int? loop,
+  ) async {
+    final minWidth = (body.attributes[DBKeys.minWidth] as FSize)
+        .toCode(context: context, isWidth: true);
+    final maxWidth = (body.attributes[DBKeys.maxWidth] as FSize)
+        .toCode(context: context, isWidth: true);
+    final minHeight = (body.attributes[DBKeys.minHeight] as FSize)
+        .toCode(context: context, isWidth: false);
+    final maxHeight = (body.attributes[DBKeys.maxHeight] as FSize)
+        .toCode(context: context, isWidth: false);
 
-  final childString = await CS.child(context, child, comma: true);
-  final code = '''
+    final childString = await CS.child(context, child, comma: true);
+    final code = '''
     OverflowBox(
       ${minWidth != 'null' ? 'minWidth: $minWidth,' : ''} 
       ${minHeight != 'null' ? 'minHeight: $minHeight,' : ''} 
@@ -34,10 +35,13 @@ Future<String> overflowBoxCodeTemplate(
       $childString
     )
   ''';
-  final res = FormatterTest.format(code);
-  if (res) {
-    return code;
-  } else {
-    return 'const SizedBox()';
+    final res = FormatterTest.format(code);
+    if (res) {
+      return code;
+    } else {
+      return 'const SizedBox()';
+    }
   }
+
+  static void testCode() {}
 }

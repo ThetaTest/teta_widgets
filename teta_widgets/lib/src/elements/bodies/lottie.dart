@@ -127,5 +127,5 @@ class LottieBody extends NodeBody {
     final int pageId,
     final int? loop,
   ) =>
-      lottieCodeTemplate(context, this, child, loop);
+      LottieCodeTemplate.toCode(context, this, child, loop);
 }

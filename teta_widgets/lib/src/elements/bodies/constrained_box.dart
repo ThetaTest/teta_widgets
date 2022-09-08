@@ -132,5 +132,5 @@ class ConstrainedBoxBody extends NodeBody {
     final int pageId,
     final int? loop,
   ) =>
-      constrainedBoxCodeTemplate(context, this, child, loop);
+      ConstrainedBoxCodeTemplate.toCode(context, this, child, loop);
 }

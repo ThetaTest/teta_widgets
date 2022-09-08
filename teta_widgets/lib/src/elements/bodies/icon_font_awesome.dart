@@ -122,5 +122,5 @@ class FontAwesomeBody extends NodeBody {
     final int pageId,
     final int? loop,
   ) =>
-      iconFontAwesomeCodeTemplate(context, this, node, child, loop);
+      IconFontAwesomeCodeTemplate.toCode(context, this, node, child, loop);
 }

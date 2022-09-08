@@ -60,10 +60,6 @@ class ContainerCodeTemplate {
           expect(
             FormatterTest.format('''
             Container(
-              margin: EdgeInsets.zero,
-              padding: EdgeInsets.zero,
-              width: 100,
-              height: 150,
               decoration: BoxDecoration(
                 ${FFill.toCodeTests(FFill().ready(FFillType.none))}
               ),
@@ -80,10 +76,6 @@ class ContainerCodeTemplate {
           expect(
             FormatterTest.format('''
             Container(
-              margin: EdgeInsets.zero,
-              padding: EdgeInsets.zero,
-              width: 100,
-              height: 150,
               decoration: BoxDecoration(
                 ${FFill.toCodeTests(FFill().ready(FFillType.solid))}
               ),
@@ -100,10 +92,6 @@ class ContainerCodeTemplate {
           expect(
             FormatterTest.format('''
             Container(
-              margin: EdgeInsets.zero,
-              padding: EdgeInsets.zero,
-              width: 100,
-              height: 150,
               decoration: BoxDecoration(
                 ${FFill.toCodeTests(FFill().ready(FFillType.linearGradient))}
               ),
@@ -120,10 +108,6 @@ class ContainerCodeTemplate {
           expect(
             FormatterTest.format('''
             Container(
-              margin: EdgeInsets.zero,
-              padding: EdgeInsets.zero,
-              width: 100,
-              height: 150,
               decoration: BoxDecoration(
                 ${FFill.toCodeTests(FFill().ready(FFillType.radialGradient))}
               ),
@@ -140,10 +124,6 @@ class ContainerCodeTemplate {
           expect(
             FormatterTest.format('''
             Container(
-              margin: EdgeInsets.zero,
-              padding: EdgeInsets.zero,
-              width: 100,
-              height: 150,
               decoration: BoxDecoration(
                 ${FFill.toCodeTests(FFill().ready(FFillType.image))}
               ),

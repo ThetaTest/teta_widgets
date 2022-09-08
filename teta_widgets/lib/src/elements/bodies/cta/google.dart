@@ -109,5 +109,5 @@ class LoginWithGoogleBody extends NodeBody {
     final int pageId,
     final int? loop,
   ) =>
-      loginGoogleCodeTemplate(pageId, context, node, child, loop ?? 0);
+      LoginGoogleCodeTemplate.toCode(pageId, context, node, child, loop ?? 0);
 }

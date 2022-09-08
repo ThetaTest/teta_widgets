@@ -8,33 +8,37 @@ import 'package:teta_widgets/src/elements/nodes/node.dart';
 import 'package:teta_widgets/src/elements/nodes/node_body.dart';
 
 /// Cupertino Switch Template
-Future<String> cupertinoSwitchCodeTemplate(
-  final int pageId,
-  final BuildContext context,
-  final NodeBody body,
-  final CNode node,
-  final CNode? child,
-  final int loop,
-) async {
-  final code = '''
+class CupertinoSwitchCodeTemplate {
+  static Future<String> toCode(
+    final int pageId,
+    final BuildContext context,
+    final NodeBody body,
+    final CNode node,
+    final CNode? child,
+    final int loop,
+  ) async {
+    final code = '''
     CupertinoSwitch(
       value: false,
       ${CS.action(
-    pageId,
-    context,
-    node,
-    ActionGesture.onChange,
-    'onChanged: (value) async',
-    'false',
-    isRequired: true,
-    loop: loop,
-  )}
+      pageId,
+      context,
+      node,
+      ActionGesture.onChange,
+      'onChanged: (value) async',
+      'false',
+      isRequired: true,
+      loop: loop,
+    )}
     )
   ''';
-  final res = FormatterTest.format(code);
-  if (res) {
-    return code;
-  } else {
-    return 'const SizedBox()';
+    final res = FormatterTest.format(code);
+    if (res) {
+      return code;
+    } else {
+      return 'const SizedBox()';
+    }
   }
+
+  static void testCode() {}
 }

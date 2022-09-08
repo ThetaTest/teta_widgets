@@ -100,5 +100,5 @@ class VisibilityBody extends NodeBody {
     final int pageId,
     final int? loop,
   ) =>
-      visibilityCodeTemplate(context, this, child, loop);
+      VisibilityCodeTemplate.toCode(context, this, child, loop);
 }

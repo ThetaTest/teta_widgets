@@ -132,5 +132,5 @@ class OverFlowBoxBody extends NodeBody {
     final int pageId,
     final int? loop,
   ) =>
-      overflowBoxCodeTemplate(context, this, child, loop);
+      OverflowBoxCodeTemplate.toCode(context, this, child, loop);
 }

@@ -122,5 +122,5 @@ class LineIconBody extends NodeBody {
     final int pageId,
     final int? loop,
   ) =>
-      iconLineCodeTemplate(context, this, node, child, loop);
+      IconLineCodeTemplate.toCode(context, this, node, child, loop);
 }

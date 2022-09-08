@@ -136,5 +136,5 @@ class MaterialAppBarBody extends NodeBody {
     final int pageId,
     final int? loop,
   ) =>
-      materialAppBarCodeTemplate(context, this, children ?? []);
+      MaterialAppBarCodeTemplate.toCode(context, this, children ?? []);
 }

@@ -10,24 +10,25 @@ import 'package:teta_widgets/src/elements/nodes/node.dart';
 import 'package:teta_widgets/src/elements/nodes/node_body.dart';
 
 /// Map Template
-Future<String> mapCodeTemplate(
-  final BuildContext context,
-  final NodeBody body,
-  final CNode node,
-  final CNode? child,
-  final List<CNode> children,
-  final int? loop,
-) async {
-  final abstract = body.attributes[DBKeys.valueOfCondition] as FTextTypeInput;
-  final value = abstract.toCode(loop);
-  final flag = body.attributes[DBKeys.flag] as bool;
-  final mapBoxKey =
-      (BlocProvider.of<FocusProjectBloc>(context).state as ProjectLoaded)
-          .prj
-          .config
-          ?.mapboxKey;
+class MapCodeTemplate {
+  static Future<String> toCode(
+    final BuildContext context,
+    final NodeBody body,
+    final CNode node,
+    final CNode? child,
+    final List<CNode> children,
+    final int? loop,
+  ) async {
+    final abstract = body.attributes[DBKeys.valueOfCondition] as FTextTypeInput;
+    final value = abstract.toCode(loop);
+    final flag = body.attributes[DBKeys.flag] as bool;
+    final mapBoxKey =
+        (BlocProvider.of<FocusProjectBloc>(context).state as ProjectLoaded)
+            .prj
+            .config
+            ?.mapboxKey;
 
-  final code = '''
+    final code = '''
 map.MapLayoutBuilder(
   controller: map.MapController(
     location: LatLng(41.52, 12.30),
@@ -55,10 +56,13 @@ map.MapLayoutBuilder(
   },
 )  
  ''';
-  final res = FormatterTest.format(code);
-  if (res) {
-    return code;
-  } else {
-    return 'const SizedBox()';
+    final res = FormatterTest.format(code);
+    if (res) {
+      return code;
+    } else {
+      return 'const SizedBox()';
+    }
   }
+
+  static void testCode() {}
 }

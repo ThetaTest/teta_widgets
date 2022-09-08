@@ -81,5 +81,5 @@ class SpacerBody extends NodeBody {
     final int pageId,
     final int? loop,
   ) =>
-      spacerCodeTemplate(context, this, child);
+      SpacerCodeTemplate.toCode(context, this, child);
 }

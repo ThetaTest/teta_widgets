@@ -115,5 +115,5 @@ class TooltipBody extends NodeBody {
     final int pageId,
     final int? loop,
   ) =>
-      tooltipCodeTemplate(context, this, child, loop);
+      TooltipCodeTemplate.toCode(context, this, child, loop);
 }

@@ -115,7 +115,7 @@ class TextButtonBody extends NodeBody {
     final int pageId,
     final int? loop,
   ) =>
-      textButtonCodeTemplate(
+      TextButtonCodeTemplate.toCode(
         pageId,
         context,
         node,

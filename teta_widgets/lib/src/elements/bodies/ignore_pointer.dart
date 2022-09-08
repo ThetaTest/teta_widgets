@@ -99,5 +99,5 @@ class IgnorePointerBody extends NodeBody {
     final int pageId,
     final int? loop,
   ) =>
-      ignorePointerCodeTemplate(context, this, child);
+      IgnorePointerCodeTemplate.toCode(context, this, child);
 }

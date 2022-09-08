@@ -8,40 +8,44 @@ import 'package:teta_widgets/src/elements/features/actions/enums/index.dart';
 import 'package:teta_widgets/src/elements/nodes/node.dart';
 import 'package:teta_widgets/src/elements/nodes/node_body.dart';
 
-/// PageView Template
-Future<String> pageViewCodeTemplate(
-  final BuildContext context,
-  final int pageId,
-  final NodeBody body,
-  final CNode node,
-  final List<CNode> children,
-  final int? loop,
-) async {
-  final _scrollDirection =
-      !(body.attributes[DBKeys.isVertical] as bool? ?? false)
-          ? 'scrollDirection: Axis.horizontal,'
-          : 'scrollDirection: Axis.vertical,';
-  final childrenString = await CS.children(context, children);
-  final code = '''
+/// Generates the code for PageView widget
+class PageViewCodeTemplate {
+  static Future<String> toCode(
+    final BuildContext context,
+    final int pageId,
+    final NodeBody body,
+    final CNode node,
+    final List<CNode> children,
+    final int? loop,
+  ) async {
+    final _scrollDirection =
+        !(body.attributes[DBKeys.isVertical] as bool? ?? false)
+            ? 'scrollDirection: Axis.horizontal,'
+            : 'scrollDirection: Axis.vertical,';
+    final childrenString = await CS.children(context, children);
+    final code = '''
     PageView(
       $_scrollDirection   
       ${CS.action(
-    pageId,
-    context,
-    node,
-    ActionGesture.onChange,
-    'onPageChanged: (index) async',
-    null,
-    isRequired: false,
-    loop: loop,
-  )}  
+      pageId,
+      context,
+      node,
+      ActionGesture.onChange,
+      'onPageChanged: (index) async',
+      null,
+      isRequired: false,
+      loop: loop,
+    )}  
       $childrenString
     )
   ''';
-  final res = FormatterTest.format(code);
-  if (res) {
-    return code;
-  } else {
-    return 'const SizedBox()';
+    final res = FormatterTest.format(code);
+    if (res) {
+      return code;
+    } else {
+      return 'const SizedBox()';
+    }
   }
+
+  static void testCode() {}
 }

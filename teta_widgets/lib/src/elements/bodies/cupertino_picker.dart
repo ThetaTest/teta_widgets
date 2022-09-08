@@ -127,7 +127,7 @@ class CupertinoPickerBody extends NodeBody {
     final int pageId,
     final int? loop,
   ) =>
-      cupertinoPickerCodeTemplate(
+      CupertinoPickerCodeTemplate.toCode(
         pageId,
         context,
         this,

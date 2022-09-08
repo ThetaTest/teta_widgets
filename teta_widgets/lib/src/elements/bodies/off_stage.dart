@@ -105,5 +105,5 @@ class OffStageBody extends NodeBody {
     final int pageId,
     final int? loop,
   ) =>
-      offStageCodeTemplate(context, this, child, loop);
+      OffStageCodeTemplate.toCode(context, this, child, loop);
 }

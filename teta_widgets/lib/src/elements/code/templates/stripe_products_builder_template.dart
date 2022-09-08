@@ -23,22 +23,23 @@ import 'package:teta_widgets/src/elements/nodes/node_body.dart';
 ///   },
 /// );
 /// ```
-Future<String> stripeProductsBuilderCodeTemplate(
-  final BuildContext context,
-  final NodeBody body,
-  final CNode? child,
-) async {
-  final _scrollDirection =
-      !(body.attributes[DBKeys.isVertical] as bool? ?? false)
-          ? 'scrollDirection: Axis.horizontal,'
-          : '';
-  final shrinkWrap = body.attributes[DBKeys.flag] as bool? ?? false;
+class StripeProductsBuilderCodeTemplate {
+  static Future<String> toCode(
+    final BuildContext context,
+    final NodeBody body,
+    final CNode? child,
+  ) async {
+    final _scrollDirection =
+        !(body.attributes[DBKeys.isVertical] as bool? ?? false)
+            ? 'scrollDirection: Axis.horizontal,'
+            : '';
+    final shrinkWrap = body.attributes[DBKeys.flag] as bool? ?? false;
 
-  var childCode = 'const SizedBox();';
-  if (child != null) {
-    childCode = await child.toCode(context);
-  }
-  final code = '''
+    var childCode = 'const SizedBox();';
+    if (child != null) {
+      childCode = await child.toCode(context);
+    }
+    final code = '''
    FutureBuilder<TetaProductsResponse>(
       future: TetaCMS.instance.store.products.all(),
       builder: ((context, snapshot) {
@@ -66,10 +67,13 @@ Future<String> stripeProductsBuilderCodeTemplate(
       ),
     )
     ''';
-  final res = FormatterTest.format(code);
-  if (res) {
-    return code;
-  } else {
-    return 'const SizedBox()';
+    final res = FormatterTest.format(code);
+    if (res) {
+      return code;
+    } else {
+      return 'const SizedBox()';
+    }
   }
+
+  static void testCode() {}
 }

@@ -190,5 +190,10 @@ class SupabaseFutureBuilderBody extends NodeBody {
     final int pageId,
     final int? loop,
   ) =>
-      supabaseFutureBuilderCodeTemplate(context, this, children ?? [], loop);
+      SupabaseFutureBuilderCodeTemplate.toCode(
+        context,
+        this,
+        children ?? [],
+        loop,
+      );
 }

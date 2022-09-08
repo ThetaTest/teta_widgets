@@ -126,5 +126,5 @@ class MapBody extends NodeBody {
     final int pageId,
     final int? loop,
   ) =>
-      mapCodeTemplate(context, this, node, child, children ?? [], loop);
+      MapCodeTemplate.toCode(context, this, node, child, children ?? [], loop);
 }

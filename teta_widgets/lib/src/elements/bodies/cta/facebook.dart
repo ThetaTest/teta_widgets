@@ -109,5 +109,5 @@ class LoginWithFacebookBody extends NodeBody {
     final int pageId,
     final int? loop,
   ) =>
-      loginFacebookCodeTemplate(pageId, context, node, child, loop ?? 0);
+      LoginFacebookCodeTemplate.toCode(pageId, context, node, child, loop ?? 0);
 }

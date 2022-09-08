@@ -112,5 +112,5 @@ class AnimatedOpacityBody extends NodeBody {
     final int pageId,
     final int? loop,
   ) =>
-      animatedOpacityCodeTemplate(context, this, child, loop);
+      AnimatedOpacityCodeTemplate.toCode(context, this, child, loop);
 }

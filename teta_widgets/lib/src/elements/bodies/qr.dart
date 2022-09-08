@@ -141,5 +141,5 @@ class QRBody extends NodeBody {
     final int pageId,
     final int? loop,
   ) =>
-      qrCodeTemplate(context, this, child, loop);
+      QrCodeTemplate.toCode(context, this, child, loop);
 }

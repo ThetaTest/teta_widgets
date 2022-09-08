@@ -103,4 +103,6 @@ BlocConsumer<${googleMapsBlocName}Cubit, ${googleMapsBlocName}State>(
       return 'const SizedBox()';
     }
   }
+
+  static void testCode() {}
 }

@@ -166,5 +166,5 @@ class GridViewBody extends NodeBody {
     final int pageId,
     final int? loop,
   ) =>
-      gridViewCodeTemplate(context, this, children ?? [], loop);
+      GridViewCodeTemplate.toCode(context, this, children ?? [], loop);
 }

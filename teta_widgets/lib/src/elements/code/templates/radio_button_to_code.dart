@@ -3,7 +3,8 @@ import 'package:teta_widgets/src/elements/code/formatter_test.dart';
 import 'package:teta_widgets/src/elements/code/snippets.dart';
 import 'package:teta_widgets/src/elements/index.dart';
 
-class RadioButtonToCode {
+///Generates code for Radio widget
+class RadioButtonTemplate {
   static Future<String> toCode(
     final int pageId,
     final BuildContext context,

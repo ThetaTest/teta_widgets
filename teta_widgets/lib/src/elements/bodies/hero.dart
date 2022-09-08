@@ -100,5 +100,5 @@ class HeroBody extends NodeBody {
     final int pageId,
     final int? loop,
   ) =>
-      heroCodeTemplate(context, this, child, loop);
+      HeroCodeTemplate.toCode(context, this, child, loop);
 }

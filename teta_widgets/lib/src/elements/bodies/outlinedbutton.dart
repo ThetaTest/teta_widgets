@@ -101,7 +101,7 @@ class OutlinedButtonBody extends NodeBody {
     final int pageId,
     final int? loop,
   ) =>
-      outlinedButtonCodeTemplate(
+      OutlinedButtonCodeTemplate.toCode(
         pageId,
         context,
         node,

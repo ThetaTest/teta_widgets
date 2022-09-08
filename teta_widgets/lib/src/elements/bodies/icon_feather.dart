@@ -122,5 +122,5 @@ class FeatherIconBody extends NodeBody {
     final int pageId,
     final int? loop,
   ) =>
-      iconFeatherCodeTemplate(context, this, node, child, loop);
+      IconFeatherCodeTemplate.toCode(context, this, node, child, loop);
 }

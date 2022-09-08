@@ -109,5 +109,5 @@ class LoginWithTwitterBody extends NodeBody {
     final int pageId,
     final int? loop,
   ) =>
-      loginTwitterCodeTemplate(pageId, context, node, child, loop ?? 0);
+      LoginTwitterCodeTemplate.toCode(pageId, context, node, child, loop ?? 0);
 }

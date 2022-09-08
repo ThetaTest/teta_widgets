@@ -91,5 +91,5 @@ class FittedBoxBody extends NodeBody {
     final int pageId,
     final int? loop,
   ) =>
-      fittedBoxCodeTemplate(context, this, child, loop);
+      FittedBoxCodeTemplate.toCode(context, this, child, loop);
 }

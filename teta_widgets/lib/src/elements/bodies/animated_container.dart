@@ -172,5 +172,5 @@ class AnimatedContainerBody extends NodeBody {
     final int pageId,
     final int? loop,
   ) =>
-      animatedContainerCodeTemplate(context, this, child, loop);
+      AnimatedContainerCodeTemplate.toCode(context, this, child, loop);
 }

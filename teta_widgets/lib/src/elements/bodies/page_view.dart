@@ -113,5 +113,5 @@ class PageViewBody extends NodeBody {
     final int pageId,
     final int? loop,
   ) =>
-      pageViewCodeTemplate(context, pageId, this, node, children ?? [], loop);
+      PageViewCodeTemplate.toCode(context, pageId, this, node, children ?? [], loop);
 }

@@ -128,5 +128,5 @@ class PlaceholderBody extends NodeBody {
     final int pageId,
     final int? loop,
   ) =>
-      placeholderCodeTemplate(context, this, child, loop);
+      PlaceholderCodeTemplate.toCode(context, this, child, loop);
 }

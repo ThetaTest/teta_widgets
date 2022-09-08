@@ -8,28 +8,29 @@ import 'package:teta_widgets/src/elements/nodes/node.dart';
 import 'package:teta_widgets/src/elements/nodes/node_body.dart';
 
 /// Generates the code for Padding widget
-Future<String> streamBuilderCodeTemplate(
-  final BuildContext context,
-  final NodeBody body,
-  final List<CNode> children,
-  final int? loop,
-) async {
-  final from =
-      (body.attributes[DBKeys.supabaseFrom] as FTextTypeInput).toCode(loop);
-  final order =
-      (body.attributes[DBKeys.supabaseOrder] as FTextTypeInput).toCode(loop);
-  final valueRangeTo =
-      (body.attributes[DBKeys.supabaseFromRange] as FTextTypeInput)
-          .toCode(loop);
-  final rangeTo =
-      int.tryParse(valueRangeTo) != null ? int.parse(valueRangeTo) : 15;
+class StreamBuilderCodeTemplate {
+  static Future<String> toCode(
+    final BuildContext context,
+    final NodeBody body,
+    final List<CNode> children,
+    final int? loop,
+  ) async {
+    final from =
+        (body.attributes[DBKeys.supabaseFrom] as FTextTypeInput).toCode(loop);
+    final order =
+        (body.attributes[DBKeys.supabaseOrder] as FTextTypeInput).toCode(loop);
+    final valueRangeTo =
+        (body.attributes[DBKeys.supabaseFromRange] as FTextTypeInput)
+            .toCode(loop);
+    final rangeTo =
+        int.tryParse(valueRangeTo) != null ? int.parse(valueRangeTo) : 15;
 
-  var child = 'const SizedBox()';
-  if (children.isNotEmpty) {
-    child = await children.first.toCode(context);
-  }
+    var child = 'const SizedBox()';
+    if (children.isNotEmpty) {
+      child = await children.first.toCode(context);
+    }
 
-  final code = '''
+    final code = '''
     StreamBuilder(
       stream: client
       .from('$from')
@@ -44,10 +45,12 @@ Future<String> streamBuilderCodeTemplate(
       }
     )
   ''';
-  final res = FormatterTest.format(code);
-  if (res) {
-    return code;
-  } else {
-    return 'const SizedBox()';
+    final res = FormatterTest.format(code);
+    if (res) {
+      return code;
+    } else {
+      return 'const SizedBox()';
+    }
   }
+  static void testCode(){}
 }

@@ -116,5 +116,5 @@ class LinearProgressIndicatorBody extends NodeBody {
     final int pageId,
     final int? loop,
   ) =>
-      linearProgressIndicatorCodeTemplate(context, this, loop);
+      LinearProgressIndicatorCodeTemplate.toCode(context, this, loop);
 }

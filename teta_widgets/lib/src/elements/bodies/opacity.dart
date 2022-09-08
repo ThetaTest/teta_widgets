@@ -100,5 +100,5 @@ class OpacityBody extends NodeBody {
     final int pageId,
     final int? loop,
   ) =>
-      opacityCodeTemplate(context, this, child, loop);
+      OpacityCodeTemplate.toCode(context, this, child, loop);
 }

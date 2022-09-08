@@ -117,5 +117,5 @@ class DividerBody extends NodeBody {
     final int pageId,
     final int? loop,
   ) =>
-      dividerCodeTemplate(context, this, child);
+      DividerCodeTemplate.toCode(context, this, child);
 }

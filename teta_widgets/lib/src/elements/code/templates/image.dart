@@ -9,16 +9,17 @@ import 'package:teta_widgets/src/elements/nodes/node.dart';
 import 'package:teta_widgets/src/elements/nodes/node_body.dart';
 
 /// Image Template
-Future<String> imageCodeTemplate(
-  final BuildContext context,
-  final NodeBody body,
-  final CNode? child,
-  final int? loop,
-) async {
-  final abstract = body.attributes[DBKeys.image] as FTextTypeInput;
-  final value = abstract.toCode(loop);
-  final borderRadius = CS.borderRadius(context, body);
-  final code = '''
+class ImageCodeTemplate {
+  static Future<String> toCode(
+    final BuildContext context,
+    final NodeBody body,
+    final CNode? child,
+    final int? loop,
+  ) async {
+    final abstract = body.attributes[DBKeys.image] as FTextTypeInput;
+    final value = abstract.toCode(loop);
+    final borderRadius = CS.borderRadius(context, body);
+    final code = '''
     ${borderRadius != '' ? 'ClipRRect( ${CS.borderRadius(context, body)} child:' : ''} 
         Image.network(
           ${abstract.type == FTextTypeEnum.text || abstract.type == FTextTypeEnum.asset ? "r$value" : value},
@@ -28,10 +29,13 @@ Future<String> imageCodeTemplate(
         )
     ${borderRadius != '' ? ',)' : ''}
   ''';
-  final res = FormatterTest.format(code);
-  if (res) {
-    return code;
-  } else {
-    return 'const SizedBox()';
+    final res = FormatterTest.format(code);
+    if (res) {
+      return code;
+    } else {
+      return 'const SizedBox()';
+    }
   }
+
+  static void testCode() {}
 }

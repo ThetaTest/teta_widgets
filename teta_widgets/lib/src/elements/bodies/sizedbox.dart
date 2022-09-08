@@ -105,5 +105,5 @@ class SizedBoxBody extends NodeBody {
     final int pageId,
     final int? loop,
   ) =>
-      sizedBoxCodeTemplate(context, this, child);
+      SizedBoxCodeTemplate.toCode(context, this, child);
 }

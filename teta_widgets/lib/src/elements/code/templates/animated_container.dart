@@ -8,17 +8,18 @@ import 'package:teta_widgets/src/elements/index.dart';
 import 'package:teta_widgets/src/elements/nodes/node_body.dart';
 
 /// Animated Container Template
-Future<String> animatedContainerCodeTemplate(
-  final BuildContext context,
-  final NodeBody body,
-  final CNode? child,
-  final int? loop,
-) async {
-  final abstract = body.attributes[DBKeys.duration] as FTextTypeInput;
-  final value = abstract.toCode(loop);
-  final duration = int.tryParse(value) != null ? int.parse(value) : '400';
-  final childString = await CS.child(context, child, comma: true);
-  final code = '''
+class AnimatedContainerCodeTemplate {
+  static Future<String> toCode(
+    final BuildContext context,
+    final NodeBody body,
+    final CNode? child,
+    final int? loop,
+  ) async {
+    final abstract = body.attributes[DBKeys.duration] as FTextTypeInput;
+    final value = abstract.toCode(loop);
+    final duration = int.tryParse(value) != null ? int.parse(value) : '400';
+    final childString = await CS.child(context, child, comma: true);
+    final code = '''
     AnimatedContainer(
       duration: const Duration(milliseconds: $duration),
       ${CS.margin(context, body, isMargin: true)}
@@ -29,15 +30,18 @@ Future<String> animatedContainerCodeTemplate(
       $childString
     )
   ''';
-  final res = FormatterTest.format(code);
-  if (res) {
-    return code;
-  } else {
-    return animatedContainerCodeTemplate(
-      context,
-      NodeBody.get(NType.animatedContainer),
-      null,
-      loop,
-    );
+    final res = FormatterTest.format(code);
+    if (res) {
+      return code;
+    } else {
+      return toCode(
+        context,
+        NodeBody.get(NType.animatedContainer),
+        null,
+        loop,
+      );
+    }
   }
+
+  static void testCode() {}
 }

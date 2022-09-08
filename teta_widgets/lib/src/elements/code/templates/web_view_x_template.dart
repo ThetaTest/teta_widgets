@@ -1,8 +1,6 @@
-// Flutter imports:
-// Project imports:
-
 import 'package:teta_widgets/src/elements/code/formatter_test.dart';
 
+/// Generates the code for WebViewX widget
 class WebViewXTemplate {
   static Future<String> toCode({required final String initialUrl}) async {
     final code = '''
@@ -22,4 +20,6 @@ class WebViewXTemplate {
       return 'const SizedBox()';
     }
   }
+
+  static void testCode(){}
 }

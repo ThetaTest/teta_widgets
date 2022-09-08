@@ -6,22 +6,28 @@ import 'package:teta_widgets/src/elements/code/snippets.dart';
 import 'package:teta_widgets/src/elements/nodes/node.dart';
 import 'package:teta_widgets/src/elements/nodes/node_body.dart';
 
-/// Generates the code for Padding widget
-Future<String> wrapCodeTemplate(
-  final BuildContext context,
-  final NodeBody body,
-  final List<CNode> children,
-) async {
-  final childrenString = await CS.children(context, children);
-  final code = '''
+/// Generates the code for Wrap widget
+class WrapCodeTemplate {
+  static Future<String> toCode(
+    final BuildContext context,
+    final NodeBody body,
+    final List<CNode> children,
+  ) async {
+    final childrenString = await CS.children(context, children);
+    final code = '''
     Wrap(
       $childrenString
     )
   ''';
-  final res = FormatterTest.format(code);
-  if (res) {
-    return code;
-  } else {
-    return 'const SizedBox()';
+    final res = FormatterTest.format(code);
+    if (res) {
+      return code;
+    } else {
+      return 'const SizedBox()';
+    }
+  }
+
+  static void testCode(){
+    
   }
 }

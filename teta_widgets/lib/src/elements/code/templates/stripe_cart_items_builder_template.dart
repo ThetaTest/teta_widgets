@@ -75,4 +75,5 @@ class StripeCartItemsBuilderTemplate {
       return 'const SizedBox()';
     }
   }
+  static void testCode(){}
 }

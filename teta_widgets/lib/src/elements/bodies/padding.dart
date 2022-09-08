@@ -102,5 +102,5 @@ class PaddingBody extends NodeBody {
     final int pageId,
     final int? loop,
   ) =>
-      paddingCodeTemplate(context, this, child);
+      PaddingCodeTemplate.toCode(context, this, child);
 }

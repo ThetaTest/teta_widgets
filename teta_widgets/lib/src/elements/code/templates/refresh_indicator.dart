@@ -9,40 +9,44 @@ import 'package:teta_widgets/src/elements/features/text_type_input.dart';
 import 'package:teta_widgets/src/elements/nodes/node.dart';
 import 'package:teta_widgets/src/elements/nodes/node_body.dart';
 
-/// Generates the code for Padding widget
-Future<String> refreshIndicatorCodeTemplate(
-  final int pageId,
-  final BuildContext context,
-  final NodeBody body,
-  final CNode node,
-  final List<CNode> children,
-  final int loop,
-) async {
-  final abstract = body.attributes[DBKeys.duration] as FTextTypeInput;
-  final value = abstract.toCode(loop);
-  final duration = int.tryParse(value) != null ? int.parse(value) : '1000';
-  final childrenString = await CS.children(context, children);
-  final code = '''
+/// Generates the code for Refresh Indicator widget
+class RefreshIndicatorCodeTemplate {
+  static Future<String> toCode(
+    final int pageId,
+    final BuildContext context,
+    final NodeBody body,
+    final CNode node,
+    final List<CNode> children,
+    final int loop,
+  ) async {
+    final abstract = body.attributes[DBKeys.duration] as FTextTypeInput;
+    final value = abstract.toCode(loop);
+    final duration = int.tryParse(value) != null ? int.parse(value) : '1000';
+    final childrenString = await CS.children(context, children);
+    final code = '''
     RefreshIndicator(
       duration: const Duration(milliseconds: $duration),
       ${CS.action(
-    pageId,
-    context,
-    node,
-    ActionGesture.onTap,
-    'onPressed: () async',
-    null,
-    isRequired: false,
-    loop: loop,
-  )}
+      pageId,
+      context,
+      node,
+      ActionGesture.onTap,
+      'onPressed: () async',
+      null,
+      isRequired: false,
+      loop: loop,
+    )}
       ${CS.size(context, body, isWidth: false)}
       $childrenString
     )
   ''';
-  final res = FormatterTest.format(code);
-  if (res) {
-    return code;
-  } else {
-    return 'const SizedBox()';
+    final res = FormatterTest.format(code);
+    if (res) {
+      return code;
+    } else {
+      return 'const SizedBox()';
+    }
   }
+
+  static void testCode() {}
 }

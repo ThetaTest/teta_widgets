@@ -9,30 +9,34 @@ import 'package:teta_widgets/src/elements/nodes/node.dart';
 import 'package:teta_widgets/src/elements/nodes/node_body.dart';
 
 /// Generates the code for FeatherIcon widget
-Future<String> iconFeatherCodeTemplate(
-  final BuildContext context,
-  final NodeBody body,
-  final CNode node,
-  final CNode? child,
-  final int? loop,
-) async {
-  final icon = node.body.attributes[DBKeys.featherIcon] as String;
-  final fill = FFill.toCode(
-    node.body.attributes[DBKeys.fill] as FFill,
-    context,
-    flagConst: false,
-  );
-  final code = '''
+class IconFeatherCodeTemplate {
+  static Future<String> toCode(
+    final BuildContext context,
+    final NodeBody body,
+    final CNode node,
+    final CNode? child,
+    final int? loop,
+  ) async {
+    final icon = node.body.attributes[DBKeys.featherIcon] as String;
+    final fill = FFill.toCode(
+      node.body.attributes[DBKeys.fill] as FFill,
+      context,
+      flagConst: false,
+    );
+    final code = '''
     Icon (
       FeatherIconsMap['$icon'],
       ${CS.size(context, body, isWidth: true).replaceAll('width', 'size')}
       $fill
     )
   ''';
-  final res = FormatterTest.format(code);
-  if (res) {
-    return code;
-  } else {
-    return 'const SizedBox()';
+    final res = FormatterTest.format(code);
+    if (res) {
+      return code;
+    } else {
+      return 'const SizedBox()';
+    }
   }
+
+  static void testCode() {}
 }

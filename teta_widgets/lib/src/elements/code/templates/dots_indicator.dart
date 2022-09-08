@@ -8,14 +8,15 @@ import 'package:teta_widgets/src/elements/nodes/node.dart';
 import 'package:teta_widgets/src/elements/nodes/node_body.dart';
 
 /// Container Template
-Future<String> dotsIndicatorCodeTemplate(
-  final BuildContext context,
-  final NodeBody body,
-  final CNode? child,
-  final int? loop,
-) async {
-  final childString = await CS.child(context, child, comma: true);
-  final code = '''
+class DotsIndicatorCodeTemplate {
+  static Future<String> toCode(
+    final BuildContext context,
+    final NodeBody body,
+    final CNode? child,
+    final int? loop,
+  ) async {
+    final childString = await CS.child(context, child, comma: true);
+    final code = '''
   Row(
     mainAxisSize: MainAxisSize.min,
     children: [
@@ -30,10 +31,13 @@ Future<String> dotsIndicatorCodeTemplate(
     ],
   )
   ''';
-  final res = FormatterTest.format(code);
-  if (res) {
-    return code;
-  } else {
-    return 'const SizedBox()';
+    final res = FormatterTest.format(code);
+    if (res) {
+      return code;
+    } else {
+      return 'const SizedBox()';
+    }
   }
+
+  static void testCode() {}
 }

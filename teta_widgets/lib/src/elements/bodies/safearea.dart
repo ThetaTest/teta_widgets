@@ -130,5 +130,5 @@ class SafeAreaBody extends NodeBody {
     final int pageId,
     final int? loop,
   ) =>
-      safeAreaCodeTemplate(context, this, child);
+      SafeAreaCodeTemplate.toCode(context, this, child);
 }

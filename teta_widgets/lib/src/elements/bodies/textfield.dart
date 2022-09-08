@@ -294,5 +294,12 @@ class TextFieldBody extends NodeBody {
     final int pageId,
     final int? loop,
   ) =>
-      textFieldCodeTemplate(pageId, context, this, node, child, loop ?? 0);
+      TextFieldCodeTemplate.toCode(
+        pageId,
+        context,
+        this,
+        node,
+        child,
+        loop ?? 0,
+      );
 }

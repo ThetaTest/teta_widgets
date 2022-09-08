@@ -113,5 +113,5 @@ class StripeProductsBuilderBody extends NodeBody {
     final int pageId,
     final int? loop,
   ) =>
-      stripeProductsBuilderCodeTemplate(context, this, child);
+      StripeProductsBuilderCodeTemplate.toCode(context, this, child);
 }

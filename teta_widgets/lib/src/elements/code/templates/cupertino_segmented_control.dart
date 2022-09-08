@@ -10,27 +10,28 @@ import 'package:teta_widgets/src/elements/nodes/node.dart';
 import 'package:teta_widgets/src/elements/nodes/node_body.dart';
 
 /// Cupertino Segmented Control Template
-Future<String> cupertinoSegmentedControlCodeTemplate(
-  final int pageId,
-  final BuildContext context,
-  final NodeBody body,
-  final CNode node,
-  final List<CNode> children,
-  final int loop,
-) async {
-  StringBuffer map;
-  if (children.isNotEmpty) {
-    //here all the children are passed from tree view and setted
-    map = StringBuffer()..write('{');
-    for (var i = 0; i < children.length; i++) {
-      map.write('$i: ${children[i].toCode(context)},');
-    }
-    map.write('},');
-  } else {
-    //here we use the default ones
-    map = StringBuffer()
-      ..write(
-        '''
+class CupertinoSegmentedControlCodeTemplate {
+  static Future<String> toCode(
+    final int pageId,
+    final BuildContext context,
+    final NodeBody body,
+    final CNode node,
+    final List<CNode> children,
+    final int loop,
+  ) async {
+    StringBuffer map;
+    if (children.isNotEmpty) {
+      //here all the children are passed from tree view and setted
+      map = StringBuffer()..write('{');
+      for (var i = 0; i < children.length; i++) {
+        map.write('$i: ${await children[i].toCode(context)},');
+      }
+      map.write('},');
+    } else {
+      //here we use the default ones
+      map = StringBuffer()
+        ..write(
+          '''
       {
         0: Container(
            padding: const EdgeInsets.symmetric(vertical: 8, horizontal: 16),
@@ -39,9 +40,9 @@ Future<String> cupertinoSegmentedControlCodeTemplate(
         ),
        ),
       ''',
-      )
-      ..write(
-        '''
+        )
+        ..write(
+          '''
       1: Container(
         padding: const EdgeInsets.symmetric(vertical: 8, horizontal: 16),
         child: const Center(
@@ -50,52 +51,55 @@ Future<String> cupertinoSegmentedControlCodeTemplate(
        ),
       },
       ''',
-      );
-  }
-  final selectedColor = FFill.toCode(
-    body.attributes[DBKeys.fill] as FFill,
-    context,
-    flagConst: true,
-  )?.replaceFirst('color:', 'selectedColor:');
-  final unselectedColor = FFill.toCode(
-    body.attributes[DBKeys.bgFill] as FFill,
-    context,
-    flagConst: true,
-  )?.replaceFirst('color:', 'unselectedColor:');
-  final pressedColor = FFill.toCode(
-    body.attributes[DBKeys.textFill] as FFill,
-    context,
-    flagConst: true,
-  )?.replaceFirst('color:', 'pressedColor:');
-  final borderColor = FFill.toCode(
-    body.attributes[DBKeys.activeFill] as FFill,
-    context,
-    flagConst: true,
-  )?.replaceFirst('color:', 'borderColor:');
+        );
+    }
+    final selectedColor = FFill.toCode(
+      body.attributes[DBKeys.fill] as FFill,
+      context,
+      flagConst: true,
+    )?.replaceFirst('color:', 'selectedColor:');
+    final unselectedColor = FFill.toCode(
+      body.attributes[DBKeys.bgFill] as FFill,
+      context,
+      flagConst: true,
+    )?.replaceFirst('color:', 'unselectedColor:');
+    final pressedColor = FFill.toCode(
+      body.attributes[DBKeys.textFill] as FFill,
+      context,
+      flagConst: true,
+    )?.replaceFirst('color:', 'pressedColor:');
+    final borderColor = FFill.toCode(
+      body.attributes[DBKeys.activeFill] as FFill,
+      context,
+      flagConst: true,
+    )?.replaceFirst('color:', 'borderColor:');
 
-  final code = '''
+    final code = '''
     CupertinoSegmentedControl<int>(
       children: $map
       ${CS.action(
-    pageId,
-    context,
-    node,
-    ActionGesture.onTap,
-    'onValueChanged: (value) async',
-    'value',
-    isRequired: true,
-    loop: loop,
-  )}
+      pageId,
+      context,
+      node,
+      ActionGesture.onTap,
+      'onValueChanged: (value) async',
+      'value',
+      isRequired: true,
+      loop: loop,
+    )}
       $selectedColor
       $unselectedColor
       $pressedColor
       $borderColor
     )
   ''';
-  final res = FormatterTest.format(code);
-  if (res) {
-    return code;
-  } else {
-    return 'const SizedBox()';
+    final res = FormatterTest.format(code);
+    if (res) {
+      return code;
+    } else {
+      return 'const SizedBox()';
+    }
   }
+
+  static void testCode() {}
 }

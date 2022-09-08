@@ -83,5 +83,5 @@ class StackBody extends NodeBody {
     final int pageId,
     final int? loop,
   ) =>
-      stackCodeTemplate(context, this, children ?? []);
+      StackCodeTemplate.toCode(context, this, children ?? []);
 }

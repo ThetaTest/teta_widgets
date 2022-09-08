@@ -128,7 +128,7 @@ class RefreshIndicatorBody extends NodeBody {
     final int pageId,
     final int? loop,
   ) =>
-      refreshIndicatorCodeTemplate(
+      RefreshIndicatorCodeTemplate.toCode(
         pageId,
         context,
         this,

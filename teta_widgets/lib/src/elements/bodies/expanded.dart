@@ -87,5 +87,5 @@ class ExpandedBody extends NodeBody {
     final int pageId,
     final int? loop,
   ) =>
-      expandedCodeTemplate(context, this, child, loop);
+      ExpandedCodeTemplate.toCode(context, this, child, loop);
 }

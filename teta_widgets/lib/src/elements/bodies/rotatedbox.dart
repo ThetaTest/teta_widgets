@@ -101,5 +101,5 @@ class RotatedBoxBody extends NodeBody {
     final int pageId,
     final int? loop,
   ) =>
-      rotatedBoxCodeTemplate(context, this, child, loop);
+      RotatedBoxCodeTemplate.toCode(context, this, child, loop);
 }

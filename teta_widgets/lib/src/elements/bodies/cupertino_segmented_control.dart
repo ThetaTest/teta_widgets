@@ -179,7 +179,7 @@ class CupertinoSegmentedControlBody extends NodeBody {
     final int pageId,
     final int? loop,
   ) =>
-      cupertinoSegmentedControlCodeTemplate(
+      CupertinoSegmentedControlCodeTemplate.toCode(
         pageId,
         context,
         this,

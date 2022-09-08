@@ -135,5 +135,5 @@ class ImageBody extends NodeBody {
     final int pageId,
     final int? loop,
   ) =>
-      imageCodeTemplate(context, this, child, loop);
+      ImageCodeTemplate.toCode(context, this, child, loop);
 }

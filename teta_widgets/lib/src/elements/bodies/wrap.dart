@@ -99,5 +99,5 @@ class WrapBody extends NodeBody {
     final int pageId,
     final int? loop,
   ) =>
-      wrapCodeTemplate(context, this, children ?? []);
+      WrapCodeTemplate.toCode(context, this, children ?? []);
 }
