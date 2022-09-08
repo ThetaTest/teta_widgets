@@ -136,6 +136,15 @@ abstract class CNode extends Equatable {
     ).toCodeOnInit(context);
   }
 
+  Object? toCodeAdditionalClasses(final BuildContext context) {
+    return NDynamic(
+      globalType: intrinsicState.type,
+      body: NDynamic.getBody(intrinsicState.type),
+      childrenIds: FChildrenIds(),
+      inSpawned: false,
+    ).toCodeAdditionalClasses(context);
+  }
+
   /// Instantiate new node by display name
   static CNode toNodeFromName(
     final String displayName,

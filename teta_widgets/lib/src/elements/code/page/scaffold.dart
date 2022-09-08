@@ -3,12 +3,14 @@
 
 // Package imports:
 import 'package:diacritic/diacritic.dart';
+
 // Flutter imports:
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:recase/recase.dart';
 import 'package:teta_core/src/services/packages_service.dart';
 import 'package:teta_core/teta_core.dart';
+
 // Project imports:
 import 'package:teta_widgets/src/elements/controls/key_constants.dart';
 import 'package:teta_widgets/src/elements/features/fill.dart';
@@ -21,6 +23,8 @@ Future<String> pageCodeTemplate(
   final CNode node,
   final List<CNode> children,
   final int pageId,
+  final String additionalClasses,
+  final String onInitCode,
 ) async {
   final prj =
       (BlocProvider.of<FocusProjectBloc>(context).state as ProjectLoaded).prj;
@@ -119,7 +123,7 @@ Future<String> pageCodeTemplate(
 
   //----start states----
   final statesString = StringBuffer()..write('');
-  final initStateString = StringBuffer()..write('');
+
   for (final element in page.states) {
     final rc = ReCase(element.name);
     final value = element.typeDeclaration(rc.camelCase) == 'String'
@@ -130,16 +134,8 @@ Future<String> pageCodeTemplate(
       ${element.typeDeclaration(rc.camelCase)} ${rc.camelCase} = $value;
       ''',
     );
-    if (element.initStateCode() != null) {
-      initStateString.write(element.initStateCode());
-    }
   }
   //----end states----
-
-  // Append toCodeOnInit for all widgets
-  for (final childWidget in children) {
-    initStateString.write(childWidget.toCodeOnInit(context));
-  }
 
   //packages
   if (page.isPage && page.flatList != null) {
@@ -186,7 +182,7 @@ Future<String> pageCodeTemplate(
       @override
       void initState() {
         super.initState();
-        $initStateString
+        $onInitCode
         TetaCMS.instance.analytics.insertEvent(
           TetaAnalyticsType.usage,
           'App usage: view page',
@@ -214,5 +210,7 @@ Future<String> pageCodeTemplate(
       );''' : strChildren.toString().isNotEmpty ? strChildren.toString() : 'const SizedBox();'}
     }
   }
+  
+  $additionalClasses
   ''';
 }
