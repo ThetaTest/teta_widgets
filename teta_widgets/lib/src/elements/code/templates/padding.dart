@@ -17,7 +17,7 @@ Future<String> paddingCodeTemplate(
     final code = await CS.child(
       context,
       child,
-      comma: false,
+      comma: true,
       withChild: false,
     );
     final res = FormatterTest.format(code);

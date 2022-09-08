@@ -207,3 +207,10 @@ const PackageModel pRxDart = PackageModel(
   isDart: false,
   customPath: "import 'package:rxdart/rxdart.dart';",
 );
+
+const PackageModel pFlutterBloc = PackageModel(
+  packageName: 'flutter_bloc',
+  packageVersion: '8.1.1',
+  isDart: false,
+  customPath: "import 'package:flutter_bloc/flutter_bloc.dart';",
+);
