@@ -4,9 +4,12 @@
 
 // Package imports:
 import 'package:enum_to_string/enum_to_string.dart';
+
 // Flutter imports:
 import 'package:flutter/material.dart';
 import 'package:teta_core/teta_core.dart';
+import 'package:teta_widgets/src/elements/bodies/google_maps_body.dart';
+
 // Project imports:
 import 'package:teta_widgets/src/elements/controls/control_model.dart';
 import 'package:teta_widgets/src/elements/controls/key_constants.dart';
@@ -247,8 +250,16 @@ class NDynamic extends CNode {
 
   @override
   String toCodeOnInit(final BuildContext context) => '''
-      ${body.toCodeOnInit(context, this, child, children, pageId!, null)}
+      ${body.toCodeOnInit(context, this, child, children, pageId!, null, [],)}
       ''';
+
+  @override
+  String toCodeAdditionalClasses(final BuildContext context) {
+    return '''
+      ${body.toCodeAdditionalClasses(
+        context, this, child, children, pageId!, null, [],)}
+      ''';
+  }
 
   /// Returns if node can have at least one child (or more the one)
   bool get canHaveAtLeastOneChild =>

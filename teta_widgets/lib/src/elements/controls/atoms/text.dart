@@ -25,7 +25,7 @@ class TextControl extends StatefulWidget {
     required this.page,
     required this.title,
     required this.callBack,
-    required this.withConvertTo,
+    this.withConvertTo = false,
     this.isSubControl = false,
     this.remove,
     final Key? key,
