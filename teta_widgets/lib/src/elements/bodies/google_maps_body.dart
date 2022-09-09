@@ -24,9 +24,9 @@ import 'package:teta_widgets/src/elements/nodes/enum.dart';
 import 'package:teta_widgets/src/elements/nodes/node.dart';
 import 'package:teta_widgets/src/elements/nodes/node_body.dart';
 import 'package:teta_widgets/src/elements/packages.dart';
-import 'package:teta_widgets/src/elements/widgets/google_maps_stub_widget.dart'
-    if (dart.library.io) 'package:teta_widgets/src/elements/widgets/google_maps_web_mobile_widget.dart'
-    if (dart.library.html) 'package:teta_widgets/src/elements/widgets/google_maps_web_mobile_widget.dart';
+import 'package:teta_widgets/src/elements/widgets/google_maps/google_maps_stub_widget.dart'
+    if (dart.library.io) 'package:teta_widgets/src/elements/widgets/google_maps/google_maps_web_mobile_widget.dart'
+    if (dart.library.html) 'package:teta_widgets/src/elements/widgets/google_maps/google_maps_web_mobile_widget.dart';
 
 const _globalType = NType.googleMaps;
 
@@ -253,11 +253,11 @@ class GoogleMapsBody extends NodeBody {
         markerIconHeight:
             (attributes[DBKeys.markerIconHeight] as FDataset).datasetAttrName ??
                 '',
-        markerDrawPath:
+        drawPathFromUserGeolocationToMarker:
             (attributes[DBKeys.markerDrawPathToUserCurrentLocation] as FDataset)
                     .datasetAttrName ??
                 '',
-        customMapStyle:
+        mapStyle:
             (attributes[DBKeys.mapCustomStyle] as FDataset).datasetAttrName ??
                 '',
         initialPositionLat:

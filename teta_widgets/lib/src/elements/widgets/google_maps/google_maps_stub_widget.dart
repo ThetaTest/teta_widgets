@@ -6,7 +6,7 @@ import 'package:teta_core/teta_core.dart';
 
 // Project imports:
 import 'package:teta_widgets/src/elements/nodes/node.dart';
-import 'package:teta_widgets/src/elements/widgets/google_maps_base_widget.dart';
+import 'package:teta_widgets/src/elements/widgets/google_maps/google_maps_base_widget.dart';
 
 // ignore_for_file: public_member_api_docs
 
@@ -28,10 +28,10 @@ class WGoogleMaps extends WGoogleMapsBase {
     required this.markerIconUrl,
     required this.markerIconWidth,
     required this.markerIconHeight,
-    required this.customMapStyle,
+    required this.mapStyle,
     required this.initialPositionLng,
     required this.initialPositionLat,
-    required this.markerDrawPath,
+    required this.drawPathFromUserGeolocationToMarker,
     required this.showMyLocationMarker,
     required this.trackMyLocation,
     required this.initialZoomLevel,
@@ -57,8 +57,8 @@ class WGoogleMaps extends WGoogleMapsBase {
   final String markerIconUrl;
   final String markerIconWidth;
   final String markerIconHeight;
-  final String markerDrawPath;
-  final String customMapStyle;
+  final String drawPathFromUserGeolocationToMarker;
+  final String mapStyle;
   final String initialPositionLng;
   final String initialPositionLat;
   final bool showMyLocationMarker;
