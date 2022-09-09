@@ -87,5 +87,5 @@ class ClipOvalBody extends NodeBody {
     final int pageId,
     final int? loop,
   ) =>
-      clipOvalCodeTemplate(context, node, child);
+      ClipOvalCodeTemplate.toCode(context, node, child);
 }

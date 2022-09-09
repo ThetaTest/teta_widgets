@@ -123,5 +123,5 @@ class CardBody extends NodeBody {
     final int pageId,
     final int? loop,
   ) =>
-      cardCodeTemplate(context, this, child, loop);
+      CardCodeTemplate.toCode(context, this, child, loop);
 }

@@ -9,17 +9,18 @@ import 'package:teta_widgets/src/elements/nodes/dynamic.dart';
 import 'package:teta_widgets/src/elements/nodes/node.dart';
 
 /// Generates the code for Qonversion product list widget, unclassified for now
-Future<String> qonversionProductsListCodeTemplate(
-  final BuildContext context,
-  final NDynamic node,
-  final CNode? child,
-  final int? loop,
-) async {
-  var childString = 'const SizedBox()';
-  if (child != null) {
-    childString = await child.toCode(context);
-  }
-  final code = '''
+class QonversionProductsListCodeTemplate {
+  static Future<String> toCode(
+    final BuildContext context,
+    final NDynamic node,
+    final CNode? child,
+    final int? loop,
+  ) async {
+    var childString = 'const SizedBox()';
+    if (child != null) {
+      childString = await child.toCode(context);
+    }
+    final code = '''
   TetaFutureBuilder<List<QProduct>>(
     future: Future<List<QProduct>>.sync(() async {
       var products = <QProduct>[];
@@ -51,10 +52,13 @@ Future<String> qonversionProductsListCodeTemplate(
     }
   )
   ''';
-  final res = FormatterTest.format(code);
-  if (res) {
-    return code;
-  } else {
-    return 'const SizedBox()';
+    final res = FormatterTest.format(code);
+    if (res) {
+      return code;
+    } else {
+      return 'const SizedBox()';
+    }
   }
+
+  static void testCode() {}
 }

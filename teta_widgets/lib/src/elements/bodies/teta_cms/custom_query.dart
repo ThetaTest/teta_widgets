@@ -120,7 +120,7 @@ LIMIT 10;''',
     final int pageId,
     final int? loop,
   ) =>
-      cmsCustomQueryCodeTemplate(
+      CmsCustomQueryCodeTemplate.toCode(
         context,
         node as NDynamic,
         children ?? <CNode>[],

@@ -124,5 +124,5 @@ class AnimationConfigGridBody extends NodeBody {
     final int pageId,
     final int? loop,
   ) =>
-      animConfigGridCodeTemplate(context, this, child, loop ?? 0);
+      AnimConfigGridCodeTemplate.toCode(context, this, child, loop ?? 0);
 }

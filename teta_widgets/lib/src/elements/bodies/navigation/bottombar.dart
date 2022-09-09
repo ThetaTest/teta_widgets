@@ -76,5 +76,5 @@ class BottomBarBody extends NodeBody {
     final int pageId,
     final int? loop,
   ) =>
-      bottomBarCodeTemplate(context, this, child);
+      BottomBarCodeTemplate.toCode(context, this, child);
 }

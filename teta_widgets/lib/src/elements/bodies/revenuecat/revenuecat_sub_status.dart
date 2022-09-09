@@ -110,5 +110,10 @@ class RevenueCatSubStatusBody extends NodeBody {
     final int pageId,
     final int? loop,
   ) =>
-      revenueCatSubsStatusCodeTemplate(context, node as NDynamic, child, loop);
+      RevenueCatSubsStatusCodeTemplate.toCode(
+        context,
+        node as NDynamic,
+        child,
+        loop,
+      );
 }

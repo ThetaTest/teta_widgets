@@ -104,5 +104,10 @@ class ConcentricPageViewBody extends NodeBody {
     final int pageId,
     final int? loop,
   ) =>
-      concentricPageViewCodeTemplate(context, this, node, children ?? []);
+      ConcentricPageViewCodeTemplate.toCode(
+        context,
+        this,
+        node,
+        children ?? [],
+      );
 }

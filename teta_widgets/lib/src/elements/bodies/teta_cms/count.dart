@@ -159,7 +159,7 @@ class CmsCountBody extends NodeBody {
     final int pageId,
     final int? loop,
   ) =>
-      cmsCountCodeTemplate(
+      CmsCountCodeTemplate.toCode(
         context,
         node as NDynamic,
         children ?? <CNode>[],

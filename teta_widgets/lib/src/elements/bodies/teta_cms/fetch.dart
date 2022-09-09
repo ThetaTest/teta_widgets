@@ -166,7 +166,7 @@ class CmsFetchBody extends NodeBody {
     final int pageId,
     final int? loop,
   ) =>
-      cmsFetchCodeTemplate(
+      CmsFetchCodeTemplate.toCode(
         context,
         node as NDynamic,
         children ?? <CNode>[],

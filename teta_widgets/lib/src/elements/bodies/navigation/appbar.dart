@@ -103,5 +103,5 @@ class AppBarBody extends NodeBody {
     final int pageId,
     final int? loop,
   ) =>
-      appBarCodeTemplate(context, this, child);
+      AppBarCodeTemplate.toCode(context, this, child);
 }

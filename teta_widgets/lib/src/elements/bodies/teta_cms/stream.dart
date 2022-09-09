@@ -167,7 +167,7 @@ class CmsStreamBody extends NodeBody {
     final int pageId,
     final int? loop,
   ) =>
-      cmsStreamCodeTemplate(
+      CmsStreamCodeTemplate.toCode(
         context,
         node as NDynamic,
         children ?? <CNode>[],

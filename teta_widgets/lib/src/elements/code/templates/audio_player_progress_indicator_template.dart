@@ -60,4 +60,6 @@ class AudioPlayerProgressIndicatorTemplate {
       return 'const SizedBox()';
     }
   }
+  static void testCode() {}
+
 }

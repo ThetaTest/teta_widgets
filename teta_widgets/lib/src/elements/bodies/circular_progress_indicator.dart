@@ -105,5 +105,5 @@ class CircularProgressIndicatorBody extends NodeBody {
     final int pageId,
     final int? loop,
   ) =>
-      circularProgressIndicatorCodeTemplate(context, this, loop);
+      CircularProgressIndicatorCodeTemplate.toCode(context, this, loop);
 }

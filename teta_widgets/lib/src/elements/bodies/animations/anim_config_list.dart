@@ -116,5 +116,5 @@ class AnimationConfigListBody extends NodeBody {
     final int pageId,
     final int? loop,
   ) =>
-      animConfigListCodeTemplate(context, this, child, loop ?? 0);
+      AnimConfigListCodeTemplate.toCode(context, this, child, loop ?? 0);
 }

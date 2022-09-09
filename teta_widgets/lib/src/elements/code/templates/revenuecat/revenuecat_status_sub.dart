@@ -10,21 +10,22 @@ import 'package:teta_widgets/src/elements/nodes/dynamic.dart';
 // Project imports:
 
 /// Generates the code for RevenueCat product list widget, unclassified for now
-Future<String> revenueCatSubsStatusCodeTemplate(
-  final BuildContext context,
-  final NDynamic node,
-  final CNode? child,
-  final int? loop,
-) async {
-  var childString = 'const SizedBox()';
-  if (child != null) {
-    childString = await child.toCode(context);
-  }
+class RevenueCatSubsStatusCodeTemplate {
+  static Future<String> toCode(
+    final BuildContext context,
+    final NDynamic node,
+    final CNode? child,
+    final int? loop,
+  ) async {
+    var childString = 'const SizedBox()';
+    if (child != null) {
+      childString = await child.toCode(context);
+    }
 
-  final entitlement =
-      (node.body.attributes[DBKeys.value] as FTextTypeInput).toCode(loop);
+    final entitlement =
+        (node.body.attributes[DBKeys.value] as FTextTypeInput).toCode(loop);
 
-  final code = '''
+    final code = '''
   TetaFutureBuilder<bool>(
     future: Future<bool>.sync(() async {
       if (UniversalPlatform.isAndroid ||
@@ -54,10 +55,13 @@ Future<String> revenueCatSubsStatusCodeTemplate(
     }
   )
   ''';
-  final res = FormatterTest.format(code);
-  if (res) {
-    return code;
-  } else {
-    return 'const SizedBox()';
+    final res = FormatterTest.format(code);
+    if (res) {
+      return code;
+    } else {
+      return 'const SizedBox()';
+    }
   }
+
+  static void testCode() {}
 }

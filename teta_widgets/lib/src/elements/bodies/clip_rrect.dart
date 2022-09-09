@@ -100,5 +100,5 @@ class ClipRRectBody extends NodeBody {
     final int pageId,
     final int? loop,
   ) =>
-      clipRRectCodeTemplate(context, this, child);
+      ClipRRectCodeTemplate.toCode(context, this, child);
 }

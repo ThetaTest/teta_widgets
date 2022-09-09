@@ -8,32 +8,34 @@ import 'package:teta_widgets/src/elements/index.dart';
 import 'package:teta_widgets/src/elements/nodes/node_body.dart';
 
 /// Generates the code for Bouncing widget
-Future<String> bouncingWidgetCodeTemplate(
-  final int pageId,
-  final BuildContext context,
-  final NodeBody body,
-  final CNode node,
-  final CNode? child,
-  final int loop,
-) async {
-  final abstract = body.attributes[DBKeys.value] as FTextTypeInput;
-  final value = abstract.toCode(loop);
-  final duration = int.tryParse(value) != null ? int.parse(value) : '200';
-  final valueOfCondition =
-      (body.attributes[DBKeys.valueOfCondition] as FTextTypeInput).toCode(loop);
-  final scale = double.tryParse(valueOfCondition) ?? 1;
-  final actionString = CS.action(
-    pageId,
-    context,
-    node,
-    ActionGesture.onTap,
-    'onPressed: () async',
-    null,
-    isRequired: false,
-    loop: loop,
-  );
-  final childString = await CS.child(context, child, comma: true);
-  final code = '''
+class BouncingWidgetCodeTemplate {
+  static Future<String> toCode(
+    final int pageId,
+    final BuildContext context,
+    final NodeBody body,
+    final CNode node,
+    final CNode? child,
+    final int loop,
+  ) async {
+    final abstract = body.attributes[DBKeys.value] as FTextTypeInput;
+    final value = abstract.toCode(loop);
+    final duration = int.tryParse(value) != null ? int.parse(value) : '200';
+    final valueOfCondition =
+        (body.attributes[DBKeys.valueOfCondition] as FTextTypeInput)
+            .toCode(loop);
+    final scale = double.tryParse(valueOfCondition) ?? 1;
+    final actionString = CS.action(
+      pageId,
+      context,
+      node,
+      ActionGesture.onTap,
+      'onPressed: () async',
+      null,
+      isRequired: false,
+      loop: loop,
+    );
+    final childString = await CS.child(context, child, comma: true);
+    final code = '''
     BouncingWidget(
       ${actionString != '' ? actionString : 'onPressed: () async {},'}
       duration: const Duration(milliseconds: $duration),
@@ -41,43 +43,46 @@ Future<String> bouncingWidgetCodeTemplate(
       $childString
     )
   ''';
-  final res = FormatterTest.format(code);
-  if (res) {
-    return code;
-  } else {
-    final code = await bouncingWidgetCodeTemplate(
-      pageId,
-      context,
-      body,
-      node,
-      null,
-      loop,
-    );
     final res = FormatterTest.format(code);
     if (res) {
       return code;
     } else {
-      final code = await bouncingWidgetCodeTemplate(
+      final code = await toCode(
         pageId,
         context,
-        NodeBody.get(NType.bouncingWidget),
+        body,
         node,
-        child,
+        null,
         loop,
       );
       final res = FormatterTest.format(code);
       if (res) {
         return code;
       } else {
-        return bouncingWidgetCodeTemplate(
+        final code = await toCode(
           pageId,
           context,
           NodeBody.get(NType.bouncingWidget),
           node,
-          null,
+          child,
           loop,
         );
+        final res = FormatterTest.format(code);
+        if (res) {
+          return code;
+        } else {
+          return toCode(
+            pageId,
+            context,
+            NodeBody.get(NType.bouncingWidget),
+            node,
+            null,
+            loop,
+          );
+        }
       }
     }
   }
+
+  static void testCode() {}
 }

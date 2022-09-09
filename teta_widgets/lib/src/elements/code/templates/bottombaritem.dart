@@ -8,44 +8,45 @@ import 'package:teta_widgets/src/elements/index.dart';
 import 'package:teta_widgets/src/elements/nodes/node_body.dart';
 
 /// Generates the code for BottomBarItem widget
-Future<String> bottomBarItemCodeTemplate(
-  final int pageId,
-  final BuildContext context,
-  final NodeBody body,
-  final CNode node,
-  final CNode? child,
-  final int loop,
-) async {
-  final abstract = body.attributes[DBKeys.value] as FTextTypeInput;
-  final value = abstract.toCode(loop);
-  final icon = body.attributes[DBKeys.icon] as String;
-  final fill = FFill.toCode(
-    body.attributes[DBKeys.fill] as FFill,
-    context,
-    flagConst: false,
-  );
-  final code = '''
+class BottomBarItemCodeTemplate {
+  static Future<String> toCode(
+    final int pageId,
+    final BuildContext context,
+    final NodeBody body,
+    final CNode node,
+    final CNode? child,
+    final int loop,
+  ) async {
+    final abstract = body.attributes[DBKeys.value] as FTextTypeInput;
+    final value = abstract.toCode(loop);
+    final icon = body.attributes[DBKeys.icon] as String;
+    final fill = FFill.toCode(
+      body.attributes[DBKeys.fill] as FFill,
+      context,
+      flagConst: false,
+    );
+    final code = '''
     GestureDetector(
       ${CS.action(
-    pageId,
-    context,
-    node,
-    ActionGesture.onTap,
-    'onTap: () async',
-    null,
-    isRequired: false,
-    loop: loop,
-  )}
+      pageId,
+      context,
+      node,
+      ActionGesture.onTap,
+      'onTap: () async',
+      null,
+      isRequired: false,
+      loop: loop,
+    )}
       ${CS.action(
-    pageId,
-    context,
-    node,
-    ActionGesture.onLongPress,
-    'onLongPress: () async',
-    null,
-    isRequired: false,
-    loop: loop,
-  )}
+      pageId,
+      context,
+      node,
+      ActionGesture.onLongPress,
+      'onLongPress: () async',
+      null,
+      isRequired: false,
+      loop: loop,
+    )}
       child: Column(
         children:[
           Icon(
@@ -60,17 +61,20 @@ Future<String> bottomBarItemCodeTemplate(
       )
     )
   ''';
-  final res = FormatterTest.format(code);
-  if (res) {
-    return code;
-  } else {
-    return bottomBarItemCodeTemplate(
-      pageId,
-      context,
-      NodeBody.get(NType.bottombaritem),
-      node,
-      child,
-      loop,
-    );
+    final res = FormatterTest.format(code);
+    if (res) {
+      return code;
+    } else {
+      return toCode(
+        pageId,
+        context,
+        NodeBody.get(NType.bottombaritem),
+        node,
+        child,
+        loop,
+      );
+    }
   }
+
+  static void testCode() {}
 }

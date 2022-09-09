@@ -95,7 +95,7 @@ class CMSLoggedUserBody extends NodeBody {
     final int pageId,
     final int? loop,
   ) =>
-      cmsLoggedUserCodeTemplate(
+      CmsLoggedUserCodeTemplate.toCode(
         context,
         node as NDynamic,
         children ?? [],

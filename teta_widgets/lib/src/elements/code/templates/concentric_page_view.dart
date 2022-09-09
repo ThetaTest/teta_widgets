@@ -8,22 +8,23 @@ import 'package:teta_widgets/src/elements/nodes/node.dart';
 import 'package:teta_widgets/src/elements/nodes/node_body.dart';
 
 /// Concentric PageView Template
-Future<String> concentricPageViewCodeTemplate(
-  final BuildContext context,
-  final NodeBody body,
-  final CNode node,
-  final List<CNode> children,
-) async {
-  //! This must use two different colors.
-  //! Use two FFill with the following keys: .fill & .bgFill
-  final fill = FFill.toCode(
-    body.attributes[DBKeys.fill] as FFill,
-    context,
-    flagConst: false,
-  );
-  final childrenStr = await CS.children(context, children)
-    ..replaceFirst('children:', '');
-  return '''
+class ConcentricPageViewCodeTemplate {
+  static Future<String> toCode(
+    final BuildContext context,
+    final NodeBody body,
+    final CNode node,
+    final List<CNode> children,
+  ) async {
+    //! This must use two different colors.
+    //! Use two FFill with the following keys: .fill & .bgFill
+    final fill = FFill.toCode(
+      body.attributes[DBKeys.fill] as FFill,
+      context,
+      flagConst: false,
+    );
+    final childrenStr = await CS.children(context, children)
+      ..replaceFirst('children:', '');
+    return '''
     ConcentricPageView(
       colors: [
         ${fill!.replaceAll('color:', '')}
@@ -35,4 +36,7 @@ Future<String> concentricPageViewCodeTemplate(
       },
     )
   ''';
+  }
+
+  static void testCode() {}
 }

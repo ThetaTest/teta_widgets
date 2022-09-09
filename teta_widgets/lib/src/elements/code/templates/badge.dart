@@ -8,21 +8,22 @@ import 'package:teta_widgets/src/elements/index.dart';
 import 'package:teta_widgets/src/elements/nodes/node_body.dart';
 
 /// Generates the code for badge widget
-Future<String> badgeCodeTemplate(
-  final BuildContext context,
-  final NodeBody body,
-  final CNode? child,
-  final int? loop,
-) async {
-  final abstract = body.attributes[DBKeys.value] as FTextTypeInput;
-  final value = abstract.toCode(loop);
-  final fill = FFill.toCode(
-    body.attributes[DBKeys.fill] as FFill,
-    context,
-    flagConst: false,
-  );
-  final childString = await CS.child(context, child, comma: true);
-  final code = '''
+class BadgeCodeTemplate {
+  static Future<String> toCode(
+    final BuildContext context,
+    final NodeBody body,
+    final CNode? child,
+    final int? loop,
+  ) async {
+    final abstract = body.attributes[DBKeys.value] as FTextTypeInput;
+    final value = abstract.toCode(loop);
+    final fill = FFill.toCode(
+      body.attributes[DBKeys.fill] as FFill,
+      context,
+      flagConst: false,
+    );
+    final childString = await CS.child(context, child, comma: true);
+    final code = '''
     Badge(
       badgeContent: Text( 
         $value,
@@ -32,21 +33,24 @@ Future<String> badgeCodeTemplate(
         $childString
     )
   ''';
-  final res = FormatterTest.format(code);
-  if (res) {
-    return code;
-  } else {
-    final code = await badgeCodeTemplate(
-      context,
-      NodeBody.get(NType.badge),
-      child,
-      loop,
-    );
     final res = FormatterTest.format(code);
     if (res) {
       return code;
     } else {
-      return badgeCodeTemplate(context, NodeBody.get(NType.badge), null, loop);
+      final code = await toCode(
+        context,
+        NodeBody.get(NType.badge),
+        child,
+        loop,
+      );
+      final res = FormatterTest.format(code);
+      if (res) {
+        return code;
+      } else {
+        return toCode(context, NodeBody.get(NType.badge), null, loop);
+      }
     }
   }
+
+  static void testCode() {}
 }

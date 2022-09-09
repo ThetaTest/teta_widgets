@@ -115,5 +115,5 @@ class ConditionBody extends NodeBody {
     final int pageId,
     final int? loop,
   ) =>
-      conditionCodeTemplate(context, this, children ?? [], loop);
+      ConditionCodeTemplate.toCode(context, this, children ?? [], loop);
 }

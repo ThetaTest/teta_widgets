@@ -6,7 +6,7 @@ import 'package:teta_widgets/src/elements/code/snippets.dart';
 import 'package:teta_widgets/src/elements/nodes/node.dart';
 import 'package:teta_widgets/src/elements/nodes/node_body.dart';
 
-/// Generates the code for Align widget
+/// Generates the code for Audio Player widget
 class AudioPlayerTemplate {
   static Future<String> toCode({
     required final BuildContext context,
@@ -74,4 +74,6 @@ class AudioPlayerTemplate {
       return 'const SizedBox()';
     }
   }
+
+  static void testCode() {}
 }

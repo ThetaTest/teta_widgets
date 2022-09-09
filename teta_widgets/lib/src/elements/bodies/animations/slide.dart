@@ -94,5 +94,5 @@ class SlideAnimationBody extends NodeBody {
     final int pageId,
     final int? loop,
   ) =>
-      slideCodeTemplate(context, this, child);
+      SlideCodeTemplate.toCode(context, this, child);
 }

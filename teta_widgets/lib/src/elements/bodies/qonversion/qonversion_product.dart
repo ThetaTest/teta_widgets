@@ -92,7 +92,7 @@ class QonversionProductListBody extends NodeBody {
     final int pageId,
     final int? loop,
   ) =>
-      qonversionProductsListCodeTemplate(
+      QonversionProductsListCodeTemplate.toCode(
         context,
         node as NDynamic,
         child,

@@ -92,7 +92,7 @@ class RevenueCatProductListBody extends NodeBody {
     final int pageId,
     final int? loop,
   ) =>
-      revenueCatProductsListCodeTemplate(
+      RevenueCatProductsListCodeTemplate.toCode(
         context,
         node as NDynamic,
         child,

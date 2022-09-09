@@ -94,5 +94,5 @@ class FadeInAnimationBody extends NodeBody {
     final int pageId,
     final int? loop,
   ) =>
-      fadeInCodeTemplate(context, this, child);
+      FadeInCodeTemplate.toCode(context, this, child);
 }

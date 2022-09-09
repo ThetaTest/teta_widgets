@@ -76,5 +76,5 @@ class DrawerBody extends NodeBody {
     final int pageId,
     final int? loop,
   ) =>
-      drawerCodeTemplate(context, this, child);
+      DrawerCodeTemplate.toCode(context, this, child);
 }

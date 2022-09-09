@@ -202,5 +202,5 @@ class CalendarBody extends NodeBody {
     final int pageId,
     final int? loop,
   ) =>
-      calendarCodeTemplate(pageId, context, node, loop ?? 0);
+      CalendarCodeTemplate.toCode(pageId, context, node, loop ?? 0);
 }

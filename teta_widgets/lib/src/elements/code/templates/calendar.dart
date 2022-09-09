@@ -9,49 +9,50 @@ import 'package:teta_widgets/src/elements/code/snippets.dart';
 import 'package:teta_widgets/src/elements/controls/key_constants.dart';
 import 'package:teta_widgets/src/elements/index.dart';
 
-/// Generates the code for Padding widget
-Future<String> calendarCodeTemplate(
-  final int pageId,
-  final BuildContext context,
-  final CNode node,
-  final int loop,
-) async {
-  final dataset = node.body.attributes[DBKeys.datasetInput] as FDataset;
-  var firstDecoration = CS
-      .boxDecoration(context, node.body, DBKeys.bgFill)
-      .replaceFirst('decoration:', '');
-  firstDecoration = firstDecoration.substring(0, firstDecoration.length - 6);
-  final code = '''
+/// Generates the code for Calendar widget
+class CalendarCodeTemplate {
+  static Future<String> toCode(
+    final int pageId,
+    final BuildContext context,
+    final CNode node,
+    final int loop,
+  ) async {
+    final dataset = node.body.attributes[DBKeys.datasetInput] as FDataset;
+    var firstDecoration = CS
+        .boxDecoration(context, node.body, DBKeys.bgFill)
+        .replaceFirst('decoration:', '');
+    firstDecoration = firstDecoration.substring(0, firstDecoration.length - 6);
+    final code = '''
   Builder(builder: (context) {
     return PagedVerticalCalendar(
       addAutomaticKeepAlives: true,
       ${CS.action(
-    pageId,
-    context,
-    node,
-    ActionGesture.onDayPressed,
-    'onDayPressed: (date) async',
-    '\$date',
-    isRequired: false,
-    loop: loop,
-    additionalCode: '''
+      pageId,
+      context,
+      node,
+      ActionGesture.onDayPressed,
+      'onDayPressed: (date) async',
+      '\$date',
+      isRequired: false,
+      loop: loop,
+      additionalCode: '''
       index = (datasets['Cms stream'] as List<dynamic>).indexOf(datasets['Cms stream'].firstWhere(
         (element) =>
           element['${dataset.datasetAttrName}'].toString().substring(0, 10) ==
           date.toString().substring(0, 10)
         )
       );''',
-  )}
+    )}
       ${CS.action(
-    pageId,
-    context,
-    node,
-    ActionGesture.onMonthLoaded,
-    'onMonthLoaded: (year, month) async',
-    '\$month',
-    isRequired: false,
-    loop: loop,
-  )}
+      pageId,
+      context,
+      node,
+      ActionGesture.onMonthLoaded,
+      'onMonthLoaded: (year, month) async',
+      '\$month',
+      isRequired: false,
+      loop: loop,
+    )}
       dayBuilder: (context, date) {
         final dataset = datasets['${dataset.datasetName}'];
          final element =
@@ -93,10 +94,13 @@ Future<String> calendarCodeTemplate(
     },
   )
   ''';
-  final res = FormatterTest.format(code);
-  if (res) {
-    return code;
-  } else {
-    return 'const SizedBox()';
+    final res = FormatterTest.format(code);
+    if (res) {
+      return code;
+    } else {
+      return 'const SizedBox()';
+    }
   }
+
+  static void testCode() {}
 }

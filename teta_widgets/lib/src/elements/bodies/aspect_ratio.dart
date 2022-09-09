@@ -102,5 +102,5 @@ class AspectRatioBody extends NodeBody {
     final int pageId,
     final int? loop,
   ) =>
-      aspectRatioCodeTemplate(context, this, child, loop);
+      AspectRatioCodeTemplate.toCode(context, this, child, loop);
 }

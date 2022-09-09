@@ -7,25 +7,29 @@ import 'package:teta_widgets/src/elements/features/fill.dart';
 import 'package:teta_widgets/src/elements/nodes/node_body.dart';
 
 /// CircularProgressIndicator Template
-Future<String> circularProgressIndicatorCodeTemplate(
-  final BuildContext context,
-  final NodeBody body,
-  final int? loop,
-) async {
-  final fill = FFill.toCode(
-    body.attributes[DBKeys.fill] as FFill,
-    context,
-    flagConst: false,
-  );
-  final code = '''
+class CircularProgressIndicatorCodeTemplate {
+  static Future<String> toCode(
+    final BuildContext context,
+    final NodeBody body,
+    final int? loop,
+  ) async {
+    final fill = FFill.toCode(
+      body.attributes[DBKeys.fill] as FFill,
+      context,
+      flagConst: false,
+    );
+    final code = '''
     CircularProgressIndicator(
       ${fill!.replaceAll('color:', 'valueColor: AlwaysStoppedAnimation<Color>(')}),
     )
   ''';
-  final res = FormatterTest.format(code);
-  if (res) {
-    return code;
-  } else {
-    return 'const SizedBox()';
+    final res = FormatterTest.format(code);
+    if (res) {
+      return code;
+    } else {
+      return 'const SizedBox()';
+    }
   }
+
+  static void testCode() {}
 }

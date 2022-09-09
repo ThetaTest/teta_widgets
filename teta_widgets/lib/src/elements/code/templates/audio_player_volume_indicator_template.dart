@@ -2,7 +2,7 @@
 import 'package:flutter/material.dart';
 import 'package:teta_widgets/src/elements/code/formatter_test.dart';
 
-/// Generates the code for Align widget
+/// Generates the code for Audio Player Volume Indicator widget
 class AudioPlayerVolumeIndicatorTemplate {
   static Future<String> toCode({
     required final BuildContext context,
@@ -60,4 +60,6 @@ StreamBuilder<Map<String, Object>>(
       return 'const SizedBox()';
     }
   }
+
+  static void testCode() {}
 }

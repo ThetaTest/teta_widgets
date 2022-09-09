@@ -94,5 +94,5 @@ class WrapperBody extends NodeBody {
     final int pageId,
     final int? loop,
   ) =>
-      wrapperCodeTemplate(context, this, child);
+      WrapperCodeTemplate.toCode(context, this, child);
 }

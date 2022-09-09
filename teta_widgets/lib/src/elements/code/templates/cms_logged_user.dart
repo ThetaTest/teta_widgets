@@ -7,29 +7,30 @@ import 'package:teta_widgets/src/elements/code/formatter_test.dart';
 import 'package:teta_widgets/src/elements/nodes/dynamic.dart';
 import 'package:teta_widgets/src/elements/nodes/node.dart';
 
-/// Generates the code for Padding widget
-Future<String> cmsLoggedUserCodeTemplate(
-  final BuildContext context,
-  final NDynamic node,
-  final List<CNode> children,
-  final int? loop,
-) async {
-  var child = 'const SizedBox()';
-  if (children.isNotEmpty) {
-    child = await children.first.toCode(context);
-  }
-  var loader = 'const Center(child: CircularProgressIndicator(),)';
-  if (children.length >= 2) {
-    loader = await children[1].toCode(context);
-  }
+/// Generates the code for CMS Logged User widget
+class CmsLoggedUserCodeTemplate {
+  static Future<String> toCode(
+    final BuildContext context,
+    final NDynamic node,
+    final List<CNode> children,
+    final int? loop,
+  ) async {
+    var child = 'const SizedBox()';
+    if (children.isNotEmpty) {
+      child = await children.first.toCode(context);
+    }
+    var loader = 'const Center(child: CircularProgressIndicator(),)';
+    if (children.length >= 2) {
+      loader = await children[1].toCode(context);
+    }
 
-  final revenueCatFlag =
-      (BlocProvider.of<FocusProjectBloc>(context).state as ProjectLoaded)
-              .prj
-              .config
-              ?.isRevenueCatEnabled ??
-          false;
-  final code = '''
+    final revenueCatFlag =
+        (BlocProvider.of<FocusProjectBloc>(context).state as ProjectLoaded)
+                .prj
+                .config
+                ?.isRevenueCatEnabled ??
+            false;
+    final code = '''
   TetaFutureBuilder<TetaUser>(
     future: Future.sync(() async {
       final user = await TetaCMS.instance.auth.user.get;
@@ -60,10 +61,13 @@ if (UniversalPlatform.isIOS || UniversalPlatform.isAndroid || UniversalPlatform.
     }
   )
   ''';
-  final res = FormatterTest.format(code);
-  if (res) {
-    return code;
-  } else {
-    return 'const SizedBox()';
+    final res = FormatterTest.format(code);
+    if (res) {
+      return code;
+    } else {
+      return 'const SizedBox()';
+    }
   }
+
+  static void testCode() {}
 }

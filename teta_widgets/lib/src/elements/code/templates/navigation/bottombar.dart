@@ -6,21 +6,25 @@ import 'package:teta_widgets/src/elements/code/snippets.dart';
 import 'package:teta_widgets/src/elements/nodes/node.dart';
 import 'package:teta_widgets/src/elements/nodes/node_body.dart';
 
-/// Generates the code for Padding widget
-Future<String> bottomBarCodeTemplate(
-  final BuildContext context,
-  final NodeBody body,
-  final CNode? child,
-) async {
-  final childString = await CS.child(context, child, comma: false);
+/// Generates the code for Bottom Bar widget
+class BottomBarCodeTemplate {
+  static Future<String> toCode(
+    final BuildContext context,
+    final NodeBody body,
+    final CNode? child,
+  ) async {
+    final childString = await CS.child(context, child, comma: false);
 
-  final code = '''
+    final code = '''
     ${childString.replaceFirst('child:', '')}
   ''';
-  final res = FormatterTest.format(code);
-  if (res) {
-    return code;
-  } else {
-    return 'const SizedBox()';
+    final res = FormatterTest.format(code);
+    if (res) {
+      return code;
+    } else {
+      return 'const SizedBox()';
+    }
   }
+
+  static void testCode() {}
 }

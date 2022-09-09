@@ -120,5 +120,5 @@ class BadgeBody extends NodeBody {
     final int pageId,
     final int? loop,
   ) =>
-      badgeCodeTemplate(context, this, child, loop);
+      BadgeCodeTemplate.toCode(context, this, child, loop);
 }

@@ -94,5 +94,5 @@ class ScaleAnimationBody extends NodeBody {
     final int pageId,
     final int? loop,
   ) =>
-      scaleCodeTemplate(context, this, child);
+      ScaleCodeTemplate.toCode(context, this, child);
 }
