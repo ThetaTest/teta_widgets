@@ -54,6 +54,17 @@ class _WImageState extends State<WImage> {
 
   @override
   void initState() {
+    result = widget.image.getForImages(
+      widget.params,
+      widget.states,
+      widget.dataset,
+      widget.loop,
+      forPlay: widget.forPlay,
+      context: context,
+    );
+    if (result is XFile) {
+      calc();
+    }
     super.initState();
   }
 
@@ -70,45 +81,84 @@ class _WImageState extends State<WImage> {
 
   @override
   Widget build(final BuildContext context) {
-    result = widget.image.getForImages(
-      widget.params,
-      widget.states,
-      widget.dataset,
-      widget.loop,
-      forPlay: widget.forPlay,
-      context: context,
-    );
-    if (result is XFile) {
-      calc();
-    }
     return NodeSelectionBuilder(
       node: widget.node,
       forPlay: widget.forPlay,
       child: ClipRRect(
         borderRadius: widget.borderRadius.get,
         child: SizedBox(
-          width: widget.width.get(context: context, isWidth: true),
-          height: widget.height.get(context: context, isWidth: false),
-          child: result is XFile
-              ? bytes == null
-                  ? const SizedBox()
-                  : Image.memory(
-                      bytes!,
-                      width: widget.width.get(context: context, isWidth: true),
-                      height:
-                          widget.height.get(context: context, isWidth: false),
-                      fit: widget.boxFit.get,
-                    )
-              : CNetworkImage(
-                  nid: widget.node.nid,
-                  src: '$result',
-                  loop: widget.loop ?? 0,
-                  width: widget.width.get(context: context, isWidth: true),
-                  height: widget.height.get(context: context, isWidth: false),
-                  fit: widget.boxFit.fit,
-                ),
+          width: widget.width.get(
+            context: context,
+            isWidth: true,
+          ),
+          height: widget.height.get(
+            context: context,
+            isWidth: false,
+          ),
+          child: _LocalImage(
+            key: ValueKey('Image ${widget.node.nid} $result'),
+            nid: widget.node.nid,
+            result: result,
+            bytes: bytes,
+            width: widget.width.get(
+              context: context,
+              isWidth: true,
+            ),
+            height: widget.height.get(
+              context: context,
+              isWidth: false,
+            ),
+            fit: widget.boxFit.get,
+          ),
         ),
       ),
     );
+  }
+}
+
+class _LocalImage extends StatefulWidget {
+  _LocalImage({
+    required this.nid,
+    required this.result,
+    required this.bytes,
+    required this.width,
+    required this.height,
+    required this.fit,
+    final Key? key,
+  }) : super(key: key);
+
+  int nid;
+  int? loop;
+  dynamic result;
+  Uint8List? bytes;
+  double? width, height;
+  BoxFit fit;
+
+  @override
+  State<_LocalImage> createState() => _LocalImageState();
+}
+
+class _LocalImageState extends State<_LocalImage> {
+  @override
+  Widget build(final BuildContext context) {
+    return widget.result is XFile
+        ? widget.bytes == null
+            ? const SizedBox()
+            : Image.memory(
+                widget.bytes!,
+                width: widget.width,
+                height: widget.height,
+                fit: widget.fit,
+              )
+        : CNetworkImage(
+            nid: widget.nid,
+            src: widget.result == ''
+                ? 'https://ymvwltogicatbkjlaswo.supabase.co/storage/v1/object/public/assets/Frame%203.jpg'
+                : '${widget.result}',
+            loop: widget.loop ?? 0,
+            width: widget.width,
+            height: widget.height,
+            fit: widget.fit,
+          );
   }
 }
