@@ -839,9 +839,7 @@ class ControlBuilder {
       return descriptionControlWidget(
         description: control.description,
         control: TextControl(
-          key: ValueKey(
-            '${node.nid} ${(control.value as FTextTypeInput).value}',
-          ),
+          key: ValueKey('${node.nid}'),
           node: node,
           page: page,
           title: control.title ?? 'Value',

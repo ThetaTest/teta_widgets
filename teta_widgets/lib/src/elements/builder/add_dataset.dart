@@ -23,7 +23,7 @@ List<DatasetObject> addDataset(
         break;
       }
     }
-    if (flag) pageFocused.datasets.add(map);
+    if (flag) pageFocused.datasets = [...pageFocused.datasets, map];
 
     if (prjState is ProjectLoaded) {
       for (final page in prjState.prj.pages!) {
@@ -35,7 +35,7 @@ List<DatasetObject> addDataset(
               break;
             }
           }
-          if (flag) page.datasets.add(map);
+          if (flag) page.datasets = [...page.datasets, map];
         }
       }
     }
