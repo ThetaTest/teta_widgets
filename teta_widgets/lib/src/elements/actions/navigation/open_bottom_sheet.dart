@@ -8,6 +8,7 @@ import 'package:diacritic/diacritic.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:flutter_test/flutter_test.dart';
 import 'package:recase/recase.dart';
 import 'package:teta_core/src/blocs/focus_project/index.dart';
 import 'package:teta_core/src/models/dataset.dart';
@@ -15,6 +16,7 @@ import 'package:teta_core/src/models/page.dart';
 import 'package:teta_core/src/models/variable.dart';
 import 'package:teta_core/src/rendering/nodes_original.dart';
 import 'package:teta_core/src/repositories/queries/node.dart';
+import 'package:teta_widgets/src/elements/code/formatter_test.dart';
 // Project imports:
 import 'package:teta_widgets/src/elements/nodes/node.dart';
 
@@ -121,5 +123,28 @@ class FActionNavigationOpenBottomSheet {
     } catch (e) {
       return '';
     }
+  }
+
+  static void testActionCode() {
+    group('OpenBottomSheet Action ToCode Test', () {
+      test(
+        'OpenBottomSheet',
+        () {
+          expect(
+            FormatterTest.format('''
+         GestureDetector(
+           onTap: () async {
+              await showModalBottomSheet<void>(
+              context: context,
+              builder: (context) => Page(),);
+           },
+           child: const SizedBox(),
+           )
+            '''),
+            true,
+          );
+        },
+      );
+    });
   }
 }

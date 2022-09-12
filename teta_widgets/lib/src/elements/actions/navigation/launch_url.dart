@@ -2,7 +2,9 @@
 
 // Flutter imports:
 import 'package:flutter/material.dart';
+import 'package:flutter_test/flutter_test.dart';
 import 'package:teta_core/teta_core.dart';
+import 'package:teta_widgets/src/elements/code/formatter_test.dart';
 import 'package:teta_widgets/src/elements/index.dart';
 import 'package:teta_widgets/src/elements/packages.dart';
 // Package imports:
@@ -37,7 +39,6 @@ class FActionNavigationLaunchURL {
   }
 
   static String toCode(
-    final BuildContext context,
     final FTextTypeInput value,
     final int loop,
   ) {
@@ -56,5 +57,26 @@ class FActionNavigationLaunchURL {
       );
     }
     ''';
+  }
+
+  static void testActionCode() {
+    group('LaunchUrl Action ToCode Test', () {
+      test(
+        'LaunchUrl',
+        () {
+          expect(
+            FormatterTest.format('''
+         GestureDetector(
+           onTap: () async {
+              ${toCode(FTextTypeInput(value: 'ciao'), 0)}
+           },
+           child: const SizedBox(),
+           )
+            '''),
+            true,
+          );
+        },
+      );
+    });
   }
 }

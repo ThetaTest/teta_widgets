@@ -3,9 +3,12 @@
 
 // Flutter imports:
 import 'package:flutter/material.dart';
+import 'package:flutter_test/flutter_test.dart';
 import 'package:recase/recase.dart';
 // Package imports:
 import 'package:teta_core/teta_core.dart';
+import 'package:teta_widgets/src/elements/code/formatter_test.dart';
+
 // Project imports:
 
 class FActionNavigationOpenDatePicker {
@@ -93,5 +96,34 @@ class FActionNavigationOpenDatePicker {
     );
 ''';
     }
+  }
+
+  static void testActionCode() {
+    group('OpenBottomSheet Action ToCode Test', () {
+      test(
+        'OpenBottomSheet',
+        () {
+          expect(
+            FormatterTest.format('''
+         GestureDetector(
+           onTap: () async {
+             final datePicked = await showDatePicker(
+                context: context,
+                initialDate: DateTime.now(),
+                firstDate: DateTime(2015, 8),
+                lastDate: DateTime(2101),);
+             const initialTime = TimeOfDay(hour: 0, minute: 0);
+             final hourPicked = await showTimePicker(
+                context: context,
+                initialTime: initialTime,);
+           },
+           child: const SizedBox(),
+           )
+            '''),
+            true,
+          );
+        },
+      );
+    });
   }
 }

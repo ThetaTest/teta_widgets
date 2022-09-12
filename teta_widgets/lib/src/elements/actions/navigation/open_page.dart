@@ -9,10 +9,12 @@ import 'package:diacritic/diacritic.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:flutter_test/flutter_test.dart';
 import 'package:recase/recase.dart';
 import 'package:teta_core/src/rendering/nodes_original.dart';
 import 'package:teta_core/src/repositories/queries/node.dart';
 import 'package:teta_core/teta_core.dart';
+import 'package:teta_widgets/src/elements/code/formatter_test.dart';
 // Project imports:
 import 'package:teta_widgets/src/elements/controls/key_constants.dart';
 import 'package:teta_widgets/src/elements/features/page_transition.dart';
@@ -331,5 +333,29 @@ class FActionNavigationOpenPage {
     
       
     """;*/
+  }
+
+  static void testActionCode() {
+    group('Open Page Action ToCode Test', () {
+      test(
+        'Open Page',
+        () {
+          expect(
+            FormatterTest.format('''
+         GestureDetector(
+           onTap: () async {
+             await Navigator.push<void>(
+             context,
+             MaterialPageRoute(
+                builder: (context) => Page( ),),);
+             },
+           child: const SizedBox(),
+           )
+            '''),
+            true,
+          );
+        },
+      );
+    });
   }
 }

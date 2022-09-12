@@ -6,11 +6,13 @@ import 'package:diacritic/diacritic.dart';
 import 'package:flutter/material.dart';
 // Package imports:
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:flutter_test/flutter_test.dart';
 import 'package:recase/recase.dart';
 import 'package:teta_core/src/blocs/focus_project/index.dart';
 import 'package:teta_core/src/models/dataset.dart';
 import 'package:teta_core/src/models/page.dart';
 import 'package:teta_core/src/models/variable.dart';
+import 'package:teta_widgets/src/elements/code/formatter_test.dart';
 
 class FActionNavigationOpenSnackBar {
   static Future action(
@@ -97,5 +99,29 @@ class FActionNavigationOpenSnackBar {
     } catch (e) {
       return '';
     }
+  }
+
+  static void testActionCode() {
+    group('Open Page Action ToCode Test', () {
+      test(
+        'Open Page',
+        () {
+          expect(
+            FormatterTest.format('''
+         GestureDetector(
+           onTap: () async {
+             final snackBar = SnackBar(
+        content: Page(),
+      );
+      ScaffoldMessenger.of(context).showSnackBar(snackBar);
+             },
+           child: const SizedBox(),
+           )
+            '''),
+            true,
+          );
+        },
+      );
+    });
   }
 }

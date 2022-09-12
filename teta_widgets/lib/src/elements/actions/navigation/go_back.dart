@@ -14,7 +14,7 @@ class FActionNavigationGoBack {
     return '''Navigator.of(context, rootNavigator: true).pop(null);''';
   }
 
-  static void testAction() {
+  static void testActionCode() {
     group('GoBack Action ToCode Test', () {
       test(
         'GoBack',
