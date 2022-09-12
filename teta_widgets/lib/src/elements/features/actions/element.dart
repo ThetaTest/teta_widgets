@@ -38,6 +38,7 @@ import 'package:teta_widgets/src/elements/actions/custom_functions/custom_functi
 import 'package:teta_widgets/src/elements/actions/delay.dart';
 import 'package:teta_widgets/src/elements/actions/loop.dart';
 import 'package:teta_widgets/src/elements/actions/navigation/go_back.dart';
+import 'package:teta_widgets/src/elements/actions/navigation/in_app_review.dart';
 import 'package:teta_widgets/src/elements/actions/navigation/launch_url.dart';
 import 'package:teta_widgets/src/elements/actions/navigation/open_bottom_sheet.dart';
 import 'package:teta_widgets/src/elements/actions/navigation/open_date_picker.dart';
@@ -1320,6 +1321,18 @@ class FActionElement extends Equatable {
               loop: loop,
             );
             break;
+          case ActionNavigation.inAppReview:
+            await actionS(
+              () => FActionNavigationInAppReview.action(
+                context,
+              ),
+              context: context,
+              params: params,
+              states: states,
+              dataset: dataset,
+              loop: loop,
+            );
+            break;
           case null:
             break;
         }
@@ -2181,6 +2194,11 @@ class FActionElement extends Equatable {
           case ActionNavigation.openDatePicker:
             return codeS(
               FActionNavigationOpenDatePicker.toCode(context, stateName),
+              context,
+            );
+          case ActionNavigation.inAppReview:
+            return codeS(
+              FActionNavigationInAppReview.toCode(),
               context,
             );
           case null:

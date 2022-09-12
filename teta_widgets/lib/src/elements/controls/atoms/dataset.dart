@@ -3,9 +3,11 @@
 
 // Flutter imports:
 import 'package:flutter/material.dart';
+
 // Package imports:
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:teta_core/teta_core.dart';
+
 // Project imports:
 import 'package:teta_widgets/src/elements/features/dataset.dart';
 import 'package:teta_widgets/src/elements/nodes/node.dart';
@@ -92,37 +94,23 @@ class DatasetControlState extends State<DatasetControl> {
               widget.callBack(widget.value, old);
             },
           ),
-          if ((widget.isAttrRequired ?? false) && databaseName != '')
-            CDropdown(
-              value: (widget.page.datasets
-                              .where(
-                                (final element) =>
-                                    element.getName == databaseName,
-                              )
-                              .first
-                              .getMap
-                              .isNotEmpty
-                          ? widget.page.datasets
-                              .where(
-                                (final element) =>
-                                    element.getName == databaseName,
-                              )
-                              .first
-                              .getMap
-                              .first
-                          : <String, dynamic>{})
-                      .keys
-                      .toSet()
-                      .contains(widget.value.datasetAttrName)
-                  ? widget.value.datasetAttrName
-                  : null,
-              items: ((widget.page.datasets
+          _buildAttrSelection(context),
+        ],
+      ),
+    );
+  }
+
+  Widget _buildAttrSelection(BuildContext context) {
+    try {
+      if ((widget.isAttrRequired ?? false) && databaseName != '') {
+        return CDropdown(
+          value: (widget.page.datasets
                           .where(
                             (final element) => element.getName == databaseName,
                           )
                           .first
                           .getMap
-                          .isNotEmpty)
+                          .isNotEmpty
                       ? widget.page.datasets
                           .where(
                             (final element) => element.getName == databaseName,
@@ -133,18 +121,43 @@ class DatasetControlState extends State<DatasetControl> {
                       : <String, dynamic>{})
                   .keys
                   .toSet()
-                  .toList(),
-              onChange: (final newValue) {
-                setState(() {
-                  databaseAttribute = newValue;
-                });
-                final old = widget.value;
-                widget.value.datasetAttrName = newValue;
-                widget.callBack(widget.value, old);
-              },
-            ),
-        ],
-      ),
-    );
+                  .contains(widget.value.datasetAttrName)
+              ? widget.value.datasetAttrName
+              : null,
+          items: ((widget.page.datasets
+                      .where(
+                        (final element) => element.getName == databaseName,
+                      )
+                      .first
+                      .getMap
+                      .isNotEmpty)
+                  ? widget.page.datasets
+                      .where(
+                        (final element) => element.getName == databaseName,
+                      )
+                      .first
+                      .getMap
+                      .first
+                  : <String, dynamic>{})
+              .keys
+              .toSet()
+              .toList(),
+          onChange: (final newValue) {
+            setState(() {
+              databaseAttribute = newValue;
+            });
+            final old = widget.value;
+            widget.value.datasetAttrName = newValue;
+            widget.callBack(widget.value, old);
+          },
+        );
+      } else {
+        return Container();
+      }
+    } catch (e, st) {
+      print('DatasetAttrSelectError: $e');
+      print('DatasetAttrSelectError: $st');
+      return Container();
+    }
   }
 }
