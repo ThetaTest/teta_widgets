@@ -33,7 +33,7 @@ dependencies:
   supabase_flutter: ^0.3.3
   http: 0.13.4
   github: 9.3.0
-  socket_io_client: 1.0.2
+  socket_io_client: 2.0.0
   dart_airtable: 1.1.0
   mixpanel_analytics: 2.1.1
 
