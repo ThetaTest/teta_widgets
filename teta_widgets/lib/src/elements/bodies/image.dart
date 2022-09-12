@@ -56,7 +56,7 @@ class ImageBody extends NodeBody {
   Map<String, dynamic> attributes = <String, dynamic>{
     DBKeys.width: FSize(size: 'max', unit: SizeUnit.pixel),
     DBKeys.height: FSize(size: '150', unit: SizeUnit.pixel),
-    DBKeys.image: FTextTypeInput(value: 'https://source.unsplash.com/random'),
+    DBKeys.image: FTextTypeInput(),
     DBKeys.boxFit: FBoxFit(),
     DBKeys.borderRadius: FBorderRadius(),
     DBKeys.shadows: FShadow(),

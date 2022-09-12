@@ -42,7 +42,7 @@ class FATetaCMSLogin {
     );
     */
 
-    await TrackService.instance.track(
+    TrackService.instance.track(
       eventName: 'Teta Auth: login in Teta',
       eventProperties: <String, String>{
         'provider': EnumToString.convertToString(provider),
