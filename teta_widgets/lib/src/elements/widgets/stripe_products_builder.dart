@@ -55,6 +55,9 @@ class WStripeProductsBuilderState extends State<WStripeProductsBuilder> {
 
   @override
   Widget build(final BuildContext context) {
+    _getStripeProducts().whenComplete(() {
+      setState(() {});
+    });
     return NodeSelectionBuilder(
       node: widget.node,
       forPlay: widget.forPlay,
