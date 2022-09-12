@@ -372,7 +372,7 @@ class FFill {
   ) {
     if (fill.type == FFillType.none) return null;
     if (fill.type == FFillType.solid) {
-      return 'color: Color(0xFF${fill.levels!.first.color}).withOpacity(${fill.levels!.first.opacity})';
+      return 'color: Color(0xFF${fill.levels!.first.color}).withOpacity(${fill.levels!.first.opacity}),';
     }
     if (fill.type == FFillType.linearGradient) {
       return '''

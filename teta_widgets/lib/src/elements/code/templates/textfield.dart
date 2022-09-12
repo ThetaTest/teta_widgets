@@ -1,5 +1,6 @@
 // Flutter imports:
 import 'package:flutter/material.dart';
+import 'package:flutter_test/flutter_test.dart';
 import 'package:teta_widgets/src/elements/code/formatter_test.dart';
 // Project imports:
 import 'package:teta_widgets/src/elements/code/snippets.dart';
@@ -7,6 +8,7 @@ import 'package:teta_widgets/src/elements/controls/key_constants.dart';
 import 'package:teta_widgets/src/elements/features/actions/enums/gestures.dart';
 import 'package:teta_widgets/src/elements/features/fill.dart';
 import 'package:teta_widgets/src/elements/features/text_type_input.dart';
+import 'package:teta_widgets/src/elements/nodes/enum.dart';
 import 'package:teta_widgets/src/elements/nodes/node.dart';
 import 'package:teta_widgets/src/elements/nodes/node_body.dart';
 
@@ -124,9 +126,100 @@ class TextFieldCodeTemplate {
     if (res) {
       return code;
     } else {
-      return 'const SizedBox()';
+      final defaultCode = await toCode(
+        pageId,
+        context,
+        NodeBody.get(NType.textField),
+        node,
+        null,
+        0,
+      );
+      return defaultCode;
     }
   }
 
-  static void testCode() {}
+  static Future<bool> runtimeTestDefaultCode(
+    final BuildContext context,
+  ) async {
+    return true;
+  }
+
+  static void testCode() {
+    group('TextField toCode test', () {
+      test(
+        'TextField: default code',
+        () {
+          final body = NodeBody.get(NType.textField);
+          final labelText =
+              (body.attributes[DBKeys.labelText] as FTextTypeInput).toCode(0);
+          final valueMaxLines =
+              (body.attributes[DBKeys.maxLines] as FTextTypeInput)
+                  .getRawToCode(0);
+          final maxLines = int.tryParse(valueMaxLines) ?? 1;
+          final valueMinLines =
+              (body.attributes[DBKeys.minLines] as FTextTypeInput)
+                  .getRawToCode(0);
+          final minLines = int.tryParse(valueMinLines) ?? 1;
+          final valueMaxLenght =
+              (body.attributes[DBKeys.maxLenght] as FTextTypeInput)
+                  .getRawToCode(0);
+          final maxLenght = int.tryParse(valueMaxLenght);
+          final obscureText =
+              body.attributes[DBKeys.obscureText] as bool? ?? false;
+          final showCursor =
+              body.attributes[DBKeys.showCursor] as bool? ?? false;
+          final autoCorrect =
+              body.attributes[DBKeys.autoCorrect] as bool? ?? false;
+          final fillToCodeColor =
+              FFill.toCodeTests(FFill().ready(FFillType.solid));
+          final fillHintToCodeColor =
+              FFill.toCodeTests(FFill().ready(FFillType.solid));
+          final bordersEnabled =
+              body.attributes[DBKeys.showBorders] as bool? ?? false;
+          final enabledBorderToCodeColor =
+              FFill.toCodeTests(FFill().ready(FFillType.solid));
+          final focusedBorderToCodeColor =
+              FFill.toCodeTests(FFill().ready(FFillType.solid));
+          final valueBordersSize =
+              (body.attributes[DBKeys.bordersSize] as FTextTypeInput)
+                  .getRawToCode(0);
+          final borderSize = double.tryParse(valueBordersSize) ?? 1;
+          expect(
+            FormatterTest.format('''
+TextField(
+  onChanged: (String value) async {},
+  onSubmitted: (String value) async {},
+  decoration: InputDecoration(
+        filled: true,
+        ${fillToCodeColor != null ? fillToCodeColor.replaceAll('color', 'fillColor') : ''}
+        counterStyle: TextStyle(
+                $fillToCodeColor),
+        border: OutlineInputBorder(
+         borderRadius: BorderRadius.all(Radius.circular(20)),
+        ),
+        enabledBorder: OutlineInputBorder(
+          borderSide: BorderSide(${bordersEnabled ? enabledBorderToCodeColor ?? 'color: Colors.transparent,' : 'color: Colors.transparent,'} width: $borderSize),
+          borderRadius: BorderRadius.all(Radius.circular(20)),
+        ),
+        focusedBorder: OutlineInputBorder(
+          borderSide: BorderSide(${bordersEnabled ? focusedBorderToCodeColor ?? 'color: Colors.transparent,' : 'color: Colors.transparent,'} width: $borderSize),
+          borderRadius: BorderRadius.all(Radius.circular(20)),
+        ),  
+        hintText: r$labelText,
+        hintStyle: TextStyle($fillHintToCodeColor),
+      ),
+      maxLines: $maxLines,
+      minLines: $minLines,
+      maxLength: $maxLenght,
+      obscureText: $obscureText,
+      showCursor: $showCursor,
+      autocorrect: $autoCorrect,
+)
+              '''),
+            true,
+          );
+        },
+      );
+    });
+  }
 }

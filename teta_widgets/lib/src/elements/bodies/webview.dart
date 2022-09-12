@@ -115,8 +115,5 @@ class WebViewBody extends NodeBody {
     final int pageId,
     final int? loop,
   ) =>
-      WebViewXTemplate.toCode(
-        initialUrl: (attributes[DBKeys.valueOfCondition] as FTextTypeInput)
-            .toCode(loop),
-      );
+      WebViewXTemplate.toCode(context, this);
 }

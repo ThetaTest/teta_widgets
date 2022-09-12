@@ -1,10 +1,12 @@
 // Flutter imports:
 import 'package:flutter/material.dart';
+import 'package:flutter_test/flutter_test.dart';
 import 'package:teta_widgets/src/elements/code/formatter_test.dart';
 // Project imports:
 import 'package:teta_widgets/src/elements/code/snippets.dart';
 import 'package:teta_widgets/src/elements/controls/key_constants.dart';
 import 'package:teta_widgets/src/elements/features/text_type_input.dart';
+import 'package:teta_widgets/src/elements/nodes/enum.dart';
 import 'package:teta_widgets/src/elements/nodes/node.dart';
 import 'package:teta_widgets/src/elements/nodes/node_body.dart';
 
@@ -29,9 +31,48 @@ class TooltipCodeTemplate {
     if (res) {
       return code;
     } else {
-      return 'const SizedBox()';
+      final defaultCode = await toCode(
+        context,
+        NodeBody.get(NType.tooltip),
+        null,
+        0,
+      );
+      return defaultCode;
     }
   }
 
-  static void testCode() {}
+  static Future<bool> runtimeTestDefaultCode(
+    final BuildContext context,
+  ) async {
+    return FormatterTest.format(
+      await toCode(
+        context,
+        NodeBody.get(NType.tooltip),
+        null,
+        0,
+      ),
+    );
+  }
+
+  static void testCode() {
+    group('Tooltip toCode test', () {
+      test(
+        'Tooltip: default code',
+        () {
+          final body = NodeBody.get(NType.tooltip);
+          final abstract = body.attributes[DBKeys.value] as FTextTypeInput;
+          final value = abstract.toCode(0);
+          expect(
+            FormatterTest.format('''
+         Tooltip(
+           message: $value,
+           child: const SizedBox(),
+           )
+            '''),
+            true,
+          );
+        },
+      );
+    });
+  }
 }

@@ -1,8 +1,10 @@
 // Flutter imports:
 import 'package:flutter/material.dart';
+import 'package:flutter_test/flutter_test.dart';
 import 'package:teta_widgets/src/elements/code/formatter_test.dart';
 // Project imports:
 import 'package:teta_widgets/src/elements/code/snippets.dart';
+import 'package:teta_widgets/src/elements/nodes/enum.dart';
 import 'package:teta_widgets/src/elements/nodes/node.dart';
 import 'package:teta_widgets/src/elements/nodes/node_body.dart';
 
@@ -23,11 +25,42 @@ class WrapCodeTemplate {
     if (res) {
       return code;
     } else {
-      return 'const SizedBox()';
+      final defaultCode = await toCode(
+        context,
+        NodeBody.get(NType.wrap),
+        [],
+      );
+      return defaultCode;
     }
   }
 
-  static void testCode(){
-    
+  static Future<bool> runtimeTestDefaultCode(
+    final BuildContext context,
+  ) async {
+    return FormatterTest.format(
+      await toCode(
+        context,
+        NodeBody.get(NType.video),
+        [],
+      ),
+    );
+  }
+
+  static void testCode() {
+    group('Wrap toCode test', () {
+      test(
+        'Wrap: default code',
+        () {
+          expect(
+            FormatterTest.format('''
+            Wrap(
+              childrens: []
+            )'''),
+            true,
+            reason: 'Wrap: default',
+          );
+        },
+      );
+    });
   }
 }

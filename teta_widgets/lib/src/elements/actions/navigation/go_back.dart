@@ -2,6 +2,8 @@
 
 // Flutter imports:
 import 'package:flutter/material.dart';
+import 'package:flutter_test/flutter_test.dart';
+import 'package:teta_widgets/src/elements/code/formatter_test.dart';
 
 class FActionNavigationGoBack {
   static Future action(final BuildContext context) async {
@@ -10,5 +12,26 @@ class FActionNavigationGoBack {
 
   static String toCode() {
     return '''Navigator.of(context, rootNavigator: true).pop(null);''';
+  }
+
+  static void testAction() {
+    group('GoBack Action ToCode Test', () {
+      test(
+        'GoBack',
+        () {
+          expect(
+            FormatterTest.format('''
+         GestureDetector(
+           onTap: () async {
+              ${toCode()}
+           },
+           child: const SizedBox(),
+           )
+            '''),
+            true,
+          );
+        },
+      );
+    });
   }
 }
