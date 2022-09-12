@@ -1,5 +1,6 @@
 // Flutter imports:
 import 'package:flutter/material.dart';
+import 'package:flutter_test/flutter_test.dart';
 import 'package:teta_widgets/src/elements/code/formatter_test.dart';
 // Project imports:
 import 'package:teta_widgets/src/elements/controls/key_constants.dart';
@@ -100,5 +101,49 @@ Checkbox(
     }
   }
 
-  static void testCode() {}
+  static void testCode() {
+    group('CheckBox toCode test', () {
+      test(
+        'CheckBox: default Value',
+        () {
+          expect(
+            FormatterTest.format('''
+           Checkbox(
+      value: false,
+      onChanged: (final bool? b) {
+    },
+)
+            '''),
+            true,
+          );
+        },
+      );
+      test(
+        'CheckBox: text Value',
+        () {
+          final value = FTextTypeInput(value: 'true').toCode(0);
+          expect(
+            FormatterTest.format('''
+           Builder(builder: (context) {
+          var val = $value;
+          return StatefulBuilder(
+            builder: (final context, final localSetState) {
+              return Checkbox(
+                value: val,
+                onChanged: (final bool? b) {
+                  localSetState(() {
+                    val = b!;
+                  });
+                },
+              );
+            },
+          );
+        })
+            '''),
+            true,
+          );
+        },
+      );
+    });
+  }
 }

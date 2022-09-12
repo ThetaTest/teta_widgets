@@ -1,5 +1,6 @@
 // Flutter imports:
 import 'package:flutter/material.dart';
+import 'package:flutter_test/flutter_test.dart';
 import 'package:teta_widgets/src/elements/code/formatter_test.dart';
 // Project imports:
 import 'package:teta_widgets/src/elements/code/snippets.dart';
@@ -47,10 +48,44 @@ class BadgeCodeTemplate {
       if (res) {
         return code;
       } else {
-        return toCode(context, NodeBody.get(NType.badge), null, loop);
+        return toCode(context, NodeBody.get(NType.badge), null, 0);
       }
     }
   }
 
-  static void testCode() {}
+  static Future<bool> runtimeTestDefaultCode(
+    final BuildContext context,
+  ) async {
+    return FormatterTest.format(
+      await toCode(
+        context,
+        NodeBody.get(NType.badge),
+        null,
+        0,
+      ),
+    );
+  }
+
+  static void testCode() {
+    group('Badge toCode test', () {
+      test(
+        'Badge: default code',
+        () {
+          final body = NodeBody.get(NType.badge);
+          final abstract = body.attributes[DBKeys.value] as FTextTypeInput;
+          final value = abstract.toCode(0);
+          final fill = FFill.toCodeTests(FFill().ready(FFillType.solid));
+          expect(
+            FormatterTest.format('''
+            Badge(
+              badgeContent: Text($value,),
+              ${fill!.replaceAll('color:', 'badgeColor:')}
+              child: const SizedBox(),)
+            '''),
+            true,
+          );
+        },
+      );
+    });
+  }
 }

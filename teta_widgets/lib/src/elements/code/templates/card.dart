@@ -1,5 +1,6 @@
 // Flutter imports:
 import 'package:flutter/material.dart';
+import 'package:flutter_test/flutter_test.dart';
 import 'package:teta_widgets/src/elements/code/formatter_test.dart';
 // Project imports:
 import 'package:teta_widgets/src/elements/code/snippets.dart';
@@ -58,5 +59,45 @@ class CardCodeTemplate {
     }
   }
 
-  static void testCode() {}
+  static Future<bool> runtimeTestDefaultCode(
+    final BuildContext context,
+  ) async {
+    return FormatterTest.format(
+      await toCode(
+        context,
+        NodeBody.get(NType.card),
+        null,
+        0,
+      ),
+    );
+  }
+
+  static void testCode() {
+    group('Card toCode test', () {
+      test(
+        'Card: default code',
+        () {
+          final body = NodeBody.get(NType.card);
+          final abstract = body.attributes[DBKeys.value] as FTextTypeInput;
+          final value = abstract.toCode(0);
+          final elevation =
+              double.tryParse(value) != null ? double.parse(value) : '1';
+          final fill = FFill.toCodeTests(FFill().ready(FFillType.solid));
+          expect(
+            FormatterTest.format('''
+             Card(
+      elevation: $elevation,
+      $fill
+      shape: RoundedRectangleBorder(
+        borderRadius: BorderRadius.all(Radius.circular(20)),
+        ),
+      child: const SizedBox(),
+    )
+            '''),
+            true,
+          );
+        },
+      );
+    });
+  }
 }

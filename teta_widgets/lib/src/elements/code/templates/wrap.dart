@@ -57,7 +57,6 @@ class WrapCodeTemplate {
               childrens: []
             )'''),
             true,
-            reason: 'Wrap: default',
           );
         },
       );
