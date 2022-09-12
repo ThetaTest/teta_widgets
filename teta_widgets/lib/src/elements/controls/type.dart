@@ -839,12 +839,13 @@ class ControlBuilder {
       return descriptionControlWidget(
         description: control.description,
         control: TextControl(
-          key: ValueKey('${node.nid}'),
+          key: ValueKey(
+            '${node.nid} ${(control.value as FTextTypeInput).value}',
+          ),
           node: node,
           page: page,
           title: control.title ?? 'Value',
           value: control.value as FTextTypeInput,
-          withConvertTo: false,
           callBack: (final value, final old) => ControlBuilder.toDB(
             prj,
             page,
