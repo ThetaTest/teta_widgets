@@ -342,15 +342,15 @@ class FTextTypeInput {
       if (paramName?.isEmpty ?? true) return "''";
       final param = ReCase(paramName ?? '');
       if (resultType == ResultTypeEnum.string) {
-        return "'''\${${param.camelCase}}'''";
+        return "'''\${widget.${param.camelCase}}'''";
       } else if (resultType == ResultTypeEnum.int) {
-        return "int.tryParse('${param.camelCase}') ?? 0";
+        return "int.tryParse('widget.${param.camelCase}') ?? 0";
       } else if (resultType == ResultTypeEnum.double) {
-        return "double.tryParse('${param.camelCase}') ?? 0.0";
+        return "double.tryParse('widget.${param.camelCase}') ?? 0.0";
       } else if (resultType == ResultTypeEnum.bool) {
-        return "'${param.camelCase}' == 'true'";
+        return "'widget.${param.camelCase}' == 'true'";
       } else {
-        return "'''\${${param.camelCase}}'''";
+        return "'''\${widget.${param.camelCase}}'''";
       }
     }
     if (type == FTextTypeEnum.state) {
