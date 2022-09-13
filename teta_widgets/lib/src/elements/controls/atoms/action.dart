@@ -144,6 +144,8 @@ class ActionControlState extends State<ActionControl> {
                               )
                             ];
                             widget.callBack(widget.action, old);
+                            Navigator.of(context, rootNavigator: true)
+                                .pop(null);
                           },
                         ),
                       ),
