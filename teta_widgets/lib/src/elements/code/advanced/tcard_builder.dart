@@ -34,7 +34,7 @@ class TCardBuilderCodeTemplate {
         500;
     final lockYAxis = node.body.attributes[DBKeys.flag] as bool? ?? false;
     final childString =
-        child != null ? child.toCode(context) : 'const SizedBox()';
+        child != null ? await child.toCode(context) : 'const SizedBox()';
     final dataset =
         (node.body.attributes[DBKeys.datasetInput] as FDataset).datasetName;
 

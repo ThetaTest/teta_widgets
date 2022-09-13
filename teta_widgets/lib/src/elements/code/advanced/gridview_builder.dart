@@ -57,7 +57,7 @@ class GridViewBuilderCodeTemplate {
         : 1;
 
     final childString =
-        child != null ? child.toCode(context) : 'const SizedBox()';
+        child != null ? await child.toCode(context) : 'const SizedBox()';
     final dataset =
         (body.attributes[DBKeys.datasetInput] as FDataset).datasetName;
 

@@ -25,7 +25,7 @@ class ListViewBuilderCodeTemplate {
     final shrinkWrap = node.body.attributes[DBKeys.flag] as bool? ?? false;
     final reverse = node.body.attributes[DBKeys.isFullWidth] as bool;
     final childString =
-        child != null ? child.toCode(context) : 'const SizedBox()';
+        child != null ? await child.toCode(context) : 'const SizedBox()';
     final dataset =
         (node.body.attributes[DBKeys.datasetInput] as FDataset).datasetName;
     final code = '''
