@@ -9,6 +9,7 @@ import 'package:cross_file/cross_file.dart';
 // Flutter imports:
 import 'package:flutter/material.dart';
 import 'package:teta_core/teta_core.dart';
+import 'package:teta_widgets/src/elements/builder/gesture_detector_base.dart';
 // Project imports:
 import 'package:teta_widgets/src/elements/index.dart';
 
@@ -84,22 +85,17 @@ class _WImageState extends State<WImage> {
     return NodeSelectionBuilder(
       node: widget.node,
       forPlay: widget.forPlay,
-      child: ClipRRect(
-        borderRadius: widget.borderRadius.get,
-        child: SizedBox(
-          width: widget.width.get(
-            context: context,
-            isWidth: true,
-          ),
-          height: widget.height.get(
-            context: context,
-            isWidth: false,
-          ),
-          child: _LocalImage(
-            key: ValueKey('Image ${widget.node.nid} $result'),
-            nid: widget.node.nid,
-            result: result,
-            bytes: bytes,
+      child: GestureBuilderBase.get(
+        context: context,
+        node: widget.node,
+        params: widget.params,
+        states: widget.states,
+        dataset: widget.dataset,
+        forPlay: widget.forPlay,
+        loop: widget.loop,
+        child: ClipRRect(
+          borderRadius: widget.borderRadius.get,
+          child: SizedBox(
             width: widget.width.get(
               context: context,
               isWidth: true,
@@ -108,7 +104,21 @@ class _WImageState extends State<WImage> {
               context: context,
               isWidth: false,
             ),
-            fit: widget.boxFit.get,
+            child: _LocalImage(
+              key: ValueKey('Image ${widget.node.nid} $result'),
+              nid: widget.node.nid,
+              result: result,
+              bytes: bytes,
+              width: widget.width.get(
+                context: context,
+                isWidth: true,
+              ),
+              height: widget.height.get(
+                context: context,
+                isWidth: false,
+              ),
+              fit: widget.boxFit.get,
+            ),
           ),
         ),
       ),

@@ -5,6 +5,7 @@ import 'package:recase/recase.dart';
 import 'package:teta_core/gen/assets.gen.dart';
 import 'package:teta_core/src/models/dataset.dart';
 import 'package:teta_core/src/models/variable.dart';
+import 'package:teta_widgets/src/elements/code/snippets.dart';
 import 'package:teta_widgets/src/elements/code/templates/audio_player_progress_indicator_template.dart';
 import 'package:teta_widgets/src/elements/controls/control_model.dart';
 import 'package:teta_widgets/src/elements/controls/key_constants.dart';
@@ -108,10 +109,16 @@ class AudioPlayerProgressIndicatorBody extends NodeBody {
     final int pageId,
     final int? loop,
   ) =>
-      AudioPlayerProgressIndicatorTemplate.toCode(
-        context: context,
-        audioPlayerName:
-            ((attributes[DBKeys.value] as FTextTypeInput).stateName ?? '')
-                .camelCase,
+      CS.defaultWidgets(
+        context,
+        node,
+        pageId,
+        AudioPlayerProgressIndicatorTemplate.toCode(
+          context: context,
+          audioPlayerName:
+              ((attributes[DBKeys.value] as FTextTypeInput).stateName ?? '')
+                  .camelCase,
+        ),
+        loop ?? 0,
       );
 }

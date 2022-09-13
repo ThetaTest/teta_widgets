@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:teta_core/gen/assets.gen.dart';
 import 'package:teta_core/src/models/dataset.dart';
 import 'package:teta_core/src/models/variable.dart';
+import 'package:teta_widgets/src/elements/code/snippets.dart';
 // Project imports:
 import 'package:teta_widgets/src/elements/code/templates/condition.dart';
 import 'package:teta_widgets/src/elements/controls/control_model.dart';
@@ -115,5 +116,11 @@ class ConditionBody extends NodeBody {
     final int pageId,
     final int? loop,
   ) =>
-      ConditionCodeTemplate.toCode(context, this, children ?? [], loop);
+      CS.defaultWidgets(
+        context,
+        node,
+        pageId,
+        ConditionCodeTemplate.toCode(context, this, children ?? [], loop),
+        loop ?? 0,
+      );
 }

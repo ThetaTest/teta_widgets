@@ -2,6 +2,7 @@
 import 'package:flutter/cupertino.dart';
 // Package imports:
 import 'package:teta_core/teta_core.dart';
+import 'package:teta_widgets/src/elements/builder/gesture_detector_base.dart';
 // Project imports:
 import 'package:teta_widgets/src/elements/index.dart';
 
@@ -36,32 +37,41 @@ class WCupertinoAppBar extends StatelessWidget {
     return NodeSelectionBuilder(
       node: node,
       forPlay: forPlay,
-      child: CupertinoNavigationBar(
-        backgroundColor: HexColor(fill.getHexColor(context)),
-        leading: children.isNotEmpty
-            ? children[0].toWidget(
-                params: params,
-                states: states,
-                dataset: dataset,
-                forPlay: forPlay,
-              )
-            : null,
-        middle: children.length >= 2
-            ? children[1].toWidget(
-                params: params,
-                states: states,
-                dataset: dataset,
-                forPlay: forPlay,
-              )
-            : null,
-        trailing: children.length >= 3
-            ? children[2].toWidget(
-                params: params,
-                states: states,
-                dataset: dataset,
-                forPlay: forPlay,
-              )
-            : null,
+      child: GestureBuilderBase.get(
+        context: context,
+        node: node,
+        params: params,
+        states: states,
+        dataset: dataset,
+        forPlay: forPlay,
+        loop: loop,
+        child: CupertinoNavigationBar(
+          backgroundColor: HexColor(fill.getHexColor(context)),
+          leading: children.isNotEmpty
+              ? children[0].toWidget(
+                  params: params,
+                  states: states,
+                  dataset: dataset,
+                  forPlay: forPlay,
+                )
+              : null,
+          middle: children.length >= 2
+              ? children[1].toWidget(
+                  params: params,
+                  states: states,
+                  dataset: dataset,
+                  forPlay: forPlay,
+                )
+              : null,
+          trailing: children.length >= 3
+              ? children[2].toWidget(
+                  params: params,
+                  states: states,
+                  dataset: dataset,
+                  forPlay: forPlay,
+                )
+              : null,
+        ),
       ),
     );
   }

@@ -3,10 +3,9 @@
 
 // Flutter imports:
 import 'package:flutter/material.dart';
-
 // Package imports:
 import 'package:teta_core/teta_core.dart';
-
+import 'package:teta_widgets/src/elements/builder/gesture_detector_base.dart';
 // Project imports:
 import 'package:teta_widgets/src/elements/index.dart';
 
@@ -40,13 +39,22 @@ class WGoogleAdMobBannerAd extends StatelessWidget {
     return NodeSelectionBuilder(
       node: node,
       forPlay: forPlay,
-      child: const SizedBox(
-        width: double.maxFinite,
-        child: Center(
-          child: Text(
-            'Here will be you ad.',
-            style: TextStyle(
-              color: Colors.white,
+      child: GestureBuilderBase.get(
+        context: context,
+        node: node,
+        params: params,
+        states: states,
+        dataset: dataset,
+        forPlay: forPlay,
+        loop: loop,
+        child: const SizedBox(
+          width: double.maxFinite,
+          child: Center(
+            child: Text(
+              'Here will be you ad.',
+              style: TextStyle(
+                color: Colors.white,
+              ),
             ),
           ),
         ),

@@ -5,6 +5,7 @@
 import 'package:flutter/material.dart';
 // Package imports:
 import 'package:teta_core/teta_core.dart';
+import 'package:teta_widgets/src/elements/builder/gesture_detector_base.dart';
 // Project imports:
 import 'package:teta_widgets/src/elements/index.dart';
 
@@ -54,23 +55,32 @@ class WSafeArea extends StatelessWidget {
     return NodeSelectionBuilder(
       node: _node,
       forPlay: _forPlay,
-      child: Container(
-        padding: EdgeInsets.only(
-          top: _top ? 44 : 0,
-          bottom: _bottom ? 34 : 0,
-          left: _left ? 0 : 0,
-          right: _right ? 0 : 0,
-        ),
-        child: ChildConditionBuilder(
-          ValueKey('${_node.nid} $_loop'),
-          name: _node.intrinsicState.displayName,
-          node: _node,
-          child: _child,
-          params: _params,
-          states: _states,
-          dataset: _dataset,
-          forPlay: _forPlay,
-          loop: _loop,
+      child: GestureBuilderBase.get(
+        context: context,
+        node: _node,
+        params: _params,
+        states: _states,
+        dataset: _dataset,
+        forPlay: _forPlay,
+        loop: _loop,
+        child: Container(
+          padding: EdgeInsets.only(
+            top: _top ? 44 : 0,
+            bottom: _bottom ? 34 : 0,
+            left: _left ? 0 : 0,
+            right: _right ? 0 : 0,
+          ),
+          child: ChildConditionBuilder(
+            ValueKey('${_node.nid} $_loop'),
+            name: _node.intrinsicState.displayName,
+            node: _node,
+            child: _child,
+            params: _params,
+            states: _states,
+            dataset: _dataset,
+            forPlay: _forPlay,
+            loop: _loop,
+          ),
         ),
       ),
     );

@@ -8,7 +8,6 @@ import 'package:teta_core/src/models/variable.dart';
 import 'package:teta_widgets/src/elements/code/templates/outlinedbutton.dart';
 import 'package:teta_widgets/src/elements/controls/control_model.dart';
 import 'package:teta_widgets/src/elements/controls/key_constants.dart';
-import 'package:teta_widgets/src/elements/controls/type.dart';
 import 'package:teta_widgets/src/elements/features/action.dart';
 import 'package:teta_widgets/src/elements/features/actions/enums/gestures.dart';
 import 'package:teta_widgets/src/elements/features/page_transition.dart';
@@ -54,13 +53,7 @@ class OutlinedButtonBody extends NodeBody {
   };
 
   @override
-  List<ControlModel> get controls => [
-        ControlObject(
-          type: ControlType.action,
-          key: DBKeys.action,
-          value: attributes[DBKeys.action],
-        ),
-      ];
+  List<ControlModel> get controls => [];
 
   @override
   Widget toWidget({

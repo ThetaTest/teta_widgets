@@ -5,6 +5,7 @@ import 'package:recase/recase.dart';
 import 'package:teta_core/gen/assets.gen.dart';
 import 'package:teta_core/src/models/dataset.dart';
 import 'package:teta_core/src/models/variable.dart';
+import 'package:teta_widgets/src/elements/code/snippets.dart';
 import 'package:teta_widgets/src/elements/code/templates/audio_player_template.dart';
 import 'package:teta_widgets/src/elements/controls/control_model.dart';
 import 'package:teta_widgets/src/elements/controls/key_constants.dart';
@@ -116,18 +117,25 @@ class AudioPlayerBody extends NodeBody {
     final int pageId,
     final int? loop,
   ) =>
-      AudioPlayerTemplate.toCode(
-        context: context,
-        body: this,
-        child: child,
-        audioPlayerName:
-            ((attributes[DBKeys.value] as FTextTypeInput).stateName ?? '')
-                .camelCase,
-        songsDataSetToCode:
-            (attributes[DBKeys.datasetInput] as FDataset).datasetName ?? '',
-        urlKey:
-            (attributes[DBKeys.datasetInput] as FDataset).datasetAttrName ?? '',
-        currentSongDatasetName:
-            node.name ?? node.intrinsicState.displayName ?? '',
+      CS.defaultWidgets(
+        context,
+        node,
+        pageId,
+        AudioPlayerTemplate.toCode(
+          context: context,
+          body: this,
+          child: child,
+          audioPlayerName:
+              ((attributes[DBKeys.value] as FTextTypeInput).stateName ?? '')
+                  .camelCase,
+          songsDataSetToCode:
+              (attributes[DBKeys.datasetInput] as FDataset).datasetName ?? '',
+          urlKey:
+              (attributes[DBKeys.datasetInput] as FDataset).datasetAttrName ??
+                  '',
+          currentSongDatasetName:
+              node.name ?? node.intrinsicState.displayName ?? '',
+        ),
+        loop ?? 0,
       );
 }

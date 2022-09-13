@@ -70,11 +70,6 @@ class TCardBody extends NodeBody {
 
   @override
   List<ControlModel> get controls => [
-        ControlObject(
-          type: ControlType.action,
-          key: DBKeys.action,
-          value: attributes[DBKeys.action],
-        ),
         FlagControlObject(
           title: 'Lock Y Axis',
           key: DBKeys.flag,

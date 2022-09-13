@@ -4,20 +4,15 @@
 
 // Package imports:
 import 'package:enum_to_string/enum_to_string.dart';
-
 // Flutter imports:
 import 'package:flutter/material.dart';
 import 'package:teta_core/teta_core.dart';
-import 'package:teta_widgets/src/elements/bodies/google_maps_body.dart';
-
 // Project imports:
 import 'package:teta_widgets/src/elements/controls/control_model.dart';
 import 'package:teta_widgets/src/elements/controls/key_constants.dart';
-import 'package:teta_widgets/src/elements/features/children_ids.dart';
+import 'package:teta_widgets/src/elements/index.dart';
 import 'package:teta_widgets/src/elements/intrinsic_states/class.dart';
 import 'package:teta_widgets/src/elements/nodes/children_enum.dart';
-import 'package:teta_widgets/src/elements/nodes/enum.dart';
-import 'package:teta_widgets/src/elements/nodes/node.dart';
 import 'package:teta_widgets/src/elements/nodes/node_body.dart';
 
 // ignore: must_be_immutable
@@ -231,6 +226,7 @@ class NDynamic extends CNode {
     required final List<DatasetObject> dataset,
     required final bool forPlay,
     final int? loop,
+    final int numberOfLoop = 0,
   }) {
     return body.toWidget(
       params: params,
@@ -250,14 +246,29 @@ class NDynamic extends CNode {
 
   @override
   String toCodeOnInit(final BuildContext context) => '''
-      ${body.toCodeOnInit(context, this, child, children, pageId!, null, [],)}
+      ${body.toCodeOnInit(
+        context,
+        this,
+        child,
+        children,
+        pageId!,
+        null,
+        [],
+      )}
       ''';
 
   @override
   String toCodeAdditionalClasses(final BuildContext context) {
     return '''
       ${body.toCodeAdditionalClasses(
-        context, this, child, children, pageId!, null, [],)}
+      context,
+      this,
+      child,
+      children,
+      pageId!,
+      null,
+      [],
+    )}
       ''';
   }
 

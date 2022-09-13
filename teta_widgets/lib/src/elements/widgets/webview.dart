@@ -6,6 +6,7 @@ import 'package:collection/collection.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:teta_core/teta_core.dart';
+import 'package:teta_widgets/src/elements/builder/gesture_detector_base.dart';
 // Project imports:
 import 'package:teta_widgets/src/elements/index.dart';
 import 'package:webviewx/webviewx.dart';
@@ -67,14 +68,23 @@ class _WWebViewXPageState extends State<WWebViewXPage> {
 
   @override
   Widget build(final BuildContext context) {
-    return WebViewX(
-      key: const ValueKey('webviewx'),
-      onWebViewCreated: (final controller) {
-        variable?.webViewController = controller;
-        _setUrl();
-      },
-      height: double.maxFinite,
-      width: double.maxFinite,
+    return GestureBuilderBase.get(
+      context: context,
+      node: widget.node,
+      params: widget.params,
+      states: widget.states,
+      dataset: widget.dataset,
+      forPlay: widget.forPlay,
+      loop: widget.loop,
+      child: WebViewX(
+        key: const ValueKey('webviewx'),
+        onWebViewCreated: (final controller) {
+          variable?.webViewController = controller;
+          _setUrl();
+        },
+        height: double.maxFinite,
+        width: double.maxFinite,
+      ),
     );
   }
 

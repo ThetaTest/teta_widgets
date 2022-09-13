@@ -80,11 +80,6 @@ class TCardBuilderBody extends NodeBody {
   @override
   List<ControlModel> get controls => [
         ControlObject(
-          type: ControlType.action,
-          key: DBKeys.action,
-          value: attributes[DBKeys.action],
-        ),
-        ControlObject(
           type: ControlType.datasetType,
           key: DBKeys.datasetInput,
           value: attributes[DBKeys.datasetInput],

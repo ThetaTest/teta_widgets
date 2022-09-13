@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:teta_core/gen/assets.gen.dart';
 import 'package:teta_core/src/models/dataset.dart';
 import 'package:teta_core/src/models/variable.dart';
+import 'package:teta_widgets/src/elements/code/snippets.dart';
 // Project imports:
 import 'package:teta_widgets/src/elements/code/templates/cupertino_appbar.dart';
 import 'package:teta_widgets/src/elements/controls/control_model.dart';
@@ -119,5 +120,11 @@ class CupertinoAppBarBody extends NodeBody {
     final int pageId,
     final int? loop,
   ) =>
-      CupertinoAppBarCodeTemplate.toCode(context, this);
+      CS.defaultWidgets(
+        context,
+        node,
+        pageId,
+        CupertinoAppBarCodeTemplate.toCode(context, this),
+        loop ?? 0,
+      );
 }

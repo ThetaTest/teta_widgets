@@ -6,6 +6,7 @@ import 'package:flutter/material.dart';
 // Package imports:
 import 'package:liquid_swipe/liquid_swipe.dart';
 import 'package:teta_core/teta_core.dart';
+import 'package:teta_widgets/src/elements/builder/gesture_detector_base.dart';
 // Project imports:
 import 'package:teta_widgets/src/elements/index.dart';
 
@@ -40,24 +41,33 @@ class WLiquidSwipe extends StatelessWidget {
   }
 
   Widget _body(final BuildContext context) {
-    return LiquidSwipe.builder(
-      itemCount: children.isNotEmpty ? children.length : 3,
-      itemBuilder: (final context, final index) {
-        if (children.isEmpty) {
-          return PlaceholderChildBuilder(
-            name: node.intrinsicState.displayName,
-            node: node,
+    return GestureBuilderBase.get(
+      context: context,
+      node: node,
+      params: params,
+      states: states,
+      dataset: dataset,
+      forPlay: forPlay,
+      loop: loop,
+      child: LiquidSwipe.builder(
+        itemCount: children.isNotEmpty ? children.length : 3,
+        itemBuilder: (final context, final index) {
+          if (children.isEmpty) {
+            return PlaceholderChildBuilder(
+              name: node.intrinsicState.displayName,
+              node: node,
+              forPlay: forPlay,
+            );
+          }
+          return children[index].toWidget(
+            loop: index,
             forPlay: forPlay,
+            params: params,
+            states: states,
+            dataset: dataset,
           );
-        }
-        return children[index].toWidget(
-          loop: index,
-          forPlay: forPlay,
-          params: params,
-          states: states,
-          dataset: dataset,
-        );
-      },
+        },
+      ),
     );
   }
 }

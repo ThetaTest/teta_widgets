@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:teta_core/gen/assets.gen.dart';
 import 'package:teta_core/src/models/dataset.dart';
 import 'package:teta_core/src/models/variable.dart';
+import 'package:teta_widgets/src/elements/code/snippets.dart';
 import 'package:teta_widgets/src/elements/code/templates/radio_button_to_code.dart';
 // Project imports:
 import 'package:teta_widgets/src/elements/controls/control_model.dart';
@@ -82,11 +83,6 @@ class RadioBody extends NodeBody {
   @override
   List<ControlModel> get controls => [
         ControlObject(
-          type: ControlType.action,
-          key: DBKeys.action,
-          value: attributes[DBKeys.action],
-        ),
-        ControlObject(
           type: ControlType.value,
           key: DBKeys.actionValue,
           value: attributes[DBKeys.actionValue],
@@ -145,12 +141,18 @@ class RadioBody extends NodeBody {
     final int pageId,
     final int? loop,
   ) =>
-      RadioButtonTemplate.toCode(
-        pageId,
+      CS.defaultWidgets(
         context,
         node,
-        attributes[DBKeys.value] as FTextTypeInput,
-        attributes[DBKeys.actionValue] as FTextTypeInput,
+        pageId,
+        RadioButtonTemplate.toCode(
+          pageId,
+          context,
+          node,
+          attributes[DBKeys.value] as FTextTypeInput,
+          attributes[DBKeys.actionValue] as FTextTypeInput,
+          loop ?? 0,
+        ),
         loop ?? 0,
       );
 }

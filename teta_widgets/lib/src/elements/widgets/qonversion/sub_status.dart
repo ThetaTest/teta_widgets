@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:teta_cms/teta_cms.dart';
 // Package imports:
 import 'package:teta_core/teta_core.dart';
+import 'package:teta_widgets/src/elements/builder/gesture_detector_base.dart';
 // Project imports:
 import 'package:teta_widgets/src/elements/index.dart';
 
@@ -56,35 +57,44 @@ class _WQonversionSingleSubStatusState
     return NodeSelectionBuilder(
       node: widget.node,
       forPlay: widget.forPlay,
-      child: TetaFutureBuilder<bool>(
-        future: loadStatus(),
-        builder: (final context, final snap) {
-          if (!snap.hasData) {
-            return const Center(
-              child: CircularProgressIndicator(),
-            );
-          }
+      child: GestureBuilderBase.get(
+        context: context,
+        node: widget.node,
+        params: widget.params,
+        states: widget.states,
+        dataset: widget.dataset,
+        forPlay: widget.forPlay,
+        loop: widget.loop,
+        child: TetaFutureBuilder<bool>(
+          future: loadStatus(),
+          builder: (final context, final snap) {
+            if (!snap.hasData) {
+              return const Center(
+                child: CircularProgressIndicator(),
+              );
+            }
 
-          final isActive = snap.data ?? false;
-          final map = <String, dynamic>{
-            'isActive': isActive,
-          };
-          _map = _map.copyWith(
-            name: mapTitle,
-            map: [map],
-          );
-          final datasets = addDataset(context, widget.dataset, _map);
-          if (widget.child != null) {
-            return widget.child!.toWidget(
-              params: widget.params,
-              states: widget.states,
-              dataset: widget.dataset.isEmpty ? datasets : widget.dataset,
-              forPlay: widget.forPlay,
+            final isActive = snap.data ?? false;
+            final map = <String, dynamic>{
+              'isActive': isActive,
+            };
+            _map = _map.copyWith(
+              name: mapTitle,
+              map: [map],
             );
-          } else {
-            return const SizedBox();
-          }
-        },
+            final datasets = addDataset(context, widget.dataset, _map);
+            if (widget.child != null) {
+              return widget.child!.toWidget(
+                params: widget.params,
+                states: widget.states,
+                dataset: widget.dataset.isEmpty ? datasets : widget.dataset,
+                forPlay: widget.forPlay,
+              );
+            } else {
+              return const SizedBox();
+            }
+          },
+        ),
       ),
     );
   }

@@ -5,6 +5,7 @@
 import 'package:flutter/material.dart';
 // Package imports:
 import 'package:teta_core/teta_core.dart';
+import 'package:teta_widgets/src/elements/code/snippets.dart';
 import 'package:teta_widgets/src/elements/code/templates/ad_mob_banner_ad_template.dart';
 import 'package:teta_widgets/src/elements/controls/control_model.dart';
 import 'package:teta_widgets/src/elements/controls/key_constants.dart';
@@ -111,6 +112,18 @@ class GoogleAdMobBannerAdBody extends NodeBody {
     final int pageId,
     final int? loop,
   ) {
-    return AdMobBannerAdTemplate.toCode(context, this, loop);
+    return CS.defaultWidgets(
+      context,
+      node,
+      pageId,
+      CS.defaultWidgets(
+        context,
+        node,
+        pageId,
+        AdMobBannerAdTemplate.toCode(context, this, loop),
+        loop ?? 0,
+      ),
+      loop ?? 0,
+    );
   }
 }

@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 // Package imports:
 import 'package:teta_core/teta_core.dart';
+import 'package:teta_widgets/src/elements/builder/gesture_detector_base.dart';
 // Project imports:
 import 'package:teta_widgets/src/elements/index.dart';
 
@@ -56,12 +57,21 @@ class WPlaceholder extends StatelessWidget {
     return NodeSelectionBuilder(
       node: node,
       forPlay: forPlay,
-      child: SizedBox(
-        width: width.get(context: context, isWidth: true) ?? 400,
-        height: height.get(context: context, isWidth: false) ?? 400,
-        child: Placeholder(
-          strokeWidth: double.tryParse(val) != null ? double.parse(val) : 2.0,
-          color: _getPlaceHolderColor(model, isLight),
+      child: GestureBuilderBase.get(
+        context: context,
+        node: node,
+        params: params,
+        states: states,
+        dataset: dataset,
+        forPlay: forPlay,
+        loop: loop,
+        child: SizedBox(
+          width: width.get(context: context, isWidth: true) ?? 400,
+          height: height.get(context: context, isWidth: false) ?? 400,
+          child: Placeholder(
+            strokeWidth: double.tryParse(val) != null ? double.parse(val) : 2.0,
+            color: _getPlaceHolderColor(model, isLight),
+          ),
         ),
       ),
     );

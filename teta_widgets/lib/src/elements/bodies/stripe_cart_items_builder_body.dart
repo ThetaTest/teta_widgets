@@ -7,6 +7,7 @@ import 'package:flutter/material.dart';
 import 'package:teta_core/gen/assets.gen.dart';
 import 'package:teta_core/src/models/dataset.dart';
 import 'package:teta_core/src/models/variable.dart';
+import 'package:teta_widgets/src/elements/code/snippets.dart';
 import 'package:teta_widgets/src/elements/code/templates/stripe_cart_items_builder_template.dart';
 // Project imports:
 import 'package:teta_widgets/src/elements/controls/control_model.dart';
@@ -121,5 +122,11 @@ class StripeCartItemsBuilderBody extends NodeBody {
     final int pageId,
     final int? loop,
   ) =>
-      StripeCartItemsBuilderTemplate.toCode(context, this, child);
+      CS.defaultWidgets(
+        context,
+        node,
+        pageId,
+        StripeCartItemsBuilderTemplate.toCode(context, this, child),
+        loop ?? 0,
+      );
 }

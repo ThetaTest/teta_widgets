@@ -7,6 +7,7 @@ import 'package:flutter/material.dart';
 import 'package:teta_cms/teta_cms.dart';
 // Package imports:
 import 'package:teta_core/teta_core.dart';
+import 'package:teta_widgets/src/elements/builder/gesture_detector_base.dart';
 // Project imports:
 import 'package:teta_widgets/src/elements/index.dart';
 
@@ -61,31 +62,40 @@ class WStripeProductsBuilderState extends State<WStripeProductsBuilder> {
     return NodeSelectionBuilder(
       node: widget.node,
       forPlay: widget.forPlay,
-      child: ListView.builder(
-        addAutomaticKeepAlives: false,
-        addRepaintBoundaries: false,
-        shrinkWrap: widget.shrinkWrap,
-        scrollDirection: widget.isVertical ? Axis.vertical : Axis.horizontal,
-        itemCount: widget.dataset
-            .firstWhere(
-              (final element) => element.getName.contains('products'),
-              orElse: DatasetObject.empty,
-            )
-            .getMap
-            .length,
-        itemBuilder: (final context, final index) => widget.child != null
-            ? widget.child!.toWidget(
-                forPlay: widget.forPlay,
-                params: widget.params,
-                states: widget.states,
-                dataset: widget.dataset,
-                loop: index,
+      child: GestureBuilderBase.get(
+        context: context,
+        node: widget.node,
+        params: widget.params,
+        states: widget.states,
+        dataset: widget.dataset,
+        forPlay: widget.forPlay,
+        loop: widget.loop,
+        child: ListView.builder(
+          addAutomaticKeepAlives: false,
+          addRepaintBoundaries: false,
+          shrinkWrap: widget.shrinkWrap,
+          scrollDirection: widget.isVertical ? Axis.vertical : Axis.horizontal,
+          itemCount: widget.dataset
+              .firstWhere(
+                (final element) => element.getName.contains('products'),
+                orElse: DatasetObject.empty,
               )
-            : PlaceholderChildBuilder(
-                name: widget.node.intrinsicState.displayName,
-                node: widget.node,
-                forPlay: widget.forPlay,
-              ),
+              .getMap
+              .length,
+          itemBuilder: (final context, final index) => widget.child != null
+              ? widget.child!.toWidget(
+                  forPlay: widget.forPlay,
+                  params: widget.params,
+                  states: widget.states,
+                  dataset: widget.dataset,
+                  loop: index,
+                )
+              : PlaceholderChildBuilder(
+                  name: widget.node.intrinsicState.displayName,
+                  node: widget.node,
+                  forPlay: widget.forPlay,
+                ),
+        ),
       ),
     );
   }

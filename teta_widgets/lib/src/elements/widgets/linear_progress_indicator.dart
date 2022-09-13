@@ -2,6 +2,7 @@
 import 'package:flutter/material.dart';
 // Package imports:
 import 'package:teta_core/teta_core.dart';
+import 'package:teta_widgets/src/elements/builder/gesture_detector_base.dart';
 // Project imports:
 import 'package:teta_widgets/src/elements/index.dart';
 
@@ -37,10 +38,19 @@ class WLinearProgressIndicator extends StatelessWidget {
     return NodeSelectionBuilder(
       node: node,
       forPlay: forPlay,
-      child: LinearProgressIndicator(
-        backgroundColor: HexColor(background.getHexColor(context)),
-        valueColor: AlwaysStoppedAnimation<Color>(
-          HexColor(fill.getHexColor(context)),
+      child: GestureBuilderBase.get(
+        context: context,
+        node: node,
+        params: params,
+        states: states,
+        dataset: dataset,
+        forPlay: forPlay,
+        loop: loop,
+        child: LinearProgressIndicator(
+          backgroundColor: HexColor(background.getHexColor(context)),
+          valueColor: AlwaysStoppedAnimation<Color>(
+            HexColor(fill.getHexColor(context)),
+          ),
         ),
       ),
     );

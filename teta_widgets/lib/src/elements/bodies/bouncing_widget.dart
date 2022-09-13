@@ -62,11 +62,6 @@ class BouncingWidgetBody extends NodeBody {
   @override
   List<ControlModel> get controls => [
         ControlObject(
-          type: ControlType.action,
-          key: DBKeys.action,
-          value: attributes[DBKeys.action],
-        ),
-        ControlObject(
           title: 'Duration',
           type: ControlType.value,
           key: DBKeys.value,

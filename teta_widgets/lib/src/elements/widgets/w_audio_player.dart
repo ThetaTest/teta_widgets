@@ -5,6 +5,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:just_audio/just_audio.dart';
 import 'package:teta_core/teta_core.dart';
+import 'package:teta_widgets/src/elements/builder/gesture_detector_base.dart';
 // Project imports:
 import 'package:teta_widgets/src/elements/index.dart';
 
@@ -125,43 +126,54 @@ class _WAudioPlayerState extends State<WAudioPlayer> {
   @override
   Widget build(final BuildContext context) {
     if (isInitialized && ap != null) {
-      return StreamBuilder(
-        stream: ap!.currentIndexStream,
-        builder: (final context, final snapshot) {
-          if (!snapshot.hasData) {
-            // has data is negative
-            _map = _map.copyWith(
-              name: widget.node.name ?? widget.node.intrinsicState.displayName,
-              map: [
-                <String, dynamic>{
-                  'is playing': ap!.playing.toString(),
-                },
-              ],
-            );
-          } else {
-            _map = _map.copyWith(
-              name: widget.node.name ?? widget.node.intrinsicState.displayName,
-              map: [
-                <String, dynamic>{
-                  ...getCurrentSongAttribute(),
-                },
-              ],
-            );
-          }
-          final datasets = addDataset(context, widget.dataset, _map);
+      return GestureBuilderBase.get(
+        context: context,
+        node: widget.node,
+        params: widget.params,
+        states: widget.states,
+        dataset: widget.dataset,
+        forPlay: widget.forPlay,
+        loop: widget.loop,
+        child: StreamBuilder(
+          stream: ap!.currentIndexStream,
+          builder: (final context, final snapshot) {
+            if (!snapshot.hasData) {
+              // has data is negative
+              _map = _map.copyWith(
+                name:
+                    widget.node.name ?? widget.node.intrinsicState.displayName,
+                map: [
+                  <String, dynamic>{
+                    'is playing': ap!.playing.toString(),
+                  },
+                ],
+              );
+            } else {
+              _map = _map.copyWith(
+                name:
+                    widget.node.name ?? widget.node.intrinsicState.displayName,
+                map: [
+                  <String, dynamic>{
+                    ...getCurrentSongAttribute(),
+                  },
+                ],
+              );
+            }
+            final datasets = addDataset(context, widget.dataset, _map);
 
-          return ChildConditionBuilder(
-            ValueKey('${widget.node.nid} ${widget.loop}'),
-            name: widget.node.intrinsicState.displayName,
-            node: widget.node,
-            child: widget.child,
-            params: widget.params,
-            states: widget.states,
-            dataset: widget.dataset.isEmpty ? datasets : widget.dataset,
-            forPlay: widget.forPlay,
-            loop: widget.loop,
-          );
-        },
+            return ChildConditionBuilder(
+              ValueKey('${widget.node.nid} ${widget.loop}'),
+              name: widget.node.intrinsicState.displayName,
+              node: widget.node,
+              child: widget.child,
+              params: widget.params,
+              states: widget.states,
+              dataset: widget.dataset.isEmpty ? datasets : widget.dataset,
+              forPlay: widget.forPlay,
+              loop: widget.loop,
+            );
+          },
+        ),
       );
     } else {
       if (ap == null) {

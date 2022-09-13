@@ -6,6 +6,7 @@ import 'package:flutter/material.dart';
 // Package imports:
 import 'package:lottie/lottie.dart';
 import 'package:teta_core/teta_core.dart';
+import 'package:teta_widgets/src/elements/builder/gesture_detector_base.dart';
 // Project imports:
 import 'package:teta_widgets/src/elements/index.dart';
 
@@ -41,13 +42,22 @@ class WLottie extends StatelessWidget {
     return NodeSelectionBuilder(
       node: node,
       forPlay: forPlay,
-      child: Lottie.network(
-        image.value != null
-            ? image.value!
-            : 'https://assets10.lottiefiles.com/packages/lf20_ptplezpy.json',
-        width: width.get(context: context, isWidth: true),
-        height: height.get(context: context, isWidth: false),
-        fit: BoxFit.contain,
+      child: GestureBuilderBase.get(
+        context: context,
+        node: node,
+        params: params,
+        states: states,
+        dataset: dataset,
+        forPlay: forPlay,
+        loop: loop,
+        child: Lottie.network(
+          image.value != null
+              ? image.value!
+              : 'https://assets10.lottiefiles.com/packages/lf20_ptplezpy.json',
+          width: width.get(context: context, isWidth: true),
+          height: height.get(context: context, isWidth: false),
+          fit: BoxFit.contain,
+        ),
       ),
     );
   }

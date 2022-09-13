@@ -3,18 +3,15 @@
 
 // Package imports:
 import 'package:collection/collection.dart';
-
 // Flutter imports:
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:teta_core/teta_core.dart';
 import 'package:teta_widgets/src/elements/code/page/code_component.dart';
-
 // Project imports:
 import 'package:teta_widgets/src/elements/code/page/scaffold.dart';
 import 'package:teta_widgets/src/elements/controls/control_model.dart';
 import 'package:teta_widgets/src/elements/controls/key_constants.dart';
-import 'package:teta_widgets/src/elements/controls/type.dart';
 import 'package:teta_widgets/src/elements/features/action.dart';
 import 'package:teta_widgets/src/elements/features/actions/enums/index.dart';
 import 'package:teta_widgets/src/elements/features/children_ids.dart';
@@ -118,11 +115,6 @@ class ScaffoldBody extends NodeBody {
 
   @override
   List<ControlModel> get controls => [
-        ControlObject(
-          type: ControlType.action,
-          key: DBKeys.action,
-          value: attributes[DBKeys.action],
-        ),
         FlagControlObject(
           title: 'ResizeToAvoidBottomInset',
           key: DBKeys.flag,

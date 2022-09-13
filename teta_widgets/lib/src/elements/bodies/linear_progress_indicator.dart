@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:teta_core/gen/assets.gen.dart';
 import 'package:teta_core/src/models/dataset.dart';
 import 'package:teta_core/src/models/variable.dart';
+import 'package:teta_widgets/src/elements/code/snippets.dart';
 // Project imports:
 import 'package:teta_widgets/src/elements/code/templates/linear_progress_indicator.dart';
 import 'package:teta_widgets/src/elements/controls/control_model.dart';
@@ -116,5 +117,11 @@ class LinearProgressIndicatorBody extends NodeBody {
     final int pageId,
     final int? loop,
   ) =>
-      LinearProgressIndicatorCodeTemplate.toCode(context, this, loop);
+      CS.defaultWidgets(
+        context,
+        node,
+        pageId,
+        LinearProgressIndicatorCodeTemplate.toCode(context, this, loop),
+        loop ?? 0,
+      );
 }

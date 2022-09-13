@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:teta_core/gen/assets.gen.dart';
 import 'package:teta_core/src/models/dataset.dart';
 import 'package:teta_core/src/models/variable.dart';
+import 'package:teta_widgets/src/elements/code/snippets.dart';
 // Project imports:
 import 'package:teta_widgets/src/elements/code/templates/icon.dart';
 import 'package:teta_widgets/src/elements/controls/control_model.dart';
@@ -122,5 +123,11 @@ class IconBody extends NodeBody {
     final int pageId,
     final int? loop,
   ) =>
-      IconCodeTemplate.toCode(context, this, node, child, loop);
+      CS.defaultWidgets(
+        context,
+        node,
+        pageId,
+        IconCodeTemplate.toCode(context, this, node, child, loop),
+        loop ?? 0,
+      );
 }

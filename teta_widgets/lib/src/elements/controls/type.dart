@@ -506,15 +506,18 @@ class ControlBuilder {
           page: page,
           node: node,
           action: control.value as FAction,
-          callBack: (final value, final old) => ControlBuilder.toDB(
-            prj,
-            page,
-            node,
-            context,
-            control.key,
-            value.toJson(),
-            old.toJson(),
-          ),
+          callBack: (final value, final old) {
+            node.body.attributes[DBKeys.action] = value;
+            ControlBuilder.toDB(
+              prj,
+              page,
+              node,
+              context,
+              control.key,
+              value.toJson(),
+              old.toJson(),
+            );
+          },
         ),
       );
     }

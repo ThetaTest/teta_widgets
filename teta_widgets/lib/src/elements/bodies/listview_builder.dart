@@ -65,11 +65,6 @@ class ListViewBuilderBody extends NodeBody {
 
   @override
   List<ControlModel> get controls => [
-        ControlObject(
-          type: ControlType.action,
-          key: DBKeys.action,
-          value: attributes[DBKeys.action],
-        ),
         FlagControlObject(
           title: 'Is Vertical',
           key: DBKeys.isVertical,

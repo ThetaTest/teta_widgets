@@ -6,6 +6,7 @@ import 'package:badges/badges.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:teta_core/teta_core.dart';
+import 'package:teta_widgets/src/elements/builder/gesture_detector_base.dart';
 // Project imports:
 import 'package:teta_widgets/src/elements/index.dart';
 
@@ -50,26 +51,35 @@ class WBadge extends StatelessWidget {
     return NodeSelectionBuilder(
       node: node,
       forPlay: forPlay,
-      child: Badge(
-        badgeContent: TextBuilder(
-          textStyle: textStyle,
-          value: value,
-          params: params,
-          states: states,
-          dataset: dataset,
-          forPlay: forPlay,
-        ),
-        badgeColor: _getbadgeColor(model, isLight),
-        child: ChildConditionBuilder(
-          ValueKey('${node.nid} $loop'),
-          name: node.intrinsicState.displayName,
-          node: node,
-          child: child,
-          params: params,
-          states: states,
-          dataset: dataset,
-          forPlay: forPlay,
-          loop: loop,
+      child: GestureBuilderBase.get(
+        context: context,
+        node: node,
+        params: params,
+        states: states,
+        dataset: dataset,
+        forPlay: forPlay,
+        loop: loop,
+        child: Badge(
+          badgeContent: TextBuilder(
+            textStyle: textStyle,
+            value: value,
+            params: params,
+            states: states,
+            dataset: dataset,
+            forPlay: forPlay,
+          ),
+          badgeColor: _getbadgeColor(model, isLight),
+          child: ChildConditionBuilder(
+            ValueKey('${node.nid} $loop'),
+            name: node.intrinsicState.displayName,
+            node: node,
+            child: child,
+            params: params,
+            states: states,
+            dataset: dataset,
+            forPlay: forPlay,
+            loop: loop,
+          ),
         ),
       ),
     );

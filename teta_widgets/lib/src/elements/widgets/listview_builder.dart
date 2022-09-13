@@ -5,6 +5,7 @@
 import 'package:flutter/material.dart';
 // Package imports:
 import 'package:teta_core/teta_core.dart';
+import 'package:teta_widgets/src/elements/builder/gesture_detector_base.dart';
 import 'package:teta_widgets/src/elements/features/physic.dart';
 // Project imports:
 import 'package:teta_widgets/src/elements/index.dart';
@@ -63,62 +64,72 @@ class WListViewBuilderState extends State<WListViewBuilder> {
     return NodeSelectionBuilder(
       node: widget.node,
       forPlay: widget.forPlay,
-      child: NotificationListener<ScrollEndNotification>(
-        onNotification: (final scrollEnd) {
-          final metrics = scrollEnd.metrics;
-          if (metrics.atEdge) {
-            final isTop = metrics.pixels == 0;
-            if (isTop) {
-              Logger.printMessage('At the top');
-              GestureBuilder.get(
-                context: context,
-                node: widget.node,
-                gesture: ActionGesture.scrollToTop,
-                action: widget.action,
-                actionValue: null,
-                params: widget.params,
-                states: widget.states,
-                dataset: widget.dataset,
-                forPlay: widget.forPlay,
-              );
-            } else {
-              Logger.printMessage('At the bottom');
-              GestureBuilder.get(
-                context: context,
-                node: widget.node,
-                gesture: ActionGesture.scrollToBottom,
-                action: widget.action,
-                actionValue: null,
-                params: widget.params,
-                states: widget.states,
-                dataset: widget.dataset,
-                forPlay: widget.forPlay,
-              );
-            }
-          }
-          return true;
-        },
-        child: ListView.builder(
-          reverse: widget.isReverse,
-          physics: widget.physic.physics,
-          addAutomaticKeepAlives: false,
-          addRepaintBoundaries: false,
-          shrinkWrap: widget.shrinkWrap,
-          scrollDirection: widget.isVertical ? Axis.vertical : Axis.horizontal,
-          itemCount: db.getMap.length,
-          itemBuilder: (final context, final index) => widget.child != null
-              ? widget.child!.toWidget(
-                  forPlay: widget.forPlay,
+      child: GestureBuilderBase.get(
+        context: context,
+        node: widget.node,
+        params: widget.params,
+        states: widget.states,
+        dataset: widget.dataset,
+        forPlay: widget.forPlay,
+        loop: widget.loop,
+        child: NotificationListener<ScrollEndNotification>(
+          onNotification: (final scrollEnd) {
+            final metrics = scrollEnd.metrics;
+            if (metrics.atEdge) {
+              final isTop = metrics.pixels == 0;
+              if (isTop) {
+                Logger.printMessage('At the top');
+                GestureBuilder.get(
+                  context: context,
+                  node: widget.node,
+                  gesture: ActionGesture.scrollToTop,
+                  action: widget.action,
+                  actionValue: null,
                   params: widget.params,
                   states: widget.states,
                   dataset: widget.dataset,
-                  loop: index,
-                )
-              : PlaceholderChildBuilder(
-                  name: widget.node.intrinsicState.displayName,
-                  node: widget.node,
                   forPlay: widget.forPlay,
-                ),
+                );
+              } else {
+                Logger.printMessage('At the bottom');
+                GestureBuilder.get(
+                  context: context,
+                  node: widget.node,
+                  gesture: ActionGesture.scrollToBottom,
+                  action: widget.action,
+                  actionValue: null,
+                  params: widget.params,
+                  states: widget.states,
+                  dataset: widget.dataset,
+                  forPlay: widget.forPlay,
+                );
+              }
+            }
+            return true;
+          },
+          child: ListView.builder(
+            reverse: widget.isReverse,
+            physics: widget.physic.physics,
+            addAutomaticKeepAlives: false,
+            addRepaintBoundaries: false,
+            shrinkWrap: widget.shrinkWrap,
+            scrollDirection:
+                widget.isVertical ? Axis.vertical : Axis.horizontal,
+            itemCount: db.getMap.length,
+            itemBuilder: (final context, final index) => widget.child != null
+                ? widget.child!.toWidget(
+                    forPlay: widget.forPlay,
+                    params: widget.params,
+                    states: widget.states,
+                    dataset: widget.dataset,
+                    loop: index,
+                  )
+                : PlaceholderChildBuilder(
+                    name: widget.node.intrinsicState.displayName,
+                    node: widget.node,
+                    forPlay: widget.forPlay,
+                  ),
+          ),
         ),
       ),
     );

@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:qr_flutter/qr_flutter.dart';
 // Package imports:
 import 'package:teta_core/teta_core.dart';
+import 'package:teta_widgets/src/elements/builder/gesture_detector_base.dart';
 // Project imports:
 import 'package:teta_widgets/src/elements/index.dart';
 
@@ -45,31 +46,40 @@ class WQR extends StatelessWidget {
     return NodeSelectionBuilder(
       node: node,
       forPlay: forPlay,
-      child: QrImage(
-        data: content.get(
-          params,
-          states,
-          dataset,
-          forPlay,
-          loop,
-          context,
+      child: GestureBuilderBase.get(
+        context: context,
+        node: node,
+        params: params,
+        states: states,
+        dataset: dataset,
+        forPlay: forPlay,
+        loop: loop,
+        child: QrImage(
+          data: content.get(
+            params,
+            states,
+            dataset,
+            forPlay,
+            loop,
+            context,
+          ),
+          gapless: false,
+          size: size.get(context: context, isWidth: true),
+          foregroundColor: HexColor(fill.getHexColor(context))
+              .withOpacity(fill.levels?.first.opacity ?? 1),
+          embeddedImage: withImage
+              ? NetworkImage(
+                  image.get(
+                    params,
+                    states,
+                    dataset,
+                    forPlay,
+                    loop,
+                    context,
+                  ),
+                )
+              : null,
         ),
-        gapless: false,
-        size: size.get(context: context, isWidth: true),
-        foregroundColor: HexColor(fill.getHexColor(context))
-            .withOpacity(fill.levels?.first.opacity ?? 1),
-        embeddedImage: withImage
-            ? NetworkImage(
-                image.get(
-                  params,
-                  states,
-                  dataset,
-                  forPlay,
-                  loop,
-                  context,
-                ),
-              )
-            : null,
       ),
     );
   }

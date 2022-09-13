@@ -6,6 +6,7 @@ import 'package:flutter/material.dart';
 import 'package:gap/gap.dart';
 // Package imports:
 import 'package:teta_core/teta_core.dart';
+import 'package:teta_widgets/src/elements/builder/gesture_detector_base.dart';
 // Project imports:
 import 'package:teta_widgets/src/elements/index.dart';
 
@@ -13,16 +14,16 @@ class WAutoAppBar extends StatelessWidget {
   /// Constructor
   const WAutoAppBar(
     final Key? key, {
-    required final this.value,
-    required final this.style,
-    required final this.fill,
-    required final this.children,
-    required final this.node,
-    required final this.forPlay,
-    required final this.params,
-    required final this.states,
-    required final this.dataset,
-    required final this.loop,
+    required this.value,
+    required this.style,
+    required this.fill,
+    required this.children,
+    required this.node,
+    required this.forPlay,
+    required this.params,
+    required this.states,
+    required this.dataset,
+    required this.loop,
   }) : super(key: key);
 
   final FTextTypeInput value;
@@ -60,58 +61,67 @@ class WAutoAppBar extends StatelessWidget {
     return NodeSelectionBuilder(
       node: node,
       forPlay: forPlay,
-      child: TContainer(
-        width: double.maxFinite,
-        padding: EI.mdA,
-        decoration: TetaBoxDecoration.get(
-          context: context,
-          fill: fill.get(context),
-        ),
-        child: SafeArea(
-          child: Row(
-            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-            children: [
-              Row(
-                children: [
-                  if (Navigator.canPop(context))
-                    GestureDetector(
-                      onTap: () {
-                        Navigator.pop(context);
-                      },
-                      child: Icon(
-                        Icons.chevron_left,
-                        color: HexColor(style.fill!.getHexColor(context)),
+      child: GestureBuilderBase.get(
+        context: context,
+        node: node,
+        params: params,
+        states: states,
+        dataset: dataset,
+        forPlay: forPlay,
+        loop: loop,
+        child: TContainer(
+          width: double.maxFinite,
+          padding: EI.mdA,
+          decoration: TetaBoxDecoration.get(
+            context: context,
+            fill: fill.get(context),
+          ),
+          child: SafeArea(
+            child: Row(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              children: [
+                Row(
+                  children: [
+                    if (Navigator.canPop(context))
+                      GestureDetector(
+                        onTap: () {
+                          Navigator.pop(context);
+                        },
+                        child: Icon(
+                          Icons.chevron_left,
+                          color: HexColor(style.fill!.getHexColor(context)),
+                        ),
+                      )
+                    else
+                      GestureDetector(
+                        onTap: () {
+                          if (!Scaffold.of(context).isDrawerOpen) {
+                            Scaffold.of(context).openDrawer();
+                          }
+                        },
+                        child: Icon(
+                          Icons.menu,
+                          color: HexColor(style.fill!.getHexColor(context)),
+                        ),
                       ),
-                    )
-                  else
-                    GestureDetector(
-                      onTap: () {
-                        if (!Scaffold.of(context).isDrawerOpen) {
-                          Scaffold.of(context).openDrawer();
-                        }
-                      },
-                      child: Icon(
-                        Icons.menu,
-                        color: HexColor(style.fill!.getHexColor(context)),
-                      ),
+                    const Gap(Grid.small),
+                    WText(
+                      this.key,
+                      value: value,
+                      node: node,
+                      textStyle: style,
+                      forPlay: forPlay,
+                      isFullWidth: false,
+                      params: params,
+                      states: states,
+                      dataset: dataset,
+                      maxLines: FTextTypeInput(value: '1'),
                     ),
-                  const Gap(Grid.small),
-                  WText(
-                    this.key,
-                    value: value,
-                    node: node,
-                    textStyle: style,
-                    forPlay: forPlay,
-                    isFullWidth: false,
-                    params: params,
-                    states: states,
-                    dataset: dataset,
-                    maxLines: FTextTypeInput(value: '1'),
-                  ),
-                ],
-              ),
-              ...childrenWidgets,
-            ],
+                  ],
+                ),
+                ...childrenWidgets,
+              ],
+            ),
           ),
         ),
       ),

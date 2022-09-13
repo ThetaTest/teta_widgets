@@ -190,6 +190,56 @@ class CS {
         : '';
   }
 
+  static Future<String> defaultWidgets(
+    final BuildContext context,
+    final CNode node,
+    final int pageId,
+    final Future<String> child,
+    final int loop,
+  ) async {
+    final childString = await child;
+    final onTap = CS.action(
+      pageId,
+      context,
+      node,
+      ActionGesture.onTap,
+      'onTap: () async',
+      null,
+      isRequired: false,
+      loop: loop,
+    );
+    final onDoubleTap = CS.action(
+      pageId,
+      context,
+      node,
+      ActionGesture.onDoubleTap,
+      'onDoubleTap: () async',
+      null,
+      isRequired: false,
+      loop: loop,
+    );
+    final onLongPress = CS.action(
+      pageId,
+      context,
+      node,
+      ActionGesture.onLongPress,
+      'onLongPress: () async',
+      null,
+      isRequired: false,
+      loop: loop,
+    );
+    if (onTap.isEmpty && onDoubleTap.isEmpty && onLongPress.isEmpty) {
+      return childString;
+    }
+    return '''
+    GestureDetector(
+      $onTap
+      $onDoubleTap
+      $onLongPress
+      $childString
+    )''';
+  }
+
   /// Returns eventualy a FMargin code
   /// Requires [isMargin] to return margin: or padding:
   ///

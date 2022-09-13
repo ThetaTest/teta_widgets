@@ -77,11 +77,6 @@ class BottomBarItemBody extends NodeBody {
   @override
   List<ControlModel> get controls => [
         ControlObject(
-          type: ControlType.action,
-          key: DBKeys.action,
-          value: attributes[DBKeys.action],
-        ),
-        ControlObject(
           type: ControlType.icon,
           key: DBKeys.icon,
           value: attributes[DBKeys.icon],

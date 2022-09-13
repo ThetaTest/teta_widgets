@@ -6,6 +6,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:teta_core/src/utils/frame/device_frame.dart';
 import 'package:teta_core/teta_core.dart';
+import 'package:teta_widgets/src/elements/builder/gesture_detector_base.dart';
 // Project imports:
 import 'package:teta_widgets/src/elements/index.dart';
 
@@ -41,14 +42,39 @@ class WWrapperContainer extends StatelessWidget {
       node: node,
       forPlay: forPlay,
       nid: node.nid,
-      child: BlocBuilder<DeviceModeCubit, DeviceInfo>(
-        builder: (final context, final state) {
-          if (state.identifier.type == DeviceType.desktop) {
-            return Center(
-              child: ConstrainedBox(
-                constraints: const BoxConstraints(maxWidth: 1200),
+      child: GestureBuilderBase.get(
+        context: context,
+        node: node,
+        params: params,
+        states: states,
+        dataset: dataset,
+        forPlay: forPlay,
+        loop: loop,
+        child: BlocBuilder<DeviceModeCubit, DeviceInfo>(
+          builder: (final context, final state) {
+            if (state.identifier.type == DeviceType.desktop) {
+              return Center(
+                child: ConstrainedBox(
+                  constraints: const BoxConstraints(maxWidth: 1200),
+                  child: ChildConditionBuilder(
+                    ValueKey('${node.nid} $loop desktop'),
+                    name: node.intrinsicState.displayName,
+                    node: node,
+                    child: child,
+                    params: params,
+                    states: states,
+                    dataset: dataset,
+                    forPlay: forPlay,
+                    loop: loop,
+                  ),
+                ),
+              );
+            }
+            if (state.identifier.type == DeviceType.tablet) {
+              return Padding(
+                padding: const EdgeInsets.symmetric(horizontal: 100),
                 child: ChildConditionBuilder(
-                  ValueKey('${node.nid} $loop desktop'),
+                  ValueKey('${node.nid} $loop tablet'),
                   name: node.intrinsicState.displayName,
                   node: node,
                   child: child,
@@ -58,14 +84,12 @@ class WWrapperContainer extends StatelessWidget {
                   forPlay: forPlay,
                   loop: loop,
                 ),
-              ),
-            );
-          }
-          if (state.identifier.type == DeviceType.tablet) {
+              );
+            }
             return Padding(
-              padding: const EdgeInsets.symmetric(horizontal: 100),
+              padding: const EdgeInsets.symmetric(horizontal: 16),
               child: ChildConditionBuilder(
-                ValueKey('${node.nid} $loop tablet'),
+                ValueKey('${node.nid} $loop mobile'),
                 name: node.intrinsicState.displayName,
                 node: node,
                 child: child,
@@ -76,22 +100,8 @@ class WWrapperContainer extends StatelessWidget {
                 loop: loop,
               ),
             );
-          }
-          return Padding(
-            padding: const EdgeInsets.symmetric(horizontal: 16),
-            child: ChildConditionBuilder(
-              ValueKey('${node.nid} $loop mobile'),
-              name: node.intrinsicState.displayName,
-              node: node,
-              child: child,
-              params: params,
-              states: states,
-              dataset: dataset,
-              forPlay: forPlay,
-              loop: loop,
-            ),
-          );
-        },
+          },
+        ),
       ),
     );
   }

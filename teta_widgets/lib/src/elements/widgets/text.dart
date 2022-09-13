@@ -5,6 +5,7 @@
 import 'package:flutter/material.dart';
 // Package imports:
 import 'package:teta_core/teta_core.dart';
+import 'package:teta_widgets/src/elements/builder/gesture_detector_base.dart';
 // Project imports:
 import 'package:teta_widgets/src/elements/index.dart';
 
@@ -41,10 +42,29 @@ class WText extends StatelessWidget {
     return NodeSelectionBuilder(
       node: node,
       forPlay: forPlay,
-      child: isFullWidth
-          ? SizedBox(
-              width: double.maxFinite,
-              child: TextBuilder(
+      child: GestureBuilderBase.get(
+        context: context,
+        node: node,
+        params: params,
+        states: states,
+        dataset: dataset,
+        forPlay: forPlay,
+        loop: loop,
+        child: isFullWidth
+            ? SizedBox(
+                width: double.maxFinite,
+                child: TextBuilder(
+                  textStyle: textStyle,
+                  value: value,
+                  maxLines: maxLines,
+                  params: params,
+                  states: states,
+                  dataset: dataset,
+                  forPlay: forPlay,
+                  loop: loop,
+                ),
+              )
+            : TextBuilder(
                 textStyle: textStyle,
                 value: value,
                 maxLines: maxLines,
@@ -54,17 +74,7 @@ class WText extends StatelessWidget {
                 forPlay: forPlay,
                 loop: loop,
               ),
-            )
-          : TextBuilder(
-              textStyle: textStyle,
-              value: value,
-              maxLines: maxLines,
-              params: params,
-              states: states,
-              dataset: dataset,
-              forPlay: forPlay,
-              loop: loop,
-            ),
+      ),
     );
   }
 }

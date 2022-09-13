@@ -5,6 +5,7 @@
 import 'package:flutter/material.dart';
 // Package imports:
 import 'package:teta_core/teta_core.dart';
+import 'package:teta_widgets/src/elements/builder/gesture_detector_base.dart';
 // Project imports:
 import 'package:teta_widgets/src/elements/index.dart';
 
@@ -66,16 +67,25 @@ class WAnimatedOpacity extends StatelessWidget {
           : rawDouble > 1
               ? 1
               : rawDouble,
-      child: ChildConditionBuilder(
-        ValueKey('${node.nid} $loop'),
-        name: node.intrinsicState.displayName,
+      child: GestureBuilderBase.get(
+        context: context,
         node: node,
-        child: child,
         params: params,
         states: states,
         dataset: dataset,
         forPlay: forPlay,
         loop: loop,
+        child: ChildConditionBuilder(
+          ValueKey('${node.nid} $loop'),
+          name: node.intrinsicState.displayName,
+          node: node,
+          child: child,
+          params: params,
+          states: states,
+          dataset: dataset,
+          forPlay: forPlay,
+          loop: loop,
+        ),
       ),
     );
   }

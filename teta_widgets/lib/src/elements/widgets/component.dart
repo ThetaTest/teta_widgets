@@ -11,6 +11,7 @@ import 'package:recase/recase.dart';
 import 'package:teta_core/src/rendering/nodes_original.dart';
 import 'package:teta_core/src/repositories/queries/node.dart';
 import 'package:teta_core/teta_core.dart';
+import 'package:teta_widgets/src/elements/builder/gesture_detector_base.dart';
 // Project imports:
 import 'package:teta_widgets/src/elements/index.dart';
 import 'package:webviewx/webviewx.dart';
@@ -152,16 +153,25 @@ class _WComponentState extends State<WComponent> {
                         node: widget.node,
                         forPlay: widget.forPlay,
                         nid: widget.node.nid,
-                        child: IgnorePointer(
-                          ignoring: !widget.forPlay,
-                          child: page.scaffold!.toWidget(
-                            params: (widget.paramsToSend != null)
-                                ? getVariableObjectsFromParams(page)
-                                : page.params,
-                            states: page.states,
-                            dataset: page.datasets,
-                            forPlay: widget.forPlay,
-                            loop: widget.loop,
+                        child: GestureBuilderBase.get(
+                          context: context,
+                          node: widget.node,
+                          params: widget.params,
+                          states: widget.states,
+                          dataset: widget.dataset,
+                          forPlay: widget.forPlay,
+                          loop: widget.loop,
+                          child: IgnorePointer(
+                            ignoring: !widget.forPlay,
+                            child: page.scaffold!.toWidget(
+                              params: (widget.paramsToSend != null)
+                                  ? getVariableObjectsFromParams(page)
+                                  : page.params,
+                              states: page.states,
+                              dataset: page.datasets,
+                              forPlay: widget.forPlay,
+                              loop: widget.loop,
+                            ),
                           ),
                         ),
                       );

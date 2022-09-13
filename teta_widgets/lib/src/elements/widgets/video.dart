@@ -6,6 +6,7 @@ import 'package:fluentui_system_icons/fluentui_system_icons.dart';
 // Flutter imports:
 import 'package:flutter/material.dart';
 import 'package:teta_core/teta_core.dart';
+import 'package:teta_widgets/src/elements/builder/gesture_detector_base.dart';
 // Project imports:
 import 'package:teta_widgets/src/elements/index.dart';
 import 'package:universal_platform/universal_platform.dart';
@@ -83,29 +84,38 @@ class WVideo extends StatelessWidget {
     return NodeSelectionBuilder(
       node: node,
       forPlay: forPlay,
-      child: forPlay
-          ? YoutubePlayerIFrame(
-              controller: controller,
-            )
-          : AspectRatio(
-              aspectRatio: 16 / 9,
-              child: Container(
-                color: Palette.bgGreyLight,
-                child: Column(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  children: const [
-                    Icon(
-                      Icons.play_arrow,
-                      size: 48,
-                      color: Colors.white,
-                    ),
-                    THeadline3(
-                      'Play to watch',
-                    ),
-                  ],
+      child: GestureBuilderBase.get(
+        context: context,
+        node: node,
+        params: params,
+        states: states,
+        dataset: dataset,
+        forPlay: forPlay,
+        loop: loop,
+        child: forPlay
+            ? YoutubePlayerIFrame(
+                controller: controller,
+              )
+            : AspectRatio(
+                aspectRatio: 16 / 9,
+                child: Container(
+                  color: Palette.bgGreyLight,
+                  child: Column(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: const [
+                      Icon(
+                        Icons.play_arrow,
+                        size: 48,
+                        color: Colors.white,
+                      ),
+                      THeadline3(
+                        'Play to watch',
+                      ),
+                    ],
+                  ),
                 ),
               ),
-            ),
+      ),
     );
   }
 }

@@ -8,7 +8,6 @@ import 'package:teta_core/src/models/variable.dart';
 import 'package:teta_widgets/src/elements/code/templates/page_view.dart';
 import 'package:teta_widgets/src/elements/controls/control_model.dart';
 import 'package:teta_widgets/src/elements/controls/key_constants.dart';
-import 'package:teta_widgets/src/elements/controls/type.dart';
 import 'package:teta_widgets/src/elements/features/action.dart';
 import 'package:teta_widgets/src/elements/features/actions/enums/index.dart';
 import 'package:teta_widgets/src/elements/intrinsic_states/class.dart';
@@ -58,11 +57,6 @@ class PageViewBody extends NodeBody {
 
   @override
   List<ControlModel> get controls => [
-        ControlObject(
-          type: ControlType.action,
-          key: DBKeys.action,
-          value: attributes[DBKeys.action],
-        ),
         FlagControlObject(
           title: 'Is Vertical',
           key: DBKeys.isVertical,
@@ -113,5 +107,6 @@ class PageViewBody extends NodeBody {
     final int pageId,
     final int? loop,
   ) =>
-      PageViewCodeTemplate.toCode(context, pageId, this, node, children ?? [], loop);
+      PageViewCodeTemplate.toCode(
+          context, pageId, this, node, children ?? [], loop);
 }

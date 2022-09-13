@@ -5,6 +5,7 @@
 import 'package:flutter/material.dart';
 // Package imports:
 import 'package:teta_core/teta_core.dart';
+import 'package:teta_widgets/src/elements/builder/gesture_detector_base.dart';
 // Project imports:
 import 'package:teta_widgets/src/elements/index.dart';
 
@@ -35,26 +36,35 @@ class WWrap extends StatelessWidget {
     return NodeSelectionBuilder(
       node: node,
       forPlay: forPlay,
-      child: Wrap(
-        children: children.isNotEmpty
-            ? children
-                .map(
-                  (final e) => e.toWidget(
-                    loop: loop,
+      child: GestureBuilderBase.get(
+        context: context,
+        node: node,
+        params: params,
+        states: states,
+        dataset: dataset,
+        forPlay: forPlay,
+        loop: loop,
+        child: Wrap(
+          children: children.isNotEmpty
+              ? children
+                  .map(
+                    (final e) => e.toWidget(
+                      loop: loop,
+                      forPlay: forPlay,
+                      params: params,
+                      states: states,
+                      dataset: dataset,
+                    ),
+                  )
+                  .toList()
+              : [
+                  PlaceholderChildBuilder(
+                    name: node.intrinsicState.displayName,
+                    node: node,
                     forPlay: forPlay,
-                    params: params,
-                    states: states,
-                    dataset: dataset,
                   ),
-                )
-                .toList()
-            : [
-                PlaceholderChildBuilder(
-                  name: node.intrinsicState.displayName,
-                  node: node,
-                  forPlay: forPlay,
-                ),
-              ],
+                ],
+        ),
       ),
     );
   }

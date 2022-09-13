@@ -6,6 +6,7 @@ import 'package:flutter/material.dart';
 // Package imports:
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:teta_core/teta_core.dart';
+import 'package:teta_widgets/src/elements/builder/gesture_detector_base.dart';
 // Project imports:
 import 'package:teta_widgets/src/elements/index.dart';
 
@@ -68,7 +69,16 @@ class _WInfiniteListViewState extends State<WInfiniteListView> {
       onExit: (final v) {
         BlocProvider.of<ZoomableCubit>(context).changeZoomableFlag(value: true);
       },
-      child: _getBody(context),
+      child: GestureBuilderBase.get(
+        context: context,
+        node: widget.node,
+        params: widget.params,
+        states: widget.states,
+        dataset: widget.dataset,
+        forPlay: widget.forPlay,
+        loop: widget.loop,
+        child: _getBody(context),
+      ),
     );
   }
 

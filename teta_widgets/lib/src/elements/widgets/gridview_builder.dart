@@ -5,6 +5,7 @@
 import 'package:flutter/material.dart';
 // Package imports:
 import 'package:teta_core/teta_core.dart';
+import 'package:teta_widgets/src/elements/builder/gesture_detector_base.dart';
 // Project imports:
 import 'package:teta_widgets/src/elements/index.dart';
 
@@ -105,42 +106,51 @@ class _WGridViewState extends State<WGridViewBuilder> {
           )
         : -1;
     final db = index != -1 ? widget.dataset[index] : DatasetObject.empty();
-    return GridView.builder(
-      shrinkWrap: widget.shrinkWrap,
-      primary: widget.primary,
-      scrollDirection: widget.isVertical ? Axis.vertical : Axis.horizontal,
-      gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
-        crossAxisCount: int.tryParse(crossAxisCountString) != null &&
-                (int.tryParse(crossAxisCountString) ?? 0) > 0.1
-            ? int.parse(crossAxisCountString)
-            : 2,
-        mainAxisSpacing: double.tryParse(mainAxisSpacingString) != null &&
-                (double.tryParse(mainAxisSpacingString) ?? 0) > 0.1
-            ? double.parse(mainAxisSpacingString)
-            : 2,
-        crossAxisSpacing: double.tryParse(crossAxisSpacingString) != null &&
-                (double.tryParse(crossAxisSpacingString) ?? 0) > 0.1
-            ? double.parse(crossAxisSpacingString)
-            : 2,
-        childAspectRatio: double.tryParse(childAspectRatioString) != null &&
-                (double.tryParse(childAspectRatioString) ?? 0) > 0.1
-            ? double.parse(childAspectRatioString)
-            : 1,
+    return GestureBuilderBase.get(
+      context: context,
+      node: widget.node,
+      params: widget.params,
+      states: widget.states,
+      dataset: widget.dataset,
+      forPlay: widget.forPlay,
+      loop: widget.loop,
+      child: GridView.builder(
+        shrinkWrap: widget.shrinkWrap,
+        primary: widget.primary,
+        scrollDirection: widget.isVertical ? Axis.vertical : Axis.horizontal,
+        gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
+          crossAxisCount: int.tryParse(crossAxisCountString) != null &&
+                  (int.tryParse(crossAxisCountString) ?? 0) > 0.1
+              ? int.parse(crossAxisCountString)
+              : 2,
+          mainAxisSpacing: double.tryParse(mainAxisSpacingString) != null &&
+                  (double.tryParse(mainAxisSpacingString) ?? 0) > 0.1
+              ? double.parse(mainAxisSpacingString)
+              : 2,
+          crossAxisSpacing: double.tryParse(crossAxisSpacingString) != null &&
+                  (double.tryParse(crossAxisSpacingString) ?? 0) > 0.1
+              ? double.parse(crossAxisSpacingString)
+              : 2,
+          childAspectRatio: double.tryParse(childAspectRatioString) != null &&
+                  (double.tryParse(childAspectRatioString) ?? 0) > 0.1
+              ? double.parse(childAspectRatioString)
+              : 1,
+        ),
+        itemCount: db.getMap.length,
+        itemBuilder: (final context, final index) => widget.child != null
+            ? widget.child!.toWidget(
+                forPlay: widget.forPlay,
+                params: [...widget.params, ...widget.params],
+                states: widget.states,
+                dataset: widget.dataset,
+                loop: index,
+              )
+            : PlaceholderChildBuilder(
+                name: widget.node.intrinsicState.displayName,
+                node: widget.node,
+                forPlay: widget.forPlay,
+              ),
       ),
-      itemCount: db.getMap.length,
-      itemBuilder: (final context, final index) => widget.child != null
-          ? widget.child!.toWidget(
-              forPlay: widget.forPlay,
-              params: [...widget.params, ...widget.params],
-              states: widget.states,
-              dataset: widget.dataset,
-              loop: index,
-            )
-          : PlaceholderChildBuilder(
-              name: widget.node.intrinsicState.displayName,
-              node: widget.node,
-              forPlay: widget.forPlay,
-            ),
     );
   }
 

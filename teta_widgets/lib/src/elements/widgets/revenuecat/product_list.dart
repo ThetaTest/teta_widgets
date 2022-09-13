@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:purchases_flutter/purchases_flutter.dart';
 // Package imports:
 import 'package:teta_core/teta_core.dart';
+import 'package:teta_widgets/src/elements/builder/gesture_detector_base.dart';
 // Project imports:
 import 'package:teta_widgets/src/elements/index.dart';
 import 'package:universal_platform/universal_platform.dart';
@@ -102,19 +103,28 @@ class _WRevenueCatProductsListState extends State<WRevenueCatProductsList> {
     return NodeSelectionBuilder(
       node: widget.node,
       forPlay: widget.forPlay,
-      child: ListView.builder(
-        shrinkWrap: true,
-        itemCount: widget.child == null ? 1 : products.length,
-        itemBuilder: (final context, final index) => ChildConditionBuilder(
-          ValueKey('${widget.node.nid} ${widget.loop}'),
-          name: NodeType.name(NType.align),
-          node: widget.node,
-          child: widget.child,
-          params: widget.params,
-          states: widget.states,
-          dataset: widget.dataset.isEmpty ? datasets : widget.dataset,
-          forPlay: widget.forPlay,
-          loop: widget.loop,
+      child: GestureBuilderBase.get(
+        context: context,
+        node: widget.node,
+        params: widget.params,
+        states: widget.states,
+        dataset: widget.dataset,
+        forPlay: widget.forPlay,
+        loop: widget.loop,
+        child: ListView.builder(
+          shrinkWrap: true,
+          itemCount: widget.child == null ? 1 : products.length,
+          itemBuilder: (final context, final index) => ChildConditionBuilder(
+            ValueKey('${widget.node.nid} ${widget.loop}'),
+            name: NodeType.name(NType.align),
+            node: widget.node,
+            child: widget.child,
+            params: widget.params,
+            states: widget.states,
+            dataset: widget.dataset.isEmpty ? datasets : widget.dataset,
+            forPlay: widget.forPlay,
+            loop: widget.loop,
+          ),
         ),
       ),
     );

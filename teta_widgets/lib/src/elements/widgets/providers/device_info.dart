@@ -5,6 +5,7 @@ import 'package:device_info_plus/device_info_plus.dart';
 // Flutter imports:
 import 'package:flutter/material.dart';
 import 'package:teta_core/teta_core.dart';
+import 'package:teta_widgets/src/elements/builder/gesture_detector_base.dart';
 // Project imports:
 import 'package:teta_widgets/src/elements/index.dart';
 
@@ -65,16 +66,25 @@ class _WDeviceInfoState extends State<WDeviceInfo> {
     return NodeSelectionBuilder(
       node: widget.node,
       forPlay: widget.forPlay,
-      child: ChildConditionBuilder(
-        ValueKey('${widget.node.nid} ${widget.loop}'),
-        name: widget.node.intrinsicState.displayName,
+      child: GestureBuilderBase.get(
+        context: context,
         node: widget.node,
-        child: widget.child,
         params: widget.params,
         states: widget.states,
-        dataset: list.isNotEmpty ? list : widget.dataset,
+        dataset: widget.dataset,
         forPlay: widget.forPlay,
         loop: widget.loop,
+        child: ChildConditionBuilder(
+          ValueKey('${widget.node.nid} ${widget.loop}'),
+          name: widget.node.intrinsicState.displayName,
+          node: widget.node,
+          child: widget.child,
+          params: widget.params,
+          states: widget.states,
+          dataset: list.isNotEmpty ? list : widget.dataset,
+          forPlay: widget.forPlay,
+          loop: widget.loop,
+        ),
       ),
     );
   }

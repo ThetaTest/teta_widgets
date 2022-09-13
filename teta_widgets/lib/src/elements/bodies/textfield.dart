@@ -83,11 +83,6 @@ class TextFieldBody extends NodeBody {
   @override
   List<ControlModel> get controls => [
         ControlObject(
-          type: ControlType.action,
-          key: DBKeys.action,
-          value: attributes[DBKeys.action],
-        ),
-        ControlObject(
           type: ControlType.margins,
           key: DBKeys.margins,
           value: attributes[DBKeys.margins],

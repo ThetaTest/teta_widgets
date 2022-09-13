@@ -9,6 +9,7 @@ import 'package:teta_core/src/models/dataset.dart';
 import 'package:teta_core/src/models/variable.dart';
 // Project imports:
 import 'package:teta_widgets/src/elements/code/advanced/gridview_builder.dart';
+import 'package:teta_widgets/src/elements/code/snippets.dart';
 import 'package:teta_widgets/src/elements/controls/control_model.dart';
 import 'package:teta_widgets/src/elements/controls/key_constants.dart';
 import 'package:teta_widgets/src/elements/controls/type.dart';
@@ -175,5 +176,11 @@ class GridViewBuilderBody extends NodeBody {
     final int pageId,
     final int? loop,
   ) =>
-      GridViewBuilderCodeTemplate.toCode(context, this, child, loop);
+      CS.defaultWidgets(
+        context,
+        node,
+        pageId,
+        GridViewBuilderCodeTemplate.toCode(context, this, child, loop),
+        loop ?? 0,
+      );
 }

@@ -5,6 +5,7 @@
 import 'package:flutter/material.dart';
 // Package imports:
 import 'package:teta_core/teta_core.dart';
+import 'package:teta_widgets/src/elements/builder/gesture_detector_base.dart';
 // Project imports:
 import 'package:teta_widgets/src/elements/index.dart';
 
@@ -50,29 +51,38 @@ class WRow extends StatelessWidget {
     return NodeSelectionBuilder(
       node: _node,
       forPlay: _forPlay,
-      child: Row(
-        mainAxisAlignment: _mainAxisAlignment.get,
-        crossAxisAlignment: _crossAxisAlignment.get,
-        mainAxisSize: _mainAxisSize.get,
-        children: _children.isNotEmpty
-            ? _children
-                .map(
-                  (final e) => e.toWidget(
-                    loop: _loop,
+      child: GestureBuilderBase.get(
+        context: context,
+        node: _node,
+        params: _params,
+        states: _states,
+        dataset: _dataset,
+        forPlay: _forPlay,
+        loop: _loop,
+        child: Row(
+          mainAxisAlignment: _mainAxisAlignment.get,
+          crossAxisAlignment: _crossAxisAlignment.get,
+          mainAxisSize: _mainAxisSize.get,
+          children: _children.isNotEmpty
+              ? _children
+                  .map(
+                    (final e) => e.toWidget(
+                      loop: _loop,
+                      forPlay: _forPlay,
+                      params: _params,
+                      states: _states,
+                      dataset: _dataset,
+                    ),
+                  )
+                  .toList()
+              : [
+                  PlaceholderChildBuilder(
+                    name: _node.intrinsicState.displayName,
+                    node: _node,
                     forPlay: _forPlay,
-                    params: _params,
-                    states: _states,
-                    dataset: _dataset,
                   ),
-                )
-                .toList()
-            : [
-                PlaceholderChildBuilder(
-                  name: _node.intrinsicState.displayName,
-                  node: _node,
-                  forPlay: _forPlay,
-                ),
-              ],
+                ],
+        ),
       ),
     );
   }

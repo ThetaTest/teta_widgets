@@ -90,11 +90,6 @@ class CalendarBody extends NodeBody {
           flag: true,
         ),
         ControlObject(
-          type: ControlType.action,
-          key: DBKeys.action,
-          value: attributes[DBKeys.action],
-        ),
-        ControlObject(
           title: 'Title Properties',
           type: ControlType.text,
           key: DBKeys.textStyle2,

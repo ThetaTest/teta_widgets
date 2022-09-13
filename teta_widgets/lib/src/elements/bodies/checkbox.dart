@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:teta_core/gen/assets.gen.dart';
 import 'package:teta_core/src/models/dataset.dart';
 import 'package:teta_core/src/models/variable.dart';
+import 'package:teta_widgets/src/elements/code/snippets.dart';
 // Project imports:
 import 'package:teta_widgets/src/elements/code/templates/checkbox.dart';
 import 'package:teta_widgets/src/elements/controls/control_model.dart';
@@ -96,12 +97,18 @@ class CheckBoxBody extends NodeBody {
     final int pageId,
     final int? loop,
   ) =>
-      CheckBoxCodeTemplate.toCode(
-        pageId,
+      CS.defaultWidgets(
         context,
-        this,
         node,
-        child,
+        pageId,
+        CheckBoxCodeTemplate.toCode(
+          pageId,
+          context,
+          this,
+          node,
+          child,
+          loop ?? 0,
+        ),
         loop ?? 0,
       );
 }

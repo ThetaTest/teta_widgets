@@ -1,16 +1,28 @@
 // Flutter imports:
 // ignore_for_file: public_member_api_docs
 
-// Flutter imports:
+import 'package:enum_to_string/enum_to_string.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:flutter_feather_icons/flutter_feather_icons.dart';
+import 'package:gap/gap.dart';
 // Package imports:
-import 'package:hovering/hovering.dart';
+import 'package:teta_core/src/design_system/buttons/element_button.dart';
 import 'package:teta_core/teta_core.dart';
 // Project imports:
 import 'package:teta_widgets/src/elements/controls/atoms/action_element.dart';
-import 'package:teta_widgets/src/elements/features/action.dart';
-import 'package:teta_widgets/src/elements/features/actions/element.dart';
-import 'package:teta_widgets/src/elements/nodes/node.dart';
+import 'package:teta_widgets/src/elements/features/actions/enums/audio_player_actions.dart';
+import 'package:teta_widgets/src/elements/features/actions/enums/braintree.dart';
+import 'package:teta_widgets/src/elements/features/actions/enums/camera.dart';
+import 'package:teta_widgets/src/elements/features/actions/enums/index.dart';
+import 'package:teta_widgets/src/elements/features/actions/enums/qonversion.dart';
+import 'package:teta_widgets/src/elements/features/actions/enums/revenue_cat.dart';
+import 'package:teta_widgets/src/elements/features/actions/enums/stripe.dart';
+import 'package:teta_widgets/src/elements/features/actions/enums/teta_cms.dart';
+import 'package:teta_widgets/src/elements/features/actions/enums/theme.dart';
+import 'package:teta_widgets/src/elements/features/actions/enums/translator.dart';
+import 'package:teta_widgets/src/elements/features/actions/enums/webview.dart';
+import 'package:teta_widgets/src/elements/index.dart';
 import 'package:uuid/uuid.dart';
 
 class ActionControl extends StatefulWidget {
@@ -55,7 +67,118 @@ class ActionControlState extends State<ActionControl> {
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          Padding(
+          for (final trigger in widget.node.intrinsicState.gestures.isNotEmpty
+              ? widget.node.intrinsicState.gestures
+              : [ActionGesture.onTap])
+            Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                TParagraph(
+                  EnumToString.convertToString(trigger, camelCase: true),
+                ),
+                Divider(
+                  color: Palette.txtPrimary.withOpacity(0.3),
+                ),
+                ElementButton(
+                  title: 'New action',
+                  isSelected: false,
+                  icon: FeatherIcons.plus,
+                  onTap: () {
+                    final pageBloc = BlocProvider.of<PageCubit>(context);
+                    showDialog<void>(
+                      context: context,
+                      builder: (final context) => BlocProvider.value(
+                        value: pageBloc,
+                        child: _NewActionAlert(
+                          callback: (final value, final actionString) {
+                            final dynamic action =
+                                FActionElement.convertDropdownToValue(
+                              value.type,
+                              actionString,
+                            );
+                            final old = widget.action;
+                            widget.action.actions = [
+                              ...widget.action.actions ?? [],
+                              FActionElement(
+                                id: const Uuid().v1(),
+                                actionType: value.actionType,
+                                actionGesture: trigger,
+                                actionState:
+                                    (action is ActionState) ? action : null,
+                                actionNavigation: (action is ActionNavigation)
+                                    ? action
+                                    : null,
+                                actionTheme:
+                                    (action is ActionTheme) ? action : null,
+                                actionWebView:
+                                    (action is ActionWebView) ? action : null,
+                                actionQonversion: (action is ActionQonversion)
+                                    ? action
+                                    : null,
+                                actionAudioPlayer:
+                                    (action is ActionAudioPlayerActions)
+                                        ? action
+                                        : null,
+                                actionRevenueCat: (action is ActionRevenueCat)
+                                    ? action
+                                    : null,
+                                actionStripe:
+                                    (action is ActionStripe) ? action : null,
+                                actionCamera:
+                                    (action is ActionCamera) ? action : null,
+                                actionSupabaseAuth:
+                                    (action is ActionSupabaseAuth)
+                                        ? action
+                                        : null,
+                                actionSupabaseDB: (action is ActionSupabaseDB)
+                                    ? action
+                                    : null,
+                                actionTetaAuth: (action is ActionTetaCmsAuth)
+                                    ? action
+                                    : null,
+                                actionTetaDB:
+                                    (action is ActionTetaCmsDB) ? action : null,
+                                actionTranslator: (action is ActionTranslator)
+                                    ? action
+                                    : null,
+                              )
+                            ];
+                            widget.callBack(widget.action, old);
+                          },
+                        ),
+                      ),
+                    );
+                  },
+                ),
+                for (final element in (widget.action.actions ??
+                        <FActionElement>[])
+                    .where((final element) => element.actionGesture == trigger)
+                    .toList())
+                  ActionElementControl(
+                    name: EnumToString.convertToString(
+                      element.actionType,
+                      camelCase: true,
+                    ),
+                    element: element,
+                    prj: widget.prj,
+                    page: widget.page,
+                    node: widget.node,
+                    callBack: (final value, final old) {
+                      final old = widget.action;
+                      final index = widget.action.actions!.indexOf(element);
+                      widget.action.actions![index] = value;
+                      widget.callBack(widget.action, old);
+                    },
+                    callBackToDelete: () {
+                      final old = widget.action;
+                      widget.action.actions!.remove(element);
+                      widget.callBack(widget.action, old);
+                    },
+                  ),
+                const Gap(Grid.medium),
+              ],
+            ),
+          /*Padding(
             padding: EdgeInsets.only(
               bottom: widget.action.actions?.isEmpty ?? true ? 0 : 8,
             ),
@@ -134,9 +257,193 @@ class ActionControlState extends State<ActionControl> {
                   ),
                 )
                 .toList(),
-          ),
+          ),*/
         ],
       ),
     );
   }
+}
+
+class _NewActionAlert extends StatefulWidget {
+  const _NewActionAlert({
+    final Key? key,
+    required this.callback,
+  }) : super(key: key);
+
+  final Function(_SelectionClass, String) callback;
+
+  @override
+  State<_NewActionAlert> createState() => __NewActionAlertState();
+}
+
+class __NewActionAlertState extends State<_NewActionAlert> {
+  final elements = <_SelectionClass>[];
+
+  @override
+  void initState() {
+    final prj =
+        (BlocProvider.of<FocusProjectBloc>(context).state as ProjectLoaded).prj;
+    final page = BlocProvider.of<PageCubit>(context).state;
+    elements.addAll([
+      _SelectionClass(
+        title: 'State',
+        actionType: ActionType.state,
+        options: FActionElement.getState(),
+        type: ActionState.values,
+      ),
+      _SelectionClass(
+        title: 'Navigation',
+        actionType: ActionType.navigation,
+        options: FActionElement.getNavigation(),
+        type: ActionNavigation.values,
+      ),
+      _SelectionClass(
+        title: 'Teta Auth',
+        actionType: ActionType.tetaAuth,
+        options: FActionElement.getTetaAuth(),
+        type: ActionTetaCmsAuth.values,
+      ),
+      _SelectionClass(
+        title: 'Teta CMS',
+        actionType: ActionType.tetaDatabase,
+        options: FActionElement.getTetaDB(),
+        type: ActionTetaCmsDB.values,
+      ),
+      _SelectionClass(
+        title: 'Multi languages',
+        actionType: ActionType.translator,
+        options: FActionElement.getTranslator(),
+        type: ActionTranslator.values,
+      ),
+      _SelectionClass(
+        title: 'Theme',
+        actionType: ActionType.theme,
+        options: FActionElement.getTheme(),
+        type: ActionTheme.values,
+      ),
+      _SelectionClass(
+        title: 'Supabase Auth',
+        actionType: ActionType.supabaseAuth,
+        options: FActionElement.getSupabaseAuth(prj.config),
+        type: ActionSupabaseAuth.values,
+      ),
+      _SelectionClass(
+        title: 'Supabase DB',
+        actionType: ActionType.supabaseDatabase,
+        options: FActionElement.getSupabaseDB(prj.config),
+        type: ActionSupabaseDB.values,
+      ),
+      _SelectionClass(
+        title: 'RevenueCat',
+        actionType: ActionType.revenueCat,
+        options: FActionElement.getRevenueCat(prj.config),
+        type: ActionRevenueCat.values,
+      ),
+      _SelectionClass(
+        title: 'Qonversion',
+        actionType: ActionType.qonversion,
+        options: FActionElement.getQonversion(prj.config),
+        type: ActionQonversion.values,
+      ),
+      _SelectionClass(
+        title: 'Braintree',
+        actionType: ActionType.braintree,
+        options: FActionElement.getBraintree(prj.config),
+        type: ActionBraintree.values,
+      ),
+      _SelectionClass(
+        title: 'WebView',
+        actionType: ActionType.webview,
+        options: ((page.flatList ?? <CNode>[]).indexWhere(
+                  (final element) =>
+                      element.intrinsicState.type == NType.webview,
+                ) !=
+                -1)
+            ? FActionElement.getWebView()
+            : [],
+        type: ActionWebView.values,
+      ),
+      _SelectionClass(
+        title: 'Audio Player',
+        actionType: ActionType.audioPlayer,
+        options: ((page.flatList ?? <CNode>[]).indexWhere(
+                  (final element) =>
+                      element.intrinsicState.type == NType.audioPlayer,
+                ) !=
+                -1)
+            ? FActionElement.getAudioPlayer()
+            : [],
+        type: ActionAudioPlayerActions.values,
+      ),
+    ]);
+    super.initState();
+  }
+
+  @override
+  Widget build(final BuildContext context) {
+    return AlertDialog(
+      backgroundColor: Palette.bgDialog,
+      content: SizedBox(
+        width: 500,
+        height: 700,
+        child: ListView.builder(
+          itemCount: elements.length,
+          itemBuilder: (final context, final index) => Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              TParagraph(elements[index].title),
+              Divider(
+                color: Palette.txtPrimary.withOpacity(0.3),
+              ),
+              Wrap(
+                children: elements[index]
+                    .options
+                    .map(
+                      (final e) => BounceSmall(
+                        onTap: () {
+                          widget.callback(
+                            elements[index],
+                            e,
+                          );
+                        },
+                        child: TContainer(
+                          margin: const EdgeInsets.only(
+                            right: 8,
+                            bottom: 8,
+                          ),
+                          padding: const EdgeInsets.symmetric(
+                            horizontal: 16,
+                            vertical: 8,
+                          ),
+                          decoration: BoxDecoration(
+                            color: Palette.blue,
+                            borderRadius: BR(40),
+                          ),
+                          child: TParagraph(e),
+                        ),
+                      ),
+                    )
+                    .toList(),
+              ),
+              const Gap(Grid.medium),
+            ],
+          ),
+        ),
+      ),
+    );
+  }
+}
+
+class _SelectionClass {
+  _SelectionClass({
+    required this.title,
+    required this.actionType,
+    required this.options,
+    required this.type,
+  });
+
+  final String title;
+  final ActionType actionType;
+  final List<String> options;
+  final List<dynamic> type;
 }

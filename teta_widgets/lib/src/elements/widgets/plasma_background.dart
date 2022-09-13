@@ -6,6 +6,7 @@ import 'package:flutter/material.dart';
 // Package imports:
 import 'package:sa3_liquid/liquid/plasma/plasma.dart';
 import 'package:teta_core/teta_core.dart';
+import 'package:teta_widgets/src/elements/builder/gesture_detector_base.dart';
 // Project imports:
 import 'package:teta_widgets/src/elements/index.dart';
 
@@ -48,31 +49,40 @@ class WPlasmaBackgroundState extends State<WPlasmaBackground> {
     return NodeSelectionBuilder(
       node: widget.node,
       forPlay: widget.forPlay,
-      child: Container(
-        width: widget.width.get(context: context, isWidth: true),
-        height: widget.height.get(context: context, isWidth: false),
-        color: Colors.black,
-        child: PlasmaRenderer(
-          fps: 50,
-          color: HexColor(widget.firstColor.levels!.first.color),
-          blur: 0.36,
-          size: 1.33,
-          speed: 5.75,
+      child: GestureBuilderBase.get(
+        context: context,
+        node: widget.node,
+        params: widget.params,
+        states: widget.states,
+        dataset: widget.dataset,
+        forPlay: widget.forPlay,
+        loop: widget.loop,
+        child: Container(
+          width: widget.width.get(context: context, isWidth: true),
+          height: widget.height.get(context: context, isWidth: false),
+          color: Colors.black,
           child: PlasmaRenderer(
             fps: 50,
-            color: HexColor(widget.secondColor.levels!.first.color),
-            blur: 0.79,
-            size: 0.87,
-            offset: 2,
-            blendMode: BlendMode.overlay,
-            child: widget.child != null
-                ? widget.child!.toWidget(
-                    forPlay: widget.forPlay,
-                    params: widget.params,
-                    states: widget.states,
-                    dataset: widget.dataset,
-                  )
-                : const SizedBox(),
+            color: HexColor(widget.firstColor.levels!.first.color),
+            blur: 0.36,
+            size: 1.33,
+            speed: 5.75,
+            child: PlasmaRenderer(
+              fps: 50,
+              color: HexColor(widget.secondColor.levels!.first.color),
+              blur: 0.79,
+              size: 0.87,
+              offset: 2,
+              blendMode: BlendMode.overlay,
+              child: widget.child != null
+                  ? widget.child!.toWidget(
+                      forPlay: widget.forPlay,
+                      params: widget.params,
+                      states: widget.states,
+                      dataset: widget.dataset,
+                    )
+                  : const SizedBox(),
+            ),
           ),
         ),
       ),

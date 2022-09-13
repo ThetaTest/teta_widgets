@@ -6,6 +6,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:just_audio/just_audio.dart';
 import 'package:rxdart/rxdart.dart';
 import 'package:teta_core/teta_core.dart';
+import 'package:teta_widgets/src/elements/builder/gesture_detector_base.dart';
 // Project imports:
 import 'package:teta_widgets/src/elements/index.dart';
 
@@ -88,63 +89,72 @@ class _WAudioPlayerProgressIndicatorState
   }
 
   Widget progressBar() => audioController != null
-      ? StreamBuilder<Map<String, Duration>>(
-          stream: Rx.combineLatest3<Duration, Duration, Duration?,
-              Map<String, Duration>>(
-            audioController!.positionStream,
-            audioController!.bufferedPositionStream,
-            audioController!.durationStream,
-            (
-              final Duration position,
-              final Duration bufferedPosition,
-              final Duration? duration,
-            ) =>
-                {
-              'position': position,
-              'bufferedPosition': bufferedPosition,
-              'duration': duration ?? Duration.zero
+      ? GestureBuilderBase.get(
+          context: context,
+          node: widget.node,
+          params: widget.params,
+          states: widget.states,
+          dataset: widget.dataset,
+          forPlay: widget.forPlay,
+          loop: widget.loop,
+          child: StreamBuilder<Map<String, Duration>>(
+            stream: Rx.combineLatest3<Duration, Duration, Duration?,
+                Map<String, Duration>>(
+              audioController!.positionStream,
+              audioController!.bufferedPositionStream,
+              audioController!.durationStream,
+              (
+                final Duration position,
+                final Duration bufferedPosition,
+                final Duration? duration,
+              ) =>
+                  {
+                'position': position,
+                'bufferedPosition': bufferedPosition,
+                'duration': duration ?? Duration.zero
+              },
+            ),
+            builder: (final context, final snapshot) {
+              final positionData = snapshot.data;
+              final duration = positionData?['duration'] ?? Duration.zero;
+              final position = positionData?['position'] ?? Duration.zero;
+              final bufferedPosition =
+                  positionData?['bufferedPosition'] ?? Duration.zero;
+
+              return Column(
+                crossAxisAlignment: CrossAxisAlignment.stretch,
+                mainAxisSize: MainAxisSize.min,
+                children: [
+                  Slider(
+                    max: duration.inSeconds.toDouble(),
+                    value: position.inSeconds.toDouble(),
+                    onChanged: (final value) {
+                      if (audioController == null) {
+                        init();
+                      }
+                      audioController?.seek(Duration(seconds: value.toInt()));
+                    },
+                  ),
+                  Padding(
+                    padding: const EdgeInsets.symmetric(horizontal: 16),
+                    child: Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      children: [
+                        Text(
+                          position.toString().split('.').first.padLeft(8, '0'),
+                          style: const TextStyle(color: Colors.white),
+                        ),
+                        Text(
+                          duration.toString().split('.').first.padLeft(8, '0'),
+                          style: const TextStyle(color: Colors.white),
+                        )
+                      ],
+                    ),
+                  )
+                ],
+              );
             },
           ),
-          builder: (final context, final snapshot) {
-            final positionData = snapshot.data;
-            final duration = positionData?['duration'] ?? Duration.zero;
-            final position = positionData?['position'] ?? Duration.zero;
-            final bufferedPosition =
-                positionData?['bufferedPosition'] ?? Duration.zero;
-
-            return Column(
-              crossAxisAlignment: CrossAxisAlignment.stretch,
-              mainAxisSize: MainAxisSize.min,
-              children: [
-                Slider(
-                  max: duration.inSeconds.toDouble(),
-                  value: position.inSeconds.toDouble(),
-                  onChanged: (final value) {
-                    if (audioController == null) {
-                      init();
-                    }
-                    audioController?.seek(Duration(seconds: value.toInt()));
-                  },
-                ),
-                Padding(
-                  padding: const EdgeInsets.symmetric(horizontal: 16),
-                  child: Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                    children: [
-                      Text(
-                        position.toString().split('.').first.padLeft(8, '0'),
-                        style: const TextStyle(color: Colors.white),
-                      ),
-                      Text(
-                        duration.toString().split('.').first.padLeft(8, '0'),
-                        style: const TextStyle(color: Colors.white),
-                      )
-                    ],
-                  ),
-                )
-              ],
-            );
-          },
         )
       : const Text('AudioPlayerProgressIndicator Controller is null.');
 }

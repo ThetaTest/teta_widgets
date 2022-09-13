@@ -95,11 +95,6 @@ class ButtonBody extends NodeBody {
   @override
   List<ControlModel> get controls => [
         ControlObject(
-          type: ControlType.action,
-          key: DBKeys.action,
-          value: attributes[DBKeys.action],
-        ),
-        ControlObject(
           type: ControlType.value,
           key: DBKeys.value,
           value: attributes[DBKeys.value],

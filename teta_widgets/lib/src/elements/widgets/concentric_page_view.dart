@@ -7,6 +7,7 @@ import 'package:concentric_transition/concentric_transition.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:teta_core/teta_core.dart';
+import 'package:teta_widgets/src/elements/builder/gesture_detector_base.dart';
 // Project imports:
 import 'package:teta_widgets/src/elements/index.dart';
 
@@ -57,20 +58,29 @@ class _WConcentricPageViewState extends State<WConcentricPageView> {
     return NodeSelectionBuilder(
       node: widget.node,
       forPlay: widget.forPlay,
-      child: ConcentricPageView(
-        colors: [
-          _getConcentricPageColor(model, isLight),
-          _getConcentricPageColor(model, isLight)
-        ],
-        itemCount: widget.children.length,
-        itemBuilder: (final int index) {
-          return widget.children[index].toWidget(
-            params: widget.params,
-            states: widget.states,
-            dataset: widget.dataset,
-            forPlay: widget.forPlay,
-          );
-        },
+      child: GestureBuilderBase.get(
+        context: context,
+        node: widget.node,
+        params: widget.params,
+        states: widget.states,
+        dataset: widget.dataset,
+        forPlay: widget.forPlay,
+        loop: widget.loop,
+        child: ConcentricPageView(
+          colors: [
+            _getConcentricPageColor(model, isLight),
+            _getConcentricPageColor(model, isLight)
+          ],
+          itemCount: widget.children.length,
+          itemBuilder: (final int index) {
+            return widget.children[index].toWidget(
+              params: widget.params,
+              states: widget.states,
+              dataset: widget.dataset,
+              forPlay: widget.forPlay,
+            );
+          },
+        ),
       ),
     );
   }

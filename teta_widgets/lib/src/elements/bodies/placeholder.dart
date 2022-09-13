@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:teta_core/gen/assets.gen.dart';
 import 'package:teta_core/src/models/dataset.dart';
 import 'package:teta_core/src/models/variable.dart';
+import 'package:teta_widgets/src/elements/code/snippets.dart';
 // Project imports:
 import 'package:teta_widgets/src/elements/code/templates/placeholder.dart';
 import 'package:teta_widgets/src/elements/controls/control_model.dart';
@@ -127,6 +128,12 @@ class PlaceholderBody extends NodeBody {
     final List<CNode>? children,
     final int pageId,
     final int? loop,
-  ) =>
-      PlaceholderCodeTemplate.toCode(context, this, child, loop);
+  ) => CS.defaultWidgets(
+        context,
+        node,
+        pageId,
+          PlaceholderCodeTemplate.toCode(context, this, child, loop),
+        loop ?? 0,
+      );
+      
 }

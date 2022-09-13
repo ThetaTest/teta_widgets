@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:teta_core/gen/assets.gen.dart';
 import 'package:teta_core/src/models/dataset.dart';
 import 'package:teta_core/src/models/variable.dart';
+import 'package:teta_widgets/src/elements/code/snippets.dart';
 // Project imports:
 import 'package:teta_widgets/src/elements/code/templates/material_appbar.dart';
 import 'package:teta_widgets/src/elements/controls/control_model.dart';
@@ -136,5 +137,11 @@ class MaterialAppBarBody extends NodeBody {
     final int pageId,
     final int? loop,
   ) =>
-      MaterialAppBarCodeTemplate.toCode(context, this, children ?? []);
+      CS.defaultWidgets(
+        context,
+        node,
+        pageId,
+        MaterialAppBarCodeTemplate.toCode(context, this, children ?? []),
+        loop ?? 0,
+      );
 }

@@ -5,6 +5,7 @@
 import 'package:flutter/material.dart';
 // Package imports:
 import 'package:teta_core/teta_core.dart';
+import 'package:teta_widgets/src/elements/builder/gesture_detector_base.dart';
 // Project imports:
 import 'package:teta_widgets/src/elements/index.dart';
 
@@ -62,30 +63,39 @@ class WAnimatedContainer extends StatelessWidget {
     return NodeSelectionBuilder(
       node: node,
       forPlay: forPlay,
-      child: AnimatedContainer(
-        duration: Duration(
-          milliseconds: int.tryParse(val) != null ? int.parse(val) : 400,
-        ),
-        margin: margins.get(context),
-        padding: paddings.get(context),
-        width: width.get(context: context, isWidth: true),
-        height: height.get(context: context, isWidth: false),
-        decoration: TetaBoxDecoration.get(
-          context: context,
-          fill: fill.get(context),
-          borderRadius: borderRadius,
-          shadow: shadows,
-        ),
-        child: ChildConditionBuilder(
-          ValueKey('${node.nid} $loop'),
-          name: node.intrinsicState.displayName,
-          node: node,
-          child: child,
-          params: params,
-          states: states,
-          dataset: dataset,
-          forPlay: forPlay,
-          loop: loop,
+      child: GestureBuilderBase.get(
+        context: context,
+        node: node,
+        params: params,
+        states: states,
+        dataset: dataset,
+        forPlay: forPlay,
+        loop: loop,
+        child: AnimatedContainer(
+          duration: Duration(
+            milliseconds: int.tryParse(val) != null ? int.parse(val) : 400,
+          ),
+          margin: margins.get(context),
+          padding: paddings.get(context),
+          width: width.get(context: context, isWidth: true),
+          height: height.get(context: context, isWidth: false),
+          decoration: TetaBoxDecoration.get(
+            context: context,
+            fill: fill.get(context),
+            borderRadius: borderRadius,
+            shadow: shadows,
+          ),
+          child: ChildConditionBuilder(
+            ValueKey('${node.nid} $loop'),
+            name: node.intrinsicState.displayName,
+            node: node,
+            child: child,
+            params: params,
+            states: states,
+            dataset: dataset,
+            forPlay: forPlay,
+            loop: loop,
+          ),
         ),
       ),
     );

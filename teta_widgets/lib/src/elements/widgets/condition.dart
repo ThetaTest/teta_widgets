@@ -5,6 +5,7 @@
 import 'package:flutter/material.dart';
 // Package imports:
 import 'package:teta_core/teta_core.dart';
+import 'package:teta_widgets/src/elements/builder/gesture_detector_base.dart';
 // Project imports:
 import 'package:teta_widgets/src/elements/index.dart';
 
@@ -64,28 +65,37 @@ class WCondition extends StatelessWidget {
       context,
     );
 
-    return (finalValue == finalValueOfCond)
-        ? children.isNotEmpty
-            ? children.first.toWidget(
-                params: params,
-                states: states,
-                dataset: dataset,
-                forPlay: forPlay,
-              )
-            : PlaceholderChildBuilder(
-                name: node.intrinsicState.displayName,
-                node: node,
-                forPlay: forPlay,
-              )
-        : children.isNotEmpty
-            ? children.length > 1
-                ? children.last.toWidget(
-                    params: params,
-                    states: states,
-                    dataset: dataset,
-                    forPlay: forPlay,
-                  )
-                : const SizedBox()
-            : const SizedBox();
+    return GestureBuilderBase.get(
+      context: context,
+      node: node,
+      params: params,
+      states: states,
+      dataset: dataset,
+      forPlay: forPlay,
+      loop: loop,
+      child: (finalValue == finalValueOfCond)
+          ? children.isNotEmpty
+              ? children.first.toWidget(
+                  params: params,
+                  states: states,
+                  dataset: dataset,
+                  forPlay: forPlay,
+                )
+              : PlaceholderChildBuilder(
+                  name: node.intrinsicState.displayName,
+                  node: node,
+                  forPlay: forPlay,
+                )
+          : children.isNotEmpty
+              ? children.length > 1
+                  ? children.last.toWidget(
+                      params: params,
+                      states: states,
+                      dataset: dataset,
+                      forPlay: forPlay,
+                    )
+                  : const SizedBox()
+              : const SizedBox(),
+    );
   }
 }
