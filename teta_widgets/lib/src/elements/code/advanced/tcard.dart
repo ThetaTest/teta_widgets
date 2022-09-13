@@ -17,49 +17,50 @@ import 'package:teta_widgets/src/elements/nodes/node.dart';
 ///   children: [], // node's children
 /// );
 /// ```
-Future<String> tCardCodeTemplate(
-  final BuildContext context,
-  final int pageId,
-  final CNode node,
-  final List<CNode> children,
-  final int? loop,
-) async {
-  final slideSpeed = double.tryParse(
-        (node.body.attributes[DBKeys.value] as FTextTypeInput).toCode(loop),
-      ) ??
-      20;
-  final delaySlideFor = double.tryParse(
-        (node.body.attributes[DBKeys.valueOfCondition] as FTextTypeInput)
-            .toCode(loop),
-      ) ??
-      500;
-  final lockYAxis = node.body.attributes[DBKeys.flag] as bool? ?? false;
-  final childrenString = await CS.children(context, children);
-  final code = '''
+class TCardCodeTemplate {
+  static Future<String> toCode(
+    final BuildContext context,
+    final int pageId,
+    final CNode node,
+    final List<CNode> children,
+    final int? loop,
+  ) async {
+    final slideSpeed = double.tryParse(
+          (node.body.attributes[DBKeys.value] as FTextTypeInput).toCode(loop),
+        ) ??
+        20;
+    final delaySlideFor = double.tryParse(
+          (node.body.attributes[DBKeys.valueOfCondition] as FTextTypeInput)
+              .toCode(loop),
+        ) ??
+        500;
+    final lockYAxis = node.body.attributes[DBKeys.flag] as bool? ?? false;
+    final childrenString = await CS.children(context, children);
+    final code = '''
   TCard(
     onForward: (index, info) async {
       if ${CS.action(
-    pageId,
-    context,
-    node,
-    ActionGesture.swipeRight,
-    '(info.direction == SwipDirection.Right)',
-    null,
-    loop: loop,
-    isRequired: true,
-    endsWithComma: false,
-  )}
+      pageId,
+      context,
+      node,
+      ActionGesture.swipeRight,
+      '(info.direction == SwipDirection.Right)',
+      null,
+      loop: loop,
+      isRequired: true,
+      endsWithComma: false,
+    )}
       ${CS.action(
-    pageId,
-    context,
-    node,
-    ActionGesture.swipeLeft,
-    'else',
-    null,
-    loop: loop,
-    isRequired: true,
-    endsWithComma: false,
-  )}
+      pageId,
+      context,
+      node,
+      ActionGesture.swipeLeft,
+      'else',
+      null,
+      loop: loop,
+      isRequired: true,
+      endsWithComma: false,
+    )}
     },
     lockYAxis: $lockYAxis,
     slideSpeed: $slideSpeed,
@@ -67,22 +68,23 @@ Future<String> tCardCodeTemplate(
     ${childrenString.replaceFirst('children', 'cards')}
   )
   ''';
-  final res = FormatterTest.format(code);
-  if (res) {
-    return code;
-  } else {
-    final code = await tCardCodeTemplate(
-      context,
-      pageId,
-      node,
-      [],
-      loop,
-    );
     final res = FormatterTest.format(code);
     if (res) {
       return code;
     } else {
-      return 'const SizedBox()';
+      final code = await toCode(
+        context,
+        pageId,
+        node,
+        [],
+        loop,
+      );
+      final res = FormatterTest.format(code);
+      if (res) {
+        return code;
+      } else {
+        return 'const SizedBox()';
+      }
     }
   }
 }

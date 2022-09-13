@@ -91,8 +91,5 @@ class GridViewCodeTemplate {
     }
   }
 
-  static void testCode(){
-
-  }
-
+  static void testCode() {}
 }

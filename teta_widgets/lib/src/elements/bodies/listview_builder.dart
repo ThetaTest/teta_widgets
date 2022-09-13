@@ -152,7 +152,7 @@ class ListViewBuilderBody extends NodeBody {
     final int pageId,
     final int? loop,
   ) =>
-      listViewBuilderCodeTemplate(
+      ListViewBuilderCodeTemplate.toCode(
         context,
         node as NDynamic,
         pageId,

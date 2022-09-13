@@ -144,5 +144,5 @@ class TCardBody extends NodeBody {
     final int pageId,
     final int? loop,
   ) =>
-      tCardCodeTemplate(context, pageId, node, children ?? [], loop);
+      TCardCodeTemplate.toCode(context, pageId, node, children ?? [], loop);
 }
