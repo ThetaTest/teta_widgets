@@ -1,5 +1,6 @@
 // Flutter imports:
 import 'package:flutter/material.dart';
+import 'package:flutter_test/flutter_test.dart';
 import 'package:teta_widgets/src/elements/code/formatter_test.dart';
 // Project imports:
 import 'package:teta_widgets/src/elements/code/snippets.dart';
@@ -27,5 +28,20 @@ class SlideCodeTemplate {
     }
   }
 
-  static void testCode() {}
+  static void testCode() {
+    group('SlideAnimation toCode test', () {
+      test(
+        'SlideAnimation: default',
+        () {
+          expect(
+            FormatterTest.format('''
+            SlideAnimation(
+              child: const SizedBox(),
+            )'''),
+            true,
+          );
+        },
+      );
+    });
+  }
 }

@@ -155,5 +155,5 @@ class TCardBuilderBody extends NodeBody {
     final int pageId,
     final int? loop,
   ) =>
-      tCardBuilderCodeTemplate(context, pageId, node, child, loop);
+      TCardBuilderCodeTemplate.toCode(context, pageId, node, child, loop);
 }

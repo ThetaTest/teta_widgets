@@ -60,7 +60,7 @@ class SupabaseFutureBuilderCodeTemplate {
     .from($from)
     .select($select)
     .order($order)
-    .range(($numberPage * $rangeFrom) - 1, $numberPage * $rangeTo)
+    .range(((int.tryParse($numberPage) ?? 1) * $rangeFrom) - 1, (int.tryParse($numberPage) ?? 1) * $rangeTo)
     .execute(),
     builder: (context, snapshot) {
       if (!snapshot.hasData) {

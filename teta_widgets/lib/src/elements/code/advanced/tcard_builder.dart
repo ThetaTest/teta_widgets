@@ -15,55 +15,56 @@ import 'package:teta_widgets/src/elements/index.dart';
 ///   children: [], // node's children
 /// );
 /// ```
-Future<String> tCardBuilderCodeTemplate(
-  final BuildContext context,
-  final int pageId,
-  final CNode node,
-  final CNode? child,
-  final int? loop,
-) async {
-  final slideSpeed = double.tryParse(
-        (node.body.attributes[DBKeys.value] as FTextTypeInput).toCode(loop),
-      ) ??
-      20;
-  final delaySlideFor = double.tryParse(
-        (node.body.attributes[DBKeys.valueOfCondition] as FTextTypeInput)
-            .toCode(loop),
-      ) ??
-      500;
-  final lockYAxis = node.body.attributes[DBKeys.flag] as bool? ?? false;
-  final childString =
-      child != null ? child.toCode(context) : 'const SizedBox()';
-  final dataset =
-      (node.body.attributes[DBKeys.datasetInput] as FDataset).datasetName;
+class TCardBuilderCodeTemplate {
+  static Future<String> toCode(
+    final BuildContext context,
+    final int pageId,
+    final CNode node,
+    final CNode? child,
+    final int? loop,
+  ) async {
+    final slideSpeed = double.tryParse(
+          (node.body.attributes[DBKeys.value] as FTextTypeInput).toCode(loop),
+        ) ??
+        20;
+    final delaySlideFor = double.tryParse(
+          (node.body.attributes[DBKeys.valueOfCondition] as FTextTypeInput)
+              .toCode(loop),
+        ) ??
+        500;
+    final lockYAxis = node.body.attributes[DBKeys.flag] as bool? ?? false;
+    final childString =
+        child != null ? await child.toCode(context) : 'const SizedBox()';
+    final dataset =
+        (node.body.attributes[DBKeys.datasetInput] as FDataset).datasetName;
 
-  final code = '''
+    final code = '''
   Builder(
     builder: (context) {
       return TCard(
         onForward: (index, info) async {
           if ${CS.action(
-    pageId,
-    context,
-    node,
-    ActionGesture.swipeRight,
-    '(info.direction == SwipDirection.Right)',
-    null,
-    loop: loop,
-    isRequired: true,
-    endsWithComma: false,
-  )}
+      pageId,
+      context,
+      node,
+      ActionGesture.swipeRight,
+      '(info.direction == SwipDirection.Right)',
+      null,
+      loop: loop,
+      isRequired: true,
+      endsWithComma: false,
+    )}
   ${CS.action(
-    pageId,
-    context,
-    node,
-    ActionGesture.swipeLeft,
-    'else',
-    null,
-    loop: loop,
-    isRequired: true,
-    endsWithComma: false,
-  )}
+      pageId,
+      context,
+      node,
+      ActionGesture.swipeLeft,
+      'else',
+      null,
+      loop: loop,
+      isRequired: true,
+      endsWithComma: false,
+    )}
         },
         lockYAxis: $lockYAxis,
         slideSpeed: $slideSpeed,
@@ -73,22 +74,25 @@ Future<String> tCardBuilderCodeTemplate(
     }
   )
   ''';
-  final res = FormatterTest.format(code);
-  if (res) {
-    return code;
-  } else {
-    final code = await tCardBuilderCodeTemplate(
-      context,
-      pageId,
-      node,
-      null,
-      loop,
-    );
     final res = FormatterTest.format(code);
     if (res) {
       return code;
     } else {
-      return 'const SizedBox()';
+      final code = await toCode(
+        context,
+        pageId,
+        node,
+        null,
+        loop,
+      );
+      final res = FormatterTest.format(code);
+      if (res) {
+        return code;
+      } else {
+        return 'const SizedBox()';
+      }
     }
   }
+
+  static void testCode() {}
 }
