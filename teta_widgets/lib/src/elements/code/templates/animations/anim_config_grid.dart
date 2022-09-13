@@ -1,5 +1,6 @@
 // Flutter imports:
 import 'package:flutter/material.dart';
+import 'package:flutter_test/flutter_test.dart';
 import 'package:teta_widgets/src/elements/code/formatter_test.dart';
 // Project imports:
 import 'package:teta_widgets/src/elements/code/snippets.dart';
@@ -60,5 +61,42 @@ class AnimConfigGridCodeTemplate {
     }
   }
 
-  static void testCode() {}
+  static void testCode() {
+    group('AnimConfigGrid toCode test', () {
+      test(
+        'AnimConfigGrid: default',
+        () {
+          final body = NodeBody.get(NType.animationConfigGrid);
+          final position =
+              (body.attributes[DBKeys.value] as FTextTypeInput).toCode(0);
+          final duration =
+              (body.attributes[DBKeys.duration] as FTextTypeInput).toCode(0);
+          final numCols =
+              (body.attributes[DBKeys.valueOfCondition] as FTextTypeInput)
+                  .toCode(0);
+          expect(
+            FormatterTest.format('''
+            AnimationConfiguration.staggeredGrid(
+      columnCount: int.tryParse(
+          $numCols
+          ) ??
+          2,
+      position: int.tryParse(
+          $position
+          ) ??
+          0,
+      duration: Duration(
+        milliseconds: int.tryParse(
+          $duration
+          ) ??
+          375,
+      ),
+      child: const SizedBox(),
+    )'''),
+            true,
+          );
+        },
+      );
+    });
+  }
 }

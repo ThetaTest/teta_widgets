@@ -1,11 +1,13 @@
 // Flutter imports:
 import 'package:flutter/material.dart';
+import 'package:flutter_test/flutter_test.dart';
 import 'package:teta_widgets/src/elements/code/formatter_test.dart';
 import 'package:teta_widgets/src/elements/code/snippets.dart';
 // Project imports:
 import 'package:teta_widgets/src/elements/controls/key_constants.dart';
 import 'package:teta_widgets/src/elements/index.dart';
 import 'package:teta_widgets/src/elements/nodes/dynamic.dart';
+import 'package:teta_widgets/src/elements/nodes/node_body.dart';
 
 /// Generates the code for ListView.builder widget
 class ListViewBuilderCodeTemplate {
@@ -89,5 +91,36 @@ class ListViewBuilderCodeTemplate {
     }
   }
 
-  static void testCode() {}
+  static void testCode() {
+    group('ListViewBuilder toCode test', () {
+      test(
+        'ListViewBuilder: default',
+        () {
+          final body = NodeBody.get(NType.listViewBuilder);
+          final _scrollDirection =
+              !(body.attributes[DBKeys.isVertical] as bool? ?? false)
+                  ? 'scrollDirection: Axis.horizontal,'
+                  : '';
+          final shrinkWrap = body.attributes[DBKeys.flag] as bool? ?? false;
+          final reverse = body.attributes[DBKeys.isFullWidth] as bool;
+          const childString = 'const SizedBox()';
+          final dataset =
+              (body.attributes[DBKeys.datasetInput] as FDataset).datasetName;
+          expect(
+            FormatterTest.format('''
+            ListView.builder(
+            $_scrollDirection
+            reverse: $reverse,
+            shrinkWrap: $shrinkWrap,
+            itemCount: this.datasets['$dataset'].length > 0 ? this.datasets['$dataset'].length : 0,
+            itemBuilder: (context, index) {
+              return $childString;
+            },
+          )'''),
+            true,
+          );
+        },
+      );
+    });
+  }
 }
