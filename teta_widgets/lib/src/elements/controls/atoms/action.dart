@@ -69,7 +69,11 @@ class ActionControlState extends State<ActionControl> {
         children: [
           for (final trigger in widget.node.intrinsicState.gestures.isNotEmpty
               ? widget.node.intrinsicState.gestures
-              : [ActionGesture.onTap])
+              : [
+                  ActionGesture.onTap,
+                  ActionGesture.onLongPress,
+                  ActionGesture.onDoubleTap
+                ])
             Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
