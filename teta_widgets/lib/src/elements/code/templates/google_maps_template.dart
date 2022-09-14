@@ -24,6 +24,7 @@ class GoogleMapsTemplate {
     required final bool trackMyLocation,
     required final String initialZoomLevel,
     required final String googleMapsBlocName,
+    required String pathColor,
   }) {
     return '';
   }
@@ -46,6 +47,7 @@ class GoogleMapsTemplate {
     required final bool trackMyLocation,
     required final String initialZoomLevel,
     required final String googleMapsBlocName,
+    required String pathColor,
   }) async {
     final code = '''
 BlocConsumer<${googleMapsBlocName}Cubit, ${googleMapsBlocName}State>(

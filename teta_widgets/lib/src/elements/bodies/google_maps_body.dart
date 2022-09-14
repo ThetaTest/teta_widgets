@@ -1,6 +1,9 @@
 // Flutter imports:
+import 'dart:js';
+
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+
 // Package imports:
 import 'package:teta_core/gen/assets.gen.dart';
 import 'package:teta_core/src/models/dataset.dart';
@@ -9,12 +12,14 @@ import 'package:teta_core/teta_core.dart';
 import 'package:teta_widgets/src/elements/code/snippets.dart';
 import 'package:teta_widgets/src/elements/code/templates/google_maps_cubit_template.dart';
 import 'package:teta_widgets/src/elements/code/templates/google_maps_template.dart';
+
 // Project imports:
 import 'package:teta_widgets/src/elements/controls/control_model.dart';
 import 'package:teta_widgets/src/elements/controls/key_constants.dart';
 import 'package:teta_widgets/src/elements/controls/type.dart';
 import 'package:teta_widgets/src/elements/features/actions/enums/permissions.dart';
 import 'package:teta_widgets/src/elements/features/dataset.dart';
+import 'package:teta_widgets/src/elements/features/features.dart';
 import 'package:teta_widgets/src/elements/features/text_type_input.dart';
 import 'package:teta_widgets/src/elements/intrinsic_states/class.dart';
 import 'package:teta_widgets/src/elements/nodes/categories.dart';
@@ -79,6 +84,7 @@ class GoogleMapsBody extends NodeBody {
     DBKeys.markerDrawPathToUserCurrentLocation: FDataset(),
     DBKeys.mapConfigShowMyLocationMarker: false,
     DBKeys.mapConfigTrackMyLocation: false,
+    DBKeys.fill: FFill(),
   };
 
   @override
@@ -208,6 +214,15 @@ class GoogleMapsBody extends NodeBody {
           value: attributes[DBKeys.markerDrawPathToUserCurrentLocation],
           flag: true,
         ),
+        FillControlObject(
+          title: 'Path color',
+          key: DBKeys.fill,
+          value: attributes[DBKeys.fill] as FFill,
+          isImageEnabled: false,
+          isNoneEnabled: true,
+          isOnlySolid: false,
+          isStyled: false,
+        ),
       ];
 
   @override
@@ -281,6 +296,7 @@ class GoogleMapsBody extends NodeBody {
                     .datasetAttrName ??
                 '',
         trackMyLocation: attributes[DBKeys.mapConfigTrackMyLocation] as bool,
+        pathColor: attributes[DBKeys.fill] as FFill,
       );
 
   @override
@@ -342,6 +358,7 @@ class GoogleMapsBody extends NodeBody {
             (attributes[DBKeys.googleMapsCubitController] as FTextTypeInput)
                     .stateName ??
                 '',
+        pathColor: (attributes[DBKeys.fill] as FFill).getHexColor(context),
       );
 
   @override
@@ -409,6 +426,7 @@ class GoogleMapsBody extends NodeBody {
             (attributes[DBKeys.googleMapsCubitController] as FTextTypeInput)
                     .stateName ??
                 '',
+        pathColor: (attributes[DBKeys.fill] as FFill).getHexColor(context),
       );
 
   @override
@@ -475,6 +493,7 @@ class GoogleMapsBody extends NodeBody {
               (attributes[DBKeys.googleMapsCubitController] as FTextTypeInput)
                       .stateName ??
                   '',
+          pathColor: (attributes[DBKeys.fill] as FFill).getHexColor(context),
         ),
         loop ?? 0,
       );

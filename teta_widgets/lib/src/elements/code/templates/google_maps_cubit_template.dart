@@ -17,6 +17,7 @@ class GoogleMapsCubitTemplate {
     required final String initialZoomLevel,
     required final String googleMapsKey,
     required final String googleMapsBlocName,
+    required String pathColor,
   }) {
     return '''
     class ${googleMapsBlocName}Cubit extends Cubit<${googleMapsBlocName}State> {
