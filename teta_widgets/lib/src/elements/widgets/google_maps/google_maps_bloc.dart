@@ -7,6 +7,7 @@ import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:http/http.dart' as http;
 import 'package:location/location.dart';
 import 'package:teta_cms/teta_cms.dart';
+import 'package:teta_core/teta_core.dart';
 
 class GoogleMapsBloc extends Cubit<GoogleMapsState> {
   GoogleMapsBloc({final GoogleMapsState? initialState})
@@ -193,6 +194,7 @@ class GoogleMapsBloc extends Cubit<GoogleMapsState> {
             if (result.points.isNotEmpty) {
               polyLines.add(
                 Polyline(
+                  color: HexColor(configNames.pathColor),
                   polylineId: PolylineId(markerId),
                   points: result.points
                       .map(
@@ -263,6 +265,7 @@ class GoogleMapsConfigNames {
     required this.markerIconHeight,
     required this.drawPathFromUserGeolocationToMarker,
     required this.googleMapsKey,
+    required this.pathColor
   });
 
 // Maps Config
@@ -281,13 +284,14 @@ class GoogleMapsConfigNames {
   final String markerIconWidth;
   final String markerIconHeight;
   final String drawPathFromUserGeolocationToMarker;
+  final String pathColor;
 
   // Keys
   final String googleMapsKey;
 }
 
 class GoogleMapsState extends Equatable {
-  GoogleMapsState({
+  const GoogleMapsState({
     required this.paths,
     required this.markers,
     required this.initialCameraPosition,

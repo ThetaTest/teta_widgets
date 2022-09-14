@@ -9,6 +9,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:teta_core/teta_core.dart';
+import 'package:teta_widgets/src/elements/features/features.dart';
 
 // Project imports:
 import 'package:teta_widgets/src/elements/nodes/node.dart';
@@ -43,6 +44,7 @@ class WGoogleMaps extends WGoogleMapsBase {
     required this.showMyLocationMarker,
     required this.trackMyLocation,
     required this.initialZoomLevel,
+    required this.pathColor,
     this.child,
     this.loop,
   }) : super(key: key);
@@ -72,6 +74,7 @@ class WGoogleMaps extends WGoogleMapsBase {
   final bool showMyLocationMarker;
   final bool trackMyLocation;
   final String initialZoomLevel;
+  final FFill pathColor;
 
   @override
   State<WGoogleMaps> createState() => _WGoogleMapsState();
@@ -87,9 +90,9 @@ class _WGoogleMapsState extends State<WGoogleMaps> {
     super.initState();
     final googleMapsKey =
         (BlocProvider.of<FocusProjectBloc>(context).state as ProjectLoaded)
-            .prj
-            .config
-            ?.googleMapsKey ??
+                .prj
+                .config
+                ?.googleMapsKey ??
             '';
     Map<String, dynamic> mapConfig;
     List<Map<String, dynamic>> markersDataset;
@@ -97,12 +100,12 @@ class _WGoogleMapsState extends State<WGoogleMaps> {
       mapConfig = widget.dataset
           .firstWhere(
             (final element) => element.getName == widget.mapConfigDatasetName,
-      )
+          )
           .getMap[0];
       markersDataset = widget.dataset
           .firstWhere(
             (final element) => element.getName == widget.markersDatasetName,
-      )
+          )
           .getMap;
     } catch (e) {
       mapConfig = <String, dynamic>{};
@@ -126,8 +129,9 @@ class _WGoogleMapsState extends State<WGoogleMaps> {
         markerIconWidth: widget.markerIconWidth,
         markerIconHeight: widget.markerIconHeight,
         drawPathFromUserGeolocationToMarker:
-        widget.drawPathFromUserGeolocationToMarker,
+            widget.drawPathFromUserGeolocationToMarker,
         googleMapsKey: googleMapsKey,
+        pathColor: widget.pathColor.getHexColor(context),
       ),
     );
   }
@@ -191,6 +195,7 @@ class _WGoogleMapsState extends State<WGoogleMaps> {
               drawPathFromUserGeolocationToMarker:
                   widget.drawPathFromUserGeolocationToMarker,
               googleMapsKey: googleMapsKey,
+              pathColor: widget.pathColor.getHexColor(context),
             ),
           );
           return const CircularProgressIndicator.adaptive();
@@ -229,6 +234,7 @@ class _WGoogleMapsState extends State<WGoogleMaps> {
               drawPathFromUserGeolocationToMarker:
                   widget.drawPathFromUserGeolocationToMarker,
               googleMapsKey: googleMapsKey,
+              pathColor: '',
             ),
           );
         }

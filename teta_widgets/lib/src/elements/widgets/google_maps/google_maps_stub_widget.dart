@@ -3,6 +3,7 @@
 // Flutter imports:
 import 'package:flutter/material.dart';
 import 'package:teta_core/teta_core.dart';
+import 'package:teta_widgets/src/elements/features/features.dart';
 
 // Project imports:
 import 'package:teta_widgets/src/elements/nodes/node.dart';
@@ -35,6 +36,7 @@ class WGoogleMaps extends WGoogleMapsBase {
     required this.showMyLocationMarker,
     required this.trackMyLocation,
     required this.initialZoomLevel,
+    required FFill pathColor,
     this.child,
     this.loop,
   }) : super(key: key);
