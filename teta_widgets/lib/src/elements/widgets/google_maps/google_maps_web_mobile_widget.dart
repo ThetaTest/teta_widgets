@@ -133,6 +133,8 @@ class _WGoogleMapsState extends State<WGoogleMaps> {
         googleMapsKey: googleMapsKey,
         pathColor: widget.pathColor.getHexColor(context),
       ),
+        widget.dataset,
+        context
     );
   }
 
@@ -197,6 +199,8 @@ class _WGoogleMapsState extends State<WGoogleMaps> {
               googleMapsKey: googleMapsKey,
               pathColor: widget.pathColor.getHexColor(context),
             ),
+            widget.dataset,
+            context
           );
           return const CircularProgressIndicator.adaptive();
         } else if (state.isError) {
@@ -236,6 +240,8 @@ class _WGoogleMapsState extends State<WGoogleMaps> {
               googleMapsKey: googleMapsKey,
               pathColor: '',
             ),
+              widget.dataset,
+              context
           );
         }
       },
