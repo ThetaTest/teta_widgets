@@ -40,7 +40,10 @@ class FActionBraintreeBuy {
   }) {
     final prj =
         (BlocProvider.of<FocusProjectBloc>(context).state as ProjectLoaded).prj;
-    final token = prj.config?.braintreeClientToken;
+    final isSandbox = prj.config?.braintreeIsSandbox ?? true;
+    final token = isSandbox
+        ? prj.config?.braintreeClientToken
+        : prj.config?.braintreeClientTokenSandbox;
     final companyName = prj.config?.companyName ?? '';
     final currencyCode = prj.config?.braintreeCurrencyCode ?? '';
     final countryCode = prj.config?.countryCode ?? '';
