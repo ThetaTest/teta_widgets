@@ -1,5 +1,6 @@
 import 'package:teta_widgets/src/elements/code/advanced/gridview.dart';
 import 'package:teta_widgets/src/elements/code/advanced/gridview_builder.dart';
+import 'package:teta_widgets/src/elements/code/advanced/listview_builder.dart';
 import 'package:teta_widgets/src/elements/code/templates/ad_mob_banner_ad_template.dart';
 import 'package:teta_widgets/src/elements/code/templates/align.dart';
 import 'package:teta_widgets/src/elements/code/templates/animated_align.dart';
@@ -36,6 +37,7 @@ void main() {
   CheckBoxCodeTemplate.testCode();
   CircularProgressIndicatorCodeTemplate.testCode();
   FadeInCodeTemplate.testCode();
+  ListViewBuilderCodeTemplate.testCode();
   GridViewBuilderCodeTemplate.testCode();
   GridViewCodeTemplate.testCode();
   ScaleCodeTemplate.testCode();

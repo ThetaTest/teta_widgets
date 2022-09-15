@@ -1,6 +1,7 @@
 import 'dart:ui';
 
 import 'package:equatable/equatable.dart';
+import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_polyline_points/flutter_polyline_points.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
@@ -8,22 +9,23 @@ import 'package:http/http.dart' as http;
 import 'package:location/location.dart';
 import 'package:teta_cms/teta_cms.dart';
 import 'package:teta_core/teta_core.dart';
+import 'package:teta_widgets/src/elements/builder/add_dataset.dart';
 
 class GoogleMapsBloc extends Cubit<GoogleMapsState> {
   GoogleMapsBloc({final GoogleMapsState? initialState})
       : super(
           initialState ??
-              GoogleMapsState(
-                paths: const <Polyline>{},
-                markers: const <Marker>{},
-                initialCameraPosition: const CameraPosition(
+              const GoogleMapsState(
+                paths: <Polyline>{},
+                markers: <Marker>{},
+                initialCameraPosition: CameraPosition(
                   target: LatLng(
                     0,
                     0,
                   ),
-                  zoom: 15,
+                  zoom: 13,
                 ),
-                initialZoom: 15,
+                initialZoom: 13,
                 isError: false,
                 mapStyle: '',
                 isInitialState: true,
@@ -34,6 +36,8 @@ class GoogleMapsBloc extends Cubit<GoogleMapsState> {
     final List<dynamic> markersDataset,
     final Map<String, dynamic> mapConfig,
     final GoogleMapsConfigNames configNames,
+    final List<DatasetObject> datasets,
+    final BuildContext context,
   ) async {
     try {
       final initialPositionLat = num.parse(
@@ -41,13 +45,13 @@ class GoogleMapsBloc extends Cubit<GoogleMapsState> {
       final initialPositionLng = num.parse(
           mapConfig[configNames.initialPositionLng] as String? ?? '12.493421');
       final initialZoom = double.parse(
-          mapConfig[configNames.initialMapZoomLevel] as String? ?? '15.0');
+          mapConfig[configNames.initialMapZoomLevel] as String? ?? '13.0');
       final mapStyle = mapConfig[configNames.mapStyle] as String? ?? '';
 
       final mapMarkers = <Marker>{};
 
-      var location = Location();
-      var loc = await location.getLocation();
+      final location = Location();
+      final loc = await location.getLocation();
       await location.requestPermission();
       await location.requestService();
       if (configNames.trackMyLocation) {
@@ -67,6 +71,7 @@ class GoogleMapsBloc extends Cubit<GoogleMapsState> {
               userLocationLng: event.longitude!,
               googleMapsKey: configNames.googleMapsKey,
               configNames: configNames,
+              datasets: datasets,
             );
           }
         });
@@ -84,6 +89,7 @@ class GoogleMapsBloc extends Cubit<GoogleMapsState> {
         userLocationLng: loc.longitude ?? 12.493421,
         googleMapsKey: configNames.googleMapsKey,
         configNames: configNames,
+        datasets: datasets,
       );
     } catch (e) {
       emit(
@@ -112,6 +118,7 @@ class GoogleMapsBloc extends Cubit<GoogleMapsState> {
     required final double userLocationLng,
     required final String googleMapsKey,
     required final GoogleMapsConfigNames configNames,
+    required final List<DatasetObject> datasets,
   }) async {
     final polyLines = <Polyline>{};
     final cms = TetaCMS.instance.client;
@@ -176,7 +183,7 @@ class GoogleMapsBloc extends Cubit<GoogleMapsState> {
             final mLat = markerLatitude.toDouble();
             final mLon = markerLongitude.toDouble();
 
-            var polylinePoints = PolylinePoints();
+            final polylinePoints = PolylinePoints();
 
             final result = await polylinePoints.getRouteBetweenCoordinates(
               googleMapsKey,
@@ -222,7 +229,9 @@ class GoogleMapsBloc extends Cubit<GoogleMapsState> {
               mLon,
             ),
             icon: markerIcon ?? BitmapDescriptor.defaultMarker,
-            onTap: () {},
+            onTap: () {
+              // addDataset(context, datasets, _map);
+            },
           ),
         );
       } catch (e, st) {
@@ -265,7 +274,7 @@ class GoogleMapsConfigNames {
     required this.markerIconHeight,
     required this.drawPathFromUserGeolocationToMarker,
     required this.googleMapsKey,
-    required this.pathColor
+    required this.pathColor,
   });
 
 // Maps Config

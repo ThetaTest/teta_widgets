@@ -17,7 +17,7 @@ class GoogleMapsCubitTemplate {
     required final String initialZoomLevel,
     required final String googleMapsKey,
     required final String googleMapsBlocName,
-    required String pathColor,
+    required final String pathColor,
   }) {
     return '''
     class ${googleMapsBlocName}Cubit extends Cubit<${googleMapsBlocName}State> {
@@ -188,6 +188,7 @@ class GoogleMapsCubitTemplate {
             if (result.points.isNotEmpty) {
               polyLines.add(
                 Polyline(
+                  color: Color($pathColor),
                   polylineId: PolylineId(markerId),
                   points: result.points
                       .map(
