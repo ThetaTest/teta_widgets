@@ -35,7 +35,17 @@ class AlignCodeTemplate {
     if (result) {
       return code;
     } else {
-      return toCode(context, NodeBody.get(NType.align), child);
+      final code = await toCode(
+        context,
+        NodeBody.get(NType.align),
+        null,
+      );
+      final res = FormatterTest.format(code);
+      if (res) {
+        return code;
+      } else {
+        return 'const SizedBox()';
+      }
     }
   }
 
