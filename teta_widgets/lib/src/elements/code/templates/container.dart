@@ -37,17 +37,13 @@ class ContainerCodeTemplate {
       final code = await toCode(
         context,
         NodeBody.get(NType.container),
-        child,
+        null,
       );
       final res = FormatterTest.format(code);
       if (res) {
         return code;
       } else {
-        return toCode(
-          context,
-          NodeBody.get(NType.container),
-          null,
-        );
+        return 'const SizedBox()';
       }
     }
   }

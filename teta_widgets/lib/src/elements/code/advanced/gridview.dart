@@ -64,8 +64,8 @@ class GridViewCodeTemplate {
       final code = await toCode(
         context,
         NodeBody.get(NType.gridView),
-        children,
-        loop,
+        [],
+        0,
       );
       final res = FormatterTest.format(code);
       if (res) {

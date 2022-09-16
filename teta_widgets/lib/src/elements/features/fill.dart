@@ -320,7 +320,7 @@ class FFill {
     final bool? flagConst,
   }) {
     final state = BlocProvider.of<ColorStylesCubit>(context).state;
-    late PaletteModel currentPaletteElement;
+    PaletteModel? currentPaletteElement;
     if (state.isNotEmpty) {
       for (final e in state) {
         if (e.id == fill.paletteStyle || e.name == fill.paletteStyle) {
@@ -332,7 +332,11 @@ class FFill {
     if (fill.type == FFillType.none) return null;
 
     if (fill.paletteStyle != null) {
-      return "color: context.watch<ThemeCubit>().state ? TetaThemes.lightTheme['${currentPaletteElement.name}'] as Color : TetaThemes.darkTheme['${currentPaletteElement.name}'] as Color,";
+      if (currentPaletteElement != null) {
+        return "color: context.watch<ThemeCubit>().state ? TetaThemes.lightTheme['${currentPaletteElement.name}'] as Color : TetaThemes.darkTheme['${currentPaletteElement.name}'] as Color,";
+      } else {
+        return 'color: Colors.black,';
+      }
     }
 
     if (fill.type == FFillType.solid) {
