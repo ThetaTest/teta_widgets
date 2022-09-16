@@ -16,37 +16,12 @@ const PackageModel pAuthButton = PackageModel(
   packageVersion: '2.0.4',
   isDart: false,
 );
-//todo: optimize later - unused - right now is a default import
-const PackageModel pSupabase = PackageModel(
-  packageName: 'supabase',
-  packageVersion: '0.3.4+1',
-  isDart: false,
-);
-//todo: optimize later - unused - right now is a default import
-const PackageModel pFlutterSupabase = PackageModel(
-  packageName: 'supabase_flutter',
-  packageVersion: '0.3.1+3',
-  isDart: false,
-);
-//todo: optimize later - unused - right now is a default import
+
 const PackageModel pGoogleMobileAds = PackageModel(
   packageName: 'google_mobile_ads',
   packageVersion: '1.2.0',
   isDart: false,
   customPath: "import 'package:google_mobile_ads/google_mobile_ads.dart';",
-);
-//todo: optimize later - unused - right now is a default import
-const PackageModel pFlutterStripe = PackageModel(
-  packageName: 'flutter_stripe',
-  packageVersion: '4.0.0',
-  isDart: false,
-);
-//todo: optimize later - unused - right now is a default import
-const PackageModel pHttp = PackageModel(
-  packageName: 'http',
-  packageVersion: '0.13.4',
-  isDart: false,
-  extraCode: 'as http',
 );
 
 const PackageModel pIntl = PackageModel(
@@ -177,22 +152,9 @@ const PackageModel pUrlLauncher = PackageModel(
   isDart: false,
   customPath: "import 'package:url_launcher/url_launcher_string.dart';",
 );
-//todo: optimize later - unused - right now is a default import
 const PackageModel pIO = PackageModel(
   packageName: 'io',
   packageVersion: '',
-  isDart: true,
-);
-//todo: optimize later - unused - right now is a default import
-const PackageModel pUI = PackageModel(
-  packageName: 'ui',
-  packageVersion: '',
-  isDart: true,
-);
-//todo: optimize later - unused - right now is a default import
-const PackageModel pConvert = PackageModel(
-  packageName: 'convert',
-  packageVersion: '3.0.2',
   isDart: true,
 );
 const PackageModel pJustAudio = PackageModel(
@@ -206,11 +168,4 @@ const PackageModel pRxDart = PackageModel(
   packageVersion: '0.27.4',
   isDart: false,
   customPath: "import 'package:rxdart/rxdart.dart';",
-);
-
-const PackageModel pFlutterBloc = PackageModel(
-  packageName: 'flutter_bloc',
-  packageVersion: '8.1.1',
-  isDart: false,
-  customPath: "import 'package:flutter_bloc/flutter_bloc.dart';",
 );

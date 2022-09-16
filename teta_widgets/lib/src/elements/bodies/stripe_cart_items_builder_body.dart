@@ -48,7 +48,7 @@ final stripeCartItemsBuilderBodyIntrinsicStates = IntrinsicStates(
   addChildLabels: [],
   gestures: [],
   permissions: [],
-  packages: [pFlutterStripe],
+  packages: [],
 );
 
 /// ListView Builder's body
