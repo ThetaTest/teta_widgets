@@ -1,5 +1,6 @@
 // Flutter imports:
 import 'package:flutter/material.dart';
+import 'package:flutter_test/flutter_test.dart';
 import 'package:teta_widgets/src/elements/code/formatter_test.dart';
 // Project imports:
 import 'package:teta_widgets/src/elements/code/snippets.dart';
@@ -31,14 +32,41 @@ class AspectRatioCodeTemplate {
     if (res) {
       return code;
     } else {
-      return toCode(
+      final code = await toCode(
         context,
         NodeBody.get(NType.aspectRatio),
         null,
-        loop,
+        0,
       );
+      final res = FormatterTest.format(code);
+      if (res) {
+        return code;
+      } else {
+        return 'const SizedBox()';
+      }
     }
   }
 
-  static void testCode() {}
+  static void testCode() {
+    group('AspectRatio toCode test', () {
+      test(
+        'AspectRatio: default',
+        () {
+          final body = NodeBody.get(NType.aspectRatio);
+          final abstract = body.attributes[DBKeys.value] as FTextTypeInput;
+          final value = abstract.toCode(0);
+          final aspectRatio =
+              double.tryParse(value) != null ? double.parse(value) : '0.5';
+          expect(
+            FormatterTest.format('''
+             AspectRatio(
+              aspectRatio: $aspectRatio,
+              child: const SizedBox(),
+            )'''),
+            true,
+          );
+        },
+      );
+    });
+  }
 }

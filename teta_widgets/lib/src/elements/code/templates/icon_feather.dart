@@ -1,10 +1,12 @@
 // Flutter imports:
 import 'package:flutter/material.dart';
+import 'package:flutter_test/flutter_test.dart';
 import 'package:teta_widgets/src/elements/code/formatter_test.dart';
 // Project imports:
 import 'package:teta_widgets/src/elements/code/snippets.dart';
 import 'package:teta_widgets/src/elements/controls/key_constants.dart';
 import 'package:teta_widgets/src/elements/features/fill.dart';
+import 'package:teta_widgets/src/elements/nodes/enum.dart';
 import 'package:teta_widgets/src/elements/nodes/node.dart';
 import 'package:teta_widgets/src/elements/nodes/node_body.dart';
 
@@ -34,9 +36,41 @@ class IconFeatherCodeTemplate {
     if (res) {
       return code;
     } else {
-      return 'const SizedBox()';
+      final code = await toCode(
+        context,
+        NodeBody.get(NType.featherIcon),
+        node,
+        null,
+        0,
+      );
+      final res = FormatterTest.format(code);
+      if (res) {
+        return code;
+      } else {
+        return 'const SizedBox()';
+      }
     }
   }
 
-  static void testCode() {}
+  static void testCode() {
+    group('IconFeather toCode test', () {
+      test(
+        'IconFeather: default',
+        () {
+          final body = NodeBody.get(NType.featherIcon);
+          final icon = body.attributes[DBKeys.featherIcon] as String;
+          final fill = FFill.toCodeTests(FFill().ready(FFillType.solid));
+          expect(
+            FormatterTest.format('''
+              Icon (
+                FeatherIconsMap['$icon'],
+                size: 24,
+                $fill
+              )'''),
+            true,
+          );
+        },
+      );
+    });
+  }
 }

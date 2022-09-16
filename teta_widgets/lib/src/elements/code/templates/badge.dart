@@ -41,14 +41,14 @@ class BadgeCodeTemplate {
       final code = await toCode(
         context,
         NodeBody.get(NType.badge),
-        child,
-        loop,
+        null,
+        0,
       );
       final res = FormatterTest.format(code);
       if (res) {
         return code;
       } else {
-        return toCode(context, NodeBody.get(NType.badge), null, 0);
+        return 'const SizedBox()';
       }
     }
   }

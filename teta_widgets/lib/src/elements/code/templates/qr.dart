@@ -1,5 +1,6 @@
 // Flutter imports:
 import 'package:flutter/material.dart';
+import 'package:flutter_test/flutter_test.dart';
 import 'package:teta_widgets/src/elements/code/formatter_test.dart';
 // Project imports:
 import 'package:teta_widgets/src/elements/controls/key_constants.dart';
@@ -42,5 +43,32 @@ class QrCodeTemplate {
     }
   }
 
-  static void testCode() {}
+  static void testCode() {
+    group('QR toCode test', () {
+      test(
+        'QR: default',
+        () {
+          final body = NodeBody.get(NType.qrCode);
+          final content =
+              (body.attributes[DBKeys.value] as FTextTypeInput).toCode(0);
+          final withImage = body.attributes[DBKeys.flag] as bool;
+          final image =
+              (body.attributes[DBKeys.image] as FTextTypeInput).toCode(0);
+          final fill = FFill.toCodeTests(FFill().ready(FFillType.solid));
+
+          expect(
+            FormatterTest.format('''
+              QrImage(
+                data: $content,
+                size: 24,
+                ${fill!.replaceAll('color:', 'foregroundColor:')}
+                ${withImage ? 'embeddedImage: NetworkImage($image),' : ''}
+                gapless: false,
+              )'''),
+            true,
+          );
+        },
+      );
+    });
+  }
 }

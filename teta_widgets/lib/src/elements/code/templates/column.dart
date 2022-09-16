@@ -27,22 +27,16 @@ class ColumnCodeTemplate {
     if (res) {
       return code;
     } else {
-      final code = await toCode(context, body, []);
+      final code = await toCode(
+        context,
+        NodeBody.get(NType.column),
+        [],
+      );
       final res = FormatterTest.format(code);
       if (res) {
         return code;
       } else {
-        final code = await toCode(
-          context,
-          NodeBody.get(NType.column),
-          children,
-        );
-        final res = FormatterTest.format(code);
-        if (res) {
-          return code;
-        } else {
-          return 'Column(children: [])';
-        }
+        return 'Column(children: [])';
       }
     }
   }

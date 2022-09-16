@@ -80,7 +80,7 @@ class ListViewBuilderCodeTemplate {
         node,
         pageId,
         null,
-        loop,
+        0,
       );
       final res = FormatterTest.format(code);
       if (res) {
