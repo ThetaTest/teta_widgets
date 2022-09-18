@@ -46,7 +46,7 @@ class AnimatedOpacityCodeTemplate {
         context,
         NodeBody.get(NType.animatedOpacity),
         null,
-        loop,
+        0,
       );
     }
   }

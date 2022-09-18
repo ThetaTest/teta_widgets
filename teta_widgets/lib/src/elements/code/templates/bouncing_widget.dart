@@ -1,5 +1,6 @@
 // Flutter imports:
 import 'package:flutter/material.dart';
+import 'package:flutter_test/flutter_test.dart';
 import 'package:teta_widgets/src/elements/code/formatter_test.dart';
 // Project imports:
 import 'package:teta_widgets/src/elements/code/snippets.dart';
@@ -50,39 +51,48 @@ class BouncingWidgetCodeTemplate {
       final code = await toCode(
         pageId,
         context,
-        body,
+        NodeBody.get(NType.bouncingWidget),
         node,
         null,
-        loop,
+        0,
       );
       final res = FormatterTest.format(code);
       if (res) {
         return code;
       } else {
-        final code = await toCode(
-          pageId,
-          context,
-          NodeBody.get(NType.bouncingWidget),
-          node,
-          child,
-          loop,
-        );
-        final res = FormatterTest.format(code);
-        if (res) {
-          return code;
-        } else {
-          return toCode(
-            pageId,
-            context,
-            NodeBody.get(NType.bouncingWidget),
-            node,
-            null,
-            loop,
-          );
-        }
+        return 'const SizedBox()';
       }
     }
   }
 
-  static void testCode() {}
+  static void testCode() {
+    group('BouncingWidget toCode test', () {
+      test(
+        'BouncingWidget: default',
+        () {
+          final body = NodeBody.get(NType.bouncingWidget);
+          final abstract = body.attributes[DBKeys.value] as FTextTypeInput;
+          final value = abstract.toCode(0);
+          final duration =
+              int.tryParse(value) != null ? int.parse(value) : '200';
+          final valueOfCondition =
+              (body.attributes[DBKeys.valueOfCondition] as FTextTypeInput)
+                  .toCode(0);
+          final scale = double.tryParse(valueOfCondition) ?? 1;
+          const actionString = 'onPressed: () async{},';
+          const childString = 'const SizedBox()';
+          expect(
+            FormatterTest.format('''
+            BouncingWidget(
+            ${actionString != '' ? actionString : 'onPressed: () async {},'}
+             duration: const Duration(milliseconds: $duration),
+             scaleFactor: $scale,
+             $childString
+             )'''),
+            true,
+          );
+        },
+      );
+    });
+  }
 }
