@@ -63,10 +63,12 @@ class _WAudioPlayerVolumeIndicatorState
           .firstWhereOrNull((final e) => e.name == widget.controller.stateName);
     }
     if (variable?.audioController != null) {
-      setState(() {
-        audioController = variable?.audioController;
-        isInitialized = true;
-      });
+      if (mounted) {
+        setState(() {
+          audioController = variable?.audioController;
+          isInitialized = true;
+        });
+      }
     }
   }
 

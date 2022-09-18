@@ -80,11 +80,13 @@ class _WCmsCustomQueryState extends State<WCmsCustomQuery> {
     );
 
     if (query.isNotEmpty) {
-      setState(() {
-        _future = TetaCMS.instance.client.query(
-          query,
-        );
-      });
+      if (mounted) {
+        setState(() {
+          _future = TetaCMS.instance.client.query(
+            query,
+          );
+        });
+      }
     }
   }
 

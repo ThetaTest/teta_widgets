@@ -38,7 +38,7 @@ class FMargins {
   static FMargins fromJson(final List<dynamic> json) {
     try {
       return FMargins(
-        margins: json.cast<String>(),
+        margins: json.map((final dynamic e) => '$e').toList(),
       );
     } catch (e) {
       return FMargins();

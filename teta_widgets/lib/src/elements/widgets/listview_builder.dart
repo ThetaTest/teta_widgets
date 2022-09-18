@@ -2,6 +2,7 @@
 // ignore_for_file: public_member_api_docs
 
 // Flutter imports:
+import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 // Package imports:
 import 'package:teta_core/teta_core.dart';
@@ -107,28 +108,31 @@ class WListViewBuilderState extends State<WListViewBuilder> {
             }
             return true;
           },
-          child: ListView.builder(
-            reverse: widget.isReverse,
-            physics: widget.physic.physics,
-            addAutomaticKeepAlives: false,
-            addRepaintBoundaries: false,
-            shrinkWrap: widget.shrinkWrap,
-            scrollDirection:
-                widget.isVertical ? Axis.vertical : Axis.horizontal,
-            itemCount: db.getMap.length,
-            itemBuilder: (final context, final index) => widget.child != null
-                ? widget.child!.toWidget(
-                    forPlay: widget.forPlay,
-                    params: widget.params,
-                    states: widget.states,
-                    dataset: widget.dataset,
-                    loop: index,
-                  )
-                : PlaceholderChildBuilder(
-                    name: widget.node.intrinsicState.displayName,
-                    node: widget.node,
-                    forPlay: widget.forPlay,
-                  ),
+          child: ScrollConfiguration(
+            behavior: _MyCustomScrollBehavior(),
+            child: ListView.builder(
+              reverse: widget.isReverse,
+              physics: widget.physic.physics,
+              addAutomaticKeepAlives: false,
+              addRepaintBoundaries: false,
+              shrinkWrap: widget.shrinkWrap,
+              scrollDirection:
+                  widget.isVertical ? Axis.vertical : Axis.horizontal,
+              itemCount: db.getMap.length,
+              itemBuilder: (final context, final index) => widget.child != null
+                  ? widget.child!.toWidget(
+                      forPlay: widget.forPlay,
+                      params: widget.params,
+                      states: widget.states,
+                      dataset: widget.dataset,
+                      loop: index,
+                    )
+                  : PlaceholderChildBuilder(
+                      name: widget.node.intrinsicState.displayName,
+                      node: widget.node,
+                      forPlay: widget.forPlay,
+                    ),
+            ),
           ),
         ),
       ),
@@ -143,11 +147,23 @@ class WListViewBuilderState extends State<WListViewBuilder> {
       final db = index != -1 ? widget.dataset[index] : DatasetObject.empty();
       if (mounted) {
         if (db.getName != '') {
-          setState(() {
-            map = db;
-          });
+          if (mounted) {
+            setState(() {
+              map = db;
+            });
+          }
         }
       }
     } catch (_) {}
   }
+}
+
+class _MyCustomScrollBehavior extends MaterialScrollBehavior {
+  // Override behavior methods and getters like dragDevices
+  @override
+  Set<PointerDeviceKind> get dragDevices => {
+        PointerDeviceKind.touch,
+        PointerDeviceKind.mouse,
+        // etc.
+      };
 }

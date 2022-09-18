@@ -128,18 +128,20 @@ class _WCmsStreamState extends State<WCmsStream> {
     Logger.printWarning(
       '$collectionId, keyName: $keyName, keyValue: $keyValue, limit: $limit, page: $page ',
     );
-    setState(() {
-      _stream = TetaCMS.instance.realtime.streamCollection(
-        collectionId,
-        filters: [
-          if (keyName.isNotEmpty && keyValue.isNotEmpty)
-            Filter(keyName, keyValue),
-        ],
-        limit: int.tryParse(limit) ?? 20,
-        page: int.tryParse(page) ?? 0,
-        showDrafts: widget.showDrafts,
-      );
-    });
+    if (mounted) {
+      setState(() {
+        _stream = TetaCMS.instance.realtime.streamCollection(
+          collectionId,
+          filters: [
+            if (keyName.isNotEmpty && keyValue.isNotEmpty)
+              Filter(keyName, keyValue),
+          ],
+          limit: int.tryParse(limit) ?? 20,
+          page: int.tryParse(page) ?? 0,
+          showDrafts: widget.showDrafts,
+        );
+      });
+    }
   }
 
   @override

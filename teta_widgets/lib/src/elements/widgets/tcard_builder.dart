@@ -166,10 +166,12 @@ class _WTCardState extends State<WTCardBuilder> {
           ),
         );
       }
-      setState(() {
-        list = temp;
-        isLoaded = widget.forPlay;
-      });
+      if (mounted) {
+        setState(() {
+          list = temp;
+          isLoaded = widget.forPlay;
+        });
+      }
     }
   }
 

@@ -2,6 +2,7 @@
 // ignore_for_file: public_member_api_docs
 
 // Flutter imports:
+import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 // Package imports:
 import 'package:teta_core/teta_core.dart';
@@ -96,31 +97,44 @@ class WListView extends StatelessWidget {
             }
             return true;
           },
-          child: ListView.builder(
-            reverse: isReverse,
-            physics: physic.physics,
-            addAutomaticKeepAlives: false,
-            addRepaintBoundaries: false,
-            scrollDirection: isVertical ? Axis.vertical : Axis.horizontal,
-            itemCount: children.isEmpty ? 1 : children.length,
-            itemBuilder: (final context, final index) {
-              return children.isNotEmpty
-                  ? children[index].toWidget(
-                      loop: loop,
-                      forPlay: forPlay,
-                      params: params,
-                      states: states,
-                      dataset: dataset,
-                    )
-                  : PlaceholderChildBuilder(
-                      name: node.intrinsicState.displayName,
-                      node: node,
-                      forPlay: forPlay,
-                    );
-            },
+          child: ScrollConfiguration(
+            behavior: _MyCustomScrollBehavior(),
+            child: ListView.builder(
+              reverse: isReverse,
+              physics: physic.physics,
+              addAutomaticKeepAlives: false,
+              addRepaintBoundaries: false,
+              scrollDirection: isVertical ? Axis.vertical : Axis.horizontal,
+              itemCount: children.isEmpty ? 1 : children.length,
+              itemBuilder: (final context, final index) {
+                return children.isNotEmpty
+                    ? children[index].toWidget(
+                        loop: loop,
+                        forPlay: forPlay,
+                        params: params,
+                        states: states,
+                        dataset: dataset,
+                      )
+                    : PlaceholderChildBuilder(
+                        name: node.intrinsicState.displayName,
+                        node: node,
+                        forPlay: forPlay,
+                      );
+              },
+            ),
           ),
         ),
       ),
     );
   }
+}
+
+class _MyCustomScrollBehavior extends MaterialScrollBehavior {
+  // Override behavior methods and getters like dragDevices
+  @override
+  Set<PointerDeviceKind> get dragDevices => {
+        PointerDeviceKind.touch,
+        PointerDeviceKind.mouse,
+        // etc.
+      };
 }

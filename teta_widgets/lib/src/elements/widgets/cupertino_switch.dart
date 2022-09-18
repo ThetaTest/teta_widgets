@@ -56,9 +56,11 @@ class _WCupertinoSwitchState extends State<WCupertinoSwitch> {
             dataset: widget.dataset,
             forPlay: widget.forPlay,
           );
-          setState(() {
-            flag = value;
-          });
+          if (mounted) {
+            setState(() {
+              flag = value;
+            });
+          }
         },
         value: flag,
       ),

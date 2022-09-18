@@ -77,6 +77,12 @@ class DBKeys {
   static const String zRotation = 'zR';
   static const String xOffset = 'xO';
   static const String yOffset = 'yO';
+  static const String xTranslation = 'xTrans';
+  static const String yTranslation = 'yTrans';
+  static const String rotation = 'rotation';
+  static const String xPerspective = 'xPer';
+  static const String yPerspective = 'yPer';
+  static const String zPerspective = 'zPer';
   static const String left = 'dl';
   static const String top = 'tp';
   static const String right = 'dr';
@@ -494,6 +500,28 @@ class DynamicAttributes {
           return FTextTypeInput.fromJson(value as Map<String, dynamic>);
         case DBKeys.labelText:
           return FTextTypeInput.fromJson(value as Map<String, dynamic>);
+        case DBKeys.xRotation:
+          return FTextTypeInput.fromJson(value as Map<String, dynamic>);
+        case DBKeys.yRotation:
+          return FTextTypeInput.fromJson(value as Map<String, dynamic>);
+        case DBKeys.zRotation:
+          return FTextTypeInput.fromJson(value as Map<String, dynamic>);
+        case DBKeys.xOffset:
+          return FTextTypeInput.fromJson(value as Map<String, dynamic>);
+        case DBKeys.yOffset:
+          return FTextTypeInput.fromJson(value as Map<String, dynamic>);
+        case DBKeys.rotation:
+          return FTextTypeInput.fromJson(value as Map<String, dynamic>);
+        case DBKeys.xPerspective:
+          return FTextTypeInput.fromJson(value as Map<String, dynamic>);
+        case DBKeys.yPerspective:
+          return FTextTypeInput.fromJson(value as Map<String, dynamic>);
+        case DBKeys.zPerspective:
+          return FTextTypeInput.fromJson(value as Map<String, dynamic>);
+        case DBKeys.xTranslation:
+          return FTextTypeInput.fromJson(value as Map<String, dynamic>);
+        case DBKeys.yTranslation:
+          return FTextTypeInput.fromJson(value as Map<String, dynamic>);
         case DBKeys.visibility:
           return value;
         case DBKeys.borderFill:
@@ -780,6 +808,28 @@ class DynamicAttributes {
       case DBKeys.borderFill:
         return value != null ? value.toJson() : FFill().toJson();
       case DBKeys.keyboardType:
+        return value != null ? value.toJson() : FKeyboardType().toJson();
+      case DBKeys.xRotation:
+        return value != null ? value.toJson() : FKeyboardType().toJson();
+      case DBKeys.yRotation:
+        return value != null ? value.toJson() : FKeyboardType().toJson();
+      case DBKeys.zRotation:
+        return value != null ? value.toJson() : FKeyboardType().toJson();
+      case DBKeys.xOffset:
+        return value != null ? value.toJson() : FKeyboardType().toJson();
+      case DBKeys.yOffset:
+        return value != null ? value.toJson() : FKeyboardType().toJson();
+      case DBKeys.xPerspective:
+        return value != null ? value.toJson() : FKeyboardType().toJson();
+      case DBKeys.yPerspective:
+        return value != null ? value.toJson() : FKeyboardType().toJson();
+      case DBKeys.zPerspective:
+        return value != null ? value.toJson() : FKeyboardType().toJson();
+      case DBKeys.rotation:
+        return value != null ? value.toJson() : FKeyboardType().toJson();
+      case DBKeys.xTranslation:
+        return value != null ? value.toJson() : FKeyboardType().toJson();
+      case DBKeys.yTranslation:
         return value != null ? value.toJson() : FKeyboardType().toJson();
       default:
         return <String, dynamic>{};

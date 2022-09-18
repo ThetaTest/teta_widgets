@@ -74,9 +74,11 @@ class _WRadioState extends State<WRadio> {
             forPlay: widget.forPlay,
           );
           if (widget.forPlay) {
-            setState(() {
-              val = !val;
-            });
+            if (mounted) {
+              setState(() {
+                val = !val;
+              });
+            }
           }
         },
 

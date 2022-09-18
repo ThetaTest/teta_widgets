@@ -107,10 +107,12 @@ class _WAudioPlayerState extends State<WAudioPlayer> {
         preload: false,
       );
 
-      setState(() {
-        ap = audioPlayer;
-        isInitialized = true;
-      });
+      if (mounted) {
+        setState(() {
+          ap = audioPlayer;
+          isInitialized = true;
+        });
+      }
     } catch (e) {
       print('WAudioPlayer.initAudioPlayer.error -> $e');
       throw Exception(e);

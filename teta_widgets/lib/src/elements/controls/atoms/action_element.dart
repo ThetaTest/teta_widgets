@@ -272,10 +272,12 @@ class ActionElementControlState extends State<ActionElementControl> {
                     listener: (final context, final state) {
                       if (state.isNotEmpty) {
                         if (state.first.nid != nodeId) {
-                          setState(() {
-                            delayController.text =
-                                widget.element.delay?.value ?? '0';
-                          });
+                          if (mounted) {
+                            setState(() {
+                              delayController.text =
+                                  widget.element.delay?.value ?? '0';
+                            });
+                          }
                           nodeId = state.first.nid;
                         }
                       }
@@ -329,11 +331,13 @@ class ActionElementControlState extends State<ActionElementControl> {
                           listener: (final context, final state) {
                             if (state.isNotEmpty) {
                               if (state.first.nid != nodeId) {
-                                setState(() {
-                                  loopController.text =
-                                      widget.element.everyMilliseconds?.value ??
-                                          '0';
-                                });
+                                if (mounted) {
+                                  setState(() {
+                                    loopController.text = widget
+                                            .element.everyMilliseconds?.value ??
+                                        '0';
+                                  });
+                                }
                                 nodeId = state.first.nid;
                               }
                             }
@@ -1308,9 +1312,11 @@ class ActionElementControlState extends State<ActionElementControl> {
                             (final element) => element.name == newValue,
                           );
                           widget.element.nameOfPage = newValue;
-                          setState(() {
-                            dropdownLinkPage = newValue;
-                          });
+                          if (mounted) {
+                            setState(() {
+                              dropdownLinkPage = newValue;
+                            });
+                          }
                           widget.callBack(widget.element, old);
                         }
                       },
@@ -1708,17 +1714,20 @@ class _ElementState extends State<Element> {
                   .toSet()
                   .toList(),
               onChange: (final newValue) {
-                setState(() {
-                  dropdownDataset = newValue;
-                  listSecondDropwdown = <Map<String, dynamic>>[];
-                  listSecondDropwdown.addAll(
-                    listDataset
-                        .firstWhere(
-                          (final element) => element.getName == dropdownDataset,
-                        )
-                        .getMap,
-                  );
-                });
+                if (mounted) {
+                  setState(() {
+                    dropdownDataset = newValue;
+                    listSecondDropwdown = <Map<String, dynamic>>[];
+                    listSecondDropwdown.addAll(
+                      listDataset
+                          .firstWhere(
+                            (final element) =>
+                                element.getName == dropdownDataset,
+                          )
+                          .getMap,
+                    );
+                  });
+                }
               },
             ),
           if (dropdownDataset != null && listSecondDropwdown.isNotEmpty)
@@ -1734,9 +1743,11 @@ class _ElementState extends State<Element> {
                   .toList(),
               onChange: (final newValue) {
                 if (newValue != null) {
-                  setState(() {
-                    dropdown = newValue;
-                  });
+                  if (mounted) {
+                    setState(() {
+                      dropdown = newValue;
+                    });
+                  }
                   if (widget.variable.id != null) {
                     widget.map[widget.variable.id!] = {
                       'dataset': dropdownDataset,

@@ -76,12 +76,16 @@ class _WMapState extends State<WMap> {
       location: LatLng(41.52, 12.30),
       zoom: 4,
     );
-    setState(() {});
+    if (mounted) {
+      setState(() {});
+    }
   }
 
   void _gotoDefault() {
     variable!.mapController!.center = LatLng(41.52, 12.30);
-    setState(() {});
+    if (mounted) {
+      setState(() {});
+    }
   }
 
   void _onDoubleTap() {

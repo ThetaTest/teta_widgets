@@ -49,7 +49,9 @@ class WStripeProductsBuilderState extends State<WStripeProductsBuilder> {
   @override
   void initState() {
     _getStripeProducts().whenComplete(() {
-      setState(() {});
+      if (mounted) {
+        setState(() {});
+      }
     });
     super.initState();
   }
@@ -57,7 +59,9 @@ class WStripeProductsBuilderState extends State<WStripeProductsBuilder> {
   @override
   Widget build(final BuildContext context) {
     _getStripeProducts().whenComplete(() {
-      setState(() {});
+      if (mounted) {
+        setState(() {});
+      }
     });
     return NodeSelectionBuilder(
       node: widget.node,

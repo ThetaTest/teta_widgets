@@ -120,17 +120,19 @@ class _WCmsCountState extends State<WCmsCount> {
       widget.loop,
       context,
     );
-    setState(() {
-      _future = TetaCMS.instance.client.getCollectionCount(
-        collectionId,
-        filters: [
-          if (keyName.isNotEmpty && keyValue.isNotEmpty)
-            Filter(keyName, keyValue),
-        ],
-        limit: int.tryParse(limit) ?? 20,
-        page: int.tryParse(page) ?? 0,
-      );
-    });
+    if (mounted) {
+      setState(() {
+        _future = TetaCMS.instance.client.getCollectionCount(
+          collectionId,
+          filters: [
+            if (keyName.isNotEmpty && keyValue.isNotEmpty)
+              Filter(keyName, keyValue),
+          ],
+          limit: int.tryParse(limit) ?? 20,
+          page: int.tryParse(page) ?? 0,
+        );
+      });
+    }
   }
 
   @override

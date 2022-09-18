@@ -89,6 +89,7 @@ abstract class CNode extends Equatable {
         nid,
         child,
         children,
+        body,
       ];
 
   /// Get all node controls.

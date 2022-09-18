@@ -76,11 +76,13 @@ class _WNumericStepButtonState extends State<WNumericStepButton> {
             iconSize: 32,
             color: Theme.of(context).primaryColor,
             onPressed: () {
-              setState(() {
-                if (counter < maxValue) {
-                  counter++;
-                }
-              });
+              if (mounted) {
+                setState(() {
+                  if (counter < maxValue) {
+                    counter++;
+                  }
+                });
+              }
             },
           ),
         ],

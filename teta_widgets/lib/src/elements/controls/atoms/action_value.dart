@@ -177,7 +177,7 @@ class PaddingsState extends State<ActionvalueControl> {
               }).toList(),
             ),
           ),
-          //todo: questo è il codice che mi serve nel button
+        //todo: questo è il codice che mi serve nel button
         if (widget.actionValue.type == FTextTypeEnum.dataset)
           Container(
             width: double.maxFinite,
@@ -197,9 +197,11 @@ class PaddingsState extends State<ActionvalueControl> {
               underline: const SizedBox(),
               onChanged: (final String? newValue) {
                 if (newValue != null) {
-                  setState(() {
-                    databaseName = newValue;
-                  });
+                  if (mounted) {
+                    setState(() {
+                      databaseName = newValue;
+                    });
+                  }
                   final old = widget.actionValue;
                   widget.actionValue.datasetName = newValue;
                   widget.callBack(widget.actionValue, old);

@@ -1,24 +1,11 @@
 // Flutter imports:
+
 import 'package:flutter/material.dart';
+import 'package:teta_core/teta_core.dart';
 // Project imports:
 import 'package:teta_widgets/src/elements/controls/key_constants.dart';
-import 'package:teta_widgets/src/elements/features/action.dart';
-import 'package:teta_widgets/src/elements/features/actions/enums/gestures.dart';
-import 'package:teta_widgets/src/elements/features/align.dart';
-import 'package:teta_widgets/src/elements/features/border.dart';
-import 'package:teta_widgets/src/elements/features/border_radius.dart';
-import 'package:teta_widgets/src/elements/features/box_fit.dart';
-import 'package:teta_widgets/src/elements/features/cross_axis_alignment.dart';
-import 'package:teta_widgets/src/elements/features/fill.dart';
-import 'package:teta_widgets/src/elements/features/firestore_path.dart';
-import 'package:teta_widgets/src/elements/features/main_axis_alignment.dart';
-import 'package:teta_widgets/src/elements/features/main_axis_size.dart';
-import 'package:teta_widgets/src/elements/features/margins.dart';
 import 'package:teta_widgets/src/elements/features/physic.dart';
-import 'package:teta_widgets/src/elements/features/sizes.dart';
-import 'package:teta_widgets/src/elements/features/text_style.dart';
-import 'package:teta_widgets/src/elements/features/wrap_alignment.dart';
-import 'package:teta_widgets/src/elements/nodes/node.dart';
+import 'package:teta_widgets/src/elements/index.dart';
 import 'package:teta_widgets/src/elements/nodes/node_body.dart';
 
 /// Code Snippets. Set of funcs to generate properties' code string.
@@ -197,7 +184,60 @@ class CS {
     final Future<String> child,
     final int loop,
   ) async {
+    return defaultWidgetVisibility(
+      node,
+      defaultWidgetMarginOrPadding(
+        context,
+        node,
+        pageId,
+        defaultWidgetGestureDetector(
+          context,
+          node,
+          pageId,
+          defaultWidgetTranslate(
+            node.body,
+            defaultWidgetRotate(
+              node,
+              defaultWidgetPerspective(
+                node.body,
+                defaultWidgetMarginOrPadding(
+                  context,
+                  node,
+                  pageId,
+                  child,
+                  loop,
+                  false,
+                  true,
+                ),
+                loop,
+              ),
+              loop,
+            ),
+            loop,
+          ),
+          loop,
+        ),
+        loop,
+        true,
+        false,
+      ),
+      loop,
+    );
+  }
+
+  static Future<String> defaultWidgetGestureDetector(
+    final BuildContext context,
+    final CNode node,
+    final int pageId,
+    final Future<String> child,
+    final int loop,
+  ) async {
     final childString = await child;
+    final originalType = NodeBody.get(node.globalType);
+    if (originalType.attributes[DBKeys.action] == null) {
+      return childString;
+    }
+
     final onTap = CS.action(
       pageId,
       context,
@@ -231,13 +271,314 @@ class CS {
     if (onTap.isEmpty && onDoubleTap.isEmpty && onLongPress.isEmpty) {
       return childString;
     }
+
     return '''
     GestureDetector(
       $onTap
       $onDoubleTap
       $onLongPress
-      $childString
+      child: $childString
     )''';
+  }
+
+  static Future<String> defaultWidgetMarginOrPadding(
+    final BuildContext context,
+    final CNode node,
+    final int pageId,
+    final Future<String> child,
+    final int loop,
+    final bool isMargin,
+    final bool withComma,
+  ) async {
+    final childString = await child;
+    final originalType = NodeBody.get(node.globalType);
+    if (originalType.attributes[DBKeys.margins] == null &&
+        node.body.attributes[DBKeys.margins] != null) {
+      final padding = CS.margin(context, node.body, isMargin: false);
+      if (padding == 'padding: EdgeInsets.zero,' || padding == '') {
+        return childString;
+      }
+
+      return '''
+    Padding(
+      ${padding != '' ? padding : "padding: EdgeInsets.zero,"}
+      child: $childString
+    )${withComma ? ',' : ''}
+  ''';
+    }
+    if (originalType.attributes[DBKeys.padding] == null &&
+        node.body.attributes[DBKeys.padding] != null) {
+      final padding = CS.margin(context, node.body, isMargin: false);
+      if (padding == 'padding: EdgeInsets.zero,' || padding == '') {
+        return childString;
+      }
+
+      return '''
+    Padding(
+      ${padding != '' ? padding : "padding: EdgeInsets.zero,"}
+      child: $childString
+    )${withComma ? ',' : ''}
+  ''';
+    }
+    return childString;
+  }
+
+  static Future<String> defaultWidgetRotate(
+    final CNode node,
+    final Future<String> child,
+    final int loop,
+  ) async {
+    final childString = await child;
+    final abstract = node.body.attributes[DBKeys.rotation] as FTextTypeInput?;
+    final value = abstract?.toCode(loop) ?? '1';
+    Logger.printMessage(value);
+    final rotation = int.tryParse(
+          value,
+        ) ??
+        1;
+
+    final originalType = NodeBody.get(node.globalType);
+    if (originalType.attributes[DBKeys.visibility] == null) {
+      if (rotation != 1) {
+        return '''
+    RotatedBox(
+      quarterTurns: $rotation,
+      child: $childString
+    ),
+  ''';
+      }
+    }
+    return childString;
+  }
+
+  static Future<String> defaultWidgetTranslate(
+    final NodeBody body,
+    final Future<String> child,
+    final int loop,
+  ) async {
+    /// Just an example
+    void example() {
+      Transform.translate(
+        offset: const Offset(100, 0),
+        child: Container(
+          height: 100,
+          width: 100,
+          color: Colors.yellow,
+        ),
+      );
+    }
+
+    final childString = await child;
+    final abstractX = body.attributes[DBKeys.xTranslation] as FTextTypeInput?;
+    final valueX = abstractX?.toCode(loop) ?? '0';
+    final transX = double.tryParse(valueX) != null ? double.parse(valueX) : 0.0;
+
+    final abstractY = body.attributes[DBKeys.yTranslation] as FTextTypeInput?;
+    final valueY = abstractY?.toCode(loop) ?? '0';
+    final transY = double.tryParse(valueY) != null ? double.parse(valueY) : 0.0;
+
+    if (transX == 0 && transY == 0) {
+      return childString;
+    }
+
+    return '''
+    Transform.translate(
+      offset: const Offset($transX, $transY),
+      child: $childString
+    )
+  ''';
+  }
+
+  static Future<String> defaultWidgetVisibility(
+    final CNode node,
+    final Future<String> child,
+    final int loop,
+  ) async {
+    /// Just an example
+    void example() {
+      Visibility(
+        visible: false,
+        child: Container(
+          height: 100,
+          width: 100,
+          color: Colors.yellow,
+        ),
+      );
+    }
+
+    final childString = await child;
+    final value = node.body.attributes[DBKeys.visibility] as bool? ?? true;
+
+    final originalType = NodeBody.get(node.globalType);
+    if (originalType.attributes[DBKeys.visibility] == null) {
+      if (value == false) {
+        return '''
+    Visibility(
+      visible: false,
+      child: $childString
+    )
+  ''';
+      }
+    }
+    return childString;
+  }
+
+  static Future<String> defaultWidgetResponsive(
+    final NodeBody body,
+    final Future<String> child,
+    final int loop,
+  ) async {
+    /// Just an example
+    void example() {
+      Builder(
+        builder: (final context) {
+          if (MediaQuery.of(context).size.shortestSide < 600) {
+            // Mobile
+            return const SizedBox();
+          }
+          if (MediaQuery.of(context).size.shortestSide < 1000) {
+            // Tablet
+            return const SizedBox();
+          }
+          // Desktop
+          return const SizedBox();
+        },
+      );
+    }
+
+    final childString = await child;
+    final abstractMobile =
+        body.attributes[DBKeys.visibleOnMobile] as FTextTypeInput?;
+    final valueMobile = abstractMobile?.toCode(loop) ?? 'true';
+    final abstractTablet =
+        body.attributes[DBKeys.visibleOnMobile] as FTextTypeInput?;
+    final valueTablet = abstractTablet?.toCode(loop) ?? 'true';
+    final abstractDesktop =
+        body.attributes[DBKeys.visibleOnMobile] as FTextTypeInput?;
+    final valueDesktop = abstractDesktop?.toCode(loop) ?? 'true';
+
+    if (valueMobile == 'true' &&
+        valueTablet == 'true' &&
+        valueDesktop == 'true') {
+      return childString;
+    }
+
+    return '''
+    Builder(
+      builder: (final context) {
+        if (MediaQuery.of(context).size.shortestSide < 600) {
+          // Mobile
+          return ${valueMobile == 'false' ? 'const SizedBox();' : childString};
+        }
+        if (MediaQuery.of(context).size.shortestSide < 1000) {
+          // Tablet
+          return ${valueTablet == 'false' ? 'const SizedBox();' : childString};
+        }
+        // Desktop
+        return ${valueDesktop == 'false' ? 'const SizedBox();' : childString};
+      },
+    )
+  ''';
+  }
+
+  static Future<String> defaultWidgetPerspective(
+    final NodeBody body,
+    final Future<String> child,
+    final int loop,
+  ) async {
+    /// Just an example
+    void example() {
+      Transform(
+        transform: Matrix4.identity()
+          ..setEntry(3, 2, 0.001) // perspective
+          ..rotateX(0)
+          ..rotateY(0),
+        child: Container(
+          height: 100,
+          width: 100,
+          color: Colors.yellow,
+        ),
+      );
+    }
+
+    final childString = await child;
+    final abstractIdentityR =
+        body.attributes[DBKeys.xPerspective] as FTextTypeInput?;
+    final valueIdentityR = abstractIdentityR?.toCode(loop) ?? '0';
+    final identityR =
+        int.tryParse(valueIdentityR) != null ? int.parse(valueIdentityR) : 0;
+
+    final abstractIdentityC =
+        body.attributes[DBKeys.yPerspective] as FTextTypeInput?;
+    final valueIdentityC = abstractIdentityC?.toCode(loop) ?? '0';
+    final identityC =
+        int.tryParse(valueIdentityC) != null ? int.parse(valueIdentityC) : 0;
+
+    final abstractIdentityV =
+        body.attributes[DBKeys.zPerspective] as FTextTypeInput?;
+    final valueIdentityV = abstractIdentityV?.toCode(loop) ?? '0';
+    final identityV = double.tryParse(valueIdentityV) != null
+        ? double.parse(valueIdentityV)
+        : 0.0;
+
+    final abstractRotateX =
+        body.attributes[DBKeys.xRotation] as FTextTypeInput?;
+    final valueRotateX = abstractRotateX?.toCode(loop) ?? '0';
+    final rotateX = double.tryParse(valueRotateX) != null
+        ? double.parse(valueRotateX)
+        : 0.0;
+
+    final abstractRotateY =
+        body.attributes[DBKeys.yRotation] as FTextTypeInput?;
+    final valueRotateY = abstractRotateY?.toCode(loop) ?? '0';
+    final rotateY = double.tryParse(valueRotateY) != null
+        ? double.parse(valueRotateY)
+        : 0.0;
+
+    final abstractRotateZ =
+        body.attributes[DBKeys.zRotation] as FTextTypeInput?;
+    final valueRotateZ = abstractRotateZ?.toCode(loop) ?? '0';
+    final rotateZ = double.tryParse(valueRotateZ) != null
+        ? double.parse(valueRotateZ)
+        : 0.0;
+
+    final setIdentity = StringBuffer();
+    if (identityC != 0 && identityV != 0 && identityR != 0) {
+      setIdentity.write('..setEntry($identityR, $identityC, $identityV)');
+    }
+
+    final setRotationX = StringBuffer();
+    if (rotateX != 0) {
+      setRotationX.write('..rotateX($rotateX)');
+    }
+
+    final setRotationY = StringBuffer();
+    if (rotateY != 0) {
+      setRotationY.write('..rotateY($rotateY)');
+    }
+
+    final setRotationZ = StringBuffer();
+    if (rotateZ != 0) {
+      setRotationZ.write('..rotateZ($rotateZ)');
+    }
+
+    if (setIdentity.toString() == '' &&
+        setRotationX.toString() == '' &&
+        setRotationY.toString() == '' &&
+        setRotationZ.toString() == '') {
+      return childString;
+    }
+
+    return '''
+    Transform(
+      transform: Matrix4.identity()
+        $setIdentity
+        $setRotationX
+        $setRotationY
+        $setRotationZ,
+      child: $childString
+    ),
+  ''';
   }
 
   /// Returns eventualy a FMargin code
@@ -258,8 +599,9 @@ class CS {
     required final bool isMargin,
   }) {
     final value = (body.attributes[isMargin ? DBKeys.margins : DBKeys.padding]
-            as FMargins)
-        .toCode(context);
+                as FMargins?)
+            ?.toCode(context) ??
+        '';
     if (value == '') return '';
     return "${isMargin ? 'margin' : 'padding'}: $value,";
   }

@@ -2,7 +2,6 @@
 // ignore_for_file: public_member_api_docs, avoid_dynamic_calls
 
 // Package imports:
-import 'package:camera/camera.dart';
 import 'package:collection/collection.dart';
 import 'package:diacritic/diacritic.dart';
 // Flutter imports:
@@ -14,6 +13,7 @@ import 'package:recase/recase.dart';
 import 'package:teta_core/src/rendering/nodes_original.dart';
 import 'package:teta_core/src/repositories/queries/node.dart';
 import 'package:teta_core/teta_core.dart';
+import 'package:teta_widgets/src/elements/actions/navigation/pass_params_builder.dart';
 import 'package:teta_widgets/src/elements/code/formatter_test.dart';
 // Project imports:
 import 'package:teta_widgets/src/elements/controls/key_constants.dart';
@@ -81,94 +81,13 @@ class FActionNavigationOpenPage {
           MaterialPageRoute(
             builder: (final context) => page!.scaffold!.toWidget(
               forPlay: true,
-              params: page.params.map((final e) {
-                if (paramsToSend?[e.id] != null) {
-                  if (paramsToSend?[e.id]['dataset'] == 'Text') {
-                    e.value = paramsToSend?[e.id]['label'];
-                  } else {
-                    final list = <DatasetObject>[
-                      DatasetObject(
-                        name: 'Parameters',
-                        map: currentPage.params
-                            .map((final e) => <String, dynamic>{e.name: e.get})
-                            .toList(),
-                      ),
-                      DatasetObject(
-                        name: 'States',
-                        map: currentPage.states
-                            .map((final e) => <String, dynamic>{e.name: e.get})
-                            .toList(),
-                      ),
-                      ...dataset,
-                    ];
-                    Map<String, dynamic>? selectedDataset;
-                    for (final element in list) {
-                      if (element.getName == paramsToSend?[e.id]['dataset']) {
-                        selectedDataset = <String, dynamic>{
-                          'name': element.getName,
-                          'map': element.getMap
-                        };
-                      }
-                    }
-                    VariableObject? variable;
-                    if (selectedDataset?['name'] == 'Parameters' ||
-                        selectedDataset?['name'] == 'States') {
-                      final map =
-                          selectedDataset!['map'] as List<Map<String, dynamic>>;
-                      //final element = map[loop ?? 0];
-                      for (final element in map) {
-                        if (element.keys.toList()[loop ?? 0] ==
-                            paramsToSend?[e.id]?['label']) {
-                          if (element[element.keys.toList()[loop ?? 0]]
-                              is String) {
-                            variable = VariableObject(
-                              name: element.keys.toList()[loop ?? 0],
-                              value: element[element.keys.toList()[loop ?? 0]],
-                            );
-                          }
-                          if (element[element.keys.toList()[loop ?? 0]]
-                              is CameraController) {
-                            variable = VariableObject(
-                              name: element.keys.toList()[loop ?? 0],
-                              type: VariableType.cameraController,
-                              controller:
-                                  element[element.keys.toList()[loop ?? 0]]
-                                      as CameraController,
-                            );
-                          }
-                          if (element[element.keys.toList()[loop ?? 0]]
-                              is XFile) {
-                            debugPrint('is XFile');
-                            variable = VariableObject(
-                              name: element.keys.toList()[loop ?? 0],
-                              type: VariableType.file,
-                              file: element[element.keys.toList()[loop ?? 0]]
-                                  as XFile,
-                            );
-                          }
-                        }
-                      }
-                    } else {
-                      final el =
-                          selectedDataset!['map'] as List<Map<String, dynamic>>;
-                      final map = el[loop ?? 0];
-                      for (final key in map.keys) {
-                        if (key == paramsToSend?[e.id]?['label']) {
-                          variable = VariableObject(name: key, value: map[key]);
-                        }
-                      }
-                    }
-                    if (variable != null) {
-                      e
-                        ..value = variable.get
-                        ..file = variable.file
-                        ..controller = variable.controller;
-                    }
-                  }
-                  return e;
-                }
-                return e;
-              }).toList(),
+              params: passParamsToNewPage(
+                page.params,
+                currentPage.params,
+                paramsToSend,
+                dataset,
+                loop: loop,
+              ),
               states: page.states,
               dataset: page.datasets,
             ),

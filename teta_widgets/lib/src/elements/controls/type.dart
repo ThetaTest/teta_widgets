@@ -193,6 +193,7 @@ class ControlBuilder {
         value: value,
         old: old,
       );
+      BlocProvider.of<RefreshCubit>(context).change();
     } catch (e) {
       if (kDebugMode) {
         // ignore: avoid_print
@@ -805,15 +806,18 @@ class ControlBuilder {
           node: node,
           title: 'Margins',
           value: control.value as FMargins,
-          callBack: (final value, final old) => ControlBuilder.toDB(
-            prj,
-            page,
-            node,
-            context,
-            control.key,
-            value,
-            old,
-          ),
+          callBack: (final value, final old) {
+            node.body.attributes[control.key] = FMargins.fromJson(value);
+            ControlBuilder.toDB(
+              prj,
+              page,
+              node,
+              context,
+              control.key,
+              value,
+              old,
+            );
+          },
         ),
       );
     }
@@ -825,15 +829,18 @@ class ControlBuilder {
           node: node,
           title: 'Padding',
           value: control.value as FMargins,
-          callBack: (final value, final old) => ControlBuilder.toDB(
-            prj,
-            page,
-            node,
-            context,
-            control.key,
-            value,
-            old,
-          ),
+          callBack: (final value, final old) {
+            node.body.attributes[control.key] = FMargins.fromJson(value);
+            ControlBuilder.toDB(
+              prj,
+              page,
+              node,
+              context,
+              control.key,
+              value,
+              old,
+            );
+          },
         ),
       );
     }
@@ -847,15 +854,18 @@ class ControlBuilder {
           page: page,
           title: control.title ?? 'Value',
           value: control.value as FTextTypeInput,
-          callBack: (final value, final old) => ControlBuilder.toDB(
-            prj,
-            page,
-            node,
-            context,
-            control.key,
-            value.toJson(),
-            old.toJson(),
-          ),
+          callBack: (final value, final old) {
+            node.body.attributes[control.key] = value;
+            ControlBuilder.toDB(
+              prj,
+              page,
+              node,
+              context,
+              control.key,
+              value.toJson(),
+              old.toJson(),
+            );
+          },
         ),
       );
     }
@@ -962,15 +972,18 @@ class ControlBuilder {
         node: node as NDynamic,
         keyValue: control.key,
         value: control.value as bool,
-        callBack: (final value, final old) => ControlBuilder.toDB(
-          prj,
-          page,
-          node,
-          context,
-          control.key,
-          value,
-          old,
-        ),
+        callBack: (final value, final old) {
+          node.body.attributes[control.key] = value;
+          ControlBuilder.toDB(
+            prj,
+            page,
+            node,
+            context,
+            control.key,
+            value,
+            old,
+          );
+        },
       ),
     );
   }

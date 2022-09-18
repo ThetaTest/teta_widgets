@@ -84,9 +84,11 @@ class _WAdaptyProductsListState extends State<WAdaptyProductsList> {
     } else {
       products = [];
     }
-    setState(() {
-      isLoading = false;
-    });
+    if (mounted) {
+      setState(() {
+        isLoading = false;
+      });
+    }
   }
 
   @override
