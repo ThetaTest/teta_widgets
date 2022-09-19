@@ -30,7 +30,13 @@ class FActionStateChangeWith {
       if (index >= 0) {
         states[index].value = value ??
             valueToChangeWith.get(
-                params, states, datasets, true, loop, context);
+              params,
+              states,
+              datasets,
+              true,
+              loop,
+              context,
+            );
         update(context);
       }
     } catch (e) {

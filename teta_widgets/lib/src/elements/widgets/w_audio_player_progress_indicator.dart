@@ -63,14 +63,12 @@ class _WAudioPlayerProgressIndicatorState
           .firstWhereOrNull((final e) => e.name == widget.controller.stateName);
     }
     if (variable?.audioController != null) {
-      if (mounted) {
-        setState(() {
-          if (variable?.audioController != null) {
-            audioController = variable?.audioController;
-          }
-          isInitialized = true;
-        });
-      }
+      setState(() {
+        if (variable?.audioController != null) {
+          audioController = variable?.audioController;
+        }
+        isInitialized = true;
+      });
     }
   }
 

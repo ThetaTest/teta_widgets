@@ -703,8 +703,8 @@ class ActionElementControlState extends State<ActionElementControl> {
                 ),
               const Gap(Grid.small),
               if (widget.element.actionType == ActionType.state &&
-                  widget.element.actionState == ActionState.increment &&
-                  widget.element.actionState == ActionState.decrement)
+                  (widget.element.actionState == ActionState.increment ||
+                      widget.element.actionState == ActionState.decrement))
                 Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [

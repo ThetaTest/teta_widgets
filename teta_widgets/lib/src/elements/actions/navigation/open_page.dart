@@ -79,17 +79,21 @@ class FActionNavigationOpenPage {
         await Navigator.push<void>(
           context,
           MaterialPageRoute(
-            builder: (final context) => page!.scaffold!.toWidget(
-              forPlay: true,
-              params: passParamsToNewPage(
-                page.params,
-                currentPage.params,
-                paramsToSend,
-                dataset,
-                loop: loop,
+            builder: (final context) => BlocProvider(
+              create: (final context) => PageCubit()
+                ..onFocus(prj: prj.prj, page: page!, context: context),
+              child: page!.scaffold!.toWidget(
+                forPlay: true,
+                params: passParamsToNewPage(
+                  page.params,
+                  currentPage.params,
+                  paramsToSend,
+                  dataset,
+                  loop: loop,
+                ),
+                states: page.states,
+                dataset: page.datasets,
               ),
-              states: page.states,
-              dataset: page.datasets,
             ),
           ),
         );

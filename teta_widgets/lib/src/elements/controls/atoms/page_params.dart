@@ -361,7 +361,7 @@ class PaddingsState extends State<PageParamsControl> {
                                   (element == 'Int' ||
                                       element == 'Double' ||
                                       element == 'String' ||
-                                      element == 'Json') ||
+                                      element == 'Audio controller') ||
                                   kDebugMode,
                             )
                                 .map<DropdownMenuItem<String>>(
