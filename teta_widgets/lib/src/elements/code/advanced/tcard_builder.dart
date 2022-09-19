@@ -1,20 +1,14 @@
 // Flutter imports:
 import 'package:flutter/material.dart';
+import 'package:flutter_test/flutter_test.dart';
 import 'package:teta_widgets/src/elements/code/formatter_test.dart';
 import 'package:teta_widgets/src/elements/code/snippets.dart';
 // Project imports:
 import 'package:teta_widgets/src/elements/controls/key_constants.dart';
 import 'package:teta_widgets/src/elements/index.dart';
+import 'package:teta_widgets/src/elements/nodes/node_body.dart';
 
-/// Generates the code for ListView widget
-///
-/// Returns:
-/// ```dart
-/// ListView(
-///   scrollDirection: Axis.horizontal, // isVertical (vertical is dedundant)
-///   children: [], // node's children
-/// );
-/// ```
+/// Generates the code for TCardBuilder widget
 class TCardBuilderCodeTemplate {
   static Future<String> toCode(
     final BuildContext context,
@@ -94,5 +88,46 @@ class TCardBuilderCodeTemplate {
     }
   }
 
-  static void testCode() {}
+  static void testCode() {
+    group('TCardBuilder toCode test', () {
+      test(
+        'TCardBuilder: default',
+        () {
+          final body = NodeBody.get(NType.tcardBuilder);
+          final slideSpeed = double.tryParse(
+                (body.attributes[DBKeys.value] as FTextTypeInput).toCode(0),
+              ) ??
+              20;
+          final delaySlideFor = double.tryParse(
+                (body.attributes[DBKeys.valueOfCondition] as FTextTypeInput)
+                    .toCode(0),
+              ) ??
+              500;
+          final lockYAxis = body.attributes[DBKeys.flag] as bool? ?? false;
+          expect(
+            FormatterTest.format('''
+Builder(
+    builder: (context) {
+            return TCard(
+               onForward: (index, info) async {
+                 if(info.direction == SwipDirection.right) {
+
+                 } else{
+
+                 }
+               },
+             lockYAxis: $lockYAxis,
+             slideSpeed: $slideSpeed,
+             delaySlideFor: $delaySlideFor,
+             cards: (datasets['default'] as List<dynamic>? ?? <dynamic>[]).map((e) => const SizedBox()).toList()
+             );
+            }
+          )
+            '''),
+            true,
+          );
+        },
+      );
+    });
+  }
 }

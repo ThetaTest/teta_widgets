@@ -3,10 +3,12 @@
 
 // Flutter imports:
 import 'package:flutter/material.dart';
+import 'package:flutter_test/flutter_test.dart';
 import 'package:teta_widgets/src/elements/code/formatter_test.dart';
 import 'package:teta_widgets/src/elements/controls/key_constants.dart';
 import 'package:teta_widgets/src/elements/index.dart';
 import 'package:teta_widgets/src/elements/nodes/dynamic.dart';
+import 'package:teta_widgets/src/elements/nodes/node_body.dart';
 // Project imports:
 
 /// Generates the code for Qonversion product list widget, unclassified for now
@@ -63,5 +65,50 @@ class QonversionSubsStatusCodeTemplate {
     }
   }
 
-  static void testCode() {}
+  static void testCode() {
+    group('QonversionSubsStatus toCode test', () {
+      test(
+        'QonversionSubsStatus: default code',
+        () {
+          final body = NodeBody.get(NType.qonversionSubStatus);
+          const childString = 'const SizedBox()';
+          final entitlement =
+              (body.attributes[DBKeys.value] as FTextTypeInput).toCode(0);
+          expect(
+            FormatterTest.format('''
+           TetaFutureBuilder<bool>(
+    future: Future<bool>.sync(() async {
+      if (UniversalPlatform.isAndroid ||
+        UniversalPlatform.isIOS ||
+        UniversalPlatform.isMacOS) {
+        try {
+          final permissions = await Qonversion.checkPermissions();
+          return permissions[$entitlement] != null && permissions[$entitlement].isActive;
+        } catch (e) {
+          // Error fetching purchaser info
+        }
+      }
+      return false;
+    }),
+    builder: (context, snapshot) {
+      if (snapshot.hasData) {
+        final flag = snapshot.data as bool? ?? false;
+        datasets[''] = <String, dynamic>{
+          'isActive': flag,
+        };
+        return $childString;
+      } else {
+        return Center(
+          child: CircularProgressIndicator(),
+        );
+      }
+    }
+  )
+            '''),
+            true,
+          );
+        },
+      );
+    });
+  }
 }

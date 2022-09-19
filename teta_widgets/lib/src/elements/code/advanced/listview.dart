@@ -10,14 +10,6 @@ import 'package:teta_widgets/src/elements/nodes/dynamic.dart';
 import 'package:teta_widgets/src/elements/nodes/node_body.dart';
 
 /// Generates the code for ListView widget
-///
-/// Returns:
-/// ```dart
-/// ListView(
-///   scrollDirection: Axis.horizontal, // isVertical (vertical is dedundant)
-///   children: [], // node's children
-/// );
-/// ```
 class ListViewCodeTemplate {
   static Future<String> toCode(
     final BuildContext context,
@@ -94,31 +86,27 @@ class ListViewCodeTemplate {
   }
 
   static void testCode() {
-    group('ListViewBuilder toCode test', () {
+    group('ListView toCode test', () {
       test(
-        'ListViewBuilder: default',
+        'ListView: default',
         () {
           final body = NodeBody.get(NType.listView);
+          final reverse = body.attributes[DBKeys.isFullWidth] as bool;
+          final primary = body.attributes[DBKeys.isPrimary] as bool;
           final _scrollDirection =
               !(body.attributes[DBKeys.isVertical] as bool? ?? false)
                   ? 'scrollDirection: Axis.horizontal,'
                   : '';
-          final shrinkWrap = body.attributes[DBKeys.flag] as bool? ?? false;
-          final reverse = body.attributes[DBKeys.isFullWidth] as bool;
-          const childString = 'const SizedBox()';
-          final dataset =
-              (body.attributes[DBKeys.datasetInput] as FDataset).datasetName;
+          const childrenString = 'children: [],';
           expect(
             FormatterTest.format('''
-            ListView.builder(
-            $_scrollDirection
-            reverse: $reverse,
-            shrinkWrap: $shrinkWrap,
-            itemCount: this.datasets['$dataset'].length > 0 ? this.datasets['$dataset'].length : 0,
-            itemBuilder: (context, index) {
-              return $childString;
-            },
-          )'''),
+            ListView(
+              reverse: $reverse,
+              primary: $primary,
+              physics: const AlwaysScrollableScrollPhysics(),
+              $_scrollDirection
+              $childrenString
+            )'''),
             true,
           );
         },

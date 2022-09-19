@@ -43,8 +43,8 @@ class AnimConfigListCodeTemplate {
       final code = await toCode(
         context,
         NodeBody.get(NType.animationConfigList),
-        child,
-        loop,
+        null,
+        0,
       );
       final res = FormatterTest.format(code);
       if (res) {
@@ -68,18 +68,10 @@ class AnimConfigListCodeTemplate {
           expect(
             FormatterTest.format('''
             AnimationConfiguration.staggeredList(
-      position: int.tryParse(
-          $position 
-          ) ??
-          0,
-      duration: Duration(
-        milliseconds: int.tryParse(
-            $duration
-            ) ??
-            375,
-      ),
-      child: const SizedBox(),
-    )'''),
+            position: int.tryParse($position  ) ?? 0,
+            duration: Duration(milliseconds: int.tryParse($duration) ?? 375),
+            child: const SizedBox(),
+            )'''),
             true,
           );
         },

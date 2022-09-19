@@ -1,22 +1,14 @@
 // Flutter imports:
 import 'package:flutter/material.dart';
+import 'package:flutter_test/flutter_test.dart';
 import 'package:teta_widgets/src/elements/code/formatter_test.dart';
 // Project imports:
 import 'package:teta_widgets/src/elements/code/snippets.dart';
 import 'package:teta_widgets/src/elements/controls/key_constants.dart';
-import 'package:teta_widgets/src/elements/features/actions/enums/index.dart';
-import 'package:teta_widgets/src/elements/features/text_type_input.dart';
-import 'package:teta_widgets/src/elements/nodes/node.dart';
+import 'package:teta_widgets/src/elements/index.dart';
+import 'package:teta_widgets/src/elements/nodes/node_body.dart';
 
-/// Generates the code for ListView widget
-///
-/// Returns:
-/// ```dart
-/// ListView(
-///   scrollDirection: Axis.horizontal, // isVertical (vertical is dedundant)
-///   children: [], // node's children
-/// );
-/// ```
+/// Generates the code for TCard widget
 class TCardCodeTemplate {
   static Future<String> toCode(
     final BuildContext context,
@@ -77,7 +69,7 @@ class TCardCodeTemplate {
         pageId,
         node,
         [],
-        loop,
+        0,
       );
       final res = FormatterTest.format(code);
       if (res) {
@@ -86,5 +78,45 @@ class TCardCodeTemplate {
         return 'const SizedBox()';
       }
     }
+  }
+
+  static void testCode() {
+    group('TCard toCode test', () {
+      test(
+        'TCard: default',
+        () {
+          final body = NodeBody.get(NType.tcard);
+          final slideSpeed = double.tryParse(
+                (body.attributes[DBKeys.value] as FTextTypeInput).toCode(0),
+              ) ??
+              20;
+          final delaySlideFor = double.tryParse(
+                (body.attributes[DBKeys.valueOfCondition] as FTextTypeInput)
+                    .toCode(0),
+              ) ??
+              500;
+          final lockYAxis = body.attributes[DBKeys.flag] as bool? ?? false;
+          const childrenString = 'cards: [],';
+          expect(
+            FormatterTest.format('''
+            TCard(
+               onForward: (index, info) async {
+                 if(info.direction == SwipDirection.right) {
+
+                 } else{
+
+                 }
+               },
+             lockYAxis: $lockYAxis,
+             slideSpeed: $slideSpeed,
+             delaySlideFor: $delaySlideFor,
+             $childrenString
+             )
+            '''),
+            true,
+          );
+        },
+      );
+    });
   }
 }

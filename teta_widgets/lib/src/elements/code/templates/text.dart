@@ -33,12 +33,17 @@ class TextCodeTemplate {
     if (res) {
       return code;
     } else {
-      final defaultCode = await toCode(
+      final code = await toCode(
         context,
         NodeBody.get(NType.text),
         0,
       );
-      return defaultCode;
+      final res = FormatterTest.format(code);
+      if (res) {
+        return code;
+      } else {
+        return 'const SizedBox()';
+      }
     }
   }
 
