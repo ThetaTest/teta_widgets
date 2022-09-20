@@ -7,6 +7,7 @@ import 'package:teta_widgets/src/elements/code/formatter_test.dart';
 import 'package:teta_widgets/src/elements/controls/key_constants.dart';
 import 'package:teta_widgets/src/elements/index.dart';
 import 'package:teta_widgets/src/elements/nodes/node_body.dart';
+import 'package:universal_platform/universal_platform.dart';
 
 /// Code Template of Text Node
 
@@ -33,7 +34,7 @@ class AdMobBannerAdTemplate {
         future: Future.delayed(Duration(milliseconds: 0), () async {
           final ad = BannerAd(
             request: const AdRequest(),
-            adUnitId: Platform.isIOS
+            adUnitId: UniversalPlatform.isIOS
                 ? $iosKey
                 : $androidKey,
             listener: const BannerAdListener(),
@@ -80,7 +81,7 @@ class AdMobBannerAdTemplate {
         future: Future.delayed(Duration(milliseconds: 0), () async {
           final ad = BannerAd(
             request: const AdRequest(),
-            adUnitId: Platform.isIOS
+            adUnitId: UniversalPlatform.isIOS
                 ? $iosKey
                 : $androidKey,
             listener: const BannerAdListener(),
@@ -126,7 +127,7 @@ FutureBuilder<BannerAd>(
         future: Future.delayed(Duration(milliseconds: 0), () async {
           final ad = BannerAd(
             request: const AdRequest(),
-            adUnitId: Platform.isIOS
+            adUnitId: UniversalPlatform.isIOS
                 ? $iosKey
                 : $androidKey,
             listener: const BannerAdListener(),
@@ -172,7 +173,7 @@ FutureBuilder<BannerAd>(
         future: Future.delayed(Duration(milliseconds: 0), () async {
           final ad = BannerAd(
             request: const AdRequest(),
-            adUnitId: Platform.isIOS
+            adUnitId: UniversalPlatform.isIOS
                 ? $iosKey
                 : $androidKey,
             listener: const BannerAdListener(),
@@ -222,9 +223,9 @@ FutureBuilder<BannerAd>(
         future: Future.delayed(Duration(milliseconds: 0), () async {
           final ad = BannerAd(
             request: const AdRequest(),
-            adUnitId: Platform.isIOS
-                ? $iosKey
-                : $androidKey,
+            adUnitId: UniversalPlatform.isIOS
+                ? ($iosKey)
+                : ($androidKey),
             listener: const BannerAdListener(),
             size: AdSize.fluid,
           );
@@ -247,5 +248,15 @@ FutureBuilder<BannerAd>(
         },
       );
     });
+  }
+
+  Widget example() {
+    final datasets = <String, dynamic>{};
+    const index = 0;
+    return Text(
+      UniversalPlatform.isIOS
+          ? (datasets['xxx']?[index]?['yyy']?.toString() ?? '')
+          : (datasets['xxx']?[index]?['yyy']?.toString() ?? ''),
+    );
   }
 }
