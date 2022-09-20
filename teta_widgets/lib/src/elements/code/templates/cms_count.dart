@@ -16,22 +16,36 @@ class CmsCountCodeTemplate {
     final int? loop,
   ) async {
     var collectionId =
-        (node.body.attributes[DBKeys.cmsCollection] as FTextTypeInput)
-            .toCode(loop);
+        (node.body.attributes[DBKeys.cmsCollection] as FTextTypeInput).toCode(
+      loop,
+      resultType: ResultTypeEnum.string,
+    );
     if (!collectionId.contains("'")) {
       collectionId = "'$collectionId'";
     }
     final limit =
-        (node.body.attributes[DBKeys.cmsLimit] as FTextTypeInput).toCode(loop);
+        (node.body.attributes[DBKeys.cmsLimit] as FTextTypeInput).toCode(
+      loop,
+      resultType: ResultTypeEnum.int,
+    );
     final page =
-        (node.body.attributes[DBKeys.cmsPage] as FTextTypeInput).toCode(loop);
-    var keyName = (node.body.attributes[DBKeys.cmsLikeKey] as FTextTypeInput)
-        .toCode(loop);
+        (node.body.attributes[DBKeys.cmsPage] as FTextTypeInput).toCode(
+      loop,
+      resultType: ResultTypeEnum.int,
+    );
+    var keyName =
+        (node.body.attributes[DBKeys.cmsLikeKey] as FTextTypeInput).toCode(
+      loop,
+      resultType: ResultTypeEnum.string,
+    );
     if (!keyName.contains("'") && keyName.isNotEmpty) {
       keyName = "'$keyName'";
     }
-    var keyValue = (node.body.attributes[DBKeys.cmsLikeValue] as FTextTypeInput)
-        .toCode(loop);
+    var keyValue =
+        (node.body.attributes[DBKeys.cmsLikeValue] as FTextTypeInput).toCode(
+      loop,
+      resultType: ResultTypeEnum.string,
+    );
     if (!keyValue.contains("'") && keyValue.isNotEmpty) {
       keyValue = "'$keyValue'";
     }

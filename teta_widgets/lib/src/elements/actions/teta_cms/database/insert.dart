@@ -42,12 +42,21 @@ class FATetaCMSInsert {
     for (final e in dbData ?? <MapElement>[]) {
       if (e.key.toLowerCase() != 'id') {
         if (e.value.type == FTextTypeEnum.text) {
-          map[e.key] = '"${e.value.toCode(0)}"';
+          map[e.key] = e.value.toCode(
+            0,
+            resultType: ResultTypeEnum.string,
+          );
         } else {
-          map[e.key] = e.value.toCode(0);
+          map[e.key] = e.value.toCode(
+            0,
+            resultType: ResultTypeEnum.string,
+          );
         }
       } else {
-        map[e.key] = int.tryParse(e.value.toCode(0));
+        map[e.key] = int.tryParse(e.value.toCode(
+          0,
+          resultType: ResultTypeEnum.int,
+        ));
       }
     }
     final mapString = StringBuffer()..write('{');

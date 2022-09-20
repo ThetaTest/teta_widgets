@@ -87,7 +87,7 @@ class GestureBuilderBase {
   }) {
     if (node.body.attributes[DBKeys.action] != null) {
       final originalType = NodeBody.get(node.globalType);
-      if (originalType.attributes[DBKeys.action] != null) {
+      if (originalType.attributes[DBKeys.action] == null) {
         return GestureDetector(
           onTap: () {
             GestureBuilder.get(
@@ -253,40 +253,64 @@ class PerspectiveBase {
   }) {
     final abstractIdentityR =
         node.body.attributes[DBKeys.xPerspective] as FTextTypeInput?;
-    final valueIdentityR = abstractIdentityR?.toCode(loop) ?? '0';
+    final valueIdentityR = abstractIdentityR?.toCode(
+          loop,
+          resultType: ResultTypeEnum.int,
+        ) ??
+        '0';
     final identityR =
         int.tryParse(valueIdentityR) != null ? int.parse(valueIdentityR) : 0;
 
     final abstractIdentityC =
         node.body.attributes[DBKeys.yPerspective] as FTextTypeInput?;
-    final valueIdentityC = abstractIdentityC?.toCode(loop) ?? '0';
+    final valueIdentityC = abstractIdentityC?.toCode(
+          loop,
+          resultType: ResultTypeEnum.int,
+        ) ??
+        '0';
     final identityC =
         int.tryParse(valueIdentityC) != null ? int.parse(valueIdentityC) : 0;
 
     final abstractIdentityV =
         node.body.attributes[DBKeys.zPerspective] as FTextTypeInput?;
-    final valueIdentityV = abstractIdentityV?.toCode(loop) ?? '0';
+    final valueIdentityV = abstractIdentityV?.toCode(
+          loop,
+          resultType: ResultTypeEnum.double,
+        ) ??
+        '0';
     final identityV = double.tryParse(valueIdentityV) != null
         ? double.parse(valueIdentityV)
         : 0.0;
 
     final abstractRotateX =
         node.body.attributes[DBKeys.xRotation] as FTextTypeInput?;
-    final valueRotateX = abstractRotateX?.toCode(loop) ?? '0';
+    final valueRotateX = abstractRotateX?.toCode(
+          loop,
+          resultType: ResultTypeEnum.double,
+        ) ??
+        '0';
     final rotateX = double.tryParse(valueRotateX) != null
         ? double.parse(valueRotateX)
         : 0.0;
 
     final abstractRotateY =
         node.body.attributes[DBKeys.yRotation] as FTextTypeInput?;
-    final valueRotateY = abstractRotateY?.toCode(loop) ?? '0';
+    final valueRotateY = abstractRotateY?.toCode(
+          loop,
+          resultType: ResultTypeEnum.double,
+        ) ??
+        '0';
     final rotateY = double.tryParse(valueRotateY) != null
         ? double.parse(valueRotateY)
         : 0.0;
 
     final abstractRotateZ =
         node.body.attributes[DBKeys.zRotation] as FTextTypeInput?;
-    final valueRotateZ = abstractRotateZ?.toCode(loop) ?? '0';
+    final valueRotateZ = abstractRotateZ?.toCode(
+          loop,
+          resultType: ResultTypeEnum.double,
+        ) ??
+        '0';
     final rotateZ = double.tryParse(valueRotateZ) != null
         ? double.parse(valueRotateZ)
         : 0.0;

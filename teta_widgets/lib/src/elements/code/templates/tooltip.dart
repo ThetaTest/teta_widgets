@@ -19,7 +19,10 @@ class TooltipCodeTemplate {
     final int? loop,
   ) async {
     final abstract = body.attributes[DBKeys.value] as FTextTypeInput;
-    final value = abstract.toCode(loop);
+    final value = abstract.toCode(
+      loop,
+      resultType: ResultTypeEnum.string,
+    );
     final childString = await CS.child(context, child, comma: true);
     final code = '''
     Tooltip(
@@ -61,7 +64,10 @@ class TooltipCodeTemplate {
         () {
           final body = NodeBody.get(NType.tooltip);
           final abstract = body.attributes[DBKeys.value] as FTextTypeInput;
-          final value = abstract.toCode(0);
+          final value = abstract.toCode(
+            0,
+            resultType: ResultTypeEnum.string,
+          );
           expect(
             FormatterTest.format('''
          Tooltip(

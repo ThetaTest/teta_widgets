@@ -17,10 +17,15 @@ class ConditionCodeTemplate {
     final int? loop,
   ) async {
     final abstract = body.attributes[DBKeys.value] as FTextTypeInput;
-    final value = abstract.toCode(loop);
+    final value = abstract.toCode(
+      loop,
+      resultType: ResultTypeEnum.string,
+    );
     var valueOfCondition =
-        (body.attributes[DBKeys.valueOfCondition] as FTextTypeInput)
-            .toCode(loop);
+        (body.attributes[DBKeys.valueOfCondition] as FTextTypeInput).toCode(
+      loop,
+      resultType: ResultTypeEnum.string,
+    );
     if (!valueOfCondition.contains("'")) {
       valueOfCondition = valueOfCondition;
     }

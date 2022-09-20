@@ -17,7 +17,11 @@ class AnimatedOpacityCodeTemplate {
     final int? loop,
   ) async {
     final abstract = body.attributes[DBKeys.value] as FTextTypeInput;
-    final value = abstract.toCode(loop);
+    final value = abstract.toCode(
+      loop,
+      resultType: ResultTypeEnum.int,
+    );
+    //! This is wrong. Int should be retrieved from the toCode func
     final rawDouble = double.tryParse(value.replaceAll('-', '')) != null
         ? double.parse(value.replaceAll('-', ''))
         : 1.0;
@@ -26,10 +30,11 @@ class AnimatedOpacityCodeTemplate {
         : rawDouble > 1
             ? 1
             : rawDouble;
-    final valueDuration =
-        (body.attributes[DBKeys.duration] as FTextTypeInput).toCode(loop);
-    final duration =
-        int.tryParse(valueDuration) != null ? int.parse(valueDuration) : '400';
+    final duration = abstract.toCode(
+      loop,
+      resultType: ResultTypeEnum.int,
+      defaultValue: '400',
+    );
     final childString = await CS.child(context, child, comma: true);
     final code = '''
     AnimatedOpacity(

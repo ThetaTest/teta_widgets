@@ -1648,16 +1648,24 @@ class _ElementState extends State<Element> {
       DatasetObject(
         name: 'Parameters',
         map: [
-          <String, dynamic>{for (var e in widget.page.params) e.name: e.get},
+          <String, dynamic>{
+            for (var e in widget.page.params
+                .where((final element) => widget.variable.type == element.type))
+              e.name: e.get
+          },
         ],
       ),
       DatasetObject(
         name: 'States',
         map: [
-          <String, dynamic>{for (var e in widget.page.states) e.name: e.get},
+          <String, dynamic>{
+            for (var e in widget.page.states
+                .where((final element) => widget.variable.type == element.type))
+              e.name: e.get
+          },
         ],
       ),
-      ...widget.page.datasets
+      if (widget.variable.type == VariableType.string) ...widget.page.datasets
     ];
     try {
       dropdown = widget.map[widget.variable.id]?['label'] as String;

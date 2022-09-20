@@ -16,28 +16,25 @@ class AnimConfigGridCodeTemplate {
     final CNode? child,
     final int loop,
   ) async {
-    final position =
-        (body.attributes[DBKeys.value] as FTextTypeInput).toCode(loop);
+    final position = (body.attributes[DBKeys.value] as FTextTypeInput).toCode(
+      loop,
+      resultType: ResultTypeEnum.int,
+    );
     final duration =
-        (body.attributes[DBKeys.duration] as FTextTypeInput).toCode(loop);
+        (body.attributes[DBKeys.duration] as FTextTypeInput).toCode(
+      loop,
+      resultType: ResultTypeEnum.int,
+      defaultValue: '375',
+    );
     final numCols = (body.attributes[DBKeys.valueOfCondition] as FTextTypeInput)
-        .toCode(loop);
+        .toCode(loop, resultType: ResultTypeEnum.int, defaultValue: '2');
     final childString = await CS.child(context, child, comma: true);
     final code = '''
     AnimationConfiguration.staggeredGrid(
-      columnCount: int.tryParse(
-          $numCols
-          ) ??
-          2,
-      position: int.tryParse(
-          $position
-          ) ??
-          0,
+      columnCount: $numCols,
+      position: $position,
       duration: Duration(
-        milliseconds: int.tryParse(
-          $duration
-          ) ??
-          375,
+        milliseconds: $duration,
       ),
       $childString
     )
@@ -68,12 +65,19 @@ class AnimConfigGridCodeTemplate {
         () {
           final body = NodeBody.get(NType.animationConfigGrid);
           final position =
-              (body.attributes[DBKeys.value] as FTextTypeInput).toCode(0);
+              (body.attributes[DBKeys.value] as FTextTypeInput).toCode(
+            0,
+            resultType: ResultTypeEnum.int,
+          );
           final duration =
-              (body.attributes[DBKeys.duration] as FTextTypeInput).toCode(0);
+              (body.attributes[DBKeys.duration] as FTextTypeInput).toCode(
+            0,
+            resultType: ResultTypeEnum.int,
+            defaultValue: '375',
+          );
           final numCols =
               (body.attributes[DBKeys.valueOfCondition] as FTextTypeInput)
-                  .toCode(0);
+                  .toCode(0, resultType: ResultTypeEnum.int, defaultValue: '2');
           expect(
             FormatterTest.format('''
             AnimationConfiguration.staggeredGrid(

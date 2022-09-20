@@ -29,6 +29,10 @@ enum ResultTypeEnum {
   int,
   double,
   bool,
+  audioPlayer,
+  webviewController,
+  mapController,
+  googleMapsController,
 }
 
 enum TypeDateTimeFormat {
@@ -319,7 +323,8 @@ class FTextTypeInput {
 
   String toCode(
     final int? loop, {
-    final ResultTypeEnum? resultType,
+    required final ResultTypeEnum resultType,
+    final String? defaultValue,
   }) {
     if (type == FTextTypeEnum.languages) {
       return "TranslatorGenerator.instance.getString('''$keyTranslator''')";
@@ -331,95 +336,115 @@ class FTextTypeInput {
       return code;
     }
 
-    return convertType(code);
+    return convertType(code, resType: resultType);
   }
 
   String getRawToCode(
     final int? loop, {
-    final ResultTypeEnum? resultType,
+    required final ResultTypeEnum resultType,
+    final String? defaultValue,
   }) {
+    // The value is a hard coded text
+    if (type == FTextTypeEnum.text) {
+      if (resultType == ResultTypeEnum.string) {
+        return "'''$value '''";
+      } else if (resultType == ResultTypeEnum.int) {
+        return '$value';
+      } else if (resultType == ResultTypeEnum.double) {
+        return '$value';
+      } else if (resultType == ResultTypeEnum.bool) {
+        return "'$value' == 'true'";
+      }
+    }
+    // The value is a param
     if (type == FTextTypeEnum.param) {
       if (paramName?.isEmpty ?? true) return "''";
       final param = ReCase(paramName ?? '');
       if (resultType == ResultTypeEnum.string) {
         return "'''\${widget.${param.camelCase}}'''";
       } else if (resultType == ResultTypeEnum.int) {
-        return "int.tryParse('widget.${param.camelCase}') ?? 0";
+        return "int.tryParse('widget.${param.camelCase}') ?? ${defaultValue ?? '0'}";
       } else if (resultType == ResultTypeEnum.double) {
-        return "double.tryParse('widget.${param.camelCase}') ?? 0.0";
+        return "double.tryParse('widget.${param.camelCase}') ?? ${defaultValue ?? '0.0'}";
       } else if (resultType == ResultTypeEnum.bool) {
         return "'widget.${param.camelCase}' == 'true'";
       } else {
         return "'''\${widget.${param.camelCase}}'''";
       }
     }
+    // The value is a state
     if (type == FTextTypeEnum.state) {
       if (stateName?.isEmpty ?? true) return "''";
       final state = ReCase(stateName ?? '');
       if (resultType == ResultTypeEnum.string) {
         return "'''\${${state.camelCase}}'''";
       } else if (resultType == ResultTypeEnum.int) {
-        return "int.tryParse('${state.camelCase}') ?? 0";
+        return "int.tryParse('${state.camelCase}') ?? ${defaultValue ?? '0'}";
       } else if (resultType == ResultTypeEnum.double) {
-        return "double.tryParse('${state.camelCase}') ?? 0.0";
+        return "double.tryParse('${state.camelCase}') ?? ${defaultValue ?? '0.0'}";
       } else if (resultType == ResultTypeEnum.bool) {
         return "'${state.camelCase}' == 'true'";
       } else {
         return "'''\${${state.camelCase}}'''";
       }
     }
+    // The value is a dataset
     if (type == FTextTypeEnum.dataset) {
-      return "this.datasets['$datasetName']?[${datasetName == 'Teta Auth User' ? '0' : 'index'}]?['$datasetAttr']?.toString() ?? ''";
+      if (resultType == ResultTypeEnum.string) {
+        return "this.datasets['$datasetName']?[${datasetName == 'Teta Auth User' ? '0' : 'index'}]?['$datasetAttr']?.toString() ?? ''";
+      } else if (resultType == ResultTypeEnum.int) {
+        return '0';
+      } else if (resultType == ResultTypeEnum.double) {
+        return '0.0';
+      } else if (resultType == ResultTypeEnum.bool) {
+        return 'true';
+      }
     }
+    // The value is an asset
     if (type == FTextTypeEnum.asset) {
       return file?.url ?? '';
     }
     if (type == FTextTypeEnum.combined) {
-      final string = StringBuffer("'''");
-      for (final element in combination ?? <FTextTypeInput>[]) {
-        final code = convertType(
-          element.toCode(loop, resultType: resultType).replaceAll("'''", ''),
-        ).replaceAll("'''", '');
-        string.write(code);
+      if (resultType == ResultTypeEnum.string) {
+        final string = StringBuffer("'''");
+        for (final element in combination ?? <FTextTypeInput>[]) {
+          final code = convertType(
+            element.toCode(loop, resultType: resultType).replaceAll("'''", ''),
+            resType: resultType,
+          ).replaceAll("'''", '');
+          string.write(code);
+        }
+        string.write("'''");
+        return string.toString();
+      } else if (resultType == ResultTypeEnum.int) {
+        return '0';
+      } else if (resultType == ResultTypeEnum.double) {
+        return '0.0';
+      } else if (resultType == ResultTypeEnum.bool) {
+        return 'true';
       }
-      string.write("'''");
-      return string.toString();
     }
     return value ?? '';
   }
 
-  String convertType(final String original) {
+  String convertType(
+    final String original, {
+    required final ResultTypeEnum resType,
+  }) {
     var code = original;
     if (original.contains("'")) {
       code = '$original ';
     }
-    if ((type == FTextTypeEnum.dataset ||
-            type == FTextTypeEnum.param ||
-            type == FTextTypeEnum.state) &&
-        code != "''") {
-      code =
-          code.replaceAll("'''", '').replaceAll(r'${', '').replaceAll('}', '');
-      code = '\${$code}';
-    }
-    if (code != "''") {
-      code = "'''$code'''";
-    }
-    switch (resultType) {
-      case ResultTypeEnum.string:
-        return code;
-      case ResultTypeEnum.int:
-        return 'int.tryParse($code) ?? 0';
-      case ResultTypeEnum.double:
-        return 'double.tryParse($code) ?? 0';
-      case ResultTypeEnum.bool:
-        return "'''\${$code == 'true'}";
-      case ResultTypeEnum.dateTime:
-        if (typeDateTimeFormat == TypeDateTimeFormat.dateWithoutTime) {
-          return "'\${DateFormat('yyyy-MM-dd').format(DateTime.tryParse($code) ?? DateTime.now())}'";
-        }
-        if (typeDateTimeFormat == TypeDateTimeFormat.dateWithTime) {
-          return "'\${DateFormat('yyyy-MM-dd hh:mm:ss').format(DateTime.tryParse($code) ?? DateTime.now())}'";
-        }
+    if (resultType == ResultTypeEnum.string) {
+      switch (resultType) {
+        case ResultTypeEnum.dateTime:
+          if (typeDateTimeFormat == TypeDateTimeFormat.dateWithoutTime) {
+            return "'\${DateFormat('yyyy-MM-dd').format(DateTime.tryParse($code) ?? DateTime.now())}'";
+          }
+          if (typeDateTimeFormat == TypeDateTimeFormat.dateWithTime) {
+            return "'\${DateFormat('yyyy-MM-dd hh:mm:ss').format(DateTime.tryParse($code) ?? DateTime.now())}'";
+          }
+      }
     }
     return code;
   }

@@ -25,15 +25,19 @@ class TCardCodeTemplate {
     final List<CNode> children,
     final int? loop,
   ) async {
-    final slideSpeed = double.tryParse(
-          (node.body.attributes[DBKeys.value] as FTextTypeInput).toCode(loop),
-        ) ??
-        20;
-    final delaySlideFor = double.tryParse(
-          (node.body.attributes[DBKeys.valueOfCondition] as FTextTypeInput)
-              .toCode(loop),
-        ) ??
-        500;
+    final slideSpeed =
+        (node.body.attributes[DBKeys.value] as FTextTypeInput).toCode(
+      loop,
+      resultType: ResultTypeEnum.int,
+      defaultValue: '20',
+    );
+    final delaySlideFor =
+        (node.body.attributes[DBKeys.valueOfCondition] as FTextTypeInput)
+            .toCode(
+      loop,
+      resultType: ResultTypeEnum.int,
+      defaultValue: '500',
+    );
     final lockYAxis = node.body.attributes[DBKeys.flag] as bool? ?? false;
     final childrenString = await CS.children(context, children);
     final code = '''

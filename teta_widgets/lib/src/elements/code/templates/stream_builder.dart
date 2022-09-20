@@ -16,12 +16,20 @@ class StreamBuilderCodeTemplate {
     final int? loop,
   ) async {
     final from =
-        (body.attributes[DBKeys.supabaseFrom] as FTextTypeInput).toCode(loop);
+        (body.attributes[DBKeys.supabaseFrom] as FTextTypeInput).toCode(
+      loop,
+      resultType: ResultTypeEnum.string,
+    );
     final order =
-        (body.attributes[DBKeys.supabaseOrder] as FTextTypeInput).toCode(loop);
+        (body.attributes[DBKeys.supabaseOrder] as FTextTypeInput).toCode(
+      loop,
+      resultType: ResultTypeEnum.string,
+    );
     final valueRangeTo =
-        (body.attributes[DBKeys.supabaseFromRange] as FTextTypeInput)
-            .toCode(loop);
+        (body.attributes[DBKeys.supabaseFromRange] as FTextTypeInput).toCode(
+      loop,
+      resultType: ResultTypeEnum.int,
+    );
     final rangeTo =
         int.tryParse(valueRangeTo) != null ? int.parse(valueRangeTo) : 15;
 
@@ -35,7 +43,7 @@ class StreamBuilderCodeTemplate {
       stream: client
       .from('$from')
       .order('$order')
-      .limit('$rangeTo')
+      .limit($rangeTo)
       .execute(),
       builder: (context, snapshot) {
         if (!snapshot.hasData) {
@@ -52,5 +60,6 @@ class StreamBuilderCodeTemplate {
       return 'const SizedBox()';
     }
   }
-  static void testCode(){}
+
+  static void testCode() {}
 }

@@ -63,7 +63,10 @@ class FActionStateChangeWith {
 
       final varName = ReCase(stateName).camelCase;
 
-      final value = valueToChangeWith.toCode(loop);
+      final value = valueToChangeWith.toCode(
+        loop,
+        resultType: ResultTypeEnum.string,
+      );
 
       if (isValueDefault) {
         return '''

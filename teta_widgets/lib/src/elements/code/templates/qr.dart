@@ -15,11 +15,15 @@ class QrCodeTemplate {
     final CNode? child,
     final int? loop,
   ) async {
-    final content =
-        (body.attributes[DBKeys.value] as FTextTypeInput).toCode(loop);
+    final content = (body.attributes[DBKeys.value] as FTextTypeInput).toCode(
+      loop,
+      resultType: ResultTypeEnum.string,
+    );
     final withImage = body.attributes[DBKeys.flag] as bool;
-    final image =
-        (body.attributes[DBKeys.image] as FTextTypeInput).toCode(loop);
+    final image = (body.attributes[DBKeys.image] as FTextTypeInput).toCode(
+      loop,
+      resultType: ResultTypeEnum.string,
+    );
     final fill = body.attributes[DBKeys.fill] as FFill;
     final hex = fill.getHexColor(context);
     final size = (body.attributes[DBKeys.width] as FSize).toCode(
@@ -50,10 +54,16 @@ class QrCodeTemplate {
         () {
           final body = NodeBody.get(NType.qrCode);
           final content =
-              (body.attributes[DBKeys.value] as FTextTypeInput).toCode(0);
+              (body.attributes[DBKeys.value] as FTextTypeInput).toCode(
+            0,
+            resultType: ResultTypeEnum.string,
+          );
           final withImage = body.attributes[DBKeys.flag] as bool;
           final image =
-              (body.attributes[DBKeys.image] as FTextTypeInput).toCode(0);
+              (body.attributes[DBKeys.image] as FTextTypeInput).toCode(
+            0,
+            resultType: ResultTypeEnum.string,
+          );
           final fill = FFill.toCodeTests(FFill().ready(FFillType.solid));
 
           expect(

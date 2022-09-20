@@ -18,27 +18,41 @@ class SupabaseFutureBuilderCodeTemplate {
     final int? loop,
   ) async {
     final from =
-        (body.attributes[DBKeys.supabaseFrom] as FTextTypeInput).toCode(loop);
+        (body.attributes[DBKeys.supabaseFrom] as FTextTypeInput).toCode(
+      loop,
+      resultType: ResultTypeEnum.string,
+    );
     final select =
-        (body.attributes[DBKeys.supabaseSelect] as FTextTypeInput).toCode(loop);
+        (body.attributes[DBKeys.supabaseSelect] as FTextTypeInput).toCode(
+      loop,
+      resultType: ResultTypeEnum.string,
+    );
     final order =
-        (body.attributes[DBKeys.supabaseOrder] as FTextTypeInput).toCode(loop);
+        (body.attributes[DBKeys.supabaseOrder] as FTextTypeInput).toCode(
+      loop,
+      resultType: ResultTypeEnum.string,
+    );
 
-    final valueRangeFrom =
-        (body.attributes[DBKeys.supabaseFromRange] as FTextTypeInput)
-            .toCode(loop);
     final rangeFrom =
-        int.tryParse(valueRangeFrom) != null ? int.parse(valueRangeFrom) : 1;
+        (body.attributes[DBKeys.supabaseFromRange] as FTextTypeInput).toCode(
+      loop,
+      resultType: ResultTypeEnum.int,
+      defaultValue: '1',
+    );
 
-    final valueRangeTo =
-        (body.attributes[DBKeys.supabaseToRange] as FTextTypeInput)
-            .toCode(loop);
     final rangeTo =
-        int.tryParse(valueRangeTo) != null ? int.parse(valueRangeTo) : 15;
+        (body.attributes[DBKeys.supabaseToRange] as FTextTypeInput).toCode(
+      loop,
+      resultType: ResultTypeEnum.int,
+      defaultValue: '15',
+    );
 
     final numberPage =
-        (body.attributes[DBKeys.supabaseNumberPage] as FTextTypeInput)
-            .toCode(loop);
+        (body.attributes[DBKeys.supabaseNumberPage] as FTextTypeInput).toCode(
+      loop,
+      resultType: ResultTypeEnum.int,
+      defaultValue: '1',
+    );
 
     var child = 'const SizedBox()';
     if (children.isNotEmpty) {
@@ -62,7 +76,7 @@ class SupabaseFutureBuilderCodeTemplate {
     .from($from)
     .select($select)
     .order($order)
-    .range(((int.tryParse($numberPage) ?? 1) * $rangeFrom) - 1, (int.tryParse($numberPage) ?? 1) * $rangeTo)
+    .range(($numberPage * $rangeFrom) - 1, $numberPage * $rangeTo)
     .execute(),
     builder: (context, snapshot) {
       if (!snapshot.hasData) {
@@ -87,28 +101,41 @@ class SupabaseFutureBuilderCodeTemplate {
         'SupabaseFutureBuilder: default',
         () {
           final body = NodeBody.get(NType.supabaseFutureBuilder);
-          final from = (body.attributes[DBKeys.supabaseFrom] as FTextTypeInput)
-              .toCode(0);
+          final from =
+              (body.attributes[DBKeys.supabaseFrom] as FTextTypeInput).toCode(
+            0,
+            resultType: ResultTypeEnum.string,
+          );
           final select =
-              (body.attributes[DBKeys.supabaseSelect] as FTextTypeInput)
-                  .toCode(0);
+              (body.attributes[DBKeys.supabaseSelect] as FTextTypeInput).toCode(
+            0,
+            resultType: ResultTypeEnum.string,
+          );
           final order =
-              (body.attributes[DBKeys.supabaseOrder] as FTextTypeInput)
-                  .toCode(0);
-          final valueRangeFrom =
+              (body.attributes[DBKeys.supabaseOrder] as FTextTypeInput).toCode(
+            0,
+            resultType: ResultTypeEnum.string,
+          );
+          final rangeFrom =
               (body.attributes[DBKeys.supabaseFromRange] as FTextTypeInput)
-                  .toCode(0);
-          final rangeFrom = int.tryParse(valueRangeFrom) != null
-              ? int.parse(valueRangeFrom)
-              : 1;
-          final valueRangeTo =
-              (body.attributes[DBKeys.supabaseToRange] as FTextTypeInput)
-                  .toCode(0);
+                  .toCode(
+            0,
+            resultType: ResultTypeEnum.int,
+            defaultValue: '1',
+          );
           final rangeTo =
-              int.tryParse(valueRangeTo) != null ? int.parse(valueRangeTo) : 15;
+              (body.attributes[DBKeys.supabaseToRange] as FTextTypeInput)
+                  .toCode(
+            0,
+            resultType: ResultTypeEnum.int,
+            defaultValue: '15',
+          );
           final numberPage =
               (body.attributes[DBKeys.supabaseNumberPage] as FTextTypeInput)
-                  .toCode(0);
+                  .toCode(
+            0,
+            resultType: ResultTypeEnum.int,
+          );
           const loader = 'const CircularProgressIndicator()';
           const func = '''
             final doc = snapshot.data as PostgrestResponse?;
@@ -123,7 +150,7 @@ class SupabaseFutureBuilderCodeTemplate {
               .from($from)
               .select($select)
               .order($order)
-              .range(((int.tryParse($numberPage) ?? 1) * $rangeFrom) - 1, (int.tryParse($numberPage) ?? 1) * $rangeTo)
+              .range(($numberPage * $rangeFrom) - 1, $numberPage * $rangeTo)
               .execute(),
                 builder: (context, snapshot) {
                   if (!snapshot.hasData) {

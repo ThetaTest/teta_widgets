@@ -18,7 +18,10 @@ class ButtonCodeTemplate {
     final int loop,
   ) async {
     final abstract = body.attributes[DBKeys.value] as FTextTypeInput;
-    final value = abstract.toCode(loop);
+    final value = abstract.toCode(
+      loop,
+      resultType: ResultTypeEnum.string,
+    );
     final code = '''
     GestureDetector(
       ${CS.action(
@@ -73,7 +76,10 @@ class ButtonCodeTemplate {
       test(
         'Button: Text Value',
         () {
-          final value = FTextTypeInput(value: 'xxx').toCode(0);
+          final value = FTextTypeInput(value: 'xxx').toCode(
+            0,
+            resultType: ResultTypeEnum.string,
+          );
           expect(
             FormatterTest.format('''
             GestureDetector(
@@ -97,7 +103,10 @@ class ButtonCodeTemplate {
         () {
           final value =
               FTextTypeInput(stateName: 'state', type: FTextTypeEnum.state)
-                  .toCode(0);
+                  .toCode(
+            0,
+            resultType: ResultTypeEnum.string,
+          );
           expect(
             FormatterTest.format('''
             GestureDetector(
@@ -121,7 +130,10 @@ class ButtonCodeTemplate {
         () {
           final value =
               FTextTypeInput(paramName: 'param', type: FTextTypeEnum.param)
-                  .toCode(0);
+                  .toCode(
+            0,
+            resultType: ResultTypeEnum.string,
+          );
           expect(
             FormatterTest.format('''
             GestureDetector(
@@ -147,7 +159,10 @@ class ButtonCodeTemplate {
             datasetName: 'xxx',
             datasetAttr: 'yyy',
             type: FTextTypeEnum.dataset,
-          ).toCode(0);
+          ).toCode(
+            0,
+            resultType: ResultTypeEnum.string,
+          );
           expect(
             FormatterTest.format('''
             GestureDetector(

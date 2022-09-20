@@ -16,16 +16,19 @@ class VideoCodeTemplate {
     final int? loop,
   ) async {
     final abstract = body.attributes[DBKeys.value] as FTextTypeInput;
-    final value = abstract.toCode(loop);
+    final value = abstract.toCode(
+      loop,
+      resultType: ResultTypeEnum.string,
+    );
     final startAt = body.attributes[DBKeys.startAt] as int? ?? 0;
     final showControls = body.attributes[DBKeys.showControls] as bool? ?? false;
     final showFullScreen =
         body.attributes[DBKeys.isFullWidth] as bool? ?? false;
     final loopVideo = body.attributes[DBKeys.loopVideo] as bool? ?? false;
-    final code = """
+    final code = '''
   YoutubePlayerIFrame(
     controller: YoutubePlayerController(
-      initialVideoId: ${value.contains('widget') ? value : "r$value"},
+      initialVideoId: $value,
       params: YoutubePlayerParams(
         startAt: Duration(seconds: $startAt),
         showControls: $showControls,
@@ -34,7 +37,7 @@ class VideoCodeTemplate {
       ),
     ),
   )
-  """;
+  ''';
     final res = FormatterTest.format(code);
     if (res) {
       return code;
@@ -67,7 +70,10 @@ class VideoCodeTemplate {
         () {
           final body = NodeBody.get(NType.video);
           final abstract = body.attributes[DBKeys.value] as FTextTypeInput;
-          final value = abstract.toCode(0);
+          final value = abstract.toCode(
+            0,
+            resultType: ResultTypeEnum.string,
+          );
           final startAt = body.attributes[DBKeys.startAt] as int? ?? 0;
           final showControls =
               body.attributes[DBKeys.showControls] as bool? ?? false;
@@ -78,7 +84,7 @@ class VideoCodeTemplate {
             FormatterTest.format('''
             YoutubePlayerIFrame(
     controller: YoutubePlayerController(
-      initialVideoId: ${value.contains('widget') ? value : "r$value"},
+      initialVideoId: $value,
       params: YoutubePlayerParams(
         startAt: Duration(seconds: $startAt),
         showControls: $showControls,

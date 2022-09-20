@@ -23,7 +23,10 @@ class RevenueCatSubsStatusCodeTemplate {
     }
 
     final entitlement =
-        (node.body.attributes[DBKeys.value] as FTextTypeInput).toCode(loop);
+        (node.body.attributes[DBKeys.value] as FTextTypeInput).toCode(
+      loop,
+      resultType: ResultTypeEnum.string,
+    );
 
     final code = '''
   TetaFutureBuilder<bool>(

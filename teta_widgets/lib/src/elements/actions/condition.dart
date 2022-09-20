@@ -15,11 +15,17 @@ class FCondition {
   }) {
     if (withCondition != true) return '';
     if (condition == null || valueOfCondition == null) return '';
-    var condStr = condition.toCode(0);
+    var condStr = condition.toCode(
+      0,
+      resultType: ResultTypeEnum.string,
+    );
     if (!condStr.contains("'''")) {
       condStr = "'''$condStr'''";
     }
-    var condVStr = valueOfCondition.toCode(0);
+    var condVStr = valueOfCondition.toCode(
+      0,
+      resultType: ResultTypeEnum.string,
+    );
     if (!condVStr.contains("'''")) {
       condVStr = "'''$condStr'''";
     }

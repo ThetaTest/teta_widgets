@@ -32,7 +32,7 @@ class ConcentricPageViewCodeTemplate {
       ],
       itemCount: ${children.length},
       itemBuilder: (final int index) {
-        return ${childrenStr.substring(0, childrenStr.length - 1)}[index];
+        return ${childrenStr.substring(0, childrenStr.length - 1).replaceFirst('children:', '')}[index];
       },
     )
   ''';

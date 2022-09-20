@@ -12,7 +12,10 @@ class WebViewXTemplate {
     final NodeBody body,
   ) async {
     final abstract = body.attributes[DBKeys.valueOfCondition] as FTextTypeInput;
-    final value = abstract.toCode(0);
+    final value = abstract.toCode(
+      0,
+      resultType: ResultTypeEnum.string,
+    );
     final code = '''
     LayoutBuilder(builder: (context, constraints) {
       return WebViewX(
@@ -57,7 +60,10 @@ class WebViewXTemplate {
           );
           final abstract =
               body.attributes[DBKeys.valueOfCondition] as FTextTypeInput;
-          final defaultValue = abstract.toCode(0);
+          final defaultValue = abstract.toCode(
+            0,
+            resultType: ResultTypeEnum.string,
+          );
           expect(
             FormatterTest.format('''
             LayoutBuilder(builder: (context, constraints) {

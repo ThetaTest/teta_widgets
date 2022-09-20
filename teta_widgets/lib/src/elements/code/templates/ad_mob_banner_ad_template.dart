@@ -17,11 +17,16 @@ class AdMobBannerAdTemplate {
     final int? loop,
   ) async {
     final androidKey =
-        (body.attributes[DBKeys.adMobAdAndroidUnitId] as FTextTypeInput)
-            .toCode(loop);
+        (body.attributes[DBKeys.adMobAdAndroidUnitId] as FTextTypeInput).toCode(
+      loop,
+      resultType: ResultTypeEnum.string,
+    );
 
-    final iosKey = (body.attributes[DBKeys.adMobAdIosUnitId] as FTextTypeInput)
-        .toCode(loop);
+    final iosKey =
+        (body.attributes[DBKeys.adMobAdIosUnitId] as FTextTypeInput).toCode(
+      loop,
+      resultType: ResultTypeEnum.string,
+    );
 
     final code = '''
       FutureBuilder<BannerAd>(
@@ -60,8 +65,14 @@ class AdMobBannerAdTemplate {
       test(
         'Text Value',
         () {
-          final androidKey = FTextTypeInput(value: 'xxx').toCode(0);
-          final iosKey = FTextTypeInput(value: 'xxx').toCode(0);
+          final androidKey = FTextTypeInput(value: 'xxx').toCode(
+            0,
+            resultType: ResultTypeEnum.string,
+          );
+          final iosKey = FTextTypeInput(value: 'xxx').toCode(
+            0,
+            resultType: ResultTypeEnum.string,
+          );
           expect(
             FormatterTest.format(
               '''
@@ -98,10 +109,16 @@ class AdMobBannerAdTemplate {
         () {
           final androidKey =
               FTextTypeInput(stateName: 'state', type: FTextTypeEnum.state)
-                  .toCode(0);
+                  .toCode(
+            0,
+            resultType: ResultTypeEnum.string,
+          );
           final iosKey =
               FTextTypeInput(stateName: 'state', type: FTextTypeEnum.state)
-                  .toCode(0);
+                  .toCode(
+            0,
+            resultType: ResultTypeEnum.string,
+          );
           expect(
             FormatterTest.format(
               '''
@@ -138,10 +155,16 @@ FutureBuilder<BannerAd>(
         () {
           final androidKey =
               FTextTypeInput(paramName: 'param', type: FTextTypeEnum.param)
-                  .toCode(0);
+                  .toCode(
+            0,
+            resultType: ResultTypeEnum.string,
+          );
           final iosKey =
               FTextTypeInput(paramName: 'param', type: FTextTypeEnum.param)
-                  .toCode(0);
+                  .toCode(
+            0,
+            resultType: ResultTypeEnum.string,
+          );
           expect(
             FormatterTest.format(
               '''
@@ -180,12 +203,18 @@ FutureBuilder<BannerAd>(
             datasetName: 'xxx',
             datasetAttr: 'yyy',
             type: FTextTypeEnum.dataset,
-          ).toCode(0);
+          ).toCode(
+            0,
+            resultType: ResultTypeEnum.string,
+          );
           final iosKey = FTextTypeInput(
             datasetName: 'xxx',
             datasetAttr: 'yyy',
             type: FTextTypeEnum.dataset,
-          ).toCode(0);
+          ).toCode(
+            0,
+            resultType: ResultTypeEnum.string,
+          );
           expect(
             FormatterTest.format(
               '''

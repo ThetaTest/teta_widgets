@@ -17,7 +17,10 @@ class ImageCodeTemplate {
     final int? loop,
   ) async {
     final abstract = body.attributes[DBKeys.image] as FTextTypeInput;
-    final value = abstract.toCode(loop);
+    final value = abstract.toCode(
+      loop,
+      resultType: ResultTypeEnum.string,
+    );
     final borderRadius = CS.borderRadius(context, body);
     final code = '''
     ${borderRadius != '' ? 'ClipRRect( ${CS.borderRadius(context, body)} child:' : ''} 

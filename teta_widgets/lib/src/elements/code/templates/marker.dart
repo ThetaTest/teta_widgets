@@ -17,15 +17,11 @@ class MarkerCodeTemplate {
     final CNode? child,
     final int? loop,
   ) async {
-    final valLat =
-        (body.attributes[DBKeys.latitude] as FTextTypeInput).toCode(loop);
-    final lat =
-        double.tryParse(valLat) != null ? double.parse(valLat) : '41.90';
+    final lat = (body.attributes[DBKeys.latitude] as FTextTypeInput)
+        .toCode(loop, resultType: ResultTypeEnum.double, defaultValue: '41.90');
 
-    final valLng =
-        (body.attributes[DBKeys.longitude] as FTextTypeInput).toCode(loop);
-    final lng =
-        double.tryParse(valLng) != null ? double.parse(valLng) : '12.49';
+    final lng = (body.attributes[DBKeys.longitude] as FTextTypeInput)
+        .toCode(loop, resultType: ResultTypeEnum.double, defaultValue: '12.49');
 
     final childString = await CS.child(context, child, comma: true);
     final code = '''

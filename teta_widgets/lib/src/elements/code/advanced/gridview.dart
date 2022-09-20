@@ -24,32 +24,43 @@ class GridViewCodeTemplate {
 
     final shrinkWrap = body.attributes[DBKeys.flag] as bool? ?? false;
     final valueMainAxisSpacing =
-        (body.attributes[DBKeys.mainAxisSpacing] as FTextTypeInput)
-            .toCode(loop);
-    final mainAxisSpacing = double.tryParse(valueMainAxisSpacing) ?? 2;
+        (body.attributes[DBKeys.mainAxisSpacing] as FTextTypeInput).toCode(
+      loop,
+      resultType: ResultTypeEnum.int,
+    );
+    //! Remove this
+    //final mainAxisSpacing = int.tryParse(valueMainAxisSpacing) ?? 2;
 
     final valueCrossAxisCount =
-        (body.attributes[DBKeys.crossAxisCount] as FTextTypeInput).toCode(loop);
-    final crossAxisCount = int.tryParse(valueCrossAxisCount) ?? 2;
+        (body.attributes[DBKeys.crossAxisCount] as FTextTypeInput).toCode(
+      loop,
+      resultType: ResultTypeEnum.int,
+    );
+    //! Remove this
+    //final crossAxisCount = int.tryParse(valueCrossAxisCount) ?? 2;
 
     final valueCrossAxisSpacing =
-        (body.attributes[DBKeys.crossAxisSpacing] as FTextTypeInput)
-            .toCode(loop);
-    final crossAxisSpacing = double.tryParse(valueCrossAxisSpacing) ?? 2;
+        (body.attributes[DBKeys.crossAxisSpacing] as FTextTypeInput).toCode(
+      loop,
+      resultType: ResultTypeEnum.int,
+    );
+    //final crossAxisSpacing = double.tryParse(valueCrossAxisSpacing) ?? 2;
 
     final valueChildAspectRatio =
-        (body.attributes[DBKeys.childAspectRatio] as FTextTypeInput)
-            .toCode(loop);
-    final childAspectRatio = double.tryParse(valueChildAspectRatio) ?? 1;
+        (body.attributes[DBKeys.childAspectRatio] as FTextTypeInput).toCode(
+      loop,
+      resultType: ResultTypeEnum.int,
+    );
+    //final childAspectRatio = double.tryParse(valueChildAspectRatio) ?? 1;
 
     final childrenString = await CS.children(context, children);
     final code = '''
     GridView(
       gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
-        mainAxisSpacing: $mainAxisSpacing,
-        crossAxisCount: $crossAxisCount,
-        crossAxisSpacing: $crossAxisSpacing,
-        childAspectRatio: $childAspectRatio, 
+        mainAxisSpacing: $valueMainAxisSpacing,
+        crossAxisCount: $valueCrossAxisCount,
+        crossAxisSpacing: $valueCrossAxisSpacing,
+        childAspectRatio: $valueChildAspectRatio, 
       ),
       shrinkWrap: $shrinkWrap,
       primary: $primary,
@@ -90,32 +101,44 @@ class GridViewCodeTemplate {
           final shrinkWrap = body.attributes[DBKeys.flag] as bool? ?? false;
           final valueMainAxisSpacing =
               (body.attributes[DBKeys.mainAxisSpacing] as FTextTypeInput)
-                  .toCode(0);
-          final mainAxisSpacing = double.tryParse(valueMainAxisSpacing) ?? 2;
+                  .toCode(
+            0,
+            resultType: ResultTypeEnum.int,
+          );
+          //! Remove this
+          //!final mainAxisSpacing = double.tryParse(valueMainAxisSpacing) ?? 2;
 
           final valueCrossAxisCount =
-              (body.attributes[DBKeys.crossAxisCount] as FTextTypeInput)
-                  .toCode(0);
-          final crossAxisCount = int.tryParse(valueCrossAxisCount) ?? 2;
+              (body.attributes[DBKeys.crossAxisCount] as FTextTypeInput).toCode(
+            0,
+            resultType: ResultTypeEnum.int,
+          );
+          //!final crossAxisCount = int.tryParse(valueCrossAxisCount) ?? 2;
 
           final valueCrossAxisSpacing =
               (body.attributes[DBKeys.crossAxisSpacing] as FTextTypeInput)
-                  .toCode(0);
-          final crossAxisSpacing = double.tryParse(valueCrossAxisSpacing) ?? 2;
+                  .toCode(
+            0,
+            resultType: ResultTypeEnum.int,
+          );
+          //!final crossAxisSpacing = double.tryParse(valueCrossAxisSpacing) ?? 2;
 
           final valueChildAspectRatio =
               (body.attributes[DBKeys.childAspectRatio] as FTextTypeInput)
-                  .toCode(0);
-          final childAspectRatio = double.tryParse(valueChildAspectRatio) ?? 1;
+                  .toCode(
+            0,
+            resultType: ResultTypeEnum.int,
+          );
+          //!final childAspectRatio = double.tryParse(valueChildAspectRatio) ?? 1;
 
           expect(
             FormatterTest.format('''
             GridView(
       gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
-        mainAxisSpacing: $mainAxisSpacing,
-        crossAxisCount: $crossAxisCount,
-        crossAxisSpacing: $crossAxisSpacing,
-        childAspectRatio: $childAspectRatio, 
+        mainAxisSpacing: $valueMainAxisSpacing,
+        crossAxisCount: $valueCrossAxisCount,
+        crossAxisSpacing: $valueCrossAxisSpacing,
+        childAspectRatio: $valueChildAspectRatio, 
       ),
       shrinkWrap: $shrinkWrap,
       primary: $primary,

@@ -42,17 +42,14 @@ class FActionNavigationLaunchURL {
     final FTextTypeInput value,
     final int loop,
   ) {
-    final code = value.toCode(loop);
-
-    final str = code.contains(r'${')
-        ? code
-        : code.contains('this.datasets')
-            ? '\${$code}'
-            : code;
+    final code = value.toCode(
+      loop,
+      resultType: ResultTypeEnum.string,
+    );
     return '''
-    if (await canLaunchUrlString($str)) {
+    if (await canLaunchUrlString($code)) {
       await launchUrlString(
-        $str,
+        $code,
         mode: LaunchMode.inAppWebView,
       );
     }

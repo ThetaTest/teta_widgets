@@ -17,7 +17,10 @@ class BadgeCodeTemplate {
     final int? loop,
   ) async {
     final abstract = body.attributes[DBKeys.value] as FTextTypeInput;
-    final value = abstract.toCode(loop);
+    final value = abstract.toCode(
+      loop,
+      resultType: ResultTypeEnum.string,
+    );
     final fill = FFill.toCode(
       body.attributes[DBKeys.fill] as FFill,
       context,
@@ -73,7 +76,10 @@ class BadgeCodeTemplate {
         () {
           final body = NodeBody.get(NType.badge);
           final abstract = body.attributes[DBKeys.value] as FTextTypeInput;
-          final value = abstract.toCode(0);
+          final value = abstract.toCode(
+            0,
+            resultType: ResultTypeEnum.string,
+          );
           final fill = FFill.toCodeTests(FFill().ready(FFillType.solid));
           expect(
             FormatterTest.format('''

@@ -17,10 +17,13 @@ class IndexedStackCodeTemplate {
     final int? loop,
   ) async {
     final abstract = body.attributes[DBKeys.value] as FTextTypeInput;
-    final value = abstract.toCode(loop);
-    final index = int.tryParse(value) == null
+    final index = abstract.toCode(
+      loop,
+      resultType: ResultTypeEnum.int,
+    );
+    /* final index = int.tryParse(value) == null
         ? value.replaceAll(r"'''${", '').replaceAll("}'''", '')
-        : 0;
+        : 0;*/
     final childrenString = await CS.children(context, children);
     final code = '''
     IndexedStack(

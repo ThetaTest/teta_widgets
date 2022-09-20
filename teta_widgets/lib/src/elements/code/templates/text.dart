@@ -17,16 +17,20 @@ class TextCodeTemplate {
     final int? loop,
   ) async {
     final abstract = body.attributes[DBKeys.value] as FTextTypeInput;
-    final value = abstract.toCode(loop);
-    final valueMaxLines =
-        (body.attributes[DBKeys.maxLines] as FTextTypeInput).toCode(loop);
+    final value = abstract.toCode(
+      loop,
+      resultType: ResultTypeEnum.string,
+    );
     final maxLines =
-        int.tryParse(valueMaxLines) != null ? int.parse(valueMaxLines) : '';
+        (body.attributes[DBKeys.maxLines] as FTextTypeInput).toCode(
+      loop,
+      resultType: ResultTypeEnum.int,
+    );
     final code = '''
     Text(
       ${abstract.type == FTextTypeEnum.text ? "r$value" : value},
       ${CS.textStyle(context, body, DBKeys.textStyle)}
-      ${maxLines != '' ? 'maxLines: $maxLines' : ''}
+      ${maxLines != '0' ? 'maxLines: $maxLines' : ''}
     )
   ''';
     final res = FormatterTest.format(code);
@@ -61,7 +65,10 @@ class TextCodeTemplate {
         () {
           final body = NodeBody.get(NType.text);
           final abstract = body.attributes[DBKeys.value] as FTextTypeInput;
-          final value = abstract.toCode(0);
+          final value = abstract.toCode(
+            0,
+            resultType: ResultTypeEnum.string,
+          );
           expect(
             FormatterTest.format('''
               Text($value)

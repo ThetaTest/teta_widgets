@@ -17,9 +17,10 @@ class AspectRatioCodeTemplate {
     final int? loop,
   ) async {
     final abstract = body.attributes[DBKeys.value] as FTextTypeInput;
-    final value = abstract.toCode(loop);
-    final aspectRatio =
-        double.tryParse(value) != null ? double.parse(value) : '0.5';
+    final aspectRatio = abstract.toCode(
+      loop,
+      resultType: ResultTypeEnum.double,
+    );
 
     final childString = await CS.child(context, child, comma: true);
     final code = '''
@@ -54,9 +55,10 @@ class AspectRatioCodeTemplate {
         () {
           final body = NodeBody.get(NType.aspectRatio);
           final abstract = body.attributes[DBKeys.value] as FTextTypeInput;
-          final value = abstract.toCode(0);
-          final aspectRatio =
-              double.tryParse(value) != null ? double.parse(value) : '0.5';
+          final aspectRatio = abstract.toCode(
+            0,
+            resultType: ResultTypeEnum.int,
+          );
           expect(
             FormatterTest.format('''
              AspectRatio(

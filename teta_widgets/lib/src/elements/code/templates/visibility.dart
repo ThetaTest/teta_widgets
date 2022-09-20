@@ -17,13 +17,12 @@ class VisibilityCodeTemplate {
     final int? loop,
   ) async {
     final abstract = body.attributes[DBKeys.value] as FTextTypeInput;
-    final value = abstract.toCode(
+    final visibility = abstract.toCode(
       loop,
       resultType: ResultTypeEnum.bool,
     );
-    final visibility = value == 'true' ? 'true' : 'false';
 
-    if (visibility == 'true') {
+    if (abstract.type == FTextTypeEnum.text && abstract.value == 'true') {
       final code = await CS.child(
         context,
         child,
@@ -80,7 +79,10 @@ class VisibilityCodeTemplate {
           final body = NodeBody.get(NType.visibility);
           body.attributes[DBKeys.value] = FTextTypeInput(value: 'false');
           final abstract = body.attributes[DBKeys.value] as FTextTypeInput;
-          final defaultValue = abstract.toCode(0);
+          final defaultValue = abstract.toCode(
+            0,
+            resultType: ResultTypeEnum.bool,
+          );
           expect(
             FormatterTest.format('''
             Visibility(

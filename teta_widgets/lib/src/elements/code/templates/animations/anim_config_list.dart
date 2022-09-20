@@ -16,22 +16,22 @@ class AnimConfigListCodeTemplate {
     final CNode? child,
     final int loop,
   ) async {
-    final position =
-        (body.attributes[DBKeys.value] as FTextTypeInput).toCode(loop);
+    final position = (body.attributes[DBKeys.value] as FTextTypeInput).toCode(
+      loop,
+      resultType: ResultTypeEnum.int,
+    );
     final duration =
-        (body.attributes[DBKeys.duration] as FTextTypeInput).toCode(loop);
+        (body.attributes[DBKeys.duration] as FTextTypeInput).toCode(
+      loop,
+      resultType: ResultTypeEnum.int,
+      defaultValue: '375',
+    );
     final childString = await CS.child(context, child, comma: true);
     final code = '''
     AnimationConfiguration.staggeredList(
-      position: int.tryParse(
-          $position 
-          ) ??
-          0,
+      position: $position,
       duration: Duration(
-        milliseconds: int.tryParse(
-            $duration
-            ) ??
-            375,
+        milliseconds: $duration,
       ),
       $childString
     )
@@ -62,9 +62,16 @@ class AnimConfigListCodeTemplate {
         () {
           final body = NodeBody.get(NType.animationConfigList);
           final position =
-              (body.attributes[DBKeys.value] as FTextTypeInput).toCode(0);
+              (body.attributes[DBKeys.value] as FTextTypeInput).toCode(
+            0,
+            resultType: ResultTypeEnum.int,
+          );
           final duration =
-              (body.attributes[DBKeys.duration] as FTextTypeInput).toCode(0);
+              (body.attributes[DBKeys.duration] as FTextTypeInput).toCode(
+            0,
+            resultType: ResultTypeEnum.int,
+            defaultValue: '375',
+          );
           expect(
             FormatterTest.format('''
             AnimationConfiguration.staggeredList(

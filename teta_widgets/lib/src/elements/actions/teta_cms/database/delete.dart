@@ -38,7 +38,10 @@ class FATetaCMSDelete {
     final FTextTypeInput? documentId,
     final int? loop,
   ) {
-    final eqValue = documentId?.toCode(loop);
+    final eqValue = documentId?.toCode(
+      loop,
+      resultType: ResultTypeEnum.string,
+    );
     return "await TetaCMS.instance.client.deleteDocument('$collectionId', $eqValue);";
   }
 }

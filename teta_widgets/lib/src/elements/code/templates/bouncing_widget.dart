@@ -19,12 +19,13 @@ class BouncingWidgetCodeTemplate {
     final int loop,
   ) async {
     final abstract = body.attributes[DBKeys.value] as FTextTypeInput;
-    final value = abstract.toCode(loop);
-    final duration = int.tryParse(value) != null ? int.parse(value) : '200';
-    final valueOfCondition =
-        (body.attributes[DBKeys.valueOfCondition] as FTextTypeInput)
-            .toCode(loop);
-    final scale = double.tryParse(valueOfCondition) ?? 1;
+    final duration = abstract.toCode(
+      loop,
+      resultType: ResultTypeEnum.int,
+      defaultValue: '200',
+    );
+    final scale = (body.attributes[DBKeys.valueOfCondition] as FTextTypeInput)
+        .toCode(loop, resultType: ResultTypeEnum.double, defaultValue: '1');
     final actionString = CS.action(
       pageId,
       context,
@@ -72,13 +73,14 @@ class BouncingWidgetCodeTemplate {
         () {
           final body = NodeBody.get(NType.bouncingWidget);
           final abstract = body.attributes[DBKeys.value] as FTextTypeInput;
-          final value = abstract.toCode(0);
-          final duration =
-              int.tryParse(value) != null ? int.parse(value) : '200';
-          final valueOfCondition =
-              (body.attributes[DBKeys.valueOfCondition] as FTextTypeInput)
-                  .toCode(0);
-          final scale = double.tryParse(valueOfCondition) ?? 1;
+          final duration = abstract.toCode(
+            0,
+            resultType: ResultTypeEnum.int,
+            defaultValue: '200',
+          );
+          final scale = (body.attributes[DBKeys.valueOfCondition]
+                  as FTextTypeInput)
+              .toCode(0, resultType: ResultTypeEnum.double, defaultValue: '1');
           const actionString = 'onPressed: () async{},';
           const childString = 'const SizedBox()';
           expect(

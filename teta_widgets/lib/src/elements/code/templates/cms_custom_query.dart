@@ -15,8 +15,10 @@ class CmsCustomQueryCodeTemplate {
     final List<CNode> children,
     final int? loop,
   ) async {
-    final query =
-        (node.body.attributes[DBKeys.value] as FTextTypeInput).toCode(loop);
+    final query = (node.body.attributes[DBKeys.value] as FTextTypeInput).toCode(
+      loop,
+      resultType: ResultTypeEnum.string,
+    );
 
     var child = 'const SizedBox()';
     if (children.isNotEmpty) {

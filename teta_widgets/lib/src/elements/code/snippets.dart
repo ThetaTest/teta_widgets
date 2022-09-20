@@ -1,7 +1,6 @@
 // Flutter imports:
 
 import 'package:flutter/material.dart';
-import 'package:teta_core/teta_core.dart';
 // Project imports:
 import 'package:teta_widgets/src/elements/controls/key_constants.dart';
 import 'package:teta_widgets/src/elements/features/physic.dart';
@@ -330,16 +329,16 @@ class CS {
   ) async {
     final childString = await child;
     final abstract = node.body.attributes[DBKeys.rotation] as FTextTypeInput?;
-    final value = abstract?.toCode(loop) ?? '1';
-    Logger.printMessage(value);
-    final rotation = int.tryParse(
-          value,
+    final rotation = abstract?.toCode(
+          loop,
+          resultType: ResultTypeEnum.int,
+          defaultValue: '1',
         ) ??
-        1;
+        '1';
 
     final originalType = NodeBody.get(node.globalType);
     if (originalType.attributes[DBKeys.visibility] == null) {
-      if (rotation != 1) {
+      if (rotation != '1') {
         return '''
     RotatedBox(
       quarterTurns: $rotation,
@@ -370,14 +369,22 @@ class CS {
 
     final childString = await child;
     final abstractX = body.attributes[DBKeys.xTranslation] as FTextTypeInput?;
-    final valueX = abstractX?.toCode(loop) ?? '0';
-    final transX = double.tryParse(valueX) != null ? double.parse(valueX) : 0.0;
+    final transX = abstractX?.toCode(
+          loop,
+          resultType: ResultTypeEnum.double,
+          defaultValue: '0.0',
+        ) ??
+        '0.0';
 
     final abstractY = body.attributes[DBKeys.yTranslation] as FTextTypeInput?;
-    final valueY = abstractY?.toCode(loop) ?? '0';
-    final transY = double.tryParse(valueY) != null ? double.parse(valueY) : 0.0;
+    final transY = abstractY?.toCode(
+          loop,
+          resultType: ResultTypeEnum.double,
+          defaultValue: '0.0',
+        ) ??
+        '0.0';
 
-    if (transX == 0 && transY == 0) {
+    if (transX == '0.0' && transY == '0.0') {
       return childString;
     }
 
@@ -449,13 +456,28 @@ class CS {
     final childString = await child;
     final abstractMobile =
         body.attributes[DBKeys.visibleOnMobile] as FTextTypeInput?;
-    final valueMobile = abstractMobile?.toCode(loop) ?? 'true';
+    final valueMobile = abstractMobile?.toCode(
+          loop,
+          resultType: ResultTypeEnum.bool,
+          defaultValue: 'true',
+        ) ??
+        'true';
     final abstractTablet =
         body.attributes[DBKeys.visibleOnMobile] as FTextTypeInput?;
-    final valueTablet = abstractTablet?.toCode(loop) ?? 'true';
+    final valueTablet = abstractTablet?.toCode(
+          loop,
+          resultType: ResultTypeEnum.bool,
+          defaultValue: 'true',
+        ) ??
+        'true';
     final abstractDesktop =
         body.attributes[DBKeys.visibleOnMobile] as FTextTypeInput?;
-    final valueDesktop = abstractDesktop?.toCode(loop) ?? 'true';
+    final valueDesktop = abstractDesktop?.toCode(
+          loop,
+          resultType: ResultTypeEnum.bool,
+          defaultValue: 'true',
+        ) ??
+        'true';
 
     if (valueMobile == 'true' &&
         valueTablet == 'true' &&
@@ -504,61 +526,73 @@ class CS {
     final childString = await child;
     final abstractIdentityR =
         body.attributes[DBKeys.xPerspective] as FTextTypeInput?;
-    final valueIdentityR = abstractIdentityR?.toCode(loop) ?? '0';
-    final identityR =
-        int.tryParse(valueIdentityR) != null ? int.parse(valueIdentityR) : 0;
+    final identityR = abstractIdentityR?.toCode(
+          loop,
+          resultType: ResultTypeEnum.int,
+        ) ??
+        '0';
 
     final abstractIdentityC =
         body.attributes[DBKeys.yPerspective] as FTextTypeInput?;
-    final valueIdentityC = abstractIdentityC?.toCode(loop) ?? '0';
-    final identityC =
-        int.tryParse(valueIdentityC) != null ? int.parse(valueIdentityC) : 0;
+    final identityC = abstractIdentityC?.toCode(
+          loop,
+          resultType: ResultTypeEnum.int,
+        ) ??
+        '0';
 
     final abstractIdentityV =
         body.attributes[DBKeys.zPerspective] as FTextTypeInput?;
-    final valueIdentityV = abstractIdentityV?.toCode(loop) ?? '0';
-    final identityV = double.tryParse(valueIdentityV) != null
-        ? double.parse(valueIdentityV)
-        : 0.0;
+    final identityV = abstractIdentityV?.toCode(
+          loop,
+          resultType: ResultTypeEnum.double,
+          defaultValue: '0.0',
+        ) ??
+        '0.0';
 
     final abstractRotateX =
         body.attributes[DBKeys.xRotation] as FTextTypeInput?;
-    final valueRotateX = abstractRotateX?.toCode(loop) ?? '0';
-    final rotateX = double.tryParse(valueRotateX) != null
-        ? double.parse(valueRotateX)
-        : 0.0;
+    final rotateX = abstractRotateX?.toCode(
+          loop,
+          resultType: ResultTypeEnum.double,
+          defaultValue: '0.0',
+        ) ??
+        '0.0';
 
     final abstractRotateY =
         body.attributes[DBKeys.yRotation] as FTextTypeInput?;
-    final valueRotateY = abstractRotateY?.toCode(loop) ?? '0';
-    final rotateY = double.tryParse(valueRotateY) != null
-        ? double.parse(valueRotateY)
-        : 0.0;
+    final rotateY = abstractRotateY?.toCode(
+          loop,
+          resultType: ResultTypeEnum.double,
+          defaultValue: '0.0',
+        ) ??
+        '0.0';
 
     final abstractRotateZ =
         body.attributes[DBKeys.zRotation] as FTextTypeInput?;
-    final valueRotateZ = abstractRotateZ?.toCode(loop) ?? '0';
-    final rotateZ = double.tryParse(valueRotateZ) != null
-        ? double.parse(valueRotateZ)
-        : 0.0;
+    final rotateZ = abstractRotateZ?.toCode(
+          loop,
+          resultType: ResultTypeEnum.double,
+          defaultValue: '0.0',
+        ) ??
+        '0.0';
 
     final setIdentity = StringBuffer();
-    if (identityC != 0 && identityV != 0 && identityR != 0) {
+    if (identityC != '0' && identityV != '0' && identityR != '0.0') {
       setIdentity.write('..setEntry($identityR, $identityC, $identityV)');
     }
 
     final setRotationX = StringBuffer();
-    if (rotateX != 0) {
+    if (rotateX != '0.0') {
       setRotationX.write('..rotateX($rotateX)');
     }
 
     final setRotationY = StringBuffer();
-    if (rotateY != 0) {
+    if (rotateY != '0.0') {
       setRotationY.write('..rotateY($rotateY)');
     }
 
     final setRotationZ = StringBuffer();
-    if (rotateZ != 0) {
+    if (rotateZ != '0.0') {
       setRotationZ.write('..rotateZ($rotateZ)');
     }
 

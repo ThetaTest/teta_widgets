@@ -57,7 +57,10 @@ class FActionWebViewNavigateTo {
 
     return '''
     if ($varName != null) { 
-      final url = ${valueToChangeWith.toCode(loop)};
+      final url = ${valueToChangeWith.toCode(
+      loop,
+      resultType: ResultTypeEnum.string,
+    )};
       $varName.loadContent(url, SourceType.url);
     }''';
   }

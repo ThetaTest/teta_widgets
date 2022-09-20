@@ -61,12 +61,21 @@ class FATetaCMSOnAll {
       for (final e in supabaseData ?? <MapElement>[]) {
         if (e.key.toLowerCase() != 'id') {
           if (e.value.type == FTextTypeEnum.text) {
-            map[e.key] = '"${e.value.toCode(0)}"';
+            map[e.key] = e.value.toCode(
+              0,
+              resultType: ResultTypeEnum.string,
+            );
           } else {
-            map[e.key] = e.value.toCode(0);
+            map[e.key] = e.value.toCode(
+              0,
+              resultType: ResultTypeEnum.string,
+            );
           }
         } else {
-          map[e.key] = int.tryParse(e.value.toCode(0));
+          map[e.key] = int.tryParse(e.value.toCode(
+            0,
+            resultType: ResultTypeEnum.int,
+          ));
         }
       }
       final mapString = StringBuffer()..write('{');
@@ -76,7 +85,10 @@ class FATetaCMSOnAll {
       mapString.write('}');
       return '''
         final response = await Supabase.instance.client
-              .from(${supabaseFrom?.toCode(0) ?? ''})
+              .from(${supabaseFrom?.toCode(
+                0,
+                resultType: ResultTypeEnum.string,
+              ) ?? ''})
               .insert($mapString)
               .execute();
         if (response.error != null) {

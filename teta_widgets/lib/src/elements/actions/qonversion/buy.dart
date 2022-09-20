@@ -104,7 +104,10 @@ class FActionQonversionBuy {
     try {
       final QOfferings offerings = await Qonversion.offerings();
       final List<QProduct> products = offerings.main.products;
-      final index = products.indexWhere((prod) => prod.qonversionId == ${productIdentifier.toCode(loop)});
+      final index = products.indexWhere((prod) => prod.qonversionId == ${productIdentifier.toCode(
+      loop,
+      resultType: ResultTypeEnum.string,
+    )});
       if (index != -1) {
         final Map<String, QPermission> permissions = await Qonversion.purchaseProduct(products[index]);
         setState(() {

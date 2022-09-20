@@ -199,9 +199,7 @@ class ElementState extends State<Element> {
   TextEditingController? controller;
   int? nodeId;
   final List<VariableObject> list = [];
-  final List<DatasetObject> listDataset = [
-    DatasetObject(name: 'Text', map: [])
-  ];
+  final List<DatasetObject> listDataset = [];
   String? dropdown;
   String? dropdownDataset;
 
@@ -209,11 +207,15 @@ class ElementState extends State<Element> {
   void initState() {
     super.initState();
 
+    if (widget.variable.type == VariableType.string) {
+      listDataset.add(DatasetObject(name: 'Text', map: []));
+    }
     if (widget.page.params != <VariableObject>[]) {
       listDataset.add(
         DatasetObject(
           name: 'Parameters',
           map: widget.page.params
+              .where((final element) => widget.variable.type == element.type)
               .map((final e) => <String, dynamic>{e.name: e.get})
               .toList(),
         ),
@@ -224,12 +226,15 @@ class ElementState extends State<Element> {
         DatasetObject(
           name: 'States',
           map: widget.page.states
+              .where((final element) => widget.variable.type == element.type)
               .map((final e) => <String, dynamic>{e.name: e.get})
               .toList(),
         ),
       );
     }
-    listDataset.addAll(widget.page.datasets);
+    if (widget.variable.type == VariableType.string) {
+      listDataset.addAll(widget.page.datasets);
+    }
     try {
       dropdown = widget.map[widget.variable.id]['label'] as String;
     } catch (_) {}

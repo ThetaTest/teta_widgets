@@ -17,8 +17,11 @@ class AnimatedAlignCodeTemplate {
     final int? loop,
   ) async {
     final abstract = body.attributes[DBKeys.duration] as FTextTypeInput;
-    final value = abstract.toCode(loop);
-    final duration = int.tryParse(value) != null ? int.parse(value) : '400';
+    final duration = abstract.toCode(
+      loop,
+      resultType: ResultTypeEnum.int,
+      defaultValue: '400',
+    );
     final childString = await CS.child(context, child, comma: true);
     final code = '''
     AnimatedAlign(
@@ -43,9 +46,11 @@ class AnimatedAlignCodeTemplate {
         () {
           final body = NodeBody.get(NType.animatedAlign);
           final abstract = body.attributes[DBKeys.duration] as FTextTypeInput;
-          final value = abstract.toCode(0);
-          final duration =
-              int.tryParse(value) != null ? int.parse(value) : '400';
+          final duration = abstract.toCode(
+            0,
+            resultType: ResultTypeEnum.int,
+            defaultValue: '400',
+          );
           expect(
             FormatterTest.format('''
             AnimatedAlign(
@@ -67,9 +72,11 @@ class AnimatedAlignCodeTemplate {
             type: FTextTypeEnum.state,
           );
           final abstract = body.attributes[DBKeys.duration] as FTextTypeInput;
-          final value = abstract.toCode(0);
-          final duration =
-              int.tryParse(value) != null ? int.parse(value) : '400';
+          final duration = abstract.toCode(
+            0,
+            resultType: ResultTypeEnum.int,
+            defaultValue: '400',
+          );
           expect(
             FormatterTest.format('''
             AnimatedAlign(
@@ -91,9 +98,11 @@ class AnimatedAlignCodeTemplate {
             type: FTextTypeEnum.param,
           );
           final abstract = body.attributes[DBKeys.duration] as FTextTypeInput;
-          final value = abstract.toCode(0);
-          final duration =
-              int.tryParse(value) != null ? int.parse(value) : '400';
+          final duration = abstract.toCode(
+            0,
+            resultType: ResultTypeEnum.int,
+            defaultValue: '400',
+          );
           expect(
             FormatterTest.format('''
             AnimatedAlign(
@@ -116,9 +125,11 @@ class AnimatedAlignCodeTemplate {
             type: FTextTypeEnum.dataset,
           );
           final abstract = body.attributes[DBKeys.duration] as FTextTypeInput;
-          final value = abstract.toCode(0);
-          final duration =
-              int.tryParse(value) != null ? int.parse(value) : '400';
+          final duration = abstract.toCode(
+            0,
+            resultType: ResultTypeEnum.int,
+            defaultValue: '400',
+          );
           expect(
             FormatterTest.format('''
             AnimatedAlign(

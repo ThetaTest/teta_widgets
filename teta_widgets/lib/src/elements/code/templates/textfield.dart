@@ -23,16 +23,27 @@ class TextFieldCodeTemplate {
     final int loop,
   ) async {
     final labelText =
-        (body.attributes[DBKeys.labelText] as FTextTypeInput).toCode(loop);
-    final valueMaxLines =
-        (body.attributes[DBKeys.maxLines] as FTextTypeInput).getRawToCode(loop);
-    final maxLines = int.tryParse(valueMaxLines) ?? 1;
-    final valueMinLines =
-        (body.attributes[DBKeys.minLines] as FTextTypeInput).getRawToCode(loop);
-    final minLines = int.tryParse(valueMinLines) ?? 1;
-    final valueMaxLenght = (body.attributes[DBKeys.maxLenght] as FTextTypeInput)
-        .getRawToCode(loop);
-    final maxLenght = int.tryParse(valueMaxLenght);
+        (body.attributes[DBKeys.labelText] as FTextTypeInput).toCode(
+      loop,
+      resultType: ResultTypeEnum.string,
+    );
+    final maxLines =
+        (body.attributes[DBKeys.maxLines] as FTextTypeInput).getRawToCode(
+      loop,
+      resultType: ResultTypeEnum.int,
+      defaultValue: '1',
+    );
+    final minLines =
+        (body.attributes[DBKeys.minLines] as FTextTypeInput).getRawToCode(
+      loop,
+      resultType: ResultTypeEnum.int,
+      defaultValue: '1',
+    );
+    final maxLenght =
+        (body.attributes[DBKeys.maxLenght] as FTextTypeInput).getRawToCode(
+      loop,
+      resultType: ResultTypeEnum.int,
+    );
     final obscureText = body.attributes[DBKeys.obscureText] as bool? ?? false;
     final showCursor = body.attributes[DBKeys.showCursor] as bool? ?? false;
     final autoCorrect = body.attributes[DBKeys.autoCorrect] as bool? ?? false;
@@ -58,10 +69,12 @@ class TextFieldCodeTemplate {
       context,
       flagConst: false,
     );
-    final valueBordersSize =
-        (body.attributes[DBKeys.bordersSize] as FTextTypeInput)
-            .getRawToCode(loop);
-    final borderSize = double.tryParse(valueBordersSize) ?? 1;
+    final borderSize =
+        (body.attributes[DBKeys.bordersSize] as FTextTypeInput).getRawToCode(
+      loop,
+      resultType: ResultTypeEnum.double,
+      defaultValue: '1',
+    );
 
     final code = """
   Container(
@@ -151,19 +164,28 @@ class TextFieldCodeTemplate {
         () {
           final body = NodeBody.get(NType.textField);
           final labelText =
-              (body.attributes[DBKeys.labelText] as FTextTypeInput).toCode(0);
-          final valueMaxLines =
-              (body.attributes[DBKeys.maxLines] as FTextTypeInput)
-                  .getRawToCode(0);
-          final maxLines = int.tryParse(valueMaxLines) ?? 1;
-          final valueMinLines =
-              (body.attributes[DBKeys.minLines] as FTextTypeInput)
-                  .getRawToCode(0);
-          final minLines = int.tryParse(valueMinLines) ?? 1;
-          final valueMaxLenght =
+              (body.attributes[DBKeys.labelText] as FTextTypeInput).toCode(
+            0,
+            resultType: ResultTypeEnum.string,
+          );
+          final maxLines =
+              (body.attributes[DBKeys.maxLines] as FTextTypeInput).getRawToCode(
+            0,
+            resultType: ResultTypeEnum.int,
+            defaultValue: '1',
+          );
+          final minLines =
+              (body.attributes[DBKeys.minLines] as FTextTypeInput).getRawToCode(
+            0,
+            resultType: ResultTypeEnum.int,
+            defaultValue: '1',
+          );
+          final maxLenght =
               (body.attributes[DBKeys.maxLenght] as FTextTypeInput)
-                  .getRawToCode(0);
-          final maxLenght = int.tryParse(valueMaxLenght);
+                  .getRawToCode(
+            0,
+            resultType: ResultTypeEnum.int,
+          );
           final obscureText =
               body.attributes[DBKeys.obscureText] as bool? ?? false;
           final showCursor =
@@ -180,10 +202,13 @@ class TextFieldCodeTemplate {
               FFill.toCodeTests(FFill().ready(FFillType.solid));
           final focusedBorderToCodeColor =
               FFill.toCodeTests(FFill().ready(FFillType.solid));
-          final valueBordersSize =
+          final borderSize =
               (body.attributes[DBKeys.bordersSize] as FTextTypeInput)
-                  .getRawToCode(0);
-          final borderSize = double.tryParse(valueBordersSize) ?? 1;
+                  .getRawToCode(
+            0,
+            resultType: ResultTypeEnum.double,
+            defaultValue: '1',
+          );
           expect(
             FormatterTest.format('''
 TextField(

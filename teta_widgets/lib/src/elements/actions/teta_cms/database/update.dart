@@ -51,9 +51,15 @@ class FATetaCMSUpdate {
   ) {
     final map = <String, dynamic>{};
     for (final e in list ?? <MapElement>[]) {
-      map[e.key] = e.value.toCode(0);
+      map[e.key] = e.value.toCode(
+        0,
+        resultType: ResultTypeEnum.string,
+      );
     }
-    final eqValue = documentId?.toCode(loop);
+    final eqValue = documentId?.toCode(
+      loop,
+      resultType: ResultTypeEnum.string,
+    );
     final mapString = StringBuffer()..write('{');
     for (final key in map.keys) {
       mapString.write("'''$key''': '${map[key]}',");

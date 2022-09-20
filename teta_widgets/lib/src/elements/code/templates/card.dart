@@ -17,9 +17,11 @@ class CardCodeTemplate {
     final int? loop,
   ) async {
     final abstract = body.attributes[DBKeys.value] as FTextTypeInput;
-    final value = abstract.toCode(loop);
-    final elevation =
-        double.tryParse(value) != null ? double.parse(value) : '1';
+    final elevation = abstract.toCode(
+      loop,
+      resultType: ResultTypeEnum.double,
+      defaultValue: '1',
+    );
     final fill = FFill.toCode(
       body.attributes[DBKeys.fill] as FFill,
       context,
@@ -79,9 +81,11 @@ class CardCodeTemplate {
         () {
           final body = NodeBody.get(NType.card);
           final abstract = body.attributes[DBKeys.value] as FTextTypeInput;
-          final value = abstract.toCode(0);
-          final elevation =
-              double.tryParse(value) != null ? double.parse(value) : '1';
+          final elevation = abstract.toCode(
+            0,
+            resultType: ResultTypeEnum.double,
+            defaultValue: '1',
+          );
           final fill = FFill.toCodeTests(FFill().ready(FFillType.solid));
           expect(
             FormatterTest.format('''

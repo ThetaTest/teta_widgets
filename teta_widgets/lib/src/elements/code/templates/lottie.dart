@@ -17,10 +17,13 @@ class LottieCodeTemplate {
     final int? loop,
   ) async {
     final abstract = body.attributes[DBKeys.image] as FTextTypeInput;
-    final value = abstract.toCode(loop);
+    final value = abstract.toCode(
+      loop,
+      resultType: ResultTypeEnum.string,
+    );
     final code = '''
     Lottie.network(
-      ${abstract.type == FTextTypeEnum.text ? "r$value" : value},
+      $value,
       ${CS.size(context, body, isWidth: true)}
       ${CS.size(context, body, isWidth: false)}
       ${CS.boxFit(context, body)}

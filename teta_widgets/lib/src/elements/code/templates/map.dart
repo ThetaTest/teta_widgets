@@ -5,7 +5,6 @@ import 'package:teta_core/teta_core.dart';
 import 'package:teta_widgets/src/elements/code/formatter_test.dart';
 // Project imports:
 import 'package:teta_widgets/src/elements/controls/key_constants.dart';
-import 'package:teta_widgets/src/elements/features/text_type_input.dart';
 import 'package:teta_widgets/src/elements/nodes/node.dart';
 import 'package:teta_widgets/src/elements/nodes/node_body.dart';
 
@@ -19,8 +18,6 @@ class MapCodeTemplate {
     final List<CNode> children,
     final int? loop,
   ) async {
-    final abstract = body.attributes[DBKeys.valueOfCondition] as FTextTypeInput;
-    final value = abstract.toCode(loop);
     final flag = body.attributes[DBKeys.flag] as bool;
     final mapBoxKey =
         (BlocProvider.of<FocusProjectBloc>(context).state as ProjectLoaded)

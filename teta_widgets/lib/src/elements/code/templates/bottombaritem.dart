@@ -18,7 +18,10 @@ class BottomBarItemCodeTemplate {
     final int loop,
   ) async {
     final abstract = body.attributes[DBKeys.value] as FTextTypeInput;
-    final value = abstract.toCode(loop);
+    final value = abstract.toCode(
+      loop,
+      resultType: ResultTypeEnum.string,
+    );
     final icon = body.attributes[DBKeys.icon] as String;
     final fill = FFill.toCode(
       body.attributes[DBKeys.fill] as FFill,

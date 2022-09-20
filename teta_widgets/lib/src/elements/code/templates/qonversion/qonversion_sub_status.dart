@@ -22,8 +22,8 @@ class QonversionSubsStatusCodeTemplate {
       childString = await child.toCode(context);
     }
 
-    final entitlement =
-        (node.body.attributes[DBKeys.value] as FTextTypeInput).toCode(loop);
+    final entitlement = (node.body.attributes[DBKeys.value] as FTextTypeInput)
+        .toCode(loop, resultType: ResultTypeEnum.string);
 
     final code = '''
   TetaFutureBuilder<bool>(

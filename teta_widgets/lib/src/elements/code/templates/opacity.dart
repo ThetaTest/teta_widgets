@@ -17,8 +17,11 @@ class OpacityCodeTemplate {
     final int? loop,
   ) async {
     final abstract = body.attributes[DBKeys.value] as FTextTypeInput;
-    final value = abstract.toCode(loop);
-    final opacity = double.tryParse(value) != null ? double.parse(value) : '1';
+    final opacity = abstract.toCode(
+      loop,
+      resultType: ResultTypeEnum.double,
+      defaultValue: '1',
+    );
     final childString = await CS.child(context, child, comma: true);
     final code = '''
     Opacity(

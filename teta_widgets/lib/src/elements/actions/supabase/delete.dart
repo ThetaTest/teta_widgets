@@ -85,13 +85,24 @@ class FASupabaseDelete {
     if (client != null) {
       dynamic eqValue;
       if (supabaseEq?.key.toLowerCase() != 'id') {
-        eqValue = supabaseEq?.value.toCode(0);
+        eqValue = supabaseEq?.value.toCode(
+          0,
+          resultType: ResultTypeEnum.string,
+        );
       } else {
-        eqValue = int.tryParse(supabaseEq!.value.toCode(0));
+        eqValue = int.tryParse(
+          supabaseEq!.value.toCode(
+            0,
+            resultType: ResultTypeEnum.string,
+          ),
+        );
       }
       return '''
         final response = await Supabase.instance.client
-              .from('${supabaseFrom?.toCode(0) ?? ''}')
+              .from('${supabaseFrom?.toCode(
+                0,
+                resultType: ResultTypeEnum.string,
+              ) ?? ''}')
               .delete()
               .eq('${supabaseEq?.key}', '$eqValue')
               .execute();

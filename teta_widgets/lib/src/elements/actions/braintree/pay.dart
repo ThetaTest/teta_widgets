@@ -47,7 +47,11 @@ class FActionBraintreeBuy {
     final companyName = prj.config?.companyName ?? '';
     final currencyCode = prj.config?.braintreeCurrencyCode ?? '';
     final countryCode = prj.config?.countryCode ?? '';
-    final amount = valueToChangeWith!.toCode(loop);
+    final amount = valueToChangeWith!.toCode(
+      loop,
+      resultType: ResultTypeEnum.double,
+      defaultValue: '1.00',
+    );
     final appleMerchantId = prj.config?.appleMerchantId;
     String? paypal;
     String? googlePay;

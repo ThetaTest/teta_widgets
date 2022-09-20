@@ -21,9 +21,11 @@ class PlaceholderCodeTemplate {
     final int? loop,
   ) async {
     final abstract = body.attributes[DBKeys.value] as FTextTypeInput;
-    final value = abstract.toCode(loop);
-    final strokeWidth =
-        double.tryParse(value) != null ? double.parse(value) : 2.0;
+    final strokeWidth = abstract.toCode(
+      loop,
+      resultType: ResultTypeEnum.double,
+      defaultValue: '2.0',
+    );
     final fill = FFill.toCode(
       body.attributes[DBKeys.fill] as FFill,
       context,
@@ -65,9 +67,11 @@ class PlaceholderCodeTemplate {
         () {
           final body = NodeBody.get(NType.placeholder);
           final abstract = body.attributes[DBKeys.value] as FTextTypeInput;
-          final value = abstract.toCode(0);
-          final strokeWidth =
-              double.tryParse(value) != null ? double.parse(value) : 2.0;
+          final strokeWidth = abstract.toCode(
+            0,
+            resultType: ResultTypeEnum.double,
+            defaultValue: '2.0',
+          );
           final fill = FFill.toCodeTests(FFill().ready(FFillType.solid));
           expect(
             FormatterTest.format('''

@@ -21,12 +21,9 @@ class CheckBoxCodeTemplate {
     var code = '';
     if (abstract.type == FTextTypeEnum.state ||
         abstract.type == FTextTypeEnum.param) {
-      final val = abstract.toCode(loop);
-      final value = val
-          .replaceAll("'", '')
-          .replaceAll(r'$', '')
-          .replaceAll('{', '')
-          .replaceAll('}', '');
+      final value = abstract.type == FTextTypeEnum.state
+          ? abstract.stateName
+          : abstract.paramName;
       code = '''
    StatefulBuilder(
             builder: (final context, final localSetState) {
@@ -46,7 +43,10 @@ class CheckBoxCodeTemplate {
           )
   ''';
     } else if (abstract.type == FTextTypeEnum.text) {
-      final val = abstract.toCode(loop);
+      final val = abstract.toCode(
+        loop,
+        resultType: ResultTypeEnum.string,
+      );
       final value = val == 'true';
       code = '''
 Builder(builder: (context) {
@@ -115,7 +115,10 @@ Checkbox(
       test(
         'CheckBox: text Value',
         () {
-          final value = FTextTypeInput(value: 'true').toCode(0);
+          final value = FTextTypeInput(value: 'true').toCode(
+            0,
+            resultType: ResultTypeEnum.string,
+          );
           expect(
             FormatterTest.format('''
            Builder(builder: (context) {
