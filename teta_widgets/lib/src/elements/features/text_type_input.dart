@@ -330,7 +330,8 @@ class FTextTypeInput {
       return "TranslatorGenerator.instance.getString('''$keyTranslator''')";
     }
 
-    final code = getRawToCode(loop, resultType: resultType);
+    final code =
+        getRawToCode(loop, resultType: resultType, defaultValue: defaultValue);
 
     if (type == FTextTypeEnum.combined) {
       return code;

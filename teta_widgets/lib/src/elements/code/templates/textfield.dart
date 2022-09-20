@@ -133,7 +133,7 @@ class TextFieldCodeTemplate {
       ${CS.textStyle(context, body, DBKeys.textStyle)}
       maxLines: $maxLines,
       minLines: $minLines,
-      ${maxLenght.isNotEmpty ? 'maxLength: $maxLenght' : ''},
+      maxLength: $maxLenght,
       obscureText: $obscureText,
       showCursor: $showCursor,
       autocorrect: $autoCorrect,
