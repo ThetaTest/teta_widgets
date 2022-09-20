@@ -370,11 +370,11 @@ class FTextTypeInput {
       if (resultType == ResultTypeEnum.string) {
         return "'''\${widget.${param.camelCase}}'''";
       } else if (resultType == ResultTypeEnum.int) {
-        return "int.tryParse('widget.${param.camelCase}') ?? ${defaultValue ?? '0'}";
+        return "int.tryParse('\${widget.${param.camelCase}}') ?? ${defaultValue ?? '0'}";
       } else if (resultType == ResultTypeEnum.double) {
-        return "double.tryParse('widget.${param.camelCase}') ?? ${defaultValue ?? '0.0'}";
+        return "double.tryParse('\${widget.${param.camelCase}}') ?? ${defaultValue ?? '0.0'}";
       } else if (resultType == ResultTypeEnum.bool) {
-        return "'widget.${param.camelCase}' == 'true'";
+        return "'\${widget.${param.camelCase}}' == 'true'";
       } else {
         return "'''\${widget.${param.camelCase}}'''";
       }
@@ -386,11 +386,11 @@ class FTextTypeInput {
       if (resultType == ResultTypeEnum.string) {
         return "'''\${${state.camelCase}}'''";
       } else if (resultType == ResultTypeEnum.int) {
-        return "int.tryParse('${state.camelCase}') ?? ${defaultValue ?? '0'}";
+        return "int.tryParse('\${${state.camelCase}}') ?? ${defaultValue ?? '0'}";
       } else if (resultType == ResultTypeEnum.double) {
-        return "double.tryParse('${state.camelCase}') ?? ${defaultValue ?? '0.0'}";
+        return "double.tryParse('\${${state.camelCase}}') ?? ${defaultValue ?? '0.0'}";
       } else if (resultType == ResultTypeEnum.bool) {
-        return "'${state.camelCase}' == 'true'";
+        return "'\${${state.camelCase}}' == 'true'";
       } else {
         return "'''\${${state.camelCase}}'''";
       }
