@@ -6,7 +6,7 @@ import 'package:teta_widgets/src/elements/actions/navigation/open_drawer.dart';
 import 'package:teta_widgets/src/elements/actions/navigation/open_page.dart';
 import 'package:teta_widgets/src/elements/actions/navigation/open_snack.dart';
 
-///Tests for all actions toCode
+///Tests for all actions
 void main() {
   //Navigation
   FActionNavigationGoBack.testActionCode();

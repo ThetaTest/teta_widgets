@@ -6,7 +6,7 @@ import 'package:teta_widgets/src/elements/index.dart';
 
 ///Tests for FTextInputType
 void main() {
-  group('Button toCode test', () {
+  group('FTextInputType toCode test', () {
     test(
       'Text Value',
       () {

@@ -8,7 +8,7 @@ import 'package:teta_widgets/src/elements/index.dart';
 void main() {
   group('FFill toCode test', () {
     test(
-      'fill type none',
+      'None',
       () {
         expect(
           FormatterTest.format('''
@@ -24,7 +24,7 @@ void main() {
       },
     );
     test(
-      ' fill type solid',
+      'Solid',
       () {
         expect(
           FormatterTest.format('''
@@ -40,7 +40,7 @@ void main() {
       },
     );
     test(
-      'fill type linear gradient',
+      'Linear Gradient',
       () {
         expect(
           FormatterTest.format('''
@@ -56,7 +56,7 @@ void main() {
       },
     );
     test(
-      'fill type radial gradient',
+      'Radial Gradient',
       () {
         expect(
           FormatterTest.format('''
@@ -72,7 +72,7 @@ void main() {
       },
     );
     test(
-      'fill type image',
+      'Image',
       () {
         expect(
           FormatterTest.format('''

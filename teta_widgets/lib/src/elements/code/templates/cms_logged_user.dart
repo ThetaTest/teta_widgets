@@ -1,6 +1,7 @@
 // Flutter imports:
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:flutter_test/flutter_test.dart';
 import 'package:teta_core/teta_core.dart';
 import 'package:teta_widgets/src/elements/code/formatter_test.dart';
 // Project imports:
@@ -69,5 +70,51 @@ if (UniversalPlatform.isIOS || UniversalPlatform.isAndroid || UniversalPlatform.
     }
   }
 
-  static void testCode() {}
+  static void testCode() {
+    group('CmsLoggedUser toCode test', () {
+      test(
+        'CmsLoggedUser: default code',
+        () {
+          const child = 'const SizedBox()';
+          const loader = 'const Center(child: CircularProgressIndicator(),)';
+          //this is for test purpose only
+          const revenueCatFlag = true == true;
+          expect(
+            FormatterTest.format('''
+TetaFutureBuilder<TetaUser>(
+    future: Future.sync(() async {
+      final user = await TetaCMS.instance.auth.user.get;
+      ${revenueCatFlag ? r"""
+if (UniversalPlatform.isIOS || UniversalPlatform.isAndroid || UniversalPlatform.isMacOS) {
+  await Purchases.logIn('${user.uid}');
+}
+""" : ''}
+      return user;
+    }),
+    builder: (context, snapshot) {
+      if (!snapshot.hasData) {
+        return $loader;
+      }
+      final user = snapshot.data as TetaUser?;
+      final data = <String, dynamic>{
+        'isLogged': user?.isLogged,
+        'uid': user?.uid,
+        'name': user?.name,
+        'email': user?.email,
+        'provider': user?.provider,
+        'created_at': user?.createdAt,
+      };
+      datasets['Teta Auth User'] = [
+        if (data != null) data,
+      ];
+      return $child;
+    }
+  )
+          '''),
+            true,
+          );
+        },
+      );
+    });
+  }
 }
