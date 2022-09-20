@@ -1,5 +1,4 @@
 import 'package:flutter/widgets.dart';
-import 'package:teta_widgets/src/elements/code/templates/tooltip.dart';
 import 'package:teta_widgets/src/elements/code/templates/video.dart';
 import 'package:teta_widgets/src/elements/code/templates/visibility.dart';
 import 'package:teta_widgets/src/elements/code/templates/web_view_x_template.dart';
@@ -10,7 +9,7 @@ import 'package:teta_widgets/src/elements/code/templates/wrap.dart';
 class RuntimeTest {
   static Future<void> runRuntimeTest(final BuildContext context) async {
     //Tooltip
-    await TooltipCodeTemplate.runtimeTestDefaultCode(context);
+    // await TooltipCodeTemplate.runtimeTestDefaultCode(context);
     //Video
     await VideoCodeTemplate.runtimeTestDefaultCode(context);
     //Visibility
