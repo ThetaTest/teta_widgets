@@ -30,12 +30,14 @@ class CmsStreamCodeTemplate {
         .toCode(
           loop,
           resultType: ResultTypeEnum.int,
+          defaultValue: '20',
         )
         .replaceAll("'''", '');
     final page = (node.body.attributes[DBKeys.cmsPage] as FTextTypeInput)
         .toCode(
           loop,
           resultType: ResultTypeEnum.int,
+          defaultValue: '0',
         )
         .replaceAll("'''", '');
     var keyName =
@@ -158,7 +160,7 @@ class CmsStreamCodeTemplate {
       filters: [
         $filter
       ], 
-      ${limit.isNotEmpty ? 'limit: $limit,' : ''}
+      ${limit != '0' ? 'limit: $limit,' : ''}
       ${page.isNotEmpty ? 'page: $page,' : ''}
     ),
     builder: (context, snapshot) {

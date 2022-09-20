@@ -30,12 +30,14 @@ class CmsFetchCodeTemplate {
         .toCode(
           loop,
           resultType: ResultTypeEnum.int,
+          defaultValue: '20',
         )
         .replaceAll("'''", '');
     final page = (node.body.attributes[DBKeys.cmsPage] as FTextTypeInput)
         .toCode(
           loop,
           resultType: ResultTypeEnum.int,
+          defaultValue: '0',
         )
         .replaceAll("'''", '');
     var keyName =
@@ -123,7 +125,7 @@ class CmsFetchCodeTemplate {
               (body.attributes[DBKeys.cmsPage] as FTextTypeInput).toCode(
             0,
             resultType: ResultTypeEnum.int,
-            defaultValue: '1',
+            defaultValue: '0',
           );
           var keyName =
               (body.attributes[DBKeys.cmsLikeKey] as FTextTypeInput).toCode(
