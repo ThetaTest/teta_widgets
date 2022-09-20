@@ -90,15 +90,11 @@ class TCardCodeTemplate {
         'TCard: default',
         () {
           final body = NodeBody.get(NType.tcard);
-          final slideSpeed = double.tryParse(
-                (body.attributes[DBKeys.value] as FTextTypeInput).toCode(0),
-              ) ??
-              20;
-          final delaySlideFor = double.tryParse(
-                (body.attributes[DBKeys.valueOfCondition] as FTextTypeInput)
-                    .toCode(0),
-              ) ??
-              500;
+          final slideSpeed = (body.attributes[DBKeys.value] as FTextTypeInput)
+              .toCode(0, resultType: ResultTypeEnum.int, defaultValue: '20');
+          final delaySlideFor = (body.attributes[DBKeys.valueOfCondition]
+                  as FTextTypeInput)
+              .toCode(0, resultType: ResultTypeEnum.int, defaultValue: '500');
           final lockYAxis = body.attributes[DBKeys.flag] as bool? ?? false;
           const childrenString = 'cards: [],';
           expect(

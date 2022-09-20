@@ -65,7 +65,10 @@ class CmsCustomQueryCodeTemplate {
         () {
           final body = NodeBody.get(NType.cmsCustomQuery);
           final query =
-              (body.attributes[DBKeys.value] as FTextTypeInput).toCode(0);
+              (body.attributes[DBKeys.value] as FTextTypeInput).toCode(
+            0,
+            resultType: ResultTypeEnum.string,
+          );
 
           const child = 'const SizedBox()';
 

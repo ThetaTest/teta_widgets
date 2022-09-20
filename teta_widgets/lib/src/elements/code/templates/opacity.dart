@@ -57,9 +57,11 @@ class OpacityCodeTemplate {
         () {
           final body = NodeBody.get(NType.opacity);
           final abstract = body.attributes[DBKeys.value] as FTextTypeInput;
-          final value = abstract.toCode(0);
-          final opacity =
-              double.tryParse(value) != null ? double.parse(value) : '1';
+          final opacity = abstract.toCode(
+            0,
+            resultType: ResultTypeEnum.string,
+            defaultValue: '1',
+          );
           const childString = 'const SizedBox()';
           expect(
             FormatterTest.format('''

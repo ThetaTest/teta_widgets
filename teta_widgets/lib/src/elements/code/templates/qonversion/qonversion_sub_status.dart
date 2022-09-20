@@ -24,8 +24,11 @@ class QonversionSubsStatusCodeTemplate {
       childString = await child.toCode(context);
     }
 
-    final entitlement = (node.body.attributes[DBKeys.value] as FTextTypeInput)
-        .toCode(loop, resultType: ResultTypeEnum.string);
+    final entitlement =
+        (node.body.attributes[DBKeys.value] as FTextTypeInput).toCode(
+      loop,
+      resultType: ResultTypeEnum.string,
+    );
 
     final code = '''
   TetaFutureBuilder<bool>(
@@ -73,7 +76,10 @@ class QonversionSubsStatusCodeTemplate {
           final body = NodeBody.get(NType.qonversionSubStatus);
           const childString = 'const SizedBox()';
           final entitlement =
-              (body.attributes[DBKeys.value] as FTextTypeInput).toCode(0);
+              (body.attributes[DBKeys.value] as FTextTypeInput).toCode(
+            0,
+            resultType: ResultTypeEnum.string,
+          );
           expect(
             FormatterTest.format('''
            TetaFutureBuilder<bool>(

@@ -104,23 +104,36 @@ class CmsCountCodeTemplate {
           final body = NodeBody.get(NType.cmsCount);
 
           var collectionId =
-              (body.attributes[DBKeys.cmsCollection] as FTextTypeInput)
-                  .toCode(0);
+              (body.attributes[DBKeys.cmsCollection] as FTextTypeInput).toCode(
+            0,
+            resultType: ResultTypeEnum.string,
+          );
           if (!collectionId.contains("'")) {
             collectionId = "'$collectionId'";
           }
           final limit =
-              (body.attributes[DBKeys.cmsLimit] as FTextTypeInput).toCode(0);
+              (body.attributes[DBKeys.cmsLimit] as FTextTypeInput).toCode(
+            0,
+            resultType: ResultTypeEnum.int,
+          );
           final page =
-              (body.attributes[DBKeys.cmsPage] as FTextTypeInput).toCode(0);
+              (body.attributes[DBKeys.cmsPage] as FTextTypeInput).toCode(
+            0,
+            resultType: ResultTypeEnum.int,
+          );
           var keyName =
-              (body.attributes[DBKeys.cmsLikeKey] as FTextTypeInput).toCode(0);
+              (body.attributes[DBKeys.cmsLikeKey] as FTextTypeInput).toCode(
+            0,
+            resultType: ResultTypeEnum.string,
+          );
           if (!keyName.contains("'") && keyName.isNotEmpty) {
             keyName = "'$keyName'";
           }
           var keyValue =
-              (body.attributes[DBKeys.cmsLikeValue] as FTextTypeInput)
-                  .toCode(0);
+              (body.attributes[DBKeys.cmsLikeValue] as FTextTypeInput).toCode(
+            0,
+            resultType: ResultTypeEnum.string,
+          );
           if (!keyValue.contains("'") && keyValue.isNotEmpty) {
             keyValue = "'$keyValue'";
           }
