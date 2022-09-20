@@ -396,7 +396,7 @@ class FTextTypeInput {
     // The value is a dataset
     if (type == FTextTypeEnum.dataset) {
       if (resultType == ResultTypeEnum.string) {
-        return "this.datasets['$datasetName']?[${datasetName == 'Teta Auth User' ? '0' : 'index'}]?['$datasetAttr']?.toString() ?? ''";
+        return "(this.datasets['$datasetName']?[${datasetName == 'Teta Auth User' ? '0' : 'index'}]?['$datasetAttr']?.toString() ?? '')";
       } else if (resultType == ResultTypeEnum.int) {
         return '0';
       } else if (resultType == ResultTypeEnum.double) {

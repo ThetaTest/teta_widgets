@@ -224,8 +224,8 @@ FutureBuilder<BannerAd>(
           final ad = BannerAd(
             request: const AdRequest(),
             adUnitId: UniversalPlatform.isIOS
-                ? ($iosKey)
-                : ($androidKey),
+                ? $iosKey
+                : $androidKey,
             listener: const BannerAdListener(),
             size: AdSize.fluid,
           );
