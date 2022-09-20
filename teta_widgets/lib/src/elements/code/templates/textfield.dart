@@ -1,6 +1,7 @@
 // Flutter imports:
 import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
+import 'package:teta_core/teta_core.dart';
 import 'package:teta_widgets/src/elements/code/formatter_test.dart';
 // Project imports:
 import 'package:teta_widgets/src/elements/code/snippets.dart';
@@ -28,21 +29,22 @@ class TextFieldCodeTemplate {
       resultType: ResultTypeEnum.string,
     );
     final maxLines =
-        (body.attributes[DBKeys.maxLines] as FTextTypeInput).getRawToCode(
+        (body.attributes[DBKeys.maxLines] as FTextTypeInput).toCode(
       loop,
       resultType: ResultTypeEnum.int,
       defaultValue: '1',
     );
     final minLines =
-        (body.attributes[DBKeys.minLines] as FTextTypeInput).getRawToCode(
+        (body.attributes[DBKeys.minLines] as FTextTypeInput).toCode(
       loop,
       resultType: ResultTypeEnum.int,
       defaultValue: '1',
     );
     final maxLenght =
-        (body.attributes[DBKeys.maxLenght] as FTextTypeInput).getRawToCode(
+        (body.attributes[DBKeys.maxLenght] as FTextTypeInput).toCode(
       loop,
       resultType: ResultTypeEnum.int,
+      defaultValue: 'null',
     );
     final obscureText = body.attributes[DBKeys.obscureText] as bool? ?? false;
     final showCursor = body.attributes[DBKeys.showCursor] as bool? ?? false;
@@ -70,12 +72,15 @@ class TextFieldCodeTemplate {
       flagConst: false,
     );
     final borderSize =
-        (body.attributes[DBKeys.bordersSize] as FTextTypeInput).getRawToCode(
+        (body.attributes[DBKeys.bordersSize] as FTextTypeInput).toCode(
       loop,
       resultType: ResultTypeEnum.double,
       defaultValue: '1',
     );
 
+    Logger.printMessage(
+      'Textfield toCode: borderSize: $borderSize labelText: $labelText maxLines: $maxLines minLines: $minLines maxLenght: $maxLenght',
+    );
     final code = """
   Container(
     ${CS.margin(context, body, isMargin: true)}
@@ -128,7 +133,7 @@ class TextFieldCodeTemplate {
       ${CS.textStyle(context, body, DBKeys.textStyle)}
       maxLines: $maxLines,
       minLines: $minLines,
-      maxLength: $maxLenght,
+      ${maxLenght.isNotEmpty ? 'maxLength: $maxLenght' : ''},
       obscureText: $obscureText,
       showCursor: $showCursor,
       autocorrect: $autoCorrect,
@@ -139,6 +144,7 @@ class TextFieldCodeTemplate {
     if (res) {
       return code;
     } else {
+      Logger.printError('Error TextField code');
       final defaultCode = await toCode(
         pageId,
         context,
@@ -147,7 +153,13 @@ class TextFieldCodeTemplate {
         null,
         0,
       );
-      return defaultCode;
+      final res = FormatterTest.format(defaultCode);
+      if (res) {
+        return defaultCode;
+      } else {
+        Logger.printError('Error TextField defaultCode');
+        return 'const SizedBox()';
+      }
     }
   }
 

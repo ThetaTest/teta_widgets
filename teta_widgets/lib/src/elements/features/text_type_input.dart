@@ -346,14 +346,15 @@ class FTextTypeInput {
   }) {
     // The value is a hard coded text
     if (type == FTextTypeEnum.text) {
+      final v = (value?.isNotEmpty ?? false) ? value : defaultValue;
       if (resultType == ResultTypeEnum.string) {
-        return "'''$value '''";
+        return "'''$v '''";
       } else if (resultType == ResultTypeEnum.int) {
-        return '$value';
+        return '$v';
       } else if (resultType == ResultTypeEnum.double) {
-        return '$value';
+        return '$v';
       } else if (resultType == ResultTypeEnum.bool) {
-        return "'$value' == 'true'";
+        return "'$v' == 'true'";
       }
     }
     // The value is a param
