@@ -64,7 +64,7 @@ class _WPageViewState extends State<WPageView> {
         loop: widget.loop,
         child: ConstrainedBox(
           constraints: const BoxConstraints(maxHeight: 850),
-          child: PageView(
+          child: PageView.builder(
             controller: controller,
             scrollDirection:
                 widget.isVertical ? Axis.vertical : Axis.horizontal,
@@ -80,44 +80,46 @@ class _WPageViewState extends State<WPageView> {
               forPlay: widget.forPlay,
               loop: widget.loop,
             ),
-            children: widget.children.isNotEmpty
-                ? widget.children
-                    .map(
-                      (final e) => e.toWidget(
-                        loop: widget.children.indexOf(e),
-                        forPlay: widget.forPlay,
-                        params: widget.params,
-                        states: widget.states,
-                        dataset: widget.dataset,
-                      ),
-                    )
-                    .toList()
-                : [
-                    const Padding(
-                      padding: EdgeInsets.all(16),
-                      child: Center(
-                        child: THeadline3(
-                          'PageView - Page 1',
+            itemCount: widget.children.length,
+            itemBuilder: (final context, final index) =>
+                widget.children.isNotEmpty
+                    ? widget.children
+                        .map(
+                          (final e) => e.toWidget(
+                            loop: widget.loop,
+                            forPlay: widget.forPlay,
+                            params: widget.params,
+                            states: widget.states,
+                            dataset: widget.dataset,
+                          ),
+                        )
+                        .toList()[index]
+                    : [
+                        const Padding(
+                          padding: EdgeInsets.all(16),
+                          child: Center(
+                            child: THeadline3(
+                              'PageView - Page 1',
+                            ),
+                          ),
                         ),
-                      ),
-                    ),
-                    const Padding(
-                      padding: EdgeInsets.all(16),
-                      child: Center(
-                        child: THeadline3(
-                          'PageView - Page 2',
+                        const Padding(
+                          padding: EdgeInsets.all(16),
+                          child: Center(
+                            child: THeadline3(
+                              'PageView - Page 2',
+                            ),
+                          ),
                         ),
-                      ),
-                    ),
-                    const Padding(
-                      padding: EdgeInsets.all(16),
-                      child: Center(
-                        child: THeadline3(
-                          'PageView - Page 3',
+                        const Padding(
+                          padding: EdgeInsets.all(16),
+                          child: Center(
+                            child: THeadline3(
+                              'PageView - Page 3',
+                            ),
+                          ),
                         ),
-                      ),
-                    ),
-                  ],
+                      ][index],
           ),
         ),
       ),

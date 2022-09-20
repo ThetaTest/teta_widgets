@@ -22,9 +22,13 @@ class PageViewCodeTemplate {
         !(body.attributes[DBKeys.isVertical] as bool? ?? false)
             ? 'scrollDirection: Axis.horizontal,'
             : 'scrollDirection: Axis.vertical,';
-    final childrenString = await CS.children(context, children);
+    final childrenString = await CS.children(
+      context,
+      children,
+      withComma: false,
+    );
     final code = '''
-    PageView(
+    PageView.builder(
       $_scrollDirection   
       ${CS.action(
       pageId,
@@ -36,7 +40,8 @@ class PageViewCodeTemplate {
       isRequired: false,
       loop: loop,
     )}  
-      $childrenString
+    itemCount: ${children.length},
+      ${childrenString.replaceFirst('children:', 'itemBuilder: (final context, final index) =>')}[index]
     )
   ''';
     final res = FormatterTest.format(code);

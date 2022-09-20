@@ -65,8 +65,9 @@ class CS {
   /// ```
   static Future<String> children(
     final BuildContext context,
-    final List<CNode> children,
-  ) async {
+    final List<CNode> children, {
+    final bool withComma = true,
+  }) async {
     final strChildren = StringBuffer()..write('');
     if (children.isNotEmpty) {
       for (final child in children) {
@@ -84,7 +85,7 @@ class CS {
       return '''
       children: [
         ${strChildren.toString()}
-      ],''';
+      ]${withComma ? ',' : ''}''';
     } else {
       // children is empty
       // returns empty string
