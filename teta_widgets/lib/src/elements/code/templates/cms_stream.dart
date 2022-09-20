@@ -116,11 +116,13 @@ class CmsStreamCodeTemplate {
               (body.attributes[DBKeys.cmsLimit] as FTextTypeInput).toCode(
             0,
             resultType: ResultTypeEnum.int,
+            defaultValue: '20',
           );
           final page =
               (body.attributes[DBKeys.cmsPage] as FTextTypeInput).toCode(
             0,
             resultType: ResultTypeEnum.int,
+            defaultValue: '1',
           );
           var keyName =
               (body.attributes[DBKeys.cmsLikeKey] as FTextTypeInput).toCode(

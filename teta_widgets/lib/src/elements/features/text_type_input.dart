@@ -346,7 +346,7 @@ class FTextTypeInput {
   }) {
     // The value is a hard coded text
     if (type == FTextTypeEnum.text) {
-      final v = (value?.isNotEmpty ?? false) ? value : defaultValue;
+      final v = (value?.isNotEmpty ?? false) ? value : defaultValue ?? 0;
       if (resultType == ResultTypeEnum.string) {
         return "'''$value'''";
       } else if (resultType == ResultTypeEnum.int) {
