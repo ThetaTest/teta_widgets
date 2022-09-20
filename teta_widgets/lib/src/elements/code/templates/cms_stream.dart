@@ -40,25 +40,22 @@ class CmsStreamCodeTemplate {
           defaultValue: '0',
         )
         .replaceAll("'''", '');
-    var keyName =
+    final keyName =
         (node.body.attributes[DBKeys.cmsLikeKey] as FTextTypeInput).toCode(
       loop,
       resultType: ResultTypeEnum.string,
+      defaultValue: 'null',
     );
-    if (!keyName.contains("'") && keyName.isNotEmpty) {
-      keyName = "'$keyName'";
-    }
-    var keyValue =
+    final keyValue =
         (node.body.attributes[DBKeys.cmsLikeValue] as FTextTypeInput).toCode(
       loop,
       resultType: ResultTypeEnum.string,
+      defaultValue: 'null',
     );
-    if (!keyValue.contains("'") && keyValue.isNotEmpty) {
-      keyValue = "'$keyValue'";
-    }
-    final filter = keyName.isNotEmpty && keyValue.isNotEmpty
-        ? 'Filter($keyName, $keyValue)'
-        : '';
+    final filter =
+        keyName.replaceAll("'", '') != '' && keyValue.replaceAll("'", '') != ''
+            ? 'Filter($keyName, $keyValue)'
+            : '';
 
     var child = 'const SizedBox()';
     if (children.isNotEmpty) {
