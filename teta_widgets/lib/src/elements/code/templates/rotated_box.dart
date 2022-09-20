@@ -35,7 +35,7 @@ class RotatedBoxCodeTemplate {
     final childString = await CS.child(context, child, comma: true);
     final code = '''
     RotatedBox(
-      rotation: $rotation,
+      quarterTurns: $rotation,
       $childString
     )
   ''';
