@@ -325,6 +325,8 @@ class FTextTypeInput {
     final int? loop, {
     required final ResultTypeEnum resultType,
     final String? defaultValue,
+    final bool? whiteSpace,
+    final bool? wrapInString,
   }) {
     if (type == FTextTypeEnum.languages) {
       return "TranslatorGenerator.instance.getString('''$keyTranslator''')";
@@ -333,7 +335,7 @@ class FTextTypeInput {
     final code =
         getRawToCode(loop, resultType: resultType, defaultValue: defaultValue);
 
-    if (type == FTextTypeEnum.combined) {
+    if (type == FTextTypeEnum.combined || whiteSpace == false) {
       return code;
     }
 
@@ -396,7 +398,7 @@ class FTextTypeInput {
     // The value is a dataset
     if (type == FTextTypeEnum.dataset) {
       if (resultType == ResultTypeEnum.string) {
-        return "(this.datasets['$datasetName']?[${datasetName == 'Teta Auth User' ? '0' : 'index'}]?['$datasetAttr']?.toString() ?? '')";
+        return "'''\${(this.datasets['$datasetName']?[${datasetName == 'Teta Auth User' ? '0' : 'index'}]?['$datasetAttr']?.toString() ?? '')}'''";
       } else if (resultType == ResultTypeEnum.int) {
         return '0';
       } else if (resultType == ResultTypeEnum.double) {

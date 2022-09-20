@@ -18,15 +18,25 @@ class ConditionCodeTemplate {
     final int? loop,
   ) async {
     final abstract = body.attributes[DBKeys.value] as FTextTypeInput;
-    final value = abstract.toCode(
+    var value = abstract.toCode(
       loop,
       resultType: ResultTypeEnum.string,
+      whiteSpace: false,
+      wrapInString: true,
     );
-    final valueOfCondition =
+    if (value.contains('this.datasets[')) {
+      value = value.replaceAll('  ', ' ');
+    }
+    var valueOfCondition =
         (body.attributes[DBKeys.valueOfCondition] as FTextTypeInput).toCode(
       loop,
       resultType: ResultTypeEnum.string,
+      whiteSpace: false,
+      wrapInString: true,
     );
+    if (valueOfCondition.contains('this.datasets[')) {
+      valueOfCondition = valueOfCondition.replaceAll('  ', ' ');
+    }
     var childIfTrue = 'const SizedBox()';
     if (children.isNotEmpty) {
       childIfTrue = (await CS.child(context, children.first, comma: false))
@@ -38,7 +48,7 @@ class ConditionCodeTemplate {
           .replaceFirst('child:', '');
     }
     final code = '''
-    (($value) == $valueOfCondition) ? $childIfTrue : $childIfFalse
+    ($value == $valueOfCondition) ? $childIfTrue : $childIfFalse
   ''';
     Logger.printMessage(code);
     final res = FormatterTest.format(code);
