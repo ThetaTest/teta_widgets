@@ -20,6 +20,7 @@ class TextCodeTemplate {
     final value = abstract.toCode(
       loop,
       resultType: ResultTypeEnum.string,
+      defaultValue: '',
     );
     final maxLines =
         (body.attributes[DBKeys.maxLines] as FTextTypeInput).toCode(
