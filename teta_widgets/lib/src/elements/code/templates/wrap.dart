@@ -35,7 +35,6 @@ class WrapCodeTemplate {
     }
   }
 
-  //TODO: use this as a model for a runtime test
   static Future<bool> runtimeTestDefaultCode(
     final BuildContext context,
   ) async {
@@ -55,6 +54,8 @@ class WrapCodeTemplate {
       );
       Logger.printWarning(codeToRun);
       Logger.printMessage('\n-----------END-----------');
+    } else {
+      Logger.printSuccess('$name: Passed!');
     }
     return returnValue;
   }
