@@ -1,9 +1,11 @@
 // Flutter imports:
 import 'package:flutter/material.dart';
+import 'package:flutter_test/flutter_test.dart';
 import 'package:teta_widgets/src/elements/code/formatter_test.dart';
 // Project imports:
 import 'package:teta_widgets/src/elements/code/snippets.dart';
 import 'package:teta_widgets/src/elements/controls/key_constants.dart';
+import 'package:teta_widgets/src/elements/nodes/enum.dart';
 import 'package:teta_widgets/src/elements/nodes/node.dart';
 import 'package:teta_widgets/src/elements/nodes/node_body.dart';
 
@@ -44,5 +46,39 @@ class ResponsiveConditionCodeTemplate {
     }
   }
 
-  static void testCode() {}
+  static void testCode() {
+    group('Responsive Condition toCode test', () {
+      test(
+        'Responsive Condition: default code',
+        () {
+          final body = NodeBody.get(NType.responsiveCondition);
+          final mobileFlag = body.attributes[DBKeys.visibleOnMobile] as bool;
+          final tabletFlag = body.attributes[DBKeys.visibleOnTablet] as bool;
+          const childString = 'const SizedBox()';
+          expect(
+            FormatterTest.format('''
+           LayoutBuilder(builder: (context, constraints) {
+               bool isMobileVisible = $mobileFlag;
+               bool isTabletVisible = $tabletFlag;
+               if(constraints.maxWidth < 600 && isMobileVisible){
+                return SizedBox(
+               $childString
+                 );
+               }
+          else if(constraints.maxWidth > 600 && isTabletVisible){
+          return SizedBox(
+             $childString
+              );
+              }
+               else{
+                return const SizedBox();
+              }
+           })
+            '''),
+            true,
+          );
+        },
+      );
+    });
+  }
 }

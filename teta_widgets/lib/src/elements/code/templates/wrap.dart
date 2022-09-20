@@ -1,6 +1,7 @@
 // Flutter imports:
 import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
+import 'package:teta_core/teta_core.dart';
 import 'package:teta_widgets/src/elements/code/formatter_test.dart';
 // Project imports:
 import 'package:teta_widgets/src/elements/code/snippets.dart';
@@ -34,16 +35,28 @@ class WrapCodeTemplate {
     }
   }
 
+  //TODO: use this as a model for a runtime test
   static Future<bool> runtimeTestDefaultCode(
     final BuildContext context,
   ) async {
-    return FormatterTest.format(
-      await toCode(
-        context,
-        NodeBody.get(NType.video),
-        [],
-      ),
+    const name = 'Wrap';
+    final nodeBody = NodeBody.get(NType.wrap);
+    final codeToRun = await toCode(
+      context,
+      nodeBody,
+      [],
     );
+    final returnValue = FormatterTest.format(
+      codeToRun,
+    );
+    if (!returnValue) {
+      Logger.printError(
+        'Runtime ToCode Default Error:\n$name\nThis was the code:\n',
+      );
+      Logger.printWarning(codeToRun);
+      Logger.printMessage('\n-----------END-----------');
+    }
+    return returnValue;
   }
 
   static void testCode() {
