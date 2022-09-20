@@ -13,6 +13,9 @@ import 'package:teta_widgets/src/elements/code/templates/animations/fade_in.dart
 import 'package:teta_widgets/src/elements/code/templates/animations/scale.dart';
 import 'package:teta_widgets/src/elements/code/templates/animations/slide.dart';
 import 'package:teta_widgets/src/elements/code/templates/aspect_ratio.dart';
+import 'package:teta_widgets/src/elements/code/templates/audio_player_progress_indicator_template.dart';
+import 'package:teta_widgets/src/elements/code/templates/audio_player_template.dart';
+import 'package:teta_widgets/src/elements/code/templates/audio_player_volume_indicator_template.dart';
 import 'package:teta_widgets/src/elements/code/templates/badge.dart';
 import 'package:teta_widgets/src/elements/code/templates/bouncing_widget.dart';
 import 'package:teta_widgets/src/elements/code/templates/button.dart';
@@ -25,6 +28,7 @@ import 'package:teta_widgets/src/elements/code/templates/cms_custom_query.dart';
 import 'package:teta_widgets/src/elements/code/templates/cms_fetch.dart';
 import 'package:teta_widgets/src/elements/code/templates/cms_logged_user.dart';
 import 'package:teta_widgets/src/elements/code/templates/cms_stream.dart';
+import 'package:teta_widgets/src/elements/code/templates/constrained_box.dart';
 import 'package:teta_widgets/src/elements/code/templates/divider.dart';
 import 'package:teta_widgets/src/elements/code/templates/future_builder.dart';
 import 'package:teta_widgets/src/elements/code/templates/icon.dart';
@@ -44,7 +48,6 @@ import 'package:teta_widgets/src/elements/code/templates/safearea.dart';
 import 'package:teta_widgets/src/elements/code/templates/sizedbox.dart';
 import 'package:teta_widgets/src/elements/code/templates/spacer.dart';
 import 'package:teta_widgets/src/elements/code/templates/stack.dart';
-import 'package:teta_widgets/src/elements/code/templates/stream_builder.dart';
 import 'package:teta_widgets/src/elements/code/templates/stripe_cart_items_builder_template.dart';
 import 'package:teta_widgets/src/elements/code/templates/stripe_products_builder_template.dart';
 import 'package:teta_widgets/src/elements/code/templates/text.dart';
@@ -59,6 +62,9 @@ import 'package:teta_widgets/src/elements/code/templates/wrap.dart';
 ///Tests for all widgets
 void main() {
   AdMobBannerAdTemplate.testCode();
+  AudioPlayerVolumeIndicatorTemplate.testCode();
+  AudioPlayerProgressIndicatorTemplate.testCode();
+  AudioPlayerTemplate.testCode();
   AlignCodeTemplate.testCode();
   AnimatedAlignCodeTemplate.testCode();
   AnimConfigGridCodeTemplate.testCode();
@@ -71,6 +77,7 @@ void main() {
   CenterCodeTemplate.testCode();
   CheckBoxCodeTemplate.testCode();
   CircularProgressIndicatorCodeTemplate.testCode();
+  ConstrainedBoxCodeTemplate.testCode();
   CmsCountCodeTemplate.testCode();
   CmsCustomQueryCodeTemplate.testCode();
   CmsFetchCodeTemplate.testCode();
@@ -103,7 +110,6 @@ void main() {
   SupabaseFutureBuilderCodeTemplate.testCode();
   StripeProductsBuilderCodeTemplate.testCode();
   StripeCartItemsBuilderTemplate.testCode();
-  StreamBuilderCodeTemplate.testCode();
   StackCodeTemplate.testCode();
   TCardCodeTemplate.testCode();
   TCardBuilderCodeTemplate.testCode();
