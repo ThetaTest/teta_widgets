@@ -30,11 +30,13 @@ class CmsCountCodeTemplate {
         (node.body.attributes[DBKeys.cmsLimit] as FTextTypeInput).toCode(
       loop,
       resultType: ResultTypeEnum.int,
+      defaultValue: '20',
     );
     final page =
         (node.body.attributes[DBKeys.cmsPage] as FTextTypeInput).toCode(
       loop,
       resultType: ResultTypeEnum.int,
+      defaultValue: '0',
     );
     var keyName =
         (node.body.attributes[DBKeys.cmsLikeKey] as FTextTypeInput).toCode(
