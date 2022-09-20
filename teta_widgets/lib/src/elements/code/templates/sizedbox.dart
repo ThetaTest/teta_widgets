@@ -1,5 +1,6 @@
 // Flutter imports:
 import 'package:flutter/material.dart';
+import 'package:flutter_test/flutter_test.dart';
 import 'package:teta_widgets/src/elements/code/formatter_test.dart';
 // Project imports:
 import 'package:teta_widgets/src/elements/code/snippets.dart';
@@ -39,5 +40,23 @@ class SizedBoxCodeTemplate {
     }
   }
 
-  static void testCode() {}
+  static void testCode() {
+    group('SizedBox toCode test', () {
+      test(
+        'SizedBox: default code',
+        () {
+          expect(
+            FormatterTest.format('''
+            SizedBox(
+             width: 100,
+             height: 100,
+             child: const SizedBox()
+            )
+            '''),
+            true,
+          );
+        },
+      );
+    });
+  }
 }

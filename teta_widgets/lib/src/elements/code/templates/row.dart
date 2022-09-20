@@ -1,5 +1,6 @@
 // Flutter imports:
 import 'package:flutter/material.dart';
+import 'package:flutter_test/flutter_test.dart';
 import 'package:teta_widgets/src/elements/code/formatter_test.dart';
 // Project imports:
 import 'package:teta_widgets/src/elements/code/snippets.dart';
@@ -29,5 +30,25 @@ class RowCodeTemplate {
       return 'const SizedBox()';
     }
   }
-  static void testCode(){}
+
+  static void testCode() {
+    group('Row toCode test', () {
+      test(
+        'Row: default code',
+        () {
+          expect(
+            FormatterTest.format('''
+           Row(
+            mainAxisAlignment: MainAxisAlignment.start,
+            crossAxisAlignment: CrossAxisAlignment.center,
+            mainAxisSize: MainAxisSize.max,
+            children: []
+           )
+            '''),
+            true,
+          );
+        },
+      );
+    });
+  }
 }

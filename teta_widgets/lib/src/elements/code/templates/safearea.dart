@@ -1,9 +1,11 @@
 // Flutter imports:
 import 'package:flutter/material.dart';
+import 'package:flutter_test/flutter_test.dart';
 import 'package:teta_widgets/src/elements/code/formatter_test.dart';
 // Project imports:
 import 'package:teta_widgets/src/elements/code/snippets.dart';
 import 'package:teta_widgets/src/elements/controls/key_constants.dart';
+import 'package:teta_widgets/src/elements/nodes/enum.dart';
 import 'package:teta_widgets/src/elements/nodes/node.dart';
 import 'package:teta_widgets/src/elements/nodes/node_body.dart';
 
@@ -22,9 +24,9 @@ class SafeAreaCodeTemplate {
     final code = '''
     SafeArea(
       left: $left,
-        top: $top,
-        right: $right,
-        bottom: $bottom,
+      top: $top,
+      right: $right,
+      bottom: $bottom,
       $childString
     )
   ''';
@@ -36,5 +38,31 @@ class SafeAreaCodeTemplate {
     }
   }
 
-  static void testCode() {}
+  static void testCode() {
+    group('SafeArea toCode test', () {
+      test(
+        'SafeArea: default code',
+        () {
+          final body = NodeBody.get(NType.safeArea);
+          final left = body.attributes[DBKeys.left] as bool;
+          final top = body.attributes[DBKeys.top] as bool;
+          final right = body.attributes[DBKeys.right] as bool;
+          final bottom = body.attributes[DBKeys.bottom] as bool;
+          const childString = 'const SizedBox()';
+          expect(
+            FormatterTest.format('''
+             SafeArea(
+              left: $left,
+              top: $top,
+              right: $right,
+              bottom: $bottom,
+              $childString
+            )
+            '''),
+            true,
+          );
+        },
+      );
+    });
+  }
 }

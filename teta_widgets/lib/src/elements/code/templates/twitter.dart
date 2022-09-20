@@ -1,5 +1,6 @@
 // Flutter imports:
 import 'package:flutter/material.dart';
+import 'package:flutter_test/flutter_test.dart';
 import 'package:teta_widgets/src/elements/code/formatter_test.dart';
 // Project imports:
 import 'package:teta_widgets/src/elements/code/snippets.dart';
@@ -51,5 +52,26 @@ SizedBox(
     }
   }
 
-  static void testCode() {}
+  static void testCode() {
+    group('LoginWithTwitter toCode test', () {
+      test(
+        'LoginWithTwitter: default code',
+        () {
+          expect(
+            FormatterTest.format('''
+           SizedBox(
+             width: 100,
+             height: 100,
+             child: TwitterAuthButton(
+                onPressed: () async {},
+                onLongPress: () async {},
+              ),
+             )
+            '''),
+            true,
+          );
+        },
+      );
+    });
+  }
 }

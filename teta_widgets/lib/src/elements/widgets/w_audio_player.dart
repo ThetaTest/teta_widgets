@@ -161,6 +161,7 @@ class _WAudioPlayerState extends State<WAudioPlayer> {
                 ],
               );
             }
+            BlocProvider.of<RefreshCubit>(context).change();
             final datasets = addDataset(context, widget.dataset, _map);
 
             return ChildConditionBuilder(
