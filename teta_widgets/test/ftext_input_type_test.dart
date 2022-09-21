@@ -8,9 +8,29 @@ import 'package:teta_widgets/src/elements/index.dart';
 
 ///Tests for FTextInputType
 void main() {
+  differentStrangeCases();
   resultTypeString();
   resultTypeInt();
   resultTypeDouble();
+}
+
+void differentStrangeCases() {
+  group('FTextInputType toCode test: Cases', () {
+    test(
+      'Text Value',
+      () {
+        final value = FTextTypeInput(
+          value: "___10101001!',pod'92883unndèòéàòòdèadwwdkskdnjajuwud8283",
+        ).toCode(0, resultType: ResultTypeEnum.string);
+        expect(
+          FormatterTest.format('''
+              Text($value)
+            '''),
+          true,
+        );
+      },
+    );
+  });
 }
 
 void resultTypeString() {
