@@ -61,13 +61,19 @@ class ButtonCodeTemplate {
     if (res) {
       return code;
     } else {
-      return toCode(
+      final code = await toCode(
         pageId,
         context,
         NodeBody.get(NType.button),
         node,
-        loop,
+        0,
       );
+      final res = FormatterTest.format(code);
+      if (res) {
+        return code;
+      } else {
+        return 'const SizedBox()';
+      }
     }
   }
 
@@ -91,7 +97,7 @@ class ButtonCodeTemplate {
                 child: Center(
                   child: Text($value),
                 ),
-               )
+              )
             )
             '''),
             true,

@@ -15,6 +15,7 @@ import 'package:teta_widgets/src/elements/code/templates/column.dart';
 import 'package:teta_widgets/src/elements/code/templates/container.dart';
 import 'package:teta_widgets/src/elements/code/templates/decoratedbox.dart';
 import 'package:teta_widgets/src/elements/code/templates/future_builder.dart';
+import 'package:teta_widgets/src/elements/code/templates/stream_builder.dart';
 import 'package:teta_widgets/src/elements/code/templates/video.dart';
 import 'package:teta_widgets/src/elements/code/templates/visibility.dart';
 import 'package:teta_widgets/src/elements/code/templates/web_view_x_template.dart';
@@ -53,6 +54,8 @@ class RuntimeTest {
     await FadeInCodeTemplate.runtimeTestDefaultCode(context);
     //Supabase Future Builder
     await SupabaseFutureBuilderCodeTemplate.runtimeTestDefaultCode(context);
+    //Supabase Stream Builder
+    await StreamBuilderCodeTemplate.runtimeTestDefaultCode(context);
     //Scale Animation
     await ScaleCodeTemplate.runtimeTestDefaultCode(context);
     //Slide Animation
