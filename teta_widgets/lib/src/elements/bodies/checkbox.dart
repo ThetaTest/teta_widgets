@@ -102,11 +102,8 @@ class CheckBoxBody extends NodeBody {
         node,
         pageId,
         CheckBoxCodeTemplate.toCode(
-          pageId,
           context,
           this,
-          node,
-          child,
           loop ?? 0,
         ),
         loop ?? 0,

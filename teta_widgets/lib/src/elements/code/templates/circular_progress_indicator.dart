@@ -1,6 +1,7 @@
 // Flutter imports:
 import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
+import 'package:teta_core/teta_core.dart';
 import 'package:teta_widgets/src/elements/code/formatter_test.dart';
 // Project imports:
 import 'package:teta_widgets/src/elements/controls/key_constants.dart';
@@ -29,25 +30,43 @@ class CircularProgressIndicatorCodeTemplate {
     if (res) {
       return code;
     } else {
-      final defaultCode = await toCode(
+      final code = await toCode(
         context,
         NodeBody.get(NType.circularProgressIndicator),
         0,
       );
-      return defaultCode;
+      final res = FormatterTest.format(code);
+      if (res) {
+        return code;
+      } else {
+        return 'const SizedBox()';
+      }
     }
   }
 
   static Future<bool> runtimeTestDefaultCode(
     final BuildContext context,
   ) async {
-    return FormatterTest.format(
-      await toCode(
-        context,
-        NodeBody.get(NType.circularProgressIndicator),
-        0,
-      ),
+    const name = 'CircularProgressIndicator';
+    final nodeBody = NodeBody.get(NType.circularProgressIndicator);
+    final codeToRun = await toCode(
+      context,
+      nodeBody,
+      0,
     );
+    final returnValue = FormatterTest.format(
+      codeToRun,
+    );
+    if (!returnValue) {
+      Logger.printError(
+        'Runtime ToCode Default Error:\n$name\nThis was the code:\n',
+      );
+      Logger.printWarning(codeToRun);
+      Logger.printMessage('\n-----------END-----------');
+    } else {
+      Logger.printSuccess('$name: Passed!');
+    }
+    return returnValue;
   }
 
   static void testCode() {

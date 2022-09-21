@@ -64,7 +64,7 @@ class ConstrainedBoxCodeTemplate {
              ConstrainedBox(
                constraints: BoxConstraints(
                 minWidth: 10,
-                minHeight:10,
+                minHeight: 10,
                 maxWidth: 10,
                 maxHeight: 10,
              ),
