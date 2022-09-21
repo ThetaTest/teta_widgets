@@ -32,14 +32,14 @@ class CmsStreamCodeTemplate {
           resultType: ResultTypeEnum.int,
           defaultValue: '20',
         )
-        .replaceAll("'''", '');
+        .replaceAll("'", '');
     final page = (node.body.attributes[DBKeys.cmsPage] as FTextTypeInput)
         .toCode(
           loop,
           resultType: ResultTypeEnum.int,
           defaultValue: '0',
         )
-        .replaceAll("'''", '');
+        .replaceAll("'", '');
     final keyName =
         (node.body.attributes[DBKeys.cmsLikeKey] as FTextTypeInput).toCode(
       loop,
@@ -52,10 +52,10 @@ class CmsStreamCodeTemplate {
       resultType: ResultTypeEnum.string,
       defaultValue: 'null',
     );
-    final filter =
-        keyName.replaceAll("'", '') != '' && keyValue.replaceAll("'", '') != ''
-            ? 'Filter($keyName, $keyValue)'
-            : '';
+    final filter = keyName.replaceAll("'", '') != 'null ' &&
+            keyValue.replaceAll("'", '') != 'null '
+        ? 'Filter($keyName, $keyValue)'
+        : '';
 
     var child = 'const SizedBox()';
     if (children.isNotEmpty) {
