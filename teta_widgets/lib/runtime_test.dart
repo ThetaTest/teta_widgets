@@ -14,6 +14,7 @@ import 'package:teta_widgets/src/elements/code/templates/circular_progress_indic
 import 'package:teta_widgets/src/elements/code/templates/column.dart';
 import 'package:teta_widgets/src/elements/code/templates/container.dart';
 import 'package:teta_widgets/src/elements/code/templates/decoratedbox.dart';
+import 'package:teta_widgets/src/elements/code/templates/future_builder.dart';
 import 'package:teta_widgets/src/elements/code/templates/video.dart';
 import 'package:teta_widgets/src/elements/code/templates/visibility.dart';
 import 'package:teta_widgets/src/elements/code/templates/web_view_x_template.dart';
@@ -50,6 +51,8 @@ class RuntimeTest {
     await DecoratedBoxCodeTemplate.runtimeTestDefaultCode(context);
     //Fade in Animation
     await FadeInCodeTemplate.runtimeTestDefaultCode(context);
+    //Supabase Future Builder
+    await SupabaseFutureBuilderCodeTemplate.runtimeTestDefaultCode(context);
     //Scale Animation
     await ScaleCodeTemplate.runtimeTestDefaultCode(context);
     //Slide Animation
