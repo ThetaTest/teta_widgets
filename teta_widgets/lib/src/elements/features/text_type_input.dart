@@ -350,9 +350,11 @@ class FTextTypeInput {
     // The value is a hard coded text
     if (type == FTextTypeEnum.text) {
       final v = (value?.replaceAll(' ', '').isNotEmpty ?? false)
-          ? value
+          ? value?.replaceAll("'", '')
           : (defaultValue ?? 0);
-      Logger.printMessage('Value: $value, $defaultValue,');
+      Logger.printMessage(
+        'Current Value: $value, Default Value: $defaultValue,',
+      );
       if (resultType == ResultTypeEnum.string) {
         return "'''$v'''";
       } else if (resultType == ResultTypeEnum.int) {
