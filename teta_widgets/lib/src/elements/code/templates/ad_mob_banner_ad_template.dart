@@ -2,6 +2,7 @@
 
 import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
+import 'package:teta_core/teta_core.dart';
 import 'package:teta_widgets/src/elements/code/formatter_test.dart';
 // Project imports:
 import 'package:teta_widgets/src/elements/controls/key_constants.dart';
@@ -57,8 +58,43 @@ class AdMobBannerAdTemplate {
     if (result) {
       return code;
     } else {
-      return toCode(context, NodeBody.get(NType.adMobBanner), loop);
+      final code = await toCode(
+        context,
+        NodeBody.get(NType.adMobBanner),
+        0,
+      );
+      final res = FormatterTest.format(code);
+      if (res) {
+        return code;
+      } else {
+        return 'const SizedBox()';
+      }
     }
+  }
+
+  static Future<bool> runtimeTestDefaultCode(
+    final BuildContext context,
+  ) async {
+    const name = 'AdMobBanner';
+    final nodeBody = NodeBody.get(NType.adMobBanner);
+    final codeToRun = await toCode(
+      context,
+      nodeBody,
+      null,
+    );
+    final returnValue = FormatterTest.format(
+      codeToRun,
+    );
+    if (!returnValue) {
+      Logger.printError(
+        'Runtime ToCode Default Error:\n$name\nThis was the code:\n',
+      );
+      Logger.printWarning(codeToRun);
+      Logger.printMessage('\n-----------END-----------');
+    } else {
+      Logger.printSuccess('$name: Passed!');
+    }
+    return returnValue;
   }
 
   static void testCode() {
