@@ -30,6 +30,7 @@ import 'package:teta_widgets/src/elements/code/templates/cms_logged_user.dart';
 import 'package:teta_widgets/src/elements/code/templates/cms_stream.dart';
 import 'package:teta_widgets/src/elements/code/templates/constrained_box.dart';
 import 'package:teta_widgets/src/elements/code/templates/divider.dart';
+import 'package:teta_widgets/src/elements/code/templates/fitted_box.dart';
 import 'package:teta_widgets/src/elements/code/templates/future_builder.dart';
 import 'package:teta_widgets/src/elements/code/templates/icon.dart';
 import 'package:teta_widgets/src/elements/code/templates/icon_feather.dart';
@@ -85,6 +86,7 @@ void main() {
   CmsStreamCodeTemplate.testCode();
   DividerCodeTemplate.testCode();
   FadeInCodeTemplate.testCode();
+  FittedBoxCodeTemplate.testCode();
   IconCodeTemplate.testCode();
   IconFontAwesomeCodeTemplate.testCode();
   IconFeatherCodeTemplate.testCode();
