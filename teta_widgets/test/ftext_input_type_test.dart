@@ -60,6 +60,20 @@ void differentStrangeCases() {
       },
     );
     test(
+      'Ten Single Quote',
+      () {
+        final value = FTextTypeInput(
+          value: "''''''''''",
+        ).toCode(0, resultType: ResultTypeEnum.string);
+        expect(
+          FormatterTest.format('''
+              Text($value)
+            '''),
+          true,
+        );
+      },
+    );
+    test(
       'Text with a Single Quote ',
       () {
         final value = FTextTypeInput(
@@ -92,6 +106,20 @@ void differentStrangeCases() {
       () {
         final value = FTextTypeInput(
           value: '"""',
+        ).toCode(0, resultType: ResultTypeEnum.string);
+        expect(
+          FormatterTest.format('''
+              Text($value)
+            '''),
+          true,
+        );
+      },
+    );
+    test(
+      'Ten Double Quote',
+      () {
+        final value = FTextTypeInput(
+          value: '""""""""""',
         ).toCode(0, resultType: ResultTypeEnum.string);
         expect(
           FormatterTest.format('''
@@ -278,8 +306,9 @@ void resultTypeDouble() {
       'State Value',
       () {
         final value = FTextTypeInput(
-                stateName: 'state', type: FTextTypeEnum.state)
-            .toCode(0, resultType: ResultTypeEnum.double, defaultValue: '0.0');
+          stateName: 'state',
+          type: FTextTypeEnum.state,
+        ).toCode(0, resultType: ResultTypeEnum.double, defaultValue: '0.0');
         expect(
           FormatterTest.format('''
               Text(${value.toString()})
@@ -292,8 +321,9 @@ void resultTypeDouble() {
       'Param Value',
       () {
         final value = FTextTypeInput(
-                paramName: 'param', type: FTextTypeEnum.param)
-            .toCode(0, resultType: ResultTypeEnum.double, defaultValue: '0.0');
+          paramName: 'param',
+          type: FTextTypeEnum.param,
+        ).toCode(0, resultType: ResultTypeEnum.double, defaultValue: '0.0');
         expect(
           FormatterTest.format('''
               Text(${value.toString()})
