@@ -43,8 +43,8 @@ class StreamBuilderCodeTemplate {
     final code = '''
     StreamBuilder(
       stream: client
-      .from('$from')
-      .order('$order')
+      .from($from)
+      .order($order)
       .limit($rangeTo)
       .execute(),
       builder: (context, snapshot) {
@@ -94,8 +94,8 @@ class StreamBuilderCodeTemplate {
             FormatterTest.format('''
  StreamBuilder(
       stream: client
-      .from('$from')
-      .order('$order')
+      .from($from)
+      .order($order)
       .limit($rangeTo)
       .execute(),
       builder: (context, snapshot) {

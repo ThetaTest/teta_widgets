@@ -49,6 +49,7 @@ import 'package:teta_widgets/src/elements/code/templates/safearea.dart';
 import 'package:teta_widgets/src/elements/code/templates/sizedbox.dart';
 import 'package:teta_widgets/src/elements/code/templates/spacer.dart';
 import 'package:teta_widgets/src/elements/code/templates/stack.dart';
+import 'package:teta_widgets/src/elements/code/templates/stream_builder.dart';
 import 'package:teta_widgets/src/elements/code/templates/stripe_cart_items_builder_template.dart';
 import 'package:teta_widgets/src/elements/code/templates/stripe_products_builder_template.dart';
 import 'package:teta_widgets/src/elements/code/templates/text.dart';
@@ -110,6 +111,7 @@ void main() {
   SizedBoxCodeTemplate.testCode();
   SafeAreaCodeTemplate.testCode();
   SupabaseFutureBuilderCodeTemplate.testCode();
+  StreamBuilderCodeTemplate.testCode();
   StripeProductsBuilderCodeTemplate.testCode();
   StripeCartItemsBuilderTemplate.testCode();
   StackCodeTemplate.testCode();

@@ -157,7 +157,7 @@ class SupabaseFutureBuilderCodeTemplate {
                     return $loader;
                    }
                   $func
-                return $child;
+              return $child;
              }
             )
              '''),

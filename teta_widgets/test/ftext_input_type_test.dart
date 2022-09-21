@@ -102,6 +102,21 @@ void differentStrangeCases() {
       },
     );
     test(
+      'Link as Text',
+      () {
+        final value = FTextTypeInput(
+          value:
+              'https://www.google.com/search?q=google&rlz=1C5CHFA_enIT904IT905&oq=google&aqs=chrome..69i57j0i271l3.613j0j7&sourceid=chrome&ie=UTF-8',
+        ).toCode(0, resultType: ResultTypeEnum.string);
+        expect(
+          FormatterTest.format('''
+              Text($value)
+            '''),
+          true,
+        );
+      },
+    );
+    test(
       'Longest Regex as Value',
       () {
         final value = FTextTypeInput(
@@ -188,7 +203,7 @@ void resultTypeInt() {
       'Text Value',
       () {
         final value = FTextTypeInput(value: 'xxx')
-            .toCode(0, resultType: ResultTypeEnum.int);
+            .toCode(0, resultType: ResultTypeEnum.int, defaultValue: '0');
         expect(
           FormatterTest.format('''
               Text(${value.toString()})
@@ -202,7 +217,7 @@ void resultTypeInt() {
       () {
         final value =
             FTextTypeInput(stateName: 'state', type: FTextTypeEnum.state)
-                .toCode(0, resultType: ResultTypeEnum.int);
+                .toCode(0, resultType: ResultTypeEnum.int, defaultValue: '0');
         expect(
           FormatterTest.format('''
               Text(${value.toString()})
@@ -216,7 +231,7 @@ void resultTypeInt() {
       () {
         final value =
             FTextTypeInput(paramName: 'param', type: FTextTypeEnum.param)
-                .toCode(0, resultType: ResultTypeEnum.int);
+                .toCode(0, resultType: ResultTypeEnum.int, defaultValue: '0');
         expect(
           FormatterTest.format('''
               Text(${value.toString()})
@@ -232,7 +247,7 @@ void resultTypeInt() {
           datasetName: 'xxx',
           datasetAttr: 'yyy',
           type: FTextTypeEnum.dataset,
-        ).toCode(0, resultType: ResultTypeEnum.int);
+        ).toCode(0, resultType: ResultTypeEnum.int, defaultValue: '0');
         expect(
           FormatterTest.format('''
               Text(${value.toString()})
@@ -250,7 +265,7 @@ void resultTypeDouble() {
       'Text Value',
       () {
         final value = FTextTypeInput(value: 'xxx')
-            .toCode(0, resultType: ResultTypeEnum.double);
+            .toCode(0, resultType: ResultTypeEnum.double, defaultValue: '0.0');
         expect(
           FormatterTest.format('''
               Text(${value.toString()})
@@ -262,9 +277,9 @@ void resultTypeDouble() {
     test(
       'State Value',
       () {
-        final value =
-            FTextTypeInput(stateName: 'state', type: FTextTypeEnum.state)
-                .toCode(0, resultType: ResultTypeEnum.double);
+        final value = FTextTypeInput(
+                stateName: 'state', type: FTextTypeEnum.state)
+            .toCode(0, resultType: ResultTypeEnum.double, defaultValue: '0.0');
         expect(
           FormatterTest.format('''
               Text(${value.toString()})
@@ -276,9 +291,9 @@ void resultTypeDouble() {
     test(
       'Param Value',
       () {
-        final value =
-            FTextTypeInput(paramName: 'param', type: FTextTypeEnum.param)
-                .toCode(0, resultType: ResultTypeEnum.double);
+        final value = FTextTypeInput(
+                paramName: 'param', type: FTextTypeEnum.param)
+            .toCode(0, resultType: ResultTypeEnum.double, defaultValue: '0.0');
         expect(
           FormatterTest.format('''
               Text(${value.toString()})
@@ -294,7 +309,7 @@ void resultTypeDouble() {
           datasetName: 'xxx',
           datasetAttr: 'yyy',
           type: FTextTypeEnum.dataset,
-        ).toCode(0, resultType: ResultTypeEnum.double);
+        ).toCode(0, resultType: ResultTypeEnum.double, defaultValue: '0.0');
         expect(
           FormatterTest.format('''
               Text(${value.toString()})
