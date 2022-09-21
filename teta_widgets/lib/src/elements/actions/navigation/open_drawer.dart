@@ -8,6 +8,7 @@ import 'package:teta_widgets/src/elements/code/formatter_test.dart';
 
 class FActionNavigationOpenDrawer {
   static Future action(final BuildContext context) async {
+    print(Scaffold.of(context).hasDrawer);
     if (!Scaffold.of(context).isDrawerOpen) Scaffold.of(context).openDrawer();
   }
 
