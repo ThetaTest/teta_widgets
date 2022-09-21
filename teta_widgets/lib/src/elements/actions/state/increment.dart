@@ -48,11 +48,29 @@ class FActionStateIncrement {
 
     final varName = ReCase(stateName).camelCase;
 
-    return '''
+    if (variable.type == VariableType.string) {
+      return '''
     if (double.tryParse($varName) != null) { 
       setState(() {
         $varName = '\${double.parse($varName) + 1}';
       });
     }''';
+    } else if (variable.type == VariableType.int) {
+      return '''
+    if (int.tryParse($varName) != null) { 
+      setState(() {
+        $varName++';
+      });
+    }''';
+    } else if (variable.type == VariableType.double) {
+      return '''
+    if (double.tryParse($varName) != null) { 
+      setState(() {
+        $varName++';
+      });
+    }''';
+    } else {
+      return '';
+    }
   }
 }

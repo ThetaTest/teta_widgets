@@ -43,13 +43,13 @@ class CmsFetchCodeTemplate {
     final keyName =
         (node.body.attributes[DBKeys.cmsLikeKey] as FTextTypeInput).toCode(
       loop,
-      resultType: ResultTypeEnum.int,
+      resultType: ResultTypeEnum.string,
       defaultValue: '',
     );
     final keyValue =
         (node.body.attributes[DBKeys.cmsLikeValue] as FTextTypeInput).toCode(
       loop,
-      resultType: ResultTypeEnum.int,
+      resultType: ResultTypeEnum.string,
       defaultValue: '',
     );
     final filter =

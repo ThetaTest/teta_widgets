@@ -48,7 +48,7 @@ final cmsCountIntrinsicStates = IntrinsicStates(
   category: NodeCategories.basic,
   maxChildren: 2,
   canHave: ChildrenEnum.children,
-  addChildLabels: [],
+  addChildLabels: ['Add new if successful', 'Add new if empty or failed'],
   gestures: [],
   permissions: [],
   packages: [],

@@ -147,17 +147,37 @@ class _WCmsFetchState extends State<WCmsFetch> {
   Widget build(final BuildContext context) {
     final datasets = _addFetchDataToDataset(list);
 
+    if (list.isEmpty) {
+      if (widget.children.length > 1) {
+        return RepaintBoundary(
+          child: widget.children.last.toWidget(
+            params: widget.params,
+            states: widget.states,
+            dataset: datasets,
+            forPlay: widget.forPlay,
+          ),
+        );
+      } else {
+        return const THeadline3(
+          'CMS Fetch returned an empty list. Add children to customize this message,',
+          isCentered: true,
+        );
+      }
+    }
+
     return NodeSelectionBuilder(
       node: widget.node,
       forPlay: widget.forPlay,
-      child: RepaintBoundary(
-        child: widget.children.first.toWidget(
-          params: widget.params,
-          states: widget.states,
-          dataset: datasets,
-          forPlay: widget.forPlay,
-        ),
-      ),
+      child: widget.children.isEmpty
+          ? const THeadline3('CMS Fetch requires at least one child')
+          : RepaintBoundary(
+              child: widget.children.first.toWidget(
+                params: widget.params,
+                states: widget.states,
+                dataset: datasets,
+                forPlay: widget.forPlay,
+              ),
+            ),
     );
   }
 

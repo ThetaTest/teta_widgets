@@ -144,46 +144,49 @@ class _WCmsCountState extends State<WCmsCount> {
         child: FutureBuilder<int>(
           future: _future,
           builder: (final context, final snapshot) {
-            if (!snapshot.hasData) {
+            if (snapshot.connectionState == ConnectionState.done) {
+              if (!snapshot.hasData) {
+                if (widget.children.length > 1) {
+                  return widget.children.last.toWidget(
+                    params: widget.params,
+                    states: widget.states,
+                    dataset: widget.dataset,
+                    forPlay: widget.forPlay,
+                  );
+                } else {
+                  return const SizedBox();
+                }
+              }
+
+              final count = snapshot.data ?? 0;
+              _map = _map.copyWith(
+                name:
+                    widget.node.name ?? widget.node.intrinsicState.displayName,
+                map: [
+                  <String, int>{
+                    'count': count,
+                  },
+                ],
+              );
+              final datasets = addDataset(context, widget.dataset, _map);
+
+              // Returns child
               if (widget.children.isNotEmpty) {
-                return widget.children.last.toWidget(
+                return widget.children.first.toWidget(
                   params: widget.params,
                   states: widget.states,
-                  dataset: widget.dataset,
+                  dataset: widget.dataset.isEmpty ? datasets : widget.dataset,
                   forPlay: widget.forPlay,
                 );
               } else {
-                return const Center(
-                  child: CircularProgressIndicator(),
-                );
+                return const SizedBox();
               }
-            }
-            if (snapshot.error != null) {
-              // TODO: Returns a error widget
-            }
-
-            final count = snapshot.data ?? 0;
-            _map = _map.copyWith(
-              name: widget.node.name ?? widget.node.intrinsicState.displayName,
-              map: [
-                <String, int>{
-                  'count': count,
-                },
-              ],
-            );
-            final datasets = addDataset(context, widget.dataset, _map);
-
-            // Returns child
-            if (widget.children.isNotEmpty) {
-              return widget.children.first.toWidget(
-                params: widget.params,
-                states: widget.states,
-                dataset: widget.dataset.isEmpty ? datasets : widget.dataset,
-                forPlay: widget.forPlay,
-              );
             } else {
-              return const SizedBox();
+              const Center(
+                child: CircularProgressIndicator(),
+              );
             }
+            return const SizedBox();
           },
         ),
       ),

@@ -8,10 +8,11 @@ import 'package:flutter/material.dart';
 // Package imports:
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:gap/gap.dart';
-import 'package:teta_core/src/design_system/textfield/minitextfield.dart';
+import 'package:teta_core/src/design_system/textfield/textfield.dart';
 import 'package:teta_core/teta_core.dart';
 // Project imports:
 import 'package:teta_widgets/src/elements/nodes/node.dart';
+import 'package:universal_platform/universal_platform.dart';
 
 class IconFeatherControl extends StatefulWidget {
   const IconFeatherControl({
@@ -49,8 +50,9 @@ class IconFeatherControlState extends State<IconFeatherControl> {
         const THeadline3(
           'Feather Icon',
         ),
-        TextButton(
-          onPressed: showPicker,
+        BounceSmall(
+          message: 'Change icon',
+          onTap: showPicker,
           child: Container(
             margin: const EdgeInsets.only(top: 8),
             padding: const EdgeInsets.symmetric(vertical: 14),
@@ -100,7 +102,7 @@ class IconFeatherControlState extends State<IconFeatherControl> {
               BlocProvider<GoogleFontsCubit>(
             create: (final context) => cubit,
             child: AlertDialog(
-              backgroundColor: const Color(0xFF222222),
+              backgroundColor: Palette.bgDialog,
               content: BlocBuilder<GoogleFontsCubit, String>(
                 bloc: cubit,
                 builder: (final context, final state) {
@@ -129,10 +131,10 @@ class IconFeatherControlState extends State<IconFeatherControl> {
                     width: 400,
                     child: Column(
                       children: [
-                        CMiniTextField(
+                        CTextField(
                           controller: editingController,
                           placeholder: 'Write here',
-                          backgroundColor: Palette.bgGrey,
+                          autofocus: UniversalPlatform.isDesktopOrWeb,
                           callBack: (final text) {
                             cubit.updateTextToFind(text);
                             setState(() {
@@ -161,7 +163,8 @@ class IconFeatherControlState extends State<IconFeatherControl> {
                             ),
                             itemBuilder: (final context, final index) {
                               final icon = filteredIcons[index];
-                              return GestureDetector(
+                              return BounceSmall(
+                                message: icon.title,
                                 onTap: () {
                                   setState(() {
                                     iconState = icon.title;
@@ -177,7 +180,7 @@ class IconFeatherControlState extends State<IconFeatherControl> {
                                   width: 32,
                                   padding: EI.smA,
                                   decoration: const BoxDecoration(
-                                    color: Palette.bgGrey,
+                                    color: Palette.bgTertiary,
                                     borderRadius:
                                         BorderRadius.all(Radius.circular(16)),
                                   ),

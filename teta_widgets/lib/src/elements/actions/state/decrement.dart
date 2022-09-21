@@ -35,7 +35,10 @@ class FActionStateDecrement {
   }
 
   static String toCode(
-      final int pageId, final BuildContext context, final String? stateName) {
+    final int pageId,
+    final BuildContext context,
+    final String? stateName,
+  ) {
     final page = getPageOnToCode(pageId, context);
     if (page == null) return '';
     final variable = takeStateFrom(page, '$stateName');
@@ -43,11 +46,29 @@ class FActionStateDecrement {
 
     final varName = ReCase(stateName).camelCase;
 
-    return '''
+    if (variable.type == VariableType.string) {
+      return '''
     if (double.tryParse($varName) != null) { 
       setState(() {
         $varName = '\${double.parse($varName) - 1}';
       });
     }''';
+    } else if (variable.type == VariableType.int) {
+      return '''
+    if (int.tryParse($varName) != null) { 
+      setState(() {
+        $varName--';
+      });
+    }''';
+    } else if (variable.type == VariableType.double) {
+      return '''
+    if (double.tryParse($varName) != null) { 
+      setState(() {
+        $varName--';
+      });
+    }''';
+    } else {
+      return '';
+    }
   }
 }

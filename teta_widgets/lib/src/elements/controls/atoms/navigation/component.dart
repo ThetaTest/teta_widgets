@@ -199,42 +199,40 @@ class ElementState extends State<Element> {
   TextEditingController? controller;
   int? nodeId;
   final List<VariableObject> list = [];
-  final List<DatasetObject> listDataset = [];
+  List<DatasetObject> listDataset = [];
   String? dropdown;
   String? dropdownDataset;
 
   @override
   void initState() {
     super.initState();
-
-    if (widget.variable.type == VariableType.string) {
-      listDataset.add(DatasetObject(name: 'Text', map: []));
-    }
-    if (widget.page.params != <VariableObject>[]) {
-      listDataset.add(
-        DatasetObject(
-          name: 'Parameters',
-          map: widget.page.params
-              .where((final element) => widget.variable.type == element.type)
-              .map((final e) => <String, dynamic>{e.name: e.get})
-              .toList(),
-        ),
-      );
-    }
-    if (widget.page.states != <VariableObject>[]) {
-      listDataset.add(
-        DatasetObject(
-          name: 'States',
-          map: widget.page.states
-              .where((final element) => widget.variable.type == element.type)
-              .map((final e) => <String, dynamic>{e.name: e.get})
-              .toList(),
-        ),
-      );
-    }
-    if (widget.variable.type == VariableType.string) {
-      listDataset.addAll(widget.page.datasets);
-    }
+    Logger.printMessage('${widget.page.datasets}');
+    Logger.printMessage('Params: ${widget.page.params}');
+    final params = Map<String, dynamic>.fromEntries(
+      widget.page.params
+          .where((final element) => widget.variable.type == element.type)
+          .map((final e) => MapEntry<String, dynamic>(e.name, e.get)),
+    );
+    final states = Map<String, dynamic>.fromEntries(
+      widget.page.states
+          .where((final element) => widget.variable.type == element.type)
+          .map((final e) => MapEntry<String, dynamic>(e.name, e.get)),
+    );
+    listDataset = <DatasetObject>[
+      DatasetObject(
+        name: 'Parameters',
+        map: [
+          params,
+        ],
+      ),
+      DatasetObject(
+        name: 'States',
+        map: [
+          states,
+        ],
+      ),
+      if (widget.variable.type == VariableType.string) ...widget.page.datasets
+    ];
     try {
       dropdown = widget.map[widget.variable.id]['label'] as String;
     } catch (_) {}
@@ -286,11 +284,13 @@ class ElementState extends State<Element> {
                     listSecondDropwdown = [];
                     listSecondDropwdown.addAll(
                       listDataset
-                          .firstWhere(
+                          .where(
                             (final element) =>
                                 element.getName == dropdownDataset,
                           )
-                          .getMap,
+                          .map(
+                            (final e) => e.getMap.first,
+                          ),
                     );
                   });
                 },

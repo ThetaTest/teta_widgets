@@ -1347,7 +1347,7 @@ class ActionElementControlState extends State<ActionElementControl> {
                                           CrossAxisAlignment.start,
                                       children: pageObject!.params
                                           .map(
-                                            (final e) => Element(
+                                            (final e) => _Element(
                                               variable: e,
                                               page: widget.page,
                                               map: map,
@@ -1614,8 +1614,8 @@ class ActionElementControlState extends State<ActionElementControl> {
   }
 }
 
-class Element extends StatefulWidget {
-  const Element({
+class _Element extends StatefulWidget {
+  const _Element({
     required this.variable,
     required this.page,
     required this.map,
@@ -1631,10 +1631,10 @@ class Element extends StatefulWidget {
   final Function(FActionElement, FActionElement) callBack;
 
   @override
-  State<Element> createState() => _ElementState();
+  State<_Element> createState() => __ElementState();
 }
 
-class _ElementState extends State<Element> {
+class __ElementState extends State<_Element> {
   List<DatasetObject> listDataset = <DatasetObject>[];
   String? dropdownDataset;
   String? dropdown;
@@ -1644,25 +1644,28 @@ class _ElementState extends State<Element> {
   void initState() {
     super.initState();
     Logger.printMessage('${widget.page.datasets}');
+    Logger.printMessage('Params: ${widget.page.params}');
+    final params = Map<String, dynamic>.fromEntries(
+      widget.page.params
+          .where((final element) => widget.variable.type == element.type)
+          .map((final e) => MapEntry<String, dynamic>(e.name, e.get)),
+    );
+    final states = Map<String, dynamic>.fromEntries(
+      widget.page.states
+          .where((final element) => widget.variable.type == element.type)
+          .map((final e) => MapEntry<String, dynamic>(e.name, e.get)),
+    );
     listDataset = <DatasetObject>[
       DatasetObject(
         name: 'Parameters',
         map: [
-          <String, dynamic>{
-            for (var e in widget.page.params
-                .where((final element) => widget.variable.type == element.type))
-              e.name: e.get
-          },
+          params,
         ],
       ),
       DatasetObject(
         name: 'States',
         map: [
-          <String, dynamic>{
-            for (var e in widget.page.states
-                .where((final element) => widget.variable.type == element.type))
-              e.name: e.get
-          },
+          states,
         ],
       ),
       if (widget.variable.type == VariableType.string) ...widget.page.datasets
@@ -1681,6 +1684,7 @@ class _ElementState extends State<Element> {
 
   @override
   Widget build(final BuildContext context) {
+    Logger.printMessage('Params: ${widget.page.params}');
     if (dropdownDataset != null) {
       try {
         listSecondDropwdown.addAll(
@@ -1728,11 +1732,13 @@ class _ElementState extends State<Element> {
                     listSecondDropwdown = <Map<String, dynamic>>[];
                     listSecondDropwdown.addAll(
                       listDataset
-                          .firstWhere(
+                          .where(
                             (final element) =>
                                 element.getName == dropdownDataset,
                           )
-                          .getMap,
+                          .map(
+                            (final e) => e.getMap.first,
+                          ),
                     );
                   });
                 }
@@ -1745,10 +1751,7 @@ class _ElementState extends State<Element> {
                       .contains(dropdown)
                   ? dropdown
                   : null,
-              items: listSecondDropwdown.first.keys
-                  .map((final key) => key)
-                  .toSet()
-                  .toList(),
+              items: listSecondDropwdown.first.keys.toList(),
               onChange: (final newValue) {
                 if (newValue != null) {
                   if (mounted) {

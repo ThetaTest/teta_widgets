@@ -153,39 +153,46 @@ class _WCmsStreamState extends State<WCmsStream> {
         child: StreamBuilder(
           stream: _stream.stream,
           builder: (final context, final snapshot) {
-            if (!snapshot.hasData) {
-              if (widget.children.isNotEmpty) {
-                return widget.children.last.toWidget(
-                  params: widget.params,
-                  states: widget.states,
-                  dataset: widget.dataset,
-                  forPlay: widget.forPlay,
-                );
+            if (snapshot.connectionState == ConnectionState.done) {
+              if (!snapshot.hasData ||
+                  ((snapshot.data as List<dynamic>?)?.isEmpty ?? true)) {
+                if (widget.children.isNotEmpty) {
+                  return widget.children.last.toWidget(
+                    params: widget.params,
+                    states: widget.states,
+                    dataset: widget.dataset,
+                    forPlay: widget.forPlay,
+                  );
+                } else {
+                  return const SizedBox();
+                }
               } else {
-                return const Center(
-                  child: CircularProgressIndicator(),
+                final list = snapshot.data as List<dynamic>?;
+                _map = _map.copyWith(
+                  name: widget.node.name ??
+                      widget.node.intrinsicState.displayName,
+                  map: (list ?? const <dynamic>[])
+                      .map((final dynamic e) => e as Map<String, dynamic>)
+                      .toList(),
                 );
-              }
-            }
-            final list = snapshot.data as List<dynamic>?;
-            _map = _map.copyWith(
-              name: widget.node.name ?? widget.node.intrinsicState.displayName,
-              map: (list ?? const <dynamic>[])
-                  .map((final dynamic e) => e as Map<String, dynamic>)
-                  .toList(),
-            );
-            final datasets = addDataset(context, widget.dataset, _map);
+                final datasets = addDataset(context, widget.dataset, _map);
 
-            // Returns child
-            if (widget.children.isNotEmpty) {
-              return widget.children.first.toWidget(
-                params: widget.params,
-                states: widget.states,
-                dataset: widget.dataset.isEmpty ? datasets : widget.dataset,
-                forPlay: widget.forPlay,
-              );
+                // Returns child
+                if (widget.children.isNotEmpty) {
+                  return widget.children.first.toWidget(
+                    params: widget.params,
+                    states: widget.states,
+                    dataset: widget.dataset.isEmpty ? datasets : widget.dataset,
+                    forPlay: widget.forPlay,
+                  );
+                } else {
+                  return const SizedBox();
+                }
+              }
             } else {
-              return const SizedBox();
+              return const Center(
+                child: CircularProgressIndicator(),
+              );
             }
           },
         ),
