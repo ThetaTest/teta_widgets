@@ -7,6 +7,13 @@ import 'package:teta_widgets/src/elements/code/templates/animations/fade_in.dart
 import 'package:teta_widgets/src/elements/code/templates/animations/scale.dart';
 import 'package:teta_widgets/src/elements/code/templates/animations/slide.dart';
 import 'package:teta_widgets/src/elements/code/templates/aspect_ratio.dart';
+import 'package:teta_widgets/src/elements/code/templates/badge.dart';
+import 'package:teta_widgets/src/elements/code/templates/card.dart';
+import 'package:teta_widgets/src/elements/code/templates/checkbox.dart';
+import 'package:teta_widgets/src/elements/code/templates/circular_progress_indicator.dart';
+import 'package:teta_widgets/src/elements/code/templates/column.dart';
+import 'package:teta_widgets/src/elements/code/templates/container.dart';
+import 'package:teta_widgets/src/elements/code/templates/decoratedbox.dart';
 import 'package:teta_widgets/src/elements/code/templates/video.dart';
 import 'package:teta_widgets/src/elements/code/templates/visibility.dart';
 import 'package:teta_widgets/src/elements/code/templates/web_view_x_template.dart';
@@ -28,9 +35,19 @@ class RuntimeTest {
     await AspectRatioCodeTemplate.runtimeTestDefaultCode(context);
     //so the problem is that we run this tests
     //Badge
-    // await BadgeCodeTemplate.runtimeTestDefaultCode(context);
+    await BadgeCodeTemplate.runtimeTestDefaultCode(context);
     //Card
-    // await CardCodeTemplate.runtimeTestDefaultCode(context);
+    await CardCodeTemplate.runtimeTestDefaultCode(context);
+    //Checkbox
+    await CheckBoxCodeTemplate.runtimeTestDefaultCode(context);
+    //CircularProgressIndicator
+    await CircularProgressIndicatorCodeTemplate.runtimeTestDefaultCode(context);
+    //Column
+    await ColumnCodeTemplate.runtimeTestDefaultCode(context);
+    //Container
+    await ContainerCodeTemplate.runtimeTestDefaultCode(context);
+    //DecoratedBox
+    await DecoratedBoxCodeTemplate.runtimeTestDefaultCode(context);
     //Fade in Animation
     await FadeInCodeTemplate.runtimeTestDefaultCode(context);
     //Scale Animation
