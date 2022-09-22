@@ -60,21 +60,8 @@ class ButtonCodeTemplate {
     final res = FormatterTest.format(code);
     if (res) {
       return code;
-    } else {
-      final code = await toCode(
-        pageId,
-        context,
-        NodeBody.get(NType.button),
-        node,
-        0,
-      );
-      final res = FormatterTest.format(code);
-      if (res) {
-        return code;
-      } else {
-        return 'const SizedBox()';
-      }
     }
+    return 'const SizedBox()';
   }
 
   static void testCode() {

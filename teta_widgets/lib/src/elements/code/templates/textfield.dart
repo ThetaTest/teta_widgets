@@ -1,7 +1,6 @@
 // Flutter imports:
 import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
-import 'package:teta_core/teta_core.dart';
 import 'package:teta_widgets/src/elements/code/formatter_test.dart';
 // Project imports:
 import 'package:teta_widgets/src/elements/code/snippets.dart';
@@ -78,9 +77,6 @@ class TextFieldCodeTemplate {
       defaultValue: '1',
     );
 
-    Logger.printMessage(
-      'Textfield toCode: borderSize: $borderSize labelText: $labelText maxLines: $maxLines minLines: $minLines maxLenght: $maxLenght',
-    );
     final code = """
   Container(
     ${CS.margin(context, body, isMargin: true)}
@@ -131,10 +127,10 @@ class TextFieldCodeTemplate {
         ${CS.margin(context, body, isMargin: false).replaceAll('padding', 'contentPadding')}
       ),
       ${CS.textStyle(context, body, DBKeys.textStyle)}
-      maxLines: $maxLines,
+      ${maxLines != '1' ? 'maxLines: $maxLines,' : ''}
       minLines: $minLines,
-      maxLength: $maxLenght,
-      obscureText: $obscureText,
+      ${maxLenght != 'null' ? 'maxLength: $maxLenght,' : ''}
+      ${obscureText != false ? 'obscureText: $obscureText,' : ''}
       showCursor: $showCursor,
       autocorrect: $autoCorrect,
     ),
@@ -144,22 +140,7 @@ class TextFieldCodeTemplate {
     if (res) {
       return code;
     } else {
-      Logger.printError('Error TextField code');
-      final defaultCode = await toCode(
-        pageId,
-        context,
-        NodeBody.get(NType.textField),
-        node,
-        null,
-        0,
-      );
-      final res = FormatterTest.format(defaultCode);
-      if (res) {
-        return defaultCode;
-      } else {
-        Logger.printError('Error TextField defaultCode');
-        return 'const SizedBox()';
-      }
+      return 'const SizedBox()';
     }
   }
 

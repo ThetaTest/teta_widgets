@@ -1,4 +1,6 @@
 import 'package:dart_style/dart_style.dart';
+import 'package:teta_core/src/repositories/project.dart';
+import 'package:teta_core/teta_core.dart';
 
 class FormatterTest {
   static bool format(final String code) {
@@ -16,8 +18,13 @@ class Test extends StatelessWidget {
     return $code;
   }
 }''');
-      result = true;
-    } catch (_) {}
+      return true;
+    } catch (e) {
+      Logger.printError('Error formating: $e');
+    }
+    if (result = false) {
+      ProjectRepository.sendToCodeError(code);
+    }
     return result;
   }
 }

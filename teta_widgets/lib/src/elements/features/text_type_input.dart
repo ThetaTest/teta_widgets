@@ -353,10 +353,6 @@ class FTextTypeInput {
           ? value?.replaceAll("'", '')
           : (defaultValue ?? 0);
 
-      Logger.printMessage(
-        'Current Value: $value, Default Value: $defaultValue,',
-      );
-
       if (resultType == ResultTypeEnum.string) {
         return "'''$v'''";
       } else if (resultType == ResultTypeEnum.int) {
