@@ -16,11 +16,14 @@ class AnimatedContainerCodeTemplate {
     final int? loop,
   ) async {
     final abstract = body.attributes[DBKeys.duration] as FTextTypeInput;
-    final duration = abstract.toCode(
-      loop,
-      resultType: ResultTypeEnum.int,
-      defaultValue: '400',
-    );
+    final duration = int.tryParse(
+          abstract.toCode(
+            loop,
+            resultType: ResultTypeEnum.int,
+            defaultValue: '400',
+          ),
+        ) ??
+        400;
     final childString = await CS.child(context, child, comma: true);
     final code = '''
     AnimatedContainer(

@@ -73,6 +73,8 @@ class AnimationConfigGridBody extends NodeBody {
           key: DBKeys.duration,
           value: attributes[DBKeys.duration],
           title: 'Duration',
+          description:
+              'Milliseconds value. Only integers are accepted. E.g. 1000 (= 1s), 2000 (= 2s) etc.',
         ),
         ControlObject(
           type: ControlType.value,

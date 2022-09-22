@@ -20,11 +20,14 @@ class RefreshIndicatorCodeTemplate {
     final int loop,
   ) async {
     final abstract = body.attributes[DBKeys.duration] as FTextTypeInput;
-    final duration = abstract.toCode(
-      loop,
-      resultType: ResultTypeEnum.int,
-      defaultValue: '1000',
-    );
+    final duration = int.tryParse(
+          abstract.toCode(
+            loop,
+            resultType: ResultTypeEnum.int,
+            defaultValue: '1000',
+          ),
+        ) ??
+        1000;
     final childrenString = await CS.children(context, children);
     final code = '''
     RefreshIndicator(

@@ -356,11 +356,13 @@ class FTextTypeInput {
       if (resultType == ResultTypeEnum.string) {
         return "'''$v'''";
       } else if (resultType == ResultTypeEnum.int) {
-        return '$v';
+        return int.tryParse('$v') != null ? '$v' : (defaultValue ?? '1');
       } else if (resultType == ResultTypeEnum.double) {
-        return '$v';
+        return double.tryParse('$v') != null ? '$v' : (defaultValue ?? '1');
       } else if (resultType == ResultTypeEnum.bool) {
-        return "'$v' == 'true'";
+        return '$v'.toLowerCase() == 'true' || '$v'.toLowerCase() == 'false'
+            ? '$v'.toLowerCase()
+            : "'$v' == 'true'".toLowerCase();
       }
     }
     // The value is a param

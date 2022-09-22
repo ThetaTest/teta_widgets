@@ -30,11 +30,14 @@ class AnimatedOpacityCodeTemplate {
         : rawDouble > 1
             ? 1
             : rawDouble;
-    final duration = abstract.toCode(
-      loop,
-      resultType: ResultTypeEnum.int,
-      defaultValue: '400',
-    );
+    final duration = int.tryParse(
+          abstract.toCode(
+            loop,
+            resultType: ResultTypeEnum.int,
+            defaultValue: '400',
+          ),
+        ) ??
+        400;
     final childString = await CS.child(context, child, comma: true);
     final code = '''
     AnimatedOpacity(

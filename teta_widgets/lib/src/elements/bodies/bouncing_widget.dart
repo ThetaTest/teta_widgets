@@ -66,6 +66,8 @@ class BouncingWidgetBody extends NodeBody {
           type: ControlType.value,
           key: DBKeys.value,
           value: attributes[DBKeys.value],
+          description:
+              'Milliseconds value. Only integers are accepted. E.g. 1000 (= 1s), 2000 (= 2s) etc.',
         ),
         ControlObject(
           title: 'Scale Factor',

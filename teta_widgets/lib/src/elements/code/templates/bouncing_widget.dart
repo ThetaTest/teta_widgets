@@ -19,11 +19,14 @@ class BouncingWidgetCodeTemplate {
     final int loop,
   ) async {
     final abstract = body.attributes[DBKeys.value] as FTextTypeInput;
-    final duration = abstract.toCode(
-      loop,
-      resultType: ResultTypeEnum.int,
-      defaultValue: '200',
-    );
+    final duration = int.tryParse(
+          abstract.toCode(
+            loop,
+            resultType: ResultTypeEnum.int,
+            defaultValue: '200',
+          ),
+        ) ??
+        1000;
     final scale = (body.attributes[DBKeys.valueOfCondition] as FTextTypeInput)
         .toCode(loop, resultType: ResultTypeEnum.double, defaultValue: '1');
     final actionString = CS.action(
@@ -73,11 +76,14 @@ class BouncingWidgetCodeTemplate {
         () {
           final body = NodeBody.get(NType.bouncingWidget);
           final abstract = body.attributes[DBKeys.value] as FTextTypeInput;
-          final duration = abstract.toCode(
-            0,
-            resultType: ResultTypeEnum.int,
-            defaultValue: '200',
-          );
+          final duration = int.tryParse(
+                abstract.toCode(
+                  0,
+                  resultType: ResultTypeEnum.int,
+                  defaultValue: '200',
+                ),
+              ) ??
+              200;
           final scale = (body.attributes[DBKeys.valueOfCondition]
                   as FTextTypeInput)
               .toCode(0, resultType: ResultTypeEnum.double, defaultValue: '1');
