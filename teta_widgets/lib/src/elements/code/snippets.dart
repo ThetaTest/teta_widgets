@@ -1,6 +1,7 @@
 // Flutter imports:
 
 import 'package:flutter/material.dart';
+import 'package:teta_core/teta_core.dart';
 // Project imports:
 import 'package:teta_widgets/src/elements/controls/key_constants.dart';
 import 'package:teta_widgets/src/elements/features/physic.dart';
@@ -206,8 +207,7 @@ class CS {
                   pageId,
                   child,
                   loop,
-                  false,
-                  true,
+                  withComma: true,
                 ),
                 loop,
               ),
@@ -218,8 +218,7 @@ class CS {
           loop,
         ),
         loop,
-        true,
-        false,
+        isMargin: true,
       ),
       loop,
     );
@@ -286,41 +285,49 @@ class CS {
     final CNode node,
     final int pageId,
     final Future<String> child,
-    final int loop,
-    final bool isMargin,
-    final bool withComma,
-  ) async {
+    final int loop, {
+    final bool isMargin = false,
+    final bool withComma = false,
+  }) async {
+    Logger.printSuccess('defaultWidgetMarginOrPadding');
     final childString = await child;
     final originalType = NodeBody.get(node.globalType);
-    if (originalType.attributes[DBKeys.margins] == null &&
-        node.body.attributes[DBKeys.margins] != null) {
-      final padding = CS.margin(context, node.body, isMargin: false);
-      if (padding == 'padding: EdgeInsets.zero,' || padding == '') {
-        return childString;
-      }
+    Logger.printSuccess('Is margin: $isMargin');
+    if (isMargin) {
+      Logger.printSuccess('Is margin');
+      if (originalType.attributes[DBKeys.margins] == null &&
+          node.body.attributes[DBKeys.margins] != null) {
+        final margin = CS.margin(context, node.body, isMargin: true);
+        Logger.printSuccess('Is margin: $margin');
+        if (margin == 'margin: EdgeInsets.zero,' || margin == '') {
+          return childString;
+        }
 
-      return '''
+        return '''
+    Padding(
+      ${margin != '' ? margin.replaceFirst('margin', 'padding') : "padding: EdgeInsets.zero,"}
+      child: $childString
+    )${withComma ? ',' : ''}
+  ''';
+      }
+      return childString;
+    } else {
+      if (originalType.attributes[DBKeys.padding] == null &&
+          node.body.attributes[DBKeys.padding] != null) {
+        final padding = CS.margin(context, node.body, isMargin: false);
+        if (padding == 'padding: EdgeInsets.zero,' || padding == '') {
+          return childString;
+        }
+
+        return '''
     Padding(
       ${padding != '' ? padding : "padding: EdgeInsets.zero,"}
       child: $childString
     )${withComma ? ',' : ''}
   ''';
-    }
-    if (originalType.attributes[DBKeys.padding] == null &&
-        node.body.attributes[DBKeys.padding] != null) {
-      final padding = CS.margin(context, node.body, isMargin: false);
-      if (padding == 'padding: EdgeInsets.zero,' || padding == '') {
-        return childString;
       }
-
-      return '''
-    Padding(
-      ${padding != '' ? padding : "padding: EdgeInsets.zero,"}
-      child: $childString
-    )${withComma ? ',' : ''}
-  ''';
+      return childString;
     }
-    return childString;
   }
 
   static Future<String> defaultWidgetRotate(
