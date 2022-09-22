@@ -18,7 +18,7 @@ class PaddingCodeTemplate {
       final code = await CS.child(
         context,
         child,
-        comma: true,
+        comma: false,
         withChild: false,
       );
       final res = FormatterTest.format(code);
