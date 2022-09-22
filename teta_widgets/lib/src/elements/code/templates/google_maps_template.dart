@@ -24,7 +24,7 @@ class GoogleMapsTemplate {
     required final bool trackMyLocation,
     required final String initialZoomLevel,
     required final String googleMapsBlocName,
-    required String pathColor,
+    required final String pathColor,
   }) {
     return '';
   }
@@ -47,11 +47,14 @@ class GoogleMapsTemplate {
     required final bool trackMyLocation,
     required final String initialZoomLevel,
     required final String googleMapsBlocName,
-    required String pathColor,
+    required final String pathColor,
   }) async {
     final code = '''
 BlocConsumer<${googleMapsBlocName}Cubit, ${googleMapsBlocName}State>(
                           bloc: $googleMapsBlocName,
+                          buildWhen: (final p, final c) {
+                               return !c.isSetNewCameraPositionState;
+                          },
                           builder:
                               (BuildContext context, ${googleMapsBlocName}State state) {
                             if (state.isInitialState) {
@@ -82,7 +85,7 @@ BlocConsumer<${googleMapsBlocName}Cubit, ${googleMapsBlocName}State>(
                             }
                           },
                           listener:
-                              (BuildContext context, ${googleMapsBlocName}State state) {
+                              (BuildContext context, ${googleMapsBlocName}State state) async {
                             if (state.isInitialState) {
                               final markersDataset =
                                   ((datasets['$markersDatasetName'] as List<dynamic>?) ??
@@ -94,6 +97,8 @@ BlocConsumer<${googleMapsBlocName}Cubit, ${googleMapsBlocName}State>(
                                 markersDataset,
                                 mapConfig,
                               );
+                            } else if (state.isSetNewCameraPositionState) {
+                              await (await $mapControllerName.future).animateCamera(CameraUpdate.newCameraPosition(state.initialCameraPosition,),);
                             }
                           },
                         )

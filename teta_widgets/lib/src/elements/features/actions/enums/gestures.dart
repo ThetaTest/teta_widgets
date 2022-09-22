@@ -15,6 +15,7 @@ enum ActionGesture {
   onDayPressed,
   onPaginationCompleted,
   initState,
+  onStreamNewValue,
   scrollToTop,
   scrollToBottom,
 }

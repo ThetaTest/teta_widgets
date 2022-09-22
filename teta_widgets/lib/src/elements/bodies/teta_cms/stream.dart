@@ -12,6 +12,7 @@ import 'package:teta_widgets/src/elements/code/templates/cms_stream.dart';
 import 'package:teta_widgets/src/elements/controls/control_model.dart';
 import 'package:teta_widgets/src/elements/controls/key_constants.dart';
 import 'package:teta_widgets/src/elements/controls/type.dart';
+import 'package:teta_widgets/src/elements/features/actions/enums/gestures.dart';
 import 'package:teta_widgets/src/elements/features/text_type_input.dart';
 import 'package:teta_widgets/src/elements/intrinsic_states/class.dart';
 import 'package:teta_widgets/src/elements/nodes/categories.dart';
@@ -53,7 +54,9 @@ final cmsStreamIntrinsicStates = IntrinsicStates(
     'Add new if successful',
     'Add new if empty or failed',
   ],
-  gestures: [],
+  gestures: [
+    ActionGesture.onStreamNewValue,
+  ],
   permissions: [],
   packages: [],
 );
@@ -175,5 +178,6 @@ class CmsStreamBody extends NodeBody {
         node as NDynamic,
         children ?? <CNode>[],
         loop,
+        pageId,
       );
 }

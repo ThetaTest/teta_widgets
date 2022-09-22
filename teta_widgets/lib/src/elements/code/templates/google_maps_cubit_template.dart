@@ -37,6 +37,7 @@ class GoogleMapsCubitTemplate {
                 isError: false,
                 mapStyle: '',
                 isInitialState: true,
+                isSetNewCameraPositionState: false,
               ),
         );
 
@@ -102,6 +103,7 @@ class GoogleMapsCubitTemplate {
           isError: true,
           mapStyle: '',
           isInitialState: false,
+          isSetNewCameraPositionState: false,
         ),
       );
     }
@@ -188,7 +190,7 @@ class GoogleMapsCubitTemplate {
             if (result.points.isNotEmpty) {
               polyLines.add(
                 Polyline(
-                  color: Color($pathColor),
+                  color: Color(0x$pathColor),
                   polylineId: PolylineId(markerId),
                   points: result.points
                       .map(
@@ -237,8 +239,33 @@ class GoogleMapsCubitTemplate {
         mapStyle: mapStyle,
         isError: false,
         isInitialState: false,
+        isSetNewCameraPositionState: false,
       ),
     );
+  }
+  
+  void onResetToInitialState() {
+    emit(state.copyWith(isInitialState: true));
+  }
+  
+  void onEmitNewCameraPosition(
+    final double lat,
+    final double lng,
+    final double zoom,
+  ) {
+    emit(
+      state.copyWith(
+        initialCameraPosition: CameraPosition(
+          target: LatLng(
+            lat,
+            lng,
+          ),
+          zoom: zoom,
+        ),
+        isSetNewCameraPositionState: true,
+      ),
+    );
+    emit(state.copyWith(isSetNewCameraPositionState: false));
   }
 }
 
@@ -250,6 +277,7 @@ class ${googleMapsBlocName}State {
   final String mapStyle;
   final bool isError;
   final bool isInitialState;
+  final bool isSetNewCameraPositionState;
 
   ${googleMapsBlocName}State({
     required this.paths,
@@ -259,6 +287,7 @@ class ${googleMapsBlocName}State {
     required this.mapStyle,
     required this.isError,
     required this.isInitialState,
+    required this.isSetNewCameraPositionState,
   });
 
   ${googleMapsBlocName}State copyWith({
@@ -269,6 +298,7 @@ class ${googleMapsBlocName}State {
     String? mapStyle,
     bool? isError,
     bool? isInitialState,
+    final bool? isSetNewCameraPositionState,
   }) =>
       ${googleMapsBlocName}State(
         paths: paths ?? this.paths,
@@ -279,6 +309,7 @@ class ${googleMapsBlocName}State {
         mapStyle: mapStyle ?? this.mapStyle,
         isError: isError ?? this.isError,
         isInitialState: isInitialState ?? this.isInitialState,
+        isSetNewCameraPositionState: isSetNewCameraPositionState ?? this.isSetNewCameraPositionState,
       );
 }
     ''';

@@ -9,7 +9,6 @@ import 'package:http/http.dart' as http;
 import 'package:location/location.dart';
 import 'package:teta_cms/teta_cms.dart';
 import 'package:teta_core/teta_core.dart';
-import 'package:teta_widgets/src/elements/builder/add_dataset.dart';
 
 class GoogleMapsBloc extends Cubit<GoogleMapsState> {
   GoogleMapsBloc({final GoogleMapsState? initialState})
@@ -29,6 +28,7 @@ class GoogleMapsBloc extends Cubit<GoogleMapsState> {
                 isError: false,
                 mapStyle: '',
                 isInitialState: true,
+                isSetNewCameraPositionState: false,
               ),
         );
 
@@ -101,6 +101,7 @@ class GoogleMapsBloc extends Cubit<GoogleMapsState> {
           isError: true,
           mapStyle: state.mapStyle,
           isInitialState: false,
+          isSetNewCameraPositionState: false,
         ),
       );
     }
@@ -253,8 +254,34 @@ class GoogleMapsBloc extends Cubit<GoogleMapsState> {
         mapStyle: mapStyle,
         isError: false,
         isInitialState: false,
+        isSetNewCameraPositionState: false,
       ),
     );
+    onEmitNewCameraPosition(initialPositionLat.toDouble(), initialPositionLng.toDouble(), initialZoom);
+  }
+
+  void onResetToInitialState() {
+    emit(state.copyWith(isInitialState: true));
+  }
+
+  void onEmitNewCameraPosition(
+    final double lat,
+    final double lng,
+    final double zoom,
+  ) {
+    emit(
+      state.copyWith(
+        initialCameraPosition: CameraPosition(
+          target: LatLng(
+            lat,
+            lng,
+          ),
+          zoom: zoom,
+        ),
+        isSetNewCameraPositionState: true,
+      ),
+    );
+    emit(state.copyWith(isSetNewCameraPositionState: false));
   }
 }
 
@@ -308,6 +335,7 @@ class GoogleMapsState extends Equatable {
     required this.mapStyle,
     required this.isError,
     required this.isInitialState,
+    required this.isSetNewCameraPositionState,
   });
 
   final Set<Polyline> paths;
@@ -317,6 +345,7 @@ class GoogleMapsState extends Equatable {
   final String mapStyle;
   final bool isError;
   final bool isInitialState;
+  final bool isSetNewCameraPositionState;
 
   GoogleMapsState copyWith({
     final Set<Polyline>? paths,
@@ -326,6 +355,7 @@ class GoogleMapsState extends Equatable {
     final String? mapStyle,
     final bool? isError,
     final bool? isInitialState,
+    final bool? isSetNewCameraPositionState,
   }) =>
       GoogleMapsState(
         paths: paths ?? this.paths,
@@ -336,6 +366,8 @@ class GoogleMapsState extends Equatable {
         mapStyle: mapStyle ?? this.mapStyle,
         isError: isError ?? this.isError,
         isInitialState: isInitialState ?? this.isInitialState,
+        isSetNewCameraPositionState:
+            isSetNewCameraPositionState ?? this.isSetNewCameraPositionState,
       );
 
   @override
@@ -345,7 +377,8 @@ class GoogleMapsState extends Equatable {
         'initialCameraPosition: $initialCameraPosition\n'
         'initialZoom: $initialZoom\n'
         'isError: $isError\n'
-        'isInitialState: $isInitialState\n';
+        'isInitialState: $isInitialState\n'
+        'isSetNewCameraPositionState: $isSetNewCameraPositionState\n';
   }
 
   @override
@@ -357,5 +390,6 @@ class GoogleMapsState extends Equatable {
         mapStyle,
         isError,
         isInitialState,
+        isSetNewCameraPositionState,
       ];
 }

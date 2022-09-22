@@ -11,6 +11,7 @@ import 'package:teta_core/src/design_system/buttons/element_button.dart';
 import 'package:teta_core/teta_core.dart';
 // Project imports:
 import 'package:teta_widgets/src/elements/controls/atoms/action_element.dart';
+import 'package:teta_widgets/src/elements/features/actions/enums/action_google_maps.dart';
 import 'package:teta_widgets/src/elements/features/actions/enums/audio_player_actions.dart';
 import 'package:teta_widgets/src/elements/features/actions/enums/braintree.dart';
 import 'package:teta_widgets/src/elements/features/actions/enums/camera.dart';
@@ -380,6 +381,18 @@ class __NewActionAlertState extends State<_NewActionAlert> {
             ? FActionElement.getAudioPlayer()
             : [],
         type: ActionAudioPlayerActions.values,
+      ),
+      _SelectionClass(
+        title: 'Google Maps',
+        actionType: ActionType.googleMaps,
+        options: ((page.flatList ?? <CNode>[]).indexWhere(
+              (final element) =>
+          element.intrinsicState.type == NType.googleMaps,
+        ) !=
+            -1)
+            ? FActionElement.getGoogleMaps(null)
+            : [],
+        type: ActionGoogleMaps.values,
       ),
     ]);
     super.initState();
