@@ -69,11 +69,13 @@ class LottieBody extends NodeBody {
           type: ControlType.image,
           key: DBKeys.image,
           value: attributes[DBKeys.image],
+          valueType: VariableType.string,
         ),
         ControlObject(
           type: ControlType.boxFit,
           key: DBKeys.boxFit,
           value: attributes[DBKeys.boxFit],
+          valueType: VariableType.string,
         ),
         SizesControlObject(
           keys: const [DBKeys.width, DBKeys.height],

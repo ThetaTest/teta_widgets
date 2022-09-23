@@ -65,11 +65,13 @@ class FirebasePaginationBody extends NodeBody {
           type: ControlType.firebasePath,
           key: DBKeys.firestorePath,
           value: attributes[DBKeys.firestorePath],
+          valueType: VariableType.string,
         ),
         ControlObject(
           type: ControlType.value,
           key: DBKeys.value,
           value: attributes[DBKeys.value],
+          valueType: VariableType.string,
         )
       ];
 

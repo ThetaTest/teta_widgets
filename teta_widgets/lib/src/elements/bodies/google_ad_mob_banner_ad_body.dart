@@ -58,6 +58,7 @@ class GoogleAdMobBannerAdBody extends NodeBody {
           key: DBKeys.adMobAdIosUnitId,
           value: attributes[DBKeys.adMobAdIosUnitId] as FTextTypeInput,
           description: 'The iOS ADMob ad unit key.',
+          valueType: VariableType.string,
         ),
         ControlObject(
           title: 'Android AdMob Ad Unit Key',
@@ -65,6 +66,7 @@ class GoogleAdMobBannerAdBody extends NodeBody {
           key: DBKeys.adMobAdAndroidUnitId,
           value: attributes[DBKeys.adMobAdAndroidUnitId] as FTextTypeInput,
           description: 'The Android AdMob Ad unit key.',
+          valueType: VariableType.string,
         ),
       ];
 

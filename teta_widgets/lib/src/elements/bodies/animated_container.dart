@@ -78,11 +78,13 @@ class AnimatedContainerBody extends NodeBody {
           type: ControlType.margins,
           key: DBKeys.margins,
           value: attributes[DBKeys.margins],
+          valueType: VariableType.double,
         ),
         ControlObject(
           type: ControlType.padding,
           key: DBKeys.padding,
           value: attributes[DBKeys.padding],
+          valueType: VariableType.double,
         ),
         SizesControlObject(
           keys: const [DBKeys.width, DBKeys.height],
@@ -104,11 +106,13 @@ class AnimatedContainerBody extends NodeBody {
           type: ControlType.borderRadius,
           key: DBKeys.borderRadius,
           value: attributes[DBKeys.borderRadius],
+          valueType: VariableType.double,
         ),
         ControlObject(
           type: ControlType.shadows,
           key: DBKeys.shadows,
           value: attributes[DBKeys.shadows],
+          valueType: VariableType.string,
         ),
         ControlObject(
           title: 'Duration',
@@ -117,6 +121,7 @@ class AnimatedContainerBody extends NodeBody {
           value: attributes[DBKeys.duration],
           description:
               'Milliseconds value. Only integers are accepted. E.g. 1000 (= 1s), 2000 (= 2s) etc.',
+          valueType: VariableType.int,
         ),
       ];
 

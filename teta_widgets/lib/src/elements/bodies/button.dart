@@ -98,6 +98,7 @@ class ButtonBody extends NodeBody {
           type: ControlType.value,
           key: DBKeys.value,
           value: attributes[DBKeys.value],
+          valueType: VariableType.string,
         ),
         SizesControlObject(
           keys: const [DBKeys.width, DBKeys.height],
@@ -119,11 +120,13 @@ class ButtonBody extends NodeBody {
           type: ControlType.borderRadius,
           key: DBKeys.borderRadius,
           value: attributes[DBKeys.borderRadius],
+          valueType: VariableType.double,
         ),
         ControlObject(
           type: ControlType.text,
           key: DBKeys.textStyle,
           value: attributes[DBKeys.textStyle],
+          valueType: VariableType.string,
         ),
       ];
 

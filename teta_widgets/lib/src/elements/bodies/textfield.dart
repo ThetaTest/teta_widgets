@@ -86,16 +86,19 @@ class TextFieldBody extends NodeBody {
           type: ControlType.margins,
           key: DBKeys.margins,
           value: attributes[DBKeys.margins],
+          valueType: VariableType.double,
         ),
         ControlObject(
           type: ControlType.padding,
           key: DBKeys.padding,
           value: attributes[DBKeys.padding],
+          valueType: VariableType.double,
         ),
         ControlObject(
           type: ControlType.value,
           key: DBKeys.value,
           value: attributes[DBKeys.value],
+          valueType: VariableType.string,
         ),
         ControlObject(
           title: 'Hint text',
@@ -104,6 +107,7 @@ class TextFieldBody extends NodeBody {
           value: attributes[DBKeys.labelText],
           description:
               'Text that suggests what sort of input the field accepts.',
+          valueType: VariableType.string,
         ),
         FillControlObject(
           title: 'Hint text color',
@@ -118,6 +122,7 @@ class TextFieldBody extends NodeBody {
           type: ControlType.text,
           key: DBKeys.textStyle,
           value: attributes[DBKeys.textStyle],
+          valueType: VariableType.string,
         ),
         FillControlObject(
           title: 'Background',
@@ -132,6 +137,7 @@ class TextFieldBody extends NodeBody {
           type: ControlType.borderRadius,
           key: DBKeys.borderRadius,
           value: attributes[DBKeys.borderRadius],
+          valueType: VariableType.double,
         ),
         FlagControlObject(
           title: 'Enable Borders',
@@ -145,6 +151,7 @@ class TextFieldBody extends NodeBody {
           key: DBKeys.bordersSize,
           value: attributes[DBKeys.bordersSize],
           description: 'Borders thickness',
+          valueType: VariableType.int,
         ),
         FillControlObject(
           title: 'Enabled Border Color',
@@ -190,6 +197,7 @@ class TextFieldBody extends NodeBody {
           value: attributes[DBKeys.maxLines],
           description:
               'The maximum number of lines to show at one time, wrapping if necessary.',
+          valueType: VariableType.int,
         ),
         ControlObject(
           type: ControlType.value,
@@ -198,6 +206,7 @@ class TextFieldBody extends NodeBody {
           value: attributes[DBKeys.minLines],
           description:
               'The minimum number of lines to occupy when the content spans fewer lines.',
+          valueType: VariableType.int,
         ),
         ControlObject(
           type: ControlType.value,
@@ -206,6 +215,7 @@ class TextFieldBody extends NodeBody {
           value: attributes[DBKeys.maxLenght],
           description:
               'The maximum number of characters to allow in the text field.',
+          valueType: VariableType.int,
         ),
       ];
 

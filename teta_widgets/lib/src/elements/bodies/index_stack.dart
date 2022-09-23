@@ -60,6 +60,7 @@ class IndexedStackBody extends NodeBody {
           key: DBKeys.value,
           value: attributes[DBKeys.value],
           description: 'Use only integer numbers as an input',
+          valueType: VariableType.string,
         ),
       ];
 

@@ -50,11 +50,11 @@ class SupabaseDeleteControl extends StatelessWidget {
           ),
         ),
         TextControl(
+          valueType: VariableType.string,
           node: node,
           value: action.dbFrom ?? FTextTypeInput(),
           page: page,
           title: 'From Table',
-          withConvertTo: false,
           callBack: (final value, final old) {},
         ),
         const Padding(

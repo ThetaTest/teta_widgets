@@ -77,6 +77,7 @@ LIMIT 10;''',
           key: DBKeys.value,
           value: attributes[DBKeys.value],
           description: 'Fetch all documents by specific query',
+          valueType: VariableType.string,
         ),
       ];
 

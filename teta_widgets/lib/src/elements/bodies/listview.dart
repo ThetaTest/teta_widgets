@@ -92,6 +92,7 @@ class ListViewBody extends NodeBody {
           value: attributes[DBKeys.physic],
           description:
               'Use the physics in order to have different scrolling behaviours',
+          valueType: VariableType.string,
         ),
       ];
 

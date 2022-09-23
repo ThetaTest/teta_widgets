@@ -67,6 +67,7 @@ class CameraBody extends NodeBody {
           type: ControlType.cameraController,
           key: DBKeys.value,
           value: attributes[DBKeys.value] as FTextTypeInput,
+          valueType: VariableType.cameraController,
         ),
       ];
 

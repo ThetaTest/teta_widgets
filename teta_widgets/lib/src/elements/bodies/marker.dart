@@ -61,12 +61,14 @@ class MarkerBody extends NodeBody {
           type: ControlType.value,
           key: DBKeys.latitude,
           value: attributes[DBKeys.latitude],
+          valueType: VariableType.double,
         ),
         ControlObject(
           title: 'Longitude',
           type: ControlType.value,
           key: DBKeys.longitude,
           value: attributes[DBKeys.longitude],
+          valueType: VariableType.double,
         ),
       ];
 

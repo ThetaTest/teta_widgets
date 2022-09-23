@@ -70,6 +70,7 @@ class RefreshIndicatorBody extends NodeBody {
           value: attributes[DBKeys.duration],
           description:
               'Milliseconds value. Only integers are accepted. E.g. 1000 (= 1s), 2000 (= 2s) etc.',
+          valueType: VariableType.int,
         ),
         SizeControlObject(
           key: DBKeys.height,

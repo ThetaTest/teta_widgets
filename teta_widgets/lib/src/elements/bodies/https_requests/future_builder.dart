@@ -62,6 +62,7 @@ class HTTPRequestFutureBuilderBody extends NodeBody {
           type: ControlType.value,
           key: DBKeys.supabaseFrom,
           value: attributes[DBKeys.supabaseFrom],
+          valueType: VariableType.string,
         ),
       ];
 

@@ -59,6 +59,7 @@ class HeroBody extends NodeBody {
           type: ControlType.value,
           key: DBKeys.value,
           value: attributes[DBKeys.value],
+          valueType: VariableType.string,
         ),
       ];
 
@@ -101,12 +102,11 @@ class HeroBody extends NodeBody {
     final int pageId,
     final int? loop,
   ) =>
-  CS.defaultWidgets(
+      CS.defaultWidgets(
         context,
         node,
         pageId,
         HeroCodeTemplate.toCode(context, this, child, loop),
         loop ?? 0,
       );
-      
 }

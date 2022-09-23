@@ -66,12 +66,14 @@ class AudioPlayerBody extends NodeBody {
           type: ControlType.audioController,
           key: DBKeys.value,
           value: attributes[DBKeys.value] as FTextTypeInput,
+          valueType: VariableType.audioController,
         ),
         ControlObject(
           title: 'Dataset song url field',
           type: ControlType.datasetType,
           key: DBKeys.datasetInput,
           value: attributes[DBKeys.datasetInput] as FDataset,
+          valueType: VariableType.string,
           flag: true,
         ),
       ];

@@ -97,6 +97,23 @@ class _WTextFieldState extends State<WTextField> {
         if (element.name == widget.textStyle.textStyleModel) model = element;
       });
     }
+    final tempOpacity = widget.fill.levels?.first.opacity ?? 1;
+    final opacity = tempOpacity >= 0 && tempOpacity <= 1 ? tempOpacity : 1.0;
+
+    final tempBorderOpacity =
+        widget.enabledBorderColor.levels?.first.opacity ?? 1;
+    final borderOpacity = tempBorderOpacity >= 0 && tempBorderOpacity <= 1
+        ? tempBorderOpacity
+        : 1.0;
+
+    final tempFocusOpacity =
+        widget.focusedBorderColor.levels?.first.opacity ?? 1;
+    final focusOpacity =
+        tempFocusOpacity >= 0 && tempFocusOpacity <= 1 ? tempFocusOpacity : 1.0;
+
+    final tempHintOpacity = widget.hintTextColor.levels?.first.opacity ?? 1;
+    final hintOpacity =
+        tempHintOpacity >= 0 && tempHintOpacity <= 1 ? tempHintOpacity : 1.0;
     return NodeSelectionBuilder(
       node: widget.node,
       forPlay: widget.forPlay,
@@ -111,10 +128,10 @@ class _WTextFieldState extends State<WTextField> {
             decoration: InputDecoration(
               filled: true,
               fillColor: HexColor(widget.fill.get(context).getHexColor(context))
-                  .withOpacity(widget.fill.levels!.first.opacity ?? 1),
+                  .withOpacity(opacity),
               counterStyle: TextStyle(
                 color: HexColor(widget.fill.get(context).getHexColor(context))
-                    .withOpacity(widget.fill.levels!.first.opacity ?? 1),
+                    .withOpacity(opacity),
               ),
               border: OutlineInputBorder(
                 borderRadius: borderRadius,
@@ -127,7 +144,7 @@ class _WTextFieldState extends State<WTextField> {
                               .get(context)
                               .getHexColor(context),
                         ).withOpacity(
-                          widget.enabledBorderColor.levels!.first.opacity ?? 1,
+                          borderOpacity,
                         )
                       : Colors.transparent,
                   width: double.tryParse(
@@ -152,7 +169,7 @@ class _WTextFieldState extends State<WTextField> {
                               .get(context)
                               .getHexColor(context),
                         ).withOpacity(
-                          widget.focusedBorderColor.levels!.first.opacity ?? 1,
+                          focusOpacity,
                         )
                       : Colors.transparent,
                   width: double.tryParse(
@@ -181,7 +198,7 @@ class _WTextFieldState extends State<WTextField> {
                 color: HexColor(
                   widget.hintTextColor.get(context).getHexColor(context),
                 ).withOpacity(
-                  widget.hintTextColor.levels!.first.opacity ?? 1,
+                  hintOpacity,
                 ),
               ),
               contentPadding: widget.paddings.get(context),

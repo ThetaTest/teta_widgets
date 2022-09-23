@@ -88,6 +88,7 @@ class RadioBody extends NodeBody {
           value: attributes[DBKeys.actionValue],
           title: 'Value',
           description: 'The value represented by this radio button.',
+          valueType: VariableType.string,
         ),
         ControlObject(
           type: ControlType.value,
@@ -96,6 +97,7 @@ class RadioBody extends NodeBody {
           title: 'Group Value',
           description:
               'The currently selected value for a group of radio buttons.',
+          valueType: VariableType.string,
         ),
       ];
 

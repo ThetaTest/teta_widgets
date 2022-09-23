@@ -66,11 +66,13 @@ class ConditionBody extends NodeBody {
           key: DBKeys.value,
           value: attributes[DBKeys.value],
           title: 'Condition',
+          valueType: VariableType.dynamic,
         ),
         ControlObject(
           type: ControlType.value,
           key: DBKeys.valueOfCondition,
           value: attributes[DBKeys.valueOfCondition],
+          valueType: VariableType.dynamic,
         ),
       ];
 

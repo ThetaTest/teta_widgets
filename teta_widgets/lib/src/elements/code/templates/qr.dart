@@ -30,11 +30,13 @@ class QrCodeTemplate {
       context: context,
       isWidth: true,
     );
+    final tempOpacity = fill.levels?.first.opacity ?? 1;
+    final opacity = tempOpacity >= 0 && tempOpacity <= 1 ? tempOpacity : 1.0;
     final code = '''
     QrImage(
       data: $content,
       size: $size,
-      foregroundColor: Color(0xff$hex).withOpacity(${fill.levels?.first.opacity ?? 1}),
+      foregroundColor: Color(0xff$hex).withOpacity($opacity),
       ${withImage ? 'embeddedImage: NetworkImage($image),' : ''}
       gapless: false,
     )

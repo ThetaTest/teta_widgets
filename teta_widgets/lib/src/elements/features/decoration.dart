@@ -20,9 +20,10 @@ class TetaBoxDecoration {
     final FFill? borderFill,
   }) {
     if (fill.type == FFillType.solid) {
+      final tempOpacity = fill.levels?.first.opacity ?? 1;
+      final opacity = tempOpacity >= 0 && tempOpacity <= 1 ? tempOpacity : 1.0;
       return BoxDecoration(
-        color: HexColor(fill.levels!.first.color)
-            .withOpacity(fill.levels!.first.opacity ?? 1),
+        color: HexColor(fill.levels!.first.color).withOpacity(opacity),
         borderRadius: borderRadius?.get,
         boxShadow: const [
           //shadows.get(context),
@@ -32,11 +33,14 @@ class TetaBoxDecoration {
     } else if (fill.type == FFillType.linearGradient) {
       return BoxDecoration(
         gradient: LinearGradient(
-          colors: fill.levels!
-              .map(
-                (final e) => HexColor(e.color).withOpacity(e.opacity ?? 1),
-              )
-              .toList(),
+          colors: fill.levels!.map(
+            (final e) {
+              final tempOpacity = e.opacity ?? 1;
+              final opacity =
+                  tempOpacity >= 0 && tempOpacity <= 1 ? tempOpacity : 1.0;
+              return HexColor(e.color).withOpacity(opacity);
+            },
+          ).toList(),
           begin: fill.begin!,
           end: fill.end!,
           stops: fill.levels!.map((final e) => e.stop).toList(),
@@ -59,9 +63,14 @@ class TetaBoxDecoration {
     } else if (fill.type == FFillType.radialGradient) {
       return BoxDecoration(
         gradient: RadialGradient(
-          colors: fill.levels!
-              .map((final e) => HexColor(e.color).withOpacity(e.opacity ?? 1))
-              .toList(),
+          colors: fill.levels!.map(
+            (final e) {
+              final tempOpacity = e.opacity ?? 1;
+              final opacity =
+                  tempOpacity >= 0 && tempOpacity <= 1 ? tempOpacity : 1.0;
+              return HexColor(e.color).withOpacity(opacity);
+            },
+          ).toList(),
           center: fill.center!,
           radius: fill.radius!,
           stops: fill.levels!.map((final e) => e.stop).toList(),

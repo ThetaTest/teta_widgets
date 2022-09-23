@@ -69,6 +69,7 @@ class ImageBody extends NodeBody {
           type: ControlType.image,
           key: DBKeys.image,
           value: attributes[DBKeys.image],
+          valueType: VariableType.string,
         ),
         BoxFitControlObject(
           key: DBKeys.boxFit,
@@ -85,6 +86,7 @@ class ImageBody extends NodeBody {
           type: ControlType.borderRadius,
           key: DBKeys.borderRadius,
           value: attributes[DBKeys.borderRadius] as FBorderRadius,
+          valueType: VariableType.double,
         ),
       ];
 

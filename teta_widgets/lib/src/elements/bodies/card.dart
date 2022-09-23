@@ -64,6 +64,7 @@ class CardBody extends NodeBody {
           type: ControlType.value,
           key: DBKeys.value,
           value: attributes[DBKeys.value],
+          valueType: VariableType.double,
         ),
         FillControlObject(
           title: '',
@@ -78,6 +79,7 @@ class CardBody extends NodeBody {
           type: ControlType.borderRadius,
           key: DBKeys.borderRadius,
           value: attributes[DBKeys.borderRadius],
+          valueType: VariableType.double,
         ),
       ];
 

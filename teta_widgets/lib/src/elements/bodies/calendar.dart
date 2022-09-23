@@ -88,27 +88,32 @@ class CalendarBody extends NodeBody {
           key: DBKeys.datasetInput,
           value: attributes[DBKeys.datasetInput],
           flag: true,
+          valueType: VariableType.string,
         ),
         ControlObject(
           title: 'Title Properties',
           type: ControlType.text,
           key: DBKeys.textStyle2,
           value: attributes[DBKeys.textStyle2],
+          valueType: VariableType.string,
         ),
         ControlObject(
           type: ControlType.text,
           key: DBKeys.textStyle,
           value: attributes[DBKeys.textStyle],
+          valueType: VariableType.string,
         ),
         ControlObject(
           type: ControlType.margins,
           key: DBKeys.margins,
           value: attributes[DBKeys.margins],
+          valueType: VariableType.double,
         ),
         ControlObject(
           type: ControlType.padding,
           key: DBKeys.padding,
           value: attributes[DBKeys.padding],
+          valueType: VariableType.double,
         ),
         FillControlObject(
           title: 'Background',
@@ -132,11 +137,13 @@ class CalendarBody extends NodeBody {
           type: ControlType.borderRadius,
           key: DBKeys.borderRadius,
           value: attributes[DBKeys.borderRadius],
+          valueType: VariableType.double,
         ),
         ControlObject(
           type: ControlType.shadows,
           key: DBKeys.shadows,
           value: attributes[DBKeys.shadows],
+          valueType: VariableType.string,
         ),
       ];
 

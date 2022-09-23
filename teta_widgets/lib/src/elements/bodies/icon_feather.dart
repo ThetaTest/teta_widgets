@@ -63,6 +63,7 @@ class FeatherIconBody extends NodeBody {
           type: ControlType.featherIcon,
           key: DBKeys.featherIcon,
           value: attributes[DBKeys.featherIcon],
+          valueType: VariableType.string,
         ),
         SizeControlObject(
           type: ControlType.size,

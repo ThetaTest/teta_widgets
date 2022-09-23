@@ -375,6 +375,7 @@ class ActionElementControlState extends State<ActionElementControl> {
               ),
               if (widget.element.withCondition == true)
                 TextControl(
+                  valueType: VariableType.string,
                   node: widget.node,
                   value: widget.element.condition ?? FTextTypeInput(),
                   page: widget.page,
@@ -390,6 +391,7 @@ class ActionElementControlState extends State<ActionElementControl> {
                   description:
                       '''If "Condition" and "Value" have the same values, the condition is true. Else, it's false.''',
                   control: TextControl(
+                    valueType: VariableType.string,
                     node: widget.node,
                     value: widget.element.valueOfCondition ?? FTextTypeInput(),
                     page: widget.page,
@@ -893,6 +895,7 @@ class ActionElementControlState extends State<ActionElementControl> {
                       child: descriptionControlWidget(
                         description: 'e.g. 4.20',
                         control: TextControl(
+                          valueType: VariableType.double,
                           node: widget.node,
                           value: widget.element.valueTextTypeInput ??
                               FTextTypeInput(),
@@ -988,6 +991,7 @@ class ActionElementControlState extends State<ActionElementControl> {
                         child: descriptionControlWidget(
                           description: 'Billing email',
                           control: TextControl(
+                            valueType: VariableType.string,
                             node: widget.node,
                             value: widget.element.stripeBillingInfoEmail ??
                                 FTextTypeInput(),
@@ -1010,6 +1014,7 @@ class ActionElementControlState extends State<ActionElementControl> {
                         child: descriptionControlWidget(
                           description: 'Billing phone',
                           control: TextControl(
+                            valueType: VariableType.string,
                             node: widget.node,
                             value: widget.element.stripeBillingInfoPhone ??
                                 FTextTypeInput(),
@@ -1032,6 +1037,7 @@ class ActionElementControlState extends State<ActionElementControl> {
                         child: descriptionControlWidget(
                           description: 'Billing city',
                           control: TextControl(
+                            valueType: VariableType.string,
                             node: widget.node,
                             value: widget.element.stripeBillingInfoCity ??
                                 FTextTypeInput(),
@@ -1054,6 +1060,7 @@ class ActionElementControlState extends State<ActionElementControl> {
                         child: descriptionControlWidget(
                           description: 'Billing state',
                           control: TextControl(
+                            valueType: VariableType.string,
                             node: widget.node,
                             value: widget.element.stripeBillingInfoState ??
                                 FTextTypeInput(),
@@ -1076,6 +1083,7 @@ class ActionElementControlState extends State<ActionElementControl> {
                         child: descriptionControlWidget(
                           description: 'Billing line',
                           control: TextControl(
+                            valueType: VariableType.string,
                             node: widget.node,
                             value: widget.element.stripeBillingInfoLine ??
                                 FTextTypeInput(),
@@ -1098,6 +1106,7 @@ class ActionElementControlState extends State<ActionElementControl> {
                         child: descriptionControlWidget(
                           description: 'Billing Postal Code',
                           control: TextControl(
+                            valueType: VariableType.string,
                             node: widget.node,
                             value: widget.element.stripeBillingInfoPostalCode ??
                                 FTextTypeInput(),
@@ -1121,6 +1130,7 @@ class ActionElementControlState extends State<ActionElementControl> {
                         child: descriptionControlWidget(
                           description: 'Billing country',
                           control: TextControl(
+                            valueType: VariableType.string,
                             node: widget.node,
                             value: widget.element.stripeBillingInfoCountry ??
                                 FTextTypeInput(),
@@ -1233,6 +1243,7 @@ class ActionElementControlState extends State<ActionElementControl> {
                     child: descriptionControlWidget(
                       description: '''''',
                       control: TextControl(
+                        valueType: VariableType.string,
                         node: widget.node,
                         value: widget.element.valueTextTypeInput ??
                             FTextTypeInput(),

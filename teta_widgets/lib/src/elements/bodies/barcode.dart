@@ -65,11 +65,13 @@ class BarcodeBody extends NodeBody {
           type: ControlType.value,
           key: DBKeys.value,
           value: attributes[DBKeys.value],
+          valueType: VariableType.string,
         ),
         ControlObject(
           type: ControlType.barcode,
           key: DBKeys.image,
           value: attributes[DBKeys.image],
+          valueType: VariableType.string,
         ),
         SizesControlObject(
           keys: const [

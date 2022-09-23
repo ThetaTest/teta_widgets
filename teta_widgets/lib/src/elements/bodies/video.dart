@@ -65,6 +65,7 @@ class VideoBody extends NodeBody {
           type: ControlType.value,
           key: DBKeys.value,
           value: attributes[DBKeys.value],
+          valueType: VariableType.string,
         ),
         FlagControlObject(
           title: 'Show Controls',

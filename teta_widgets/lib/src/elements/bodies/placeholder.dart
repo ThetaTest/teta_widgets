@@ -74,6 +74,7 @@ class PlaceholderBody extends NodeBody {
           type: ControlType.value,
           key: DBKeys.value,
           value: attributes[DBKeys.value],
+          valueType: VariableType.int,
         ),
         SizesControlObject(
           keys: const [DBKeys.width, DBKeys.height],
@@ -128,12 +129,12 @@ class PlaceholderBody extends NodeBody {
     final List<CNode>? children,
     final int pageId,
     final int? loop,
-  ) => CS.defaultWidgets(
+  ) =>
+      CS.defaultWidgets(
         context,
         node,
         pageId,
-          PlaceholderCodeTemplate.toCode(context, this, child, loop),
+        PlaceholderCodeTemplate.toCode(context, this, child, loop),
         loop ?? 0,
       );
-      
 }

@@ -68,6 +68,7 @@ class AudioPlayerVolumeIndicatorBody extends NodeBody {
           type: ControlType.audioController,
           key: DBKeys.value,
           value: attributes[DBKeys.value] as FTextTypeInput,
+          valueType: VariableType.audioController,
         ),
       ];
 

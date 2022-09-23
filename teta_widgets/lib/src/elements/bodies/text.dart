@@ -69,11 +69,13 @@ class TextBody extends NodeBody {
           type: ControlType.value,
           key: DBKeys.value,
           value: attributes[DBKeys.value],
+          valueType: VariableType.string,
         ),
         ControlObject(
           type: ControlType.text,
           key: DBKeys.textStyle,
           value: attributes[DBKeys.textStyle],
+          valueType: VariableType.string,
         ),
         ControlObject(
           title: 'Max Lines',
@@ -82,6 +84,7 @@ class TextBody extends NodeBody {
           value: attributes[DBKeys.maxLines] as FTextTypeInput,
           description:
               'An optional maximum number of lines for the text to span, wrapping if necessary. If the text exceeds the given number of lines, it will be truncated according to overflow.',
+          valueType: VariableType.int,
         ),
       ];
 

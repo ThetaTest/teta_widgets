@@ -61,6 +61,7 @@ class PaddingBody extends NodeBody {
           type: ControlType.padding,
           key: DBKeys.padding,
           value: attributes[DBKeys.padding],
+          valueType: VariableType.double,
         ),
       ];
 

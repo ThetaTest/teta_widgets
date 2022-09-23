@@ -63,6 +63,7 @@ class LineIconBody extends NodeBody {
           type: ControlType.lineIcon,
           key: DBKeys.lineIcon,
           value: attributes[DBKeys.lineIcon],
+          valueType: VariableType.string,
         ),
         SizeControlObject(
           type: ControlType.size,

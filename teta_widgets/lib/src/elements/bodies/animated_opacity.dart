@@ -61,6 +61,7 @@ class AnimatedOpacityBody extends NodeBody {
           type: ControlType.value,
           key: DBKeys.value,
           value: attributes[DBKeys.value],
+          valueType: VariableType.double,
         ),
         ControlObject(
           title: 'Duration',
@@ -69,6 +70,7 @@ class AnimatedOpacityBody extends NodeBody {
           value: attributes[DBKeys.duration],
           description:
               'Milliseconds value. Only integers are accepted. E.g. 1000 (= 1s), 2000 (= 2s) etc.',
+          valueType: VariableType.int,
         ),
       ];
 

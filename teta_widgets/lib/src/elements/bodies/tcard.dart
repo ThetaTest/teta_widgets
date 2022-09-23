@@ -83,6 +83,7 @@ class TCardBody extends NodeBody {
           title: 'Slide Speed',
           description:
               'How quick should it be slided? less is slower. 10 is a bit slow. 20 is a quick enough.',
+          valueType: VariableType.int,
         ),
         ControlObject(
           type: ControlType.value,
@@ -91,6 +92,7 @@ class TCardBody extends NodeBody {
           title: 'Delay Slide For',
           description:
               'How long does it have to wait until the next slide is sliable? less is quicker. 100 is fast enough. 500 is a bit slow.',
+          valueType: VariableType.int,
         ),
       ];
 

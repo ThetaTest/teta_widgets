@@ -43,6 +43,8 @@ class WQR extends StatelessWidget {
 
   @override
   Widget build(final BuildContext context) {
+    final tempOpacity = fill.levels?.first.opacity ?? 1;
+    final opacity = tempOpacity >= 0 && tempOpacity <= 1 ? tempOpacity : 1.0;
     return NodeSelectionBuilder(
       node: node,
       forPlay: forPlay,
@@ -65,8 +67,8 @@ class WQR extends StatelessWidget {
           ),
           gapless: false,
           size: size.get(context: context, isWidth: true),
-          foregroundColor: HexColor(fill.getHexColor(context))
-              .withOpacity(fill.levels?.first.opacity ?? 1),
+          foregroundColor:
+              HexColor(fill.getHexColor(context)).withOpacity(opacity),
           embeddedImage: withImage
               ? NetworkImage(
                   image.get(

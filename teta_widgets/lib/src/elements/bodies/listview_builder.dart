@@ -82,6 +82,7 @@ class ListViewBuilderBody extends NodeBody {
           type: ControlType.datasetType,
           key: DBKeys.datasetInput,
           value: attributes[DBKeys.datasetInput],
+          valueType: VariableType.string,
         ),
         FlagControlObject(
           title: 'Reverse',
@@ -95,6 +96,7 @@ class ListViewBuilderBody extends NodeBody {
           value: attributes[DBKeys.physic],
           description:
               'Use the physics in order to have different scrolling behaviours',
+          valueType: VariableType.string,
         ),
       ];
 

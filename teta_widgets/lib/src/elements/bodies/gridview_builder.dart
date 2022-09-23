@@ -92,6 +92,7 @@ class GridViewBuilderBody extends NodeBody {
           value: attributes[DBKeys.mainAxisSpacing],
           description:
               'The number of logical pixels between each child along the main axis.',
+          valueType: VariableType.int,
         ),
         ControlObject(
           title: 'Cross Axis Count',
@@ -99,6 +100,7 @@ class GridViewBuilderBody extends NodeBody {
           key: DBKeys.crossAxisCount,
           value: attributes[DBKeys.crossAxisCount],
           description: 'The number of children in the cross axis.',
+          valueType: VariableType.int,
         ),
         ControlObject(
           title: 'Cross Axis Spacing',
@@ -107,6 +109,7 @@ class GridViewBuilderBody extends NodeBody {
           value: attributes[DBKeys.crossAxisSpacing],
           description:
               'The number of logical pixels between each child along the cross axis.',
+          valueType: VariableType.int,
         ),
         ControlObject(
           title: 'Child Aspect Ratio',
@@ -115,11 +118,13 @@ class GridViewBuilderBody extends NodeBody {
           value: attributes[DBKeys.childAspectRatio],
           description:
               'The ratio of the cross-axis to the main-axis extent of each child.',
+          valueType: VariableType.double,
         ),
         ControlObject(
           type: ControlType.datasetType,
           key: DBKeys.datasetInput,
           value: attributes[DBKeys.datasetInput],
+          valueType: VariableType.string,
         ),
       ];
 

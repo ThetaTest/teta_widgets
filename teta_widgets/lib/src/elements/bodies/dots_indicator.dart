@@ -76,6 +76,7 @@ class DotsIndicatorBody extends NodeBody {
           key: DBKeys.value,
           value: attributes[DBKeys.value],
           title: 'Number of dots',
+          valueType: VariableType.int,
         ),
         ControlObject(
           type: ControlType.value,
@@ -83,11 +84,13 @@ class DotsIndicatorBody extends NodeBody {
           value: attributes[DBKeys.valueOfCondition],
           title: 'Current position',
           description: 'The position index starts from 0',
+          valueType: VariableType.int,
         ),
         ControlObject(
           type: ControlType.margins,
           key: DBKeys.margins,
           value: attributes[DBKeys.margins],
+          valueType: VariableType.double,
         ),
         SizesControlObject(
           keys: const [DBKeys.width, DBKeys.height],
@@ -100,6 +103,7 @@ class DotsIndicatorBody extends NodeBody {
           type: ControlType.borderRadius,
           key: DBKeys.borderRadius,
           value: attributes[DBKeys.borderRadius],
+          valueType: VariableType.double,
         ),
         FillControlObject(
           title: 'Active Color',

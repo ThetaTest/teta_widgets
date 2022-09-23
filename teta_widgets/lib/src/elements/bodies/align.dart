@@ -66,6 +66,7 @@ class AlignBody extends NodeBody {
           type: ControlType.align,
           key: DBKeys.align,
           value: attributes[DBKeys.align],
+          valueType: VariableType.string,
         ),
       ];
 

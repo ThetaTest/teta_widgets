@@ -43,6 +43,8 @@ class WOpacity extends StatelessWidget {
       loop,
       context,
     );
+    final tempOpacity = double.tryParse(opacityString) ?? 1;
+    final opacity = tempOpacity >= 0 && tempOpacity <= 1 ? tempOpacity : 1.0;
     return NodeSelectionBuilder(
       node: node,
       forPlay: forPlay,
@@ -55,9 +57,7 @@ class WOpacity extends StatelessWidget {
         forPlay: forPlay,
         loop: loop,
         child: Opacity(
-          opacity: double.tryParse(opacityString) != null
-              ? double.parse(opacityString)
-              : 1,
+          opacity: opacity,
           child: ChildConditionBuilder(
             ValueKey('${node.nid} $loop'),
             name: node.intrinsicState.displayName,

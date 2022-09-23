@@ -63,6 +63,7 @@ class ComponentBody extends NodeBody {
           type: ControlType.component,
           key: DBKeys.componentName,
           value: attributes[DBKeys.componentName],
+          valueType: VariableType.string,
         ),
       ];
 

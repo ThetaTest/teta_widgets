@@ -67,11 +67,13 @@ class WebViewBody extends NodeBody {
           type: ControlType.webViewController,
           key: DBKeys.value,
           value: attributes[DBKeys.value] as FTextTypeInput,
+          valueType: VariableType.webViewController,
         ),
         ControlObject(
           type: ControlType.value,
           key: DBKeys.valueOfCondition,
           value: attributes[DBKeys.valueOfCondition] as FTextTypeInput,
+          valueType: VariableType.string,
         ),
       ];
 

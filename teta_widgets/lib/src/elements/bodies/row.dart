@@ -64,16 +64,19 @@ class RowBody extends NodeBody {
           type: ControlType.mainAxisAlignment,
           key: DBKeys.mainAxisAlignment,
           value: attributes[DBKeys.mainAxisAlignment],
+          valueType: VariableType.string,
         ),
         ControlObject(
           type: ControlType.crossAxisAlignment,
           key: DBKeys.crossAxisAlignment,
           value: attributes[DBKeys.crossAxisAlignment],
+          valueType: VariableType.string,
         ),
         ControlObject(
           type: ControlType.mainAxisSize,
           key: DBKeys.mainAxisSize,
           value: attributes[DBKeys.mainAxisSize],
+          valueType: VariableType.string,
         ),
       ];
 

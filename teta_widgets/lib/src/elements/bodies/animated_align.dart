@@ -72,6 +72,7 @@ class AnimatedAlignBody extends NodeBody {
           type: ControlType.align,
           key: DBKeys.align,
           value: attributes[DBKeys.align],
+          valueType: VariableType.string,
         ),
         ControlObject(
           title: 'Duration',
@@ -80,6 +81,7 @@ class AnimatedAlignBody extends NodeBody {
           value: attributes[DBKeys.duration],
           description:
               'Milliseconds value. Only integers are accepted. E.g. 1000 (= 1s), 2000 (= 2s) etc.',
+          valueType: VariableType.int,
         ),
       ];
 

@@ -850,6 +850,7 @@ class ControlBuilder {
         description: control.description,
         control: TextControl(
           key: ValueKey('${node.nid}'),
+          valueType: control.valueType,
           node: node,
           page: page,
           title: control.title ?? 'Value',

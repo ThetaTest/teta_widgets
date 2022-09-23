@@ -66,6 +66,7 @@ class AnimationConfigListBody extends NodeBody {
           key: DBKeys.value,
           value: attributes[DBKeys.value],
           title: 'Index',
+          valueType: VariableType.int,
         ),
         ControlObject(
           type: ControlType.value,
@@ -74,6 +75,7 @@ class AnimationConfigListBody extends NodeBody {
           title: 'Duration',
           description:
               'Milliseconds value. Only integers are accepted. E.g. 1000 (= 1s), 2000 (= 2s) etc.',
+          valueType: VariableType.int,
         ),
       ];
 

@@ -56,6 +56,7 @@ class CheckBoxBody extends NodeBody {
           type: ControlType.value,
           key: DBKeys.value,
           value: attributes[DBKeys.value],
+          valueType: VariableType.bool,
         ),
       ];
 

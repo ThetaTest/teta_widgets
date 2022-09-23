@@ -66,11 +66,13 @@ class MapBuilderBody extends NodeBody {
           type: ControlType.mapController,
           key: DBKeys.valueOfCondition,
           value: attributes[DBKeys.valueOfCondition] as FTextTypeInput,
+          valueType: VariableType.mapController,
         ),
         ControlObject(
           type: ControlType.datasetType,
           key: DBKeys.datasetInput,
           value: attributes[DBKeys.datasetInput],
+          valueType: VariableType.string,
         ),
         FlagControlObject(
           title: 'Dark Mode',

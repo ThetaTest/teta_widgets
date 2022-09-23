@@ -75,11 +75,13 @@ class AutoAppBarBody extends NodeBody {
           type: ControlType.value,
           key: DBKeys.value,
           value: attributes[DBKeys.value],
+          valueType: VariableType.string,
         ),
         ControlObject(
           type: ControlType.text,
           key: DBKeys.textStyle,
           value: attributes[DBKeys.textStyle],
+          valueType: VariableType.string,
         ),
       ];
 

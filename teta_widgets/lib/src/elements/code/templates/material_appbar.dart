@@ -19,9 +19,12 @@ class MaterialAppBarCodeTemplate {
     final hex = fill.getHexColor(context);
 
     final childrenString = await CS.children(context, children);
+
+    final tempOpacity = fill.levels?.first.opacity ?? 1;
+    final opacity = tempOpacity >= 0 && tempOpacity <= 1 ? tempOpacity : 1.0;
     final code = '''
     MaterialAppBar(
-      color: Color(0xFF$hex).withOpacity(${fill.levels?.first.opacity ?? '1'}),
+      color: Color(0xFF$hex).withOpacity($opacity),
       $childrenString
     )
   ''';

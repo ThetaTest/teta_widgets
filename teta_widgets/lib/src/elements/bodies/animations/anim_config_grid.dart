@@ -67,6 +67,7 @@ class AnimationConfigGridBody extends NodeBody {
           key: DBKeys.value,
           value: attributes[DBKeys.value],
           title: 'Index',
+          valueType: VariableType.int,
         ),
         ControlObject(
           type: ControlType.value,
@@ -75,12 +76,14 @@ class AnimationConfigGridBody extends NodeBody {
           title: 'Duration',
           description:
               'Milliseconds value. Only integers are accepted. E.g. 1000 (= 1s), 2000 (= 2s) etc.',
+          valueType: VariableType.int,
         ),
         ControlObject(
           type: ControlType.value,
           key: DBKeys.valueOfCondition,
           value: attributes[DBKeys.valueOfCondition],
           title: 'Number of columns',
+          valueType: VariableType.int,
         ),
       ];
 

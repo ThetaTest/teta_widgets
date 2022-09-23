@@ -47,11 +47,11 @@ class RevenueCatBuyActionWidget extends StatelessWidget {
           SizedBox(
             width: double.maxFinite,
             child: TextControl(
+              valueType: VariableType.string,
               node: node,
               value: element.revenueCatProductIdentifier ?? FTextTypeInput(),
               page: page,
               title: 'Prod Identifier',
-              withConvertTo: false,
               callBack: (final value, final old) {
                 final old = element;
                 element.revenueCatProductIdentifier = value;

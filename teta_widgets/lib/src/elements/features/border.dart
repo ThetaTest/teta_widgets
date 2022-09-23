@@ -52,28 +52,26 @@ class FBorder {
   /// Get [Border] from actual values
   Border get(final BuildContext context, {required final bool forPlay}) {
     final values = width!.getList(context);
+    final tempOpacity = fill?.levels?.first.opacity ?? 1;
+    final opacity = tempOpacity >= 0 && tempOpacity <= 1 ? tempOpacity : 1.0;
     return Border(
       left: BorderSide(
-        color: HexColor(fill!.getHexColor(context))
-            .withOpacity(fill?.levels?.first.opacity ?? 1),
+        color: HexColor(fill!.getHexColor(context)).withOpacity(opacity),
         style: style!.get,
         width: double.tryParse(values[0]) != null ? double.parse(values[0]) : 0,
       ),
       top: BorderSide(
-        color: HexColor(fill!.getHexColor(context))
-            .withOpacity(fill?.levels?.first.opacity ?? 1),
+        color: HexColor(fill!.getHexColor(context)).withOpacity(opacity),
         style: style!.get,
         width: double.tryParse(values[1]) != null ? double.parse(values[1]) : 0,
       ),
       right: BorderSide(
-        color: HexColor(fill!.getHexColor(context))
-            .withOpacity(fill?.levels?.first.opacity ?? 1),
+        color: HexColor(fill!.getHexColor(context)).withOpacity(opacity),
         style: style!.get,
         width: double.tryParse(values[2]) != null ? double.parse(values[2]) : 0,
       ),
       bottom: BorderSide(
-        color: HexColor(fill!.getHexColor(context))
-            .withOpacity(fill?.levels?.first.opacity ?? 1),
+        color: HexColor(fill!.getHexColor(context)).withOpacity(opacity),
         style: style!.get,
         width: double.tryParse(values[3]) != null ? double.parse(values[3]) : 0,
       ),
@@ -105,17 +103,19 @@ class FBorder {
   String toCode(final BuildContext context) {
     final values = width!.margins!;
     final color = fill!.getHexColor(context);
+    final tempOpacity = fill?.levels?.first.opacity ?? 1;
+    final opacity = tempOpacity >= 0 && tempOpacity <= 1 ? tempOpacity : 1.0;
     if (style?.get != BorderStyle.none) return '';
     return '''
     Border(
       left:
-          BorderSide(width: ${values[0] != '' ? values[0] : '0'}, ${style?.get != BorderStyle.solid ? 'style: ${style!.toCode()},' : ''} color: Color(0xFF$color).withOpacity(${fill?.levels?.first.opacity ?? '1'})),
+          BorderSide(width: ${values[0] != '' ? values[0] : '0'}, ${style?.get != BorderStyle.solid ? 'style: ${style!.toCode()},' : ''} color: Color(0xFF$color).withOpacity($opacity)),
       top:
-          BorderSide(width: ${values[1] != '' ? values[1] : '0'}, ${style?.get != BorderStyle.solid ? 'style: ${style!.toCode()},' : ''} color: Color(0xFF$color).withOpacity(${fill?.levels?.first.opacity ?? '1'})),
+          BorderSide(width: ${values[1] != '' ? values[1] : '0'}, ${style?.get != BorderStyle.solid ? 'style: ${style!.toCode()},' : ''} color: Color(0xFF$color).withOpacity($opacity)),
       right:
-          BorderSide(width: ${values[2] != '' ? values[2] : '0'}, ${style?.get != BorderStyle.solid ? 'style: ${style!.toCode()},' : ''} color: Color(0xFF$color).withOpacity(${fill?.levels?.first.opacity ?? '1'})),
+          BorderSide(width: ${values[2] != '' ? values[2] : '0'}, ${style?.get != BorderStyle.solid ? 'style: ${style!.toCode()},' : ''} color: Color(0xFF$color).withOpacity($opacity)),
       bottom:
-          BorderSide(width: ${values[3] != '' ? values[3] : '0'}, ${style?.get != BorderStyle.solid ? 'style: ${style!.toCode()},' : ''} color: Color(0xFF$color).withOpacity(${fill?.levels?.first.opacity ?? '1'})),
+          BorderSide(width: ${values[3] != '' ? values[3] : '0'}, ${style?.get != BorderStyle.solid ? 'style: ${style!.toCode()},' : ''} color: Color(0xFF$color).withOpacity($opacity)),
     )
   ''';
   }

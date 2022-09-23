@@ -62,6 +62,7 @@ class IconBody extends NodeBody {
           type: ControlType.icon,
           key: DBKeys.icon,
           value: attributes[DBKeys.icon],
+          valueType: VariableType.string,
         ),
         SizeControlObject(
           type: ControlType.size,

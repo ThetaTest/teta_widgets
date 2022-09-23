@@ -60,6 +60,8 @@ class RotatedBoxBody extends NodeBody {
           type: ControlType.value,
           key: DBKeys.value,
           value: attributes[DBKeys.value],
+          valueType: VariableType.int,
+          description: 'It accepts only integers. Eg. 1, 2, 3, 4, etc.',
         ),
       ];
 
@@ -101,12 +103,12 @@ class RotatedBoxBody extends NodeBody {
     final List<CNode>? children,
     final int pageId,
     final int? loop,
-  ) => CS.defaultWidgets(
-      context,
-      node,
-      pageId,
-      RotatedBoxCodeTemplate.toCode(context, this, child, loop),
-      loop ?? 0,
-    );
-      
+  ) =>
+      CS.defaultWidgets(
+        context,
+        node,
+        pageId,
+        RotatedBoxCodeTemplate.toCode(context, this, child, loop),
+        loop ?? 0,
+      );
 }

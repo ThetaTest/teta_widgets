@@ -20,6 +20,7 @@ import 'package:teta_widgets/src/elements/nodes/node.dart';
 
 class TextControl extends StatefulWidget {
   const TextControl({
+    required this.valueType,
     required this.node,
     required this.value,
     required this.page,
@@ -31,6 +32,7 @@ class TextControl extends StatefulWidget {
     final Key? key,
   }) : super(key: key);
 
+  final VariableType? valueType;
   final CNode node;
   final FTextTypeInput value;
   final PageObject page;
@@ -232,7 +234,15 @@ class PaddingsState extends State<TextControl> {
                             .contains(widget.value.paramName)
                         ? widget.value.paramName
                         : null,
-                    items: widget.page.params.map((final e) => e.name).toList(),
+                    items: widget.page.params
+                        .where(
+                          (final element) =>
+                              widget.valueType != VariableType.dynamic
+                                  ? element.type == widget.valueType
+                                  : true,
+                        )
+                        .map((final e) => e.name)
+                        .toList(),
                     onChange: (final newValue) {
                       final old = widget.value;
                       widget.value.paramName = newValue;
@@ -267,7 +277,15 @@ class PaddingsState extends State<TextControl> {
                             .contains(widget.value.stateName)
                         ? widget.value.stateName
                         : null,
-                    items: widget.page.states.map((final e) => e.name).toList(),
+                    items: widget.page.states
+                        .where(
+                          (final element) =>
+                              widget.valueType != VariableType.dynamic
+                                  ? element.type == widget.valueType
+                                  : true,
+                        )
+                        .map((final e) => e.name)
+                        .toList(),
                     onChange: (final newValue) {
                       final old = widget.value;
                       widget.value.stateName = newValue;
@@ -333,35 +351,37 @@ class PaddingsState extends State<TextControl> {
                   widget.callBack(widget.value, old);
                 },
               ),
-            if (widget.value.type == FTextTypeEnum.dataset &&
-                widget.value.datasetName != null)
-              Padding(
-                padding: EI.smT,
-                child: CDropdown(
-                  value: (dataset.getMap.isNotEmpty
-                              ? dataset.getMap.first
-                              : <String, dynamic>{})
-                          .keys
-                          .toSet()
-                          .contains(widget.value.datasetAttr)
-                      ? widget.value.datasetAttr
-                      : null,
-                  items: (dataset.getMap.isNotEmpty
-                          ? dataset.getMap.first
-                          : <String, dynamic>{})
-                      .keys
-                      .toSet()
-                      .toList(),
-                  onChange: (final newValue) {
-                    setState(() {
-                      databaseAttribute = newValue!;
-                    });
-                    final old = widget.value;
-                    widget.value.datasetAttr = newValue;
-                    widget.callBack(widget.value, old);
-                  },
+            if (widget.valueType == VariableType.string ||
+                widget.valueType == VariableType.dynamic)
+              if (widget.value.type == FTextTypeEnum.dataset &&
+                  widget.value.datasetName != null)
+                Padding(
+                  padding: EI.smT,
+                  child: CDropdown(
+                    value: (dataset.getMap.isNotEmpty
+                                ? dataset.getMap.first
+                                : <String, dynamic>{})
+                            .keys
+                            .toSet()
+                            .contains(widget.value.datasetAttr)
+                        ? widget.value.datasetAttr
+                        : null,
+                    items: (dataset.getMap.isNotEmpty
+                            ? dataset.getMap.first
+                            : <String, dynamic>{})
+                        .keys
+                        .toSet()
+                        .toList(),
+                    onChange: (final newValue) {
+                      setState(() {
+                        databaseAttribute = newValue!;
+                      });
+                      final old = widget.value;
+                      widget.value.datasetAttr = newValue;
+                      widget.callBack(widget.value, old);
+                    },
+                  ),
                 ),
-              ),
             if (widget.value.type == FTextTypeEnum.combined)
               TContainer(
                 decoration: BoxDecoration(
@@ -456,6 +476,7 @@ class PaddingsState extends State<TextControl> {
                     for (var element
                         in widget.value.combination ?? <FTextTypeInput>[])
                       TextControl(
+                        valueType: VariableType.dynamic,
                         node: widget.node,
                         value: element,
                         page: widget.page,

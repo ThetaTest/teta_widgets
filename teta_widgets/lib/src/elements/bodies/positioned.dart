@@ -66,6 +66,7 @@ class PositionedBody extends NodeBody {
           type: ControlType.margins,
           key: DBKeys.margins,
           value: attributes[DBKeys.margins],
+          valueType: VariableType.double,
         ),
         FlagControlObject(
           title: 'Left',

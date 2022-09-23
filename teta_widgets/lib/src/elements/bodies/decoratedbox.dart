@@ -72,11 +72,13 @@ class DecoratedBoxBody extends NodeBody {
           type: ControlType.borderRadius,
           key: DBKeys.borderRadius,
           value: attributes[DBKeys.borderRadius],
+          valueType: VariableType.double,
         ),
         ControlObject(
           type: ControlType.shadows,
           key: DBKeys.shadows,
           value: attributes[DBKeys.shadows],
+          valueType: VariableType.string,
         ),
       ];
 

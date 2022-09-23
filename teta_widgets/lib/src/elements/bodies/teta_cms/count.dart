@@ -75,6 +75,7 @@ class CmsCountBody extends NodeBody {
           key: DBKeys.cmsCollection,
           value: attributes[DBKeys.cmsCollection],
           description: 'Fetch all documents of a specific collection by name',
+          valueType: VariableType.string,
         ),
         ControlObject(
           title: 'Limit',
@@ -82,6 +83,7 @@ class CmsCountBody extends NodeBody {
           key: DBKeys.cmsLimit,
           value: attributes[DBKeys.cmsLimit],
           description: 'Limit the number of docs per page',
+          valueType: VariableType.int,
         ),
         ControlObject(
           title: 'Page',
@@ -89,6 +91,7 @@ class CmsCountBody extends NodeBody {
           key: DBKeys.cmsPage,
           value: attributes[DBKeys.cmsPage],
           description: 'Index of page',
+          valueType: VariableType.int,
         ),
         ControlObject(
           title: 'Like: key',
@@ -96,6 +99,7 @@ class CmsCountBody extends NodeBody {
           key: DBKeys.cmsLikeKey,
           value: attributes[DBKeys.cmsLikeKey],
           description: 'Like op: the key name used to filter',
+          valueType: VariableType.string,
         ),
         ControlObject(
           title: 'Like: value',
@@ -103,6 +107,7 @@ class CmsCountBody extends NodeBody {
           key: DBKeys.cmsLikeValue,
           value: attributes[DBKeys.cmsLikeValue],
           description: 'Like op: the value to search in db',
+          valueType: VariableType.string,
         ),
       ];
 

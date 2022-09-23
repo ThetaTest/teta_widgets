@@ -67,18 +67,21 @@ class SupabaseStreamBuilderBody extends NodeBody {
           type: ControlType.value,
           key: DBKeys.supabaseFrom,
           value: attributes[DBKeys.supabaseFrom],
+          valueType: VariableType.string,
         ),
         ControlObject(
           title: 'From Range',
           type: ControlType.value,
           key: DBKeys.supabaseFromRange,
           value: attributes[DBKeys.supabaseFromRange],
+          valueType: VariableType.int,
         ),
         ControlObject(
           title: 'Order',
           type: ControlType.value,
           key: DBKeys.supabaseOrder,
           value: attributes[DBKeys.supabaseOrder],
+          valueType: VariableType.string,
         ),
       ];
 

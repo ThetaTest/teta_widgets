@@ -62,6 +62,7 @@ class FirebaseSBBody extends NodeBody {
           type: ControlType.firebasePath,
           key: DBKeys.firestorePath,
           value: attributes[DBKeys.firestorePath],
+          valueType: VariableType.string,
         )
       ];
 

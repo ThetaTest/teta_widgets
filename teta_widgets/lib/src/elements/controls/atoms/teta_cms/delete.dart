@@ -73,11 +73,11 @@ class TetaCmsDeleteControl extends StatelessWidget {
             borderRadius: BorderRadius.circular(8),
           ),
           child: TextControl(
+            valueType: VariableType.string,
             node: node,
             value: action.dbFrom ?? FTextTypeInput(),
             page: page,
             title: 'Document Id',
-            withConvertTo: false,
             callBack: (final value, final old) {
               action.dbFrom = value;
               callback();

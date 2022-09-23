@@ -46,6 +46,8 @@ class WBarcode extends StatelessWidget {
 
   @override
   Widget build(final BuildContext context) {
+    final tempOpacity = fill.levels?.first.opacity ?? 1;
+    final opacity = tempOpacity >= 0 && tempOpacity <= 1 ? tempOpacity : 1.0;
     return NodeSelectionBuilder(
       node: node,
       forPlay: forPlay,
@@ -82,8 +84,7 @@ class WBarcode extends StatelessWidget {
           ),
           width: width.get(context: context, isWidth: true),
           height: height.get(context: context, isWidth: false),
-          color: HexColor(fill.getHexColor(context))
-              .withOpacity(fill.levels?.first.opacity ?? 1),
+          color: HexColor(fill.getHexColor(context)).withOpacity(opacity),
         ),
       ),
     );

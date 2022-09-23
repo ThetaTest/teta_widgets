@@ -77,11 +77,13 @@ class ContainerBody extends NodeBody {
           type: ControlType.margins,
           key: DBKeys.margins,
           value: attributes[DBKeys.margins],
+          valueType: VariableType.double,
         ),
         ControlObject(
           type: ControlType.padding,
           key: DBKeys.padding,
           value: attributes[DBKeys.padding],
+          valueType: VariableType.double,
         ),
         SizesControlObject(
           keys: const [DBKeys.width, DBKeys.height],
@@ -103,11 +105,13 @@ class ContainerBody extends NodeBody {
           type: ControlType.borderRadius,
           key: DBKeys.borderRadius,
           value: attributes[DBKeys.borderRadius],
+          valueType: VariableType.double,
         ),
         ControlObject(
           type: ControlType.border,
           key: DBKeys.borders,
           value: attributes[DBKeys.borders],
+          valueType: VariableType.string,
         ),
       ];
 

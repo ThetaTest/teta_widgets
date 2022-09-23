@@ -37,10 +37,11 @@ class FFillElement {
   double stop;
 
   static FFillElement fromJson({required final Map<String, dynamic> json}) {
+    final opacity = (json['opacity'] as num? ?? 1).toDouble();
     return FFillElement(
       color: json['color'] as String,
       stop: double.tryParse('${json['stop']}') ?? 0,
-      opacity: (json['opacity'] as num? ?? 1).toDouble(),
+      opacity: opacity >= 0 && opacity <= 1 ? opacity : 1,
     );
   }
 
@@ -340,14 +341,21 @@ class FFill {
     }
 
     if (fill.type == FFillType.solid) {
-      return 'color: ${flagConst ?? false ? 'const' : ''} Color(0xFF${fill.getHexColor(context)}).withOpacity(${fill.levels!.first.opacity}),';
+      final tempOpacity = fill.levels?.first.opacity ?? 1;
+      final opacity = tempOpacity >= 0 && tempOpacity <= 1 ? tempOpacity : 1.0;
+      return 'color: ${flagConst ?? false ? 'const' : ''} Color(0xFF${fill.getHexColor(context)}).withOpacity($opacity),';
     }
     if (fill.type == FFillType.linearGradient) {
       return '''
       gradient: LinearGradient(
         begin: ${fill.begin},
         end: ${fill.end},
-        colors: <Color>${fill.levels!.map((final e) => 'Color(0xFF${e.color.toUpperCase()}).withOpacity(${e.opacity})').toList()},
+        colors: <Color>${fill.levels!.map((final e) {
+        final tempOpacity = e.opacity ?? 1;
+        final opacity =
+            tempOpacity >= 0 && tempOpacity <= 1 ? tempOpacity : 1.0;
+        return 'Color(0xFF${e.color.toUpperCase()}).withOpacity($opacity)';
+      }).toList()},
         stops: ${fill.levels!.map((final e) => e.stop).toList()},
       ),''';
     }
@@ -356,7 +364,12 @@ class FFill {
       gradient: RadialGradient(
         center: ${fill.center},
         radius: ${fill.radius},
-        colors: <Color>${fill.levels!.map((final e) => 'Color(0xFF${e.color.toUpperCase()}).withOpacity(${e.opacity})').toList()},
+        colors: <Color>${fill.levels!.map((final e) {
+        final tempOpacity = e.opacity ?? 1;
+        final opacity =
+            tempOpacity >= 0 && tempOpacity <= 1 ? tempOpacity : 1.0;
+        return 'Color(0xFF${e.color.toUpperCase()}).withOpacity($opacity)';
+      }).toList()},
         stops: ${fill.levels!.map((final e) => e.stop).toList()},
       ),''';
     }
@@ -376,14 +389,21 @@ class FFill {
   ) {
     if (fill.type == FFillType.none) return null;
     if (fill.type == FFillType.solid) {
-      return 'color: Color(0xFF${fill.levels!.first.color}).withOpacity(${fill.levels!.first.opacity}),';
+      final tempOpacity = fill.levels!.first.opacity ?? 1;
+      final opacity = tempOpacity >= 0 && tempOpacity <= 1 ? tempOpacity : 1.0;
+      return 'color: Color(0xFF${fill.levels!.first.color}).withOpacity($opacity),';
     }
     if (fill.type == FFillType.linearGradient) {
       return '''
       gradient: LinearGradient(
         begin: ${fill.begin},
         end: ${fill.end},
-        colors: <Color>${fill.levels!.map((final e) => 'Color(0xFF${e.color.toUpperCase()}).withOpacity(${e.opacity})').toList()},
+        colors: <Color>${fill.levels!.map((final e) {
+        final tempOpacity = e.opacity ?? 1;
+        final opacity =
+            tempOpacity >= 0 && tempOpacity <= 1 ? tempOpacity : 1.0;
+        return 'Color(0xFF${e.color.toUpperCase()}).withOpacity($opacity)';
+      }).toList()},
         stops: ${fill.levels!.map((final e) => e.stop).toList()},
       ),''';
     }
@@ -392,7 +412,12 @@ class FFill {
       gradient: RadialGradient(
         center: ${fill.center},
         radius: ${fill.radius},
-        colors: <Color>${fill.levels!.map((final e) => 'Color(0xFF${e.color.toUpperCase()}).withOpacity(${e.opacity})').toList()},
+        colors: <Color>${fill.levels!.map((final e) {
+        final tempOpacity = e.opacity ?? 1;
+        final opacity =
+            tempOpacity >= 0 && tempOpacity <= 1 ? tempOpacity : 1.0;
+        return 'Color(0xFF${e.color.toUpperCase()}).withOpacity($opacity)';
+      }).toList()},
         stops: ${fill.levels!.map((final e) => e.stop).toList()},
       ),''';
     }

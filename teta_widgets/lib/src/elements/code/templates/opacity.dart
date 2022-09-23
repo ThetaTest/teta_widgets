@@ -19,11 +19,15 @@ class OpacityCodeTemplate {
     final int? loop,
   ) async {
     final abstract = body.attributes[DBKeys.value] as FTextTypeInput;
-    final opacity = abstract.toCode(
-      loop,
-      resultType: ResultTypeEnum.double,
-      defaultValue: '1',
-    );
+    final tempOpacity = double.tryParse(
+          abstract.toCode(
+            loop,
+            resultType: ResultTypeEnum.double,
+            defaultValue: '1.0',
+          ),
+        ) ??
+        1;
+    final opacity = tempOpacity >= 0 && tempOpacity <= 1 ? tempOpacity : 1;
     final childString = await CS.child(context, child, comma: true);
     final code = '''
     Opacity(
@@ -57,11 +61,16 @@ class OpacityCodeTemplate {
         () {
           final body = NodeBody.get(NType.opacity);
           final abstract = body.attributes[DBKeys.value] as FTextTypeInput;
-          final opacity = abstract.toCode(
-            0,
-            resultType: ResultTypeEnum.string,
-            defaultValue: '1',
-          );
+          final tempOpacity = double.tryParse(
+                abstract.toCode(
+                  0,
+                  resultType: ResultTypeEnum.double,
+                  defaultValue: '1.0',
+                ),
+              ) ??
+              1;
+          final opacity =
+              tempOpacity >= 0 && tempOpacity <= 1 ? tempOpacity : 1;
           const childString = 'const SizedBox()';
           expect(
             FormatterTest.format('''

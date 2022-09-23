@@ -74,18 +74,21 @@ class TransformPerspectiveBody extends NodeBody {
           type: ControlType.value,
           key: DBKeys.rotateY,
           value: attributes[DBKeys.rotateX],
+          valueType: VariableType.double,
         ),
         ControlObject(
           title: 'Rotate Y',
           type: ControlType.value,
           key: DBKeys.rotateY,
           value: attributes[DBKeys.rotateY],
+          valueType: VariableType.double,
         ),
         ControlObject(
           title: 'Rotate Z',
           type: ControlType.value,
           key: DBKeys.rotateZ,
           value: attributes[DBKeys.rotateZ],
+          valueType: VariableType.double,
         ),
       ];
 

@@ -18,11 +18,19 @@ class LinearProgressIndicatorCodeTemplate {
     final colorBgFill = body.attributes[DBKeys.bgFill] as FFill;
     final hex2 = colorBgFill.getHexColor(context);
 
+    final tempOpacity = colorBgFill.levels?.first.opacity ?? 1;
+    final colorBGOpacity =
+        tempOpacity >= 0 && tempOpacity <= 1 ? tempOpacity : 1.0;
+
+    final tempColorOpacity = colorFill.levels?.first.opacity ?? 1;
+    final colorOpacity =
+        tempColorOpacity >= 0 && tempColorOpacity <= 1 ? tempColorOpacity : 1.0;
+
     final code = '''
     LinearProgressIndicator(
-      backgroundColor: Color(0xFF$hex2).withOpacity(${colorBgFill.levels?.first.opacity ?? '1'}), 
+      backgroundColor: Color(0xFF$hex2).withOpacity($colorBGOpacity), 
       valueColor: AlwaysStoppedAnimation<Color>(
-              Color(0xFF$hex1).withOpacity(${colorFill.levels?.first.opacity ?? '1'})),
+              Color(0xFF$hex1).withOpacity($colorOpacity)),
     )
   ''';
     final res = FormatterTest.format(code);

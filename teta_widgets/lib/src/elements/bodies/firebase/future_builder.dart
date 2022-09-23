@@ -64,6 +64,7 @@ class FirebaseFBBody extends NodeBody {
           type: ControlType.firebasePath,
           key: DBKeys.firestorePath,
           value: attributes[DBKeys.firestorePath],
+          valueType: VariableType.string,
         )
       ];
 
@@ -99,5 +100,6 @@ class FirebaseFBBody extends NodeBody {
     final int? loop,
   ) =>
       Future.value(
-          firestoreFutureBuilderCodeTemplate(context, this, children ?? []));
+        firestoreFutureBuilderCodeTemplate(context, this, children ?? []),
+      );
 }

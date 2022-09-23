@@ -3,7 +3,7 @@
 
 // Package imports:
 import 'package:equatable/equatable.dart';
-
+import 'package:teta_core/teta_core.dart';
 // Project imports:
 import 'package:teta_widgets/src/elements/controls/type.dart';
 import 'package:teta_widgets/src/elements/features/box_fit.dart';
@@ -26,6 +26,7 @@ class ControlObject extends ControlModel {
     required this.type,
     required this.key,
     required this.value,
+    required this.valueType,
     this.title,
     this.description,
     this.flag,
@@ -37,6 +38,7 @@ class ControlObject extends ControlModel {
   final String? title;
   final String? description;
   final bool? flag;
+  final VariableType valueType;
 
   @override
   List<Object?> get props => [
@@ -44,6 +46,7 @@ class ControlObject extends ControlModel {
         key,
         value,
         title,
+        valueType,
       ];
 
   @override

@@ -63,6 +63,7 @@ class FontAwesomeBody extends NodeBody {
           type: ControlType.fontAwesomeIcon,
           key: DBKeys.faIcon,
           value: attributes[DBKeys.faIcon],
+          valueType: VariableType.string,
         ),
         SizeControlObject(
           type: ControlType.size,
