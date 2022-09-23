@@ -83,12 +83,14 @@ class LocationBody extends NodeBody {
           type: ControlType.value,
           key: DBKeys.googleMapsController,
           value: attributes[DBKeys.googleMapsController],
+          valueType: VariableType.double,
         ),
         ControlObject(
           title: 'Longitude',
           type: ControlType.value,
           key: DBKeys.googleMapsCubitController,
           value: attributes[DBKeys.googleMapsCubitController],
+          valueType: VariableType.double,
         ),
       ];
 
@@ -165,17 +167,16 @@ class LocationBody extends NodeBody {
     final List<NType> existingNodeTypes,
   ) =>
       LocationTemplate.toCode(
-        pageId,
-        context,
-        //lat
-        (attributes[DBKeys.googleMapsController] as FTextTypeInput)
-            .stateName ??
-            '',
+          pageId,
+          context,
+          //lat
+          (attributes[DBKeys.googleMapsController] as FTextTypeInput)
+                  .stateName ??
+              '',
           //lng
           (attributes[DBKeys.googleMapsCubitController] as FTextTypeInput)
-          .stateName ??
-          '',
-        loop,
-        node
-      );
+                  .stateName ??
+              '',
+          loop,
+          node);
 }
