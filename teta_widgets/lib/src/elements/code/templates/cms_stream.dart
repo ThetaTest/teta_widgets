@@ -2,8 +2,10 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:teta_widgets/src/elements/code/formatter_test.dart';
+import 'package:teta_widgets/src/elements/code/snippets.dart';
 // Project imports:
 import 'package:teta_widgets/src/elements/controls/key_constants.dart';
+import 'package:teta_widgets/src/elements/features/actions/enums/gestures.dart';
 import 'package:teta_widgets/src/elements/features/text_type_input.dart';
 import 'package:teta_widgets/src/elements/nodes/dynamic.dart';
 import 'package:teta_widgets/src/elements/nodes/enum.dart';
@@ -17,7 +19,18 @@ class CmsStreamCodeTemplate {
     final NDynamic node,
     final List<CNode> children,
     final int? loop,
+      final int pageId,
   ) async {
+
+    final onEmitNewValue = CS.getActionsInFormOfFutureDelayed(
+      pageId,
+      context,
+      node,
+      ActionGesture.onStreamNewValue,
+      '',
+      loop: loop,
+    );
+
     var collectionId =
         (node.body.attributes[DBKeys.cmsCollection] as FTextTypeInput).toCode(
       loop,
@@ -85,6 +98,9 @@ class CmsStreamCodeTemplate {
         return $loader;
       }
       $func
+      \n
+      $onEmitNewValue
+      \n
       return $child;
     }
   )

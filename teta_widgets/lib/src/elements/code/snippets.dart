@@ -1,7 +1,10 @@
 // Flutter imports:
 
+import 'dart:async';
+
 import 'package:flutter/material.dart';
 import 'package:teta_core/teta_core.dart';
+
 // Project imports:
 import 'package:teta_widgets/src/elements/controls/key_constants.dart';
 import 'package:teta_widgets/src/elements/features/physic.dart';
@@ -810,6 +813,47 @@ class CS {
       ${additionalCode ?? ''}
       ${code.toString()}
     }${endsWithComma ? ',' : ''}
+    ''';
+  }
+
+  static String getActionsInFormOfFutureDelayed(
+    final int pageId,
+    final BuildContext context,
+    final CNode node,
+    final ActionGesture gesture,
+    final String? value, {
+    required final int? loop,
+    final String? additionalCode,
+    final bool withValue = false,
+    final bool endsWithComma = true,
+  }) {
+    final code = StringBuffer()..write('');
+    if (node.body.attributes[DBKeys.action] == null) return '';
+    for (final element
+        in (node.body.attributes[DBKeys.action] as FAction).actions!) {
+      if (element.actionGesture == gesture) {
+        code.write(
+          element.toCode(
+            pageId: pageId,
+            value: value,
+            context: context,
+            body: node,
+            loop: loop ?? 0,
+            withValue: withValue,
+          ),
+        );
+      }
+    }
+   return
+     '''
+    unawaited(
+      Future.delayed(
+        Duration.zero,
+        () async {
+          ${code.toString()}
+        },
+      ),
+    );
     ''';
   }
 
