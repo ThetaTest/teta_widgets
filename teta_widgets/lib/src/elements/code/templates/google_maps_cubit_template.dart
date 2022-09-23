@@ -56,6 +56,7 @@ class GoogleMapsCubitTemplate {
       final bool trackMyLocation = $trackMyLocation;
 
       Location location = Location();
+      await location.changeSettings(distanceFilter: 30);
       await location.requestPermission();
       await location.requestService();
       // await Future.delayed(const Duration(seconds: 2));
