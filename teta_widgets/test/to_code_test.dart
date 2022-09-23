@@ -37,6 +37,7 @@ import 'package:teta_widgets/src/elements/code/templates/icon_feather.dart';
 import 'package:teta_widgets/src/elements/code/templates/icon_font_awesome.dart';
 import 'package:teta_widgets/src/elements/code/templates/icon_line.dart';
 import 'package:teta_widgets/src/elements/code/templates/opacity.dart';
+import 'package:teta_widgets/src/elements/code/templates/padding.dart';
 import 'package:teta_widgets/src/elements/code/templates/placeholder.dart';
 import 'package:teta_widgets/src/elements/code/templates/qonversion/qonversion_products.dart';
 import 'package:teta_widgets/src/elements/code/templates/qonversion/qonversion_sub_status.dart';
@@ -97,6 +98,7 @@ void main() {
   LoginTwitterCodeTemplate.testCode();
   OpacityCodeTemplate.testCode();
   PlaceholderCodeTemplate.testCode();
+  PaddingCodeTemplate.testCode();
   QonversionProductsListCodeTemplate.testCode();
   QonversionSubsStatusCodeTemplate.testCode();
   QrCodeTemplate.testCode();
