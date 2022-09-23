@@ -13,6 +13,7 @@ import 'package:teta_widgets/src/elements/code/templates/location_template.dart'
 import 'package:teta_widgets/src/elements/controls/control_model.dart';
 import 'package:teta_widgets/src/elements/controls/key_constants.dart';
 import 'package:teta_widgets/src/elements/controls/type.dart';
+import 'package:teta_widgets/src/elements/features/actions/enums/permissions.dart';
 import 'package:teta_widgets/src/elements/features/border.dart';
 import 'package:teta_widgets/src/elements/features/border_radius.dart';
 import 'package:teta_widgets/src/elements/features/fill.dart';
@@ -26,6 +27,7 @@ import 'package:teta_widgets/src/elements/nodes/children_enum.dart';
 import 'package:teta_widgets/src/elements/nodes/enum.dart';
 import 'package:teta_widgets/src/elements/nodes/node.dart';
 import 'package:teta_widgets/src/elements/nodes/node_body.dart';
+import 'package:teta_widgets/src/elements/packages.dart';
 import 'package:teta_widgets/src/elements/widgets/container.dart';
 
 import '../features/actions/enums/gestures.dart';
@@ -50,8 +52,12 @@ final locationIntrinsicStates = IntrinsicStates(
   gestures: [
     ActionGesture.onStreamNewValue,
   ],
-  permissions: [],
-  packages: [],
+  permissions: [
+    Permissions.location,
+  ],
+  packages: [
+    pLocation,
+  ],
 );
 
 class LocationBody extends NodeBody {
