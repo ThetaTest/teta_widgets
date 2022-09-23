@@ -133,8 +133,8 @@ class _WGoogleMapsState extends State<WGoogleMaps> {
         googleMapsKey: googleMapsKey,
         pathColor: widget.pathColor.getHexColor(context),
       ),
-        widget.dataset,
-        context
+      widget.dataset,
+      context,
     );
   }
 
@@ -200,7 +200,7 @@ class _WGoogleMapsState extends State<WGoogleMaps> {
               pathColor: widget.pathColor.getHexColor(context),
             ),
             widget.dataset,
-            context
+            context,
           );
           return const CircularProgressIndicator.adaptive();
         } else if (state.isError) {
@@ -217,31 +217,43 @@ class _WGoogleMapsState extends State<WGoogleMaps> {
           );
         }
       },
-      listener: (final BuildContext context, final GoogleMapsState state) {
+      buildWhen: (final p, final c) {
+        return !c.isSetNewCameraPositionState;
+      },
+      listener:
+          (final BuildContext context, final GoogleMapsState state) async {
         if (state.isInitialState) {
-          googleMapsBloc.onInitialState(
-            markersDataset,
-            mapConfig,
-            GoogleMapsConfigNames(
-              mapStyle: widget.mapStyle,
-              initialPositionLat: widget.initialPositionLat,
-              initialPositionLng: widget.initialPositionLng,
-              initialMapZoomLevel: widget.initialZoomLevel,
-              showMyLocationMarker: widget.showMyLocationMarker,
-              trackMyLocation: widget.trackMyLocation,
-              markerId: widget.markerId,
-              markerLocationLat: widget.markerLatitude,
-              markerLoctionLng: widget.markerLongitude,
-              markerIconUrl: widget.markerIconUrl,
-              markerIconWidth: widget.markerIconWidth,
-              markerIconHeight: widget.markerIconHeight,
-              drawPathFromUserGeolocationToMarker:
-                  widget.drawPathFromUserGeolocationToMarker,
-              googleMapsKey: googleMapsKey,
-              pathColor: '',
-            ),
+          unawaited(
+            googleMapsBloc.onInitialState(
+              markersDataset,
+              mapConfig,
+              GoogleMapsConfigNames(
+                mapStyle: widget.mapStyle,
+                initialPositionLat: widget.initialPositionLat,
+                initialPositionLng: widget.initialPositionLng,
+                initialMapZoomLevel: widget.initialZoomLevel,
+                showMyLocationMarker: widget.showMyLocationMarker,
+                trackMyLocation: widget.trackMyLocation,
+                markerId: widget.markerId,
+                markerLocationLat: widget.markerLatitude,
+                markerLoctionLng: widget.markerLongitude,
+                markerIconUrl: widget.markerIconUrl,
+                markerIconWidth: widget.markerIconWidth,
+                markerIconHeight: widget.markerIconHeight,
+                drawPathFromUserGeolocationToMarker:
+                    widget.drawPathFromUserGeolocationToMarker,
+                googleMapsKey: googleMapsKey,
+                pathColor: '',
+              ),
               widget.dataset,
-              context
+              context,
+            ),
+          );
+        } else if (state.isSetNewCameraPositionState) {
+          await (await googleMapsController.future).animateCamera(
+            CameraUpdate.newCameraPosition(
+              state.initialCameraPosition,
+            ),
           );
         }
       },

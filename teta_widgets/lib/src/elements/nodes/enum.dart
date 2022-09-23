@@ -156,7 +156,7 @@ enum NType {
   animationConfigStaticList,
   fadeInAnimation,
   slideAnimation,
-  scaleAnimation,
+  scaleAnimation, location,
 }
 
 extension NodeType on NType {

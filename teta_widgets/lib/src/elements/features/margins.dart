@@ -87,6 +87,24 @@ class FMargins {
     )''';
   }
 
-  /*toCode() =>
-      "FMargins(margins: [${convertToCode(margins?[0])},${convertToCode(margins?[1])},${convertToCode(margins?[2])}])";*/
+  String toCodeForTests() {
+    final left = margins![0];
+    final top = margins![1];
+    final right = margins![2];
+    final bottom = margins![3];
+
+    if (double.tryParse(left) == 0 &&
+        double.tryParse(top) == 0 &&
+        double.tryParse(right) == 0 &&
+        double.tryParse(bottom) == 0) {
+      return 'EdgeInsets.zero';
+    }
+    return '''
+    const EdgeInsets.only(
+      ${double.tryParse(left) != null && double.tryParse(left) != 0 ? "left: ${double.parse(margins![0]).abs()}," : ""}
+      ${double.tryParse(top) != null && double.tryParse(top) != 0 ? "top: ${double.parse(margins![1]).abs()}," : ""}
+      ${double.tryParse(right) != null && double.tryParse(right) != 0 ? "right: ${double.parse(margins![2]).abs()}," : ""}
+      ${double.tryParse(bottom) != null && double.tryParse(bottom) != 0 ? "bottom: ${double.parse(margins![3]).abs()}," : ""}
+    )''';
+  }
 }

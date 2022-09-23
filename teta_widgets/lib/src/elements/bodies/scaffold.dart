@@ -237,6 +237,7 @@ class ScaffoldBody extends NodeBody {
           loop,
           [],
         ),
+        loop
       );
     } else {
       return codeComponentTemplate(context, node, children ?? [], pageId);

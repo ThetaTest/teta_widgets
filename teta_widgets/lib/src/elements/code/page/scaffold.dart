@@ -10,24 +10,28 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:recase/recase.dart';
 import 'package:teta_core/src/services/packages_service.dart';
 import 'package:teta_core/teta_core.dart';
+import 'package:teta_widgets/src/elements/code/snippets.dart';
 
 // Project imports:
 import 'package:teta_widgets/src/elements/controls/key_constants.dart';
+import 'package:teta_widgets/src/elements/features/actions/enums/gestures.dart';
 import 'package:teta_widgets/src/elements/features/fill.dart';
 import 'package:teta_widgets/src/elements/nodes/enum.dart';
 import 'package:teta_widgets/src/elements/nodes/node.dart';
 
 /// Generates the code for a page
-Future<String> pageCodeTemplate(
-  final BuildContext context,
-  final CNode node,
-  final List<CNode> children,
-  final int pageId,
-  final String additionalClasses,
-  final String onInitCode,
-) async {
+Future<String> pageCodeTemplate(final BuildContext context,
+    final CNode node,
+    final List<CNode> children,
+    final int pageId,
+    final String additionalClasses,
+    final String onInitCode,
+    final int? loop,
+    ) async {
   final prj =
-      (BlocProvider.of<FocusProjectBloc>(context).state as ProjectLoaded).prj;
+      (BlocProvider
+          .of<FocusProjectBloc>(context)
+          .state as ProjectLoaded).prj;
   final page = prj.pages!.firstWhere((final element) => element.id == pageId);
   final temp = removeDiacritics(
     page.name
@@ -46,7 +50,8 @@ Future<String> pageCodeTemplate(
         .replaceAll('"', ''),
   );
   final pageNameRC = ReCase(temp);
-  final strChildren = StringBuffer()..write('');
+  final strChildren = StringBuffer()
+    ..write('');
   var appBarString = '';
   var bottomBarString = '';
   var drawerString = '';
@@ -54,14 +59,14 @@ Future<String> pageCodeTemplate(
   //----local properties for this page----
   final flag = node.body.attributes[DBKeys.flag] as bool;
   final backgroundColor =
-      (node.body.attributes[DBKeys.fill] as FFill).getHexColor(context);
+  (node.body.attributes[DBKeys.fill] as FFill).getHexColor(context);
   //----local properties end----
 
   for (final e in children) {
     if (e.globalType == NType.appBar) {
       final appToCode = await e.toCode(context);
       appBarString = e.child != null &&
-              (node.body.attributes[DBKeys.showAppBar] as bool? ?? false)
+          (node.body.attributes[DBKeys.showAppBar] as bool? ?? false)
           ? '''
           appBar: PreferredSize(
             preferredSize: const Size.fromHeight(120),
@@ -70,13 +75,13 @@ Future<String> pageCodeTemplate(
           : '';
     } else if (e.globalType == NType.bottomBar) {
       final child = e.child != null &&
-              (node.body.attributes[DBKeys.showBottomBar] as bool? ?? false)
+          (node.body.attributes[DBKeys.showBottomBar] as bool? ?? false)
           ? await e.toCode(context)
           : '';
       bottomBarString =
-          (node.body.attributes[DBKeys.showBottomBar] as bool? ?? false)
-              ? child != ''
-                  ? '''
+      (node.body.attributes[DBKeys.showBottomBar] as bool? ?? false)
+          ? child != ''
+          ? '''
       Positioned(
         left: 0,
         right: 0,
@@ -84,8 +89,8 @@ Future<String> pageCodeTemplate(
         child: $child
       ),
       '''
-                  : ''
-              : '';
+          : ''
+          : '';
     } else if (e.globalType == NType.drawer) {
       final drawerCode = await e.toCode(context);
       drawerString = e.child != null ? 'drawer: $drawerCode,' : '';
@@ -105,8 +110,10 @@ Future<String> pageCodeTemplate(
   }
 
   //----start parameters----
-  final paramsString = StringBuffer()..write('');
-  final parametersString = StringBuffer()..write('');
+  final paramsString = StringBuffer()
+    ..write('');
+  final parametersString = StringBuffer()
+    ..write('');
   for (final element in page.params) {
     final rc = ReCase(element.name);
     final value = element.typeDeclaration(rc.camelCase) == 'String'
@@ -122,7 +129,8 @@ Future<String> pageCodeTemplate(
   //----end parameters----
 
   //----start states----
-  final statesString = StringBuffer()..write('');
+  final statesString = StringBuffer()
+    ..write('');
 
   for (final element in page.states) {
     final rc = ReCase(element.name);
@@ -148,27 +156,53 @@ Future<String> pageCodeTemplate(
 
   final isARState = isSupabaseIntegrated
       ? page.isAuthenticatedRequired
-          ? 'AuthRequiredState<Page${pageNameRC.pascalCase}> with SingleTickerProviderStateMixin'
-          : 'AuthState<Page${pageNameRC.pascalCase}> with SingleTickerProviderStateMixin'
+      ? 'AuthRequiredState<Page${pageNameRC
+      .pascalCase}> with SingleTickerProviderStateMixin'
+      : 'AuthState<Page${pageNameRC
+      .pascalCase}> with SingleTickerProviderStateMixin'
       : 'State<Page${pageNameRC.pascalCase}>';
+
+  final onInitActions = CS.getActionsInFormOfFutureDelayed(
+    pageId,
+    context,
+    node,
+    ActionGesture.initState,
+    '',
+    loop: loop,
+  );
 
   return '''
     import 'package:myapp/src/teta_files/imports.dart';
-    ${page.isAuthenticatedRequired ? "import 'package:myapp/auth/auth_required_state.dart';" : "import 'package:myapp/auth/auth_state.dart';"}
-    ${prj.config?.isAdaptyReady ?? false ? "import 'package:adapty_flutter/adapty_flutter.dart';" : ''}
-    ${prj.config?.isRevenueCatEnabled ?? false ? "import 'package:purchases_flutter/purchases_flutter.dart';" : ''}
-    ${prj.config?.isQonversionReady ?? false ? "import 'package:qonversion_flutter/qonversion_flutter.dart';" : ''}
-    ${prj.config?.isBraintreeReady ?? false ? "import 'package:flutter_braintree/flutter_braintree.dart';" : ''}
-    
+    ${page.isAuthenticatedRequired
+      ? "import 'package:myapp/auth/auth_required_state.dart';"
+      : "import 'package:myapp/auth/auth_state.dart';"}
+    ${prj.config?.isAdaptyReady ?? false
+      ? "import 'package:adapty_flutter/adapty_flutter.dart';"
+      : ''}
+    ${prj.config?.isRevenueCatEnabled ?? false
+      ? "import 'package:purchases_flutter/purchases_flutter.dart';"
+      : ''}
+    ${prj.config?.isQonversionReady ?? false
+      ? "import 'package:qonversion_flutter/qonversion_flutter.dart';"
+      : ''}
+    ${prj.config?.isBraintreeReady ?? false
+      ? "import 'package:flutter_braintree/flutter_braintree.dart';"
+      : ''}
+    ${prj.config?.isStripeEnabled ?? false
+      ? "import 'package:flutter_stripe/flutter_stripe.dart'; \n import 'dart:convert' as convert;"
+      : ''}
+
     ${PackagesService.instance.getToCodePackages()}
 
     class Page${pageNameRC.pascalCase} extends StatefulWidget {
-      const Page${pageNameRC.pascalCase}({Key? key, ${parametersString.toString()}}) : super(key: key);
+      const Page${pageNameRC.pascalCase}({Key? key, ${parametersString
+      .toString()}}) : super(key: key);
 
       ${paramsString.toString()}
 
       @override
-      _State${pageNameRC.pascalCase} createState() => _State${pageNameRC.pascalCase}();
+      _State${pageNameRC.pascalCase} createState() => _State${pageNameRC
+      .pascalCase}();
     }
 
     class _State${pageNameRC.pascalCase} extends $isARState {
@@ -182,7 +216,6 @@ Future<String> pageCodeTemplate(
       @override
       void initState() {
         super.initState();
-        $onInitCode
         TetaCMS.instance.analytics.insertEvent(
           TetaAnalyticsType.usage,
           'App usage: view page',
@@ -191,6 +224,10 @@ Future<String> pageCodeTemplate(
           },
           isUserIdPreferableIfExists: true,
         );
+        $onInitCode
+        \n
+        $onInitActions
+        \n
       }
 
       @override
@@ -207,7 +244,9 @@ Future<String> pageCodeTemplate(
             $bottomBarString
           ],
         ),
-      );''' : strChildren.toString().isNotEmpty ? strChildren.toString() : 'const SizedBox();'}
+      );''' : strChildren
+      .toString()
+      .isNotEmpty ? strChildren.toString() : 'const SizedBox();'}
     }
   }
   

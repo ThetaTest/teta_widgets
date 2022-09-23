@@ -1,8 +1,6 @@
 // Flutter imports:
 // ignore_for_file: lines_longer_than_80_chars
 
-import 'package:collection/collection.dart';
-
 // Flutter imports:
 import 'package:flutter/material.dart';
 
@@ -35,9 +33,9 @@ class FActionStripeCartBuyAll {
                       final data = (await TetaCMS.instance.store.cart
                           .getPaymentIntent());
                       final paymentIntentClientSecret =
-                          jsonDecode(data.data!)['key'];
+                          convert.jsonDecode(data.data!)['key'];
                       final publishableKey =
-                          jsonDecode(data.data!)['publishableKey'];
+                          convert.jsonDecode(data.data!)['publishableKey'];
                       Stripe.publishableKey = publishableKey;
 
                       await Stripe.instance.initPaymentSheet(

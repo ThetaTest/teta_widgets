@@ -6,6 +6,7 @@ import 'dart:async';
 // Package imports:
 import 'package:enum_to_string/enum_to_string.dart';
 import 'package:equatable/equatable.dart';
+
 // Flutter imports:
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
@@ -16,6 +17,7 @@ import 'package:teta_core/src/models/page.dart';
 import 'package:teta_core/src/models/project.dart';
 import 'package:teta_core/src/models/variable.dart';
 import 'package:teta_core/src/services/packages_service.dart';
+
 // Project imports:
 import 'package:teta_widgets/src/elements/actions/audio_player/loop_all.dart';
 import 'package:teta_widgets/src/elements/actions/audio_player/loop_off.dart';
@@ -36,6 +38,9 @@ import 'package:teta_widgets/src/elements/actions/camera/torch_flash.dart';
 import 'package:teta_widgets/src/elements/actions/condition.dart';
 import 'package:teta_widgets/src/elements/actions/custom_functions/custom_function.dart';
 import 'package:teta_widgets/src/elements/actions/delay.dart';
+import 'package:teta_widgets/src/elements/actions/google_maps/reload_data.dart';
+import 'package:teta_widgets/src/elements/actions/google_maps/set_camera_position.dart';
+import 'package:teta_widgets/src/elements/actions/google_maps/update_device_live_location.dart';
 import 'package:teta_widgets/src/elements/actions/loop.dart';
 import 'package:teta_widgets/src/elements/actions/navigation/go_back.dart';
 import 'package:teta_widgets/src/elements/actions/navigation/in_app_review.dart';
@@ -81,6 +86,7 @@ import 'package:teta_widgets/src/elements/actions/webview/back.dart';
 import 'package:teta_widgets/src/elements/actions/webview/forward.dart';
 import 'package:teta_widgets/src/elements/actions/webview/navigate_to.dart';
 import 'package:teta_widgets/src/elements/actions/webview/reload.dart';
+import 'package:teta_widgets/src/elements/features/actions/enums/action_google_maps.dart';
 import 'package:teta_widgets/src/elements/features/actions/enums/audio_player_actions.dart';
 import 'package:teta_widgets/src/elements/features/actions/enums/braintree.dart';
 import 'package:teta_widgets/src/elements/features/actions/enums/camera.dart';
@@ -106,6 +112,7 @@ class FActionElement extends Equatable {
     this.actionQonversion,
     this.actionTheme,
     this.actionStripe,
+    this.actionGoogleMaps,
     this.actionType,
     this.actionGesture,
     this.actionNavigation,
@@ -122,6 +129,8 @@ class FActionElement extends Equatable {
     this.prodId,
     this.stateName,
     this.stateName2,
+    this.stateName3,
+    this.stateName4,
     this.nameOfPage,
     this.paramsToSend,
     this.value,
@@ -177,6 +186,9 @@ class FActionElement extends Equatable {
     actionStripe =
         convertDropdownToValue(ActionStripe.values, doc['sPK'] as String?)
             as ActionStripe?;
+    actionGoogleMaps = convertDropdownToValue(
+            ActionGoogleMaps.values, doc['actionGoogleMaps'] as String?)
+        as ActionGoogleMaps?;
     actionState =
         convertDropdownToValue(ActionState.values, doc['aS'] as String?)
             as ActionState?;
@@ -207,6 +219,8 @@ class FActionElement extends Equatable {
             as ActionTetaCmsAuth?;
     stateName = doc['sN'] as String?;
     stateName2 = doc['sN2'] as String?;
+    stateName3 = doc['sN3'] as String?;
+    stateName4 = doc['sN4'] as String?;
     nameOfPage = doc['pN'] as String?;
     paramsToSend = doc['pTS'] as Map<String, dynamic>?;
     valueTextTypeInput =
@@ -258,6 +272,26 @@ class FActionElement extends Equatable {
                 doc['stripeBillingInfoCountry'] as Map<String, dynamic>,
               )
             : FTextTypeInput());
+    // lat, lng, zoom
+    googleMapsLat = googleMapsLat ??
+        (doc['googleMapsLat'] != null
+            ? FTextTypeInput.fromJson(
+                doc['googleMapsLat'] as Map<String, dynamic>,
+              )
+            : FTextTypeInput());
+    googleMapsLng = googleMapsLng ??
+        (doc['googleMapsLng'] != null
+            ? FTextTypeInput.fromJson(
+                doc['googleMapsLng'] as Map<String, dynamic>,
+              )
+            : FTextTypeInput());
+    googleMapsZoom = googleMapsZoom ??
+        (doc['googleMapsZoom'] != null
+            ? FTextTypeInput.fromJson(
+                doc['googleMapsZoom'] as Map<String, dynamic>,
+              )
+            : FTextTypeInput());
+    //
     dbFrom = FTextTypeInput.fromJson(doc['sFrom'] as Map<String, dynamic>?);
     cmsCollectionId = doc['cmsCId'] as String?;
     dbData = (doc['sData'] as List<dynamic>? ?? <dynamic>[])
@@ -319,6 +353,7 @@ class FActionElement extends Equatable {
   ActionTranslator? actionTranslator;
   ActionTheme? actionTheme;
   ActionStripe? actionStripe;
+  ActionGoogleMaps? actionGoogleMaps;
   int? customFunctionId;
   ActionSupabaseAuth? actionSupabaseAuth;
   ActionSupabaseDB? actionSupabaseDB;
@@ -341,6 +376,8 @@ class FActionElement extends Equatable {
   String? prodId;
   String? stateName;
   String? stateName2;
+  String? stateName3;
+  String? stateName4;
   String? nameOfPage;
   String? nameOfDataset;
   Map<String, dynamic>? paramsToSend;
@@ -355,6 +392,11 @@ class FActionElement extends Equatable {
   FTextTypeInput? stripeBillingInfoLine;
   FTextTypeInput? stripeBillingInfoPostalCode;
   FTextTypeInput? stripeBillingInfoCountry;
+
+  //lat, lng, zoom
+  FTextTypeInput? googleMapsLat;
+  FTextTypeInput? googleMapsLng;
+  FTextTypeInput? googleMapsZoom;
 
   /// Supabase from
   FTextTypeInput? dbFrom;
@@ -402,6 +444,7 @@ class FActionElement extends Equatable {
           'Teta auth',
           'Theme',
           'Languages',
+          'Google Maps',
           if (kDebugMode) 'Custom Functions',
           if (config.supabaseEnabled ?? false) 'Supabase auth',
           if (config.supabaseEnabled ?? false) 'Supabase database',
@@ -495,12 +538,11 @@ class FActionElement extends Equatable {
   }
 
   static List<String> getStripe(final ProjectConfig? config) {
-    if (config != null) {
-      if (config.isStripeEnabled) {
-        return enumsToListString(ActionStripe.values);
-      }
-    }
-    return [];
+    return enumsToListString(ActionStripe.values);
+  }
+
+  static List<String> getGoogleMaps(final ProjectConfig? config) {
+    return enumsToListString(ActionGoogleMaps.values);
   }
 
   static List<String> getTheme() {
@@ -561,6 +603,11 @@ class FActionElement extends Equatable {
     if (type == ActionType.theme) {
       return 'Theme';
     }
+
+    if (type == ActionType.googleMaps) {
+      return 'Google Maps';
+    }
+
     if (type == ActionType.translator) {
       return 'Languages';
     }
@@ -583,6 +630,11 @@ class FActionElement extends Equatable {
     if (value == 'Stripe') {
       return ActionType.stripe;
     }
+
+    if (value == 'Google Maps') {
+      return ActionType.googleMaps;
+    }
+
     if (value == 'Custom Functions') {
       return ActionType.customFunctions;
     }
@@ -624,10 +676,13 @@ class FActionElement extends Equatable {
         'aBrain': convertValueToDropdown(actionBraintree),
         'aTrans': convertValueToDropdown(actionTranslator),
         'sPK': convertValueToDropdown(actionStripe),
+        'actionGoogleMaps': convertValueToDropdown(actionGoogleMaps),
         'aTDb': convertValueToDropdown(actionTetaDB),
         'aTAu': convertValueToDropdown(actionTetaAuth),
         'sN': stateName,
         'sN2': stateName2,
+        'sN3': stateName3,
+        'sN4': stateName4,
         'pTS': paramsToSend,
         'pN': nameOfPage,
         'v': value,
@@ -670,6 +725,11 @@ class FActionElement extends Equatable {
         'stripeBillingInfoCountry': stripeBillingInfoCountry != null
             ? stripeBillingInfoCountry!.toJson()
             : null,
+        //lat, lng, zoom
+        'googleMapsLat': googleMapsLat != null ? googleMapsLat!.toJson() : null,
+        'googleMapsLng': googleMapsLng != null ? googleMapsLng!.toJson() : null,
+        'googleMapsZoom':
+            googleMapsZoom != null ? googleMapsZoom!.toJson() : null,
         'revenueCatEntitle': revenueCatEntitlement != null
             ? revenueCatEntitlement!.toJson()
             : null,
@@ -1000,6 +1060,55 @@ class FActionElement extends Equatable {
             break;
           default:
             break;
+        }
+        break;
+      case ActionType.googleMaps:
+        switch (actionGoogleMaps) {
+          case ActionGoogleMaps.reloadData:
+            await actionS(
+              () => FActionGoogleMapsReloadData.action(
+                context,
+                states,
+                stateName,
+                loop,
+              ),
+              context: context,
+              params: params,
+              states: states,
+              dataset: dataset,
+              loop: loop,
+            );
+            break;
+          case ActionGoogleMaps.setCameraPosition:
+            await actionS(
+              () => FActionGoogleMapsSetCameraPosition.action(
+                context,
+                states,
+                stateName,
+                loop,
+              ),
+              context: context,
+              params: params,
+              states: states,
+              dataset: dataset,
+              loop: loop,
+            );
+            break;
+          case ActionGoogleMaps.updateLiveLocation:
+            await actionS(
+              () => FActionGoogleMapsUpdateDeviceLiveLocation.action(
+                context,
+                states,
+                stateName,
+                stateName2,
+                loop,
+              ),
+              context: context,
+              params: params,
+              states: states,
+              dataset: dataset,
+              loop: loop,
+            );
         }
         break;
       case ActionType.stripe:
@@ -1978,6 +2087,58 @@ class FActionElement extends Equatable {
             );
           default:
             break;
+        }
+        break;
+      case ActionType.googleMaps:
+        switch (actionGoogleMaps) {
+          case ActionGoogleMaps.reloadData:
+            return codeS(
+              FActionGoogleMapsReloadData.toCode(
+                pageId,
+                context,
+                stateName,
+                loop,
+              ),
+              context,
+            );
+          case ActionGoogleMaps.setCameraPosition:
+            return codeS(
+              FActionGoogleMapsSetCameraPosition.toCode(
+                pageId,
+                context,
+                stateName,
+                loop,
+                googleMapsLat?.toCode(
+                      null,
+                      resultType: ResultTypeEnum.double,
+                    ) ??
+                    '',
+                googleMapsLng?.toCode(
+                      null,
+                      resultType: ResultTypeEnum.double,
+                    ) ??
+                    '',
+                googleMapsZoom?.toCode(
+                      null,
+                      resultType: ResultTypeEnum.double,
+                    ) ??
+                    '',
+              ),
+              context,
+            );
+          case ActionGoogleMaps.updateLiveLocation:
+            return codeS(
+              FActionGoogleMapsUpdateDeviceLiveLocation.toCode(
+                pageId,
+                context,
+                stateName3,
+                stateName4,
+                loop,
+              ),
+              context,
+            );
+          case null:
+            return '';
         }
         break;
       case ActionType.stripe:

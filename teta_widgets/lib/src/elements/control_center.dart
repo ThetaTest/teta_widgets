@@ -70,6 +70,7 @@ import 'package:teta_widgets/src/elements/bodies/liquid_swipe.dart';
 import 'package:teta_widgets/src/elements/bodies/list_tile.dart';
 import 'package:teta_widgets/src/elements/bodies/listview.dart';
 import 'package:teta_widgets/src/elements/bodies/listview_builder.dart';
+import 'package:teta_widgets/src/elements/bodies/location_body.dart';
 import 'package:teta_widgets/src/elements/bodies/lottie.dart';
 import 'package:teta_widgets/src/elements/bodies/map.dart';
 import 'package:teta_widgets/src/elements/bodies/map_builder.dart';
@@ -238,6 +239,7 @@ final stateTypes = <IntrinsicStates>[
   dotsIndicatorIntrinsicStates,
   mapBuilderIntrinsicStates,
   googleMapsIntrinsicStates,
+  locationIntrinsicStates,
   wrapperIntrinsicStates,
   revenueCatProductsListIntrinsicStates,
   revenueCatSubStatusIntrinsicStates,
@@ -266,6 +268,8 @@ NodeBody getBody(final NType type) {
   switch (type) {
     case NType.align:
       return AlignBody();
+      case NType.location:
+      return LocationBody();
     case NType.appBar:
       return AppBarBody();
     case NType.badge:

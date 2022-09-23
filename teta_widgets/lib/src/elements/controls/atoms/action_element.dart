@@ -29,6 +29,7 @@ import 'package:teta_widgets/src/elements/controls/atoms/teta_cms/insert.dart';
 import 'package:teta_widgets/src/elements/controls/atoms/teta_cms/update.dart';
 import 'package:teta_widgets/src/elements/controls/atoms/text.dart';
 import 'package:teta_widgets/src/elements/controls/type.dart';
+import 'package:teta_widgets/src/elements/features/actions/enums/action_google_maps.dart';
 import 'package:teta_widgets/src/elements/features/actions/enums/audio_player_actions.dart';
 import 'package:teta_widgets/src/elements/features/actions/enums/braintree.dart';
 import 'package:teta_widgets/src/elements/features/actions/enums/camera.dart';
@@ -962,6 +963,280 @@ class ActionElementControlState extends State<ActionElementControl> {
                   element: widget.element,
                   callback: widget.callBack,
                 ),
+              if (ActionType.googleMaps == widget.element.actionType)
+                Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    const Gap(Grid.medium),
+                    const THeadline3(
+                      'Action type',
+                      isCentered: false,
+                    ),
+                    CDropdown(
+                      value: FActionElement.convertValueToDropdown(
+                        widget.element.actionGoogleMaps,
+                      ),
+                      items: FActionElement.getGoogleMaps(widget.prj.config)
+                          .toSet()
+                          .toList(),
+                      onChange: (final newValue) {
+                        if (newValue != null) {
+                          final old = widget.element;
+                          widget.element.actionGoogleMaps =
+                              FActionElement.convertDropdownToValue(
+                            ActionGoogleMaps.values,
+                            newValue,
+                          ) as ActionGoogleMaps?;
+                          widget.callBack(widget.element, old);
+                        }
+                      },
+                    ),
+                    const Gap(Grid.medium),
+                    const THeadline3(
+                      'Google Maps Cubit',
+                      isCentered: false,
+                    ),
+                    descriptionControlWidget(
+                      description: 'Google Maps Cubit',
+                      control: CDropdown(
+                        value: widget.page.states
+                                    .where(
+                                      (final element) =>
+                                          element.type ==
+                                          VariableType.googleMapsBloc,
+                                    )
+                                    .map((final e) => e.name)
+                                    .where((final element) => element != 'null')
+                                    .toList()
+                                    .indexWhere(
+                                      (final e) =>
+                                          e == widget.element.stateName,
+                                    ) !=
+                                -1
+                            ? widget.element.stateName
+                            : null,
+                        items: widget.page.states
+                            .where(
+                              (final element) =>
+                                  element.type == VariableType.googleMapsBloc,
+                            )
+                            .map((final e) => e.name)
+                            .where((final element) => element != 'null')
+                            .toList(),
+                        onChange: (final newValue) {
+                          if (newValue != null) {
+                            final old = widget.element;
+                            widget.element.stateName = newValue;
+                            widget.callBack(widget.element, old);
+                          }
+                        },
+                      ),
+                    ),
+                    const Gap(Grid.medium),
+                    const THeadline3(
+                      'Google Maps Controller',
+                      isCentered: false,
+                    ),
+                    descriptionControlWidget(
+                      description: 'Google Maps Controller',
+                      control: CDropdown(
+                        value: widget.page.states
+                                    .where(
+                                      (final element) =>
+                                          element.type ==
+                                          VariableType.googleMapsController,
+                                    )
+                                    .map((final e) => e.name)
+                                    .where((final element) => element != 'null')
+                                    .toList()
+                                    .indexWhere(
+                                      (final e) =>
+                                          e == widget.element.stateName2,
+                                    ) !=
+                                -1
+                            ? widget.element.stateName2
+                            : null,
+                        items: widget.page.states
+                            .where(
+                              (final element) =>
+                                  element.type ==
+                                  VariableType.googleMapsController,
+                            )
+                            .map((final e) => e.name)
+                            .where((final element) => element != 'null')
+                            .toList(),
+                        onChange: (final newValue) {
+                          if (newValue != null) {
+                            final old = widget.element;
+                            widget.element.stateName2 = newValue;
+                            widget.callBack(widget.element, old);
+                          }
+                        },
+                      ),
+                    ),
+                    if (ActionGoogleMaps.updateLiveLocation ==
+                        widget.element.actionGoogleMaps) ...[
+                      const Gap(Grid.medium),
+                      const THeadline3(
+                        'Latitude variable',
+                        isCentered: false,
+                      ),
+                      descriptionControlWidget(
+                        description:
+                            'Each time a new location is streamed it will be stored here.',
+                        control: CDropdown(
+                          value: widget.page.states
+                                      .where(
+                                        (final element) =>
+                                            element.type == VariableType.double,
+                                      )
+                                      .map((final e) => e.name)
+                                      .where(
+                                        (final element) => element != 'null',
+                                      )
+                                      .toList()
+                                      .indexWhere(
+                                        (final e) =>
+                                            e == widget.element.stateName3,
+                                      ) !=
+                                  -1
+                              ? widget.element.stateName3
+                              : null,
+                          items: widget.page.states
+                              .where(
+                                (final element) =>
+                                    element.type == VariableType.double,
+                              )
+                              .map((final e) => e.name)
+                              .where((final element) => element != 'null')
+                              .toList(),
+                          onChange: (final newValue) {
+                            if (newValue != null) {
+                              final old = widget.element;
+                              widget.element.stateName3 = newValue;
+                              widget.callBack(widget.element, old);
+                            }
+                          },
+                        ),
+                      ),
+                      const Gap(Grid.medium),
+                      const THeadline3(
+                        'Longitude Variable',
+                        isCentered: false,
+                      ),
+                      descriptionControlWidget(
+                        description:
+                            'Each time a new location is streamed it will be stored here.',
+                        control: CDropdown(
+                          value: widget.page.states
+                                      .where(
+                                        (final element) =>
+                                            element.type == VariableType.double,
+                                      )
+                                      .map((final e) => e.name)
+                                      .where(
+                                        (final element) => element != 'null',
+                                      )
+                                      .toList()
+                                      .indexWhere(
+                                        (final e) =>
+                                            e == widget.element.stateName4,
+                                      ) !=
+                                  -1
+                              ? widget.element.stateName4
+                              : null,
+                          items: widget.page.states
+                              .where(
+                                (final element) =>
+                                    element.type == VariableType.double,
+                              )
+                              .map((final e) => e.name)
+                              .where((final element) => element != 'null')
+                              .toList(),
+                          onChange: (final newValue) {
+                            if (newValue != null) {
+                              final old = widget.element;
+                              widget.element.stateName4 = newValue;
+                              widget.callBack(widget.element, old);
+                            }
+                          },
+                        ),
+                      ),
+                    ],
+                    if (ActionGoogleMaps.setCameraPosition ==
+                        widget.element.actionGoogleMaps) ...[
+                      Padding(
+                        padding: const EdgeInsets.only(top: 8),
+                        child: SizedBox(
+                          width: double.maxFinite,
+                          child: descriptionControlWidget(
+                            description: 'Camera Latitude',
+                            control: TextControl(
+                              valueType: VariableType.double,
+                              node: widget.node,
+                              value: widget.element.googleMapsLat ??
+                                  FTextTypeInput(),
+                              page: widget.page,
+                              title: 'Camera Latitude',
+                              callBack: (final value, final old) {
+                                final old = widget.element;
+                                widget.element.googleMapsLat = value;
+                                widget.element.valueOfCondition = value;
+                                widget.callBack(widget.element, old);
+                              },
+                            ),
+                          ),
+                        ),
+                      ),
+                      Padding(
+                        padding: const EdgeInsets.only(top: 8),
+                        child: SizedBox(
+                          width: double.maxFinite,
+                          child: descriptionControlWidget(
+                            description: 'Camera Longitude',
+                            control: TextControl(
+                              valueType: VariableType.double,
+                              node: widget.node,
+                              value: widget.element.googleMapsLng ??
+                                  FTextTypeInput(),
+                              page: widget.page,
+                              title: 'Camera Longitude',
+                              callBack: (final value, final old) {
+                                final old = widget.element;
+                                widget.element.googleMapsLng = value;
+                                widget.element.valueOfCondition = value;
+                                widget.callBack(widget.element, old);
+                              },
+                            ),
+                          ),
+                        ),
+                      ),
+                      Padding(
+                        padding: const EdgeInsets.only(top: 8),
+                        child: SizedBox(
+                          width: double.maxFinite,
+                          child: descriptionControlWidget(
+                            description: 'Camera Zoom',
+                            control: TextControl(
+                              valueType: VariableType.string,
+                              node: widget.node,
+                              value: widget.element.googleMapsZoom ??
+                                  FTextTypeInput(),
+                              page: widget.page,
+                              title: 'Camera Zoom',
+                              callBack: (final value, final old) {
+                                final old = widget.element;
+                                widget.element.googleMapsZoom = value;
+                                widget.element.valueOfCondition = value;
+                                widget.callBack(widget.element, old);
+                              },
+                            ),
+                          ),
+                        ),
+                      ),
+                    ]
+                  ],
+                ),
               if (widget.element.actionType == ActionType.stripe)
                 Column(
                   children: [
@@ -984,168 +1259,172 @@ class ActionElementControlState extends State<ActionElementControl> {
                         }
                       },
                     ),
-                    Padding(
-                      padding: const EdgeInsets.only(top: 8),
-                      child: SizedBox(
-                        width: double.maxFinite,
-                        child: descriptionControlWidget(
-                          description: 'Billing email',
-                          control: TextControl(
-                            valueType: VariableType.string,
-                            node: widget.node,
-                            value: widget.element.stripeBillingInfoEmail ??
-                                FTextTypeInput(),
-                            page: widget.page,
-                            title: 'Billing email',
-                            callBack: (final value, final old) {
-                              final old = widget.element;
-                              widget.element.stripeBillingInfoEmail = value;
-                              widget.element.valueOfCondition = value;
-                              widget.callBack(widget.element, old);
-                            },
+                    if (ActionStripe.buyCartItems ==
+                        widget.element.actionStripe) ...[
+                      Padding(
+                        padding: const EdgeInsets.only(top: 8),
+                        child: SizedBox(
+                          width: double.maxFinite,
+                          child: descriptionControlWidget(
+                            description: 'Billing email',
+                            control: TextControl(
+                              valueType: VariableType.string,
+                              node: widget.node,
+                              value: widget.element.stripeBillingInfoEmail ??
+                                  FTextTypeInput(),
+                              page: widget.page,
+                              title: 'Billing email',
+                              callBack: (final value, final old) {
+                                final old = widget.element;
+                                widget.element.stripeBillingInfoEmail = value;
+                                widget.element.valueOfCondition = value;
+                                widget.callBack(widget.element, old);
+                              },
+                            ),
                           ),
                         ),
                       ),
-                    ),
-                    Padding(
-                      padding: const EdgeInsets.only(top: 8),
-                      child: SizedBox(
-                        width: double.maxFinite,
-                        child: descriptionControlWidget(
-                          description: 'Billing phone',
-                          control: TextControl(
-                            valueType: VariableType.string,
-                            node: widget.node,
-                            value: widget.element.stripeBillingInfoPhone ??
-                                FTextTypeInput(),
-                            page: widget.page,
-                            title: 'Billing phone',
-                            callBack: (final value, final old) {
-                              final old = widget.element;
-                              widget.element.stripeBillingInfoPhone = value;
-                              widget.element.valueOfCondition = value;
-                              widget.callBack(widget.element, old);
-                            },
+                      Padding(
+                        padding: const EdgeInsets.only(top: 8),
+                        child: SizedBox(
+                          width: double.maxFinite,
+                          child: descriptionControlWidget(
+                            description: 'Billing phone',
+                            control: TextControl(
+                              valueType: VariableType.string,
+                              node: widget.node,
+                              value: widget.element.stripeBillingInfoPhone ??
+                                  FTextTypeInput(),
+                              page: widget.page,
+                              title: 'Billing phone',
+                              callBack: (final value, final old) {
+                                final old = widget.element;
+                                widget.element.stripeBillingInfoPhone = value;
+                                widget.element.valueOfCondition = value;
+                                widget.callBack(widget.element, old);
+                              },
+                            ),
                           ),
                         ),
                       ),
-                    ),
-                    Padding(
-                      padding: const EdgeInsets.only(top: 8),
-                      child: SizedBox(
-                        width: double.maxFinite,
-                        child: descriptionControlWidget(
-                          description: 'Billing city',
-                          control: TextControl(
-                            valueType: VariableType.string,
-                            node: widget.node,
-                            value: widget.element.stripeBillingInfoCity ??
-                                FTextTypeInput(),
-                            page: widget.page,
-                            title: 'Billing city',
-                            callBack: (final value, final old) {
-                              final old = widget.element;
-                              widget.element.stripeBillingInfoCity = value;
-                              widget.element.valueOfCondition = value;
-                              widget.callBack(widget.element, old);
-                            },
+                      Padding(
+                        padding: const EdgeInsets.only(top: 8),
+                        child: SizedBox(
+                          width: double.maxFinite,
+                          child: descriptionControlWidget(
+                            description: 'Billing city',
+                            control: TextControl(
+                              valueType: VariableType.string,
+                              node: widget.node,
+                              value: widget.element.stripeBillingInfoCity ??
+                                  FTextTypeInput(),
+                              page: widget.page,
+                              title: 'Billing city',
+                              callBack: (final value, final old) {
+                                final old = widget.element;
+                                widget.element.stripeBillingInfoCity = value;
+                                widget.element.valueOfCondition = value;
+                                widget.callBack(widget.element, old);
+                              },
+                            ),
                           ),
                         ),
                       ),
-                    ),
-                    Padding(
-                      padding: const EdgeInsets.only(top: 8),
-                      child: SizedBox(
-                        width: double.maxFinite,
-                        child: descriptionControlWidget(
-                          description: 'Billing state',
-                          control: TextControl(
-                            valueType: VariableType.string,
-                            node: widget.node,
-                            value: widget.element.stripeBillingInfoState ??
-                                FTextTypeInput(),
-                            page: widget.page,
-                            title: 'Billing state',
-                            callBack: (final value, final old) {
-                              final old = widget.element;
-                              widget.element.stripeBillingInfoState = value;
-                              widget.element.valueOfCondition = value;
-                              widget.callBack(widget.element, old);
-                            },
+                      Padding(
+                        padding: const EdgeInsets.only(top: 8),
+                        child: SizedBox(
+                          width: double.maxFinite,
+                          child: descriptionControlWidget(
+                            description: 'Billing state',
+                            control: TextControl(
+                              valueType: VariableType.string,
+                              node: widget.node,
+                              value: widget.element.stripeBillingInfoState ??
+                                  FTextTypeInput(),
+                              page: widget.page,
+                              title: 'Billing state',
+                              callBack: (final value, final old) {
+                                final old = widget.element;
+                                widget.element.stripeBillingInfoState = value;
+                                widget.element.valueOfCondition = value;
+                                widget.callBack(widget.element, old);
+                              },
+                            ),
                           ),
                         ),
                       ),
-                    ),
-                    Padding(
-                      padding: const EdgeInsets.only(top: 8),
-                      child: SizedBox(
-                        width: double.maxFinite,
-                        child: descriptionControlWidget(
-                          description: 'Billing line',
-                          control: TextControl(
-                            valueType: VariableType.string,
-                            node: widget.node,
-                            value: widget.element.stripeBillingInfoLine ??
-                                FTextTypeInput(),
-                            page: widget.page,
-                            title: 'Billing line',
-                            callBack: (final value, final old) {
-                              final old = widget.element;
-                              widget.element.stripeBillingInfoLine = value;
-                              widget.element.valueOfCondition = value;
-                              widget.callBack(widget.element, old);
-                            },
+                      Padding(
+                        padding: const EdgeInsets.only(top: 8),
+                        child: SizedBox(
+                          width: double.maxFinite,
+                          child: descriptionControlWidget(
+                            description: 'Billing line',
+                            control: TextControl(
+                              valueType: VariableType.string,
+                              node: widget.node,
+                              value: widget.element.stripeBillingInfoLine ??
+                                  FTextTypeInput(),
+                              page: widget.page,
+                              title: 'Billing line',
+                              callBack: (final value, final old) {
+                                final old = widget.element;
+                                widget.element.stripeBillingInfoLine = value;
+                                widget.element.valueOfCondition = value;
+                                widget.callBack(widget.element, old);
+                              },
+                            ),
                           ),
                         ),
                       ),
-                    ),
-                    Padding(
-                      padding: const EdgeInsets.only(top: 8),
-                      child: SizedBox(
-                        width: double.maxFinite,
-                        child: descriptionControlWidget(
-                          description: 'Billing Postal Code',
-                          control: TextControl(
-                            valueType: VariableType.string,
-                            node: widget.node,
-                            value: widget.element.stripeBillingInfoPostalCode ??
-                                FTextTypeInput(),
-                            page: widget.page,
-                            title: 'Billing postal code',
-                            callBack: (final value, final old) {
-                              final old = widget.element;
-                              widget.element.stripeBillingInfoPostalCode =
-                                  value;
-                              widget.element.valueOfCondition = value;
-                              widget.callBack(widget.element, old);
-                            },
+                      Padding(
+                        padding: const EdgeInsets.only(top: 8),
+                        child: SizedBox(
+                          width: double.maxFinite,
+                          child: descriptionControlWidget(
+                            description: 'Billing Postal Code',
+                            control: TextControl(
+                              valueType: VariableType.string,
+                              node: widget.node,
+                              value:
+                                  widget.element.stripeBillingInfoPostalCode ??
+                                      FTextTypeInput(),
+                              page: widget.page,
+                              title: 'Billing postal code',
+                              callBack: (final value, final old) {
+                                final old = widget.element;
+                                widget.element.stripeBillingInfoPostalCode =
+                                    value;
+                                widget.element.valueOfCondition = value;
+                                widget.callBack(widget.element, old);
+                              },
+                            ),
                           ),
                         ),
                       ),
-                    ),
-                    Padding(
-                      padding: const EdgeInsets.only(top: 8),
-                      child: SizedBox(
-                        width: double.maxFinite,
-                        child: descriptionControlWidget(
-                          description: 'Billing country',
-                          control: TextControl(
-                            valueType: VariableType.string,
-                            node: widget.node,
-                            value: widget.element.stripeBillingInfoCountry ??
-                                FTextTypeInput(),
-                            page: widget.page,
-                            title: 'Billing country',
-                            callBack: (final value, final old) {
-                              final old = widget.element;
-                              widget.element.stripeBillingInfoCountry = value;
-                              widget.element.valueOfCondition = value;
-                              widget.callBack(widget.element, old);
-                            },
+                      Padding(
+                        padding: const EdgeInsets.only(top: 8),
+                        child: SizedBox(
+                          width: double.maxFinite,
+                          child: descriptionControlWidget(
+                            description: 'Billing country',
+                            control: TextControl(
+                              valueType: VariableType.string,
+                              node: widget.node,
+                              value: widget.element.stripeBillingInfoCountry ??
+                                  FTextTypeInput(),
+                              page: widget.page,
+                              title: 'Billing country',
+                              callBack: (final value, final old) {
+                                final old = widget.element;
+                                widget.element.stripeBillingInfoCountry = value;
+                                widget.element.valueOfCondition = value;
+                                widget.callBack(widget.element, old);
+                              },
+                            ),
                           ),
                         ),
                       ),
-                    ),
+                    ]
                   ],
                 ),
               if (widget.element.actionType == ActionType.tetaAuth)

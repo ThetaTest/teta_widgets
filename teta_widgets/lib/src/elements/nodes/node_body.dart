@@ -1,9 +1,11 @@
 // Flutter imports:
 import 'package:equatable/equatable.dart';
 import 'package:flutter/material.dart';
+
 // Package imports:
 import 'package:teta_core/src/models/dataset.dart';
 import 'package:teta_core/src/models/variable.dart';
+
 // Project imports:
 import 'package:teta_widgets/src/elements/control_center.dart';
 import 'package:teta_widgets/src/elements/controls/control_model.dart';
@@ -97,40 +99,36 @@ class NodeBody extends Equatable {
     final int? loop,
     final List<NType> existingNodeTypes,
   ) {
-    if (existingNodeTypes.contains(node.globalType)) {
-      return '';
-    } else {
-      existingNodeTypes.add(node.globalType);
-      final buffer = StringBuffer()..write('');
-      if (child != null) {
+    existingNodeTypes.add(node.globalType);
+    final buffer = StringBuffer()..write('');
+    if (child != null) {
+      buffer.write(
+        child.body.toCodeOnInit(
+          context,
+          child,
+          child.child,
+          child.children,
+          pageId,
+          loop,
+          existingNodeTypes,
+        ),
+      );
+    } else if (children != null) {
+      for (final e in children) {
         buffer.write(
-          child.body.toCodeOnInit(
+          e.body.toCodeOnInit(
             context,
-            node,
-            child.child,
-            child.children,
+            e,
+            e.child,
+            e.children,
             pageId,
             loop,
             existingNodeTypes,
           ),
         );
-      } else if (children != null) {
-        for (final e in children) {
-          buffer.write(
-            e.body.toCodeOnInit(
-              context,
-              node,
-              e.child,
-              e.children,
-              pageId,
-              loop,
-              existingNodeTypes,
-            ),
-          );
-        }
       }
-      return buffer.toString();
     }
+    return buffer.toString();
   }
 
   /// Additional classes code representation
