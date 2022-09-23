@@ -189,7 +189,7 @@ Future<String> pageCodeTemplate(final BuildContext context,
       ? "import 'package:flutter_braintree/flutter_braintree.dart';"
       : ''}
     ${prj.config?.isStripeEnabled ?? false
-      ? "import 'package:flutter_stripe/flutter_stripe.dart'; \n import 'dart:convert';"
+      ? "import 'package:flutter_stripe/flutter_stripe.dart'; \n import 'dart:convert' as convert;"
       : ''}
 
     ${PackagesService.instance.getToCodePackages()}
