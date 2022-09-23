@@ -23,6 +23,7 @@ import 'package:teta_widgets/src/elements/code/templates/card.dart';
 import 'package:teta_widgets/src/elements/code/templates/center.dart';
 import 'package:teta_widgets/src/elements/code/templates/checkbox.dart';
 import 'package:teta_widgets/src/elements/code/templates/circular_progress_indicator.dart';
+import 'package:teta_widgets/src/elements/code/templates/clip_rrect.dart';
 import 'package:teta_widgets/src/elements/code/templates/cms_count.dart';
 import 'package:teta_widgets/src/elements/code/templates/cms_custom_query.dart';
 import 'package:teta_widgets/src/elements/code/templates/cms_fetch.dart';
@@ -86,6 +87,7 @@ void main() {
   CmsFetchCodeTemplate.testCode();
   CmsLoggedUserCodeTemplate.testCode();
   CmsStreamCodeTemplate.testCode();
+  ClipRRectCodeTemplate.testCode();
   DividerCodeTemplate.testCode();
   FadeInCodeTemplate.testCode();
   FittedBoxCodeTemplate.testCode();
