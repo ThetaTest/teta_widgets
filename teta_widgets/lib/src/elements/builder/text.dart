@@ -50,6 +50,7 @@ class TextBuilder extends StatelessWidget {
         if (state.isNotEmpty) {
           for (final e in state) {
             if (e.id == _textStyle.fill!.paletteStyle) finalFill = e.fill;
+            if (e.name == _textStyle.fill!.paletteStyle) finalFill = e.fill;
           }
         }
         finalFill ??= _textStyle.fill!;
