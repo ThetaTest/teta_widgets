@@ -7,6 +7,7 @@ import 'package:flutter/material.dart';
 import 'package:teta_core/gen/assets.gen.dart';
 import 'package:teta_core/src/models/dataset.dart';
 import 'package:teta_core/src/models/variable.dart';
+import 'package:teta_widgets/src/elements/code/snippets.dart';
 // Project imports:
 import 'package:teta_widgets/src/elements/code/templates/textfield.dart';
 import 'package:teta_widgets/src/elements/controls/control_model.dart';
@@ -299,12 +300,18 @@ class TextFieldBody extends NodeBody {
     final int pageId,
     final int? loop,
   ) =>
-      TextFieldCodeTemplate.toCode(
-        pageId,
+      CS.defaultWidgets(
         context,
-        this,
         node,
-        child,
+        pageId,
+        TextFieldCodeTemplate.toCode(
+          pageId,
+          context,
+          this,
+          node,
+          child,
+          loop ?? 0,
+        ),
         loop ?? 0,
       );
 }

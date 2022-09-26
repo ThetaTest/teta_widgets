@@ -4,7 +4,6 @@ import 'dart:async';
 
 import 'package:flutter/material.dart';
 import 'package:teta_core/teta_core.dart';
-
 // Project imports:
 import 'package:teta_widgets/src/elements/controls/key_constants.dart';
 import 'package:teta_widgets/src/elements/features/physic.dart';
@@ -210,7 +209,6 @@ class CS {
                   pageId,
                   child,
                   loop,
-                  withComma: true,
                 ),
                 loop,
               ),
@@ -354,7 +352,7 @@ class CS {
     RotatedBox(
       quarterTurns: $rotation,
       child: $childString
-    ),
+    )
   ''';
       }
     }
@@ -622,7 +620,7 @@ class CS {
         $setRotationY
         $setRotationZ,
       child: $childString
-    ),
+    )
   ''';
   }
 
@@ -844,8 +842,7 @@ class CS {
         );
       }
     }
-   return
-     '''
+    return '''
     unawaited(
       Future.delayed(
         Duration.zero,

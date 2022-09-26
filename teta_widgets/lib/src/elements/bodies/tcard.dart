@@ -9,6 +9,7 @@ import 'package:teta_core/src/models/dataset.dart';
 import 'package:teta_core/src/models/variable.dart';
 // Project imports:
 import 'package:teta_widgets/src/elements/code/advanced/tcard.dart';
+import 'package:teta_widgets/src/elements/code/snippets.dart';
 import 'package:teta_widgets/src/elements/controls/control_model.dart';
 import 'package:teta_widgets/src/elements/controls/key_constants.dart';
 import 'package:teta_widgets/src/elements/controls/type.dart';
@@ -141,5 +142,11 @@ class TCardBody extends NodeBody {
     final int pageId,
     final int? loop,
   ) =>
-      TCardCodeTemplate.toCode(context, pageId, node, children ?? [], loop);
+      CS.defaultWidgets(
+        context,
+        node,
+        pageId,
+        TCardCodeTemplate.toCode(context, pageId, node, children ?? [], loop),
+        loop ?? 0,
+      );
 }

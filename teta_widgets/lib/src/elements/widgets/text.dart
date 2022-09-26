@@ -96,18 +96,7 @@ class _WTextState extends State<WText> {
           }
           return GestureDetector(
             onDoubleTap: () {
-              final maxLines = int.tryParse(
-                    widget.maxLines.get(
-                      widget.params,
-                      widget.states,
-                      widget.dataset,
-                      widget.forPlay,
-                      widget.loop,
-                      context,
-                    ),
-                  ) ??
-                  1;
-              if (!widget.forPlay && maxLines == 1) {
+              if (!widget.forPlay) {
                 _controller.text = widget.value.get(
                   widget.params,
                   widget.states,
@@ -125,62 +114,72 @@ class _WTextState extends State<WText> {
               }
             },
             child: isEditing
-                ? !widget.isFullWidth
-                    ? IntrinsicWidth(
-                        child: TextField(
-                          controller: _controller,
-                          autofocus: true,
-                          style: widget.textStyle.get(context, model),
-                          textAlign: widget.textStyle.textAlign?.get ??
-                              TextAlign.start,
-                          decoration: const InputDecoration(
-                            contentPadding: EdgeInsets.symmetric(vertical: 4),
-                            isDense: true,
-                            border: InputBorder.none,
+                ? Focus(
+                    focusNode: focusNode,
+                    onFocusChange: (final hasFocus) {
+                      if (!hasFocus) {
+                        updateTextOnSubmit(_controller.text, context);
+                      }
+                    },
+                    child: !widget.isFullWidth
+                        ? IntrinsicWidth(
+                            child: TextField(
+                              controller: _controller,
+                              autofocus: true,
+                              style: widget.textStyle.get(context, model),
+                              textAlign: widget.textStyle.textAlign?.get ??
+                                  TextAlign.start,
+                              decoration: const InputDecoration(
+                                contentPadding:
+                                    EdgeInsets.symmetric(vertical: 4),
+                                isDense: true,
+                                border: InputBorder.none,
+                              ),
+                              maxLines: int.tryParse(
+                                    widget.maxLines.get(
+                                      widget.params,
+                                      widget.states,
+                                      widget.dataset,
+                                      widget.forPlay,
+                                      widget.loop,
+                                      context,
+                                    ),
+                                  ) ??
+                                  1,
+                              onSubmitted: (final text) =>
+                                  updateTextOnSubmit(text, context),
+                            ),
+                          )
+                        : SizedBox(
+                            width: double.maxFinite,
+                            child: TextField(
+                              controller: _controller,
+                              autofocus: true,
+                              style: widget.textStyle.get(context, model),
+                              textAlign: widget.textStyle.textAlign?.get ??
+                                  TextAlign.start,
+                              decoration: const InputDecoration(
+                                contentPadding:
+                                    EdgeInsets.symmetric(vertical: 4),
+                                isDense: true,
+                                border: InputBorder.none,
+                              ),
+                              maxLines: int.tryParse(
+                                    widget.maxLines.get(
+                                      widget.params,
+                                      widget.states,
+                                      widget.dataset,
+                                      widget.forPlay,
+                                      widget.loop,
+                                      context,
+                                    ),
+                                  ) ??
+                                  1,
+                              onSubmitted: (final text) =>
+                                  updateTextOnSubmit(text, context),
+                            ),
                           ),
-                          maxLines: int.tryParse(
-                                widget.maxLines.get(
-                                  widget.params,
-                                  widget.states,
-                                  widget.dataset,
-                                  widget.forPlay,
-                                  widget.loop,
-                                  context,
-                                ),
-                              ) ??
-                              1,
-                          onSubmitted: (final text) =>
-                              updateTextOnSubmit(text, context),
-                        ),
-                      )
-                    : SizedBox(
-                        width: double.maxFinite,
-                        child: TextField(
-                          controller: _controller,
-                          autofocus: true,
-                          style: widget.textStyle.get(context, model),
-                          textAlign: widget.textStyle.textAlign?.get ??
-                              TextAlign.start,
-                          decoration: const InputDecoration(
-                            contentPadding: EdgeInsets.symmetric(vertical: 4),
-                            isDense: true,
-                            border: InputBorder.none,
-                          ),
-                          maxLines: int.tryParse(
-                                widget.maxLines.get(
-                                  widget.params,
-                                  widget.states,
-                                  widget.dataset,
-                                  widget.forPlay,
-                                  widget.loop,
-                                  context,
-                                ),
-                              ) ??
-                              1,
-                          onSubmitted: (final text) =>
-                              updateTextOnSubmit(text, context),
-                        ),
-                      )
+                  )
                 : GestureBuilderBase.get(
                     context: context,
                     node: widget.node,

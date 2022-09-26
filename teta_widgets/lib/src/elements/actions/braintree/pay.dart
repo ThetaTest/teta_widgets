@@ -41,7 +41,7 @@ class FActionBraintreeBuy {
     final prj =
         (BlocProvider.of<FocusProjectBloc>(context).state as ProjectLoaded).prj;
     final isSandbox = prj.config?.braintreeIsSandbox ?? true;
-    final token = isSandbox
+    final token = !isSandbox
         ? prj.config?.braintreeClientToken
         : prj.config?.braintreeClientTokenSandbox;
     final companyName = prj.config?.companyName ?? '';
@@ -69,7 +69,7 @@ class FActionBraintreeBuy {
 
     paypal = '''
       BraintreePayPalRequest(
-        amount: $amount,
+        amount: '$amount',
         displayName: '$companyName',
       ),''';
 
