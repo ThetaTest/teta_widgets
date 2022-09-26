@@ -7,6 +7,7 @@ import 'package:flutter/material.dart';
 // Package imports:
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:supabase/supabase.dart';
+import 'package:teta_core/src/cubits/panels/cubit.dart';
 import 'package:teta_core/src/design_system/textfield/textfield.dart';
 import 'package:teta_core/teta_core.dart';
 // Project imports:
@@ -282,12 +283,9 @@ class SrcImageControlState extends State<SrcImageControl> {
                                     padding: const EdgeInsets.only(bottom: 8),
                                     child: GestureDetector(
                                       onTap: () {
-                                        BlocProvider.of<PanelsBloc>(context)
-                                            .add(
-                                          const ChangeIndex(
-                                            type: PanelsEnum.assets,
-                                          ),
-                                        );
+                                        BlocProvider.of<PanelsCubit>(context)
+                                            .changePanel(PanelsEnum.assets,);
+                                          
                                       },
                                       child: const MouseRegion(
                                         cursor: SystemMouseCursors.click,

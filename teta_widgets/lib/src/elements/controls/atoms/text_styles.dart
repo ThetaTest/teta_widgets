@@ -7,6 +7,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:hovering/hovering.dart';
+import 'package:teta_core/src/cubits/panels/cubit.dart';
 import 'package:teta_core/src/design_system/textfield/minitextfield.dart';
 import 'package:teta_core/teta_core.dart';
 // Project imports:
@@ -96,8 +97,8 @@ class TextStylesControlState extends State<TextStylesControl> {
                     if (widget.textStyle.textStyleModel == null) {
                       /*newTextStylePicker(
                           context, BlocProvider.of<TextStylesBloc>(context));*/
-                      BlocProvider.of<PanelsBloc>(context)
-                          .add(const ChangeIndex(type: PanelsEnum.assets));
+                      BlocProvider.of<PanelsCubit>(context)
+                          .changePanel(PanelsEnum.assets);
                     } else {
                       final old = widget.textStyle.textStyleModel;
                       //String txtSM = widget.node.textStyleModel;
