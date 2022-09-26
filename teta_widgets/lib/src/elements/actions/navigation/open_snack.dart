@@ -10,8 +10,8 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:recase/recase.dart';
 import 'package:teta_core/src/rendering/nodes_original.dart';
-import 'package:teta_core/src/repositories/queries/node.dart';
 import 'package:teta_core/teta_core.dart';
+import 'package:teta_repositories/src/node_repository.dart';
 import 'package:teta_widgets/src/elements/actions/navigation/pass_params_builder.dart';
 import 'package:teta_widgets/src/elements/code/formatter_test.dart';
 import 'package:teta_widgets/src/elements/index.dart';
@@ -35,7 +35,7 @@ class FActionNavigationOpenSnackBar {
         page = prj.prj.pages!
             .firstWhereOrNull((final element) => element.name == nameOfPage);
         if (page != null) {
-          final list = await NodeQueries.fetchNodesByPage(page.id);
+          final list = await NodeRepository.fetchNodesByPage(page.id);
           final nodes = <CNode>[];
           for (final e in list) {
             nodes.add(

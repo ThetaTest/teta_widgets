@@ -6,10 +6,10 @@ import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 // Package imports:
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:teta_core/src/repositories/node.dart';
-import 'package:teta_core/src/repositories/queries/color_style.dart';
-import 'package:teta_core/src/repositories/queries/page.dart';
 import 'package:teta_core/teta_core.dart';
+import 'package:teta_repositories/src/node_repository.dart';
+import 'package:teta_repositories/src/project_repository.dart';
+import 'package:teta_repositories/src/project_styles_repository.dart';
 // Project imports:
 import 'package:teta_widgets/src/elements/controls/atoms/action.dart';
 import 'package:teta_widgets/src/elements/controls/atoms/aligns.dart';
@@ -911,7 +911,7 @@ class ControlBuilder {
           node: node,
           page: page,
           callBack: (final list) async {
-            await PageQueries.update(page);
+            await ProjectRepository.updatePage(page);
             BlocProvider.of<RefreshCubit>(context).change();
           },
         ),
@@ -925,7 +925,7 @@ class ControlBuilder {
           node: node,
           page: page,
           callBack: (final list) async {
-            await PageQueries.update(page);
+            await ProjectRepository.updatePage(page);
             BlocProvider.of<RefreshCubit>(context).change();
           },
         ),
@@ -1023,7 +1023,7 @@ class ControlBuilder {
           );
         } else {
           if (value.paletteStyle is int) {
-            ColorStyleQueries.update(
+            ProjectStylesRepository.updateColorStyle(
               PaletteModel(id: value.paletteStyle! as int, fill: value),
             );
           }

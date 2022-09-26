@@ -6,8 +6,8 @@ import 'package:flutter/material.dart';
 // Package imports:
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:teta_core/src/rendering/find.dart';
-import 'package:teta_core/src/repositories/actions/remove_node_between_nodes.dart';
 import 'package:teta_core/teta_core.dart';
+import 'package:teta_repositories/src/node_repository.dart';
 // Project imports:
 import 'package:teta_widgets/src/elements/nodes/children_enum.dart';
 import 'package:teta_widgets/src/elements/nodes/dynamic.dart';
@@ -59,7 +59,7 @@ class DeleteControlState extends State<DeleteControl> {
               padding: const EdgeInsets.only(top: 8),
               child: CDangerousButton(
                 label: 'Delete This Node Only',
-                callback: () async => removeNodeBetweenNodes(
+                callback: () async => NodeRepository().removeNodeBetweenNodes(
                   context: context,
                   nodes:
                       BlocProvider.of<PageCubit>(context).state.flatList ?? [],

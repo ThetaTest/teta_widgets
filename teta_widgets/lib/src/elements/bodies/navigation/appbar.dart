@@ -1,8 +1,8 @@
 // Flutter imports:
 import 'package:flutter/material.dart';
-// Package imports:
-import 'package:teta_core/src/repositories/node.dart';
 import 'package:teta_core/teta_core.dart';
+// Package imports:
+import 'package:teta_repositories/src/node_repository.dart';
 // Project imports:
 import 'package:teta_widgets/src/elements/code/templates/navigation/appbar.dart';
 import 'package:teta_widgets/src/elements/controls/control_model.dart';

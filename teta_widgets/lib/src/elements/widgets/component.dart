@@ -9,8 +9,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:recase/recase.dart';
 import 'package:teta_core/src/rendering/nodes_original.dart';
-import 'package:teta_core/src/repositories/queries/node.dart';
 import 'package:teta_core/teta_core.dart';
+import 'package:teta_repositories/src/node_repository.dart';
 import 'package:teta_widgets/src/elements/builder/gesture_detector_base.dart';
 // Project imports:
 import 'package:teta_widgets/src/elements/index.dart';
@@ -121,7 +121,7 @@ class _WComponentState extends State<WComponent> {
     final PageObject page,
     final BuildContext context,
   ) async {
-    final list = await NodeQueries.fetchNodesByPage(page.id);
+    final list = await NodeRepository.fetchNodesByPage(page.id);
     final nodes = <CNode>[];
     for (final e in list) {
       nodes.add(

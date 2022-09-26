@@ -17,12 +17,12 @@ dependencies:
       url: git@github.com:andreabuttarelli/Teta.git
       path: teta_core
       ref: develop
-
+  teta_repositories:
+      path: ../../Teta/teta_repositories
   teta_cms:
     git:
       url: https://github.com/teta-so/cms-dart.git
       ref: main
-
   flutter_polyline_points:
     git:
       url: https://github.com/AndreiCosmaTeta/flutter_polyline_points.git
@@ -178,6 +178,8 @@ dependency_overrides:
     path: ../../Teta/teta_core
   teta_cms:
     path: ../../teta-db
+  teta_repositories:
+    path: ../../Teta/teta_repositories
 
 
 

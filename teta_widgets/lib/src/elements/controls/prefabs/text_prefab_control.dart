@@ -5,9 +5,9 @@
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:gap/gap.dart';
-import 'package:teta_core/src/repositories/project.dart';
-import 'package:teta_core/src/repositories/queries/color_style.dart';
 import 'package:teta_core/teta_core.dart';
+import 'package:teta_repositories/src/project_repository.dart';
+import 'package:teta_repositories/src/project_styles_repository.dart';
 // Project imports:
 import 'package:teta_widgets/src/elements/controls/atoms/fill.dart';
 import 'package:teta_widgets/src/elements/controls/atoms/font_family.dart';
@@ -242,7 +242,7 @@ class TextPrefabControl extends StatelessWidget {
               );
             } else {
               if (textStyle.fill!.paletteStyle is int) {
-                ColorStyleQueries.update(
+                ProjectStylesRepository.updateColorStyle(
                   PaletteModel(
                     id: textStyle.fill!.paletteStyle! as int,
                     fill: color,

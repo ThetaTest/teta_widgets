@@ -1,18 +1,17 @@
 // Flutter imports:
 import 'package:flutter/material.dart';
-
 // Package imports:
 import 'package:teta_core/gen/assets.gen.dart';
 import 'package:teta_core/src/models/dataset.dart';
 import 'package:teta_core/src/models/variable.dart';
 import 'package:teta_widgets/src/elements/code/snippets.dart';
-
 // Project imports:
 import 'package:teta_widgets/src/elements/code/templates/container.dart';
 import 'package:teta_widgets/src/elements/code/templates/location_template.dart';
 import 'package:teta_widgets/src/elements/controls/control_model.dart';
 import 'package:teta_widgets/src/elements/controls/key_constants.dart';
 import 'package:teta_widgets/src/elements/controls/type.dart';
+import 'package:teta_widgets/src/elements/features/actions/enums/gestures.dart';
 import 'package:teta_widgets/src/elements/features/border.dart';
 import 'package:teta_widgets/src/elements/features/border_radius.dart';
 import 'package:teta_widgets/src/elements/features/fill.dart';
@@ -27,8 +26,6 @@ import 'package:teta_widgets/src/elements/nodes/enum.dart';
 import 'package:teta_widgets/src/elements/nodes/node.dart';
 import 'package:teta_widgets/src/elements/nodes/node_body.dart';
 import 'package:teta_widgets/src/elements/widgets/container.dart';
-
-import '../features/actions/enums/gestures.dart';
 
 const _globalType = NType.location;
 
@@ -77,12 +74,14 @@ class LocationBody extends NodeBody {
           type: ControlType.value,
           key: DBKeys.googleMapsController,
           value: attributes[DBKeys.googleMapsController],
+          valueType: VariableType.double,
         ),
         ControlObject(
           title: 'Longitude',
           type: ControlType.value,
           key: DBKeys.googleMapsCubitController,
           value: attributes[DBKeys.googleMapsCubitController],
+          valueType: VariableType.double,
         ),
       ];
 
@@ -162,14 +161,13 @@ class LocationBody extends NodeBody {
         pageId,
         context,
         //lat
-        (attributes[DBKeys.googleMapsController] as FTextTypeInput)
-            .stateName ??
+        (attributes[DBKeys.googleMapsController] as FTextTypeInput).stateName ??
             '',
-          //lng
-          (attributes[DBKeys.googleMapsCubitController] as FTextTypeInput)
-          .stateName ??
-          '',
+        //lng
+        (attributes[DBKeys.googleMapsCubitController] as FTextTypeInput)
+                .stateName ??
+            '',
         loop,
-        node
+        node,
       );
 }

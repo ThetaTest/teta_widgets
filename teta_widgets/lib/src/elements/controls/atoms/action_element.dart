@@ -14,8 +14,8 @@ import 'package:flutter_feather_icons/flutter_feather_icons.dart';
 import 'package:gap/gap.dart';
 import 'package:hovering/hovering.dart';
 import 'package:teta_core/src/design_system/textfield/minitextfield.dart';
-import 'package:teta_core/src/repositories/node.dart';
 import 'package:teta_core/teta_core.dart';
+import 'package:teta_repositories/src/node_repository.dart';
 import 'package:teta_widgets/src/elements/controls/atoms/actions/validator.dart';
 // Project imports:
 import 'package:teta_widgets/src/elements/controls/atoms/flag.dart';
