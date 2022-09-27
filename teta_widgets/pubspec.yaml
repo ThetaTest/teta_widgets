@@ -20,7 +20,7 @@ dependencies:
   teta_repositories:
     git:
       url: git@github.com:andreabuttarelli/Teta.git
-      path: teta_core
+      path: teta_repositories
       ref: develop
   teta_cms:
     git:
