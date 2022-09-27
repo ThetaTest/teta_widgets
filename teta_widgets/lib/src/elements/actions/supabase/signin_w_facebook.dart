@@ -7,9 +7,6 @@ import 'package:flutter/material.dart';
 // Package imports:
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:supabase_flutter/supabase_flutter.dart';
-import 'package:teta_core/src/cubits/supabase.dart';
-import 'package:teta_core/src/models/dataset.dart';
-import 'package:teta_core/src/models/variable.dart';
 import 'package:teta_core/src/services/user_social_login/enums/login_provider.dart';
 import 'package:teta_core/src/services/user_social_login/services/social_login_service/index.dart';
 import 'package:teta_core/teta_core.dart';

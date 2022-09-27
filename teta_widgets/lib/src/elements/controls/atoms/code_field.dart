@@ -6,7 +6,6 @@ import 'package:flutter/material.dart';
 import 'package:gap/gap.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:teta_core/src/design_system/dialogs/cms/db/custom_query_documentation.dart';
-import 'package:teta_core/src/pages/dashboard/pages/custom_queries/language_mode.dart';
 import 'package:teta_core/src/utils/code_text_field/code_text_field.dart';
 import 'package:teta_core/src/utils/code_theme.dart';
 import 'package:teta_core/teta_core.dart';
@@ -29,7 +28,6 @@ class CodeFieldControl extends StatefulWidget {
 
 class CodeFieldControlState extends State<CodeFieldControl> {
   final CodeController codeController = CodeController(
-    language: ayaya,
     theme: tetaTheme,
   );
   bool isChanged = false;
