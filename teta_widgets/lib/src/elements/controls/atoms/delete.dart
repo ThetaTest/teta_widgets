@@ -58,7 +58,7 @@ class DeleteControlState extends State<DeleteControl> {
             Padding(
               padding: const EdgeInsets.only(top: 8),
               child: CDangerousButton(
-                label: 'Delete This Node Only',
+                label: 'Delete this node only',
                 callback: () async => NodeRepository().removeNodeBetweenNodes(
                   context: context,
                   nodes:
