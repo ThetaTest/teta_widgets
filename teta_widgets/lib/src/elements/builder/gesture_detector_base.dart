@@ -20,58 +20,62 @@ class GestureBuilderBase {
     required final Widget child,
     final int? loop,
   }) =>
-      VisibilityBase.get(
+      ResponsiveVisibilityBase.get(
+        context: context,
         node: node,
-        child: MarginOrPaddingBase.get(
-          context: context,
+        child: VisibilityBase.get(
           node: node,
-          params: params,
-          states: states,
-          dataset: dataset,
-          forPlay: forPlay,
-          child: GestureBuilderBase.getGesture(
+          child: MarginOrPaddingBase.get(
             context: context,
             node: node,
             params: params,
             states: states,
             dataset: dataset,
             forPlay: forPlay,
-            child: TranslateBase.get(
+            child: GestureBuilderBase.getGesture(
               context: context,
               node: node,
               params: params,
               states: states,
               dataset: dataset,
               forPlay: forPlay,
-              child: RotationBase.get(
+              child: TranslateBase.get(
                 context: context,
                 node: node,
                 params: params,
                 states: states,
                 dataset: dataset,
                 forPlay: forPlay,
-                child: PerspectiveBase.get(
+                child: RotationBase.get(
                   context: context,
                   node: node,
                   params: params,
                   states: states,
                   dataset: dataset,
                   forPlay: forPlay,
-                  child: MarginOrPaddingBase.get(
+                  child: PerspectiveBase.get(
                     context: context,
                     node: node,
                     params: params,
                     states: states,
                     dataset: dataset,
                     forPlay: forPlay,
-                    child: child,
-                    isMargins: false,
+                    child: MarginOrPaddingBase.get(
+                      context: context,
+                      node: node,
+                      params: params,
+                      states: states,
+                      dataset: dataset,
+                      forPlay: forPlay,
+                      child: child,
+                      isMargins: false,
+                    ),
                   ),
                 ),
               ),
             ),
+            isMargins: true,
           ),
-          isMargins: true,
         ),
       );
 
@@ -355,6 +359,48 @@ class VisibilityBase {
           child: child,
         );
       }
+    }
+    return child;
+  }
+}
+
+class ResponsiveVisibilityBase {
+  static Widget get({
+    required final BuildContext context,
+    required final CNode node,
+    required final Widget child,
+  }) {
+    final visibleOnMobile =
+        node.body.attributes[DBKeys.visibleOnMobile] as bool? ?? true;
+    final visibleOnTablet =
+        node.body.attributes[DBKeys.visibleOnTablet] as bool? ?? true;
+    final visibleOnDesktop =
+        node.body.attributes[DBKeys.visibleOnDesktop] as bool? ?? true;
+
+    final originalType = NodeBody.get(node.globalType);
+    if (originalType.attributes[DBKeys.visibleOnMobile] == null &&
+        originalType.attributes[DBKeys.visibleOnTablet] == null &&
+        originalType.attributes[DBKeys.visibleOnDesktop] == null) {
+      return Builder(
+        builder: (final context) {
+          if (MediaQuery.of(context).size.shortestSide <= 600) {
+            return Visibility(
+              visible: visibleOnMobile,
+              child: child,
+            );
+          }
+          if (MediaQuery.of(context).size.shortestSide <= 1100) {
+            return Visibility(
+              visible: visibleOnTablet,
+              child: child,
+            );
+          }
+          return Visibility(
+            visible: visibleOnDesktop,
+            child: child,
+          );
+        },
+      );
     }
     return child;
   }

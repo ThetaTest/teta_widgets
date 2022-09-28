@@ -189,25 +189,29 @@ class CS {
   ) async {
     return defaultWidgetVisibility(
       node,
-      defaultWidgetMarginOrPadding(
-        context,
+      defaultWidgetResponsive(
         node,
-        pageId,
-        defaultWidgetGestureDetector(
+        defaultWidgetMarginOrPadding(
           context,
           node,
           pageId,
-          defaultWidgetTranslate(
-            node.body,
-            defaultWidgetRotate(
-              node,
-              defaultWidgetPerspective(
-                node.body,
-                defaultWidgetMarginOrPadding(
-                  context,
-                  node,
-                  pageId,
-                  child,
+          defaultWidgetGestureDetector(
+            context,
+            node,
+            pageId,
+            defaultWidgetTranslate(
+              node.body,
+              defaultWidgetRotate(
+                node,
+                defaultWidgetPerspective(
+                  node.body,
+                  defaultWidgetMarginOrPadding(
+                    context,
+                    node,
+                    pageId,
+                    child,
+                    loop,
+                  ),
                   loop,
                 ),
                 loop,
@@ -217,9 +221,9 @@ class CS {
             loop,
           ),
           loop,
+          isMargin: true,
         ),
         loop,
-        isMargin: true,
       ),
       loop,
     );
@@ -440,7 +444,7 @@ class CS {
   }
 
   static Future<String> defaultWidgetResponsive(
-    final NodeBody body,
+    final CNode node,
     final Future<String> child,
     final int loop,
   ) async {
@@ -463,50 +467,46 @@ class CS {
     }
 
     final childString = await child;
-    final abstractMobile =
-        body.attributes[DBKeys.visibleOnMobile] as FTextTypeInput?;
-    final valueMobile = abstractMobile?.toCode(
-          loop,
-          resultType: ResultTypeEnum.bool,
-          defaultValue: 'true',
-        ) ??
-        'true';
-    final abstractTablet =
-        body.attributes[DBKeys.visibleOnMobile] as FTextTypeInput?;
-    final valueTablet = abstractTablet?.toCode(
-          loop,
-          resultType: ResultTypeEnum.bool,
-          defaultValue: 'true',
-        ) ??
-        'true';
-    final abstractDesktop =
-        body.attributes[DBKeys.visibleOnMobile] as FTextTypeInput?;
-    final valueDesktop = abstractDesktop?.toCode(
-          loop,
-          resultType: ResultTypeEnum.bool,
-          defaultValue: 'true',
-        ) ??
-        'true';
+    final visibleOnMobile =
+        node.body.attributes[DBKeys.visibleOnMobile] as bool? ?? true;
+    final visibleOnTablet =
+        node.body.attributes[DBKeys.visibleOnTablet] as bool? ?? true;
+    final visibleOnDesktop =
+        node.body.attributes[DBKeys.visibleOnDesktop] as bool? ?? true;
 
-    if (valueMobile == 'true' &&
-        valueTablet == 'true' &&
-        valueDesktop == 'true') {
+    final originalType = NodeBody.get(node.globalType);
+    if (originalType.attributes[DBKeys.visibleOnMobile] != null ||
+        originalType.attributes[DBKeys.visibleOnTablet] != null ||
+        originalType.attributes[DBKeys.visibleOnDesktop] != null) {
+      return childString;
+    }
+
+    if (visibleOnMobile && visibleOnTablet && visibleOnDesktop) {
       return childString;
     }
 
     return '''
     Builder(
       builder: (final context) {
-        if (MediaQuery.of(context).size.shortestSide < 600) {
+        if (MediaQuery.of(context).size.shortestSide <= 600) {
           // Mobile
-          return ${valueMobile == 'false' ? 'const SizedBox();' : childString};
+          return Visibility(
+            visible: $visibleOnMobile,
+            child: $childString
+          );
         }
-        if (MediaQuery.of(context).size.shortestSide < 1000) {
+        if (MediaQuery.of(context).size.shortestSide <= 1100) {
           // Tablet
-          return ${valueTablet == 'false' ? 'const SizedBox();' : childString};
+          return Visibility(
+            visible: $visibleOnTablet,
+            child: $childString
+          );
         }
         // Desktop
-        return ${valueDesktop == 'false' ? 'const SizedBox();' : childString};
+        return Visibility(
+          visible: $visibleOnDesktop,
+          child: $childString
+        );
       },
     )
   ''';
