@@ -2,6 +2,7 @@
 
 // Package imports:
 import 'package:teta_core/gen/assets.gen.dart';
+import 'package:teta_core/src/models/constants_model.dart';
 import 'package:teta_core/src/models/package.dart';
 // Project imports:
 import 'package:teta_widgets/src/elements/control_center.dart';
@@ -80,7 +81,7 @@ class IntrinsicStates {
   final List<PackageModel> packages;
 
   ///List of all constants required for this node to work
-  final List<PackageModel> constants;
+  final List<ConstantsModel> constants;
 
   bool get canHaveChildren => canHave == ChildrenEnum.children;
   bool get canHaveChild => canHave == ChildrenEnum.child;

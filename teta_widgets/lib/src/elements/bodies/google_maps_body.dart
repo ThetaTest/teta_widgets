@@ -1,12 +1,12 @@
 // Flutter imports:
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-
 // Package imports:
 import 'package:teta_core/teta_core.dart';
 import 'package:teta_widgets/src/elements/code/snippets.dart';
 import 'package:teta_widgets/src/elements/code/templates/google_maps_cubit_template.dart';
 import 'package:teta_widgets/src/elements/code/templates/google_maps_template.dart';
+import 'package:teta_widgets/src/elements/constants_export.dart';
 
 // Project imports:
 import 'package:teta_widgets/src/elements/controls/control_model.dart';
@@ -56,6 +56,14 @@ final googleMapsIntrinsicStates = IntrinsicStates(
     pDartz,
     pPolyLinesPoints,
   ],
+  constants: [
+    kMapStyleStandard,
+    kMapStyleSilver,
+    kMapStyleRetro,
+    kMapStyleDark,
+    kMapStyleNight,
+    kMapStyleAubergine,
+  ]
 );
 
 /// Body of MapBox

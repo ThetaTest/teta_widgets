@@ -20,6 +20,8 @@ class GoogleMapsCubitTemplate {
     required final String googleMapsBlocName,
     required final String pathColor,
   }) {
+    final mapStyleVarName = getMapToCodeName(customMapStyle);
+
     return '''
     class ${googleMapsBlocName}Cubit extends Cubit<${googleMapsBlocName}State> {
   ${googleMapsBlocName}Cubit({${googleMapsBlocName}State? initialState})
@@ -47,7 +49,7 @@ class GoogleMapsCubitTemplate {
       final num initialPositionLat = $initialPositionLat;
       final num initialPositionLng = $initialPositionLng;
       final double initialZoom = $initialZoomLevel;
-      final String mapStyle = '';
+      final String mapStyle = constantz.$mapStyleVarName;
 
       final mapMarkers = Set<Marker>();
       final bool trackMyLocation = $trackMyLocation;
