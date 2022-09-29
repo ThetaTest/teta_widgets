@@ -1,7 +1,8 @@
+import 'package:teta_widgets/src/elements/widgets/google_maps/maps/map_style.dart';
+
 class GoogleMapsCubitTemplate {
   static String toCode({
     required final String mapControllerName,
-    required final String mapConfigDatasetName,
     required final String markersDatasetName,
     required final String markerId,
     required final String markerLatitude,
@@ -9,7 +10,7 @@ class GoogleMapsCubitTemplate {
     required final String markerIconUrl,
     required final String markerIconWidth,
     required final String markerDrawPath,
-    required final String customMapStyle,
+    required final MapStyle customMapStyle,
     required final String initialPositionLng,
     required final String initialPositionLat,
     required final bool showMyLocationMarker,
@@ -41,16 +42,12 @@ class GoogleMapsCubitTemplate {
               ),
         );
 
-  void onInitialState(
-      List<dynamic> markersDataset, Map<String, dynamic> mapConfig) async {
+  void onInitialState(List<dynamic> markersDataset) async {
     try {
-      final num initialPositionLat =
-          num.parse(mapConfig['$initialPositionLat'] ?? '41.889221');
-      final num initialPositionLng =
-          num.parse(mapConfig['$initialPositionLng'] ?? '12.493421');
-      final double initialZoom =
-          double.parse(mapConfig['$initialZoomLevel'] as String? ?? '7.0');
-      final String mapStyle = mapConfig['$customMapStyle'] ?? '';
+      final num initialPositionLat = $initialPositionLat;
+      final num initialPositionLng = $initialPositionLng;
+      final double initialZoom = $initialZoomLevel;
+      final String mapStyle = '';
 
       final mapMarkers = Set<Marker>();
       final bool trackMyLocation = $trackMyLocation;
@@ -66,7 +63,6 @@ class GoogleMapsCubitTemplate {
           // emit new location
           _buildMarkersAndPath(
             markersDataset: markersDataset,
-            mapConfig: mapConfig,
             mapMarkers: mapMarkers,
             initialPositionLat: initialPositionLat,
             initialPositionLng: initialPositionLng,
@@ -80,7 +76,6 @@ class GoogleMapsCubitTemplate {
 
       _buildMarkersAndPath(
         markersDataset: markersDataset,
-        mapConfig: mapConfig,
         mapMarkers: mapMarkers,
         initialPositionLat: initialPositionLat,
         initialPositionLng: initialPositionLng,
@@ -112,7 +107,6 @@ class GoogleMapsCubitTemplate {
 
   void _buildMarkersAndPath({
     required List<dynamic> markersDataset,
-    required Map<String, dynamic> mapConfig,
     required Set<Marker> mapMarkers,
     required num initialPositionLat,
     required num initialPositionLng,

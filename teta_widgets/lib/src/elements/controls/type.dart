@@ -4,12 +4,14 @@
 // Flutter imports:
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
+
 // Package imports:
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:teta_core/teta_core.dart';
 import 'package:teta_repositories/src/node_repository.dart';
 import 'package:teta_repositories/src/project_repository.dart';
 import 'package:teta_repositories/src/project_styles_repository.dart';
+
 // Project imports:
 import 'package:teta_widgets/src/elements/controls/atoms/action.dart';
 import 'package:teta_widgets/src/elements/controls/atoms/aligns.dart';
@@ -27,6 +29,7 @@ import 'package:teta_widgets/src/elements/controls/atoms/fill.dart';
 import 'package:teta_widgets/src/elements/controls/atoms/firebase/path.dart';
 import 'package:teta_widgets/src/elements/controls/atoms/flag.dart';
 import 'package:teta_widgets/src/elements/controls/atoms/google_maps_control.dart';
+import 'package:teta_widgets/src/elements/controls/atoms/google_maps_map_style_controls.dart';
 import 'package:teta_widgets/src/elements/controls/atoms/icon.dart';
 import 'package:teta_widgets/src/elements/controls/atoms/icon_feather.dart';
 import 'package:teta_widgets/src/elements/controls/atoms/icon_fontawesome.dart';
@@ -49,6 +52,7 @@ import 'package:teta_widgets/src/elements/controls/google_maps_cubit_control.dar
 import 'package:teta_widgets/src/elements/controls/key_constants.dart';
 import 'package:teta_widgets/src/elements/controls/prefabs/sizes_prefab_control.dart';
 import 'package:teta_widgets/src/elements/controls/prefabs/text_prefab_control.dart';
+import 'package:teta_widgets/src/elements/features/google_maps_map_style.dart';
 import 'package:teta_widgets/src/elements/features/physic.dart';
 import 'package:teta_widgets/src/elements/index.dart';
 import 'package:teta_widgets/src/elements/nodes/dynamic.dart';
@@ -145,6 +149,9 @@ enum ControlType {
   /// Made to use FMainAxisAlignment.
   mainAxisAlignment,
 
+  /// Returns the selected string
+  googleMapsMapStyle,
+
   /// Made to use FCrossAxisAlignment.
   crossAxisAlignment,
 
@@ -153,12 +160,9 @@ enum ControlType {
 
   /// Made to select dataset only
   datasetType,
-
   barcode,
-
   params,
   states,
-
   cameraController,
   webViewController,
   audioController,
@@ -166,7 +170,6 @@ enum ControlType {
   mapController,
   googleMapsController,
   googleMapsCubitController,
-
   cmsCollections,
   cmsCustomQuery,
 }
@@ -767,6 +770,25 @@ class ControlBuilder {
           key: ValueKey('${node.nid}'),
           node: node,
           mainAxisAlignment: control.value as FMainAxisAlignment,
+          callBack: (final value, final old) => ControlBuilder.toDB(
+            prj,
+            page,
+            node,
+            context,
+            control.key,
+            value.toJson(),
+            old.toJson(),
+          ),
+        ),
+      );
+    }
+    if (control.type == ControlType.googleMapsMapStyle) {
+      return descriptionControlWidget(
+        description: control.description,
+        control: GoogleMapsMapStyleControls(
+          key: ValueKey('${node.nid}'),
+          node: node,
+          mapStyle: control.value as FGoogleMapsMapStyle,
           callBack: (final value, final old) => ControlBuilder.toDB(
             prj,
             page,

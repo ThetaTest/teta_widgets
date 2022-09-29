@@ -15,6 +15,7 @@ import 'package:teta_widgets/src/elements/features/features.dart';
 import 'package:teta_widgets/src/elements/nodes/node.dart';
 import 'package:teta_widgets/src/elements/widgets/google_maps/google_maps_base_widget.dart';
 import 'package:teta_widgets/src/elements/widgets/google_maps/google_maps_bloc.dart';
+import 'package:teta_widgets/src/elements/widgets/google_maps/maps/map_style.dart';
 import 'package:universal_platform/universal_platform.dart';
 
 // ignore_for_file: public_member_api_docs
@@ -29,7 +30,6 @@ class WGoogleMaps extends WGoogleMapsBase {
     required this.states,
     required this.dataset,
     required this.mapControllerName,
-    required this.mapConfigDatasetName,
     required this.markersDatasetName,
     required this.markerId,
     required this.markerLatitude,
@@ -60,7 +60,6 @@ class WGoogleMaps extends WGoogleMapsBase {
 
   final String markersDatasetName;
   final String mapControllerName;
-  final String mapConfigDatasetName;
   final String markerId;
   final String markerLatitude;
   final String markerLongitude;
@@ -68,7 +67,7 @@ class WGoogleMaps extends WGoogleMapsBase {
   final String markerIconWidth;
   final String markerIconHeight;
   final String drawPathFromUserGeolocationToMarker;
-  final String mapStyle;
+  final MapStyle mapStyle;
   final String initialPositionLng;
   final String initialPositionLat;
   final bool showMyLocationMarker;
@@ -84,9 +83,10 @@ class _WGoogleMapsState extends State<WGoogleMaps> {
   final GoogleMapsBloc googleMapsBloc = GoogleMapsBloc();
   Completer<GoogleMapController> googleMapsController =
       Completer<GoogleMapController>();
-
   @override
   void initState() {
+    print('Build map init-->');
+
     super.initState();
     final googleMapsKey =
         (BlocProvider.of<FocusProjectBloc>(context).state as ProjectLoaded)
@@ -94,27 +94,20 @@ class _WGoogleMapsState extends State<WGoogleMaps> {
                 .config
                 ?.googleMapsKey ??
             '';
-    Map<String, dynamic> mapConfig;
     List<Map<String, dynamic>> markersDataset;
     try {
-      mapConfig = widget.dataset
-          .firstWhere(
-            (final element) => element.getName == widget.mapConfigDatasetName,
-          )
-          .getMap[0];
+
       markersDataset = widget.dataset
           .firstWhere(
             (final element) => element.getName == widget.markersDatasetName,
           )
           .getMap;
     } catch (e) {
-      mapConfig = <String, dynamic>{};
       markersDataset = [];
     }
 
-    googleMapsBloc.onInitialState(
+    googleMapsBloc.onLoadData(
       markersDataset,
-      mapConfig,
       GoogleMapsConfigNames(
         mapStyle: widget.mapStyle,
         initialPositionLat: widget.initialPositionLat,
@@ -136,10 +129,39 @@ class _WGoogleMapsState extends State<WGoogleMaps> {
       widget.dataset,
       context,
     );
+
+    BlocProvider.of<RefreshCubit>(context).stream.listen((_) {
+      print('Build map refresh-->');
+
+      googleMapsBloc.onLoadData(
+        markersDataset,
+        GoogleMapsConfigNames(
+          mapStyle: widget.mapStyle,
+          initialPositionLat: widget.initialPositionLat,
+          initialPositionLng: widget.initialPositionLng,
+          initialMapZoomLevel: widget.initialZoomLevel,
+          showMyLocationMarker: widget.showMyLocationMarker,
+          trackMyLocation: widget.trackMyLocation,
+          markerId: widget.markerId,
+          markerLocationLat: widget.markerLatitude,
+          markerLoctionLng: widget.markerLongitude,
+          markerIconUrl: widget.markerIconUrl,
+          markerIconWidth: widget.markerIconWidth,
+          markerIconHeight: widget.markerIconHeight,
+          drawPathFromUserGeolocationToMarker:
+          widget.drawPathFromUserGeolocationToMarker,
+          googleMapsKey: googleMapsKey,
+          pathColor: widget.pathColor.getHexColor(context),
+        ),
+        widget.dataset,
+        context,
+      );
+    });
   }
 
   @override
   Widget build(final BuildContext context) {
+    print('Build map -->');
     if (UniversalPlatform.isAndroid || UniversalPlatform.isIOS) {
       return _buildGoogleMapsWidget(context);
     } else if (UniversalPlatform.isWeb) {
@@ -156,21 +178,14 @@ class _WGoogleMapsState extends State<WGoogleMaps> {
                 .config
                 ?.googleMapsKey ??
             '';
-    Map<String, dynamic> mapConfig;
     List<Map<String, dynamic>> markersDataset;
     try {
-      mapConfig = widget.dataset
-          .firstWhere(
-            (final element) => element.getName == widget.mapConfigDatasetName,
-          )
-          .getMap[0];
       markersDataset = widget.dataset
           .firstWhere(
             (final element) => element.getName == widget.markersDatasetName,
           )
           .getMap;
     } catch (e) {
-      mapConfig = <String, dynamic>{};
       markersDataset = [];
     }
 
@@ -178,9 +193,8 @@ class _WGoogleMapsState extends State<WGoogleMaps> {
       bloc: googleMapsBloc,
       builder: (final BuildContext context, final GoogleMapsState state) {
         if (state.isInitialState) {
-          googleMapsBloc.onInitialState(
+          googleMapsBloc.onLoadData(
             markersDataset,
-            mapConfig,
             GoogleMapsConfigNames(
               mapStyle: widget.mapStyle,
               initialPositionLat: widget.initialPositionLat,
@@ -222,11 +236,16 @@ class _WGoogleMapsState extends State<WGoogleMaps> {
       },
       listener:
           (final BuildContext context, final GoogleMapsState state) async {
+        try {
+          await (await googleMapsController.future).setMapStyle(state.mapStyle);
+        } catch(e, st){
+          print(e);
+          print(st);
+        }
         if (state.isInitialState) {
           unawaited(
-            googleMapsBloc.onInitialState(
+            googleMapsBloc.onLoadData(
               markersDataset,
-              mapConfig,
               GoogleMapsConfigNames(
                 mapStyle: widget.mapStyle,
                 initialPositionLat: widget.initialPositionLat,

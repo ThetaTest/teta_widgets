@@ -9,6 +9,7 @@ import 'package:http/http.dart' as http;
 import 'package:location/location.dart';
 import 'package:teta_cms/teta_cms.dart';
 import 'package:teta_core/teta_core.dart';
+import 'package:teta_widgets/src/elements/widgets/google_maps/maps/map_style.dart';
 
 class GoogleMapsBloc extends Cubit<GoogleMapsState> {
   GoogleMapsBloc({final GoogleMapsState? initialState})
@@ -32,21 +33,17 @@ class GoogleMapsBloc extends Cubit<GoogleMapsState> {
               ),
         );
 
-  Future<void> onInitialState(
+  Future<void> onLoadData(
     final List<dynamic> markersDataset,
-    final Map<String, dynamic> mapConfig,
     final GoogleMapsConfigNames configNames,
     final List<DatasetObject> datasets,
     final BuildContext context,
   ) async {
     try {
-      final initialPositionLat = num.parse(
-          mapConfig[configNames.initialPositionLat] as String? ?? '41.889221');
-      final initialPositionLng = num.parse(
-          mapConfig[configNames.initialPositionLng] as String? ?? '12.493421');
-      final initialZoom = double.parse(
-          mapConfig[configNames.initialMapZoomLevel] as String? ?? '13.0');
-      final mapStyle = mapConfig[configNames.mapStyle] as String? ?? '';
+      final initialPositionLat = num.parse(configNames.initialPositionLat);
+      final initialPositionLng = num.parse(configNames.initialPositionLng);
+      final initialZoom = double.parse(configNames.initialMapZoomLevel);
+      final mapStyle = getMap(configNames.mapStyle);
 
       final mapMarkers = <Marker>{};
 
@@ -61,7 +58,6 @@ class GoogleMapsBloc extends Cubit<GoogleMapsState> {
             await location.changeSettings(interval: 10000, distanceFilter: 50);
             _buildMarkersAndPath(
               markersDataset: markersDataset,
-              mapConfig: mapConfig,
               mapMarkers: mapMarkers,
               initialPositionLat: initialPositionLat,
               initialPositionLng: initialPositionLng,
@@ -79,7 +75,6 @@ class GoogleMapsBloc extends Cubit<GoogleMapsState> {
 
       _buildMarkersAndPath(
         markersDataset: markersDataset,
-        mapConfig: mapConfig,
         mapMarkers: mapMarkers,
         initialPositionLat: initialPositionLat,
         initialPositionLng: initialPositionLng,
@@ -109,7 +104,6 @@ class GoogleMapsBloc extends Cubit<GoogleMapsState> {
 
   void _buildMarkersAndPath({
     required final List<dynamic> markersDataset,
-    required final Map<String, dynamic> mapConfig,
     required final Set<Marker> mapMarkers,
     required final num initialPositionLat,
     required final num initialPositionLng,
@@ -305,7 +299,7 @@ class GoogleMapsConfigNames {
   });
 
 // Maps Config
-  final String mapStyle;
+  final MapStyle mapStyle;
   final String initialPositionLat;
   final String initialPositionLng;
   final String initialMapZoomLevel;

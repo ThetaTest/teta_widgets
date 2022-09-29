@@ -7,6 +7,7 @@ import 'package:flutter/foundation.dart';
 import 'package:teta_core/src/models/variable.dart';
 // Project imports:
 import 'package:teta_widgets/src/elements/features/font_weight.dart';
+import 'package:teta_widgets/src/elements/features/google_maps_map_style.dart';
 import 'package:teta_widgets/src/elements/features/physic.dart';
 import 'package:teta_widgets/src/elements/index.dart';
 
@@ -219,6 +220,8 @@ class DBKeys {
   static const String mapConfigShowMyLocationMarker =
       'mapDrawPathToBetweenMarkersAndUserCurrentLocation';
   static const String mapConfigTrackMyLocation = 'mapConfigShowTrackMyLocation';
+
+  static const String stringDropdown = 'StringDropdownValue';
 }
 
 class DynamicAttributes {
@@ -271,6 +274,8 @@ class DynamicAttributes {
         case DBKeys.mapConfigShowMyLocationMarker:
           return value;
         case DBKeys.mapConfigTrackMyLocation:
+          return value;
+          case DBKeys.stringDropdown:
           return value;
         case DBKeys.fontFamily:
           return value;
@@ -381,13 +386,13 @@ class DynamicAttributes {
         case DBKeys.markerIconHeight:
           return FDataset.fromJson(value as Map<String, dynamic>);
         case DBKeys.mapInitialPositionLng:
-          return FDataset.fromJson(value as Map<String, dynamic>);
+          return FTextTypeInput.fromJson(value as Map<String, dynamic>);
         case DBKeys.mapCustomStyle:
-          return FDataset.fromJson(value as Map<String, dynamic>);
+          return FGoogleMapsMapStyle().fromJson(value as String);
         case DBKeys.mapCustomInitialZoomLevel:
-          return FDataset.fromJson(value as Map<String, dynamic>);
+          return FTextTypeInput.fromJson(value as Map<String, dynamic>);
         case DBKeys.mapInitialPositionLat:
-          return FDataset.fromJson(value as Map<String, dynamic>);
+          return FTextTypeInput.fromJson(value as Map<String, dynamic>);
         case DBKeys.valueOfCondition:
           return FTextTypeInput.fromJson(value as Map<String, dynamic>);
         case DBKeys.visibleOnDesktop:
@@ -583,6 +588,8 @@ class DynamicAttributes {
         return value;
       case DBKeys.mapConfigTrackMyLocation:
         return value;
+        case DBKeys.stringDropdown:
+        return value;
       case DBKeys.fontFamily:
         return value;
       case DBKeys.fontSize:
@@ -690,13 +697,13 @@ class DynamicAttributes {
       case DBKeys.markerIconHeight:
         return value != null ? value.toJson() : FDataset().toJson();
       case DBKeys.mapCustomStyle:
-        return value != null ? value.toJson() : FDataset().toJson();
+        return value != null ? value.toJson() : FGoogleMapsMapStyle().toJson();
       case DBKeys.mapCustomInitialZoomLevel:
-        return value != null ? value.toJson() : FDataset().toJson();
+        return value != null ? value.toJson() : FTextTypeInput().toJson();
       case DBKeys.mapInitialPositionLat:
-        return value != null ? value.toJson() : FDataset().toJson();
+        return value != null ? value.toJson() : FTextTypeInput().toJson();
       case DBKeys.mapInitialPositionLng:
-        return value != null ? value.toJson() : FDataset().toJson();
+        return value != null ? value.toJson() : FTextTypeInput().toJson();
       case DBKeys.valueOfCondition:
         return value != null ? value.toJson() : FTextTypeInput().toJson();
       case DBKeys.duration:

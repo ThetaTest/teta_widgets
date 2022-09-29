@@ -1,11 +1,13 @@
 // Flutter imports:
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+
 // Package imports:
 import 'package:teta_core/teta_core.dart';
 import 'package:teta_widgets/src/elements/code/snippets.dart';
 import 'package:teta_widgets/src/elements/code/templates/google_maps_cubit_template.dart';
 import 'package:teta_widgets/src/elements/code/templates/google_maps_template.dart';
+
 // Project imports:
 import 'package:teta_widgets/src/elements/controls/control_model.dart';
 import 'package:teta_widgets/src/elements/controls/key_constants.dart';
@@ -13,6 +15,7 @@ import 'package:teta_widgets/src/elements/controls/type.dart';
 import 'package:teta_widgets/src/elements/features/actions/enums/permissions.dart';
 import 'package:teta_widgets/src/elements/features/dataset.dart';
 import 'package:teta_widgets/src/elements/features/features.dart';
+import 'package:teta_widgets/src/elements/features/google_maps_map_style.dart';
 import 'package:teta_widgets/src/elements/features/text_type_input.dart';
 import 'package:teta_widgets/src/elements/intrinsic_states/class.dart';
 import 'package:teta_widgets/src/elements/nodes/categories.dart';
@@ -62,7 +65,6 @@ class GoogleMapsBody extends NodeBody {
   Map<String, dynamic> attributes = <String, dynamic>{
     DBKeys.googleMapsController: FTextTypeInput(type: FTextTypeEnum.state),
     DBKeys.googleMapsCubitController: FTextTypeInput(type: FTextTypeEnum.state),
-    DBKeys.mapConfig: FDataset(),
     DBKeys.datasetInput: FDataset(),
     DBKeys.markerId: FDataset(),
     DBKeys.markerLatitude: FDataset(),
@@ -70,10 +72,13 @@ class GoogleMapsBody extends NodeBody {
     DBKeys.markerIconUrl: FDataset(),
     DBKeys.markerIconWidth: FDataset(),
     DBKeys.markerIconHeight: FDataset(),
-    DBKeys.mapCustomStyle: FDataset(),
-    DBKeys.mapCustomInitialZoomLevel: FDataset(),
-    DBKeys.mapInitialPositionLat: FDataset(),
-    DBKeys.mapInitialPositionLng: FDataset(),
+    DBKeys.mapCustomStyle: FGoogleMapsMapStyle(),
+    DBKeys.mapCustomInitialZoomLevel:
+        FTextTypeInput(value: '12', resultType: ResultTypeEnum.double),
+    DBKeys.mapInitialPositionLat:
+        FTextTypeInput(value: '41.889221', resultType: ResultTypeEnum.double),
+    DBKeys.mapInitialPositionLng:
+        FTextTypeInput(value: '12.493421', resultType: ResultTypeEnum.double),
     DBKeys.markerDrawPathToUserCurrentLocation: FDataset(),
     DBKeys.mapConfigShowMyLocationMarker: false,
     DBKeys.mapConfigTrackMyLocation: false,
@@ -97,15 +102,8 @@ class GoogleMapsBody extends NodeBody {
           valueType: VariableType.string,
         ),
         ControlObject(
-          title: 'Map Config Dataset',
-          type: ControlType.datasetType,
-          key: DBKeys.mapConfig,
-          value: attributes[DBKeys.mapConfig],
-          valueType: VariableType.string,
-        ),
-        ControlObject(
           title: 'Map style Field Name',
-          type: ControlType.datasetType,
+          type: ControlType.googleMapsMapStyle,
           key: DBKeys.mapCustomStyle,
           value: attributes[DBKeys.mapCustomStyle],
           description:
@@ -114,31 +112,29 @@ class GoogleMapsBody extends NodeBody {
           valueType: VariableType.string,
         ),
         ControlObject(
-          title: 'Initial Position Latitude Field Name',
-          type: ControlType.datasetType,
+          title: 'Initial Position Latitude',
+          type: ControlType.value,
           key: DBKeys.mapInitialPositionLat,
           value: attributes[DBKeys.mapInitialPositionLat],
-          flag: true,
           description: 'Double. Ex: 41.889221',
           valueType: VariableType.double,
         ),
         ControlObject(
-          title: 'Initial Position Longitude Field Name',
-          type: ControlType.datasetType,
+          title: 'Initial Position Longitude',
+          type: ControlType.value,
           key: DBKeys.mapInitialPositionLng,
           value: attributes[DBKeys.mapInitialPositionLng],
-          flag: true,
           description: 'Double. Ex: 12.493421',
           valueType: VariableType.double,
         ),
         ControlObject(
-          title: 'Initial map zoom level',
-          type: ControlType.datasetType,
+          title: 'Initial map zoom',
+          type: ControlType.value,
           key: DBKeys.mapCustomInitialZoomLevel,
           value: attributes[DBKeys.mapCustomInitialZoomLevel],
           flag: true,
-          description: 'Integer. Ex: 13',
-          valueType: VariableType.int,
+          description: 'Double. Ex: 10',
+          valueType: VariableType.double,
         ),
         FlagControlObject(
           title: 'Show my location marker',
@@ -256,8 +252,6 @@ class GoogleMapsBody extends NodeBody {
             (attributes[DBKeys.googleMapsController] as FTextTypeInput)
                     .stateName ??
                 '',
-        mapConfigDatasetName:
-            (attributes[DBKeys.mapConfig] as FDataset).datasetName ?? '',
         markersDatasetName:
             (attributes[DBKeys.datasetInput] as FDataset).datasetName ?? '',
         markerId:
@@ -282,16 +276,13 @@ class GoogleMapsBody extends NodeBody {
                     .datasetAttrName ??
                 '',
         mapStyle:
-            (attributes[DBKeys.mapCustomStyle] as FDataset).datasetAttrName ??
-                '',
+            (attributes[DBKeys.mapCustomStyle] as FGoogleMapsMapStyle).get,
         initialPositionLat:
-            (attributes[DBKeys.mapInitialPositionLat] as FDataset)
-                    .datasetAttrName ??
-                '',
+            (attributes[DBKeys.mapInitialPositionLat] as FTextTypeInput)
+                .toCode(loop, resultType: ResultTypeEnum.double),
         initialPositionLng:
-            (attributes[DBKeys.mapInitialPositionLng] as FDataset)
-                    .datasetAttrName ??
-                '',
+            (attributes[DBKeys.mapInitialPositionLng] as FTextTypeInput)
+                .toCode(loop, resultType: ResultTypeEnum.double),
         forPlay: forPlay,
         loop: loop,
         params: params,
@@ -300,9 +291,8 @@ class GoogleMapsBody extends NodeBody {
         showMyLocationMarker:
             attributes[DBKeys.mapConfigShowMyLocationMarker] as bool,
         initialZoomLevel:
-            (attributes[DBKeys.mapCustomInitialZoomLevel] as FDataset)
-                    .datasetAttrName ??
-                '',
+            (attributes[DBKeys.mapCustomInitialZoomLevel] as FTextTypeInput)
+                .toCode(loop, resultType: ResultTypeEnum.double),
         trackMyLocation: attributes[DBKeys.mapConfigTrackMyLocation] as bool,
         pathColor: attributes[DBKeys.fill] as FFill,
       );
@@ -322,8 +312,6 @@ class GoogleMapsBody extends NodeBody {
             (attributes[DBKeys.googleMapsController] as FTextTypeInput)
                     .stateName ??
                 '',
-        mapConfigDatasetName:
-            (attributes[DBKeys.mapConfig] as FDataset).datasetName ?? '',
         markersDatasetName:
             (attributes[DBKeys.datasetInput] as FDataset).datasetName ?? '',
         markerId:
@@ -345,22 +333,23 @@ class GoogleMapsBody extends NodeBody {
                     .datasetAttrName ??
                 '',
         customMapStyle:
-            (attributes[DBKeys.mapCustomStyle] as FDataset).datasetAttrName ??
-                '',
+            (attributes[DBKeys.mapCustomStyle] as FGoogleMapsMapStyle).get,
         initialPositionLat:
-            (attributes[DBKeys.mapInitialPositionLat] as FDataset)
-                    .datasetAttrName ??
-                '',
+            (attributes[DBKeys.mapInitialPositionLat] as FTextTypeInput)
+                .toCode(loop, resultType: ResultTypeEnum.double),
         initialPositionLng:
-            (attributes[DBKeys.mapInitialPositionLng] as FDataset)
-                    .datasetAttrName ??
-                '',
+            (attributes[DBKeys.mapInitialPositionLng] as FTextTypeInput).toCode(
+          loop,
+          resultType: ResultTypeEnum.double,
+        ),
         showMyLocationMarker:
             attributes[DBKeys.mapConfigShowMyLocationMarker] as bool,
         initialZoomLevel:
-            (attributes[DBKeys.mapCustomInitialZoomLevel] as FDataset)
-                    .datasetAttrName ??
-                '',
+            (attributes[DBKeys.mapCustomInitialZoomLevel] as FTextTypeInput)
+                .toCode(
+          loop,
+          resultType: ResultTypeEnum.double,
+        ),
         trackMyLocation: attributes[DBKeys.mapConfigTrackMyLocation] as bool,
         googleMapsBlocName:
             (attributes[DBKeys.googleMapsCubitController] as FTextTypeInput)
@@ -384,8 +373,6 @@ class GoogleMapsBody extends NodeBody {
             (attributes[DBKeys.googleMapsController] as FTextTypeInput)
                     .stateName ??
                 '',
-        mapConfigDatasetName:
-            (attributes[DBKeys.mapConfig] as FDataset).datasetName ?? '',
         markersDatasetName:
             (attributes[DBKeys.datasetInput] as FDataset).datasetName ?? '',
         markerId:
@@ -407,22 +394,18 @@ class GoogleMapsBody extends NodeBody {
                     .datasetAttrName ??
                 '',
         customMapStyle:
-            (attributes[DBKeys.mapCustomStyle] as FDataset).datasetAttrName ??
-                '',
+            (attributes[DBKeys.mapCustomStyle] as FGoogleMapsMapStyle).get,
         initialPositionLat:
-            (attributes[DBKeys.mapInitialPositionLat] as FDataset)
-                    .datasetAttrName ??
-                '',
+            (attributes[DBKeys.mapInitialPositionLat] as FTextTypeInput)
+                .toCode(loop, resultType: ResultTypeEnum.double),
         initialPositionLng:
-            (attributes[DBKeys.mapInitialPositionLng] as FDataset)
-                    .datasetAttrName ??
-                '',
+            (attributes[DBKeys.mapInitialPositionLng] as FTextTypeInput)
+                .toCode(loop, resultType: ResultTypeEnum.double),
         showMyLocationMarker:
             attributes[DBKeys.mapConfigShowMyLocationMarker] as bool,
         initialZoomLevel:
-            (attributes[DBKeys.mapCustomInitialZoomLevel] as FDataset)
-                    .datasetAttrName ??
-                '',
+            (attributes[DBKeys.mapCustomInitialZoomLevel] as FTextTypeInput)
+                .toCode(loop, resultType: ResultTypeEnum.double),
         trackMyLocation: attributes[DBKeys.mapConfigTrackMyLocation] as bool,
         googleMapsKey:
             (BlocProvider.of<FocusProjectBloc>(context).state as ProjectLoaded)
@@ -456,8 +439,6 @@ class GoogleMapsBody extends NodeBody {
               (attributes[DBKeys.googleMapsController] as FTextTypeInput)
                       .stateName ??
                   '',
-          mapConfigDatasetName:
-              (attributes[DBKeys.mapConfig] as FDataset).datasetName ?? '',
           markersDatasetName:
               (attributes[DBKeys.datasetInput] as FDataset).datasetName ?? '',
           markerId:
@@ -480,22 +461,21 @@ class GoogleMapsBody extends NodeBody {
                       .datasetAttrName ??
                   '',
           customMapStyle:
-              (attributes[DBKeys.mapCustomStyle] as FDataset).datasetAttrName ??
-                  '',
+              (attributes[DBKeys.mapCustomStyle] as FGoogleMapsMapStyle).get,
           initialPositionLat:
-              (attributes[DBKeys.mapInitialPositionLat] as FDataset)
-                      .datasetAttrName ??
-                  '',
+              (attributes[DBKeys.mapInitialPositionLat] as FTextTypeInput)
+                  .toCode(loop, resultType: ResultTypeEnum.double),
           initialPositionLng:
-              (attributes[DBKeys.mapInitialPositionLng] as FDataset)
-                      .datasetAttrName ??
-                  '',
+              (attributes[DBKeys.mapInitialPositionLng] as FTextTypeInput)
+                  .toCode(loop, resultType: ResultTypeEnum.double),
           showMyLocationMarker:
               attributes[DBKeys.mapConfigShowMyLocationMarker] as bool,
           initialZoomLevel:
-              (attributes[DBKeys.mapCustomInitialZoomLevel] as FDataset)
-                      .datasetAttrName ??
-                  '',
+              (attributes[DBKeys.mapCustomInitialZoomLevel] as FTextTypeInput)
+                  .toCode(
+            loop,
+            resultType: ResultTypeEnum.double,
+          ),
           trackMyLocation: attributes[DBKeys.mapConfigTrackMyLocation] as bool,
           googleMapsBlocName:
               (attributes[DBKeys.googleMapsCubitController] as FTextTypeInput)

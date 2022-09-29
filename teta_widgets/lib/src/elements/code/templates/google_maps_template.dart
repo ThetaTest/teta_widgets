@@ -1,6 +1,7 @@
 // Flutter imports:
 import 'package:flutter/material.dart';
 import 'package:teta_widgets/src/elements/code/formatter_test.dart';
+import 'package:teta_widgets/src/elements/widgets/google_maps/maps/map_style.dart';
 
 // Project imports:
 
@@ -9,7 +10,6 @@ import 'package:teta_widgets/src/elements/code/formatter_test.dart';
 class GoogleMapsTemplate {
   static String toCodeOnInit({
     required final String mapControllerName,
-    required final String mapConfigDatasetName,
     required final String markersDatasetName,
     required final String markerId,
     required final String markerLatitude,
@@ -17,7 +17,7 @@ class GoogleMapsTemplate {
     required final String markerIconUrl,
     required final String markerIconWidth,
     required final String markerDrawPath,
-    required final String customMapStyle,
+    required final MapStyle customMapStyle,
     required final String initialPositionLng,
     required final String initialPositionLat,
     required final bool showMyLocationMarker,
@@ -32,7 +32,6 @@ class GoogleMapsTemplate {
   static Future<String> toCode({
     required final BuildContext context,
     required final String mapControllerName,
-    required final String mapConfigDatasetName,
     required final String markersDatasetName,
     required final String markerId,
     required final String markerLatitude,
@@ -40,7 +39,7 @@ class GoogleMapsTemplate {
     required final String markerIconUrl,
     required final String markerIconWidth,
     required final String markerDrawPath,
-    required final String customMapStyle,
+    required final MapStyle customMapStyle,
     required final String initialPositionLng,
     required final String initialPositionLat,
     required final bool showMyLocationMarker,
@@ -61,12 +60,8 @@ BlocConsumer<${googleMapsBlocName}Cubit, ${googleMapsBlocName}State>(
                               final markersDataset =
                                   ((datasets['$markersDatasetName'] as List<dynamic>?) ??
                                       <dynamic>[]);
-                              final mapConfig =
-                                  ((datasets['$mapConfigDatasetName'] as List<dynamic>?) ??
-                                      <dynamic>[])[0];
                               ${googleMapsBlocName}.onInitialState(
                                 markersDataset,
-                                mapConfig,
                               );
                               return const CircularProgressIndicator.adaptive();
                             } else if (state.isError) {
@@ -90,12 +85,8 @@ BlocConsumer<${googleMapsBlocName}Cubit, ${googleMapsBlocName}State>(
                               final markersDataset =
                                   ((datasets['$markersDatasetName'] as List<dynamic>?) ??
                                       <dynamic>[]);
-                              final mapConfig =
-                                  ((datasets['$mapConfigDatasetName'] as List<dynamic>?) ??
-                                      <dynamic>[])[0];
                               ${googleMapsBlocName}.onInitialState(
                                 markersDataset,
-                                mapConfig,
                               );
                             } else if (state.isSetNewCameraPositionState) {
                               await (await $mapControllerName.future).animateCamera(CameraUpdate.newCameraPosition(state.initialCameraPosition,),);

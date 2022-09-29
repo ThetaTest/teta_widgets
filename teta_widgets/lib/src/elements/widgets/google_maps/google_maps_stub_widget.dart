@@ -8,6 +8,7 @@ import 'package:teta_widgets/src/elements/features/features.dart';
 // Project imports:
 import 'package:teta_widgets/src/elements/nodes/node.dart';
 import 'package:teta_widgets/src/elements/widgets/google_maps/google_maps_base_widget.dart';
+import 'package:teta_widgets/src/elements/widgets/google_maps/maps/map_style.dart';
 
 // ignore_for_file: public_member_api_docs
 
@@ -21,7 +22,6 @@ class WGoogleMaps extends WGoogleMapsBase {
     required this.states,
     required this.dataset,
     required this.mapControllerName,
-    required this.mapConfigDatasetName,
     required this.markersDatasetName,
     required this.markerId,
     required this.markerLatitude,
@@ -52,7 +52,6 @@ class WGoogleMaps extends WGoogleMapsBase {
 
   final String markersDatasetName;
   final String mapControllerName;
-  final String mapConfigDatasetName;
   final String markerId;
   final String markerLatitude;
   final String markerLongitude;
@@ -60,7 +59,7 @@ class WGoogleMaps extends WGoogleMapsBase {
   final String markerIconWidth;
   final String markerIconHeight;
   final String drawPathFromUserGeolocationToMarker;
-  final String mapStyle;
+  final MapStyle mapStyle;
   final String initialPositionLng;
   final String initialPositionLat;
   final bool showMyLocationMarker;
