@@ -29,6 +29,7 @@ class IntrinsicStates {
     required this.gestures,
     required this.permissions,
     required this.packages,
+    this.constants = const [],
   });
 
   /// Icon of the node.
@@ -77,6 +78,9 @@ class IntrinsicStates {
 
   ///List of all packages required for this node to work
   final List<PackageModel> packages;
+
+  ///List of all constants required for this node to work
+  final List<PackageModel> constants;
 
   bool get canHaveChildren => canHave == ChildrenEnum.children;
   bool get canHaveChild => canHave == ChildrenEnum.child;
