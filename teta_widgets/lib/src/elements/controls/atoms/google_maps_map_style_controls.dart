@@ -109,15 +109,19 @@ class GoogleMapsMapStyleControlsState
         child: Row(
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: [
+            ClipRRect(
+              borderRadius: BR(4),
+              child: Image.asset(
+                asset,
+                package: 'teta_widgets',
+                fit: BoxFit.cover,
+                height: 40,
+                width: 40,
+              ),
+            ),
+            const SizedBox(width: 8,),
             TParagraph(value),
             const Spacer(),
-            Image.asset(
-              asset,
-              package: 'teta_widgets',
-              fit: BoxFit.cover,
-              height: 40,
-              width: 40,
-            ),
           ],
         ),
       );
