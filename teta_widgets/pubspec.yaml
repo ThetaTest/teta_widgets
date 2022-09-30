@@ -11,7 +11,7 @@ environment:
 dependencies:
   flutter:
     sdk: flutter
-     
+
   teta_core:
     git:
       url: git@github.com:andreabuttarelli/Teta.git
@@ -168,12 +168,12 @@ dependencies:
 
   # Adapty
   adapty_flutter: ^1.0.14
-  
+
 
 dev_dependencies:
   flutter_test:
     sdk: flutter
-  
+
   import_sorter: 4.6.0
 
 dependency_overrides:
@@ -190,11 +190,14 @@ dependency_overrides:
 # following page: https://dart.dev/tools/pub/pubspec
 
 flutter:
-
   # To add assets to your package, add an assets section, like this:
-  # assets:
-  #   - images/a_dot_burr.jpeg
-  #   - images/a_dot_ham.jpeg
+  assets:
+    - assets/images/standard.png
+    - assets/images/dark.png
+    - assets/images/night.png
+    - assets/images/retro.png
+    - assets/images/silver.png
+    - assets/images/aubergine.png
   #
   # For details regarding assets in packages, see
   # https://flutter.dev/assets-and-images/#from-packages

@@ -3,12 +3,13 @@
 
 // Flutter imports:
 import 'package:flutter/material.dart';
+
 // Package imports:
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:teta_core/teta_core.dart';
 import 'package:teta_widgets/src/elements/features/google_maps_map_style.dart';
+
 // Project imports:
-import 'package:teta_widgets/src/elements/features/main_axis_alignment.dart';
 import 'package:teta_widgets/src/elements/nodes/node.dart';
 
 class GoogleMapsMapStyleControls extends StatefulWidget {
@@ -28,7 +29,8 @@ class GoogleMapsMapStyleControls extends StatefulWidget {
       GoogleMapsMapStyleControlsState();
 }
 
-class GoogleMapsMapStyleControlsState extends State<GoogleMapsMapStyleControls> {
+class GoogleMapsMapStyleControlsState
+    extends State<GoogleMapsMapStyleControls> {
   int? nodeId;
   bool? isUpdated;
   String? dropdown;
@@ -71,15 +73,15 @@ class GoogleMapsMapStyleControlsState extends State<GoogleMapsMapStyleControls> 
                   ],
                 ),
               ),
-              CDropdown(
+              CDropdownCustom<String>(
                 value: dropdown,
-                items: const [
-                  'Standard',
-                  'Silver',
-                  'Retro',
-                  'Dark',
-                  'Night',
-                  'Aubergine',
+                items: [
+                  buildMapStyleMenuItem('Standard', 'assets/images/standard.png'),
+                  buildMapStyleMenuItem('Silver', 'assets/images/silver.png'),
+                  buildMapStyleMenuItem('Retro', 'assets/images/retro.png'),
+                  buildMapStyleMenuItem('Dark', 'assets/images/dark.png'),
+                  buildMapStyleMenuItem('Night', 'assets/images/night.png'),
+                  buildMapStyleMenuItem('Aubergine', 'assets/images/aubergine.png'),
                 ],
                 onChange: (final newValue) {
                   if (newValue != null) {
@@ -99,4 +101,21 @@ class GoogleMapsMapStyleControlsState extends State<GoogleMapsMapStyleControls> 
       ),
     );
   }
+
+  DropdownCustomMenuItem<String> buildMapStyleMenuItem(final String value, final String asset) =>
+      DropdownCustomMenuItem<String>(
+        value: value,
+        child: Row(
+          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+          children: [
+            TParagraph(value),
+            const Spacer(),
+            Image.asset(
+              asset,
+              package: 'teta_widgets',
+              fit: BoxFit.cover,
+            ),
+          ],
+        ),
+      );
 }
