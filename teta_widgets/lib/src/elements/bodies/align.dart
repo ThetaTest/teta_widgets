@@ -1,6 +1,4 @@
 // Flutter imports:
-
-// Flutter imports:
 import 'package:flutter/material.dart';
 // Package imports:
 import 'package:teta_core/gen/assets.gen.dart';
@@ -19,6 +17,7 @@ import 'package:teta_widgets/src/elements/nodes/children_enum.dart';
 import 'package:teta_widgets/src/elements/nodes/enum.dart';
 import 'package:teta_widgets/src/elements/nodes/node.dart';
 import 'package:teta_widgets/src/elements/nodes/node_body.dart';
+import 'package:teta_widgets/src/elements/nodes/suggestion.dart';
 import 'package:teta_widgets/src/elements/widgets/align.dart';
 
 const _globalType = NType.align;
@@ -41,18 +40,17 @@ final alignIntrinsicStates = IntrinsicStates(
   gestures: [],
   permissions: [],
   packages: [],
+  suggestionsTitle: 'What is an Align?',
+  suggestions: [
+    const Suggestion(
+      title: 'What about align?',
+      description: 'Test',
+      linkToOpen: 'https://docs.teta.so/teta-docs/',
+    )
+  ],
 );
 
-/// Set of funcs to use Align widget
-/// ```dart
-/// Align({
-///   Key? key,
-///   AlignmentGeometry alignment,
-///   double? widthFactor,
-///   double? heightFactor,
-///   Widget? child
-/// })
-/// ```
+///
 class AlignBody extends NodeBody {
   @override
   // ignore: overridden_fields

@@ -11,6 +11,7 @@ import 'package:teta_widgets/src/elements/features/actions/enums/permissions.dar
 import 'package:teta_widgets/src/elements/nodes/categories.dart';
 import 'package:teta_widgets/src/elements/nodes/children_enum.dart';
 import 'package:teta_widgets/src/elements/nodes/enum.dart';
+import 'package:teta_widgets/src/elements/nodes/suggestion.dart';
 
 class IntrinsicStates {
   IntrinsicStates({
@@ -31,6 +32,14 @@ class IntrinsicStates {
     required this.permissions,
     required this.packages,
     this.constants = const [],
+    this.suggestionsTitle = 'Need Help with this Widget?',
+    this.suggestions = const [
+      Suggestion(
+        title: 'Docs',
+        description: 'Docs',
+        linkToOpen: 'https://docs.teta.so/teta-docs/',
+      )
+    ],
   });
 
   /// Icon of the node.
@@ -82,6 +91,14 @@ class IntrinsicStates {
 
   ///List of all constants required for this node to work
   final List<ConstantsModel> constants;
+
+  ///The headline for suggestions, label
+  final String suggestionsTitle;
+
+  /// Get all node suggestion.
+  /// suggestion are the articles showed on right bar,
+  /// used to let the user know how the node work
+  final List<Suggestion> suggestions;
 
   bool get canHaveChildren => canHave == ChildrenEnum.children;
   bool get canHaveChild => canHave == ChildrenEnum.child;
