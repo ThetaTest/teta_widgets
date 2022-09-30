@@ -92,6 +92,7 @@ class GoogleMapsMapStyleControlsState
                         .fromJson(widget.mapStyle.toJson());
                     final mAA = widget.mapStyle..set(newValue);
                     widget.callBack(mAA, old);
+                    BlocProvider.of<RefreshCubit>(context).change();
                   }
                 },
               ),
@@ -114,6 +115,8 @@ class GoogleMapsMapStyleControlsState
               asset,
               package: 'teta_widgets',
               fit: BoxFit.cover,
+              height: 40,
+              width: 40,
             ),
           ],
         ),

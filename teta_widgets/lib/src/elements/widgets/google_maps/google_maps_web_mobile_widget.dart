@@ -85,8 +85,6 @@ class _WGoogleMapsState extends State<WGoogleMaps> {
       Completer<GoogleMapController>();
   @override
   void initState() {
-    print('Build map init-->');
-
     super.initState();
     final googleMapsKey =
         (BlocProvider.of<FocusProjectBloc>(context).state as ProjectLoaded)
@@ -131,8 +129,6 @@ class _WGoogleMapsState extends State<WGoogleMaps> {
     );
 
     BlocProvider.of<RefreshCubit>(context).stream.listen((_) {
-      print('Build map refresh-->');
-
       googleMapsBloc.onLoadData(
         markersDataset,
         GoogleMapsConfigNames(
@@ -161,7 +157,6 @@ class _WGoogleMapsState extends State<WGoogleMaps> {
 
   @override
   Widget build(final BuildContext context) {
-    print('Build map -->');
     if (UniversalPlatform.isAndroid || UniversalPlatform.isIOS) {
       return _buildGoogleMapsWidget(context);
     } else if (UniversalPlatform.isWeb) {
