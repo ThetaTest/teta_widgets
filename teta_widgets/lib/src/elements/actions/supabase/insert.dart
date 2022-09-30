@@ -96,6 +96,16 @@ class FASupabaseInsert {
               0,
               resultType: ResultTypeEnum.string,
             );
+          } else if (e.value.type == FTextTypeEnum.state) {
+            map[e.key] = e.value.toCode(
+              0,
+              resultType: ResultTypeEnum.string,
+            );
+          } else if (e.value.type == FTextTypeEnum.param) {
+            map[e.key] = e.value.toCode(
+              0,
+              resultType: ResultTypeEnum.string,
+            );
           } else {
             map[e.key] = e.value.toCode(
               0,
@@ -118,10 +128,10 @@ class FASupabaseInsert {
       mapString.write('}');
       return '''
         final response = await Supabase.instance.client
-              .from('${supabaseFrom?.toCode(
+              .from(${supabaseFrom?.toCode(
                 0,
                 resultType: ResultTypeEnum.string,
-              ) ?? ''}')
+              ) ?? ''})
               .insert($mapString, returning: ReturningOption.minimal,)
               .execute();
         if (response.error != null) {
