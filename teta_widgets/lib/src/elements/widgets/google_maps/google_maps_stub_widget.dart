@@ -76,7 +76,6 @@ class WGoogleMaps extends WGoogleMapsBase {
 class _WGoogleMapsState extends State<WGoogleMaps> {
   @override
   Widget build(final BuildContext context) {
-    print('Google maps stub implementation.');
     return const Center(
       child: Text('This platform is not supported for Google Maps'),
     );

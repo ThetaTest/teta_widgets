@@ -33,38 +33,39 @@ const _globalType = NType.googleMaps;
 
 /// Intrinsic States of Mapbox
 final googleMapsIntrinsicStates = IntrinsicStates(
-    nodeIcon: Assets.wIcons.maps,
-    nodeVideo: null,
-    nodeDescription: null,
-    advicedChildren: [],
-    blockedTypes: [],
-    synonymous: ['map', 'google maps', 'maps', 'google'],
-    advicedChildrenCanHaveAtLeastAChild: [],
-    displayName: NodeType.name(_globalType),
-    type: _globalType,
-    category: NodeCategories.advanced,
-    maxChildren: 0,
-    canHave: ChildrenEnum.none,
-    addChildLabels: [],
-    gestures: [],
-    permissions: [
-      Permissions.location,
-    ],
-    packages: [
-      pGoogleMaps,
-      pFlutterCacheManager,
-      pLocation,
-      pDartz,
-      pPolyLinesPoints,
-    ],
-    constants: [
-      kMapStyleStandard,
-      kMapStyleSilver,
-      kMapStyleRetro,
-      kMapStyleDark,
-      kMapStyleNight,
-      kMapStyleAubergine,
-    ]);
+  nodeIcon: Assets.wIcons.maps,
+  nodeVideo: null,
+  nodeDescription: null,
+  advicedChildren: [],
+  blockedTypes: [],
+  synonymous: ['map', 'google maps', 'maps', 'google'],
+  advicedChildrenCanHaveAtLeastAChild: [],
+  displayName: NodeType.name(_globalType),
+  type: _globalType,
+  category: NodeCategories.advanced,
+  maxChildren: 0,
+  canHave: ChildrenEnum.none,
+  addChildLabels: [],
+  gestures: [],
+  permissions: [
+    Permissions.location,
+  ],
+  packages: [
+    pGoogleMaps,
+    pFlutterCacheManager,
+    pLocation,
+    pDartz,
+    pPolyLinesPoints,
+  ],
+  constants: [
+    kMapStyleStandard,
+    kMapStyleSilver,
+    kMapStyleRetro,
+    kMapStyleDark,
+    kMapStyleNight,
+    kMapStyleAubergine,
+  ],
+);
 
 /// Body of MapBox
 class GoogleMapsBody extends NodeBody {

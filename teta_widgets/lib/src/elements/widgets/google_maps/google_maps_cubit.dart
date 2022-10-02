@@ -45,6 +45,13 @@ class GoogleMapsCubit extends Cubit<GoogleMapsState> {
       final initialZoom = double.parse(configNames.initialMapZoomLevel);
       final mapStyle = getMap(configNames.mapStyle);
 
+      onEmitNewCameraPosition(
+        initialPositionLat.toDouble(),
+        initialPositionLng.toDouble(),
+        initialZoom,
+      );
+      onEmitNewMapStyle(configNames.mapStyle);
+
       final location = Location();
       final loc = await location.getLocation();
       await location.requestPermission();
@@ -81,8 +88,8 @@ class GoogleMapsCubit extends Cubit<GoogleMapsState> {
         initialPositionLng: initialPositionLng,
         zoom: initialZoom,
         mapStyle: mapStyle,
-        userLocationLat: loc.latitude ?? 41.889221,
-        userLocationLng: loc.longitude ?? 12.493421,
+        userLocationLat: loc.latitude ?? initialPositionLng.toDouble(),
+        userLocationLng: loc.longitude ?? initialPositionLng.toDouble(),
         googleMapsKey: configNames.googleMapsKey,
         configNames: configNames,
         datasets: datasets,

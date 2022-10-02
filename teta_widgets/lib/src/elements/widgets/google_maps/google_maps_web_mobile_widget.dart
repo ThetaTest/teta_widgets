@@ -17,7 +17,6 @@ import 'package:teta_widgets/src/elements/features/google_maps_map_style.dart';
 import 'package:teta_widgets/src/elements/nodes/node.dart';
 import 'package:teta_widgets/src/elements/widgets/google_maps/google_maps_base_widget.dart';
 import 'package:teta_widgets/src/elements/widgets/google_maps/google_maps_cubit.dart';
-import 'package:universal_platform/universal_platform.dart';
 
 // ignore_for_file: public_member_api_docs
 
@@ -104,7 +103,7 @@ class _WGoogleMapsState extends State<WGoogleMaps> {
               if (state is GoogleMapsInitialState) {
                 print('Initial state');
                 googleMapsCubit.onEmitReloadDataState();
-                return const CircularProgressIndicator.adaptive();
+                return const CircularProgressIndicator();
               } else if (state is GoogleMapsErrorState) {
                 return Container();
               } else {
@@ -189,7 +188,7 @@ class _WGoogleMapsState extends State<WGoogleMaps> {
               }
             },
           )
-        : const CircularProgressIndicator();
+        : const Text('Add Google Maps Cubit to initialize map.');
   }
 
   Future<void> initData() async {
