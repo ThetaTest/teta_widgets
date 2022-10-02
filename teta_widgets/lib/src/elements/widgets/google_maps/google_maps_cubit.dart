@@ -52,17 +52,50 @@ class GoogleMapsCubit extends Cubit<GoogleMapsState> {
       );
       onEmitNewMapStyle(configNames.mapStyle);
 
-      final location = Location();
-      final loc = await location.getLocation();
-      await location.requestPermission();
-      await location.requestService();
+      final location = await getLocation(settings: LocationSettings());
+      print('Location2');
+      try {
+        print('Google Maps User Markers :${configNames.showMyLocationMarker}');
+        if (configNames.showMyLocationMarker) {
+          onEmitNewMarkers(
+            state.uiModel.markers
+                .where(
+                  (final element) => element.markerId.value != 'myLocation',
+                )
+                .toSet(),
+          );
+          state.uiModel.markers.add(
+            Marker(
+              markerId: const MarkerId('myLocation'),
+              position: LatLng(
+                location.latitude ?? initialPositionLat.toDouble(),
+                location.longitude ?? initialPositionLng.toDouble(),
+              ),
+            ),
+          );
+          print('Google Maps User Markers True:${state.uiModel.markers}');
+          onEmitNewMarkers(
+            state.uiModel.markers,
+          );
+        } else {
+          state.uiModel.markers.removeWhere(
+            (final element) => element.markerId.value == 'myLocation',
+          );
+          print('Google Maps User Markers False:${state.uiModel.markers}');
+
+          onEmitNewMarkers(state.uiModel.markers);
+        }
+      } catch (e, st) {
+        print('Google Maps Show My Location Error.');
+        print(e);
+        print(st);
+      }
+
       if (configNames.trackMyLocation) {
-        location.onLocationChanged.listen(
+        onLocationChanged().listen(
           (final event) async {
             if (event.latitude != null) {
               // emit new location
-              await location.changeSettings(
-                  interval: 10000, distanceFilter: 50);
               unawaited(
                 _buildMarkersAndPath(
                   markersDataset: markersDataset,
@@ -88,8 +121,8 @@ class GoogleMapsCubit extends Cubit<GoogleMapsState> {
         initialPositionLng: initialPositionLng,
         zoom: initialZoom,
         mapStyle: mapStyle,
-        userLocationLat: loc.latitude ?? initialPositionLng.toDouble(),
-        userLocationLng: loc.longitude ?? initialPositionLng.toDouble(),
+        userLocationLat: location.latitude ?? initialPositionLat.toDouble(),
+        userLocationLng: location.longitude ?? initialPositionLng.toDouble(),
         googleMapsKey: configNames.googleMapsKey,
         configNames: configNames,
         datasets: datasets,
@@ -125,22 +158,6 @@ class GoogleMapsCubit extends Cubit<GoogleMapsState> {
 
     final cms = TetaCMS.instance.client;
 
-    try {
-      if (configNames.showMyLocationMarker) {
-        mapMarkers.add(
-          Marker(
-            markerId: const MarkerId('myLocation'),
-            position: LatLng(
-              userLocationLat,
-              userLocationLng,
-            ),
-          ),
-        );
-      }
-    } catch (e, st) {
-      print(e);
-      print(st);
-    }
     for (final element in markersDataset) {
       try {
         final markerDrawPath =
@@ -240,9 +257,17 @@ class GoogleMapsCubit extends Cubit<GoogleMapsState> {
         print('Marker: $element failed. with error: $e $st');
       }
     }
+    if (configNames.showMyLocationMarker) {
+      mapMarkers.addAll(
+        state.uiModel.markers
+            .where(
+              (final element) => element.markerId.value == 'myLocation',
+            ),
+      );
+    }
     emit(
       GoogleMapsLoadedState(
-        GoogleMapsUiModel(
+        state.uiModel.copyWith(
           paths: polyLines,
           markers: mapMarkers,
           cameraPosition: CameraPosition(
@@ -255,11 +280,6 @@ class GoogleMapsCubit extends Cubit<GoogleMapsState> {
           style: mapStyle,
         ),
       ),
-    );
-    onEmitNewCameraPosition(
-      initialPositionLat.toDouble(),
-      initialPositionLng.toDouble(),
-      zoom,
     );
   }
 
@@ -301,7 +321,15 @@ class GoogleMapsCubit extends Cubit<GoogleMapsState> {
     );
   }
 
-  void onEmitNewMarkers() {}
+  void onEmitNewMarkers(final Set<Marker> markers) {
+    emit(
+      GoogleMapsReloadMarkersState(
+        state.uiModel.copyWith(
+          markers: markers,
+        ),
+      ),
+    );
+  }
 }
 
 class GoogleMapsConfigNames {
