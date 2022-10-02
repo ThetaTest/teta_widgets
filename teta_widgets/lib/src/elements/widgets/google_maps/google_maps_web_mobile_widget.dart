@@ -6,6 +6,7 @@ import 'dart:async';
 
 // Flutter imports:
 import 'package:dart_airtable/dart_airtable.dart';
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
@@ -101,13 +102,13 @@ class _WGoogleMapsState extends State<WGoogleMaps> {
             bloc: googleMapsCubit,
             builder: (final BuildContext context, final GoogleMapsState state) {
               if (state is GoogleMapsInitialState) {
-                print('Initial state');
-                googleMapsCubit.onEmitReloadDataState();
                 return const CircularProgressIndicator();
               } else if (state is GoogleMapsErrorState) {
                 return Container();
               } else {
-                print('Build map state: $state');
+                if (kDebugMode) {
+                  print('Build map state: $state');
+                }
                 return GoogleMap(
                   initialCameraPosition: state.uiModel.cameraPosition,
                   polylines: state.uiModel.paths,
@@ -126,12 +127,18 @@ class _WGoogleMapsState extends State<WGoogleMaps> {
               final build = c is! GoogleMapsSetNewCameraPositionState &&
                   c is! GoogleMapsChangeMapStyleState &&
                   c is! GoogleMapsReloadDataState;
-              print('Build when state($build): $c');
+              if (kDebugMode) {
+                print('Build when state($build): $c');
+              }
               return build;
             },
-            listener: (final BuildContext context,
-                final GoogleMapsState state) async {
-              print('Listed state $state');
+            listener: (
+              final BuildContext context,
+              final GoogleMapsState state,
+            ) async {
+              if (kDebugMode) {
+                print('Listed state $state');
+              }
               if (state is GoogleMapsSetNewCameraPositionState) {
                 if (googleMapsController.isCompleted) {
                   await (await googleMapsController.future).animateCamera(
@@ -146,7 +153,9 @@ class _WGoogleMapsState extends State<WGoogleMaps> {
                       .setMapStyle(state.uiModel.style);
                 }
               } else if (state is GoogleMapsReloadDataState) {
-                print('Reload Map State');
+                if (kDebugMode) {
+                  print('Reload Map State');
+                }
                 List<Map<String, dynamic>> markersDataset;
                 try {
                   markersDataset = widget.dataset
@@ -184,7 +193,9 @@ class _WGoogleMapsState extends State<WGoogleMaps> {
                     context,
                   ),
                 );
-                print('Reload state finished');
+                if (kDebugMode) {
+                  print('Reload state finished');
+                }
               }
             },
           )
@@ -220,16 +231,16 @@ class _WGoogleMapsState extends State<WGoogleMaps> {
 
       BlocProvider.of<RefreshCubit>(context).stream.listen(
         (_) {
-          print('Will load data with style ${widget.mapStyle}');
           googleMapsCubit.onEmitReloadDataState();
         },
       );
       setState(() {
-        print('GoogleMapsInitData complete.');
         isInitialized = true;
       });
     } catch (e, st) {
-      print('GoogleMapsInitData e:$e, stackTrace:$st');
+      if (kDebugMode) {
+        print('GoogleMapsInitData e:$e, stackTrace:$st');
+      }
     }
   }
 }

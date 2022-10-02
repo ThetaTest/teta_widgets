@@ -2,6 +2,7 @@ import 'dart:async';
 import 'dart:ui';
 
 import 'package:equatable/equatable.dart';
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_polyline_points/flutter_polyline_points.dart';
@@ -52,44 +53,9 @@ class GoogleMapsCubit extends Cubit<GoogleMapsState> {
       );
       onEmitNewMapStyle(configNames.mapStyle);
 
-      final location = await getLocation(settings: LocationSettings());
-      print('Location2');
-      try {
-        print('Google Maps User Markers :${configNames.showMyLocationMarker}');
-        if (configNames.showMyLocationMarker) {
-          onEmitNewMarkers(
-            state.uiModel.markers
-                .where(
-                  (final element) => element.markerId.value != 'myLocation',
-                )
-                .toSet(),
-          );
-          state.uiModel.markers.add(
-            Marker(
-              markerId: const MarkerId('myLocation'),
-              position: LatLng(
-                location.latitude ?? initialPositionLat.toDouble(),
-                location.longitude ?? initialPositionLng.toDouble(),
-              ),
-            ),
-          );
-          print('Google Maps User Markers True:${state.uiModel.markers}');
-          onEmitNewMarkers(
-            state.uiModel.markers,
-          );
-        } else {
-          state.uiModel.markers.removeWhere(
-            (final element) => element.markerId.value == 'myLocation',
-          );
-          print('Google Maps User Markers False:${state.uiModel.markers}');
-
-          onEmitNewMarkers(state.uiModel.markers);
-        }
-      } catch (e, st) {
-        print('Google Maps Show My Location Error.');
-        print(e);
-        print(st);
-      }
+      final location = await getLocation(
+        settings: LocationSettings(),
+      );
 
       if (configNames.trackMyLocation) {
         onLocationChanged().listen(
@@ -158,6 +124,29 @@ class GoogleMapsCubit extends Cubit<GoogleMapsState> {
 
     final cms = TetaCMS.instance.client;
 
+    try {
+      if (configNames.showMyLocationMarker) {
+        if (kDebugMode) {
+          print('ADD LOCATION MARKER!1');
+        }
+        mapMarkers.add(
+          Marker(
+            markerId: const MarkerId('myLocation'),
+            position: LatLng(
+              userLocationLat,
+              userLocationLng,
+            ),
+          ),
+        );
+      }
+    } catch (e, st) {
+      if (kDebugMode) {
+        print('Google Maps Show My Location Error.');
+        print(e);
+        print(st);
+      }
+    }
+
     for (final element in markersDataset) {
       try {
         final markerDrawPath =
@@ -194,8 +183,10 @@ class GoogleMapsCubit extends Cubit<GoogleMapsState> {
             markerIcon = BitmapDescriptor.fromBytes(resizedMarkerImageBytes);
           }
         } catch (e, st) {
-          print(e);
-          print(st);
+          if (kDebugMode) {
+            print(e);
+            print(st);
+          }
         }
         try {
           if (markerDrawPath) {
@@ -235,11 +226,16 @@ class GoogleMapsCubit extends Cubit<GoogleMapsState> {
             }
           }
         } catch (e, st) {
-          print(e);
-          print(st);
+          if (kDebugMode) {
+            print(e);
+            print(st);
+          }
         }
         final mLat = markerLatitude.toDouble();
         final mLon = markerLongitude.toDouble();
+        if (kDebugMode) {
+          print('ADD RANDOM MARKER!1');
+        }
         mapMarkers.add(
           Marker(
             markerId: MarkerId(markerId),
@@ -254,17 +250,12 @@ class GoogleMapsCubit extends Cubit<GoogleMapsState> {
           ),
         );
       } catch (e, st) {
-        print('Marker: $element failed. with error: $e $st');
+        if (kDebugMode) {
+          print('Marker: $element failed. with error: $e $st');
+        }
       }
     }
-    if (configNames.showMyLocationMarker) {
-      mapMarkers.addAll(
-        state.uiModel.markers
-            .where(
-              (final element) => element.markerId.value == 'myLocation',
-            ),
-      );
-    }
+
     emit(
       GoogleMapsLoadedState(
         state.uiModel.copyWith(
