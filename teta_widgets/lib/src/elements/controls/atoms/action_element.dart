@@ -1003,7 +1003,7 @@ class ActionElementControlState extends State<ActionElementControl> {
                                     .where(
                                       (final element) =>
                                           element.type ==
-                                          VariableType.googleMapsBloc,
+                                          VariableType.googleMapsCubit,
                                     )
                                     .map((final e) => e.name)
                                     .where((final element) => element != 'null')
@@ -1018,7 +1018,7 @@ class ActionElementControlState extends State<ActionElementControl> {
                         items: widget.page.states
                             .where(
                               (final element) =>
-                                  element.type == VariableType.googleMapsBloc,
+                                  element.type == VariableType.googleMapsCubit,
                             )
                             .map((final e) => e.name)
                             .where((final element) => element != 'null')

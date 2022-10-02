@@ -104,7 +104,7 @@ class GoogleMapsCubitControlState extends State<GoogleMapsCubitControl> {
                 items: widget.page.params
                     .where(
                       (final element) =>
-                          element.type == VariableType.googleMapsBloc,
+                          element.type == VariableType.googleMapsCubit,
                     )
                     .map((final e) => e.name)
                     .toList(),
@@ -124,7 +124,7 @@ class GoogleMapsCubitControlState extends State<GoogleMapsCubitControl> {
                 items: widget.page.states
                     .where(
                       (final element) =>
-                          element.type == VariableType.googleMapsBloc,
+                          element.type == VariableType.googleMapsCubit,
                     )
                     .map((final e) => e.name)
                     .toList(),

@@ -1,6 +1,7 @@
 // Flutter imports:
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+
 // Package imports:
 import 'package:teta_core/teta_core.dart';
 import 'package:teta_widgets/src/elements/code/snippets.dart';
@@ -32,39 +33,38 @@ const _globalType = NType.googleMaps;
 
 /// Intrinsic States of Mapbox
 final googleMapsIntrinsicStates = IntrinsicStates(
-  nodeIcon: Assets.wIcons.maps,
-  nodeVideo: null,
-  nodeDescription: null,
-  advicedChildren: [],
-  blockedTypes: [],
-  synonymous: ['map', 'google maps', 'maps', 'google'],
-  advicedChildrenCanHaveAtLeastAChild: [],
-  displayName: NodeType.name(_globalType),
-  type: _globalType,
-  category: NodeCategories.advanced,
-  maxChildren: 0,
-  canHave: ChildrenEnum.none,
-  addChildLabels: [],
-  gestures: [],
-  permissions: [
-    Permissions.location,
-  ],
-  packages: [
-    pGoogleMaps,
-    pFlutterCacheManager,
-    pLocation,
-    pDartz,
-    pPolyLinesPoints,
-  ],
-  constants: [
-    kMapStyleStandard,
-    kMapStyleSilver,
-    kMapStyleRetro,
-    kMapStyleDark,
-    kMapStyleNight,
-    kMapStyleAubergine,
-  ]
-);
+    nodeIcon: Assets.wIcons.maps,
+    nodeVideo: null,
+    nodeDescription: null,
+    advicedChildren: [],
+    blockedTypes: [],
+    synonymous: ['map', 'google maps', 'maps', 'google'],
+    advicedChildrenCanHaveAtLeastAChild: [],
+    displayName: NodeType.name(_globalType),
+    type: _globalType,
+    category: NodeCategories.advanced,
+    maxChildren: 0,
+    canHave: ChildrenEnum.none,
+    addChildLabels: [],
+    gestures: [],
+    permissions: [
+      Permissions.location,
+    ],
+    packages: [
+      pGoogleMaps,
+      pFlutterCacheManager,
+      pLocation,
+      pDartz,
+      pPolyLinesPoints,
+    ],
+    constants: [
+      kMapStyleStandard,
+      kMapStyleSilver,
+      kMapStyleRetro,
+      kMapStyleDark,
+      kMapStyleNight,
+      kMapStyleAubergine,
+    ]);
 
 /// Body of MapBox
 class GoogleMapsBody extends NodeBody {
@@ -283,8 +283,7 @@ class GoogleMapsBody extends NodeBody {
             (attributes[DBKeys.markerDrawPathToUserCurrentLocation] as FDataset)
                     .datasetAttrName ??
                 '',
-        mapStyle:
-            (attributes[DBKeys.mapCustomStyle] as FGoogleMapsMapStyle).get,
+        mapStyle: attributes[DBKeys.mapCustomStyle] as FGoogleMapsMapStyle,
         initialPositionLat:
             (attributes[DBKeys.mapInitialPositionLat] as FTextTypeInput)
                 .toCode(loop, resultType: ResultTypeEnum.double),
@@ -303,6 +302,10 @@ class GoogleMapsBody extends NodeBody {
                 .toCode(loop, resultType: ResultTypeEnum.double),
         trackMyLocation: attributes[DBKeys.mapConfigTrackMyLocation] as bool,
         pathColor: attributes[DBKeys.fill] as FFill,
+        cubitName:
+            (attributes[DBKeys.googleMapsCubitController] as FTextTypeInput)
+                    .stateName ??
+                '',
       );
 
   @override

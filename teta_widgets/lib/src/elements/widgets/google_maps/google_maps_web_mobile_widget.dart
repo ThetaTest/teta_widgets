@@ -5,17 +5,18 @@
 import 'dart:async';
 
 // Flutter imports:
+import 'package:dart_airtable/dart_airtable.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:teta_core/teta_core.dart';
 import 'package:teta_widgets/src/elements/features/features.dart';
+import 'package:teta_widgets/src/elements/features/google_maps_map_style.dart';
 
 // Project imports:
 import 'package:teta_widgets/src/elements/nodes/node.dart';
 import 'package:teta_widgets/src/elements/widgets/google_maps/google_maps_base_widget.dart';
-import 'package:teta_widgets/src/elements/widgets/google_maps/google_maps_bloc.dart';
-import 'package:teta_widgets/src/elements/widgets/google_maps/maps/map_style.dart';
+import 'package:teta_widgets/src/elements/widgets/google_maps/google_maps_cubit.dart';
 import 'package:universal_platform/universal_platform.dart';
 
 // ignore_for_file: public_member_api_docs
@@ -45,6 +46,7 @@ class WGoogleMaps extends WGoogleMapsBase {
     required this.trackMyLocation,
     required this.initialZoomLevel,
     required this.pathColor,
+    required this.cubitName,
     this.child,
     this.loop,
   }) : super(key: key);
@@ -60,6 +62,7 @@ class WGoogleMaps extends WGoogleMapsBase {
 
   final String markersDatasetName;
   final String mapControllerName;
+  final String cubitName;
   final String markerId;
   final String markerLatitude;
   final String markerLongitude;
@@ -67,7 +70,7 @@ class WGoogleMaps extends WGoogleMapsBase {
   final String markerIconWidth;
   final String markerIconHeight;
   final String drawPathFromUserGeolocationToMarker;
-  final MapStyle mapStyle;
+  final FGoogleMapsMapStyle mapStyle;
   final String initialPositionLng;
   final String initialPositionLat;
   final bool showMyLocationMarker;
@@ -80,203 +83,154 @@ class WGoogleMaps extends WGoogleMapsBase {
 }
 
 class _WGoogleMapsState extends State<WGoogleMaps> {
-  final GoogleMapsBloc googleMapsBloc = GoogleMapsBloc();
-  Completer<GoogleMapController> googleMapsController =
-      Completer<GoogleMapController>();
+  late String googleMapsKey;
+  late GoogleMapsCubit googleMapsCubit;
+  Completer<GoogleMapController> googleMapsController = Completer();
+  bool isInitialized = false;
+
   @override
   void initState() {
     super.initState();
-    final googleMapsKey =
-        (BlocProvider.of<FocusProjectBloc>(context).state as ProjectLoaded)
-                .prj
-                .config
-                ?.googleMapsKey ??
-            '';
-    List<Map<String, dynamic>> markersDataset;
-    try {
-
-      markersDataset = widget.dataset
-          .firstWhere(
-            (final element) => element.getName == widget.markersDatasetName,
-          )
-          .getMap;
-    } catch (e) {
-      markersDataset = [];
-    }
-
-    googleMapsBloc.onLoadData(
-      markersDataset,
-      GoogleMapsConfigNames(
-        mapStyle: widget.mapStyle,
-        initialPositionLat: widget.initialPositionLat,
-        initialPositionLng: widget.initialPositionLng,
-        initialMapZoomLevel: widget.initialZoomLevel,
-        showMyLocationMarker: widget.showMyLocationMarker,
-        trackMyLocation: widget.trackMyLocation,
-        markerId: widget.markerId,
-        markerLocationLat: widget.markerLatitude,
-        markerLoctionLng: widget.markerLongitude,
-        markerIconUrl: widget.markerIconUrl,
-        markerIconWidth: widget.markerIconWidth,
-        markerIconHeight: widget.markerIconHeight,
-        drawPathFromUserGeolocationToMarker:
-            widget.drawPathFromUserGeolocationToMarker,
-        googleMapsKey: googleMapsKey,
-        pathColor: widget.pathColor.getHexColor(context),
-      ),
-      widget.dataset,
-      context,
-    );
-
-    BlocProvider.of<RefreshCubit>(context).stream.listen((_) {
-      googleMapsBloc.onLoadData(
-        markersDataset,
-        GoogleMapsConfigNames(
-          mapStyle: widget.mapStyle,
-          initialPositionLat: widget.initialPositionLat,
-          initialPositionLng: widget.initialPositionLng,
-          initialMapZoomLevel: widget.initialZoomLevel,
-          showMyLocationMarker: widget.showMyLocationMarker,
-          trackMyLocation: widget.trackMyLocation,
-          markerId: widget.markerId,
-          markerLocationLat: widget.markerLatitude,
-          markerLoctionLng: widget.markerLongitude,
-          markerIconUrl: widget.markerIconUrl,
-          markerIconWidth: widget.markerIconWidth,
-          markerIconHeight: widget.markerIconHeight,
-          drawPathFromUserGeolocationToMarker:
-          widget.drawPathFromUserGeolocationToMarker,
-          googleMapsKey: googleMapsKey,
-          pathColor: widget.pathColor.getHexColor(context),
-        ),
-        widget.dataset,
-        context,
-      );
-    });
+    print('GoogleMapsInitData');
+    initData();
   }
 
   @override
   Widget build(final BuildContext context) {
-    if (UniversalPlatform.isAndroid || UniversalPlatform.isIOS) {
-      return _buildGoogleMapsWidget(context);
-    } else if (UniversalPlatform.isWeb) {
-      return _buildGoogleMapsWidget(context);
-    } else {
-      return _elseMap();
-    }
-  }
+    return isInitialized
+        ? BlocConsumer<GoogleMapsCubit, GoogleMapsState>(
+            bloc: googleMapsCubit,
+            builder: (final BuildContext context, final GoogleMapsState state) {
+              if (state is GoogleMapsInitialState) {
+                print('Initial state');
+                googleMapsCubit.onEmitReloadDataState();
+                return const CircularProgressIndicator.adaptive();
+              } else if (state is GoogleMapsErrorState) {
+                return Container();
+              } else {
+                print('Build map state: $state');
+                return GoogleMap(
+                  initialCameraPosition: state.uiModel.cameraPosition,
+                  polylines: state.uiModel.paths,
+                  markers: state.uiModel.markers,
+                  onMapCreated: (final cnt) {
+                    googleMapsController.complete(cnt);
 
-  Widget _buildGoogleMapsWidget(final BuildContext context) {
-    final googleMapsKey =
-        (BlocProvider.of<FocusProjectBloc>(context).state as ProjectLoaded)
-                .prj
-                .config
-                ?.googleMapsKey ??
-            '';
-    List<Map<String, dynamic>> markersDataset;
-    try {
-      markersDataset = widget.dataset
-          .firstWhere(
-            (final element) => element.getName == widget.markersDatasetName,
-          )
-          .getMap;
-    } catch (e) {
-      markersDataset = [];
-    }
-
-    return BlocConsumer<GoogleMapsBloc, GoogleMapsState>(
-      bloc: googleMapsBloc,
-      builder: (final BuildContext context, final GoogleMapsState state) {
-        if (state.isInitialState) {
-          googleMapsBloc.onLoadData(
-            markersDataset,
-            GoogleMapsConfigNames(
-              mapStyle: widget.mapStyle,
-              initialPositionLat: widget.initialPositionLat,
-              initialPositionLng: widget.initialPositionLng,
-              initialMapZoomLevel: widget.initialZoomLevel,
-              showMyLocationMarker: widget.showMyLocationMarker,
-              trackMyLocation: widget.trackMyLocation,
-              markerId: widget.markerId,
-              markerLocationLat: widget.markerLatitude,
-              markerLoctionLng: widget.markerLongitude,
-              markerIconUrl: widget.markerIconUrl,
-              markerIconWidth: widget.markerIconWidth,
-              markerIconHeight: widget.markerIconHeight,
-              drawPathFromUserGeolocationToMarker:
-                  widget.drawPathFromUserGeolocationToMarker,
-              googleMapsKey: googleMapsKey,
-              pathColor: widget.pathColor.getHexColor(context),
-            ),
-            widget.dataset,
-            context,
-          );
-          return const CircularProgressIndicator.adaptive();
-        } else if (state.isError) {
-          return Container();
-        } else {
-          return GoogleMap(
-            initialCameraPosition: state.initialCameraPosition,
-            polylines: state.paths,
-            markers: state.markers,
-            onMapCreated: (final cnt) {
-              googleMapsController.complete(cnt);
-              cnt.setMapStyle(state.mapStyle);
+                    googleMapsCubit
+                      ..onEmitNewMapStyle(widget.mapStyle.get)
+                      ..onEmitReloadDataState();
+                  },
+                );
+              }
             },
-          );
-        }
-      },
-      buildWhen: (final p, final c) {
-        return !c.isSetNewCameraPositionState;
-      },
-      listener:
-          (final BuildContext context, final GoogleMapsState state) async {
-        try {
-          await (await googleMapsController.future).setMapStyle(state.mapStyle);
-        } catch(e, st){
-          print(e);
-          print(st);
-        }
-        if (state.isInitialState) {
-          unawaited(
-            googleMapsBloc.onLoadData(
-              markersDataset,
-              GoogleMapsConfigNames(
-                mapStyle: widget.mapStyle,
-                initialPositionLat: widget.initialPositionLat,
-                initialPositionLng: widget.initialPositionLng,
-                initialMapZoomLevel: widget.initialZoomLevel,
-                showMyLocationMarker: widget.showMyLocationMarker,
-                trackMyLocation: widget.trackMyLocation,
-                markerId: widget.markerId,
-                markerLocationLat: widget.markerLatitude,
-                markerLoctionLng: widget.markerLongitude,
-                markerIconUrl: widget.markerIconUrl,
-                markerIconWidth: widget.markerIconWidth,
-                markerIconHeight: widget.markerIconHeight,
-                drawPathFromUserGeolocationToMarker:
-                    widget.drawPathFromUserGeolocationToMarker,
-                googleMapsKey: googleMapsKey,
-                pathColor: '',
-              ),
-              widget.dataset,
-              context,
-            ),
-          );
-        } else if (state.isSetNewCameraPositionState) {
-          await (await googleMapsController.future).animateCamera(
-            CameraUpdate.newCameraPosition(
-              state.initialCameraPosition,
-            ),
-          );
-        }
-      },
-    );
+            buildWhen: (final p, final c) {
+              final build = c is! GoogleMapsSetNewCameraPositionState &&
+                  c is! GoogleMapsChangeMapStyleState &&
+                  c is! GoogleMapsReloadDataState;
+              print('Build when state($build): $c');
+              return build;
+            },
+            listener: (final BuildContext context,
+                final GoogleMapsState state) async {
+              print('Listed state $state');
+              if (state is GoogleMapsSetNewCameraPositionState) {
+                if (googleMapsController.isCompleted) {
+                  await (await googleMapsController.future).animateCamera(
+                    CameraUpdate.newCameraPosition(
+                      state.uiModel.cameraPosition,
+                    ),
+                  );
+                }
+              } else if (state is GoogleMapsChangeMapStyleState) {
+                if (googleMapsController.isCompleted) {
+                  await (await googleMapsController.future)
+                      .setMapStyle(state.uiModel.style);
+                }
+              } else if (state is GoogleMapsReloadDataState) {
+                print('Reload Map State');
+                List<Map<String, dynamic>> markersDataset;
+                try {
+                  markersDataset = widget.dataset
+                      .firstWhere(
+                        (final element) =>
+                            element.getName == widget.markersDatasetName,
+                      )
+                      .getMap;
+                } catch (e) {
+                  markersDataset = [];
+                }
+
+                unawaited(
+                  googleMapsCubit.onLoadData(
+                    markersDataset,
+                    GoogleMapsConfigNames(
+                      mapStyle: widget.mapStyle.get,
+                      initialPositionLat: widget.initialPositionLat,
+                      initialPositionLng: widget.initialPositionLng,
+                      initialMapZoomLevel: widget.initialZoomLevel,
+                      showMyLocationMarker: widget.showMyLocationMarker,
+                      trackMyLocation: widget.trackMyLocation,
+                      markerId: widget.markerId,
+                      markerLocationLat: widget.markerLatitude,
+                      markerLocationLng: widget.markerLongitude,
+                      markerIconUrl: widget.markerIconUrl,
+                      markerIconWidth: widget.markerIconWidth,
+                      markerIconHeight: widget.markerIconHeight,
+                      drawPathFromUserGeolocationToMarker:
+                          widget.drawPathFromUserGeolocationToMarker,
+                      googleMapsKey: googleMapsKey,
+                      pathColor: widget.pathColor.getHexColor(context),
+                    ),
+                    widget.dataset,
+                    context,
+                  ),
+                );
+                print('Reload state finished');
+              }
+            },
+          )
+        : const CircularProgressIndicator();
   }
 
-  Widget _elseMap() => const Center(
-        child: THeadline3(
-          'This platform does not support this Google map plugin, yet.',
-        ),
+  Future<void> initData() async {
+    try {
+      googleMapsKey =
+          (BlocProvider.of<FocusProjectBloc>(context).state as ProjectLoaded)
+                  .prj
+                  .config
+                  ?.googleMapsKey ??
+              '';
+      final page = BlocProvider.of<PageCubit>(context).state;
+      final VariableObject? variable;
+
+      variable = page.states.firstWhereOrNull(
+        (final e) => e.name == widget.cubitName,
       );
+
+      if (variable == null) {
+        // throw exception
+      }
+
+      if (variable!.googleMapsCubit == null) {
+        variable.googleMapsCubit = GoogleMapsCubit();
+      }
+
+      variable.googleMapsCubit?.onEmitReloadDataState();
+
+      googleMapsCubit = variable.googleMapsCubit!;
+
+      BlocProvider.of<RefreshCubit>(context).stream.listen(
+        (_) {
+          print('Will load data with style ${widget.mapStyle}');
+          googleMapsCubit.onEmitReloadDataState();
+        },
+      );
+      setState(() {
+        print('GoogleMapsInitData complete.');
+        isInitialized = true;
+      });
+    } catch (e, st) {
+      print('GoogleMapsInitData e:$e, stackTrace:$st');
+    }
+  }
 }

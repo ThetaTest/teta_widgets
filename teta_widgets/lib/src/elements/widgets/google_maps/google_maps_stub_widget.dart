@@ -4,10 +4,12 @@
 import 'package:flutter/material.dart';
 import 'package:teta_core/teta_core.dart';
 import 'package:teta_widgets/src/elements/features/features.dart';
+import 'package:teta_widgets/src/elements/features/google_maps_map_style.dart';
 
 // Project imports:
 import 'package:teta_widgets/src/elements/nodes/node.dart';
 import 'package:teta_widgets/src/elements/widgets/google_maps/google_maps_base_widget.dart';
+import 'package:teta_widgets/src/elements/widgets/google_maps/google_maps_cubit.dart';
 import 'package:teta_widgets/src/elements/widgets/google_maps/maps/map_style.dart';
 
 // ignore_for_file: public_member_api_docs
@@ -36,7 +38,8 @@ class WGoogleMaps extends WGoogleMapsBase {
     required this.showMyLocationMarker,
     required this.trackMyLocation,
     required this.initialZoomLevel,
-    required FFill pathColor,
+    required final FFill pathColor,
+    required final String cubitName,
     this.child,
     this.loop,
   }) : super(key: key);
@@ -59,7 +62,7 @@ class WGoogleMaps extends WGoogleMapsBase {
   final String markerIconWidth;
   final String markerIconHeight;
   final String drawPathFromUserGeolocationToMarker;
-  final MapStyle mapStyle;
+  final FGoogleMapsMapStyle mapStyle;
   final String initialPositionLng;
   final String initialPositionLat;
   final bool showMyLocationMarker;
