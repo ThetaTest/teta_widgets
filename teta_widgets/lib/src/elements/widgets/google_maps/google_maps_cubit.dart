@@ -34,6 +34,9 @@ class GoogleMapsCubit extends Cubit<GoogleMapsState> {
               ),
         );
 
+  bool isTrackingAlreadyActive = false;
+  StreamSubscription? tracking;
+
   Future<void> onLoadData(
     final List<dynamic> markersDataset,
     final GoogleMapsConfigNames configNames,
@@ -57,29 +60,33 @@ class GoogleMapsCubit extends Cubit<GoogleMapsState> {
         settings: LocationSettings(),
       );
 
-      // if (configNames.trackMyLocation) {
-      //   onLocationChanged().listen(
-      //     (final event) async {
-      //       if (event.latitude != null) {
-      //         // emit new location
-      //         unawaited(
-      //           _buildMarkersAndPath(
-      //             markersDataset: markersDataset,
-      //             initialPositionLat: initialPositionLat,
-      //             initialPositionLng: initialPositionLng,
-      //             zoom: initialZoom,
-      //             mapStyle: mapStyle,
-      //             userLocationLat: event.latitude!,
-      //             userLocationLng: event.longitude!,
-      //             googleMapsKey: configNames.googleMapsKey,
-      //             configNames: configNames,
-      //             datasets: datasets,
-      //           ),
-      //         );
-      //       }
-      //     },
-      //   );
-      // }
+      if (configNames.trackMyLocation && !isTrackingAlreadyActive) {
+        tracking = onLocationChanged().listen(
+          (final event) async {
+            if (event.latitude != null) {
+              // emit new location
+              unawaited(
+                _buildMarkersAndPath(
+                  markersDataset: markersDataset,
+                  initialPositionLat: initialPositionLat,
+                  initialPositionLng: initialPositionLng,
+                  zoom: initialZoom,
+                  mapStyle: mapStyle,
+                  userLocationLat: event.latitude!,
+                  userLocationLng: event.longitude!,
+                  googleMapsKey: configNames.googleMapsKey,
+                  configNames: configNames,
+                  datasets: datasets,
+                ),
+              );
+            }
+          },
+        );
+        isTrackingAlreadyActive = true;
+      } else {
+        await tracking?.cancel();
+        isTrackingAlreadyActive = false;
+      }
 
       await _buildMarkersAndPath(
         markersDataset: markersDataset,
