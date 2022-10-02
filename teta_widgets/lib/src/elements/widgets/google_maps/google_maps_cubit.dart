@@ -57,29 +57,29 @@ class GoogleMapsCubit extends Cubit<GoogleMapsState> {
         settings: LocationSettings(),
       );
 
-      if (configNames.trackMyLocation) {
-        onLocationChanged().listen(
-          (final event) async {
-            if (event.latitude != null) {
-              // emit new location
-              unawaited(
-                _buildMarkersAndPath(
-                  markersDataset: markersDataset,
-                  initialPositionLat: initialPositionLat,
-                  initialPositionLng: initialPositionLng,
-                  zoom: initialZoom,
-                  mapStyle: mapStyle,
-                  userLocationLat: event.latitude!,
-                  userLocationLng: event.longitude!,
-                  googleMapsKey: configNames.googleMapsKey,
-                  configNames: configNames,
-                  datasets: datasets,
-                ),
-              );
-            }
-          },
-        );
-      }
+      // if (configNames.trackMyLocation) {
+      //   onLocationChanged().listen(
+      //     (final event) async {
+      //       if (event.latitude != null) {
+      //         // emit new location
+      //         unawaited(
+      //           _buildMarkersAndPath(
+      //             markersDataset: markersDataset,
+      //             initialPositionLat: initialPositionLat,
+      //             initialPositionLng: initialPositionLng,
+      //             zoom: initialZoom,
+      //             mapStyle: mapStyle,
+      //             userLocationLat: event.latitude!,
+      //             userLocationLng: event.longitude!,
+      //             googleMapsKey: configNames.googleMapsKey,
+      //             configNames: configNames,
+      //             datasets: datasets,
+      //           ),
+      //         );
+      //       }
+      //     },
+      //   );
+      // }
 
       await _buildMarkersAndPath(
         markersDataset: markersDataset,
@@ -125,6 +125,9 @@ class GoogleMapsCubit extends Cubit<GoogleMapsState> {
     final cms = TetaCMS.instance.client;
 
     try {
+      if (kDebugMode) {
+        print('ADD LOCATION MARKER!${configNames.showMyLocationMarker}');
+      }
       if (configNames.showMyLocationMarker) {
         if (kDebugMode) {
           print('ADD LOCATION MARKER!1');
