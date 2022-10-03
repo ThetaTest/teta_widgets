@@ -34,7 +34,6 @@ class GoogleMapsCubit extends Cubit<GoogleMapsState> {
               ),
         );
 
-  bool isTrackingAlreadyActive = false;
   StreamSubscription? tracking;
 
   Future<void> onLoadData(
@@ -60,7 +59,8 @@ class GoogleMapsCubit extends Cubit<GoogleMapsState> {
         settings: LocationSettings(),
       );
 
-      if (configNames.trackMyLocation && !isTrackingAlreadyActive) {
+      if (configNames.trackMyLocation) {
+        await tracking?.cancel();
         tracking = onLocationChanged().listen(
           (final event) async {
             if (event.latitude != null) {
@@ -82,10 +82,8 @@ class GoogleMapsCubit extends Cubit<GoogleMapsState> {
             }
           },
         );
-        isTrackingAlreadyActive = true;
       } else {
         await tracking?.cancel();
-        isTrackingAlreadyActive = false;
       }
 
       await _buildMarkersAndPath(
