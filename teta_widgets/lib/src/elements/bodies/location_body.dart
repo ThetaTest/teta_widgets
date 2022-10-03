@@ -53,7 +53,7 @@ final locationIntrinsicStates = IntrinsicStates(
     Permissions.location,
   ],
   packages: [
-    pLocation,
+    pGeolocator,
   ],
 );
 
