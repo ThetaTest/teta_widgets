@@ -6,9 +6,9 @@ import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_polyline_points/flutter_polyline_points.dart';
+import 'package:geolocator/geolocator.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:http/http.dart' as http;
-import 'package:location/location.dart';
 import 'package:teta_cms/teta_cms.dart';
 import 'package:teta_core/teta_core.dart';
 import 'package:teta_widgets/src/elements/widgets/google_maps/maps/map_style.dart';
@@ -55,15 +55,17 @@ class GoogleMapsCubit extends Cubit<GoogleMapsState> {
       );
       onEmitNewMapStyle(configNames.mapStyle);
 
-      final location = await getLocation(
-        settings: LocationSettings(),
-      );
+      await Geolocator.requestPermission();
+      final location = await Geolocator.getCurrentPosition();
 
       if (configNames.trackMyLocation) {
         await tracking?.cancel();
-        tracking = onLocationChanged().listen(
+        tracking = Geolocator.getPositionStream(
+          locationSettings: const LocationSettings(
+            distanceFilter: 20,
+          ),
+        ).listen(
           (final event) async {
-            if (event.latitude != null) {
               // emit new location
               unawaited(
                 _buildMarkersAndPath(
@@ -72,14 +74,13 @@ class GoogleMapsCubit extends Cubit<GoogleMapsState> {
                   initialPositionLng: initialPositionLng,
                   zoom: initialZoom,
                   mapStyle: mapStyle,
-                  userLocationLat: event.latitude!,
-                  userLocationLng: event.longitude!,
+                  userLocationLat: event.latitude,
+                  userLocationLng: event.longitude,
                   googleMapsKey: configNames.googleMapsKey,
                   configNames: configNames,
                   datasets: datasets,
                 ),
               );
-            }
           },
         );
       } else {
