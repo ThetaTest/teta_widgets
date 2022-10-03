@@ -53,9 +53,10 @@ final googleMapsIntrinsicStates = IntrinsicStates(
   packages: [
     pGoogleMaps,
     pFlutterCacheManager,
-    pLocation,
+    pGeolocator,
     pDartz,
     pPolyLinesPoints,
+    pEquatable,
   ],
   constants: [
     kMapStyleStandard,
@@ -434,7 +435,7 @@ class GoogleMapsBody extends NodeBody {
                     .config
                     ?.googleMapsKey ??
                 '',
-        googleMapsBlocName:
+        googleMapsCubitName:
             (attributes[DBKeys.googleMapsCubitController] as FTextTypeInput)
                     .stateName ??
                 '',
@@ -498,7 +499,7 @@ class GoogleMapsBody extends NodeBody {
             resultType: ResultTypeEnum.double,
           ),
           trackMyLocation: attributes[DBKeys.mapConfigTrackMyLocation] as bool,
-          googleMapsBlocName:
+          googleMapsCubitName:
               (attributes[DBKeys.googleMapsCubitController] as FTextTypeInput)
                       .stateName ??
                   '',
