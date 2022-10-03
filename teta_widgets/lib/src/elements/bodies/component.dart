@@ -21,6 +21,8 @@ import 'package:teta_widgets/src/elements/nodes/node.dart';
 import 'package:teta_widgets/src/elements/nodes/node_body.dart';
 import 'package:teta_widgets/src/elements/widgets/component.dart';
 
+import '../nodes/suggestion.dart';
+
 const _globalType = NType.component;
 
 /// Instrict State of Component
@@ -41,6 +43,15 @@ final componentIntrinsicStates = IntrinsicStates(
   gestures: [],
   permissions: [],
   packages: [],
+  suggestionsTitle: 'Why use Component in Teta?',
+  suggestions: [
+    const Suggestion(
+      title: 'Why use Component in Teta?',
+      description: 'Test',
+      linkToOpen:
+          'https://docs.teta.so/teta-docs/widget/advanced-widgets/component',
+    )
+  ],
 );
 
 /// Set of funcs to use a Component widget

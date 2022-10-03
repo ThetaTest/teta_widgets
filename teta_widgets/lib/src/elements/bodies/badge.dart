@@ -20,6 +20,7 @@ import 'package:teta_widgets/src/elements/nodes/enum.dart';
 import 'package:teta_widgets/src/elements/nodes/node.dart';
 import 'package:teta_widgets/src/elements/nodes/node_body.dart';
 import 'package:teta_widgets/src/elements/packages.dart';
+import 'package:teta_widgets/src/elements/nodes/suggestion.dart';
 import 'package:teta_widgets/src/elements/widgets/badge.dart';
 
 const _globalType = NType.badge;
@@ -42,6 +43,14 @@ final badgeIntrinsicStates = IntrinsicStates(
   gestures: [],
   permissions: [],
   packages: [pBadges],
+  suggestionsTitle: 'Why use Badge in Teta?',
+  suggestions: [
+    const Suggestion(
+      title: 'Why use Badge in Teta?',
+      description: 'Test',
+      linkToOpen: 'https://docs.teta.so/teta-docs/widget/basic-widgets/badge',
+    )
+  ],
 );
 
 /// Sets of funcs to use Badge widget

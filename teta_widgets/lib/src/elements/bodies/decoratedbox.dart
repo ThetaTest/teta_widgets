@@ -21,6 +21,8 @@ import 'package:teta_widgets/src/elements/nodes/node.dart';
 import 'package:teta_widgets/src/elements/nodes/node_body.dart';
 import 'package:teta_widgets/src/elements/widgets/decoratedbox.dart';
 
+import '../nodes/suggestion.dart';
+
 const _globalType = NType.decoratedBox;
 
 /// Instrict State of DecoratedBox
@@ -45,6 +47,15 @@ final decoratedBoxIntrinsicStates = IntrinsicStates(
   gestures: [],
   permissions: [],
   packages: [],
+  suggestionsTitle: 'Why use Decorated Box in Teta?',
+  suggestions: [
+    const Suggestion(
+      title: 'Why use Decorated Box in Teta?',
+      description: 'Test',
+      linkToOpen:
+          'https://docs.teta.so/teta-docs/widget/advanced-widgets/decorated-box',
+    )
+  ],
 );
 
 /// Set of funcs to use DecoratedBox widget

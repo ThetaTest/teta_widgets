@@ -19,6 +19,8 @@ import 'package:teta_widgets/src/elements/nodes/node.dart';
 import 'package:teta_widgets/src/elements/nodes/node_body.dart';
 import 'package:teta_widgets/src/elements/widgets/padding.dart';
 
+import '../nodes/suggestion.dart';
+
 const _globalType = NType.padding;
 
 /// IS
@@ -43,6 +45,14 @@ final paddingIntrinsicStates = IntrinsicStates(
   gestures: [],
   permissions: [],
   packages: [],
+  suggestionsTitle: 'Why use Padding in Teta?',
+  suggestions: [
+    const Suggestion(
+      title: 'Why use Padding in Teta?',
+      description: 'Test',
+      linkToOpen: 'https://docs.teta.so/teta-docs/widget/basic-widgets/padding',
+    )
+  ],
 );
 
 /// Body

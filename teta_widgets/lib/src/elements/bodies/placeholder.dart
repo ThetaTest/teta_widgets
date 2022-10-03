@@ -21,6 +21,8 @@ import 'package:teta_widgets/src/elements/nodes/node.dart';
 import 'package:teta_widgets/src/elements/nodes/node_body.dart';
 import 'package:teta_widgets/src/elements/widgets/placeholder.dart';
 
+import '../nodes/suggestion.dart';
+
 const _globalType = NType.placeholder;
 
 /// Intrinsic States of Center node type
@@ -45,6 +47,15 @@ final placeholderIntrinsicStates = IntrinsicStates(
   gestures: [],
   permissions: [],
   packages: [],
+  suggestionsTitle: 'Why use Placeholder in Teta?',
+  suggestions: [
+    const Suggestion(
+      title: 'Why use Placeholder in Teta?',
+      description: 'Test',
+      linkToOpen:
+          'https://docs.teta.so/teta-docs/widget/advanced-widgets/placeholder',
+    )
+  ],
 );
 
 /// Set of funcs of Center node

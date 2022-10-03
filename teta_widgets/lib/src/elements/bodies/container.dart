@@ -24,6 +24,8 @@ import 'package:teta_widgets/src/elements/nodes/node.dart';
 import 'package:teta_widgets/src/elements/nodes/node_body.dart';
 import 'package:teta_widgets/src/elements/widgets/container.dart';
 
+import '../nodes/suggestion.dart';
+
 const _globalType = NType.container;
 
 /// Instrinsic States of Container
@@ -54,6 +56,15 @@ final containerIntrinsicStates = IntrinsicStates(
   gestures: [],
   permissions: [],
   packages: [],
+  suggestionsTitle: 'Why use Container in Teta?',
+  suggestions: [
+    const Suggestion(
+      title: 'Why use Container in Teta?',
+      description: 'Test',
+      linkToOpen:
+          'https://docs.teta.so/teta-docs/widget/basic-widgets/container',
+    )
+  ],
 );
 
 /// Set of funcs to use Container widget

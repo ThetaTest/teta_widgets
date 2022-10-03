@@ -17,6 +17,8 @@ import 'package:teta_widgets/src/elements/nodes/node.dart';
 import 'package:teta_widgets/src/elements/nodes/node_body.dart';
 import 'package:teta_widgets/src/elements/widgets/fitted_box.dart';
 
+import '../nodes/suggestion.dart';
+
 const _globalType = NType.fittedBox;
 
 /// Instrict State of FittedBox
@@ -42,6 +44,15 @@ final fittedBoxIntrinsicStates = IntrinsicStates(
   gestures: [],
   permissions: [],
   packages: [],
+  suggestionsTitle: 'Why use Fitted Box in Teta?',
+  suggestions: [
+    const Suggestion(
+      title: 'Why use Fitted Box in Teta?',
+      description: 'Test',
+      linkToOpen:
+          'https://docs.teta.so/teta-docs/widget/advanced-widgets/fitted-box',
+    )
+  ],
 );
 
 /// Set of funcs to use Container widget

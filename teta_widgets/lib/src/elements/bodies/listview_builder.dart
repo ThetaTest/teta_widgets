@@ -21,6 +21,8 @@ import 'package:teta_widgets/src/elements/nodes/children_enum.dart';
 import 'package:teta_widgets/src/elements/nodes/dynamic.dart';
 import 'package:teta_widgets/src/elements/nodes/node_body.dart';
 
+import '../nodes/suggestion.dart';
+
 const _globalType = NType.listViewBuilder;
 
 /// Intrinsic States of ListView Builder
@@ -48,6 +50,15 @@ final listViewBuilderIntrinsicStates = IntrinsicStates(
   ],
   permissions: [],
   packages: [],
+  suggestionsTitle: 'Why use ListView Builder in Teta?',
+  suggestions: [
+    const Suggestion(
+      title: 'Why use ListView Builder in Teta?',
+      description: 'Test',
+      linkToOpen:
+          'https://docs.teta.so/teta-docs/widget/list-widgets/listview-builder',
+    )
+  ],
 );
 
 /// ListView Builder's body

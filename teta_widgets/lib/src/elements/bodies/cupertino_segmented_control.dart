@@ -18,6 +18,8 @@ import 'package:teta_widgets/src/elements/nodes/node.dart';
 import 'package:teta_widgets/src/elements/nodes/node_body.dart';
 import 'package:teta_widgets/src/elements/widgets/cupertino_segmented_control.dart';
 
+import '../nodes/suggestion.dart';
+
 const _globalType = NType.cupertinoSegmentedControl;
 
 /// Instrict State of Cupertino Segmented Control
@@ -57,6 +59,15 @@ final cupertinoSegmentedControlIntrinsicStates = IntrinsicStates(
   ],
   permissions: [],
   packages: [],
+  suggestionsTitle: 'Why use Cupertino Segmented Control in Teta?',
+  suggestions: [
+    const Suggestion(
+      title: 'Why use Cupertino Segmented Control in Teta?',
+      description: 'Test',
+      linkToOpen:
+          'https://docs.teta.so/teta-docs/widget/input-widgets/cupertino-segmented-control',
+    )
+  ],
 );
 
 /// Cupertino Segmented Control's body

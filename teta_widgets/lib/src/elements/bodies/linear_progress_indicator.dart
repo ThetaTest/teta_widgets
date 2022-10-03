@@ -19,6 +19,8 @@ import 'package:teta_widgets/src/elements/nodes/node.dart';
 import 'package:teta_widgets/src/elements/nodes/node_body.dart';
 import 'package:teta_widgets/src/elements/widgets/linear_progress_indicator.dart';
 
+import '../nodes/suggestion.dart';
+
 const _globalType = NType.linearProgressIndicator;
 
 /// Intrinsic States of Center node type
@@ -43,6 +45,15 @@ final linearProgressIndicatorIntrinsicStates = IntrinsicStates(
   gestures: [],
   permissions: [],
   packages: [],
+  suggestionsTitle: 'Why use Linear Progress Indicator in Teta?',
+  suggestions: [
+    const Suggestion(
+      title: 'Why use Linear Progress Indicator in Teta?',
+      description: 'Test',
+      linkToOpen:
+          'https://docs.teta.so/teta-docs/widget/advanced-widgets/linear-progress-indicator',
+    )
+  ],
 );
 
 /// Set of funcs of Center node

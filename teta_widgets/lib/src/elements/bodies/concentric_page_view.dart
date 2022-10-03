@@ -19,6 +19,8 @@ import 'package:teta_widgets/src/elements/nodes/node_body.dart';
 import 'package:teta_widgets/src/elements/packages.dart';
 import 'package:teta_widgets/src/elements/widgets/concentric_page_view.dart';
 
+import '../nodes/suggestion.dart';
+
 const _globalType = NType.concentricPageView;
 
 /// Instrict State of Concentric PageView
@@ -43,6 +45,15 @@ final concentricPageViewIntrinsicStates = IntrinsicStates(
   gestures: [],
   permissions: [],
   packages: [pConcentricTransition],
+  suggestionsTitle: 'Why use Concentric PageView in Teta?',
+  suggestions: [
+    const Suggestion(
+      title: 'Why use Concentric PageView in Teta?',
+      description: 'Test',
+      linkToOpen:
+          'https://docs.teta.so/teta-docs/widget/list-widgets/concentric-pageview',
+    )
+  ],
 );
 
 /// Concentric PageView's body

@@ -13,6 +13,7 @@ import 'package:teta_widgets/src/elements/nodes/children_enum.dart';
 import 'package:teta_widgets/src/elements/nodes/enum.dart';
 import 'package:teta_widgets/src/elements/nodes/node.dart';
 import 'package:teta_widgets/src/elements/nodes/node_body.dart';
+import 'package:teta_widgets/src/elements/nodes/suggestion.dart';
 import 'package:teta_widgets/src/elements/widgets/wrap.dart';
 
 /// GlobalType for Wrap widget
@@ -40,6 +41,14 @@ final wrapIntrinsicStates = IntrinsicStates(
   gestures: [],
   permissions: [],
   packages: [],
+  suggestionsTitle: 'Why use Wrap in Teta?',
+  suggestions: [
+    const Suggestion(
+      title: 'Why use Wrap in Teta?',
+      description: 'Test',
+      linkToOpen: 'https://docs.teta.so/teta-docs/widget/list-widgets/wrap',
+    )
+  ],
 );
 
 /// Body for Wrap widget

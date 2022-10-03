@@ -19,6 +19,8 @@ import 'package:teta_widgets/src/elements/nodes/node.dart';
 import 'package:teta_widgets/src/elements/nodes/node_body.dart';
 import 'package:teta_widgets/src/elements/widgets/gesture_detector.dart';
 
+import '../nodes/suggestion.dart';
+
 const _globalType = NType.gestureDetector;
 
 /// Instrict State of GestureDetector
@@ -53,6 +55,15 @@ final gestureDetectorIntrinsicStates = IntrinsicStates(
   ],
   permissions: [],
   packages: [],
+  suggestionsTitle: 'Why use Gesture Detector in Teta?',
+  suggestions: [
+    const Suggestion(
+      title: 'Why use Gesture Detector in Teta?',
+      description: 'Test',
+      linkToOpen:
+          'https://docs.teta.so/teta-docs/widget/input-widgets/gesture-detector',
+    )
+  ],
 );
 
 /// GestureDetector's body

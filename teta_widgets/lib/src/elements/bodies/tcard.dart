@@ -23,6 +23,7 @@ import 'package:teta_widgets/src/elements/nodes/children_enum.dart';
 import 'package:teta_widgets/src/elements/nodes/enum.dart';
 import 'package:teta_widgets/src/elements/nodes/node.dart';
 import 'package:teta_widgets/src/elements/nodes/node_body.dart';
+import 'package:teta_widgets/src/elements/nodes/suggestion.dart';
 import 'package:teta_widgets/src/elements/packages.dart';
 import 'package:teta_widgets/src/elements/widgets/tcard.dart';
 
@@ -54,6 +55,14 @@ final tcardIntrinsicStates = IntrinsicStates(
   ],
   permissions: [],
   packages: [pTCard],
+  suggestionsTitle: 'Why use Tcard in Teta?',
+  suggestions: [
+    const Suggestion(
+      title: 'Why use Tcard in Teta?',
+      description: 'Test',
+      linkToOpen: 'https://docs.teta.so/teta-docs/widget/list-widgets/tcard',
+    )
+  ],
 );
 
 /// Body

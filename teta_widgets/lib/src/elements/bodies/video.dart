@@ -20,6 +20,7 @@ import 'package:teta_widgets/src/elements/nodes/children_enum.dart';
 import 'package:teta_widgets/src/elements/nodes/enum.dart';
 import 'package:teta_widgets/src/elements/nodes/node.dart';
 import 'package:teta_widgets/src/elements/nodes/node_body.dart';
+import 'package:teta_widgets/src/elements/nodes/suggestion.dart';
 import 'package:teta_widgets/src/elements/packages.dart';
 import 'package:teta_widgets/src/elements/widgets/video.dart';
 
@@ -44,6 +45,14 @@ final videoIntrinsicStates = IntrinsicStates(
   gestures: [],
   permissions: [],
   packages: [pYoutubePlayerIframe],
+  suggestionsTitle: 'Why use Video in Teta?',
+  suggestions: [
+    const Suggestion(
+      title: 'Why use Video in Teta?',
+      description: 'Test',
+      linkToOpen: 'https://docs.teta.so/teta-docs/widget/basic-widgets/video',
+    )
+  ],
 );
 
 /// Body for Video widget

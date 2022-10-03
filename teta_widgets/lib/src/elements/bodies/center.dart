@@ -14,6 +14,7 @@ import 'package:teta_widgets/src/elements/nodes/children_enum.dart';
 import 'package:teta_widgets/src/elements/nodes/enum.dart';
 import 'package:teta_widgets/src/elements/nodes/node.dart';
 import 'package:teta_widgets/src/elements/nodes/node_body.dart';
+import 'package:teta_widgets/src/elements/nodes/suggestion.dart';
 import 'package:teta_widgets/src/elements/widgets/center.dart';
 
 const _globalType = NType.center;
@@ -40,6 +41,14 @@ final centerIntrinsicStates = IntrinsicStates(
   gestures: [],
   permissions: [],
   packages: [],
+  suggestionsTitle: 'Why use Center in Teta?',
+  suggestions: [
+    const Suggestion(
+      title: 'Why use Center in Teta?',
+      description: 'Test',
+      linkToOpen: 'https://docs.teta.so/teta-docs/widget/basic-widgets/center',
+    )
+  ],
 );
 
 /// Set of funcs of Center node

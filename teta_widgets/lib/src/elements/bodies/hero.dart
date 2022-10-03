@@ -19,6 +19,8 @@ import 'package:teta_widgets/src/elements/nodes/node.dart';
 import 'package:teta_widgets/src/elements/nodes/node_body.dart';
 import 'package:teta_widgets/src/elements/widgets/hero.dart';
 
+import '../nodes/suggestion.dart';
+
 const _globalType = NType.hero;
 
 /// Instrict State of Hero
@@ -43,6 +45,14 @@ final heroIntrinsicStates = IntrinsicStates(
   gestures: [],
   permissions: [],
   packages: [],
+  suggestionsTitle: 'Why use Hero in Teta?',
+  suggestions: [
+    const Suggestion(
+      title: 'Why use Hero in Teta?',
+      description: 'Test',
+      linkToOpen: 'https://docs.teta.so/teta-docs/widget/animated-widgets/hero',
+    )
+  ],
 );
 
 /// Hero's body

@@ -22,6 +22,8 @@ import 'package:teta_widgets/src/elements/nodes/node_body.dart';
 import 'package:teta_widgets/src/elements/packages.dart';
 import 'package:teta_widgets/src/elements/widgets/lottie.dart';
 
+import '../nodes/suggestion.dart';
+
 const _globalType = NType.lottie;
 
 /// Lottie Intrinsic States
@@ -42,6 +44,15 @@ final lottieIntrinsicStates = IntrinsicStates(
   gestures: [],
   permissions: [],
   packages: [pLottie],
+  suggestionsTitle: 'Why use Lottie in Teta?',
+  suggestions: [
+    const Suggestion(
+      title: 'Why use Lottie in Teta?',
+      description: 'Test',
+      linkToOpen:
+          'https://docs.teta.so/teta-docs/widget/advanced-widgets/lottie',
+    )
+  ],
 );
 
 /// Body of Lottie

@@ -21,6 +21,8 @@ import 'package:teta_widgets/src/elements/nodes/node_body.dart';
 import 'package:teta_widgets/src/elements/packages.dart';
 import 'package:teta_widgets/src/elements/widgets/icon_line.dart';
 
+import '../nodes/suggestion.dart';
+
 const _globalType = NType.lineIcon;
 
 /// Intrinsic States of featherIcon node
@@ -45,6 +47,15 @@ final lineIconIntrinsicStates = IntrinsicStates(
   gestures: [],
   permissions: [],
   packages: [pLineIcons],
+  suggestionsTitle: 'Why use Line Icons in Teta?',
+  suggestions: [
+    const Suggestion(
+      title: 'Why use Line Icons in Teta?',
+      description: 'Test',
+      linkToOpen:
+          'https://docs.teta.so/teta-docs/widget/icon-widgets/line-icons',
+    )
+  ],
 );
 
 /// Feather Icon's body

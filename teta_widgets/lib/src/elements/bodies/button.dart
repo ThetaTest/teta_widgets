@@ -27,6 +27,8 @@ import 'package:teta_widgets/src/elements/nodes/node.dart';
 import 'package:teta_widgets/src/elements/nodes/node_body.dart';
 import 'package:teta_widgets/src/elements/widgets/button.dart';
 
+import '../nodes/suggestion.dart';
+
 const _globalType = NType.button;
 
 /// Instrict State of Button
@@ -58,6 +60,14 @@ final buttonIntrinsicStates = IntrinsicStates(
   ],
   permissions: [],
   packages: [],
+  suggestionsTitle: 'Why use Button in Teta?',
+  suggestions: [
+    const Suggestion(
+      title: 'Why use Button in Teta?',
+      description: 'Test',
+      linkToOpen: 'https://docs.teta.so/teta-docs/widget/input-widgets/button',
+    )
+  ],
 );
 
 /// Set of funcs to use a Button widget

@@ -27,6 +27,8 @@ import 'package:teta_widgets/src/elements/nodes/node_body.dart';
 import 'package:teta_widgets/src/elements/packages.dart';
 import 'package:teta_widgets/src/elements/widgets/calendar.dart';
 
+import '../nodes/suggestion.dart';
+
 const _globalType = NType.calendar;
 
 /// Instrict State of Calendar
@@ -52,6 +54,15 @@ final calendarIntrinsicStates = IntrinsicStates(
     Permissions.calendar,
   ],
   packages: [pPagedVerticalCalendar, pIntl],
+  suggestionsTitle: 'Why use Calendar in Teta?',
+  suggestions: [
+    const Suggestion(
+      title: 'Why use Calendar in Teta?',
+      description: 'Test',
+      linkToOpen:
+          'https://docs.teta.so/teta-docs/widget/advanced-widgets/calendar',
+    )
+  ],
 );
 
 /// Set of funcs to use Align widget
