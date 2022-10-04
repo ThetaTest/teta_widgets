@@ -21,6 +21,8 @@ import 'package:teta_widgets/src/elements/nodes/node_body.dart';
 import 'package:teta_widgets/src/elements/packages.dart';
 import 'package:teta_widgets/src/elements/widgets/bouncing_widget.dart';
 
+import '../nodes/suggestion.dart';
+
 const _globalType = NType.bouncingWidget;
 
 /// Instrict State of Bouncing Widget
@@ -47,6 +49,15 @@ final bouncingWidgetIntrinsicStates = IntrinsicStates(
   ],
   permissions: [],
   packages: [pBouncingWidget],
+  suggestionsTitle: 'Why use Button in Teta?',
+  suggestions: [
+    const Suggestion(
+      title: 'Why use Button in Teta?',
+      description: 'Test',
+      linkToOpen:
+          'https://docs.teta.so/teta-docs/widget/animated-widgets/bouncing-widget',
+    )
+  ],
 );
 
 /// Set of funcs to use Container widget

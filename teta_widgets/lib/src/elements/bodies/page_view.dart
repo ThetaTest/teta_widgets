@@ -18,6 +18,8 @@ import 'package:teta_widgets/src/elements/nodes/node.dart';
 import 'package:teta_widgets/src/elements/nodes/node_body.dart';
 import 'package:teta_widgets/src/elements/widgets/page_view.dart';
 
+import '../nodes/suggestion.dart';
+
 const _globalType = NType.pageView;
 
 /// Intrinsic States of PageView
@@ -44,6 +46,14 @@ final pageViewIntrinsicStates = IntrinsicStates(
   ],
   permissions: [],
   packages: [],
+  suggestionsTitle: 'Why use PageView in Teta?',
+  suggestions: [
+    const Suggestion(
+      title: 'Why use PageView in Teta?',
+      description: 'Test',
+      linkToOpen: 'https://docs.teta.so/teta-docs/widget/list-widgets/pageview',
+    )
+  ],
 );
 
 /// PageView's body

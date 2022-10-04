@@ -22,6 +22,8 @@ import 'package:teta_widgets/src/elements/nodes/node.dart';
 import 'package:teta_widgets/src/elements/nodes/node_body.dart';
 import 'package:teta_widgets/src/elements/widgets/gridview.dart';
 
+import '../nodes/suggestion.dart';
+
 const _globalType = NType.gridView;
 
 /// Instrict State of GridView
@@ -46,6 +48,14 @@ final gridIntrinsicStates = IntrinsicStates(
   gestures: [],
   permissions: [],
   packages: [],
+  suggestionsTitle: 'Why use GridView in Teta?',
+  suggestions: [
+    const Suggestion(
+      title: 'Why use GridView in Teta?',
+      description: 'Test',
+      linkToOpen: 'https://docs.teta.so/teta-docs/widget/list-widgets/gridview',
+    )
+  ],
 );
 
 /// GridView builder

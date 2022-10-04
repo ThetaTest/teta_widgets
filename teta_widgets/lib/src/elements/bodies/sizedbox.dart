@@ -18,6 +18,8 @@ import 'package:teta_widgets/src/elements/nodes/node.dart';
 import 'package:teta_widgets/src/elements/nodes/node_body.dart';
 import 'package:teta_widgets/src/elements/widgets/sizedbox.dart';
 
+import '../nodes/suggestion.dart';
+
 /// globalType for SizedBox widget
 const _globalType = NType.sizedBox;
 
@@ -43,6 +45,15 @@ final sizedBoxIntrinsicStates = IntrinsicStates(
   gestures: [],
   permissions: [],
   packages: [],
+  suggestionsTitle: 'Why use Sized Box in Teta?',
+  suggestions: [
+    const Suggestion(
+      title: 'Why use Sized Box in Teta?',
+      description: 'Test',
+      linkToOpen:
+          'https://docs.teta.so/teta-docs/widget/basic-widgets/sized-box',
+    )
+  ],
 );
 
 /// Body for SizedBox widget

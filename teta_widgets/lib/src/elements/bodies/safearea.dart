@@ -20,6 +20,8 @@ import 'package:teta_widgets/src/elements/nodes/node.dart';
 import 'package:teta_widgets/src/elements/nodes/node_body.dart';
 import 'package:teta_widgets/src/elements/widgets/safearea.dart';
 
+import '../nodes/suggestion.dart';
+
 const _globalType = NType.safeArea;
 
 /// IS
@@ -43,6 +45,15 @@ final safeareaIntrinsicStates = IntrinsicStates(
   addChildLabels: [],
   gestures: [],
   permissions: [], packages: [],
+  suggestionsTitle: 'Why use Safe Area in Teta?',
+  suggestions: [
+    const Suggestion(
+      title: 'Why use Safe Area in Teta?',
+      description: 'Test',
+      linkToOpen:
+          'https://docs.teta.so/teta-docs/widget/advanced-widgets/safe-area',
+    )
+  ],
 );
 
 /// Body

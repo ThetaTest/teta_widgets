@@ -17,111 +17,122 @@ class GoogleMapsCubitTemplate {
     required final bool trackMyLocation,
     required final String initialZoomLevel,
     required final String googleMapsKey,
-    required final String googleMapsBlocName,
+    required final String googleMapsCubitName,
     required final String pathColor,
   }) {
-    final mapStyleVarName = getMapToCodeName(customMapStyle);
+    final style = getMapToCodeName(customMapStyle);
 
     return '''
-    class ${googleMapsBlocName}Cubit extends Cubit<${googleMapsBlocName}State> {
-  ${googleMapsBlocName}Cubit({${googleMapsBlocName}State? initialState})
+class ${googleMapsCubitName}Cubit extends Cubit<${googleMapsCubitName}State> {
+  ${googleMapsCubitName}Cubit({final ${googleMapsCubitName}State? initialState})
       : super(
           initialState ??
-              ${googleMapsBlocName}State(
-                paths: <Polyline>{},
-                markers: <Marker>{},
-                initialCameraPosition: const CameraPosition(
-                  target: LatLng(
-                    0,
-                    0,
+              const ${googleMapsCubitName}InitialState(
+                ${googleMapsCubitName}UiModel(
+                  paths: <Polyline>{},
+                  markers: <Marker>{},
+                  cameraPosition: CameraPosition(
+                    target: LatLng(
+                      0,
+                      0,
+                    ),
+                    zoom: 10,
                   ),
+                  style: constantz.$style,
                 ),
-                initialZoom: 7,
-                isError: false,
-                mapStyle: '',
-                isInitialState: true,
-                isSetNewCameraPositionState: false,
               ),
-        );
+        ) {
+    onEmitReloadDataState();
+  }
 
-  void onInitialState(List<dynamic> markersDataset) async {
+  StreamSubscription? tracking;
+
+  Future<void> onLoadData(
+    final List<dynamic> markersDataset,
+  ) async {
     try {
       final num initialPositionLat = $initialPositionLat;
       final num initialPositionLng = $initialPositionLng;
       final double initialZoom = $initialZoomLevel;
-      final String mapStyle = constantz.$mapStyleVarName;
-
-      final mapMarkers = Set<Marker>();
+      final String mapStyle = constantz.$style;
       final bool trackMyLocation = $trackMyLocation;
+      final String googleMapsKey = '$googleMapsKey';
 
-      Location location = Location();
-      await location.changeSettings(distanceFilter: 30);
-      await location.requestPermission();
-      await location.requestService();
-      // await Future.delayed(const Duration(seconds: 2));
-      // final userLocation = await location.getLocation();
+      onEmitNewCameraPosition(
+        initialPositionLat.toDouble(),
+        initialPositionLng.toDouble(),
+        initialZoom,
+      );
+      onEmitNewMapStyle(mapStyle);
+
+      await Geolocator.requestPermission();
+      final location = await Geolocator.getCurrentPosition(
+      );
+      
       if (trackMyLocation) {
-        location.onLocationChanged.listen((event) {
-          // emit new location
-          _buildMarkersAndPath(
-            markersDataset: markersDataset,
-            mapMarkers: mapMarkers,
-            initialPositionLat: initialPositionLat,
-            initialPositionLng: initialPositionLng,
-            initialZoom: initialZoom,
-            mapStyle: mapStyle,
-            userLocationLat: event.latitude!,
-            userLocationLng: event.longitude!,
-          );
-        });
+        await tracking?.cancel();
+        tracking = Geolocator.getPositionStream().listen(
+          (final event) async {
+            if (event.latitude != null) {
+              // emit new location
+              unawaited(
+                _buildMarkersAndPath(
+                  markersDataset: markersDataset,
+                  initialPositionLat: initialPositionLat,
+                  initialPositionLng: initialPositionLng,
+                  zoom: initialZoom,
+                  mapStyle: mapStyle,
+                  userLocationLat: event.latitude,
+                  userLocationLng: event.longitude,
+                  googleMapsKey: googleMapsKey,
+                ),
+              );
+            }
+          },
+        );
+      } else {
+        await tracking?.cancel();
       }
 
-      _buildMarkersAndPath(
+      await _buildMarkersAndPath(
         markersDataset: markersDataset,
-        mapMarkers: mapMarkers,
         initialPositionLat: initialPositionLat,
         initialPositionLng: initialPositionLng,
-        initialZoom: initialZoom,
+        zoom: initialZoom,
         mapStyle: mapStyle,
-        userLocationLat: 41.889221,
-        userLocationLng: 12.493421,
+        userLocationLat: location.latitude ?? initialPositionLat.toDouble(),
+        userLocationLng: location.longitude ?? initialPositionLng.toDouble(),
+        googleMapsKey: googleMapsKey,
       );
     } catch (e) {
       emit(
-        ${googleMapsBlocName}State(
-          paths: <Polyline>{},
-          markers: <Marker>{},
-          initialCameraPosition: const CameraPosition(
-            target: LatLng(
-              0,
-              0,
-            ),
+        ${googleMapsCubitName}ErrorState(
+          ${googleMapsCubitName}UiModel(
+            paths: state.uiModel.paths,
+            markers: state.uiModel.markers,
+            cameraPosition: state.uiModel.cameraPosition,
+            style: state.uiModel.style,
           ),
-          initialZoom: 10,
-          isError: true,
-          mapStyle: '',
-          isInitialState: false,
-          isSetNewCameraPositionState: false,
         ),
       );
     }
   }
 
-  void _buildMarkersAndPath({
-    required List<dynamic> markersDataset,
-    required Set<Marker> mapMarkers,
-    required num initialPositionLat,
-    required num initialPositionLng,
-    required double initialZoom,
-    required String mapStyle,
-    required double userLocationLat,
-    required double userLocationLng,
+  Future<void> _buildMarkersAndPath({
+    required final List<dynamic> markersDataset,
+    required final num initialPositionLat,
+    required final num initialPositionLng,
+    required final double zoom,
+    required final String mapStyle,
+    required final double userLocationLat,
+    required final double userLocationLng,
+    required final String googleMapsKey,
   }) async {
     final polyLines = <Polyline>{};
-    final bool showMyLocationMarker = $showMyLocationMarker;
+    final mapMarkers = <Marker>{};
 
     try {
-      if (showMyLocationMarker) {
+      if ($showMyLocationMarker) {
         mapMarkers.add(
           Marker(
             markerId: const MarkerId('myLocation'),
@@ -133,22 +144,31 @@ class GoogleMapsCubitTemplate {
         );
       }
     } catch (e, st) {
+      print('Google Maps Show My Location Error.');
       print(e);
       print(st);
     }
+
     for (final element in markersDataset) {
       try {
-        final bool markerDrawPath =
-            ((element['$markerDrawPath'] as String?) ?? 'false').toLowerCase() ==
+        final markerDrawPath =
+            ((element['$markerDrawPath']
+                            as String?) ??
+                        'false')
+                    .toLowerCase() ==
                 'true';
-        final String markerId = element['$markerId'];
-        final num markerLatitude = num.parse(element['$markerLatitude']);
-        final num markerLongitude = num.parse(element['$markerLongitude']);
-        final String? markerIconUrl = element['$markerIconUrl'];
-        final num markerIconWidth = num.parse(element['$markerIconWidth'] ?? '70');
+        final markerId = element['$markerId'] as String;
+        final markerLatitude =
+            num.parse(element['$markerLatitude'] as String);
+        final markerLongitude =
+            num.parse(element['$markerLongitude'] as String);
+        final markerIconUrl = element['$markerIconUrl'] as String?;
+        final markerIconWidth =
+            num.parse(element['$markerIconWidth'] as String? ?? '70');
         BitmapDescriptor? markerIcon;
 
-        if (markerIconUrl != null) {
+        try {
+          if (markerIconUrl != null) {
           final File markerImageFile =
               await DefaultCacheManager().getSingleFile(markerIconUrl);
           final Uint8List markerImageBytes =
@@ -166,17 +186,20 @@ class GoogleMapsCubitTemplate {
               byteData!.buffer.asUint8List();
 
           markerIcon = BitmapDescriptor.fromBytes(resizedMarkerImageBytes);
+          }
+        } catch (e, st) {
+          print(e);
+          print(st);
         }
         try {
           if (markerDrawPath) {
             final mLat = markerLatitude.toDouble();
             final mLon = markerLongitude.toDouble();
 
-            PolylinePoints polylinePoints = PolylinePoints();
+            final polylinePoints = PolylinePoints();
 
-            PolylineResult result =
-                await polylinePoints.getRouteBetweenCoordinates(
-              '$googleMapsKey',
+            final result = await polylinePoints.getRouteBetweenCoordinates(
+              googleMapsKey,
               PointLatLng(userLocationLat, userLocationLng),
               PointLatLng(
                 mLat,
@@ -187,11 +210,11 @@ class GoogleMapsCubitTemplate {
             if (result.points.isNotEmpty) {
               polyLines.add(
                 Polyline(
-                  color: Color(0x$pathColor),
+                  color: const Color(0x006A56B0),
                   polylineId: PolylineId(markerId),
                   points: result.points
                       .map(
-                        (e) => LatLng(
+                        (final e) => LatLng(
                           e.latitude,
                           e.longitude,
                         ),
@@ -215,99 +238,173 @@ class GoogleMapsCubitTemplate {
               mLon,
             ),
             icon: markerIcon ?? BitmapDescriptor.defaultMarker,
-            onTap: () {},
+            onTap: () {
+              //
+            },
           ),
         );
-      } catch (e) {
-        print('Marker: \$element failed.');
+      } catch (e, st) {
+        print('Marker: \$element failed. with error: \$e \$st');
       }
     }
+
     emit(
-      ${googleMapsBlocName}State(
-        paths: polyLines,
-        markers: mapMarkers,
-        initialCameraPosition: CameraPosition(
-          target: LatLng(
-            initialPositionLat.toDouble(),
-            initialPositionLng.toDouble(),
+      ${googleMapsCubitName}LoadedState(
+        state.uiModel.copyWith(
+          paths: polyLines,
+          markers: mapMarkers,
+          cameraPosition: CameraPosition(
+            target: LatLng(
+              initialPositionLat.toDouble(),
+              initialPositionLng.toDouble(),
+            ),
+            zoom: zoom,
           ),
+          style: mapStyle,
         ),
-        initialZoom: initialZoom,
-        mapStyle: mapStyle,
-        isError: false,
-        isInitialState: false,
-        isSetNewCameraPositionState: false,
       ),
     );
   }
-  
-  void onResetToInitialState() {
-    emit(state.copyWith(isInitialState: true));
+
+  void onEmitReloadDataState() {
+    emit(
+      ${googleMapsCubitName}ReloadDataState(
+        state.uiModel,
+      ),
+    );
   }
-  
+
   void onEmitNewCameraPosition(
     final double lat,
     final double lng,
     final double zoom,
   ) {
     emit(
-      state.copyWith(
-        initialCameraPosition: CameraPosition(
-          target: LatLng(
-            lat,
-            lng,
+      ${googleMapsCubitName}SetNewCameraPositionState(
+        state.uiModel.copyWith(
+          cameraPosition: CameraPosition(
+            target: LatLng(
+              lat,
+              lng,
+            ),
+            zoom: zoom,
           ),
-          zoom: zoom,
         ),
-        isSetNewCameraPositionState: true,
       ),
     );
-    emit(state.copyWith(isSetNewCameraPositionState: false));
+  }
+
+  void onEmitNewMapStyle(final String style) {
+    emit(
+      ${googleMapsCubitName}ChangeMapStyleState(
+        state.uiModel.copyWith(style: style),
+      ),
+    );
+  }
+
+  void onEmitNewMarkers(final Set<Marker> markers) {
+    emit(
+      ${googleMapsCubitName}ReloadMarkersState(
+        state.uiModel.copyWith(
+          markers: markers,
+        ),
+      ),
+    );
   }
 }
 
-class ${googleMapsBlocName}State {
-  final Set<Polyline> paths;
-  final Set<Marker> markers;
-  final CameraPosition initialCameraPosition;
-  final double initialZoom;
-  final String mapStyle;
-  final bool isError;
-  final bool isInitialState;
-  final bool isSetNewCameraPositionState;
-
-  ${googleMapsBlocName}State({
+class ${googleMapsCubitName}UiModel extends Equatable {
+  const ${googleMapsCubitName}UiModel({
     required this.paths,
     required this.markers,
-    required this.initialCameraPosition,
-    required this.initialZoom,
-    required this.mapStyle,
-    required this.isError,
-    required this.isInitialState,
-    required this.isSetNewCameraPositionState,
+    required this.cameraPosition,
+    required this.style,
   });
 
-  ${googleMapsBlocName}State copyWith({
-    Set<Polyline>? paths,
-    Set<Marker>? markers,
-    CameraPosition? initialCameraPosition,
-    double? initialZoom,
-    String? mapStyle,
-    bool? isError,
-    bool? isInitialState,
-    final bool? isSetNewCameraPositionState,
+  final Set<Polyline> paths;
+  final Set<Marker> markers;
+  final CameraPosition cameraPosition;
+  final String style;
+
+  ${googleMapsCubitName}UiModel copyWith({
+    final Set<Polyline>? paths,
+    final Set<Marker>? markers,
+    final CameraPosition? cameraPosition,
+    final double? initialZoom,
+    final String? style,
+    final bool? isError,
+    final bool? isInitialState,
   }) =>
-      ${googleMapsBlocName}State(
+      ${googleMapsCubitName}UiModel(
         paths: paths ?? this.paths,
         markers: markers ?? this.markers,
-        initialCameraPosition:
-            initialCameraPosition ?? this.initialCameraPosition,
-        initialZoom: initialZoom ?? this.initialZoom,
-        mapStyle: mapStyle ?? this.mapStyle,
-        isError: isError ?? this.isError,
-        isInitialState: isInitialState ?? this.isInitialState,
-        isSetNewCameraPositionState: isSetNewCameraPositionState ?? this.isSetNewCameraPositionState,
+        cameraPosition: cameraPosition ?? this.cameraPosition,
+        style: style ?? this.style,
       );
+
+  @override
+  String toString() {
+    return 'paths: \$paths\\n'
+        'markers: \$markers\\n'
+        'initialCameraPosition: \$cameraPosition\\n';
+  }
+
+  @override
+  List<Object?> get props => [
+        paths,
+        markers,
+        cameraPosition,
+        style,
+      ];
+}
+
+abstract class ${googleMapsCubitName}State extends Equatable {
+  const ${googleMapsCubitName}State(this.uiModel);
+
+  final ${googleMapsCubitName}UiModel uiModel;
+
+  @override
+  List<Object?> get props => [uiModel];
+}
+
+class ${googleMapsCubitName}InitialState extends ${googleMapsCubitName}State {
+  const ${googleMapsCubitName}InitialState(final ${googleMapsCubitName}UiModel uiModel)
+      : super(uiModel);
+}
+
+class ${googleMapsCubitName}ReloadDataState extends ${googleMapsCubitName}State {
+  const ${googleMapsCubitName}ReloadDataState(final ${googleMapsCubitName}UiModel uiModel)
+      : super(uiModel);
+}
+
+class ${googleMapsCubitName}LoadedState extends ${googleMapsCubitName}State {
+  const ${googleMapsCubitName}LoadedState(final ${googleMapsCubitName}UiModel uiModel) : super(uiModel);
+}
+
+class ${googleMapsCubitName}ErrorState extends ${googleMapsCubitName}State {
+  const ${googleMapsCubitName}ErrorState(final ${googleMapsCubitName}UiModel uiModel) : super(uiModel);
+}
+
+class ${googleMapsCubitName}SetNewCameraPositionState extends ${googleMapsCubitName}State {
+  const ${googleMapsCubitName}SetNewCameraPositionState(final ${googleMapsCubitName}UiModel uiModel)
+      : super(uiModel);
+}
+
+//Need to rebuild widget for this
+class ${googleMapsCubitName}ReloadMarkersState extends ${googleMapsCubitName}State {
+  const ${googleMapsCubitName}ReloadMarkersState(final ${googleMapsCubitName}UiModel uiModel)
+      : super(uiModel);
+}
+
+//Need to rebuild widget for this
+class ${googleMapsCubitName}ReloadPolyLinesState extends ${googleMapsCubitName}State {
+  const ${googleMapsCubitName}ReloadPolyLinesState(final ${googleMapsCubitName}UiModel uiModel)
+      : super(uiModel);
+}
+
+class ${googleMapsCubitName}ChangeMapStyleState extends ${googleMapsCubitName}State {
+  const ${googleMapsCubitName}ChangeMapStyleState(final ${googleMapsCubitName}UiModel uiModel)
+      : super(uiModel);
 }
     ''';
   }

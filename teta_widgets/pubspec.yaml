@@ -133,7 +133,7 @@ dependencies:
   cross_connectivity: 3.0.5
   linked_scroll_controller: 0.2.0
   just_audio: 0.9.27
-  location: 5.0.0-dev.8
+  geolocator: 8.2.1
   image:
   msix: 2.8.18
   geocode: 1.0.1

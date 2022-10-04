@@ -40,12 +40,12 @@ final alignIntrinsicStates = IntrinsicStates(
   gestures: [],
   permissions: [],
   packages: [],
-  suggestionsTitle: 'What is an Align?',
+  suggestionsTitle: 'Why use Align in Teta?',
   suggestions: [
     const Suggestion(
-      title: 'What about align?',
+      title: 'Why use Align in Teta?',
       description: 'Test',
-      linkToOpen: 'https://docs.teta.so/teta-docs/',
+      linkToOpen: 'https://docs.teta.so/teta-docs/widget/basic-widgets/align',
     )
   ],
 );

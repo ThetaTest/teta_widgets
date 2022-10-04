@@ -19,6 +19,8 @@ import 'package:teta_widgets/src/elements/nodes/node.dart';
 import 'package:teta_widgets/src/elements/nodes/node_body.dart';
 import 'package:teta_widgets/src/elements/widgets/constrained_box.dart';
 
+import '../nodes/suggestion.dart';
+
 const _globalType = NType.constrainedBox;
 
 /// Intrinsic States of Center node type
@@ -43,6 +45,15 @@ final constrainedBoxIntrinsicStates = IntrinsicStates(
   gestures: [],
   permissions: [],
   packages: [],
+  suggestionsTitle: 'Why use Constrained Box in Teta?',
+  suggestions: [
+    const Suggestion(
+      title: 'Why use Constrained Box in Teta?',
+      description: 'Test',
+      linkToOpen:
+          'https://docs.teta.so/teta-docs/widget/advanced-widgets/constrained-box',
+    )
+  ],
 );
 
 /// Set of funcs of Center node

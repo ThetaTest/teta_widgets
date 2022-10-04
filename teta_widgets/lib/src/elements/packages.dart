@@ -64,7 +64,7 @@ const PackageModel pMap = PackageModel(
 );
 const PackageModel pGoogleMaps = PackageModel(
   packageName: 'google_maps_flutter',
-  packageVersion: '2.1.9',
+  packageVersion: '2.2.1',
   isDart: false,
   customPath: '''
   import 'package:google_maps_flutter/google_maps_flutter.dart';
@@ -98,9 +98,18 @@ const PackageModel pPolyLinesPoints = PackageModel(
     import 'package:flutter_polyline_points/flutter_polyline_points.dart';
     ''',
 );
+//Use this instead of location. Location is not maintained properly.
+const PackageModel pGeolocator = PackageModel(
+  packageName: 'geolocator',
+  packageVersion: '9.0.2',
+  isDart: false,
+  customPath: '''
+    import 'package:geolocator/geolocator.dart';
+    ''',
+);
 const PackageModel pLocation = PackageModel(
   packageName: 'location',
-  packageVersion: '4.4.0',
+  packageVersion: '5.0.0-dev.8',
   isDart: false,
   customPath: '''
     import 'package:location/location.dart';
@@ -168,4 +177,10 @@ const PackageModel pRxDart = PackageModel(
   packageVersion: '0.27.4',
   isDart: false,
   customPath: "import 'package:rxdart/rxdart.dart';",
+);
+const PackageModel pEquatable = PackageModel(
+  packageName: 'equatable',
+  packageVersion: '2.0.3',
+  isDart: false,
+  customPath: "import 'package:equatable/equatable.dart';",
 );

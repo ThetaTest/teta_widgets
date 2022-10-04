@@ -19,6 +19,8 @@ import 'package:teta_widgets/src/elements/nodes/node.dart';
 import 'package:teta_widgets/src/elements/nodes/node_body.dart';
 import 'package:teta_widgets/src/elements/widgets/overflowbox.dart';
 
+import '../nodes/suggestion.dart';
+
 const _globalType = NType.overflowbox;
 
 /// Intrinsic States of Center node type
@@ -43,6 +45,15 @@ final overFlowBoxIntrinsicStates = IntrinsicStates(
   gestures: [],
   permissions: [],
   packages: [],
+  suggestionsTitle: 'Why use Overflowbox in Teta?',
+  suggestions: [
+    const Suggestion(
+      title: 'Why use Overflowbox in Teta?',
+      description: 'Test',
+      linkToOpen:
+          'https://docs.teta.so/teta-docs/widget/advanced-widgets/overflowbox',
+    )
+  ],
 );
 
 /// Set of funcs of Center node

@@ -23,6 +23,8 @@ import 'package:teta_widgets/src/elements/nodes/node.dart';
 import 'package:teta_widgets/src/elements/nodes/node_body.dart';
 import 'package:teta_widgets/src/elements/widgets/image.dart';
 
+import '../nodes/suggestion.dart';
+
 const _globalType = NType.image;
 
 /// Intrinsic State of Image
@@ -48,6 +50,14 @@ final imageIntrinsicStates = IntrinsicStates(
   gestures: [],
   permissions: [],
   packages: [],
+  suggestionsTitle: 'Why use Image in Teta?',
+  suggestions: [
+    const Suggestion(
+      title: 'Why use Image in Teta?',
+      description: 'Test',
+      linkToOpen: 'https://docs.teta.so/teta-docs/widget/basic-widgets/image',
+    )
+  ],
 );
 
 /// Image's body

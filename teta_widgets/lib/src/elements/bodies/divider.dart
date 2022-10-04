@@ -20,6 +20,8 @@ import 'package:teta_widgets/src/elements/nodes/node.dart';
 import 'package:teta_widgets/src/elements/nodes/node_body.dart';
 import 'package:teta_widgets/src/elements/widgets/divider.dart';
 
+import '../nodes/suggestion.dart';
+
 const _globalType = NType.divider;
 
 /// Instrict State of Divider
@@ -44,6 +46,14 @@ final dividerIntrinsicStates = IntrinsicStates(
   gestures: [],
   permissions: [],
   packages: [],
+  suggestionsTitle: 'Why use Divider in Teta?',
+  suggestions: [
+    const Suggestion(
+      title: 'Why use Divider in Teta?',
+      description: 'Test',
+      linkToOpen: 'https://docs.teta.so/teta-docs/widget/basic-widgets/divider',
+    )
+  ],
 );
 
 /// Divider's body

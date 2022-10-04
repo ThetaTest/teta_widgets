@@ -19,6 +19,8 @@ import 'package:teta_widgets/src/elements/nodes/node.dart';
 import 'package:teta_widgets/src/elements/nodes/node_body.dart';
 import 'package:teta_widgets/src/elements/widgets/rotatedbox.dart';
 
+import '../nodes/suggestion.dart';
+
 const _globalType = NType.rotatedBox;
 
 /// Intrinsic States of Center node type
@@ -43,6 +45,15 @@ final rotatedBoxIntrinsicStates = IntrinsicStates(
   gestures: [],
   permissions: [],
   packages: [],
+  suggestionsTitle: 'Why use Rotated Box in Teta?',
+  suggestions: [
+    const Suggestion(
+      title: 'Why use Rotated Box in Teta?',
+      description: 'Test',
+      linkToOpen:
+          'https://docs.teta.so/teta-docs/widget/advanced-widgets/rotated-box',
+    )
+  ],
 );
 
 /// Set of funcs of Center node

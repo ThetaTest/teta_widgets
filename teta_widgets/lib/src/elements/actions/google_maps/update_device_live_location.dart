@@ -6,7 +6,6 @@ import 'package:collection/collection.dart';
 
 // Flutter imports:
 import 'package:flutter/material.dart';
-import 'package:location/location.dart';
 import 'package:recase/recase.dart';
 import 'package:teta_core/src/models/variable.dart';
 import 'package:teta_widgets/src/elements/actions/snippets/get_page_on_code.dart';

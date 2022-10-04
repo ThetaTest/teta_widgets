@@ -27,6 +27,8 @@ import 'package:teta_widgets/src/elements/nodes/node_body.dart';
 import 'package:teta_widgets/src/elements/packages.dart';
 import 'package:teta_widgets/src/elements/widgets/tcard_builder.dart';
 
+import '../nodes/suggestion.dart';
+
 const _globalType = NType.tcardBuilder;
 
 /// IS
@@ -62,6 +64,15 @@ final tcardBuilderIntrinsicStates = IntrinsicStates(
   ],
   permissions: [],
   packages: [pTCard],
+  suggestionsTitle: 'Why use Tcard Builder in Teta?',
+  suggestions: [
+    const Suggestion(
+      title: 'Why use Tcard Builder in Teta?',
+      description: 'Test',
+      linkToOpen:
+          'https://docs.teta.so/teta-docs/widget/list-widgets/tcard-builder',
+    )
+  ],
 );
 
 /// Body

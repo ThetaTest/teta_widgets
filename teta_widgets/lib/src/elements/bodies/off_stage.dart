@@ -20,6 +20,8 @@ import 'package:teta_widgets/src/elements/nodes/node.dart';
 import 'package:teta_widgets/src/elements/nodes/node_body.dart';
 import 'package:teta_widgets/src/elements/widgets/off_stage.dart';
 
+import '../nodes/suggestion.dart';
+
 const _globalType = NType.offStage;
 
 /// IS
@@ -45,6 +47,15 @@ final offStageIntrinsicStates = IntrinsicStates(
   gestures: [],
   permissions: [],
   packages: [],
+  suggestionsTitle: 'Why use Off Stage in Teta?',
+  suggestions: [
+    const Suggestion(
+      title: 'Why use Off Stage in Teta?',
+      description: 'Test',
+      linkToOpen:
+          'https://docs.teta.so/teta-docs/widget/advanced-widgets/off-stage',
+    )
+  ],
 );
 
 /// Set of funcs to use Container widget

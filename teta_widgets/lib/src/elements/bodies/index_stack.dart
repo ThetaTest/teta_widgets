@@ -19,6 +19,8 @@ import 'package:teta_widgets/src/elements/nodes/node.dart';
 import 'package:teta_widgets/src/elements/nodes/node_body.dart';
 import 'package:teta_widgets/src/elements/widgets/index_stack.dart';
 
+import '../nodes/suggestion.dart';
+
 const _globalType = NType.indexedStack;
 
 /// Intrinsic States of IndexedStack
@@ -43,6 +45,15 @@ final indexedStackIntrinsicStates = IntrinsicStates(
   gestures: [],
   permissions: [],
   packages: [],
+  suggestionsTitle: 'Why use Indexed Stack in Teta?',
+  suggestions: [
+    const Suggestion(
+      title: 'Why use Indexed Stack in Teta?',
+      description: 'Test',
+      linkToOpen:
+          'https://docs.teta.so/teta-docs/widget/logic-widgets/indexed-stack',
+    )
+  ],
 );
 
 /// Set of funcs to use Column widget

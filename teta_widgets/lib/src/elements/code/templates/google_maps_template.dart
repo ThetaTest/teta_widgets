@@ -45,54 +45,77 @@ class GoogleMapsTemplate {
     required final bool showMyLocationMarker,
     required final bool trackMyLocation,
     required final String initialZoomLevel,
-    required final String googleMapsBlocName,
+    required final String googleMapsCubitName,
     required final String pathColor,
   }) async {
+    final style = getMapToCodeName(customMapStyle);
     final code = '''
-BlocConsumer<${googleMapsBlocName}Cubit, ${googleMapsBlocName}State>(
-                          bloc: $googleMapsBlocName,
-                          buildWhen: (final p, final c) {
-                               return !c.isSetNewCameraPositionState;
-                          },
-                          builder:
-                              (BuildContext context, ${googleMapsBlocName}State state) {
-                            if (state.isInitialState) {
-                              final markersDataset =
-                                  ((datasets['$markersDatasetName'] as List<dynamic>?) ??
-                                      <dynamic>[]);
-                              ${googleMapsBlocName}.onInitialState(
-                                markersDataset,
-                              );
-                              return const CircularProgressIndicator.adaptive();
-                            } else if (state.isError) {
-                              return Container();
-                            } else {
-                              return GoogleMap(
-                                initialCameraPosition:
-                                    state.initialCameraPosition,
-                                polylines: state.paths,
-                                markers: state.markers,
-                                onMapCreated: (cnt) {
-                                  $mapControllerName.complete(cnt);
-                                  cnt.setMapStyle(state.mapStyle);
-                                },
-                              );
-                            }
-                          },
-                          listener:
-                              (BuildContext context, ${googleMapsBlocName}State state) async {
-                            if (state.isInitialState) {
-                              final markersDataset =
-                                  ((datasets['$markersDatasetName'] as List<dynamic>?) ??
-                                      <dynamic>[]);
-                              ${googleMapsBlocName}.onInitialState(
-                                markersDataset,
-                              );
-                            } else if (state.isSetNewCameraPositionState) {
-                              await (await $mapControllerName.future).animateCamera(CameraUpdate.newCameraPosition(state.initialCameraPosition,),);
-                            }
-                          },
-                        )
+    BlocConsumer<${googleMapsCubitName}Cubit, ${googleMapsCubitName}State>(
+  bloc: $googleMapsCubitName,
+  builder: (final BuildContext context, final ${googleMapsCubitName}State state) {
+    if (state is ${googleMapsCubitName}InitialState) {
+      $googleMapsCubitName.onEmitReloadDataState();
+      return const CircularProgressIndicator();
+    } else if (state is ${googleMapsCubitName}ErrorState) {
+      return Container();
+    } else {
+      return GoogleMap(
+        initialCameraPosition: state.uiModel.cameraPosition,
+        polylines: state.uiModel.paths,
+        markers: state.uiModel.markers,
+        onMapCreated: (final cnt) {
+          $mapControllerName.complete(cnt);
+
+          $googleMapsCubitName
+            ..onEmitNewMapStyle(constantz.$style)
+            ..onEmitReloadDataState();
+        },
+      );
+    }
+  },
+  buildWhen: (final p, final c) {
+    final build = c is! ${googleMapsCubitName}SetNewCameraPositionState &&
+        c is! ${googleMapsCubitName}ChangeMapStyleState &&
+        c is! ${googleMapsCubitName}ReloadDataState;
+    return build;
+  },
+  listener: (
+    final BuildContext context,
+    final ${googleMapsCubitName}State state,
+  ) async {
+  
+     if (state is ${googleMapsCubitName}InitialState) {
+      $googleMapsCubitName.onEmitReloadDataState();
+    }
+    
+    if (state is ${googleMapsCubitName}SetNewCameraPositionState) {
+      if ($mapControllerName.isCompleted) {
+        await (await $mapControllerName.future).animateCamera(
+          CameraUpdate.newCameraPosition(
+            state.uiModel.cameraPosition,
+          ),
+        );
+      }
+    } else if (state is ${googleMapsCubitName}ChangeMapStyleState) {
+      if ($mapControllerName.isCompleted) {
+        await (await $mapControllerName.future)
+            .setMapStyle(state.uiModel.style);
+      }
+    } else if (state is ${googleMapsCubitName}ReloadDataState) {
+      List<dynamic> markersDataset;
+      try {
+        markersDataset =
+            ((datasets['$markersDatasetName'] as List<dynamic>?) ?? <dynamic>[]);
+      } catch (e) {
+        markersDataset = [];
+      }
+
+      await $googleMapsCubitName.onLoadData(
+        markersDataset,
+      );
+    }
+  },
+);
  ''';
     final res = FormatterTest.format(code);
     if (res) {

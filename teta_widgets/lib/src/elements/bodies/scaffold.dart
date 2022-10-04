@@ -215,30 +215,29 @@ class ScaffoldBody extends NodeBody {
     final page = prj.pages!.firstWhere((final element) => element.id == pageId);
     if (!page.isHardCoded) {
       return pageCodeTemplate(
-        context,
-        node,
-        children ?? [],
-        pageId,
-        toCodeAdditionalClasses(
           context,
           node,
-          child,
-          children,
+          children ?? [],
           pageId,
-          loop,
-          [],
-        ),
-        toCodeOnInit(
-          context,
-          node,
-          child,
-          children,
-          pageId,
-          loop,
-          [],
-        ),
-        loop
-      );
+          toCodeAdditionalClasses(
+            context,
+            node,
+            child,
+            children,
+            pageId,
+            loop,
+            [],
+          ),
+          toCodeOnInit(
+            context,
+            node,
+            child,
+            children,
+            pageId,
+            loop,
+            [],
+          ),
+          loop);
     } else {
       return codeComponentTemplate(context, node, children ?? [], pageId);
     }

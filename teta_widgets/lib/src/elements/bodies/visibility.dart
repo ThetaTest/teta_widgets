@@ -17,6 +17,7 @@ import 'package:teta_widgets/src/elements/nodes/children_enum.dart';
 import 'package:teta_widgets/src/elements/nodes/enum.dart';
 import 'package:teta_widgets/src/elements/nodes/node.dart';
 import 'package:teta_widgets/src/elements/nodes/node_body.dart';
+import 'package:teta_widgets/src/elements/nodes/suggestion.dart';
 import 'package:teta_widgets/src/elements/widgets/visibility.dart';
 
 const _globalType = NType.visibility;
@@ -43,6 +44,15 @@ final visibilityIntrinsicStates = IntrinsicStates(
   gestures: [],
   permissions: [],
   packages: [],
+  suggestionsTitle: 'Why use Visibility in Teta?',
+  suggestions: [
+    const Suggestion(
+      title: 'Why use Visibility in Teta?',
+      description: 'Test',
+      linkToOpen:
+          'https://docs.teta.so/teta-docs/widget/logic-widgets/visibility',
+    )
+  ],
 );
 
 /// Body

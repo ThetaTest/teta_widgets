@@ -18,6 +18,8 @@ import 'package:teta_widgets/src/elements/nodes/node_body.dart';
 import 'package:teta_widgets/src/elements/packages.dart';
 import 'package:teta_widgets/src/elements/widgets/w_google_ad_mob_banner_ad_body.dart';
 
+import '../nodes/suggestion.dart';
+
 /// GlobalType for [] widget
 const _globalType = NType.adMobBanner;
 
@@ -39,6 +41,15 @@ final googleAdMobBannerAdIntrinsicStates = IntrinsicStates(
   gestures: [],
   permissions: [],
   packages: [pGoogleMobileAds, pIO],
+  suggestionsTitle: 'Why use Ad mob banner in Teta?',
+  suggestions: [
+    const Suggestion(
+      title: 'Why use Ad mob banner in Teta?',
+      description: 'Test',
+      linkToOpen:
+          'https://docs.teta.so/teta-docs/widget/advanced-widgets/ad-mob-banner',
+    )
+  ],
 );
 
 /// Body for [] widget

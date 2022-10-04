@@ -1,14 +1,12 @@
 // Flutter imports:
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-
 // Package imports:
 import 'package:teta_core/teta_core.dart';
 import 'package:teta_widgets/src/elements/code/snippets.dart';
 import 'package:teta_widgets/src/elements/code/templates/google_maps_cubit_template.dart';
 import 'package:teta_widgets/src/elements/code/templates/google_maps_template.dart';
 import 'package:teta_widgets/src/elements/constants_export.dart';
-
 // Project imports:
 import 'package:teta_widgets/src/elements/controls/control_model.dart';
 import 'package:teta_widgets/src/elements/controls/key_constants.dart';
@@ -28,6 +26,8 @@ import 'package:teta_widgets/src/elements/packages.dart';
 import 'package:teta_widgets/src/elements/widgets/google_maps/google_maps_stub_widget.dart'
     if (dart.library.io) 'package:teta_widgets/src/elements/widgets/google_maps/google_maps_web_mobile_widget.dart'
     if (dart.library.html) 'package:teta_widgets/src/elements/widgets/google_maps/google_maps_web_mobile_widget.dart';
+
+import '../nodes/suggestion.dart';
 
 const _globalType = NType.googleMaps;
 
@@ -53,9 +53,10 @@ final googleMapsIntrinsicStates = IntrinsicStates(
   packages: [
     pGoogleMaps,
     pFlutterCacheManager,
-    pLocation,
+    pGeolocator,
     pDartz,
     pPolyLinesPoints,
+    pEquatable,
   ],
   constants: [
     kMapStyleStandard,
@@ -64,6 +65,15 @@ final googleMapsIntrinsicStates = IntrinsicStates(
     kMapStyleDark,
     kMapStyleNight,
     kMapStyleAubergine,
+  ],
+  suggestionsTitle: 'Why use Google Maps in Teta?',
+  suggestions: [
+    const Suggestion(
+      title: 'Why use Google Maps in Teta?',
+      description: 'Test',
+      linkToOpen:
+          'https://docs.teta.so/teta-docs/widget/map-widgets/google-maps',
+    )
   ],
 );
 
@@ -425,7 +435,7 @@ class GoogleMapsBody extends NodeBody {
                     .config
                     ?.googleMapsKey ??
                 '',
-        googleMapsBlocName:
+        googleMapsCubitName:
             (attributes[DBKeys.googleMapsCubitController] as FTextTypeInput)
                     .stateName ??
                 '',
@@ -489,7 +499,7 @@ class GoogleMapsBody extends NodeBody {
             resultType: ResultTypeEnum.double,
           ),
           trackMyLocation: attributes[DBKeys.mapConfigTrackMyLocation] as bool,
-          googleMapsBlocName:
+          googleMapsCubitName:
               (attributes[DBKeys.googleMapsCubitController] as FTextTypeInput)
                       .stateName ??
                   '',

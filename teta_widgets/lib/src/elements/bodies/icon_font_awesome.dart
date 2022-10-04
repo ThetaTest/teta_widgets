@@ -21,6 +21,8 @@ import 'package:teta_widgets/src/elements/nodes/node_body.dart';
 import 'package:teta_widgets/src/elements/packages.dart';
 import 'package:teta_widgets/src/elements/widgets/icon_font_awesome.dart';
 
+import '../nodes/suggestion.dart';
+
 const _globalType = NType.fontAwesomeIcon;
 
 /// Intrinsic States of FontAwesome Icon
@@ -45,6 +47,14 @@ final fontAwesomeIntrinsicStates = IntrinsicStates(
   gestures: [],
   permissions: [],
   packages: [pFontAwesomeNamed],
+  suggestionsTitle: 'Why use FA Icon in Teta?',
+  suggestions: [
+    const Suggestion(
+      title: 'Why use FA Icon in Teta?',
+      description: 'Test',
+      linkToOpen: 'https://docs.teta.so/teta-docs/widget/icon-widgets/fa-icon',
+    )
+  ],
 );
 
 /// FontAwesome Icon's body

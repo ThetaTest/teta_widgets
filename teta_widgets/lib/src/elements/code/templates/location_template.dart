@@ -34,9 +34,9 @@ class LocationTemplate {
       loop: loop,
     );
     return '''
-    final location = Location();
-    location.changeSettings(distanceFilter: 30);
-    location.onLocationChanged.listen((final event) { 
+      await Geolocator.requestPermission();
+      final location = await Geolocator.getCurrentPosition();
+      Geolocator.getPositionStream(locationSettings: const LocationSettings(distanceFilter: 20)).listen((final event) { 
       $latVarFinalName = event.latitude!;
       $lngVarFinalName = event.longitude!;
       

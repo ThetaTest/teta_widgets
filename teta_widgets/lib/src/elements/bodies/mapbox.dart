@@ -25,6 +25,8 @@ import 'package:teta_widgets/src/elements/nodes/node_body.dart';
 import 'package:teta_widgets/src/elements/packages.dart';
 import 'package:teta_widgets/src/elements/widgets/mapbox.dart';
 
+import '../nodes/suggestion.dart';
+
 const _globalType = NType.mapBox;
 
 /// Intrinsic States of Map
@@ -49,6 +51,14 @@ final mapBoxIntrinsicStates = IntrinsicStates(
     Permissions.location,
   ],
   packages: [pMap, pLatLang],
+  suggestionsTitle: 'Why use Map in Teta?',
+  suggestions: [
+    const Suggestion(
+      title: 'Why use Map in Teta?',
+      description: 'Test',
+      linkToOpen: 'https://docs.teta.so/teta-docs/widget/map-widgets/map',
+    )
+  ],
 );
 
 /// Body of Map
