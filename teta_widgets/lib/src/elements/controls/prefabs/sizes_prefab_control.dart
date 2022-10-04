@@ -27,55 +27,52 @@ class SizesPrefabControl extends StatelessWidget {
 
   @override
   Widget build(final BuildContext context) {
-    return Padding(
-      padding: const EdgeInsets.only(left: 4),
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
-          const Padding(
-            padding: EdgeInsets.only(top: 16, bottom: 8),
-            child: THeadline3(
-              'Sizes',
-            ),
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: [
+        const Padding(
+          padding: EdgeInsets.only(top: 16, bottom: 8),
+          child: THeadline3(
+            'Sizes',
           ),
-          SizeControl(
-            node: node,
-            size: values.first,
-            isWidth: true,
-            title: 'Width',
-            keyAttr: DBKeys.width,
-            isFromSizesPrefab: true,
-            callBack: (final value, final old) {
-              ControlBuilder.toDB(
-                prj,
-                page,
-                node,
-                context,
-                DBKeys.width,
-                value,
-                old,
-              );
-            },
-          ),
-          SizeControl(
-            node: node,
-            size: values.last,
-            isWidth: false,
-            title: 'Height',
-            keyAttr: DBKeys.height,
-            isFromSizesPrefab: true,
-            callBack: (final value, final old) => ControlBuilder.toDB(
+        ),
+        SizeControl(
+          node: node,
+          size: values.first,
+          isWidth: true,
+          title: 'Width',
+          keyAttr: DBKeys.width,
+          isFromSizesPrefab: true,
+          callBack: (final value, final old) {
+            ControlBuilder.toDB(
               prj,
               page,
               node,
               context,
-              DBKeys.height,
+              DBKeys.width,
               value,
               old,
-            ),
+            );
+          },
+        ),
+        SizeControl(
+          node: node,
+          size: values.last,
+          isWidth: false,
+          title: 'Height',
+          keyAttr: DBKeys.height,
+          isFromSizesPrefab: true,
+          callBack: (final value, final old) => ControlBuilder.toDB(
+            prj,
+            page,
+            node,
+            context,
+            DBKeys.height,
+            value,
+            old,
           ),
-        ],
-      ),
+        ),
+      ],
     );
   }
 }

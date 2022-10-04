@@ -105,7 +105,7 @@ class MarginsState extends State<Margins> {
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             Padding(
-              padding: const EdgeInsets.only(bottom: 12, left: 4),
+              padding: const EdgeInsets.only(bottom: 12),
               child: Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
@@ -159,7 +159,7 @@ class MarginsState extends State<Margins> {
                     title: (!isLinked) ? 'LEFT' : 'ALL',
                     controller: controllers[0],
                     text: widget.value.getList(context)[0],
-                    hpadding: 4,
+                    hpadding: isLinked ? 0 : 4,
                     withSwipe: true,
                     callBack: (final text) {
                       final finalText = text.replaceAll('-', '');

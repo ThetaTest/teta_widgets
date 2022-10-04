@@ -18,7 +18,7 @@ class Wrapper extends StatelessWidget {
   Widget build(final BuildContext context) {
     return Container(
       margin: const EdgeInsets.only(top: 12),
-      padding: const EdgeInsets.only(left: 8, right: 8),
+      padding: const EdgeInsets.only(left: 12, right: 12),
       child: Column(
         children: [
           control,

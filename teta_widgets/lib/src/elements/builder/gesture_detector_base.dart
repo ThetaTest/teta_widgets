@@ -1,5 +1,6 @@
 // Flutter imports:
 import 'package:flutter/material.dart';
+import 'package:flutter_staggered_animations/flutter_staggered_animations.dart';
 // Package imports:
 import 'package:teta_core/teta_core.dart';
 import 'package:teta_widgets/src/elements/controls/key_constants.dart';
@@ -67,7 +68,11 @@ class GestureBuilderBase {
                       states: states,
                       dataset: dataset,
                       forPlay: forPlay,
-                      child: child,
+                      child: EntryAnimationsBase().get(
+                        node: node,
+                        child: child,
+                        loop: loop,
+                      ),
                       isMargins: false,
                     ),
                   ),
@@ -340,6 +345,65 @@ class PerspectiveBase {
       transform: matrix,
       child: child,
     );
+  }
+}
+
+class EntryAnimationsBase {
+  Widget fade(
+    final CNode node,
+    final Widget child,
+  ) {
+    if (node.body.attributes[DBKeys.fadeAnimationEnabled] as bool? ?? false) {
+      return FadeInAnimation(child: child);
+    }
+    return child;
+  }
+
+  Widget scale(
+    final CNode node,
+    final Widget child,
+  ) {
+    if (node.body.attributes[DBKeys.scaleAnimationEnabled] as bool? ?? false) {
+      return ScaleAnimation(child: child);
+    }
+    return child;
+  }
+
+  Widget slide(
+    final CNode node,
+    final Widget child,
+  ) {
+    if (node.body.attributes[DBKeys.slideAnimationEnabled] as bool? ?? false) {
+      return SlideAnimation(child: child);
+    }
+    return child;
+  }
+
+  Widget get({
+    required final CNode node,
+    required final Widget child,
+    required final int? loop,
+  }) {
+    if ((node.body.attributes[DBKeys.fadeAnimationEnabled] as bool? ?? false) &&
+        (node.body.attributes[DBKeys.scaleAnimationEnabled] as bool? ??
+            false) &&
+        (node.body.attributes[DBKeys.slideAnimationEnabled] as bool? ??
+            false)) {
+      return AnimationConfiguration.staggeredList(
+        position: loop ?? 0,
+        child: fade(
+          node,
+          scale(
+            node,
+            slide(
+              node,
+              child,
+            ),
+          ),
+        ),
+      );
+    }
+    return child;
   }
 }
 

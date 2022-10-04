@@ -3,6 +3,7 @@
 import 'dart:async';
 
 import 'package:flutter/material.dart';
+import 'package:flutter_staggered_animations/flutter_staggered_animations.dart';
 import 'package:teta_core/teta_core.dart';
 // Project imports:
 import 'package:teta_widgets/src/elements/controls/key_constants.dart';
@@ -209,7 +210,7 @@ class CS {
                     context,
                     node,
                     pageId,
-                    child,
+                    defaultWidgetAnimation(node, child, loop),
                     loop,
                   ),
                   loop,
@@ -441,6 +442,85 @@ class CS {
       }
     }
     return childString;
+  }
+
+  static Future<String> defaultWidgetAnimation(
+    final CNode node,
+    final Future<String> child,
+    final int? loop,
+  ) async {
+    /// Just an example
+    void example() {
+      const AnimationConfiguration.staggeredList(
+        position: 0,
+        child: FadeInAnimation(
+          child: ScaleAnimation(
+            child: SlideAnimation(
+              child: SizedBox(),
+            ),
+          ),
+        ),
+      );
+    }
+
+    String configCode(final String child) {
+      if ((node.body.attributes[DBKeys.fadeAnimationEnabled] as bool? ??
+              false) ||
+          (node.body.attributes[DBKeys.scaleAnimationEnabled] as bool? ??
+              false) ||
+          (node.body.attributes[DBKeys.slideAnimationEnabled] as bool? ??
+              false)) {
+        return '''
+        AnimationConfiguration.staggeredList(
+          position: ${loop != null ? 'index' : '0'},
+          child: $child
+        )
+      ''';
+      } else {
+        return child;
+      }
+    }
+
+    String fadeCode(final String child) {
+      if (node.body.attributes[DBKeys.fadeAnimationEnabled] as bool? ?? false) {
+        return '''
+        FadeInAnimation(
+          child: $child
+        ),
+      ''';
+      } else {
+        return child;
+      }
+    }
+
+    String scaleCode(final String child) {
+      if (node.body.attributes[DBKeys.scaleAnimationEnabled] as bool? ??
+          false) {
+        return '''
+        ScaleAnimation(
+          child: $child
+        ),
+      ''';
+      } else {
+        return child;
+      }
+    }
+
+    String slideCode(final String child) {
+      if (node.body.attributes[DBKeys.slideAnimationEnabled] as bool? ??
+          false) {
+        return '''
+        SlideAnimation(
+          child: $child
+        ),
+      ''';
+      } else {
+        return child;
+      }
+    }
+
+    final childString = await child;
+    return configCode(fadeCode(scaleCode(slideCode(childString))));
   }
 
   static Future<String> defaultWidgetResponsive(

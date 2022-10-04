@@ -92,6 +92,9 @@ class DBKeys {
   static const String visibleOnMobile = 'vOM';
   static const String visibleOnTablet = 'vOT';
   static const String visibleOnDesktop = 'vOD';
+  static const String fadeAnimationEnabled = 'animF';
+  static const String scaleAnimationEnabled = 'animScale';
+  static const String slideAnimationEnabled = 'animSlide';
   static const String showControls = 'sCnt';
   static const String loopVideo = 'looV';
   static const String showAppBar = 'shAB';
@@ -275,7 +278,7 @@ class DynamicAttributes {
           return value;
         case DBKeys.mapConfigTrackMyLocation:
           return value;
-          case DBKeys.stringDropdown:
+        case DBKeys.stringDropdown:
           return value;
         case DBKeys.fontFamily:
           return value;
@@ -400,6 +403,12 @@ class DynamicAttributes {
         case DBKeys.visibleOnMobile:
           return value;
         case DBKeys.visibleOnTablet:
+          return value;
+        case DBKeys.fadeAnimationEnabled:
+          return value;
+        case DBKeys.scaleAnimationEnabled:
+          return value;
+        case DBKeys.slideAnimationEnabled:
           return value;
         case DBKeys.width:
           return FSize.fromJson(value as Map<String, dynamic>);
@@ -588,7 +597,7 @@ class DynamicAttributes {
         return value;
       case DBKeys.mapConfigTrackMyLocation:
         return value;
-        case DBKeys.stringDropdown:
+      case DBKeys.stringDropdown:
         return value;
       case DBKeys.fontFamily:
         return value;
@@ -713,6 +722,12 @@ class DynamicAttributes {
       case DBKeys.visibleOnMobile:
         return value;
       case DBKeys.visibleOnTablet:
+        return value;
+      case DBKeys.fadeAnimationEnabled:
+        return value;
+      case DBKeys.scaleAnimationEnabled:
+        return value;
+      case DBKeys.slideAnimationEnabled:
         return value;
       case DBKeys.width:
         return value != null ? value.toJson() : FSize().toJson();
