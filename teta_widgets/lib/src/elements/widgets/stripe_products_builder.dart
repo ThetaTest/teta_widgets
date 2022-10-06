@@ -106,7 +106,9 @@ class WStripeProductsBuilderState extends State<WStripeProductsBuilder> {
 
   Future _getStripeProducts() async {
     try {
-      final r = await TetaCMS.instance.store.products.all();
+      final getAllProductsUseCase = GetAllProductsUseCase();
+
+      final r = await getAllProductsUseCase.execute();
 
       if (r.data != null) {
         final datasetObject = DatasetObject(

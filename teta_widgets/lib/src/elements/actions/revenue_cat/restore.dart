@@ -48,7 +48,7 @@ class FActionRevenueCatRestorePurchases {
       );
     } else {
       try {
-        final restoredInfo = await Purchases.restoreTransactions();
+        final restoredInfo = await Purchases.restorePurchases();
         final index =
             states.indexWhere((final element) => element.name == stateName);
         if (index >= 0) {
@@ -80,7 +80,7 @@ class FActionRevenueCatRestorePurchases {
 
     return '''
     try {
-        final restoredInfo = await Purchases.restoreTransactions();
+        final restoredInfo = await Purchases.restorePurchases();
         setState(() {
           $varName = restoredInfo.entitlements.active.isNotEmpty ? 'Success' : 'Failed';
         });

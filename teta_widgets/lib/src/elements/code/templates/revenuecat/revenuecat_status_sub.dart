@@ -35,7 +35,7 @@ class RevenueCatSubsStatusCodeTemplate {
         UniversalPlatform.isIOS ||
         UniversalPlatform.isMacOS) {
         try {
-          final res = await Purchases.getPurchaserInfo();
+          final res = await Purchases.getCustomerInfo();
           return res.entitlements.all[$entitlement]?.isActive ?? false;
         } catch (e) {
           // Error fetching purchaser info

@@ -39,7 +39,7 @@ class WQonversionProductsList extends StatefulWidget {
 }
 
 class _WQonversionProductsListState extends State<WQonversionProductsList> {
-  List<Product> products = [];
+  List<StoreProduct> products = [];
   bool isLoading = true;
   late DatasetObject _map;
 
@@ -56,7 +56,7 @@ class _WQonversionProductsListState extends State<WQonversionProductsList> {
   Future<void> getProducts() async {
     setState(() {
       products = [
-        const Product(
+        const StoreProduct(
           'identifier',
           'This is just a mockup',
           'Mockup',

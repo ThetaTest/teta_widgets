@@ -22,15 +22,15 @@ class RevenueCatProductsListCodeTemplate {
     }
 
     final code = '''
-  TetaFutureBuilder<List<Product>>(
-    future: Future<List<Product>>.sync(() async {
-      var products = <Product>[];
+  TetaFutureBuilder<List<StoreProduct>>(
+    future: Future<List<StoreProduct>>.sync(() async {
+      var products = <StoreProduct>[];
       if (UniversalPlatform.isIOS || UniversalPlatform.isAndroid) {
         try {
           final offerings = await Purchases.getOfferings();
           if (offerings.current != null &&
               (offerings.current?.availablePackages ?? []).isNotEmpty) {
-            final prods = <Product>[];
+            final prods = <StoreProduct>[];
             for (final product
                 in offerings.current?.availablePackages ?? <Package>[]) {
               prods.add(product.product);

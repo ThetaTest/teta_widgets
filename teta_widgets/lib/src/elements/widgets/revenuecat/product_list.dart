@@ -40,7 +40,7 @@ class WRevenueCatProductsList extends StatefulWidget {
 }
 
 class _WRevenueCatProductsListState extends State<WRevenueCatProductsList> {
-  List<Product> products = [];
+  List<StoreProduct> products = [];
   bool isLoading = true;
   late DatasetObject _map;
 
@@ -60,10 +60,10 @@ class _WRevenueCatProductsListState extends State<WRevenueCatProductsList> {
         final offerings = await Purchases.getOfferings();
         if (offerings.current != null &&
             (offerings.current?.availablePackages ?? []).isNotEmpty) {
-          final prods = <Product>[];
+          final prods = <StoreProduct>[];
           for (final product
               in offerings.current?.availablePackages ?? <Package>[]) {
-            prods.add(product.product);
+            prods.add(product.storeProduct);
           }
           products = prods;
         }
@@ -72,7 +72,7 @@ class _WRevenueCatProductsListState extends State<WRevenueCatProductsList> {
       }
     } else {
       products = [
-        const Product(
+        const StoreProduct(
           'identifier',
           'This is just a mockup',
           'Mockup',
