@@ -142,19 +142,18 @@ class _WMapState extends State<WMap> {
     if (variable?.mapController == null) {
       return const Center(
         child: THeadline3(
-          'Implement a Map Controller state',
+          'Implement a Map Controller state or param',
         ),
       );
     }
-
     return NodeSelectionBuilder(
       node: widget.node,
       forPlay: widget.forPlay,
-      child: (BlocProvider.of<FocusProjectBloc>(context).state as ProjectLoaded)
-                  .prj
-                  .config
-                  ?.mapboxEnabled !=
-              true
+      child: !(BlocProvider.of<FocusProjectBloc>(context).state
+                  as ProjectLoaded)
+              .prj
+              .config!
+              .mapEnabled
           ? const DecoratedBox(
               decoration: BoxDecoration(color: Colors.black),
               child: Center(
@@ -167,7 +166,6 @@ class _WMapState extends State<WMap> {
               controller: variable!.mapController!,
               builder: (final context, final transformer) {
                 final markers = <LatLng>[];
-
                 for (final child in widget.children) {
                   if ((child as NDynamic).intrinsicState.type == NType.marker) {
                     final lat = (child.body.attributes[DBKeys.latitude]

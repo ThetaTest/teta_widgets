@@ -181,11 +181,11 @@ class _WMapBuilderState extends State<WMapBuilder> {
     return NodeSelectionBuilder(
       node: widget.node,
       forPlay: widget.forPlay,
-      child: (BlocProvider.of<FocusProjectBloc>(context).state as ProjectLoaded)
-                  .prj
-                  .config
-                  ?.mapboxEnabled !=
-              true
+      child: !(BlocProvider.of<FocusProjectBloc>(context).state
+                  as ProjectLoaded)
+              .prj
+              .config!
+              .mapEnabled
           ? const DecoratedBox(
               decoration: BoxDecoration(color: Colors.black),
               child: Center(
