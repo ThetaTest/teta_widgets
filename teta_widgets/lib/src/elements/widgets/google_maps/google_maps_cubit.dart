@@ -55,23 +55,27 @@ class GoogleMapsCubit extends Cubit<GoogleMapsState> {
       );
       onEmitNewMapStyle(configNames.mapStyle);
 
-      await Geolocator.requestPermission();
-      final location = await Geolocator.getCurrentPosition();
+      final isLocationEnabled = await Geolocator.isLocationServiceEnabled();
+      Position? location;
 
-      if (configNames.trackMyLocation) {
-        await tracking?.cancel();
-        tracking = Geolocator.getPositionStream(
-          locationSettings: const LocationSettings(
-            distanceFilter: 20,
-          ),
-        ).listen(
-          (final event) async {
+      if(isLocationEnabled) {
+        await Geolocator.requestPermission();
+        location = await Geolocator.getCurrentPosition();
+
+        if (configNames.trackMyLocation) {
+          await tracking?.cancel();
+          tracking = Geolocator.getPositionStream(
+            locationSettings: const LocationSettings(
+              distanceFilter: 20,
+            ),
+          ).listen(
+                (final event) async {
               // emit new location
               unawaited(
                 _buildMarkersAndPath(
                   markersDataset: markersDataset,
-                  initialPositionLat: initialPositionLat,
-                  initialPositionLng: initialPositionLng,
+                  initialPositionLat: event.latitude,
+                  initialPositionLng: event.longitude,
                   zoom: initialZoom,
                   mapStyle: mapStyle,
                   userLocationLat: event.latitude,
@@ -79,25 +83,27 @@ class GoogleMapsCubit extends Cubit<GoogleMapsState> {
                   googleMapsKey: configNames.googleMapsKey,
                   configNames: configNames,
                   datasets: datasets,
+                  moveCameraToUserLocation: true
                 ),
               );
-          },
-        );
-      } else {
-        await tracking?.cancel();
+            },
+          );
+        } else {
+          await tracking?.cancel();
+        }
       }
-
       await _buildMarkersAndPath(
         markersDataset: markersDataset,
         initialPositionLat: initialPositionLat,
         initialPositionLng: initialPositionLng,
         zoom: initialZoom,
         mapStyle: mapStyle,
-        userLocationLat: location.latitude ?? initialPositionLat.toDouble(),
-        userLocationLng: location.longitude ?? initialPositionLng.toDouble(),
+        userLocationLat: location?.latitude ?? initialPositionLat.toDouble(),
+        userLocationLng: location?.longitude ?? initialPositionLng.toDouble(),
         googleMapsKey: configNames.googleMapsKey,
         configNames: configNames,
         datasets: datasets,
+        moveCameraToUserLocation: configNames.trackMyLocation,
       );
     } catch (e) {
       emit(
@@ -124,6 +130,7 @@ class GoogleMapsCubit extends Cubit<GoogleMapsState> {
     required final String googleMapsKey,
     required final GoogleMapsConfigNames configNames,
     required final List<DatasetObject> datasets,
+    required final bool moveCameraToUserLocation,
   }) async {
     final polyLines = <Polyline>{};
     final mapMarkers = <Marker>{};
@@ -281,6 +288,13 @@ class GoogleMapsCubit extends Cubit<GoogleMapsState> {
         ),
       ),
     );
+    if(moveCameraToUserLocation) {
+      onEmitNewCameraPosition(
+        userLocationLat,
+        userLocationLng,
+        zoom,
+      );
+    }
   }
 
   void onEmitReloadDataState() {

@@ -65,9 +65,11 @@ class ${googleMapsCubitName}Cubit extends Cubit<${googleMapsCubitName}State> {
       );
       onEmitNewMapStyle(mapStyle);
 
+      final isLocationEnabled = await Geolocator.isLocationServiceEnabled();
+      Position? location;
+      if(isLocationEnabled) {
       await Geolocator.requestPermission();
-      final location = await Geolocator.getCurrentPosition(
-      );
+     location = await Geolocator.getCurrentPosition();
       
       if (trackMyLocation) {
         await tracking?.cancel();
@@ -78,13 +80,14 @@ class ${googleMapsCubitName}Cubit extends Cubit<${googleMapsCubitName}State> {
               unawaited(
                 _buildMarkersAndPath(
                   markersDataset: markersDataset,
-                  initialPositionLat: initialPositionLat,
-                  initialPositionLng: initialPositionLng,
+                  initialPositionLat: event.latitude,
+                  initialPositionLng: event.longitude,
                   zoom: initialZoom,
                   mapStyle: mapStyle,
                   userLocationLat: event.latitude,
                   userLocationLng: event.longitude,
                   googleMapsKey: googleMapsKey,
+                  moveCameraToUserLocation: true,
                 ),
               );
             }
@@ -93,16 +96,17 @@ class ${googleMapsCubitName}Cubit extends Cubit<${googleMapsCubitName}State> {
       } else {
         await tracking?.cancel();
       }
-
+    }
       await _buildMarkersAndPath(
         markersDataset: markersDataset,
         initialPositionLat: initialPositionLat,
         initialPositionLng: initialPositionLng,
         zoom: initialZoom,
         mapStyle: mapStyle,
-        userLocationLat: location.latitude ?? initialPositionLat.toDouble(),
-        userLocationLng: location.longitude ?? initialPositionLng.toDouble(),
+        userLocationLat: location?.latitude ?? initialPositionLat.toDouble(),
+        userLocationLng: location?.longitude ?? initialPositionLng.toDouble(),
         googleMapsKey: googleMapsKey,
+        moveCameraToUserLocation: configNames.trackMyLocation,
       );
     } catch (e) {
       emit(
@@ -127,6 +131,7 @@ class ${googleMapsCubitName}Cubit extends Cubit<${googleMapsCubitName}State> {
     required final double userLocationLat,
     required final double userLocationLng,
     required final String googleMapsKey,
+    required final bool moveCameraToUserLocation,
   }) async {
     final polyLines = <Polyline>{};
     final mapMarkers = <Marker>{};
@@ -264,6 +269,13 @@ class ${googleMapsCubitName}Cubit extends Cubit<${googleMapsCubitName}State> {
         ),
       ),
     );
+   if(moveCameraToUserLocation) {
+      onEmitNewCameraPosition(
+        userLocationLat,
+        userLocationLng,
+        zoom,
+      );
+    }
   }
 
   void onEmitReloadDataState() {
