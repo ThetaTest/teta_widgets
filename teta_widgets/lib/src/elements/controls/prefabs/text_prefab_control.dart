@@ -200,7 +200,6 @@ class TextPrefabControl extends StatelessWidget {
             ],
           ),
         ),
-        if (kDebugMode) const Gap(16),
         if (kDebugMode)
           TextDirectionControl(
             node: node,

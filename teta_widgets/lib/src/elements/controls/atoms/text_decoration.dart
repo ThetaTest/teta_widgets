@@ -31,12 +31,12 @@ class TextDecorationControl extends StatelessWidget {
         return Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            const Padding(
-              padding: EdgeInsets.only(bottom: 8),
-              child: THeadline3(
-                'Decoration',
-              ),
-            ),
+            // const Padding(
+            //   padding: EdgeInsets.only(bottom: 8),
+            //   child: THeadline3(
+            //     'Decoration',
+            //   ),
+            // ),
             Row(
               children: [
                 SelectionTab(

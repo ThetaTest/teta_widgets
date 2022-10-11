@@ -46,12 +46,12 @@ class TextAlignControlsState extends State<TextAlignControls> {
         return Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            const Padding(
-              padding: EdgeInsets.only(bottom: 8),
-              child: THeadline3(
-                'Text Align',
-              ),
-            ),
+            // const Padding(
+            //   padding: EdgeInsets.only(bottom: 8),
+            //   child: THeadline3(
+            //     'Text Align',
+            //   ),
+            // ),
             Row(
               children: [
                 SelectionTab(
