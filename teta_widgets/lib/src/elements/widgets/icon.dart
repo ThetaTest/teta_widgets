@@ -63,13 +63,14 @@ class WIcon extends StatelessWidget {
   }
 
   // ignore: avoid_positional_boolean_parameters
-  HexColor _getIconColor(final PaletteModel? model, final bool isLight) {
+  Color _getIconColor(final PaletteModel? model, final bool isLight) {
+    final tempOpacity = fill.levels?.first.opacity ?? 1;
     if (model != null) {
       return isLight
           ? HexColor(model.light!.levels!.first.color)
           : HexColor(model.fill!.levels!.first.color);
     } else {
-      return HexColor(fill.levels!.first.color);
+      return HexColor(fill.levels!.first.color).withOpacity(tempOpacity);
     }
   }
 }
