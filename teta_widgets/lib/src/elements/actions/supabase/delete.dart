@@ -99,12 +99,12 @@ class FASupabaseDelete {
       }
       return '''
         final response = await Supabase.instance.client
-              .from('${supabaseFrom?.toCode(
+              .from(${supabaseFrom?.toCode(
                 0,
                 resultType: ResultTypeEnum.string,
-              ) ?? ''}')
+              ) ?? ''})
               .delete()
-              .eq('${supabaseEq?.key}', '$eqValue')
+              .eq('${supabaseEq?.key}', $eqValue)
               .execute();
         if (response.error != null) {
           ${status != null ? "setState(() { status = 'Failed'; });" : ''}

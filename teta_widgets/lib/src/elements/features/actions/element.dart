@@ -6,18 +6,12 @@ import 'dart:async';
 // Package imports:
 import 'package:enum_to_string/enum_to_string.dart';
 import 'package:equatable/equatable.dart';
-
 // Flutter imports:
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:teta_cms/teta_cms.dart';
-import 'package:teta_core/src/models/dataset.dart';
-import 'package:teta_core/src/models/map_element.dart';
-import 'package:teta_core/src/models/page.dart';
-import 'package:teta_core/src/models/project.dart';
-import 'package:teta_core/src/models/variable.dart';
 import 'package:teta_core/src/services/packages_service.dart';
-
+import 'package:teta_core/teta_core.dart';
 // Project imports:
 import 'package:teta_widgets/src/elements/actions/audio_player/loop_all.dart';
 import 'package:teta_widgets/src/elements/actions/audio_player/loop_off.dart';
@@ -187,8 +181,9 @@ class FActionElement extends Equatable {
         convertDropdownToValue(ActionStripe.values, doc['sPK'] as String?)
             as ActionStripe?;
     actionGoogleMaps = convertDropdownToValue(
-            ActionGoogleMaps.values, doc['actionGoogleMaps'] as String?)
-        as ActionGoogleMaps?;
+      ActionGoogleMaps.values,
+      doc['actionGoogleMaps'] as String?,
+    ) as ActionGoogleMaps?;
     actionState =
         convertDropdownToValue(ActionState.values, doc['aS'] as String?)
             as ActionState?;
@@ -751,6 +746,7 @@ class FActionElement extends Equatable {
     final List<DatasetObject> dataset,
     final int? loop,
   ) async {
+    Logger.printSuccess(actionType.toString());
     switch (actionType) {
       case ActionType.theme:
         switch (actionTheme) {
@@ -1890,6 +1886,69 @@ class FActionElement extends Equatable {
         break;
       case ActionType.firebaseStorage:
         break;
+      case ActionType.supabaseDatabase:
+        switch (actionSupabaseDB) {
+          case ActionSupabaseDB.insert:
+            Logger.printMessage('dbFrom: ${dbFrom!.value!}');
+            await actionS(
+              () => FASupabaseInsert.action(
+                context,
+                dbFrom,
+                dbData,
+                params,
+                states,
+                dataset,
+                loop,
+              ),
+              context: context,
+              params: params,
+              states: states,
+              dataset: dataset,
+              loop: loop,
+            );
+            break;
+          case ActionSupabaseDB.delete:
+            Logger.printMessage('dbFrom: ${dbFrom!.value!}');
+            await actionS(
+              () => FASupabaseDelete.action(
+                context,
+                dbFrom,
+                dbEq!,
+                params,
+                states,
+                dataset,
+                loop,
+              ),
+              context: context,
+              params: params,
+              states: states,
+              dataset: dataset,
+              loop: loop,
+            );
+            break;
+          case ActionSupabaseDB.update:
+            Logger.printMessage('dbFrom: ${dbFrom!.value!}');
+            await actionS(
+              () => FASupabaseUpdate.action(
+                context,
+                dbFrom,
+                dbData,
+                dbEq!,
+                params,
+                states,
+                dataset,
+                loop,
+              ),
+              context: context,
+              params: params,
+              states: states,
+              dataset: dataset,
+              loop: loop,
+            );
+            break;
+          case null:
+            return '';
+        }
     }
   }
 

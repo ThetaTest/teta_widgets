@@ -56,7 +56,10 @@ class SupabaseUpdateControl extends StatelessWidget {
           value: action.dbFrom ?? FTextTypeInput(),
           page: page,
           title: 'From Table',
-          callBack: (final value, final old) {},
+          callBack: (final value, final old) {
+            action.dbFrom = value;
+            callback();
+          },
         ),
         DBMapControl(
           node: node,
