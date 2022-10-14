@@ -288,6 +288,7 @@ class __NewActionAlertState extends State<_NewActionAlert> {
 
   @override
   void initState() {
+    super.initState();
     final prj =
         (BlocProvider.of<FocusProjectBloc>(context).state as ProjectLoaded).prj;
     final page = BlocProvider.of<PageCubit>(context).state;
@@ -386,16 +387,15 @@ class __NewActionAlertState extends State<_NewActionAlert> {
         title: 'Google Maps',
         actionType: ActionType.googleMaps,
         options: ((page.flatList ?? <CNode>[]).indexWhere(
-              (final element) =>
-          element.intrinsicState.type == NType.googleMaps,
-        ) !=
-            -1)
+                  (final element) =>
+                      element.intrinsicState.type == NType.googleMaps,
+                ) !=
+                -1)
             ? FActionElement.getGoogleMaps(null)
             : [],
         type: ActionGoogleMaps.values,
       ),
     ]);
-    super.initState();
   }
 
   @override
