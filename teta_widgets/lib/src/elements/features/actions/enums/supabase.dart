@@ -12,8 +12,4 @@ enum ActionSupabaseDB {
   insert,
   update,
   delete,
-  // onAll,
-  // onInsert,
-  // onUpdate,
-  // onDelete,
 }
