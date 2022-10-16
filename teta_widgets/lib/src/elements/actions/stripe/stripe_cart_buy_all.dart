@@ -35,7 +35,7 @@ class FActionStripeCartBuyAll {
                       final paymentIntentClientSecret =
                           convert.jsonDecode(data.data!)['key'];
                       final publishableKey =
-                          convert.jsonDecode(data.data!)['publishableKey'];
+                          convert.jsonDecode(data.data!)['stripe_publishable_key'];
                       Stripe.publishableKey = publishableKey;
 
                       await Stripe.instance.initPaymentSheet(
