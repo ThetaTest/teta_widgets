@@ -34,6 +34,10 @@ class LocationTemplate {
       loop: loop,
     );
     return '''
+          unawaited(
+        Future.delayed(
+          Duration.zero,
+          () async {
       await Geolocator.requestPermission();
       final location = await Geolocator.getCurrentPosition();
       Geolocator.getPositionStream(locationSettings: const LocationSettings(distanceFilter: 20)).listen((final event) { 
@@ -42,6 +46,9 @@ class LocationTemplate {
       
       $onEmitNewValue
     });
+              },
+        ),
+      );
     ''';
   }
 }
