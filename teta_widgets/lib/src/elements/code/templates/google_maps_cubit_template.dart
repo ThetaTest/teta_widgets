@@ -106,7 +106,7 @@ class ${googleMapsCubitName}Cubit extends Cubit<${googleMapsCubitName}State> {
         userLocationLat: location?.latitude ?? initialPositionLat.toDouble(),
         userLocationLng: location?.longitude ?? initialPositionLng.toDouble(),
         googleMapsKey: googleMapsKey,
-        moveCameraToUserLocation: configNames.trackMyLocation,
+        moveCameraToUserLocation: trackMyLocation,
       );
     } catch (e) {
       emit(
