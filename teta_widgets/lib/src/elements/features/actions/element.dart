@@ -546,7 +546,7 @@ class FActionElement extends Equatable {
 
   static List<String> getSupabaseAuth(final ProjectConfig? config) {
     if (config != null) {
-      if (config.supabaseEnabled ?? false) {
+      if (config.isSupabaseReady) {
         return enumsToListString(ActionSupabaseAuth.values);
       }
     }
