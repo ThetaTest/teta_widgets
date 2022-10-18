@@ -30,13 +30,10 @@ class FActionStripeCartBuyAll {
     required final String country,
   }) {
     return '''
-                      final data = (await TetaCMS.instance.store.cart
-                          .getPaymentIntent());
-                      final paymentIntentClientSecret =
-                          convert.jsonDecode(data.data!)['key'];
-                      final publishableKey =
-                          convert.jsonDecode(data.data!)['publishableKey'];
-                      Stripe.publishableKey = publishableKey;
+                      final purchaseData = (await getPaymentIntent()).data;
+                      if(purchaseData != null){
+                      Stripe.publishableKey = purchaseData.stripePublishableKey;
+                      Stripe.merchantIdentifier = purchaseData.merchantIdentifier;
 
                       await Stripe.instance.initPaymentSheet(
                           paymentSheetParameters: SetupPaymentSheetParameters(
@@ -61,10 +58,11 @@ class FActionStripeCartBuyAll {
                           ),
                           name: $email,
                         ),
-                        paymentIntentClientSecret: paymentIntentClientSecret,
+                        paymentIntentClientSecret: purchaseData.paymentIntentClientSecret,
                       ));
 
                       await Stripe.instance.presentPaymentSheet();
+                      }
     ''';
   }
 }
