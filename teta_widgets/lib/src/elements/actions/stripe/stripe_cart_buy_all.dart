@@ -64,7 +64,7 @@ class FActionStripeCartBuyAll {
 
                       await Stripe.instance.presentPaymentSheet();
                       
-                      await 
+                      await TetaCMS.instance.store.checkPayment(purchaseData.paymentIntent);
                       }
     ''';
   }
