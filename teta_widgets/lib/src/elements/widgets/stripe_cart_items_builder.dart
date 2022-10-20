@@ -3,9 +3,11 @@
 
 import 'package:flutter/material.dart';
 import 'package:teta_cms/teta_cms.dart';
+
 // Package imports:
 import 'package:teta_core/teta_core.dart';
 import 'package:teta_widgets/src/elements/builder/gesture_detector_base.dart';
+
 // Project imports:
 import 'package:teta_widgets/src/elements/index.dart';
 
@@ -104,15 +106,15 @@ class _WStripeCartItemsBuilderState extends State<WStripeCartItemsBuilder> {
       final tetaCms = TetaCMS.instance;
       final products = await tetaCms.store.cart.get();
 
-      if(products.data != null) {
+      if (products.data != null) {
         final datasetObject = DatasetObject(
           name: 'cart',
-          map: products.data!.map((final e) => e.toJson()).toList(
-              growable: true),
+          map: products.data!.map((final e) => e.toJson()).toList(growable: true),
         );
         addDataset(context, widget.dataset, datasetObject);
       } else {
-        debugPrint('Error in calc WStripeProductsCartList -> ${products.error?.message ?? 'no message'}');
+        debugPrint(
+            'Error in calc WStripeProductsCartList -> ${products.error?.message ?? 'no message'}');
       }
     } catch (e) {
       debugPrint('Error in calc WStripeProductsCartList -> $e');
