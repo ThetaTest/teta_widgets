@@ -102,15 +102,20 @@ class _WStripeCartItemsBuilderState extends State<WStripeCartItemsBuilder> {
   Future _getStripeProducts() async {
     try {
       final tetaCms = TetaCMS.instance;
-      final products = await tetaCms.store.products.all();
+      final products = await tetaCms.store.cart.get();
 
-      final datasetObject = DatasetObject(
-        name: 'cart',
-        map: products.data!.map((final e) => e.toJson()).toList(growable: true),
-      );
-      addDataset(context, widget.dataset, datasetObject);
+      if(products.data != null) {
+        final datasetObject = DatasetObject(
+          name: 'cart',
+          map: products.data!.map((final e) => e.toJson()).toList(
+              growable: true),
+        );
+        addDataset(context, widget.dataset, datasetObject);
+      } else {
+        debugPrint('Error in calc WStripeProductsCartList -> ${products.error?.message ?? 'no message'}');
+      }
     } catch (e) {
-      debugPrint('Error in calc WStripeProductsList -> $e');
+      debugPrint('Error in calc WStripeProductsCartList -> $e');
     }
   }
 }
