@@ -6,12 +6,14 @@ import 'dart:async';
 // Package imports:
 import 'package:enum_to_string/enum_to_string.dart';
 import 'package:equatable/equatable.dart';
+
 // Flutter imports:
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:teta_cms/teta_cms.dart';
 import 'package:teta_core/src/services/packages_service.dart';
 import 'package:teta_core/teta_core.dart';
+
 // Project imports:
 import 'package:teta_widgets/src/elements/actions/audio_player/loop_all.dart';
 import 'package:teta_widgets/src/elements/actions/audio_player/loop_off.dart';
@@ -267,6 +269,12 @@ class FActionElement extends Equatable {
                 doc['stripeBillingInfoCountry'] as Map<String, dynamic>,
               )
             : FTextTypeInput());
+    stripeShippingId = stripeShippingId ??
+        (doc['stripeShippingId'] != null
+            ? FTextTypeInput.fromJson(
+                doc['stripeShippingId'] as Map<String, dynamic>,
+              )
+            : FTextTypeInput());
     // lat, lng, zoom
     googleMapsLat = googleMapsLat ??
         (doc['googleMapsLat'] != null
@@ -387,6 +395,7 @@ class FActionElement extends Equatable {
   FTextTypeInput? stripeBillingInfoLine;
   FTextTypeInput? stripeBillingInfoPostalCode;
   FTextTypeInput? stripeBillingInfoCountry;
+  FTextTypeInput? stripeShippingId;
 
   //lat, lng, zoom
   FTextTypeInput? googleMapsLat;
@@ -720,6 +729,8 @@ class FActionElement extends Equatable {
         'stripeBillingInfoCountry': stripeBillingInfoCountry != null
             ? stripeBillingInfoCountry!.toJson()
             : null,
+        'stripeShippingId':
+            stripeShippingId != null ? stripeShippingId!.toJson() : null,
         //lat, lng, zoom
         'googleMapsLat': googleMapsLat != null ? googleMapsLat!.toJson() : null,
         'googleMapsLng': googleMapsLng != null ? googleMapsLng!.toJson() : null,
@@ -2244,6 +2255,11 @@ class FActionElement extends Equatable {
                     ) ??
                     '',
                 country: stripeBillingInfoCountry?.toCode(
+                      null,
+                      resultType: ResultTypeEnum.string,
+                    ) ??
+                    '',
+                shippingId: stripeShippingId?.toCode(
                       null,
                       resultType: ResultTypeEnum.string,
                     ) ??

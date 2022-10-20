@@ -28,9 +28,10 @@ class FActionStripeCartBuyAll {
     required final String line,
     required final String postalCode,
     required final String country,
+    required final String shippingId,
   }) {
     return '''
-                      final purchaseData = (await getPaymentIntent()).data;
+                      final purchaseData = (await TetaCMS.instance.store.cart.getPaymentIntent($shippingId)).data;
                       if(purchaseData != null){
                       Stripe.publishableKey = purchaseData.stripePublishableKey;
                       Stripe.merchantIdentifier = purchaseData.merchantIdentifier;
@@ -62,6 +63,8 @@ class FActionStripeCartBuyAll {
                       ));
 
                       await Stripe.instance.presentPaymentSheet();
+                      
+                      await 
                       }
     ''';
   }
