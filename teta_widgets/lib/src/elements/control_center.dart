@@ -92,6 +92,7 @@ import 'package:teta_widgets/src/elements/bodies/positioned.dart';
 import 'package:teta_widgets/src/elements/bodies/qonversion/qonversion_product.dart';
 import 'package:teta_widgets/src/elements/bodies/qonversion/qonversion_sub_status.dart';
 import 'package:teta_widgets/src/elements/bodies/qr.dart';
+import 'package:teta_widgets/src/elements/bodies/qr_scanner.dart';
 import 'package:teta_widgets/src/elements/bodies/radio.dart';
 import 'package:teta_widgets/src/elements/bodies/refresh_indicator.dart';
 import 'package:teta_widgets/src/elements/bodies/responsive/wrapper.dart';
@@ -261,6 +262,7 @@ final stateTypes = <IntrinsicStates>[
   autoAppBarIntrinsicStates,
   qonversionProductsListIntrinsicStates,
   qonversionSubStatusIntrinsicStates,
+  qrScannerIntrinsicStates,
 ];
 
 /// Method to return any body
@@ -268,7 +270,7 @@ NodeBody getBody(final NType type) {
   switch (type) {
     case NType.align:
       return AlignBody();
-      case NType.location:
+    case NType.location:
       return LocationBody();
     case NType.appBar:
       return AppBarBody();
@@ -522,6 +524,8 @@ NodeBody getBody(final NType type) {
       return CmsCustomQueryBody();
     case NType.autoAppBar:
       return AutoAppBarBody();
+    case NType.qrScanner:
+      return QrScannerBody();
     case NType.listViewSeparated:
       break;
     case NType.nil:

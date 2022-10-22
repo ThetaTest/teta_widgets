@@ -4,14 +4,12 @@
 // Flutter imports:
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
-
 // Package imports:
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:teta_core/teta_core.dart';
 import 'package:teta_repositories/src/node_repository.dart';
 import 'package:teta_repositories/src/project_repository.dart';
 import 'package:teta_repositories/src/project_styles_repository.dart';
-
 // Project imports:
 import 'package:teta_widgets/src/elements/controls/atoms/action.dart';
 import 'package:teta_widgets/src/elements/controls/atoms/aligns.dart';
@@ -56,6 +54,7 @@ import 'package:teta_widgets/src/elements/features/google_maps_map_style.dart';
 import 'package:teta_widgets/src/elements/features/physic.dart';
 import 'package:teta_widgets/src/elements/index.dart';
 import 'package:teta_widgets/src/elements/nodes/dynamic.dart';
+import 'package:very_good_analysis/very_good_analysis.dart';
 
 enum ControlType {
   /// Made for colors, gradients and images.
@@ -187,14 +186,24 @@ class ControlBuilder {
     final dynamic old,
   ) async {
     try {
-      Logger.printMessage('node.body.toJson(): ${node.body.toJson()}');
-      await NodeRepository.change(
-        nodeId: node.nid,
-        node: node as NDynamic,
-        pageId: page.id,
-        key: key,
-        value: value,
-        old: old,
+      try {
+        final userId = (BlocProvider.of<AuthenticationBloc>(context).state
+                as Authenticated)
+            .user
+            .id;
+        ProjectRepository.track(prj.id, userId);
+      } catch (e) {
+        Logger.printError('Error tracking generic project update, error: $e');
+      }
+      unawaited(
+        NodeRepository.change(
+          nodeId: node.nid,
+          node: node as NDynamic,
+          pageId: page.id,
+          key: key,
+          value: value,
+          old: old,
+        ),
       );
       BlocProvider.of<RefreshCubit>(context).change();
     } catch (e) {

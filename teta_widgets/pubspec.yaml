@@ -95,7 +95,7 @@ dependencies:
   google_maps_flutter: 2.2.1
   flutter_cache_manager: 3.3.0
   download_assets: 3.0.0
-
+  mobile_scanner: 2.0.0
 
   # Utils
   uuid: 3.0.6

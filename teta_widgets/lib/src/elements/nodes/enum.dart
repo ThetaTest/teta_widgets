@@ -113,6 +113,7 @@ enum NType {
   featherIcon,
   lineIcon,
   qrCode,
+  qrScanner,
   barcode,
 
   // Transform
@@ -156,7 +157,8 @@ enum NType {
   animationConfigStaticList,
   fadeInAnimation,
   slideAnimation,
-  scaleAnimation, location,
+  scaleAnimation,
+  location,
 }
 
 extension NodeType on NType {
