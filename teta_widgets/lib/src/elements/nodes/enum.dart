@@ -129,6 +129,7 @@ enum NType {
   //Stripe
   stripeProductsBuilder,
   stripeCartItemsBuilder,
+  stripeTransactionsBuilder,
 
   // RevenueCat
   revenueCatProducts,
