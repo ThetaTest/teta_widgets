@@ -105,7 +105,7 @@ class FBorder {
     final color = fill!.getHexColor(context);
     final tempOpacity = fill?.levels?.first.opacity ?? 1;
     final opacity = tempOpacity >= 0 && tempOpacity <= 1 ? tempOpacity : 1.0;
-    if (style?.get != BorderStyle.none) return '';
+    // if (style?.get != BorderStyle.none) return '';
     return '''
     Border(
       left:

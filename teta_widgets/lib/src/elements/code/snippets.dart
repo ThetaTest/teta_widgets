@@ -747,6 +747,7 @@ class CS {
       context,
       flagConst: false,
     );
+
     return '''
       decoration: BoxDecoration(
         ${fill ?? ''}
@@ -799,7 +800,7 @@ class CS {
     final value = body.attributes[DBKeys.borders] != null
         ? (body.attributes[DBKeys.borders] as FBorder).toCode(context)
         : null;
-    if (value != null && value != '') return '';
+    // if (value != null && value != '') return '';
     return avoidRedundantValue(value, 'border', '');
   }
 
