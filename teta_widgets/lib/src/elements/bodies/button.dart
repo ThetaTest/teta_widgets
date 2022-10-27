@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:teta_core/gen/assets.gen.dart';
 import 'package:teta_core/src/models/dataset.dart';
 import 'package:teta_core/src/models/variable.dart';
+import 'package:teta_widgets/src/elements/code/snippets.dart';
 // Project imports:
 import 'package:teta_widgets/src/elements/code/templates/button.dart';
 import 'package:teta_widgets/src/elements/controls/control_model.dart';
@@ -25,9 +26,8 @@ import 'package:teta_widgets/src/elements/nodes/children_enum.dart';
 import 'package:teta_widgets/src/elements/nodes/enum.dart';
 import 'package:teta_widgets/src/elements/nodes/node.dart';
 import 'package:teta_widgets/src/elements/nodes/node_body.dart';
+import 'package:teta_widgets/src/elements/nodes/suggestion.dart';
 import 'package:teta_widgets/src/elements/widgets/button.dart';
-
-import '../nodes/suggestion.dart';
 
 const _globalType = NType.button;
 
@@ -196,5 +196,11 @@ class ButtonBody extends NodeBody {
     final int pageId,
     final int? loop,
   ) =>
-      ButtonCodeTemplate.toCode(pageId, context, this, node, loop ?? 0);
+      CS.defaultWidgets(
+        context,
+        node,
+        pageId,
+        ButtonCodeTemplate.toCode(pageId, context, this, node, loop ?? 0),
+        loop ?? 0,
+      );
 }
