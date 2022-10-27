@@ -181,7 +181,7 @@ class NDynamic extends CNode {
     return NDynamic(
       name: doc['name'] as String?,
       description: doc['desc'] as String?,
-      nid: doc[DBKeys.id] as int,
+      nid: doc['_id'] as int,
       globalType: globalType,
       body: body,
       childrenIds: ids,
