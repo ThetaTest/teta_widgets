@@ -25,6 +25,7 @@ enum NType {
   icon,
   ignorePointer,
   image,
+  limitedBox,
   liquidSwipe,
   listView,
   listViewBuilder,

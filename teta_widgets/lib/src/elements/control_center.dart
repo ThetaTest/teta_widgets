@@ -65,6 +65,7 @@ import 'package:teta_widgets/src/elements/bodies/icon_line.dart';
 import 'package:teta_widgets/src/elements/bodies/ignore_pointer.dart';
 import 'package:teta_widgets/src/elements/bodies/image.dart';
 import 'package:teta_widgets/src/elements/bodies/index_stack.dart';
+import 'package:teta_widgets/src/elements/bodies/limitedbox.dart';
 import 'package:teta_widgets/src/elements/bodies/linear_progress_indicator.dart';
 import 'package:teta_widgets/src/elements/bodies/liquid_swipe.dart';
 import 'package:teta_widgets/src/elements/bodies/list_tile.dart';
@@ -265,6 +266,7 @@ final stateTypes = <IntrinsicStates>[
   qonversionProductsListIntrinsicStates,
   qonversionSubStatusIntrinsicStates,
   qrScannerIntrinsicStates,
+  limitedBoxIntrinsicStates
 ];
 
 /// Method to return any body
@@ -296,7 +298,7 @@ NodeBody getBody(final NType type) {
       return CheckBoxBody();
     case NType.stripeProductsBuilder:
       return StripeProductsBuilderBody();
-      case NType.stripeTransactionsBuilder:
+    case NType.stripeTransactionsBuilder:
       return StripeTransactionsBuilderBody();
     case NType.stripeCartItemsBuilder:
       return StripeCartItemsBuilderBody();
@@ -530,6 +532,8 @@ NodeBody getBody(final NType type) {
       return AutoAppBarBody();
     case NType.qrScanner:
       return QrScannerBody();
+    case NType.limitedBox:
+      return LimitedBoxBody();
     case NType.listViewSeparated:
       break;
     case NType.nil:
