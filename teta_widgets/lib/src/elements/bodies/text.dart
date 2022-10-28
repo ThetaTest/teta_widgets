@@ -13,16 +13,12 @@ import 'package:teta_widgets/src/elements/code/templates/text.dart';
 import 'package:teta_widgets/src/elements/controls/control_model.dart';
 import 'package:teta_widgets/src/elements/controls/key_constants.dart';
 import 'package:teta_widgets/src/elements/controls/type.dart';
-import 'package:teta_widgets/src/elements/features/text_style.dart';
-import 'package:teta_widgets/src/elements/features/text_type_input.dart';
+import 'package:teta_widgets/src/elements/index.dart';
 import 'package:teta_widgets/src/elements/intrinsic_states/class.dart';
 import 'package:teta_widgets/src/elements/nodes/categories.dart';
 import 'package:teta_widgets/src/elements/nodes/children_enum.dart';
-import 'package:teta_widgets/src/elements/nodes/enum.dart';
-import 'package:teta_widgets/src/elements/nodes/node.dart';
 import 'package:teta_widgets/src/elements/nodes/node_body.dart';
 import 'package:teta_widgets/src/elements/nodes/suggestion.dart';
-import 'package:teta_widgets/src/elements/widgets/text.dart';
 
 /// GlobalType for [Text] widget
 const _globalType = NType.text;
@@ -61,7 +57,10 @@ class TextBody extends NodeBody {
   // ignore: overridden_fields
   Map<String, dynamic> attributes = <String, dynamic>{
     DBKeys.value: FTextTypeInput(value: 'text'),
-    DBKeys.textStyle: FTextStyle(),
+    DBKeys.textStyle: FTextStyle(
+      textStyleModel: 'Headline',
+      fill: FFill(paletteStyle: 'Text / Primary'),
+    ),
     DBKeys.isFullWidth: false,
     DBKeys.maxLines: FTextTypeInput(value: '1'),
   };

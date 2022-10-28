@@ -6,14 +6,12 @@ import 'dart:async';
 // Package imports:
 import 'package:enum_to_string/enum_to_string.dart';
 import 'package:equatable/equatable.dart';
-
 // Flutter imports:
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:teta_cms/teta_cms.dart';
 import 'package:teta_core/src/services/packages_service.dart';
 import 'package:teta_core/teta_core.dart';
-
 // Project imports:
 import 'package:teta_widgets/src/elements/actions/audio_player/loop_all.dart';
 import 'package:teta_widgets/src/elements/actions/audio_player/loop_off.dart';
@@ -46,6 +44,7 @@ import 'package:teta_widgets/src/elements/actions/navigation/open_date_picker.da
 import 'package:teta_widgets/src/elements/actions/navigation/open_drawer.dart';
 import 'package:teta_widgets/src/elements/actions/navigation/open_page.dart';
 import 'package:teta_widgets/src/elements/actions/navigation/open_snack.dart';
+import 'package:teta_widgets/src/elements/actions/navigation/share.dart';
 import 'package:teta_widgets/src/elements/actions/qonversion/buy.dart';
 import 'package:teta_widgets/src/elements/actions/qonversion/restore.dart';
 import 'package:teta_widgets/src/elements/actions/revenue_cat/buy.dart';
@@ -719,7 +718,7 @@ class FActionElement extends Equatable {
         'stripeBillingInfoEmail': stripeBillingInfoEmail != null
             ? stripeBillingInfoEmail!.toJson()
             : null,
-    'stripePaymentIntentId': stripePaymentIntentId != null
+        'stripePaymentIntentId': stripePaymentIntentId != null
             ? stripePaymentIntentId!.toJson()
             : null,
         'stripeBillingInfoPhone': stripeBillingInfoPhone != null
@@ -1385,6 +1384,23 @@ class FActionElement extends Equatable {
                 .insertPackages(FActionNavigationLaunchURL.packages);
             await actionS(
               () => FActionNavigationLaunchURL.action(
+                context: context,
+                params: params,
+                states: states,
+                datasets: dataset,
+                loop: loop ?? 0,
+                value: valueTextTypeInput ?? FTextTypeInput(),
+              ),
+              context: context,
+              params: params,
+              states: states,
+              dataset: dataset,
+              loop: loop,
+            );
+            break;
+          case ActionNavigation.share:
+            await actionS(
+              () => FActionNavigationShare.action(
                 context: context,
                 params: params,
                 states: states,
@@ -2420,17 +2436,14 @@ class FActionElement extends Equatable {
               ),
               context,
             );
-          case ActionNavigation.launchURL:
-            PackagesService.instance
-                .insertPackages(FActionNavigationLaunchURL.packages);
+          case ActionNavigation.share:
             return codeS(
-              FActionNavigationLaunchURL.toCode(
+              FActionNavigationShare.toCode(
                 valueTextTypeInput ?? FTextTypeInput(),
                 loop,
               ),
               context,
             );
-
           case ActionNavigation.openBottomSheet:
             return codeS(
               FActionNavigationOpenBottomSheet.toCode(
@@ -2461,6 +2474,8 @@ class FActionElement extends Equatable {
               context,
             );
           case null:
+            return '';
+          default:
             return '';
         }
       case ActionType.supabaseAuth:

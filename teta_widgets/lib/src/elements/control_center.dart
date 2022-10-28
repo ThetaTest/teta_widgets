@@ -296,7 +296,7 @@ NodeBody getBody(final NType type) {
       return CheckBoxBody();
     case NType.stripeProductsBuilder:
       return StripeProductsBuilderBody();
-      case NType.stripeTransactionsBuilder:
+    case NType.stripeTransactionsBuilder:
       return StripeTransactionsBuilderBody();
     case NType.stripeCartItemsBuilder:
       return StripeCartItemsBuilderBody();

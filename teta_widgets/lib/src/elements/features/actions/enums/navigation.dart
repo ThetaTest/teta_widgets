@@ -9,4 +9,5 @@ enum ActionNavigation {
   openSnackBar,
   openDatePicker,
   inAppReview,
+  share,
 }

@@ -169,6 +169,9 @@ dependencies:
   # Adapty
   adapty_flutter: ^1.0.14
 
+  # Share
+  share: ^2.0.4
+
 
 dev_dependencies:
   flutter_test:

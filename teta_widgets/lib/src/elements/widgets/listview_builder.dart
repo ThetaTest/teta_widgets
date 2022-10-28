@@ -19,6 +19,8 @@ class WListViewBuilder extends StatefulWidget {
     required this.node,
     required this.forPlay,
     required this.value,
+    required this.startFromIndex,
+    required this.limit,
     required this.shrinkWrap,
     required this.isVertical,
     required this.isReverse,
@@ -33,6 +35,8 @@ class WListViewBuilder extends StatefulWidget {
   final CNode node;
   final CNode? child;
   final bool forPlay;
+  final FTextTypeInput startFromIndex;
+  final FTextTypeInput limit;
   final bool shrinkWrap;
   final bool isVertical;
   final bool isReverse;
@@ -62,6 +66,41 @@ class WListViewBuilderState extends State<WListViewBuilder> {
           )
         : -1;
     final db = index != -1 ? widget.dataset[index] : DatasetObject.empty();
+    var startFromIndex = int.tryParse(
+          widget.startFromIndex.get(
+            widget.params,
+            widget.states,
+            widget.dataset,
+            widget.forPlay,
+            widget.loop,
+            context,
+          ),
+        ) ??
+        0;
+    if (startFromIndex < 0) {
+      startFromIndex = 0;
+    }
+    if (startFromIndex >= db.getMap.length) {
+      startFromIndex = 0;
+    }
+    var limit = int.tryParse(
+          widget.limit.get(
+            widget.params,
+            widget.states,
+            widget.dataset,
+            widget.forPlay,
+            widget.loop,
+            context,
+          ),
+        ) ??
+        db.getMap.length;
+    Logger.printWarning('Listview.builder limit: $limit');
+    if (limit <= 0) {
+      limit = db.getMap.length;
+    }
+    if (limit > db.getMap.length) {
+      limit = db.getMap.length;
+    }
     return NodeSelectionBuilder(
       node: widget.node,
       forPlay: widget.forPlay,
@@ -118,20 +157,22 @@ class WListViewBuilderState extends State<WListViewBuilder> {
               shrinkWrap: widget.shrinkWrap,
               scrollDirection:
                   widget.isVertical ? Axis.vertical : Axis.horizontal,
-              itemCount: db.getMap.length,
-              itemBuilder: (final context, final index) => widget.child != null
-                  ? widget.child!.toWidget(
-                      forPlay: widget.forPlay,
-                      params: widget.params,
-                      states: widget.states,
-                      dataset: widget.dataset,
-                      loop: index,
-                    )
-                  : PlaceholderChildBuilder(
-                      name: widget.node.intrinsicState.displayName,
-                      node: widget.node,
-                      forPlay: widget.forPlay,
-                    ),
+              itemCount: db.getMap.sublist(startFromIndex, limit).length,
+              itemBuilder: (final context, final index) {
+                return widget.child != null
+                    ? widget.child!.toWidget(
+                        forPlay: widget.forPlay,
+                        params: widget.params,
+                        states: widget.states,
+                        dataset: widget.dataset,
+                        loop: index,
+                      )
+                    : PlaceholderChildBuilder(
+                        name: widget.node.intrinsicState.displayName,
+                        node: widget.node,
+                        forPlay: widget.forPlay,
+                      );
+              },
             ),
           ),
         ),

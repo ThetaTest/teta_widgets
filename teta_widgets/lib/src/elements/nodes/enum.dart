@@ -160,6 +160,9 @@ enum NType {
   slideAnimation,
   scaleAnimation,
   location,
+
+  // Airtable
+  airtableFetch
 }
 
 extension NodeType on NType {

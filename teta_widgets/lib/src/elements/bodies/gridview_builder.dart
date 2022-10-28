@@ -21,9 +21,8 @@ import 'package:teta_widgets/src/elements/nodes/children_enum.dart';
 import 'package:teta_widgets/src/elements/nodes/enum.dart';
 import 'package:teta_widgets/src/elements/nodes/node.dart';
 import 'package:teta_widgets/src/elements/nodes/node_body.dart';
+import 'package:teta_widgets/src/elements/nodes/suggestion.dart';
 import 'package:teta_widgets/src/elements/widgets/gridview_builder.dart';
-
-import '../nodes/suggestion.dart';
 
 const _globalType = NType.gridViewBuilder;
 
@@ -73,10 +72,35 @@ class GridViewBuilderBody extends NodeBody {
     DBKeys.crossAxisSpacing: FTextTypeInput(value: '2'),
     DBKeys.childAspectRatio: FTextTypeInput(value: '1'),
     DBKeys.datasetInput: FDataset(),
+    DBKeys.value: FTextTypeInput(value: '0'),
+    DBKeys.valueOfCondition: FTextTypeInput(),
   };
 
   @override
   List<ControlModel> get controls => [
+        ControlObject(
+          type: ControlType.datasetType,
+          key: DBKeys.datasetInput,
+          value: attributes[DBKeys.datasetInput],
+          valueType: VariableType.string,
+        ),
+        ControlObject(
+          title: 'Start from',
+          type: ControlType.value,
+          key: DBKeys.value,
+          value: attributes[DBKeys.value],
+          description:
+              'Int value. The first valid index to start to fetch. E.g. to exclude the first element, set index = 0',
+          valueType: VariableType.string,
+        ),
+        ControlObject(
+          title: 'Limit',
+          type: ControlType.value,
+          key: DBKeys.valueOfCondition,
+          value: attributes[DBKeys.valueOfCondition],
+          description: 'How many elements should be fetched inside the list.',
+          valueType: VariableType.string,
+        ),
         FlagControlObject(
           title: 'Is Vertical',
           description: 'The axis along which the scroll view scrolls.',
@@ -131,12 +155,6 @@ class GridViewBuilderBody extends NodeBody {
               'The ratio of the cross-axis to the main-axis extent of each child.',
           valueType: VariableType.double,
         ),
-        ControlObject(
-          type: ControlType.datasetType,
-          key: DBKeys.datasetInput,
-          value: attributes[DBKeys.datasetInput],
-          valueType: VariableType.string,
-        ),
       ];
 
   @override
@@ -164,6 +182,8 @@ class GridViewBuilderBody extends NodeBody {
       ${(attributes[DBKeys.childAspectRatio] as FTextTypeInput).toJson()}
       ${(attributes[DBKeys.crossAxisCount] as FTextTypeInput).toJson()}
       ${(attributes[DBKeys.crossAxisSpacing] as FTextTypeInput).toJson()}
+      ${(attributes[DBKeys.value] as FTextTypeInput).toJson()}
+      ${(attributes[DBKeys.valueOfCondition] as FTextTypeInput).toJson()}
       ''',
         ),
         node: node,
@@ -176,6 +196,8 @@ class GridViewBuilderBody extends NodeBody {
         childAspectRatio: attributes[DBKeys.childAspectRatio] as FTextTypeInput,
         crossAxisCount: attributes[DBKeys.crossAxisCount] as FTextTypeInput,
         crossAxisSpacing: attributes[DBKeys.crossAxisSpacing] as FTextTypeInput,
+        startFromIndex: attributes[DBKeys.value] as FTextTypeInput,
+        limit: attributes[DBKeys.valueOfCondition] as FTextTypeInput,
         forPlay: forPlay,
         loop: loop,
         params: params,

@@ -3,8 +3,6 @@
 // Flutter imports:
 import 'package:flutter/material.dart';
 // Package imports:
-import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:teta_core/src/utils/frame/device_frame.dart';
 import 'package:teta_core/teta_core.dart';
 import 'package:teta_widgets/src/elements/builder/gesture_detector_base.dart';
 // Project imports:
@@ -38,6 +36,7 @@ class WWrapperContainer extends StatelessWidget {
 
   @override
   Widget build(final BuildContext context) {
+    Logger.printWarning('${MediaQuery.of(context).size.width}');
     return NodeSelection(
       node: node,
       forPlay: forPlay,
@@ -50,9 +49,9 @@ class WWrapperContainer extends StatelessWidget {
         dataset: dataset,
         forPlay: forPlay,
         loop: loop,
-        child: BlocBuilder<DeviceModeCubit, DeviceInfo>(
-          builder: (final context, final state) {
-            if (state.identifier.type == DeviceType.desktop) {
+        child: Builder(
+          builder: (final context) {
+            if (MediaQuery.of(context).size.width > 1200) {
               return Center(
                 child: ConstrainedBox(
                   constraints: const BoxConstraints(maxWidth: 1200),
@@ -70,7 +69,7 @@ class WWrapperContainer extends StatelessWidget {
                 ),
               );
             }
-            if (state.identifier.type == DeviceType.tablet) {
+            if (MediaQuery.of(context).size.width > 600) {
               return Padding(
                 padding: const EdgeInsets.symmetric(horizontal: 100),
                 child: ChildConditionBuilder(
