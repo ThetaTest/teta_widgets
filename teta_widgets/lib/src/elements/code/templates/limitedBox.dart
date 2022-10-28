@@ -24,8 +24,8 @@ class LimitedBoxCodeTemplate {
 
     final code = '''
     LimitedBox(
-        ${maxWidth != 'null' ? 'maxWidth: $maxWidth,' : ''}
-        ${maxHeight != 'null' ? 'maxHeight: $maxHeight,' : ''}
+        ${(maxWidth != 'null' && maxWidth != null) ? 'maxWidth: $maxWidth,' : ''}
+        ${(maxHeight != 'null' && maxHeight != null) ? 'maxHeight: $maxHeight,' : ''}
 
       $childString
     )
