@@ -58,11 +58,11 @@ import 'package:teta_widgets/src/elements/actions/state/increment.dart';
 import 'package:teta_widgets/src/elements/actions/state/password_validator.dart';
 import 'package:teta_widgets/src/elements/actions/state/phone_validator.dart';
 import 'package:teta_widgets/src/elements/actions/state/website_validator.dart';
-import 'package:teta_widgets/src/elements/actions/stripe/buy.dart';
 import 'package:teta_widgets/src/elements/actions/stripe/stripe_add_list_item_to_cart.dart';
 import 'package:teta_widgets/src/elements/actions/stripe/stripe_cart_buy_all.dart';
 import 'package:teta_widgets/src/elements/actions/stripe/stripe_cart_remove_list_item_from_cart.dart';
 import 'package:teta_widgets/src/elements/actions/stripe/stripe_remove_list_item_to_cart.dart';
+import 'package:teta_widgets/src/elements/actions/stripe/stripe_show_receipt.dart';
 import 'package:teta_widgets/src/elements/actions/supabase/delete.dart';
 import 'package:teta_widgets/src/elements/actions/supabase/insert.dart';
 import 'package:teta_widgets/src/elements/actions/supabase/signin_w_apple.dart';
@@ -233,6 +233,12 @@ class FActionElement extends Equatable {
                 doc['stripeBillingInfoEmail'] as Map<String, dynamic>,
               )
             : FTextTypeInput());
+    stripePaymentIntentId = stripePaymentIntentId ??
+        (doc['stripePaymentIntentId'] != null
+            ? FTextTypeInput.fromJson(
+                doc['stripePaymentIntentId'] as Map<String, dynamic>,
+              )
+            : FTextTypeInput());
     stripeBillingInfoPhone = stripeBillingInfoPhone ??
         (doc['stripeBillingInfoPhone'] != null
             ? FTextTypeInput.fromJson(
@@ -396,6 +402,8 @@ class FActionElement extends Equatable {
   FTextTypeInput? stripeBillingInfoPostalCode;
   FTextTypeInput? stripeBillingInfoCountry;
   FTextTypeInput? stripeShippingId;
+
+  FTextTypeInput? stripePaymentIntentId;
 
   //lat, lng, zoom
   FTextTypeInput? googleMapsLat;
@@ -710,6 +718,9 @@ class FActionElement extends Equatable {
         //email, phone, city, state, line1, postalCode, country
         'stripeBillingInfoEmail': stripeBillingInfoEmail != null
             ? stripeBillingInfoEmail!.toJson()
+            : null,
+    'stripePaymentIntentId': stripePaymentIntentId != null
+            ? stripePaymentIntentId!.toJson()
             : null,
         'stripeBillingInfoPhone': stripeBillingInfoPhone != null
             ? stripeBillingInfoPhone!.toJson()
@@ -1120,9 +1131,9 @@ class FActionElement extends Equatable {
         break;
       case ActionType.stripe:
         switch (actionStripe) {
-          case ActionStripe.buy:
+          case ActionStripe.showReceipt:
             await actionS(
-              () => FActionStripeBuy.action(
+              () => FActionStripeShowReceipt.action(
                 context,
                 states,
                 stateName,
@@ -2213,9 +2224,18 @@ class FActionElement extends Equatable {
         break;
       case ActionType.stripe:
         switch (actionStripe) {
-          case ActionStripe.buy:
+          case ActionStripe.showReceipt:
             return codeS(
-              FActionStripeBuy.toCode(context, stateName, body),
+              FActionStripeShowReceipt.toCode(
+                context,
+                stateName,
+                body,
+                paymentIntentId: stripePaymentIntentId?.toCode(
+                      null,
+                      resultType: ResultTypeEnum.string,
+                    ) ??
+                    '',
+              ),
               context,
             );
           case ActionStripe.buyCartItems:

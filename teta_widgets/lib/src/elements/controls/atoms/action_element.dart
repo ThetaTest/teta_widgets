@@ -1449,6 +1449,32 @@ class ActionElementControlState extends State<ActionElementControl> {
                           ),
                         ),
                       ),
+                    ],
+                    if (ActionStripe.showReceipt ==
+                        widget.element.actionStripe) ...[
+                      Padding(
+                        padding: const EdgeInsets.only(top: 8),
+                        child: SizedBox(
+                          width: double.maxFinite,
+                          child: descriptionControlWidget(
+                            description: 'Payment Intent Id',
+                            control: TextControl(
+                              valueType: VariableType.string,
+                              node: widget.node,
+                              value: widget.element.stripePaymentIntentId ??
+                                  FTextTypeInput(),
+                              page: widget.page,
+                              title: 'Payment Intent Id',
+                              callBack: (final value, final old) {
+                                final old = widget.element;
+                                widget.element.stripePaymentIntentId = value;
+                                widget.element.valueOfCondition = value;
+                                widget.callBack(widget.element, old);
+                              },
+                            ),
+                          ),
+                        ),
+                      ),
                     ]
                   ],
                 ),
