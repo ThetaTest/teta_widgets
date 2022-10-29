@@ -12,4 +12,5 @@ enum ActionTetaCmsDB {
   insert,
   update,
   delete,
+  fetch,
 }

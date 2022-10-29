@@ -16,6 +16,7 @@ import 'package:hovering/hovering.dart';
 import 'package:teta_core/src/design_system/textfield/minitextfield.dart';
 import 'package:teta_core/teta_core.dart';
 import 'package:teta_repositories/src/node_repository.dart';
+import 'package:teta_widgets/src/elements/actions/teta_cms/database/fetch.dart';
 import 'package:teta_widgets/src/elements/controls/atoms/actions/validator.dart';
 // Project imports:
 import 'package:teta_widgets/src/elements/controls/atoms/flag.dart';
@@ -25,6 +26,7 @@ import 'package:teta_widgets/src/elements/controls/atoms/subapase/delete.dart';
 import 'package:teta_widgets/src/elements/controls/atoms/subapase/insert.dart';
 import 'package:teta_widgets/src/elements/controls/atoms/subapase/update.dart';
 import 'package:teta_widgets/src/elements/controls/atoms/teta_cms/delete.dart';
+import 'package:teta_widgets/src/elements/controls/atoms/teta_cms/fetch.dart';
 import 'package:teta_widgets/src/elements/controls/atoms/teta_cms/insert.dart';
 import 'package:teta_widgets/src/elements/controls/atoms/teta_cms/update.dart';
 import 'package:teta_widgets/src/elements/controls/atoms/text.dart';
@@ -1898,6 +1900,32 @@ class ActionElementControlState extends State<ActionElementControl> {
                   callback: () {
                     final old = widget.element;
                     widget.callBack(widget.element, old);
+                  },
+                ),
+              if (widget.element.actionType == ActionType.tetaDatabase &&
+                  widget.element.actionTetaDB == ActionTetaCmsDB.fetch)
+                TetaCmsFetchControl(
+                  prj: widget.prj,
+                  page: widget.page,
+                  node: widget.node,
+                  action: widget.element,
+                  callback: () {
+                    final old = widget.element;
+                    widget.callBack(widget.element, old);
+                    final page = BlocProvider.of<PageCubit>(context).state;
+                    FATetaCMSFetch.action(
+                      context,
+                      widget.element.cmsCollectionId ?? '',
+                      widget.element.cmsLimit ?? FTextTypeInput(),
+                      widget.element.cmsPage ?? FTextTypeInput(),
+                      widget.element.cmsKeyValue ?? FTextTypeInput(),
+                      widget.element.cmsKeyName ?? FTextTypeInput(),
+                      false,
+                      page.params,
+                      page.states,
+                      page.datasets,
+                      0,
+                    );
                   },
                 ),
               if (widget.element.actionType == ActionType.supabaseDatabase &&

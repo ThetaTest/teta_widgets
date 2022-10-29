@@ -73,6 +73,7 @@ import 'package:teta_widgets/src/elements/actions/supabase/update.dart';
 import 'package:teta_widgets/src/elements/actions/teta_cms/auth/login.dart';
 import 'package:teta_widgets/src/elements/actions/teta_cms/auth/logout.dart';
 import 'package:teta_widgets/src/elements/actions/teta_cms/database/delete.dart';
+import 'package:teta_widgets/src/elements/actions/teta_cms/database/fetch.dart';
 import 'package:teta_widgets/src/elements/actions/teta_cms/database/insert.dart';
 import 'package:teta_widgets/src/elements/actions/teta_cms/database/update.dart';
 import 'package:teta_widgets/src/elements/actions/theme/change_theme.dart';
@@ -418,6 +419,13 @@ class FActionElement extends Equatable {
 
   /// Supabase name of column for condition
   MapElement? dbEq;
+
+  // CMS
+  FTextTypeInput? cmsCollection;
+  FTextTypeInput? cmsLimit;
+  FTextTypeInput? cmsPage;
+  FTextTypeInput? cmsKeyName;
+  FTextTypeInput? cmsKeyValue;
 
   @override
   List<Object?> get props => [
@@ -813,6 +821,28 @@ class FActionElement extends Equatable {
         break;
       case ActionType.tetaDatabase:
         switch (actionTetaDB) {
+          case ActionTetaCmsDB.fetch:
+            await actionS(
+              () => FATetaCMSFetch.action(
+                context,
+                cmsCollectionId ?? '',
+                cmsLimit ?? FTextTypeInput(),
+                cmsPage ?? FTextTypeInput(),
+                cmsKeyValue ?? FTextTypeInput(),
+                cmsKeyName ?? FTextTypeInput(),
+                false,
+                params,
+                states,
+                dataset,
+                loop,
+              ),
+              context: context,
+              params: params,
+              states: states,
+              dataset: dataset,
+              loop: loop,
+            );
+            break;
           case ActionTetaCmsDB.insert:
             await actionS(
               () => FATetaCMSInsert.action(
@@ -2034,6 +2064,19 @@ class FActionElement extends Equatable {
               FATetaCMSInsert.toCode(
                 cmsCollectionId,
                 dbData,
+              ),
+              context,
+            );
+          case ActionTetaCmsDB.fetch:
+            return codeS(
+              FATetaCMSFetch.toCode(
+                cmsCollectionId ?? '',
+                cmsLimit ?? FTextTypeInput(),
+                cmsPage ?? FTextTypeInput(),
+                cmsKeyValue ?? FTextTypeInput(),
+                cmsKeyName ?? FTextTypeInput(),
+                false,
+                loop,
               ),
               context,
             );
