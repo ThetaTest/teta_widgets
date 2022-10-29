@@ -143,6 +143,9 @@ enum NType {
   // HTTP Requests
   httpRequest,
 
+  // HTTP Request from custom backend
+  customHttpRequest,
+
   // TetaCMS
   cmsFetch,
   cmsStream,

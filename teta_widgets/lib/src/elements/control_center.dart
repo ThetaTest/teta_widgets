@@ -58,6 +58,7 @@ import 'package:teta_widgets/src/elements/bodies/gridview.dart';
 import 'package:teta_widgets/src/elements/bodies/gridview_builder.dart';
 import 'package:teta_widgets/src/elements/bodies/hero.dart';
 import 'package:teta_widgets/src/elements/bodies/https_requests/future_builder.dart';
+import 'package:teta_widgets/src/elements/bodies/https_requests_custom_backend/custom_http_request.dart';
 import 'package:teta_widgets/src/elements/bodies/icon.dart';
 import 'package:teta_widgets/src/elements/bodies/icon_feather.dart';
 import 'package:teta_widgets/src/elements/bodies/icon_font_awesome.dart';
@@ -266,7 +267,8 @@ final stateTypes = <IntrinsicStates>[
   qonversionProductsListIntrinsicStates,
   qonversionSubStatusIntrinsicStates,
   qrScannerIntrinsicStates,
-  limitedBoxIntrinsicStates
+  limitedBoxIntrinsicStates,
+  customHttpRequestIntrinsicStates,
 ];
 
 /// Method to return any body
@@ -534,6 +536,8 @@ NodeBody getBody(final NType type) {
       return QrScannerBody();
     case NType.limitedBox:
       return LimitedBoxBody();
+    case NType.customHttpRequest:
+      return CustomHttpRequestBody();
     case NType.listViewSeparated:
       break;
     case NType.nil:

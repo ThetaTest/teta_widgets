@@ -182,6 +182,9 @@ class DBKeys {
   static const String supabaseEqName = 'spEqN';
   static const String supabaseEqValue = 'spEqV';
 
+  // Use for custom http request
+  static const String customHttpRequestURL = 'customHttpRequestURL';
+
   static const String cmsCollection = 'cmsColl';
   static const String cmsLimit = 'cmsLmt';
   static const String cmsPage = 'cmsPage';
@@ -442,6 +445,8 @@ class DynamicAttributes {
           return value;
         case DBKeys.showDrawer:
           return value;
+        case DBKeys.customHttpRequestURL:
+          return FTextTypeInput.fromJson(value as Map<String, dynamic>);
         case DBKeys.cmsCollection:
           return FTextTypeInput.fromJson(value as Map<String, dynamic>);
         case DBKeys.cmsPage:
@@ -753,6 +758,8 @@ class DynamicAttributes {
                 .map((final e) => e.toJson())
                 .toList()
             : null;
+      case DBKeys.customHttpRequestURL:
+        return value != null ? value.toJson() : FTextTypeInput().toJson();
       case DBKeys.cmsCollection:
         return value != null ? value.toJson() : FTextTypeInput().toJson();
       case DBKeys.cmsPage:
