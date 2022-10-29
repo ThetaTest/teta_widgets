@@ -8,12 +8,18 @@ class FBorderRadius {
   /// Constructor
   FBorderRadius({
     this.radius,
+    this.radiusTablet,
+    this.radiusDesktop,
   }) {
     radius ??= [0, 0, 0, 0];
+    radiusTablet ??= [0, 0, 0, 0];
+    radiusDesktop ??= [0, 0, 0, 0];
   }
 
   /// The value of [FBorderRadius], used to display BorderRadius
   List<double>? radius;
+  List<double>? radiusTablet;
+  List<double>? radiusDesktop;
 
   /// Convert [radius] to [BorderRadius]
   BorderRadius get get => BorderRadius.only(
