@@ -172,6 +172,9 @@ dependencies:
   # Share
   share: ^2.0.4
 
+  # Responsive values / builder
+  responsive_builder: ^0.4.3
+  device_frame:
 
 dev_dependencies:
   flutter_test:

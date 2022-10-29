@@ -46,7 +46,7 @@ class WClipRRect extends StatelessWidget {
         forPlay: forPlay,
         loop: loop,
         child: ClipRRect(
-          borderRadius: borderRadius.get,
+          borderRadius: borderRadius.get(context),
           child: ChildConditionBuilder(
             ValueKey('${node.nid} $loop'),
             name: node.intrinsicState.displayName,

@@ -237,7 +237,7 @@ class DynamicAttributes {
         case DBKeys.actionValue:
           return FTextTypeInput.fromJson(value as Map<String, dynamic>);
         case DBKeys.align:
-          return FAlign.fromJson(value as String);
+          return FAlign.fromJson(value as dynamic);
         case DBKeys.physic:
           return FPhysic.fromJson(value as String);
         case DBKeys.bgFill:

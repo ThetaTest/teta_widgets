@@ -94,7 +94,7 @@ class _WImageState extends State<WImage> {
         forPlay: widget.forPlay,
         loop: widget.loop,
         child: ClipRRect(
-          borderRadius: widget.borderRadius.get,
+          borderRadius: widget.borderRadius.get(context),
           child: SizedBox(
             width: widget.width.get(
               context: context,

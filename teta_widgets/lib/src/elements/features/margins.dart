@@ -2,9 +2,12 @@
 // ignore_for_file: public_member_api_docs, lines_longer_than_80_chars
 
 // Flutter imports:
+import 'package:device_frame/device_frame.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 // Package imports:
 import 'package:teta_core/src/utils/expression/expression.dart';
+import 'package:teta_core/teta_core.dart';
 
 class FMargins {
   FMargins({
@@ -14,15 +17,21 @@ class FMargins {
   }
 
   List<String>? margins;
+  List<String>? marginsTablet;
+  List<String>? marginsDesktop;
 
   EdgeInsets get(final BuildContext context) {
-    final left =
-        MathExpression.parse(context: context, expression: margins![0]);
-    final top = MathExpression.parse(context: context, expression: margins![1]);
-    final right =
-        MathExpression.parse(context: context, expression: margins![2]);
-    final bottom =
-        MathExpression.parse(context: context, expression: margins![3]);
+    var temp = marginsDesktop!;
+    final device = BlocProvider.of<DeviceModeCubit>(context).state;
+    if (device.identifier.type == DeviceType.phone) {
+      temp = margins!;
+    } else if (device.identifier.type == DeviceType.tablet) {
+      temp = marginsTablet!;
+    }
+    final left = MathExpression.parse(context: context, expression: temp[0]);
+    final top = MathExpression.parse(context: context, expression: temp[1]);
+    final right = MathExpression.parse(context: context, expression: temp[2]);
+    final bottom = MathExpression.parse(context: context, expression: temp[3]);
     return EdgeInsets.only(
       left: double.tryParse(left) != null ? double.parse(left).abs() : 0,
       top: double.tryParse(top) != null ? double.parse(top).abs() : 0,
@@ -32,7 +41,14 @@ class FMargins {
   }
 
   List<String> getList(final BuildContext context) {
-    return margins!;
+    final device = BlocProvider.of<DeviceModeCubit>(context).state;
+    if (device.identifier.type == DeviceType.phone) {
+      return margins!;
+    } else if (device.identifier.type == DeviceType.tablet) {
+      return marginsTablet!;
+    } else {
+      return marginsDesktop!;
+    }
   }
 
   static FMargins fromJson(final List<dynamic> json) {
