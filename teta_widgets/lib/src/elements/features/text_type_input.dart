@@ -58,6 +58,8 @@ class FTextTypeInput {
   });
 
   FTextTypeEnum? type;
+  FTextTypeEnum? typeTablet;
+  FTextTypeEnum? typeDesktop;
   String? value;
   String? paramName;
   String? stateName;

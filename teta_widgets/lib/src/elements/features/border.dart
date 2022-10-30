@@ -83,7 +83,7 @@ class FBorder {
     try {
       return FBorder(
         style: FBorderStyle.fromJson(doc[DBKeys.borderStyle] as String),
-        width: FMargins.fromJson(doc[DBKeys.margins] as List<dynamic>),
+        width: FMargins.fromJson(doc[DBKeys.margins] as dynamic),
         fill: FFill().fromJson(doc[DBKeys.fill] as Map<String, dynamic>),
       );
     } catch (e) {
@@ -101,12 +101,12 @@ class FBorder {
 
   /// Export code String
   String toCode(final BuildContext context) {
-    final values = width!.margins!;
-    final color = fill!.getHexColor(context);
-    final tempOpacity = fill?.levels?.first.opacity ?? 1;
-    final opacity = tempOpacity >= 0 && tempOpacity <= 1 ? tempOpacity : 1.0;
-    // if (style?.get != BorderStyle.none) return '';
-    return '''
+    String _valueToCode(final List<String> values) {
+      final color = fill!.getHexColor(context);
+      final tempOpacity = fill?.levels?.first.opacity ?? 1;
+      final opacity = tempOpacity >= 0 && tempOpacity <= 1 ? tempOpacity : 1.0;
+      // if (style?.get != BorderStyle.none) return '';
+      return '''
     Border(
       left:
           BorderSide(width: ${values[0] != '' ? values[0] : '0'}, ${style?.get != BorderStyle.solid ? 'style: ${style!.toCode()},' : ''} color: Color(0xFF$color).withOpacity($opacity)),
@@ -118,5 +118,15 @@ class FBorder {
           BorderSide(width: ${values[3] != '' ? values[3] : '0'}, ${style?.get != BorderStyle.solid ? 'style: ${style!.toCode()},' : ''} color: Color(0xFF$color).withOpacity($opacity)),
     )
   ''';
+    }
+
+    return '''
+getValueForScreenType<Border>(
+  context: context,
+  mobile: ${_valueToCode(width!.margins!)},
+  tablet: ${_valueToCode(width!.marginsTablet ?? width!.margins!)},
+  desktop: ${_valueToCode(width!.marginsDesktop ?? width!.margins!)},
+)
+''';
   }
 }

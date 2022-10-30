@@ -149,7 +149,8 @@ class MarginsState extends State<Margins> {
                           ],
                         ),
                       ),
-                      GestureDetector(
+                      BounceSmall(
+                        message: 'Link or unlink values',
                         onTap: () {
                           setState(() {
                             isLinked = !isLinked;

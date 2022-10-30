@@ -56,19 +56,26 @@ class SizeControlsState extends State<SizeControl> {
   @override
   Widget build(final BuildContext context) {
     return BlocListener<DeviceModeCubit, DeviceInfo>(
-      listener: (final context, final state) {
+      listener: (final context, final device) {
         flag =
             widget.size.get(context: context, isWidth: widget.isWidth) != null;
+        String? size;
+        if (device.identifier.type == DeviceType.phone) {
+          size = widget.size.size;
+        } else if (device.identifier.type == DeviceType.tablet) {
+          size = widget.size.sizeTablet;
+        } else {
+          size = widget.size.sizeDesktop;
+        }
+        final unit = widget.size.getUnit(context);
         for (var i = 0; i < 2; i++) {
-          controller.text = (widget.size.size == 'max' ||
-                  widget.size.size == 'inf' &&
-                      widget.size.size == '100%' &&
-                      widget.size.unit == SizeUnit.pixel)
+          controller.text = (size == 'max' ||
+                  size == 'inf' && size == '100%' && unit == SizeUnit.pixel)
               ? 'max'
-              : (widget.size.size == 'max' ||
-                      widget.size.size == 'inf' &&
-                          widget.size.size == '100%' &&
-                          widget.size.unit == SizeUnit.percent)
+              : (size == 'max' ||
+                      size == 'inf' &&
+                          size == '100%' &&
+                          unit == SizeUnit.percent)
                   ? '100%'
                   : (widget.size.size == 'auto')
                       ? 'auto'
@@ -86,18 +93,27 @@ class SizeControlsState extends State<SizeControl> {
                   flag = widget.size
                           .get(context: context, isWidth: widget.isWidth) !=
                       null;
+                  String? size;
+                  if (device.identifier.type == DeviceType.phone) {
+                    size = widget.size.size;
+                  } else if (device.identifier.type == DeviceType.tablet) {
+                    size = widget.size.sizeTablet;
+                  } else {
+                    size = widget.size.sizeDesktop;
+                  }
+                  final unit = widget.size.getUnit(context);
                   for (var i = 0; i < 2; i++) {
-                    controller.text = (widget.size.size == 'max' ||
-                            widget.size.size == 'inf' &&
-                                widget.size.size == '100%' &&
-                                widget.size.unit == SizeUnit.pixel)
+                    controller.text = (size == 'max' ||
+                            size == 'inf' &&
+                                size == '100%' &&
+                                unit == SizeUnit.pixel)
                         ? 'max'
-                        : (widget.size.size == 'max' ||
-                                widget.size.size == 'inf' &&
-                                    widget.size.size == '100%' &&
-                                    widget.size.unit == SizeUnit.percent)
+                        : (size == 'max' ||
+                                size == 'inf' &&
+                                    size == '100%' &&
+                                    unit == SizeUnit.percent)
                             ? '100%'
-                            : (widget.size.size == 'auto')
+                            : (size == 'auto')
                                 ? 'auto'
                                 : '${widget.size.get(context: context, isWidth: widget.isWidth)}';
                   }
