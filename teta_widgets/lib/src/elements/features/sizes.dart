@@ -2,6 +2,7 @@
 // ignore_for_file: public_member_api_docs
 
 // Flutter imports:
+import 'package:device_frame/device_frame.dart' as frame;
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -21,10 +22,23 @@ class FSize {
   FSize({
     this.size,
     this.unit,
-  });
+    this.sizeTablet,
+    this.unitTablet,
+    this.sizeDesktop,
+    this.unitDesktop,
+  }) {
+    sizeTablet ??= size;
+    sizeDesktop ??= size;
+    unitTablet ??= unit;
+    unitDesktop ??= unit;
+  }
 
   String? size;
+  String? sizeTablet;
+  String? sizeDesktop;
   SizeUnit? unit;
+  SizeUnit? unitTablet;
+  SizeUnit? unitDesktop;
 
   static FSize ready() => FSize(size: '0', unit: SizeUnit.pixel);
 
@@ -32,36 +46,82 @@ class FSize {
     required final BuildContext context,
     required final bool isWidth,
   }) {
+    var size = sizeDesktop ?? this.size!;
+    var unit = unitDesktop ?? this.unit!;
+    final device = BlocProvider.of<DeviceModeCubit>(context).state;
+    if (device.identifier.type == frame.DeviceType.phone) {
+      size = this.size ?? '0';
+      unit = this.unit!;
+    } else if (device.identifier.type == frame.DeviceType.tablet) {
+      size = sizeTablet ?? this.size ?? '0';
+      unit = unitTablet ?? this.unit!;
+    }
+
     double? value = 0;
-    if (size != null) {
-      if (unit == SizeUnit.pixel &&
-          (size!.toLowerCase() == 'max' ||
-              size!.toLowerCase() == 'inf' ||
-              size!.toLowerCase() == '100%')) {
-        value = double.maxFinite;
+    if (unit == SizeUnit.pixel &&
+        (size.toLowerCase() == 'max' ||
+            size.toLowerCase() == 'inf' ||
+            size.toLowerCase() == '100%')) {
+      value = double.maxFinite;
+    } else {
+      if (size.toLowerCase() == 'null' || size.toLowerCase() == 'auto') {
+        value = null;
       } else {
-        if (size!.toLowerCase() == 'null' || size!.toLowerCase() == 'auto') {
-          value = null;
-        } else {
-          final exp = MathExpression.parse(
-            context: context,
-            expression: size!.replaceAll('%', ''),
-          );
-          if (double.tryParse(exp) != null) {
-            value = double.parse(exp);
-          }
+        final exp = MathExpression.parse(
+          context: context,
+          expression: size.replaceAll('%', ''),
+        );
+        if (double.tryParse(exp) != null) {
+          value = double.parse(exp);
         }
       }
-      if (value != null && unit == SizeUnit.percent) {
-        final screen =
-            BlocProvider.of<DeviceModeCubit>(context).state.screenSize;
-        value = isWidth ? screen.width : screen.height * (value / 100);
-      }
-      if (value != null && unit == SizeUnit.width) {
-        value = isWidth ? value.w : value.h;
-      }
+    }
+    if (value != null && unit == SizeUnit.percent) {
+      final screen = BlocProvider.of<DeviceModeCubit>(context).state.screenSize;
+      value = isWidth ? screen.width : screen.height * (value / 100);
+    }
+    if (value != null && unit == SizeUnit.width) {
+      value = isWidth ? value.w : value.h;
     }
     return value;
+  }
+
+  SizeUnit getUnit(final BuildContext context) {
+    final device = BlocProvider.of<DeviceModeCubit>(context).state;
+    if (device.identifier.type == frame.DeviceType.phone) {
+      return unit = unit!;
+    } else if (device.identifier.type == frame.DeviceType.tablet) {
+      return unit = unitTablet ?? unit!;
+    }
+    return unitDesktop ?? unit!;
+  }
+
+  void updateSize(
+    final String newValue,
+    final BuildContext context,
+  ) {
+    final device = BlocProvider.of<DeviceModeCubit>(context).state;
+    if (device.identifier.type == frame.DeviceType.phone) {
+      size = newValue;
+    } else if (device.identifier.type == frame.DeviceType.tablet) {
+      sizeTablet = newValue;
+    } else {
+      sizeDesktop = newValue;
+    }
+  }
+
+  void updateUnit(
+    final SizeUnit newUnit,
+    final BuildContext context,
+  ) {
+    final device = BlocProvider.of<DeviceModeCubit>(context).state;
+    if (device.identifier.type == frame.DeviceType.phone) {
+      unit = newUnit;
+    } else if (device.identifier.type == frame.DeviceType.tablet) {
+      unitTablet = newUnit;
+    } else {
+      unitDesktop = newUnit;
+    }
   }
 
   static FSize fromJson(final Map<String, dynamic> json) {
@@ -69,6 +129,10 @@ class FSize {
       return FSize(
         size: json['s'] as String?,
         unit: json['u'] == 'i' ? SizeUnit.pixel : SizeUnit.percent,
+        sizeTablet: json['t'] as String?,
+        sizeDesktop: json['d'] as String?,
+        unitTablet: json['ut'] == 'i' ? SizeUnit.pixel : SizeUnit.percent,
+        unitDesktop: json['ud'] == 'i' ? SizeUnit.pixel : SizeUnit.percent,
       );
     } catch (e) {
       if (kDebugMode) {
@@ -82,7 +146,11 @@ class FSize {
   Map<String, dynamic> toJson() => <String, dynamic>{
         's': size,
         'u': unit == SizeUnit.percent ? 'e' : 'i',
-      }..removeWhere((final String key, final dynamic value) => value == null);
+        't': sizeTablet,
+        'd': sizeDesktop,
+        'ut': unitTablet == SizeUnit.percent ? 'e' : 'i',
+        'ud': unitDesktop == SizeUnit.percent ? 'e' : 'i',
+      };
 
   static String convertListToCode(final String? value) {
     return value ?? '';
@@ -97,23 +165,23 @@ class FSize {
     required final BuildContext context,
     required final bool isWidth,
   }) {
-    String? value;
-    if (size != null) {
+    String _valueToCode(final String size, final SizeUnit unit) {
+      String? value;
       if (unit == SizeUnit.pixel &&
-          (size!.toLowerCase() == 'max' ||
-              size!.toLowerCase() == 'inf' ||
-              size!.toLowerCase() == '100%')) {
+          (size.toLowerCase() == 'max' ||
+              size.toLowerCase() == 'inf' ||
+              size.toLowerCase() == '100%')) {
         value = 'double.maxFinite';
       } else {
-        if (size!.toLowerCase() == 'null' || size!.toLowerCase() == 'auto') {
+        if (size.toLowerCase() == 'null' || size.toLowerCase() == 'auto') {
           value = null;
         } else {
           final exp = MathExpression.parse(
             context: context,
-            expression: size!.replaceAll('%', ''),
+            expression: size.replaceAll('%', ''),
           );
           if (double.tryParse(exp) != null) {
-            value = size!.replaceAll('%', '');
+            value = size.replaceAll('%', '');
           }
         }
       }
@@ -123,8 +191,16 @@ class FSize {
             '${(size ?? '16').replaceAll('%', '')}${isWidth ? '.w' : '.h'}';
         return finalString;
       }
+      return value ?? 'null';
     }
-    return value;
+
+    return '''
+getValueForScreenType<double?>(
+  context: context,
+  mobile: ${_valueToCode(size!, unit!)},
+  tablet: ${_valueToCode(sizeTablet ?? size!, unitTablet ?? unit!)},
+  desktop: ${_valueToCode(sizeDesktop ?? size!, unitDesktop ?? unit!)},
+)''';
   }
 
   @override
