@@ -12,8 +12,12 @@ import 'package:teta_core/teta_core.dart';
 class FMargins {
   FMargins({
     this.margins,
+    this.marginsTablet,
+    this.marginsDesktop,
   }) {
     margins ??= ['0', '0', '0', '0'];
+    marginsTablet ??= margins;
+    marginsDesktop ??= margins;
   }
 
   List<String>? margins;
@@ -51,25 +55,51 @@ class FMargins {
     }
   }
 
-  static FMargins fromJson(final List<dynamic> json) {
+  static FMargins fromJson(final dynamic json) {
+    if (json.runtimeType is List<dynamic>) {
+      return FMargins(
+        margins:
+            (json as List<dynamic>).map((final dynamic e) => '$e').toList(),
+      );
+    }
     try {
       return FMargins(
-        margins: json.map((final dynamic e) => '$e').toList(),
+        margins: (json['m'] as List<dynamic>)
+            .map((final dynamic e) => '$e')
+            .toList(),
+        marginsTablet: (json['t'] as List<dynamic>)
+            .map((final dynamic e) => '$e')
+            .toList(),
+        marginsDesktop: (json['d'] as List<dynamic>)
+            .map((final dynamic e) => '$e')
+            .toList(),
       );
     } catch (e) {
       return FMargins();
     }
   }
 
-  List<String> toJson() {
-    return margins!;
+  Map<String, dynamic> toJson() {
+    return <String, dynamic>{
+      'm': margins,
+      't': marginsTablet,
+      'd': marginsDesktop,
+    };
   }
 
-  List<String> update({
+  Map<String, dynamic> update({
     required final List<String> value,
     required final BuildContext context,
   }) {
-    return value;
+    final device = BlocProvider.of<DeviceModeCubit>(context).state;
+    if (device.identifier.type == DeviceType.phone) {
+      margins = value;
+    } else if (device.identifier.type == DeviceType.tablet) {
+      marginsTablet = value;
+    } else {
+      marginsDesktop = value;
+    }
+    return toJson();
   }
 
   static String convertToCode(final List<String>? list) {
@@ -77,30 +107,41 @@ class FMargins {
   }
 
   String toCode(final BuildContext context) {
-    final left =
-        MathExpression.parse(context: context, expression: margins![0]);
-    final top = MathExpression.parse(context: context, expression: margins![1]);
-    final right =
-        MathExpression.parse(context: context, expression: margins![2]);
-    final bottom =
-        MathExpression.parse(context: context, expression: margins![3]);
-    if (double.tryParse(left) == null &&
-        double.tryParse(top) == null &&
-        double.tryParse(right) == null &&
-        double.tryParse(bottom) == null) return '';
-    if (double.tryParse(left) == 0 &&
-        double.tryParse(top) == 0 &&
-        double.tryParse(right) == 0 &&
-        double.tryParse(bottom) == 0) {
-      return 'EdgeInsets.zero';
-    }
-    return '''
+    String valueToCode(final List<String> margins) {
+      final left =
+          MathExpression.parse(context: context, expression: margins[0]);
+      final top =
+          MathExpression.parse(context: context, expression: margins[1]);
+      final right =
+          MathExpression.parse(context: context, expression: margins[2]);
+      final bottom =
+          MathExpression.parse(context: context, expression: margins[3]);
+      if (double.tryParse(left) == null &&
+          double.tryParse(top) == null &&
+          double.tryParse(right) == null &&
+          double.tryParse(bottom) == null) return '';
+      if (double.tryParse(left) == 0 &&
+          double.tryParse(top) == 0 &&
+          double.tryParse(right) == 0 &&
+          double.tryParse(bottom) == 0) {
+        return 'EdgeInsets.zero';
+      }
+      return '''
     const EdgeInsets.only(
-      ${double.tryParse(left) != null && double.tryParse(left) != 0 ? "left: ${double.parse(margins![0]).abs()}," : ""}
-      ${double.tryParse(top) != null && double.tryParse(top) != 0 ? "top: ${double.parse(margins![1]).abs()}," : ""}
-      ${double.tryParse(right) != null && double.tryParse(right) != 0 ? "right: ${double.parse(margins![2]).abs()}," : ""}
-      ${double.tryParse(bottom) != null && double.tryParse(bottom) != 0 ? "bottom: ${double.parse(margins![3]).abs()}," : ""}
+      ${double.tryParse(left) != null && double.tryParse(left) != 0 ? "left: ${double.parse(margins[0]).abs()}," : ""}
+      ${double.tryParse(top) != null && double.tryParse(top) != 0 ? "top: ${double.parse(margins[1]).abs()}," : ""}
+      ${double.tryParse(right) != null && double.tryParse(right) != 0 ? "right: ${double.parse(margins[2]).abs()}," : ""}
+      ${double.tryParse(bottom) != null && double.tryParse(bottom) != 0 ? "bottom: ${double.parse(margins[3]).abs()}," : ""}
     )''';
+    }
+
+    return '''
+getValueForScreenType<EdgeInsets>(
+  context: context,
+  mobile: ${valueToCode(margins!)},
+  tablet: ${valueToCode(marginsTablet ?? margins!)},
+  desktop: ${valueToCode(marginsDesktop ?? margins!)},
+)''';
   }
 
   String toCodeForTests() {

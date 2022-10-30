@@ -5,9 +5,12 @@
 import 'dart:async';
 
 // Flutter imports:
+import 'package:device_frame/device_frame.dart';
 import 'package:flutter/material.dart';
 // Package imports:
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:flutter_feather_icons/flutter_feather_icons.dart';
+import 'package:gap/gap.dart';
 import 'package:hovering/hovering.dart';
 import 'package:teta_core/src/design_system/textfield/minitextfield.dart';
 import 'package:teta_core/teta_core.dart';
@@ -27,7 +30,7 @@ class Margins extends StatefulWidget {
   final CNode node;
   final String title;
   final FMargins value;
-  final Function(List<String>, List<String>) callBack;
+  final Function(Map<String, dynamic>, Map<String, dynamic>) callBack;
 
   @override
   MarginsState createState() => MarginsState();
@@ -79,161 +82,203 @@ class MarginsState extends State<Margins> {
 
   @override
   Widget build(final BuildContext context) {
-    return BlocBuilder<FocusBloc, List<CNode>>(
-      builder: (final context, final state) {
-        if (state.isNotEmpty) {
-          if (state.first.nid != nodeId) {
-            if (mounted) {
-              nodeId = state.first.nid;
-              margins = widget.value.getList(context);
-              for (var i = 0; i < 4; i++) {
-                controllers[i].text = margins![i];
-              }
-              var flag = false;
-              var lastValue = '';
-              for (final element in margins ?? const <String>[]) {
-                if (lastValue == '') lastValue = element;
-                if (element != lastValue) {
-                  flag = true;
-                }
-              }
-              isLinked = !flag;
-            }
+    return BlocListener<DeviceModeCubit, DeviceInfo>(
+      listener: (final context, final state) {
+        margins = widget.value.getList(context);
+        for (var i = 0; i < 4; i++) {
+          controllers[i].text = margins![i];
+        }
+        var flag = false;
+        var lastValue = '';
+        for (final element in margins ?? const <String>[]) {
+          if (lastValue == '') lastValue = element;
+          if (element != lastValue) {
+            flag = true;
           }
         }
-        return Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            Padding(
-              padding: const EdgeInsets.only(bottom: 12),
-              child: Row(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                children: [
-                  THeadline3(
-                    widget.title,
-                  ),
-                  GestureDetector(
-                    onTap: () {
-                      setState(() {
-                        isLinked = !isLinked;
-                      });
-                    },
-                    child: HoverWidget(
-                      hoverChild: Container(
-                        padding: const EdgeInsets.all(4),
-                        decoration: BoxDecoration(
-                          border: Border.all(
-                            color: Colors.white,
-                          ),
-                        ),
-                        child: Icon(
-                          isLinked ? Icons.link : Icons.link_off,
-                          size: 24,
-                          color: Colors.white,
-                        ),
-                      ),
-                      onHover: (final e) {},
-                      child: Container(
-                        padding: const EdgeInsets.all(4),
-                        decoration: BoxDecoration(
-                          border: Border.all(
-                            color: Colors.transparent,
-                          ),
-                        ),
-                        child: Icon(
-                          isLinked ? Icons.link : Icons.link_off,
-                          size: 24,
-                          color: Colors.white,
-                        ),
-                      ),
-                    ),
-                  ),
-                ],
-              ),
-            ),
-            Row(
+        isLinked = !flag;
+      },
+      child: BlocBuilder<DeviceModeCubit, DeviceInfo>(
+        builder: (final context, final device) =>
+            BlocBuilder<FocusBloc, List<CNode>>(
+          builder: (final context, final state) {
+            if (state.isNotEmpty) {
+              if (state.first.nid != nodeId) {
+                if (mounted) {
+                  nodeId = state.first.nid;
+                  margins = widget.value.getList(context);
+                  for (var i = 0; i < 4; i++) {
+                    controllers[i].text = margins![i];
+                  }
+                  var flag = false;
+                  var lastValue = '';
+                  for (final element in margins ?? const <String>[]) {
+                    if (lastValue == '') lastValue = element;
+                    if (element != lastValue) {
+                      flag = true;
+                    }
+                  }
+                  isLinked = !flag;
+                }
+              }
+            }
+            return Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                Expanded(
-                  child: CMiniTextField(
-                    title: (!isLinked) ? 'LEFT' : 'ALL',
-                    controller: controllers[0],
-                    text: widget.value.getList(context)[0],
-                    hpadding: isLinked ? 0 : 4,
-                    withSwipe: true,
-                    callBack: (final text) {
-                      final finalText = text.replaceAll('-', '');
-                      margins![0] = finalText;
-                      if (isLinked) {
-                        margins![1] = finalText;
-                        controllers[1].text = finalText;
-                        margins![2] = finalText;
-                        controllers[2].text = finalText;
-                        margins![3] = finalText;
-                        controllers[3].text = finalText;
-                      }
-                      final old = FMargins.fromJson(widget.value.toJson());
-                      final temp = FMargins.fromJson(widget.value.toJson());
-                      onChangeHandler(temp, old);
-                    },
+                Padding(
+                  padding: const EdgeInsets.only(bottom: 12),
+                  child: Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    children: [
+                      Padding(
+                        padding: const EdgeInsets.only(bottom: 8),
+                        child: Row(
+                          children: [
+                            Icon(
+                              device.identifier.type == DeviceType.phone
+                                  ? FeatherIcons.smartphone
+                                  : device.identifier.type == DeviceType.tablet
+                                      ? FeatherIcons.tablet
+                                      : FeatherIcons.monitor,
+                              color: Palette.txtPrimary,
+                            ),
+                            const Gap(Grid.small),
+                            THeadline3(
+                              widget.title,
+                            ),
+                          ],
+                        ),
+                      ),
+                      GestureDetector(
+                        onTap: () {
+                          setState(() {
+                            isLinked = !isLinked;
+                          });
+                        },
+                        child: HoverWidget(
+                          hoverChild: Container(
+                            padding: const EdgeInsets.all(4),
+                            decoration: BoxDecoration(
+                              border: Border.all(
+                                color: Colors.white,
+                              ),
+                            ),
+                            child: Icon(
+                              isLinked ? Icons.link : Icons.link_off,
+                              size: 24,
+                              color: Colors.white,
+                            ),
+                          ),
+                          onHover: (final e) {},
+                          child: Container(
+                            padding: const EdgeInsets.all(4),
+                            decoration: BoxDecoration(
+                              border: Border.all(
+                                color: Colors.transparent,
+                              ),
+                            ),
+                            child: Icon(
+                              isLinked ? Icons.link : Icons.link_off,
+                              size: 24,
+                              color: Colors.white,
+                            ),
+                          ),
+                        ),
+                      ),
+                    ],
                   ),
                 ),
-                if (!isLinked)
-                  Expanded(
-                    child: CMiniTextField(
-                      title: 'TOP',
-                      controller: controllers[1],
-                      text: widget.value.getList(context)[1],
-                      hpadding: 4,
-                      withSwipe: true,
-                      callBack: (final text) {
-                        final finalText = text.replaceAll('-', '');
-                        margins![1] = finalText;
-                        final old = FMargins.fromJson(widget.value.toJson());
-                        final temp = FMargins.fromJson(widget.value.toJson());
-                        onChangeHandler(temp, old);
-                      },
+                Row(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Expanded(
+                      child: CMiniTextField(
+                        title: (!isLinked) ? 'LEFT' : 'ALL',
+                        controller: controllers[0],
+                        text: widget.value.getList(context)[0],
+                        hpadding: isLinked ? 0 : 4,
+                        withSwipe: true,
+                        callBack: (final text) {
+                          final finalText = text.replaceAll('-', '');
+                          margins![0] = finalText;
+                          if (isLinked) {
+                            margins![1] = finalText;
+                            controllers[1].text = finalText;
+                            margins![2] = finalText;
+                            controllers[2].text = finalText;
+                            margins![3] = finalText;
+                            controllers[3].text = finalText;
+                          }
+                          final old = FMargins.fromJson(widget.value.toJson());
+                          final temp = FMargins.fromJson(widget.value.toJson());
+                          onChangeHandler(temp, old);
+                        },
+                      ),
                     ),
-                  ),
-                if (!isLinked)
-                  Expanded(
-                    child: CMiniTextField(
-                      title: 'RIGHT',
-                      controller: controllers[2],
-                      text: widget.value.getList(context)[2],
-                      hpadding: 4,
-                      withSwipe: true,
-                      callBack: (final text) {
-                        final finalText = text.replaceAll('-', '');
-                        margins![2] = finalText;
-                        final old = FMargins.fromJson(widget.value.toJson());
-                        final temp = FMargins.fromJson(widget.value.toJson());
-                        onChangeHandler(temp, old);
-                      },
-                    ),
-                  ),
-                if (!isLinked)
-                  Expanded(
-                    child: CMiniTextField(
-                      title: 'BOTTOM',
-                      controller: controllers[3],
-                      text: widget.value.getList(context)[3],
-                      hpadding: 4,
-                      withSwipe: true,
-                      callBack: (final text) {
-                        final finalText = text.replaceAll('-', '');
-                        margins![3] = finalText;
-                        final old = FMargins.fromJson(widget.value.toJson());
-                        final temp = FMargins.fromJson(widget.value.toJson());
-                        onChangeHandler(temp, old);
-                      },
-                    ),
-                  ),
+                    if (!isLinked)
+                      Expanded(
+                        child: CMiniTextField(
+                          title: 'TOP',
+                          controller: controllers[1],
+                          text: widget.value.getList(context)[1],
+                          hpadding: 4,
+                          withSwipe: true,
+                          callBack: (final text) {
+                            final finalText = text.replaceAll('-', '');
+                            margins![1] = finalText;
+                            final old =
+                                FMargins.fromJson(widget.value.toJson());
+                            final temp =
+                                FMargins.fromJson(widget.value.toJson());
+                            onChangeHandler(temp, old);
+                          },
+                        ),
+                      ),
+                    if (!isLinked)
+                      Expanded(
+                        child: CMiniTextField(
+                          title: 'RIGHT',
+                          controller: controllers[2],
+                          text: widget.value.getList(context)[2],
+                          hpadding: 4,
+                          withSwipe: true,
+                          callBack: (final text) {
+                            final finalText = text.replaceAll('-', '');
+                            margins![2] = finalText;
+                            final old =
+                                FMargins.fromJson(widget.value.toJson());
+                            final temp =
+                                FMargins.fromJson(widget.value.toJson());
+                            onChangeHandler(temp, old);
+                          },
+                        ),
+                      ),
+                    if (!isLinked)
+                      Expanded(
+                        child: CMiniTextField(
+                          title: 'BOTTOM',
+                          controller: controllers[3],
+                          text: widget.value.getList(context)[3],
+                          hpadding: 4,
+                          withSwipe: true,
+                          callBack: (final text) {
+                            final finalText = text.replaceAll('-', '');
+                            margins![3] = finalText;
+                            final old =
+                                FMargins.fromJson(widget.value.toJson());
+                            final temp =
+                                FMargins.fromJson(widget.value.toJson());
+                            onChangeHandler(temp, old);
+                          },
+                        ),
+                      ),
+                  ],
+                ),
               ],
-            ),
-          ],
-        );
-      },
+            );
+          },
+        ),
+      ),
     );
   }
 }
