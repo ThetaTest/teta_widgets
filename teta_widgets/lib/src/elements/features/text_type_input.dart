@@ -5,6 +5,7 @@
 // Package imports:
 import 'package:camera/camera.dart';
 import 'package:collection/collection.dart';
+import 'package:device_frame/device_frame.dart';
 import 'package:enum_to_string/enum_to_string.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -45,6 +46,8 @@ class FTextTypeInput {
   FTextTypeInput({
     this.type = FTextTypeEnum.text,
     this.value = '',
+    this.valueTablet,
+    this.valueDesktop,
     this.paramName,
     this.stateName,
     this.datasetName,
@@ -55,12 +58,15 @@ class FTextTypeInput {
     this.combination,
     this.resultType = ResultTypeEnum.string,
     this.typeDateTimeFormat,
-  });
+  }) {
+    valueTablet ??= '';
+    valueDesktop ??= '';
+  }
 
   FTextTypeEnum? type;
-  FTextTypeEnum? typeTablet;
-  FTextTypeEnum? typeDesktop;
   String? value;
+  String? valueTablet;
+  String? valueDesktop;
   String? paramName;
   String? stateName;
   String? datasetName;
@@ -225,7 +231,36 @@ class FTextTypeInput {
         ).state.getString(keyTranslator!);
       }
     }
-    return value ?? '';
+    final device = BlocProvider.of<DeviceModeCubit>(context).state;
+    if (device.identifier.type == DeviceType.phone) {
+      return value ?? '';
+    } else if (device.identifier.type == DeviceType.tablet) {
+      return valueTablet != '' ? valueTablet ?? value ?? '' : value ?? '';
+    } else {
+      return valueDesktop != '' ? valueDesktop ?? value ?? '' : value ?? '';
+    }
+  }
+
+  String getValue(final BuildContext context) {
+    final device = BlocProvider.of<DeviceModeCubit>(context).state;
+    if (device.identifier.type == DeviceType.phone) {
+      return value ?? '';
+    } else if (device.identifier.type == DeviceType.tablet) {
+      return valueTablet != '' ? valueTablet ?? value ?? '' : value ?? '';
+    } else {
+      return valueDesktop != '' ? valueDesktop ?? value ?? '' : value ?? '';
+    }
+  }
+
+  void updateValue(final String val, final BuildContext context) {
+    final device = BlocProvider.of<DeviceModeCubit>(context).state;
+    if (device.identifier.type == DeviceType.phone) {
+      value = val;
+    } else if (device.identifier.type == DeviceType.tablet) {
+      valueTablet = val;
+    } else {
+      valueDesktop = val;
+    }
   }
 
   static FTextTypeInput fromJson(final Map<String, dynamic>? json) {
@@ -249,6 +284,8 @@ class FTextTypeInput {
                                         ? FTextTypeEnum.languages
                                         : FTextTypeEnum.text,
         value: json?['v'] as String?,
+        valueTablet: json?['vt'] as String?,
+        valueDesktop: json?['vd'] as String?,
         paramName: json?['pN'] as String?,
         stateName: json?['sN'] as String?,
         datasetName: json?['dN'] as String?,
@@ -300,6 +337,8 @@ class FTextTypeInput {
                                     ? 'languages'
                                     : 'text',
         'v': value,
+        'vt': valueTablet,
+        'vd': valueDesktop,
         'pN': paramName,
         'sN': stateName,
         'dN': datasetName,
@@ -353,18 +392,54 @@ class FTextTypeInput {
     if (type == FTextTypeEnum.text) {
       final v = (value?.replaceAll(' ', '').isNotEmpty ?? false)
           ? value?.replaceAll("'", '')
-          : (defaultValue ?? 0);
+          : (defaultValue ?? '0');
+      final vT = valueTablet != null || valueTablet != ''
+          ? (valueTablet?.replaceAll(' ', '').isNotEmpty ?? false)
+              ? valueTablet?.replaceAll("'", '')
+              : (defaultValue ?? '0')
+          : (value?.replaceAll(' ', '').isNotEmpty ?? false)
+              ? value?.replaceAll("'", '')
+              : (defaultValue ?? '0');
+      final vD = valueDesktop != null || valueDesktop != ''
+          ? (valueDesktop?.replaceAll(' ', '').isNotEmpty ?? false)
+              ? valueDesktop?.replaceAll("'", '')
+              : (defaultValue ?? '0')
+          : (value?.replaceAll(' ', '').isNotEmpty ?? false)
+              ? value?.replaceAll("'", '')
+              : (defaultValue ?? '0');
 
       if (resultType == ResultTypeEnum.string) {
-        return "'''$v'''";
+        return """
+getValueForScreenType<String>(
+  context: context,
+  mobile: '''$v''',
+  tablet: '''$vT''',
+  desktop: '''$vD''',
+)""";
       } else if (resultType == ResultTypeEnum.int) {
-        return int.tryParse('$v') != null ? '$v' : (defaultValue ?? '1');
+        return """
+getValueForScreenType<int>(
+  context: context,
+  mobile: ${int.tryParse('$v') != null ? '$v' : (defaultValue ?? '1')},
+  tablet: ${int.tryParse('$vT') != null ? '$vT' : (defaultValue ?? '1')},
+  desktop: ${int.tryParse('$vD') != null ? '$vD' : (defaultValue ?? '1')},
+)""";
       } else if (resultType == ResultTypeEnum.double) {
-        return double.tryParse('$v') != null ? '$v' : (defaultValue ?? '1');
+        return """
+getValueForScreenType<double>(
+  context: context,
+  mobile: ${double.tryParse('$v') != null ? '$v' : (defaultValue ?? '1')},
+  tablet: ${double.tryParse('$vT') != null ? '$vT' : (defaultValue ?? '1')},
+  desktop: ${double.tryParse('$vD') != null ? '$vD' : (defaultValue ?? '1')},
+)""";
       } else if (resultType == ResultTypeEnum.bool) {
-        return '$v'.toLowerCase() == 'true' || '$v'.toLowerCase() == 'false'
-            ? '$v'.toLowerCase()
-            : "'$v' == 'true'".toLowerCase();
+        return """
+getValueForScreenType<double>(
+  context: context,
+  mobile: ${'$v'.toLowerCase() == 'true' || '$v'.toLowerCase() == 'false' ? '$v'.toLowerCase() : "'$v' == 'true'".toLowerCase()},
+  tablet: ${'$vT'.toLowerCase() == 'true' || '$vT'.toLowerCase() == 'false' ? '$vT'.toLowerCase() : "'$vT' == 'true'".toLowerCase()},
+  desktop: ${'$vD'.toLowerCase() == 'true' || '$vD'.toLowerCase() == 'false' ? '$vD'.toLowerCase() : "'$vD' == 'true'".toLowerCase()},
+)""";
       }
     }
     // The value is a param
