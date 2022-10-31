@@ -26,7 +26,8 @@ class GridViewBuilderCodeTemplate {
     final valueMainAxisSpacing =
         (body.attributes[DBKeys.mainAxisSpacing] as FTextTypeInput).toCode(
       loop,
-      resultType: ResultTypeEnum.int,
+      resultType: ResultTypeEnum.double,
+      defaultValue: '1',
     );
     final mainAxisSpacing = double.tryParse(valueMainAxisSpacing) != null &&
             (double.tryParse(valueMainAxisSpacing) ?? 0) > 0.1
@@ -36,7 +37,7 @@ class GridViewBuilderCodeTemplate {
     final valueCrossAxisCount =
         (body.attributes[DBKeys.crossAxisCount] as FTextTypeInput).toCode(
       loop,
-      resultType: ResultTypeEnum.int,
+      resultType: ResultTypeEnum.double,
       defaultValue: '1',
     );
     final crossAxisCount = int.tryParse(valueCrossAxisCount) != null &&
@@ -47,7 +48,8 @@ class GridViewBuilderCodeTemplate {
     final valueCrossAxisSpacing =
         (body.attributes[DBKeys.crossAxisSpacing] as FTextTypeInput).toCode(
       loop,
-      resultType: ResultTypeEnum.int,
+      resultType: ResultTypeEnum.double,
+      defaultValue: '1',
     );
     final crossAxisSpacing = double.tryParse(valueCrossAxisSpacing) != null &&
             (double.tryParse(valueCrossAxisSpacing) ?? 0) > 0.1
@@ -57,7 +59,8 @@ class GridViewBuilderCodeTemplate {
     final valueChildAspectRatio =
         (body.attributes[DBKeys.childAspectRatio] as FTextTypeInput).toCode(
       loop,
-      resultType: ResultTypeEnum.int,
+      resultType: ResultTypeEnum.double,
+      defaultValue: '1',
     );
     final childAspectRatio = double.tryParse(valueChildAspectRatio) != null &&
             (double.tryParse(valueChildAspectRatio) ?? 0) > 0.1

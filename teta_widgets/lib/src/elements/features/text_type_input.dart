@@ -393,20 +393,20 @@ class FTextTypeInput {
       final v = (value?.replaceAll(' ', '').isNotEmpty ?? false)
           ? value?.replaceAll("'", '')
           : (defaultValue ?? '0');
-      final vT = valueTablet != null || valueTablet != ''
+      final vT = valueTablet != null && valueTablet != ''
           ? (valueTablet?.replaceAll(' ', '').isNotEmpty ?? false)
               ? valueTablet?.replaceAll("'", '')
-              : (defaultValue ?? '0')
+              : v ?? (defaultValue ?? '0')
           : (value?.replaceAll(' ', '').isNotEmpty ?? false)
               ? value?.replaceAll("'", '')
-              : (defaultValue ?? '0');
-      final vD = valueDesktop != null || valueDesktop != ''
+              : v ?? (defaultValue ?? '0');
+      final vD = valueDesktop != null && valueDesktop != ''
           ? (valueDesktop?.replaceAll(' ', '').isNotEmpty ?? false)
               ? valueDesktop?.replaceAll("'", '')
-              : (defaultValue ?? '0')
+              : v ?? (defaultValue ?? '0')
           : (value?.replaceAll(' ', '').isNotEmpty ?? false)
               ? value?.replaceAll("'", '')
-              : (defaultValue ?? '0');
+              : v ?? (defaultValue ?? '0');
 
       if (resultType == ResultTypeEnum.string) {
         final type = defaultValue != 'null' && defaultValue != null

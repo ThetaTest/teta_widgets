@@ -20,12 +20,13 @@ class ImageCodeTemplate {
     final value = abstract.toCode(
       loop,
       resultType: ResultTypeEnum.string,
+      defaultValue: '',
     );
     final borderRadius = CS.borderRadius(context, body);
     final code = '''
     ${borderRadius != '' ? 'ClipRRect( ${CS.borderRadius(context, body)} child:' : ''} 
         Image.network(
-          ${abstract.type == FTextTypeEnum.text || abstract.type == FTextTypeEnum.asset ? "r$value" : value},
+          ${abstract.type == FTextTypeEnum.text || abstract.type == FTextTypeEnum.asset ? value : value},
           ${CS.size(context, body, isWidth: true)}
           ${CS.size(context, body, isWidth: false)}
           ${CS.boxFit(context, body)}
