@@ -16,7 +16,6 @@ import 'package:teta_widgets/src/elements/features/action.dart';
 import 'package:teta_widgets/src/elements/features/actions/enums/index.dart';
 import 'package:teta_widgets/src/elements/features/children_ids.dart';
 import 'package:teta_widgets/src/elements/features/fill.dart';
-import 'package:teta_widgets/src/elements/features/margins.dart';
 import 'package:teta_widgets/src/elements/features/sizes.dart';
 import 'package:teta_widgets/src/elements/intrinsic_states/class.dart';
 import 'package:teta_widgets/src/elements/nodes/categories.dart';
@@ -71,8 +70,9 @@ class ScaffoldBody extends NodeBody {
       size: '812',
       unit: SizeUnit.pixel,
     ),
-    DBKeys.padding: FMargins(),
-    DBKeys.fill: FFill(),
+    DBKeys.fill: FFill(
+      paletteStyle: 'Background / Primary',
+    ),
     DBKeys.action: FAction(),
     DBKeys.showAppBar: false,
     DBKeys.showBottomBar: false,
@@ -121,6 +121,15 @@ class ScaffoldBody extends NodeBody {
           value: attributes[DBKeys.flag],
           description:
               'if true, the bottombar is hidden under the keyboard. if false it is put on top',
+        ),
+        FillControlObject(
+          title: 'Background color',
+          key: DBKeys.fill,
+          value: attributes[DBKeys.fill] as FFill,
+          isStyled: true,
+          isImageEnabled: false,
+          isNoneEnabled: false,
+          isOnlySolid: true,
         ),
         /*FlagControlObject(
           title: 'Show AppBar',
@@ -215,29 +224,30 @@ class ScaffoldBody extends NodeBody {
     final page = prj.pages!.firstWhere((final element) => element.id == pageId);
     if (!page.isHardCoded) {
       return pageCodeTemplate(
+        context,
+        node,
+        children ?? [],
+        pageId,
+        toCodeAdditionalClasses(
           context,
           node,
-          children ?? [],
+          child,
+          children,
           pageId,
-          toCodeAdditionalClasses(
-            context,
-            node,
-            child,
-            children,
-            pageId,
-            loop,
-            [],
-          ),
-          toCodeOnInit(
-            context,
-            node,
-            child,
-            children,
-            pageId,
-            loop,
-            [],
-          ),
-          loop);
+          loop,
+          [],
+        ),
+        toCodeOnInit(
+          context,
+          node,
+          child,
+          children,
+          pageId,
+          loop,
+          [],
+        ),
+        loop,
+      );
     } else {
       return codeComponentTemplate(context, node, children ?? [], pageId);
     }

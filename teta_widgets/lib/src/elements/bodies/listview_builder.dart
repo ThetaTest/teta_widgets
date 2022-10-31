@@ -20,8 +20,7 @@ import 'package:teta_widgets/src/elements/nodes/categories.dart';
 import 'package:teta_widgets/src/elements/nodes/children_enum.dart';
 import 'package:teta_widgets/src/elements/nodes/dynamic.dart';
 import 'package:teta_widgets/src/elements/nodes/node_body.dart';
-
-import '../nodes/suggestion.dart';
+import 'package:teta_widgets/src/elements/nodes/suggestion.dart';
 
 const _globalType = NType.listViewBuilder;
 
@@ -73,6 +72,8 @@ class ListViewBuilderBody extends NodeBody {
     DBKeys.isFullWidth: false,
     DBKeys.physic: FPhysic(),
     DBKeys.action: FAction(),
+    DBKeys.value: FTextTypeInput(value: '0'),
+    DBKeys.valueOfCondition: FTextTypeInput(),
   };
 
   @override
@@ -94,6 +95,23 @@ class ListViewBuilderBody extends NodeBody {
           type: ControlType.datasetType,
           key: DBKeys.datasetInput,
           value: attributes[DBKeys.datasetInput],
+          valueType: VariableType.string,
+        ),
+        ControlObject(
+          title: 'Start from',
+          type: ControlType.value,
+          key: DBKeys.value,
+          value: attributes[DBKeys.value],
+          description:
+              'Int value. The first valid index to start to fetch. E.g. to exclude the first element, set index = 0',
+          valueType: VariableType.string,
+        ),
+        ControlObject(
+          title: 'Limit',
+          type: ControlType.value,
+          key: DBKeys.valueOfCondition,
+          value: attributes[DBKeys.valueOfCondition],
+          description: 'How many elements should be fetched inside the list.',
           valueType: VariableType.string,
         ),
         FlagControlObject(
@@ -135,6 +153,8 @@ class ListViewBuilderBody extends NodeBody {
       ${attributes[DBKeys.isFullWidth] as bool}
       ${(attributes[DBKeys.physic] as FPhysic).toJson()}
       ${(attributes[DBKeys.action] as FAction).toJson()}
+      ${(attributes[DBKeys.value] as FTextTypeInput).toJson()}
+      ${(attributes[DBKeys.valueOfCondition] as FTextTypeInput).toJson()}
       ''',
         ),
         node: node,
@@ -145,6 +165,8 @@ class ListViewBuilderBody extends NodeBody {
         isReverse: attributes[DBKeys.isFullWidth] as bool,
         physic: attributes[DBKeys.physic] as FPhysic,
         action: attributes[DBKeys.action] as FAction,
+        startFromIndex: attributes[DBKeys.value] as FTextTypeInput,
+        limit: attributes[DBKeys.valueOfCondition] as FTextTypeInput,
         forPlay: forPlay,
         loop: loop,
         params: params,

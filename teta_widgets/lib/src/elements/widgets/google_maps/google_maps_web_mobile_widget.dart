@@ -5,7 +5,7 @@
 import 'dart:async';
 
 // Flutter imports:
-import 'package:dart_airtable/dart_airtable.dart';
+import 'package:collection/collection.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -13,7 +13,6 @@ import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:teta_core/teta_core.dart';
 import 'package:teta_widgets/src/elements/features/features.dart';
 import 'package:teta_widgets/src/elements/features/google_maps_map_style.dart';
-
 // Project imports:
 import 'package:teta_widgets/src/elements/nodes/node.dart';
 import 'package:teta_widgets/src/elements/widgets/google_maps/google_maps_base_widget.dart';
@@ -230,7 +229,7 @@ class _WGoogleMapsState extends State<WGoogleMaps> {
       googleMapsCubit = variable.googleMapsCubit!;
 
       BlocProvider.of<RefreshCubit>(context).stream.listen(
-        (_) {
+        (final _) {
           googleMapsCubit.onEmitReloadDataState();
         },
       );

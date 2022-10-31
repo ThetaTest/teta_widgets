@@ -16,28 +16,28 @@ class WrapperCodeTemplate {
   ) async {
     final childString = await CS.child(context, child, comma: true);
     final code = '''
-    BlocBuilder<DeviceModeCubit, DeviceInfo>(
-        builder: (context, state) {
-          if (state.identifier.type == DeviceType.desktop) {
-            return Center(
-              child: ConstrainedBox(
-                constraints: const BoxConstraints(maxWidth: 1200),
-                $childString
-              ),
-            );
-          }
-          if (state.identifier.type == DeviceType.tablet) {
-            return Padding(
-              padding: const EdgeInsets.symmetric(horizontal: 100),
+    Builder(
+      builder: (context) {
+        if (MediaQuery.of(context).size.width > 1200) {
+          return Center(
+            child: ConstrainedBox(
+              constraints: const BoxConstraints(maxWidth: 1200),
               $childString
-            );
-          }
+            ),
+          );
+        }
+        if (MediaQuery.of(context).size.width > 600) {
           return Padding(
-            padding: const EdgeInsets.symmetric(horizontal: 16),
+            padding: const EdgeInsets.symmetric(horizontal: 100),
             $childString
           );
-        },
-      )
+        }
+        return Padding(
+          padding: const EdgeInsets.symmetric(horizontal: 16),
+          $childString
+        );
+      },
+    )
   ''';
     final res = FormatterTest.format(code);
     if (res) {

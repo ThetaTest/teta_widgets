@@ -21,6 +21,7 @@ class CmsCustomQueryCodeTemplate {
     final query = (node.body.attributes[DBKeys.value] as FTextTypeInput).toCode(
       loop,
       resultType: ResultTypeEnum.string,
+      defaultValue: '',
     );
 
     var child = 'const SizedBox()';

@@ -10,51 +10,19 @@ import 'package:teta_widgets/src/elements/nodes/enum.dart';
 import 'package:teta_widgets/src/elements/nodes/node.dart';
 import 'package:teta_widgets/src/elements/nodes/node_body.dart';
 
-/// Generates the code for CMS count widget
-class CmsCountCodeTemplate {
+/// Generates the code for CMS Fetch widget
+class AirtableFetchCodeTemplate {
   static Future<String> toCode(
     final BuildContext context,
     final NDynamic node,
     final List<CNode> children,
     final int? loop,
   ) async {
-    var collectionId =
-        (node.body.attributes[DBKeys.cmsCollection] as FTextTypeInput).toCode(
+    final recordName =
+        (node.body.attributes[DBKeys.value] as FTextTypeInput).toCode(
       loop,
       resultType: ResultTypeEnum.string,
-      defaultValue: '',
     );
-    if (!collectionId.contains("'")) {
-      collectionId = "'$collectionId'";
-    }
-    final limit =
-        (node.body.attributes[DBKeys.cmsLimit] as FTextTypeInput).toCode(
-      loop,
-      resultType: ResultTypeEnum.int,
-      defaultValue: '20',
-    );
-    final page =
-        (node.body.attributes[DBKeys.cmsPage] as FTextTypeInput).toCode(
-      loop,
-      resultType: ResultTypeEnum.int,
-      defaultValue: '0',
-    );
-    final keyName =
-        (node.body.attributes[DBKeys.cmsLikeKey] as FTextTypeInput).toCode(
-      loop,
-      resultType: ResultTypeEnum.string,
-      defaultValue: '',
-    );
-    final keyValue =
-        (node.body.attributes[DBKeys.cmsLikeValue] as FTextTypeInput).toCode(
-      loop,
-      resultType: ResultTypeEnum.string,
-      defaultValue: '',
-    );
-    final filter =
-        keyName.replaceAll("'", '') != '' && keyValue.replaceAll("'", '') != ''
-            ? 'Filter($keyName, $keyValue)'
-            : '';
 
     var child = 'const SizedBox()';
     if (children.isNotEmpty) {
@@ -70,15 +38,8 @@ class CmsCountCodeTemplate {
   ''';
 
     final code = '''
-  TetaFutureBuilder(
-    future: TetaCMS.instance.client.getCollectionCount(
-      $collectionId,
-      filters: [
-        $filter
-      ], 
-      ${limit.replaceAll("'", "").isNotEmpty ? 'limit: ${limit..replaceAll("'", "")},' : ''}
-      ${page.replaceAll("'", "").isNotEmpty ? 'page: ${page..replaceAll("'", "")},' : ''}
-    ),
+  TetaFutureBuilder<List<AirtableRecord>>(
+    future: BlocProvider.of<AirtableCubit>(context).getAllRecords(recordName)
     builder: (context, snapshot) {
       if (!snapshot.hasData) {
         return $loader;
@@ -97,11 +58,11 @@ class CmsCountCodeTemplate {
   }
 
   static void testCode() {
-    group('CmsCount toCode test', () {
+    group('CmsFetch toCode test', () {
       test(
-        'CmsCount: default',
+        'CmsFetch: default',
         () {
-          final body = NodeBody.get(NType.cmsCount);
+          final body = NodeBody.get(NType.cmsFetch);
 
           var collectionId =
               (body.attributes[DBKeys.cmsCollection] as FTextTypeInput).toCode(
@@ -121,7 +82,7 @@ class CmsCountCodeTemplate {
               (body.attributes[DBKeys.cmsPage] as FTextTypeInput).toCode(
             0,
             resultType: ResultTypeEnum.int,
-            defaultValue: '1',
+            defaultValue: '0',
           );
           var keyName =
               (body.attributes[DBKeys.cmsLikeKey] as FTextTypeInput).toCode(
@@ -153,14 +114,14 @@ class CmsCountCodeTemplate {
 
           expect(
             FormatterTest.format('''
-             TetaFutureBuilder(
-               future: TetaCMS.instance.client.getCollectionCount(
+            TetaFutureBuilder(
+    future: TetaCMS.instance.client.getCollection(
       $collectionId,
       filters: [
         $filter
       ], 
-      ${limit.replaceAll("'", "").isNotEmpty ? 'limit: ${limit..replaceAll("'", "")},' : ''}
-      ${page.replaceAll("'", "").isNotEmpty ? 'page: ${page..replaceAll("'", "")},' : ''}
+      ${limit.isNotEmpty ? 'limit: $limit,' : ''}
+      ${page.isNotEmpty ? 'page: $page,' : ''}
     ),
     builder: (context, snapshot) {
       if (!snapshot.hasData) {

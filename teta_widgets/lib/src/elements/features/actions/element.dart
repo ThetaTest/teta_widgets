@@ -6,14 +6,12 @@ import 'dart:async';
 // Package imports:
 import 'package:enum_to_string/enum_to_string.dart';
 import 'package:equatable/equatable.dart';
-
 // Flutter imports:
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:teta_cms/teta_cms.dart';
 import 'package:teta_core/src/services/packages_service.dart';
 import 'package:teta_core/teta_core.dart';
-
 // Project imports:
 import 'package:teta_widgets/src/elements/actions/audio_player/loop_all.dart';
 import 'package:teta_widgets/src/elements/actions/audio_player/loop_off.dart';
@@ -46,6 +44,7 @@ import 'package:teta_widgets/src/elements/actions/navigation/open_date_picker.da
 import 'package:teta_widgets/src/elements/actions/navigation/open_drawer.dart';
 import 'package:teta_widgets/src/elements/actions/navigation/open_page.dart';
 import 'package:teta_widgets/src/elements/actions/navigation/open_snack.dart';
+import 'package:teta_widgets/src/elements/actions/navigation/share.dart';
 import 'package:teta_widgets/src/elements/actions/qonversion/buy.dart';
 import 'package:teta_widgets/src/elements/actions/qonversion/restore.dart';
 import 'package:teta_widgets/src/elements/actions/revenue_cat/buy.dart';
@@ -58,11 +57,11 @@ import 'package:teta_widgets/src/elements/actions/state/increment.dart';
 import 'package:teta_widgets/src/elements/actions/state/password_validator.dart';
 import 'package:teta_widgets/src/elements/actions/state/phone_validator.dart';
 import 'package:teta_widgets/src/elements/actions/state/website_validator.dart';
-import 'package:teta_widgets/src/elements/actions/stripe/buy.dart';
 import 'package:teta_widgets/src/elements/actions/stripe/stripe_add_list_item_to_cart.dart';
 import 'package:teta_widgets/src/elements/actions/stripe/stripe_cart_buy_all.dart';
 import 'package:teta_widgets/src/elements/actions/stripe/stripe_cart_remove_list_item_from_cart.dart';
 import 'package:teta_widgets/src/elements/actions/stripe/stripe_remove_list_item_to_cart.dart';
+import 'package:teta_widgets/src/elements/actions/stripe/stripe_show_receipt.dart';
 import 'package:teta_widgets/src/elements/actions/supabase/delete.dart';
 import 'package:teta_widgets/src/elements/actions/supabase/insert.dart';
 import 'package:teta_widgets/src/elements/actions/supabase/signin_w_apple.dart';
@@ -233,6 +232,12 @@ class FActionElement extends Equatable {
                 doc['stripeBillingInfoEmail'] as Map<String, dynamic>,
               )
             : FTextTypeInput());
+    stripePaymentIntentId = stripePaymentIntentId ??
+        (doc['stripePaymentIntentId'] != null
+            ? FTextTypeInput.fromJson(
+                doc['stripePaymentIntentId'] as Map<String, dynamic>,
+              )
+            : FTextTypeInput());
     stripeBillingInfoPhone = stripeBillingInfoPhone ??
         (doc['stripeBillingInfoPhone'] != null
             ? FTextTypeInput.fromJson(
@@ -396,6 +401,8 @@ class FActionElement extends Equatable {
   FTextTypeInput? stripeBillingInfoPostalCode;
   FTextTypeInput? stripeBillingInfoCountry;
   FTextTypeInput? stripeShippingId;
+
+  FTextTypeInput? stripePaymentIntentId;
 
   //lat, lng, zoom
   FTextTypeInput? googleMapsLat;
@@ -710,6 +717,9 @@ class FActionElement extends Equatable {
         //email, phone, city, state, line1, postalCode, country
         'stripeBillingInfoEmail': stripeBillingInfoEmail != null
             ? stripeBillingInfoEmail!.toJson()
+            : null,
+        'stripePaymentIntentId': stripePaymentIntentId != null
+            ? stripePaymentIntentId!.toJson()
             : null,
         'stripeBillingInfoPhone': stripeBillingInfoPhone != null
             ? stripeBillingInfoPhone!.toJson()
@@ -1120,9 +1130,9 @@ class FActionElement extends Equatable {
         break;
       case ActionType.stripe:
         switch (actionStripe) {
-          case ActionStripe.buy:
+          case ActionStripe.showReceipt:
             await actionS(
-              () => FActionStripeBuy.action(
+              () => FActionStripeShowReceipt.action(
                 context,
                 states,
                 stateName,
@@ -1374,6 +1384,23 @@ class FActionElement extends Equatable {
                 .insertPackages(FActionNavigationLaunchURL.packages);
             await actionS(
               () => FActionNavigationLaunchURL.action(
+                context: context,
+                params: params,
+                states: states,
+                datasets: dataset,
+                loop: loop ?? 0,
+                value: valueTextTypeInput ?? FTextTypeInput(),
+              ),
+              context: context,
+              params: params,
+              states: states,
+              dataset: dataset,
+              loop: loop,
+            );
+            break;
+          case ActionNavigation.share:
+            await actionS(
+              () => FActionNavigationShare.action(
                 context: context,
                 params: params,
                 states: states,
@@ -2213,9 +2240,18 @@ class FActionElement extends Equatable {
         break;
       case ActionType.stripe:
         switch (actionStripe) {
-          case ActionStripe.buy:
+          case ActionStripe.showReceipt:
             return codeS(
-              FActionStripeBuy.toCode(context, stateName, body),
+              FActionStripeShowReceipt.toCode(
+                context,
+                stateName,
+                body,
+                paymentIntentId: stripePaymentIntentId?.toCode(
+                      null,
+                      resultType: ResultTypeEnum.string,
+                    ) ??
+                    '',
+              ),
               context,
             );
           case ActionStripe.buyCartItems:
@@ -2400,17 +2436,14 @@ class FActionElement extends Equatable {
               ),
               context,
             );
-          case ActionNavigation.launchURL:
-            PackagesService.instance
-                .insertPackages(FActionNavigationLaunchURL.packages);
+          case ActionNavigation.share:
             return codeS(
-              FActionNavigationLaunchURL.toCode(
+              FActionNavigationShare.toCode(
                 valueTextTypeInput ?? FTextTypeInput(),
                 loop,
               ),
               context,
             );
-
           case ActionNavigation.openBottomSheet:
             return codeS(
               FActionNavigationOpenBottomSheet.toCode(
@@ -2441,6 +2474,8 @@ class FActionElement extends Equatable {
               context,
             );
           case null:
+            return '';
+          default:
             return '';
         }
       case ActionType.supabaseAuth:

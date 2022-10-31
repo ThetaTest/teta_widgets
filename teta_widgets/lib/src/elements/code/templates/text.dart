@@ -26,10 +26,11 @@ class TextCodeTemplate {
         (body.attributes[DBKeys.maxLines] as FTextTypeInput).toCode(
       loop,
       resultType: ResultTypeEnum.int,
+      defaultValue: '1',
     );
     final code = '''
     Text(
-      ${abstract.type == FTextTypeEnum.text ? "r$value" : value},
+      $value,
       ${CS.textStyle(context, body, DBKeys.textStyle)}
       ${maxLines != '0' ? 'maxLines: $maxLines' : ''}
     )

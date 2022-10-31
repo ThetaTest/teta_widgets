@@ -5,6 +5,7 @@
 import 'dart:async';
 
 // Flutter imports:
+import 'package:device_frame/device_frame.dart';
 import 'package:flutter/material.dart';
 // Package imports:
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -40,7 +41,7 @@ class FontSizeState extends State<FontSizeControl> {
   @override
   void initState() {
     nodeId = widget.node.nid;
-    controller.text = '${widget.textStyle.fontSize?.get()}';
+    controller.text = '${widget.textStyle.fontSize?.get(context)}';
     super.initState();
   }
 
@@ -66,78 +67,102 @@ class FontSizeState extends State<FontSizeControl> {
 
   @override
   Widget build(final BuildContext context) {
-    return BlocListener<FocusBloc, List<CNode>>(
+    return BlocListener<DeviceModeCubit, DeviceInfo>(
       listener: (final context, final state) {
-        if (state.isNotEmpty) {
-          if (state.first.nid != nodeId) {
-            setState(() {
-              isUpdated = true;
-              controller.text = '${widget.textStyle.fontSize!.get()}';
-            });
-            nodeId = state.first.nid;
-          }
-        }
+        controller.text = '${widget.textStyle.fontSize!.get(context)}';
       },
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
-          Row(
-            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+      child: BlocBuilder<DeviceModeCubit, DeviceInfo>(
+        builder: (final context, final device) =>
+            BlocListener<FocusBloc, List<CNode>>(
+          listener: (final context, final state) {
+            if (state.isNotEmpty) {
+              if (state.first.nid != nodeId) {
+                setState(() {
+                  isUpdated = true;
+                  controller.text =
+                      '${widget.textStyle.fontSize!.get(context)}';
+                });
+                nodeId = state.first.nid;
+              }
+            }
+          },
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              const THeadline3(
-                'Font Size',
-              ),
               Row(
-                mainAxisSize: MainAxisSize.min,
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
-                  GestureDetector(
-                    onTap: () {
-                      final old = widget.textStyle;
-                      widget.textStyle.fontSize!.unit = SizeUnit.pixel;
-                      onChangeHandler(widget.textStyle, old);
-                    },
-                    child: unitIcon(
-                      unit: SizeUnit.pixel,
-                      unitFromNode: widget.textStyle.fontSize!.unit,
-                    ),
+                  Row(
+                    children: [
+                      Image.asset(
+                        device.identifier.type == DeviceType.phone
+                            ? Assets.icons.devices.smartphone.path
+                            : device.identifier.type == DeviceType.tablet
+                                ? Assets.icons.devices.tablet.path
+                                : Assets.icons.devices.monitor.path,
+                        width: 24,
+                        height: 24,
+                      ),
+                      const Gap(Grid.small),
+                      const THeadline3(
+                        'Font Size',
+                      ),
+                    ],
                   ),
-                  GestureDetector(
-                    onTap: () {
-                      final old = widget.textStyle;
-                      widget.textStyle.fontSize!.unit = SizeUnit.width;
-                      onChangeHandler(widget.textStyle, old);
-                    },
-                    child: unitIcon(
-                      unit: SizeUnit.width,
-                      unitFromNode: widget.textStyle.fontSize!.unit,
-                    ),
-                  ),
-                  GestureDetector(
-                    onTap: () {
-                      final old = widget.textStyle;
-                      widget.textStyle.fontSize!.unit = SizeUnit.height;
-                      onChangeHandler(widget.textStyle, old);
-                    },
-                    child: unitIcon(
-                      unit: SizeUnit.height,
-                      unitFromNode: widget.textStyle.fontSize!.unit,
-                    ),
+                  Row(
+                    mainAxisSize: MainAxisSize.min,
+                    children: [
+                      GestureDetector(
+                        onTap: () {
+                          final old = widget.textStyle;
+                          widget.textStyle.fontSize!.unit = SizeUnit.pixel;
+                          onChangeHandler(widget.textStyle, old);
+                        },
+                        child: unitIcon(
+                          unit: SizeUnit.pixel,
+                          unitFromNode: widget.textStyle.fontSize!.unit,
+                        ),
+                      ),
+                      GestureDetector(
+                        onTap: () {
+                          final old = widget.textStyle;
+                          widget.textStyle.fontSize!.unit = SizeUnit.width;
+                          onChangeHandler(widget.textStyle, old);
+                        },
+                        child: unitIcon(
+                          unit: SizeUnit.width,
+                          unitFromNode: widget.textStyle.fontSize!.unit,
+                        ),
+                      ),
+                      GestureDetector(
+                        onTap: () {
+                          final old = widget.textStyle;
+                          widget.textStyle.fontSize!.unit = SizeUnit.height;
+                          onChangeHandler(widget.textStyle, old);
+                        },
+                        child: unitIcon(
+                          unit: SizeUnit.height,
+                          unitFromNode: widget.textStyle.fontSize!.unit,
+                        ),
+                      ),
+                    ],
                   ),
                 ],
               ),
+              const Gap(Grid.small),
+              CTextField(
+                controller: controller,
+                text: '${widget.textStyle.fontSize?.get(context)}',
+                callBack: (final value) {
+                  final old = widget.textStyle;
+                  widget.textStyle.fontSize!
+                      .update(double.parse(value), context);
+                  onChangeHandler(widget.textStyle, old);
+                },
+              ),
             ],
           ),
-          const Gap(Grid.small),
-          CTextField(
-            controller: controller,
-            text: '${widget.textStyle.fontSize?.get()}',
-            callBack: (final value) {
-              final old = widget.textStyle;
-              widget.textStyle.fontSize!.size = double.parse(value);
-              onChangeHandler(widget.textStyle, old);
-            },
-          ),
-        ],
+        ),
       ),
     );
   }

@@ -225,7 +225,8 @@ class TextStylesControlState extends State<TextStylesControl> {
                                         entry.name!,
                                         style: GoogleFonts.getFont(
                                           entry.fontFamily!,
-                                          fontSize: entry.fontSize!.get(),
+                                          fontSize:
+                                              entry.fontSize!.get(context),
                                           fontWeight: entry.fontWeight!.get,
                                           color: Colors.white,
                                         ),

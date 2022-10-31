@@ -16,6 +16,8 @@ class WGridViewBuilder extends StatefulWidget {
     required this.node,
     required this.forPlay,
     required this.value,
+    required this.startFromIndex,
+    required this.limit,
     required this.crossAxisCount,
     required this.mainAxisSpacing,
     required this.crossAxisSpacing,
@@ -38,6 +40,8 @@ class WGridViewBuilder extends StatefulWidget {
   final bool isVertical;
   final bool primary;
   final bool shrinkWrap;
+  final FTextTypeInput startFromIndex;
+  final FTextTypeInput limit;
   final FTextTypeInput crossAxisCount;
   final FTextTypeInput mainAxisSpacing;
   final FTextTypeInput crossAxisSpacing;
@@ -106,6 +110,41 @@ class _WGridViewState extends State<WGridViewBuilder> {
           )
         : -1;
     final db = index != -1 ? widget.dataset[index] : DatasetObject.empty();
+    var startFromIndex = int.tryParse(
+          widget.startFromIndex.get(
+            widget.params,
+            widget.states,
+            widget.dataset,
+            widget.forPlay,
+            widget.loop,
+            context,
+          ),
+        ) ??
+        0;
+    if (startFromIndex < 0) {
+      startFromIndex = 0;
+    }
+    if (startFromIndex >= db.getMap.length) {
+      startFromIndex = 0;
+    }
+    var limit = int.tryParse(
+          widget.limit.get(
+            widget.params,
+            widget.states,
+            widget.dataset,
+            widget.forPlay,
+            widget.loop,
+            context,
+          ),
+        ) ??
+        db.getMap.length;
+    Logger.printWarning('Listview.builder limit: $limit');
+    if (limit <= 0) {
+      limit = db.getMap.length;
+    }
+    if (limit > db.getMap.length) {
+      limit = db.getMap.length;
+    }
     return GestureBuilderBase.get(
       context: context,
       node: widget.node,
@@ -136,7 +175,7 @@ class _WGridViewState extends State<WGridViewBuilder> {
               ? double.parse(childAspectRatioString)
               : 1,
         ),
-        itemCount: db.getMap.length,
+        itemCount: db.getMap.sublist(startFromIndex, limit).length,
         itemBuilder: (final context, final index) => widget.child != null
             ? widget.child!.toWidget(
                 forPlay: widget.forPlay,

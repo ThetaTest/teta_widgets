@@ -6,7 +6,6 @@
 // Package imports:
 import 'package:collection/collection.dart';
 import 'package:expandable/expandable.dart';
-
 // Flutter imports:
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
@@ -18,7 +17,6 @@ import 'package:teta_core/src/design_system/textfield/minitextfield.dart';
 import 'package:teta_core/teta_core.dart';
 import 'package:teta_repositories/src/node_repository.dart';
 import 'package:teta_widgets/src/elements/controls/atoms/actions/validator.dart';
-
 // Project imports:
 import 'package:teta_widgets/src/elements/controls/atoms/flag.dart';
 import 'package:teta_widgets/src/elements/controls/atoms/qonversion/buy.dart';
@@ -1449,6 +1447,32 @@ class ActionElementControlState extends State<ActionElementControl> {
                           ),
                         ),
                       ),
+                    ],
+                    if (ActionStripe.showReceipt ==
+                        widget.element.actionStripe) ...[
+                      Padding(
+                        padding: const EdgeInsets.only(top: 8),
+                        child: SizedBox(
+                          width: double.maxFinite,
+                          child: descriptionControlWidget(
+                            description: 'Payment Intent Id',
+                            control: TextControl(
+                              valueType: VariableType.string,
+                              node: widget.node,
+                              value: widget.element.stripePaymentIntentId ??
+                                  FTextTypeInput(),
+                              page: widget.page,
+                              title: 'Payment Intent Id',
+                              callBack: (final value, final old) {
+                                final old = widget.element;
+                                widget.element.stripePaymentIntentId = value;
+                                widget.element.valueOfCondition = value;
+                                widget.callBack(widget.element, old);
+                              },
+                            ),
+                          ),
+                        ),
+                      ),
                     ]
                   ],
                 ),
@@ -1538,6 +1562,9 @@ class ActionElementControlState extends State<ActionElementControl> {
                   (widget.element.actionType == ActionType.navigation &&
                       widget.element.actionNavigation ==
                           ActionNavigation.launchURL) ||
+                  (widget.element.actionType == ActionType.navigation &&
+                      widget.element.actionNavigation ==
+                          ActionNavigation.share) ||
                   (widget.element.actionType == ActionType.webview &&
                       widget.element.actionWebView == ActionWebView.navigateTo))
                 Padding(

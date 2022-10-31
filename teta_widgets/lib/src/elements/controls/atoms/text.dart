@@ -3,6 +3,7 @@
 
 // Package imports:
 import 'package:collection/collection.dart';
+import 'package:device_frame/device_frame.dart';
 import 'package:enum_to_string/enum_to_string.dart';
 // Flutter imports:
 import 'package:flutter/material.dart';
@@ -63,7 +64,7 @@ class PaddingsState extends State<TextControl> {
     keyController = TextEditingController();
     nodeId = widget.node.nid;
     try {
-      text = widget.value.value ?? '';
+      text = widget.value.getValue(context) ?? '';
       controller.text = text!;
       typeOfInput = widget.value.type!;
       if (widget.value.datasetName != null) {
@@ -82,486 +83,513 @@ class PaddingsState extends State<TextControl> {
     );
     final dataset =
         index != -1 ? widget.page.datasets[index] : DatasetObject.empty();
-    return BlocBuilder<FocusBloc, List<CNode>>(
-      builder: (final context, final state) {
-        if (state.isNotEmpty) {
-          if (state.first.nid != nodeId) {
-            if (mounted) {
-              nodeId = state.first.nid;
-              controller.text = widget.value.value ?? '';
+    return BlocListener<DeviceModeCubit, DeviceInfo>(
+      listener: (final context, final device) {
+        controller.text = widget.value.getValue(context) ?? '';
+      },
+      child: BlocBuilder<DeviceModeCubit, DeviceInfo>(
+        builder: (final context, final device) =>
+            BlocBuilder<FocusBloc, List<CNode>>(
+          builder: (final context, final state) {
+            if (state.isNotEmpty) {
+              if (state.first.nid != nodeId) {
+                if (mounted) {
+                  nodeId = state.first.nid;
+                  controller.text = widget.value.getValue(context) ?? '';
+                }
+              }
             }
-          }
-        }
-        return Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            Row(
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            return Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                if (!widget.isSubControl)
-                  THeadline3(
-                    widget.title,
-                  ),
-                if (widget.isSubControl)
-                  BounceSmall(
-                    onTap: () {
-                      if (widget.remove != null) {
-                        // ignore: prefer_null_aware_method_calls
-                        widget.remove!();
-                      }
-                    },
-                    child: HoverWidget(
-                      hoverChild: Container(
-                        padding: const EdgeInsets.all(4),
-                        decoration: BoxDecoration(
-                          border: Border.all(
-                            color: Colors.white,
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: [
+                    Row(
+                      children: [
+                        if (widget.value.type == FTextTypeEnum.text)
+                          Image.asset(
+                            device.identifier.type == DeviceType.phone
+                                ? Assets.icons.devices.smartphone.path
+                                : device.identifier.type == DeviceType.tablet
+                                    ? Assets.icons.devices.tablet.path
+                                    : Assets.icons.devices.monitor.path,
+                            width: 24,
+                            height: 24,
                           ),
-                        ),
-                        child: const Icon(
-                          FeatherIcons.minus,
-                          size: 24,
-                          color: Colors.white,
-                        ),
-                      ),
-                      onHover: (final e) {},
-                      child: Container(
-                        padding: const EdgeInsets.all(4),
-                        decoration: BoxDecoration(
-                          border: Border.all(
-                            color: Colors.transparent,
+                        if (widget.value.type == FTextTypeEnum.text)
+                          const Gap(Grid.small),
+                        if (!widget.isSubControl)
+                          THeadline3(
+                            widget.title,
                           ),
-                        ),
-                        child: const Icon(
-                          FeatherIcons.minus,
-                          size: 24,
-                          color: Colors.white,
-                        ),
-                      ),
+                      ],
                     ),
-                  ),
-                CDropdownForType(
-                  value: widget.value.type == FTextTypeEnum.dataset
-                      ? 'dataset'
-                      : widget.value.type == FTextTypeEnum.state
-                          ? 'state'
-                          : widget.value.type == FTextTypeEnum.param
-                              ? 'param'
-                              : widget.value.type == FTextTypeEnum.combined
-                                  ? 'combined'
-                                  : widget.value.type == FTextTypeEnum.languages
-                                      ? 'languages'
-                                      : 'text',
-                  items: [
-                    'text',
-                    'param',
-                    'state',
-                    'dataset',
-                    if (!widget.isSubControl) 'combined',
-                    'languages',
+                    if (widget.isSubControl)
+                      BounceSmall(
+                        onTap: () {
+                          if (widget.remove != null) {
+                            // ignore: prefer_null_aware_method_calls
+                            widget.remove!();
+                          }
+                        },
+                        child: HoverWidget(
+                          hoverChild: Container(
+                            padding: const EdgeInsets.all(4),
+                            decoration: BoxDecoration(
+                              border: Border.all(
+                                color: Colors.white,
+                              ),
+                            ),
+                            child: const Icon(
+                              FeatherIcons.minus,
+                              size: 24,
+                              color: Colors.white,
+                            ),
+                          ),
+                          onHover: (final e) {},
+                          child: Container(
+                            padding: const EdgeInsets.all(4),
+                            decoration: BoxDecoration(
+                              border: Border.all(
+                                color: Colors.transparent,
+                              ),
+                            ),
+                            child: const Icon(
+                              FeatherIcons.minus,
+                              size: 24,
+                              color: Colors.white,
+                            ),
+                          ),
+                        ),
+                      ),
+                    CDropdownForType(
+                      value: widget.value.type == FTextTypeEnum.dataset
+                          ? 'dataset'
+                          : widget.value.type == FTextTypeEnum.state
+                              ? 'state'
+                              : widget.value.type == FTextTypeEnum.param
+                                  ? 'param'
+                                  : widget.value.type == FTextTypeEnum.combined
+                                      ? 'combined'
+                                      : widget.value.type ==
+                                              FTextTypeEnum.languages
+                                          ? 'languages'
+                                          : 'text',
+                      items: [
+                        'text',
+                        'param',
+                        'state',
+                        'dataset',
+                        if (!widget.isSubControl) 'combined',
+                        'languages',
+                      ],
+                      onChange: (final value) {
+                        var typeOfInput = FTextTypeEnum.text;
+                        if (value == 'text') {
+                          typeOfInput = FTextTypeEnum.text;
+                        }
+                        if (value == 'param') {
+                          typeOfInput = FTextTypeEnum.param;
+                        }
+                        if (value == 'state') {
+                          typeOfInput = FTextTypeEnum.state;
+                        }
+                        if (value == 'dataset') {
+                          typeOfInput = FTextTypeEnum.dataset;
+                        }
+                        if (value == 'combined') {
+                          typeOfInput = FTextTypeEnum.combined;
+                        }
+                        if (value == 'languages') {
+                          typeOfInput = FTextTypeEnum.languages;
+                        }
+                        final old = widget.value;
+                        widget.value.type = typeOfInput;
+                        widget.callBack(widget.value, old);
+                      },
+                    ),
                   ],
-                  onChange: (final value) {
-                    var typeOfInput = FTextTypeEnum.text;
-                    if (value == 'text') {
-                      typeOfInput = FTextTypeEnum.text;
-                    }
-                    if (value == 'param') {
-                      typeOfInput = FTextTypeEnum.param;
-                    }
-                    if (value == 'state') {
-                      typeOfInput = FTextTypeEnum.state;
-                    }
-                    if (value == 'dataset') {
-                      typeOfInput = FTextTypeEnum.dataset;
-                    }
-                    if (value == 'combined') {
-                      typeOfInput = FTextTypeEnum.combined;
-                    }
-                    if (value == 'languages') {
-                      typeOfInput = FTextTypeEnum.languages;
-                    }
-                    final old = widget.value;
-                    widget.value.type = typeOfInput;
-                    widget.callBack(widget.value, old);
-                  },
                 ),
-              ],
-            ),
-            if (widget.value.type == FTextTypeEnum.text)
-              Column(
-                children: [
-                  CMultiLinesTextField(
-                    //text: text,
-                    controller: controller,
-                    callBack: (final value) {
-                      setState(() {
-                        isChanged = true;
-                      });
-                    },
-                    onSubmitted: (final value) {
-                      value.replaceAll(r'\', r'\\');
-                      final old = widget.value;
-                      widget.value.value = value;
-                      widget.callBack(widget.value, old);
-                      setState(() {
-                        isChanged = false;
-                      });
-                    },
+                if (widget.value.type == FTextTypeEnum.text)
+                  Column(
+                    children: [
+                      CMultiLinesTextField(
+                        //text: text,
+                        controller: controller,
+                        callBack: (final value) {
+                          setState(() {
+                            isChanged = true;
+                          });
+                        },
+                        onSubmitted: (final value) {
+                          value.replaceAll(r'\', r'\\');
+                          final old = widget.value;
+                          widget.value.updateValue(value, context);
+                          widget.callBack(widget.value, old);
+                          setState(() {
+                            isChanged = false;
+                          });
+                        },
+                      ),
+                      const Gap(Grid.small),
+                      CButton(
+                        label: 'Confirm',
+                        isPrimary: isChanged,
+                        callback: () {
+                          final old = widget.value;
+                          widget.value.updateValue(
+                            controller.text.replaceAll(r'\', r'\\'),
+                            context,
+                          );
+                          widget.callBack(widget.value, old);
+                          setState(() {
+                            isChanged = false;
+                          });
+                        },
+                      ),
+                    ],
                   ),
-                  const Gap(Grid.small),
-                  CButton(
-                    label: 'Confirm',
-                    isPrimary: isChanged,
-                    callback: () {
-                      final old = widget.value;
-                      widget.value.value =
-                          controller.text.replaceAll(r'\', r'\\');
-
-                      widget.callBack(widget.value, old);
-                      setState(() {
-                        isChanged = false;
-                      });
-                    },
-                  ),
-                ],
-              ),
-            if (widget.value.type == FTextTypeEnum.param)
-              Column(
-                children: [
-                  CDropdown(
-                    value: widget.page.params
+                if (widget.value.type == FTextTypeEnum.param)
+                  Column(
+                    children: [
+                      CDropdown(
+                        value: widget.page.params
+                                .map((final e) => e.name)
+                                .contains(widget.value.paramName)
+                            ? widget.value.paramName
+                            : null,
+                        items: widget.page.params
+                            .where(
+                              (final element) =>
+                                  widget.valueType != VariableType.dynamic
+                                      ? element.type == widget.valueType
+                                      : true,
+                            )
                             .map((final e) => e.name)
-                            .contains(widget.value.paramName)
-                        ? widget.value.paramName
-                        : null,
-                    items: widget.page.params
-                        .where(
-                          (final element) =>
-                              widget.valueType != VariableType.dynamic
-                                  ? element.type == widget.valueType
-                                  : true,
-                        )
-                        .map((final e) => e.name)
-                        .toList(),
-                    onChange: (final newValue) {
-                      final old = widget.value;
-                      widget.value.paramName = newValue;
-                      widget.callBack(widget.value, old);
-                    },
+                            .toList(),
+                        onChange: (final newValue) {
+                          final old = widget.value;
+                          widget.value.paramName = newValue;
+                          widget.callBack(widget.value, old);
+                        },
+                      ),
+                      if ((widget.page.params
+                                  .firstWhereOrNull(
+                                    (final element) =>
+                                        element.name == widget.value.paramName,
+                                  )
+                                  ?.type ??
+                              VariableType.int) ==
+                          VariableType.json)
+                        CTextField(
+                          controller: keyController,
+                          title: 'Map Key',
+                          callBack: (final key) {
+                            final old = widget.value;
+                            widget.value.mapKey = key;
+                            widget.callBack(widget.value, old);
+                          },
+                        ),
+                    ],
                   ),
-                  if ((widget.page.params
+                if (widget.value.type == FTextTypeEnum.state)
+                  Column(
+                    children: [
+                      CDropdown(
+                        value: widget.page.states
+                                .map((final e) => e.name)
+                                .contains(widget.value.stateName)
+                            ? widget.value.stateName
+                            : null,
+                        items: widget.page.states
+                            .where(
+                              (final element) =>
+                                  widget.valueType != VariableType.dynamic
+                                      ? element.type == widget.valueType
+                                      : true,
+                            )
+                            .map((final e) => e.name)
+                            .toList(),
+                        onChange: (final newValue) {
+                          final old = widget.value;
+                          widget.value.stateName = newValue;
+                          widget.callBack(widget.value, old);
+                        },
+                      ),
+                      if (widget.page.states
                               .firstWhereOrNull(
                                 (final element) =>
-                                    element.name == widget.value.paramName,
+                                    element.name == widget.value.stateName,
                               )
-                              ?.type ??
-                          VariableType.int) ==
-                      VariableType.json)
-                    CTextField(
-                      controller: keyController,
-                      title: 'Map Key',
-                      callBack: (final key) {
-                        final old = widget.value;
-                        widget.value.mapKey = key;
-                        widget.callBack(widget.value, old);
-                      },
-                    ),
-                ],
-              ),
-            if (widget.value.type == FTextTypeEnum.state)
-              Column(
-                children: [
+                              ?.type ==
+                          VariableType.json)
+                        CMiniTextField(
+                          text: widget.value.mapKey,
+                          title: 'Map Key',
+                          callBack: (final key) {
+                            final old = widget.value;
+                            widget.value.mapKey = key;
+                            widget.callBack(widget.value, old);
+                          },
+                        ),
+                    ],
+                  ),
+                if (widget.value.type == FTextTypeEnum.languages)
                   CDropdown(
-                    value: widget.page.states
-                            .map((final e) => e.name)
-                            .contains(widget.value.stateName)
-                        ? widget.value.stateName
+                    value: widget.value.keyTranslator,
+                    items: ((BlocProvider.of<FocusProjectBloc>(context).state
+                                    as ProjectLoaded)
+                                .prj
+                                .config
+                                ?.appLanguage
+                                ?.terms ??
+                            <String, dynamic>{})
+                        .entries
+                        .map((final e) => e.key)
+                        .toList(),
+                    onChange: (final value) {
+                      final old = widget.value;
+                      widget.value.keyTranslator = value;
+                      widget.callBack(widget.value, old);
+                      setState(() {});
+                    },
+                  ),
+                if (widget.value.type == FTextTypeEnum.dataset)
+                  CDropdown(
+                    value: widget.page.datasets
+                            .map((final e) => e.getName)
+                            .where((final element) => element != 'null')
+                            .contains(widget.value.datasetName)
+                        ? widget.value.datasetName
                         : null,
-                    items: widget.page.states
-                        .where(
-                          (final element) =>
-                              widget.valueType != VariableType.dynamic
-                                  ? element.type == widget.valueType
-                                  : true,
-                        )
-                        .map((final e) => e.name)
+                    items: widget.page.datasets
+                        .map((final e) => e.getName)
+                        .where((final element) => element != 'null')
                         .toList(),
                     onChange: (final newValue) {
+                      setState(() {
+                        databaseName = newValue!;
+                      });
                       final old = widget.value;
-                      widget.value.stateName = newValue;
+                      widget.value.datasetName = newValue;
                       widget.callBack(widget.value, old);
                     },
                   ),
-                  if (widget.page.states
-                          .firstWhereOrNull(
-                            (final element) =>
-                                element.name == widget.value.stateName,
-                          )
-                          ?.type ==
-                      VariableType.json)
-                    CMiniTextField(
-                      text: widget.value.mapKey,
-                      title: 'Map Key',
-                      callBack: (final key) {
-                        final old = widget.value;
-                        widget.value.mapKey = key;
-                        widget.callBack(widget.value, old);
-                      },
-                    ),
-                ],
-              ),
-            if (widget.value.type == FTextTypeEnum.languages)
-              CDropdown(
-                value: widget.value.keyTranslator,
-                items: ((BlocProvider.of<FocusProjectBloc>(context).state
-                                as ProjectLoaded)
-                            .prj
-                            .config
-                            ?.appLanguage
-                            ?.terms ??
-                        <String, dynamic>{})
-                    .entries
-                    .map((final e) => e.key)
-                    .toList(),
-                onChange: (final value) {
-                  final old = widget.value;
-                  widget.value.keyTranslator = value;
-                  widget.callBack(widget.value, old);
-                  setState(() {});
-                },
-              ),
-            if (widget.value.type == FTextTypeEnum.dataset)
-              CDropdown(
-                value: widget.page.datasets
-                        .map((final e) => e.getName)
-                        .where((final element) => element != 'null')
-                        .contains(widget.value.datasetName)
-                    ? widget.value.datasetName
-                    : null,
-                items: widget.page.datasets
-                    .map((final e) => e.getName)
-                    .where((final element) => element != 'null')
-                    .toList(),
-                onChange: (final newValue) {
-                  setState(() {
-                    databaseName = newValue!;
-                  });
-                  final old = widget.value;
-                  widget.value.datasetName = newValue;
-                  widget.callBack(widget.value, old);
-                },
-              ),
-            if (widget.valueType == VariableType.string ||
-                widget.valueType == VariableType.dynamic)
-              if (widget.value.type == FTextTypeEnum.dataset &&
-                  widget.value.datasetName != null)
-                Padding(
-                  padding: EI.smT,
-                  child: CDropdown(
-                    value: (dataset.getMap.isNotEmpty
+                if (widget.valueType == VariableType.string ||
+                    widget.valueType == VariableType.dynamic)
+                  if (widget.value.type == FTextTypeEnum.dataset &&
+                      widget.value.datasetName != null)
+                    Padding(
+                      padding: EI.smT,
+                      child: CDropdown(
+                        value: (dataset.getMap.isNotEmpty
+                                    ? dataset.getMap.first
+                                    : <String, dynamic>{})
+                                .keys
+                                .toSet()
+                                .contains(widget.value.datasetAttr)
+                            ? widget.value.datasetAttr
+                            : null,
+                        items: (dataset.getMap.isNotEmpty
                                 ? dataset.getMap.first
                                 : <String, dynamic>{})
                             .keys
                             .toSet()
-                            .contains(widget.value.datasetAttr)
-                        ? widget.value.datasetAttr
-                        : null,
-                    items: (dataset.getMap.isNotEmpty
-                            ? dataset.getMap.first
-                            : <String, dynamic>{})
-                        .keys
-                        .toSet()
-                        .toList(),
-                    onChange: (final newValue) {
-                      setState(() {
-                        databaseAttribute = newValue!;
-                      });
-                      final old = widget.value;
-                      widget.value.datasetAttr = newValue;
-                      widget.callBack(widget.value, old);
-                    },
-                  ),
-                ),
-            if (widget.value.type == FTextTypeEnum.combined)
-              TContainer(
-                decoration: BoxDecoration(
-                  borderRadius: BR(8),
-                  color: Palette.bgTertiary,
-                ),
-                padding: EI.smA,
-                width: double.maxFinite,
-                child: Column(
-                  children: [
-                    Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                            .toList(),
+                        onChange: (final newValue) {
+                          setState(() {
+                            databaseAttribute = newValue!;
+                          });
+                          final old = widget.value;
+                          widget.value.datasetAttr = newValue;
+                          widget.callBack(widget.value, old);
+                        },
+                      ),
+                    ),
+                if (widget.value.type == FTextTypeEnum.combined)
+                  TContainer(
+                    decoration: BoxDecoration(
+                      borderRadius: BR(8),
+                      color: Palette.bgTertiary,
+                    ),
+                    padding: EI.smA,
+                    width: double.maxFinite,
+                    child: Column(
                       children: [
-                        const THeadline3('Combination'),
                         Row(
+                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
                           children: [
-                            BounceSmall(
-                              onTap: () {
-                                editChildrenAlert(context);
-                              },
-                              child: HoverWidget(
-                                hoverChild: Container(
-                                  padding: const EdgeInsets.all(4),
-                                  decoration: BoxDecoration(
-                                    border: Border.all(
-                                      color: Colors.white,
+                            const THeadline3('Combination'),
+                            Row(
+                              children: [
+                                BounceSmall(
+                                  onTap: () {
+                                    editChildrenAlert(context);
+                                  },
+                                  child: HoverWidget(
+                                    hoverChild: Container(
+                                      padding: const EdgeInsets.all(4),
+                                      decoration: BoxDecoration(
+                                        border: Border.all(
+                                          color: Colors.white,
+                                        ),
+                                      ),
+                                      child: const Icon(
+                                        Icons.list,
+                                        size: 24,
+                                        color: Colors.white,
+                                      ),
+                                    ),
+                                    onHover: (final e) {},
+                                    child: Container(
+                                      padding: const EdgeInsets.all(4),
+                                      decoration: BoxDecoration(
+                                        border: Border.all(
+                                          color: Colors.transparent,
+                                        ),
+                                      ),
+                                      child: const Icon(
+                                        Icons.list,
+                                        size: 24,
+                                        color: Colors.white,
+                                      ),
                                     ),
                                   ),
-                                  child: const Icon(
-                                    Icons.list,
-                                    size: 24,
-                                    color: Colors.white,
-                                  ),
                                 ),
-                                onHover: (final e) {},
-                                child: Container(
-                                  padding: const EdgeInsets.all(4),
-                                  decoration: BoxDecoration(
-                                    border: Border.all(
-                                      color: Colors.transparent,
+                                BounceSmall(
+                                  onTap: () {
+                                    final old = widget.value;
+                                    widget.value.combination ??= [];
+                                    widget.value.combination!
+                                        .add(FTextTypeInput());
+                                    widget.callBack(widget.value, old);
+                                  },
+                                  child: HoverWidget(
+                                    hoverChild: Container(
+                                      padding: const EdgeInsets.all(4),
+                                      decoration: BoxDecoration(
+                                        border: Border.all(
+                                          color: Colors.white,
+                                        ),
+                                      ),
+                                      child: const Icon(
+                                        Icons.add,
+                                        size: 24,
+                                        color: Colors.white,
+                                      ),
+                                    ),
+                                    onHover: (final e) {},
+                                    child: Container(
+                                      padding: const EdgeInsets.all(4),
+                                      decoration: BoxDecoration(
+                                        border: Border.all(
+                                          color: Colors.transparent,
+                                        ),
+                                      ),
+                                      child: const Icon(
+                                        Icons.add,
+                                        size: 24,
+                                        color: Colors.white,
+                                      ),
                                     ),
                                   ),
-                                  child: const Icon(
-                                    Icons.list,
-                                    size: 24,
-                                    color: Colors.white,
-                                  ),
                                 ),
-                              ),
-                            ),
-                            BounceSmall(
-                              onTap: () {
-                                final old = widget.value;
-                                widget.value.combination ??= [];
-                                widget.value.combination!.add(FTextTypeInput());
-                                widget.callBack(widget.value, old);
-                              },
-                              child: HoverWidget(
-                                hoverChild: Container(
-                                  padding: const EdgeInsets.all(4),
-                                  decoration: BoxDecoration(
-                                    border: Border.all(
-                                      color: Colors.white,
-                                    ),
-                                  ),
-                                  child: const Icon(
-                                    Icons.add,
-                                    size: 24,
-                                    color: Colors.white,
-                                  ),
-                                ),
-                                onHover: (final e) {},
-                                child: Container(
-                                  padding: const EdgeInsets.all(4),
-                                  decoration: BoxDecoration(
-                                    border: Border.all(
-                                      color: Colors.transparent,
-                                    ),
-                                  ),
-                                  child: const Icon(
-                                    Icons.add,
-                                    size: 24,
-                                    color: Colors.white,
-                                  ),
-                                ),
-                              ),
+                              ],
                             ),
                           ],
                         ),
+                        for (var element
+                            in widget.value.combination ?? <FTextTypeInput>[])
+                          TextControl(
+                            valueType: VariableType.dynamic,
+                            node: widget.node,
+                            value: element,
+                            page: widget.page,
+                            title: '',
+                            isSubControl: true,
+                            withConvertTo: true,
+                            callBack: (final value, final old) {
+                              final old = widget.value;
+                              element = value;
+                              widget.callBack(widget.value, old);
+                            },
+                            remove: () {
+                              final old = widget.value;
+                              widget.value.combination?.remove(element);
+                              widget.callBack(widget.value, old);
+                            },
+                          ),
                       ],
                     ),
-                    for (var element
-                        in widget.value.combination ?? <FTextTypeInput>[])
-                      TextControl(
-                        valueType: VariableType.dynamic,
-                        node: widget.node,
-                        value: element,
-                        page: widget.page,
-                        title: '',
-                        isSubControl: true,
-                        withConvertTo: true,
-                        callBack: (final value, final old) {
-                          final old = widget.value;
-                          element = value;
-                          widget.callBack(widget.value, old);
-                        },
-                        remove: () {
-                          final old = widget.value;
-                          widget.value.combination?.remove(element);
-                          widget.callBack(widget.value, old);
-                        },
-                      ),
-                  ],
-                ),
-              )
-            else if (widget.withConvertTo)
-              Column(
-                mainAxisSize: MainAxisSize.min,
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  const Gap(Grid.medium),
-                  const TDetailLabel('Convert to:'),
-                  Padding(
-                    padding: EI.smT,
-                    child: CDropdown(
-                      value: EnumToString.convertToString(
-                        widget.value.resultType,
-                        camelCase: true,
-                      ),
-                      items: EnumToString.toList(
-                        ResultTypeEnum.values,
-                        camelCase: true,
-                      ).toList(),
-                      onChange: (final newValue) {
-                        if (newValue != null) {
-                          final old = widget.value;
-                          final type = EnumToString.fromString(
-                            ResultTypeEnum.values,
-                            newValue,
+                  )
+                else if (widget.withConvertTo)
+                  Column(
+                    mainAxisSize: MainAxisSize.min,
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      const Gap(Grid.medium),
+                      const TDetailLabel('Convert to:'),
+                      Padding(
+                        padding: EI.smT,
+                        child: CDropdown(
+                          value: EnumToString.convertToString(
+                            widget.value.resultType,
                             camelCase: true,
-                          );
-                          widget.value.resultType = type!;
-                          widget.callBack(widget.value, old);
-                        }
-                      },
-                    ),
-                  ),
-                  if (widget.value.resultType == ResultTypeEnum.dateTime)
-                    Padding(
-                      padding: EI.smT,
-                      child: CDropdown(
-                        value: widget.value.typeDateTimeFormat != null
-                            ? EnumToString.convertToString(
-                                widget.value.typeDateTimeFormat,
+                          ),
+                          items: EnumToString.toList(
+                            ResultTypeEnum.values,
+                            camelCase: true,
+                          ).toList(),
+                          onChange: (final newValue) {
+                            if (newValue != null) {
+                              final old = widget.value;
+                              final type = EnumToString.fromString(
+                                ResultTypeEnum.values,
+                                newValue,
                                 camelCase: true,
-                              )
-                            : null,
-                        items: EnumToString.toList(
-                          TypeDateTimeFormat.values,
-                          camelCase: true,
-                        ).toList(),
-                        onChange: (final newValue) {
-                          if (newValue != null) {
-                            final old = widget.value;
-                            final type = EnumToString.fromString(
-                              TypeDateTimeFormat.values,
-                              newValue,
-                              camelCase: true,
-                            );
-                            widget.value.typeDateTimeFormat = type;
-                            widget.callBack(widget.value, old);
-                          }
-                        },
+                              );
+                              widget.value.resultType = type!;
+                              widget.callBack(widget.value, old);
+                            }
+                          },
+                        ),
                       ),
-                    ),
-                ],
-              )
-          ],
-        );
-      },
+                      if (widget.value.resultType == ResultTypeEnum.dateTime)
+                        Padding(
+                          padding: EI.smT,
+                          child: CDropdown(
+                            value: widget.value.typeDateTimeFormat != null
+                                ? EnumToString.convertToString(
+                                    widget.value.typeDateTimeFormat,
+                                    camelCase: true,
+                                  )
+                                : null,
+                            items: EnumToString.toList(
+                              TypeDateTimeFormat.values,
+                              camelCase: true,
+                            ).toList(),
+                            onChange: (final newValue) {
+                              if (newValue != null) {
+                                final old = widget.value;
+                                final type = EnumToString.fromString(
+                                  TypeDateTimeFormat.values,
+                                  newValue,
+                                  camelCase: true,
+                                );
+                                widget.value.typeDateTimeFormat = type;
+                                widget.callBack(widget.value, old);
+                              }
+                            },
+                          ),
+                        ),
+                    ],
+                  )
+              ],
+            );
+          },
+        ),
+      ),
     );
   }
 

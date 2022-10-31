@@ -37,6 +37,7 @@ class GridViewBuilderCodeTemplate {
         (body.attributes[DBKeys.crossAxisCount] as FTextTypeInput).toCode(
       loop,
       resultType: ResultTypeEnum.int,
+      defaultValue: '1',
     );
     final crossAxisCount = int.tryParse(valueCrossAxisCount) != null &&
             (int.tryParse(valueCrossAxisCount) ?? 0) > 0.1
@@ -67,6 +68,21 @@ class GridViewBuilderCodeTemplate {
         child != null ? await child.toCode(context) : 'const SizedBox()';
     final dataset =
         (body.attributes[DBKeys.datasetInput] as FDataset).datasetName;
+    var startFromIndex =
+        (body.attributes[DBKeys.value] as FTextTypeInput).toCode(
+      loop,
+      resultType: ResultTypeEnum.int,
+      defaultValue: '0',
+    );
+    if ((int.tryParse(startFromIndex) ?? 0) <= 0) {
+      startFromIndex = '0';
+    }
+    final limit =
+        (body.attributes[DBKeys.valueOfCondition] as FTextTypeInput).toCode(
+      loop,
+      resultType: ResultTypeEnum.int,
+      defaultValue: "this.datasets['$dataset'].length",
+    );
 
     final code = '''
     GridView.builder(
@@ -79,12 +95,10 @@ class GridViewBuilderCodeTemplate {
         crossAxisSpacing: $crossAxisSpacing,
         childAspectRatio: $childAspectRatio,
       ),
-      itemCount: ${dataset != null ? '''
-          datasets.keys.contains('$dataset') ? (datasets['$dataset'] as List<dynamic>).length : 0
-          ''' : '0'},
+      itemCount: this.datasets['$dataset'].length > 0 ? this.datasets['$dataset'].sublist($startFromIndex, $limit).length : 0,
       itemBuilder: (context, index) {
-            return $childString;
-          },
+        return $childString;
+      },
     )
   ''';
     final res = FormatterTest.format(code);

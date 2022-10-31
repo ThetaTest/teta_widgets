@@ -22,6 +22,7 @@ class CmsFetchCodeTemplate {
         (node.body.attributes[DBKeys.cmsCollection] as FTextTypeInput).toCode(
       loop,
       resultType: ResultTypeEnum.string,
+      defaultValue: '',
     );
     if (!collectionId.contains("'")) {
       collectionId = "'$collectionId'";

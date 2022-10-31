@@ -18,16 +18,32 @@ class ListViewBuilderCodeTemplate {
     final CNode? child,
     final int? loop,
   ) async {
+    final dataset =
+        (node.body.attributes[DBKeys.datasetInput] as FDataset).datasetName;
     final _scrollDirection =
         !(node.body.attributes[DBKeys.isVertical] as bool? ?? false)
             ? 'scrollDirection: Axis.horizontal,'
             : '';
     final shrinkWrap = node.body.attributes[DBKeys.flag] as bool? ?? false;
     final reverse = node.body.attributes[DBKeys.isFullWidth] as bool;
+    var startFromIndex =
+        (node.body.attributes[DBKeys.value] as FTextTypeInput).toCode(
+      loop,
+      resultType: ResultTypeEnum.int,
+      defaultValue: '0',
+    );
+    if ((int.tryParse(startFromIndex) ?? 0) <= 0) {
+      startFromIndex = '0';
+    }
+    final limit =
+        (node.body.attributes[DBKeys.valueOfCondition] as FTextTypeInput)
+            .toCode(
+      loop,
+      resultType: ResultTypeEnum.int,
+      defaultValue: "this.datasets['$dataset'].length",
+    );
     final childString =
         child != null ? await child.toCode(context) : 'const SizedBox()';
-    final dataset =
-        (node.body.attributes[DBKeys.datasetInput] as FDataset).datasetName;
     final code = '''
     NotificationListener<ScrollEndNotification>(
           onNotification: (final scrollEnd) {
@@ -64,7 +80,7 @@ class ListViewBuilderCodeTemplate {
             reverse: $reverse,
             physics: ${CS.physic(context, node.body)},
             shrinkWrap: $shrinkWrap,
-            itemCount: this.datasets['$dataset'].length > 0 ? this.datasets['$dataset'].length : 0,
+            itemCount: this.datasets['$dataset'].length > 0 ? this.datasets['$dataset'].sublist($startFromIndex, $limit).length : 0,
             itemBuilder: (context, index) {
               return $childString;
             },

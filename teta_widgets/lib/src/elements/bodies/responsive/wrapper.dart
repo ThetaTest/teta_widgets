@@ -29,7 +29,7 @@ final wrapperIntrinsicStates = IntrinsicStates(
   blockedTypes: [],
   synonymous: [NodeType.name(_globalType), 'baseline', 'bottom'],
   advicedChildrenCanHaveAtLeastAChild: [],
-  displayName: NodeType.name(_globalType),
+  displayName: 'Responsive wrapper',
   type: _globalType,
   category: NodeCategories.responsive,
   maxChildren: 1,
