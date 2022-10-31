@@ -6,7 +6,6 @@ import 'package:device_frame/device_frame.dart';
 import 'package:flutter/material.dart';
 // Package imports:
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:flutter_feather_icons/flutter_feather_icons.dart';
 import 'package:hovering/hovering.dart';
 import 'package:teta_core/src/design_system/textfield/minitextfield.dart';
 import 'package:teta_core/teta_core.dart';
@@ -132,14 +131,17 @@ class SizeControlsState extends State<SizeControl> {
                       Row(
                         mainAxisSize: MainAxisSize.min,
                         children: [
-                          Icon(
-                            device.identifier.type == DeviceType.phone
-                                ? FeatherIcons.smartphone
-                                : device.identifier.type == DeviceType.tablet
-                                    ? FeatherIcons.tablet
-                                    : FeatherIcons.monitor,
-                            color: Palette.txtPrimary,
-                          ),
+                          Image.asset(
+                                  device.identifier.type ==
+                                          DeviceType.phone
+                                      ? Assets.icons.devices.smartphone.path
+                                      : device.identifier.type ==
+                                              DeviceType.tablet
+                                          ? Assets.icons.devices.tablet.path
+                                          : Assets.icons.devices.monitor.path,
+                                  width: 24,
+                                  height: 24,
+                                ),
                           CSwitch(
                             callback: (final v) {
                               final value = v

@@ -65,7 +65,20 @@ class FActionStateChangeWith {
 
       final value = valueToChangeWith.toCode(
         loop,
-        resultType: ResultTypeEnum.string,
+        resultType: variable.type == VariableType.string
+            ? ResultTypeEnum.string
+            : variable.type == VariableType.int
+                ? ResultTypeEnum.int
+                : variable.type == VariableType.double
+                    ? ResultTypeEnum.double
+                    : ResultTypeEnum.bool,
+        defaultValue: variable.type == VariableType.string
+            ? ''
+            : variable.type == VariableType.int
+                ? '0'
+                : variable.type == VariableType.double
+                    ? '0.0'
+                    : 'false',
       );
 
       if (isValueDefault) {

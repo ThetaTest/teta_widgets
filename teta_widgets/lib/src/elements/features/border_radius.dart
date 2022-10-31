@@ -50,7 +50,7 @@ class FBorderRadius {
 
   /// Instantiate [FBorderRadius] from Json
   static FBorderRadius fromJson(final dynamic json) {
-    if (json.runtimeType is List<dynamic>) {
+    if (json.runtimeType == List<dynamic>) {
       return FBorderRadius(
         radius: (json as List<dynamic>)
             .map((final dynamic e) => double.parse('$e'))

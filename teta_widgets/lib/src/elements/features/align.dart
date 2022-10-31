@@ -54,7 +54,7 @@ class FAlign {
   }
 
   static FAlign fromJson(final dynamic json) {
-    if (json.runtimeType is String) {
+    if (json.runtimeType == String) {
       return FAlign(
         align: convertJsonToValue(json as String),
       );

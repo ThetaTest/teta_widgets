@@ -9,7 +9,6 @@ import 'package:device_frame/device_frame.dart';
 import 'package:flutter/material.dart';
 // Package imports:
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:flutter_feather_icons/flutter_feather_icons.dart';
 import 'package:gap/gap.dart';
 import 'package:teta_core/src/design_system/textfield/textfield.dart';
 import 'package:teta_core/teta_core.dart';
@@ -95,13 +94,14 @@ class FontSizeState extends State<FontSizeControl> {
                 children: [
                   Row(
                     children: [
-                      Icon(
+                      Image.asset(
                         device.identifier.type == DeviceType.phone
-                            ? FeatherIcons.smartphone
+                            ? Assets.icons.devices.smartphone.path
                             : device.identifier.type == DeviceType.tablet
-                                ? FeatherIcons.tablet
-                                : FeatherIcons.monitor,
-                        color: Palette.txtPrimary,
+                                ? Assets.icons.devices.tablet.path
+                                : Assets.icons.devices.monitor.path,
+                        width: 24,
+                        height: 24,
                       ),
                       const Gap(Grid.small),
                       const THeadline3(

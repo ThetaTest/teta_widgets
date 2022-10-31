@@ -129,10 +129,14 @@ class FSize {
       return FSize(
         size: json['s'] as String?,
         unit: json['u'] == 'i' ? SizeUnit.pixel : SizeUnit.percent,
-        sizeTablet: json['t'] as String?,
-        sizeDesktop: json['d'] as String?,
-        unitTablet: json['ut'] == 'i' ? SizeUnit.pixel : SizeUnit.percent,
-        unitDesktop: json['ud'] == 'i' ? SizeUnit.pixel : SizeUnit.percent,
+        sizeTablet: json['t'] as String? ?? json['s'] as String?,
+        sizeDesktop: json['d'] as String? ?? json['s'] as String?,
+        unitTablet: json['ut'] == 'i' || json['u'] == 'i'
+            ? SizeUnit.pixel
+            : SizeUnit.percent,
+        unitDesktop: json['ud'] == 'i' || json['u'] == 'i'
+            ? SizeUnit.pixel
+            : SizeUnit.percent,
       );
     } catch (e) {
       if (kDebugMode) {

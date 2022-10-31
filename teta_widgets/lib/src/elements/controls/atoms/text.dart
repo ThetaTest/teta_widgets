@@ -108,13 +108,14 @@ class PaddingsState extends State<TextControl> {
                     Row(
                       children: [
                         if (widget.value.type == FTextTypeEnum.text)
-                          Icon(
+                          Image.asset(
                             device.identifier.type == DeviceType.phone
-                                ? FeatherIcons.smartphone
+                                ? Assets.icons.devices.smartphone.path
                                 : device.identifier.type == DeviceType.tablet
-                                    ? FeatherIcons.tablet
-                                    : FeatherIcons.monitor,
-                            color: Palette.txtPrimary,
+                                    ? Assets.icons.devices.tablet.path
+                                    : Assets.icons.devices.monitor.path,
+                            width: 24,
+                            height: 24,
                           ),
                         if (widget.value.type == FTextTypeEnum.text)
                           const Gap(Grid.small),

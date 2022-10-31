@@ -409,22 +409,30 @@ class FTextTypeInput {
               : (defaultValue ?? '0');
 
       if (resultType == ResultTypeEnum.string) {
+        final type = defaultValue != 'null' && defaultValue != null
+            ? 'String'
+            : 'String?';
         return """
-getValueForScreenType<String>(
+getValueForScreenType<$type>(
   context: context,
   mobile: '''$v''',
   tablet: '''$vT''',
   desktop: '''$vD''',
 )""";
       } else if (resultType == ResultTypeEnum.int) {
+        final type =
+            defaultValue != 'null' && defaultValue != null ? 'int' : 'int?';
         return """
-getValueForScreenType<int>(
+getValueForScreenType<$type>(
   context: context,
   mobile: ${int.tryParse('$v') != null ? '$v' : (defaultValue ?? '1')},
   tablet: ${int.tryParse('$vT') != null ? '$vT' : (defaultValue ?? '1')},
   desktop: ${int.tryParse('$vD') != null ? '$vD' : (defaultValue ?? '1')},
 )""";
       } else if (resultType == ResultTypeEnum.double) {
+        final type = defaultValue != 'null' && defaultValue != null
+            ? 'double'
+            : 'double?';
         return """
 getValueForScreenType<double>(
   context: context,
@@ -433,8 +441,10 @@ getValueForScreenType<double>(
   desktop: ${double.tryParse('$vD') != null ? '$vD' : (defaultValue ?? '1')},
 )""";
       } else if (resultType == ResultTypeEnum.bool) {
+        final type =
+            defaultValue != 'null' && defaultValue != null ? 'bool' : 'bool?';
         return """
-getValueForScreenType<double>(
+getValueForScreenType<$type>(
   context: context,
   mobile: ${'$v'.toLowerCase() == 'true' || '$v'.toLowerCase() == 'false' ? '$v'.toLowerCase() : "'$v' == 'true'".toLowerCase()},
   tablet: ${'$vT'.toLowerCase() == 'true' || '$vT'.toLowerCase() == 'false' ? '$vT'.toLowerCase() : "'$vT' == 'true'".toLowerCase()},

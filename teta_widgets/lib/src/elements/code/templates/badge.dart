@@ -21,6 +21,7 @@ class BadgeCodeTemplate {
     final value = abstract.toCode(
       loop,
       resultType: ResultTypeEnum.string,
+      defaultValue: '',
     );
     final fill = FFill.toCode(
       body.attributes[DBKeys.fill] as FFill,
