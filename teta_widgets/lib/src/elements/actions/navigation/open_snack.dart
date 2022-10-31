@@ -11,7 +11,7 @@ import 'package:flutter_test/flutter_test.dart';
 import 'package:recase/recase.dart';
 import 'package:teta_core/src/rendering/nodes_original.dart';
 import 'package:teta_core/teta_core.dart';
-import 'package:teta_repositories/src/node_repository.dart';
+import 'package:teta_db/teta_db.dart';
 import 'package:teta_widgets/src/elements/actions/navigation/pass_params_builder.dart';
 import 'package:teta_widgets/src/elements/code/formatter_test.dart';
 import 'package:teta_widgets/src/elements/index.dart';
@@ -35,9 +35,19 @@ class FActionNavigationOpenSnackBar {
         page = prj.prj.pages!
             .firstWhereOrNull((final element) => element.name == nameOfPage);
         if (page != null) {
-          final list = await NodeRepository.fetchNodesByPage(page.id);
+          final list = await TetaDB.instance.client.selectList(
+            'nodes',
+            match: <String, dynamic>{
+              'page_id': page.id,
+            },
+          );
+          if (list.error != null) {
+            Logger.printError(
+              'Error fetching nodes FActionNavigationOpenPage func, error: ${list.error?.message}',
+            );
+          }
           final nodes = <CNode>[];
-          for (final e in list) {
+          for (final e in list.data ?? <dynamic>[]) {
             nodes.add(
               CNode.fromJson(
                 e as Map<String, dynamic>,
