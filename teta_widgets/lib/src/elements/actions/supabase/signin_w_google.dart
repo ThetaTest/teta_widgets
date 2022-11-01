@@ -84,6 +84,31 @@ class FASupabaseSignInWithGoogle {
   ) {
     return '''
     await Supabase.instance.client.auth.signInWithProvider(Provider.google);
+    uriLinkStream.listen(
+      (final Uri? uri) async {
+        if (uri != null) {
+          if (uri.queryParameters['access_token'] != null &&
+              uri.queryParameters['access_token'] is String) {
+            await recoverSessionFromUrl(uri!);
+            await closeInAppWebView();
+            unawaited(
+              TetaCMS.instance.analytics.insertEvent(
+                TetaAnalyticsType.tetaAuthSignIn,
+                'Supabase Auth: signIn request',
+                <String, dynamic>{
+                  'device': 'mobile',
+                  'provider': EnumToString.convertToString(provider),
+                },
+                isUserIdPreferableIfExists: false,
+              ),
+            );
+          }
+        }
+      },
+      onError: (final Object err) {
+        throw Exception('got err: \$err');
+      },
+    );
     ${FActionNavigationOpenPage.toCode(context, nameOfPage, paramsToSend)}
     ''';
   }

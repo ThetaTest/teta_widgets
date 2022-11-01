@@ -17,9 +17,8 @@ import 'package:teta_widgets/src/elements/nodes/children_enum.dart';
 import 'package:teta_widgets/src/elements/nodes/enum.dart';
 import 'package:teta_widgets/src/elements/nodes/node.dart';
 import 'package:teta_widgets/src/elements/nodes/node_body.dart';
+import 'package:teta_widgets/src/elements/nodes/suggestion.dart';
 import 'package:teta_widgets/src/elements/widgets/index_stack.dart';
-
-import '../nodes/suggestion.dart';
 
 const _globalType = NType.indexedStack;
 
@@ -71,7 +70,7 @@ class IndexedStackBody extends NodeBody {
           key: DBKeys.value,
           value: attributes[DBKeys.value],
           description: 'Use only integer numbers as an input',
-          valueType: VariableType.string,
+          valueType: VariableType.int,
         ),
       ];
 

@@ -56,9 +56,6 @@ class FMargins {
   }
 
   static FMargins fromJson(final dynamic json) {
-    Logger.printWarning(
-      'FMargins fromJson, json runtimeType: ${json.runtimeType}',
-    );
     if (json.runtimeType == List<dynamic>) {
       return FMargins(
         margins:

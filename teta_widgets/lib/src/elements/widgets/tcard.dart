@@ -118,6 +118,20 @@ class _WTCardState extends State<WTCard> {
         ignoring: !widget.forPlay,
         child: TCard(
           controller: _controller,
+          onEnd: () {
+            GestureBuilder.get(
+              context: context,
+              node: widget.node,
+              gesture: ActionGesture.onEnd,
+              action: widget.action,
+              actionValue: null,
+              params: widget.params,
+              states: widget.states,
+              dataset: widget.dataset,
+              forPlay: widget.forPlay,
+              loop: widget.loop,
+            );
+          },
           onForward: (final index, final info) {
             if (info.direction == SwipDirection.Right) {
               // swipe right

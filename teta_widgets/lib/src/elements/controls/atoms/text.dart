@@ -163,7 +163,8 @@ class PaddingsState extends State<TextControl> {
                           ),
                         ),
                       ),
-                    CDropdownForType(
+                    CDropdownCustom(
+                      background: Colors.transparent,
                       value: widget.value.type == FTextTypeEnum.dataset
                           ? 'dataset'
                           : widget.value.type == FTextTypeEnum.state
@@ -176,13 +177,86 @@ class PaddingsState extends State<TextControl> {
                                               FTextTypeEnum.languages
                                           ? 'languages'
                                           : 'text',
-                      items: [
-                        'text',
-                        'param',
-                        'state',
-                        'dataset',
-                        if (!widget.isSubControl) 'combined',
-                        'languages',
+                      items: <DropdownCustomMenuItem<String>>[
+                        DropdownCustomMenuItem(
+                          value: 'text',
+                          child: Row(
+                            children: const [
+                              Icon(
+                                FeatherIcons.type,
+                                color: Palette.txtPrimary,
+                              ),
+                              Gap(Grid.small),
+                              TParagraph('Text'),
+                            ],
+                          ),
+                        ),
+                        DropdownCustomMenuItem(
+                          value: 'param',
+                          child: Row(
+                            children: const [
+                              Icon(
+                                FeatherIcons.cpu,
+                                color: Palette.txtPrimary,
+                              ),
+                              Gap(Grid.small),
+                              TParagraph('Parameter'),
+                            ],
+                          ),
+                        ),
+                        DropdownCustomMenuItem(
+                          value: 'state',
+                          child: Row(
+                            children: const [
+                              Icon(
+                                FeatherIcons.cpu,
+                                color: Palette.txtPrimary,
+                              ),
+                              Gap(Grid.small),
+                              TParagraph('State'),
+                            ],
+                          ),
+                        ),
+                        DropdownCustomMenuItem(
+                          value: 'dataset',
+                          child: Row(
+                            children: const [
+                              Icon(
+                                FeatherIcons.server,
+                                color: Palette.txtPrimary,
+                              ),
+                              Gap(Grid.small),
+                              TParagraph('Collection / Dataset'),
+                            ],
+                          ),
+                        ),
+                        if (!widget.isSubControl)
+                          DropdownCustomMenuItem(
+                            value: 'combined',
+                            child: Row(
+                              children: const [
+                                Icon(
+                                  FeatherIcons.server,
+                                  color: Palette.txtPrimary,
+                                ),
+                                Gap(Grid.small),
+                                TParagraph('Combined value'),
+                              ],
+                            ),
+                          ),
+                        DropdownCustomMenuItem(
+                          value: 'languages',
+                          child: Row(
+                            children: const [
+                              Icon(
+                                FeatherIcons.globe,
+                                color: Palette.txtPrimary,
+                              ),
+                              Gap(Grid.small),
+                              TParagraph('Language Terms'),
+                            ],
+                          ),
+                        ),
                       ],
                       onChange: (final value) {
                         var typeOfInput = FTextTypeEnum.text;
