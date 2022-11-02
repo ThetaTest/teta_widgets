@@ -41,7 +41,7 @@ class FActionStripeCartBuyAll {
         postalCode: $postalCode,
         country: $country,
       ),
-    ),).data;
+    )).data;
 
     final settings = (await TetaCMS.instance.store.getSettings()).data!;
 
