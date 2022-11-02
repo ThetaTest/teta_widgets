@@ -3,6 +3,7 @@
 
 // Flutter imports:
 import 'package:flutter/material.dart';
+import 'package:teta_cms/teta_cms.dart';
 
 // Package imports:
 import 'package:teta_core/teta_core.dart';
@@ -43,6 +44,9 @@ class FActionStripeCartBuyAll {
         country: $country,
       ),
     ),).data;
+
+    final settings = (await TetaCMS.instance.store.getSettings()).data!;
+
                       if(purchaseData != null){
                       Stripe.publishableKey = purchaseData.stripePublishableKey;
                       Stripe.merchantIdentifier = purchaseData.merchantIdentifier;
@@ -50,13 +54,13 @@ class FActionStripeCartBuyAll {
                       await Stripe.instance.initPaymentSheet(
                           paymentSheetParameters: SetupPaymentSheetParameters(
                         googlePay: PaymentSheetGooglePay(
-                          merchantCountryCode: 'IT',
-                          testEnv: true,
+                          merchantCountryCode: settings.merchantCountryCode,
+                          testEnv: !settings.livemode,
                         ),
                         applePay: PaymentSheetApplePay(
-                          merchantCountryCode: 'IT',
+                          merchantCountryCode: settings.merchantCountryCode,
                         ),
-                        merchantDisplayName: 'Test',
+                        merchantDisplayName: settings.merchantDisplayName,
                         billingDetails: BillingDetails(
                           email: $email,
                           phone: $phone,
