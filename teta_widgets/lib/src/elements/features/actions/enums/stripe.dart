@@ -4,6 +4,5 @@ enum ActionStripe {
   showReceipt,
   buyCartItems,
   addProductsListItemToCart,
-  removeProductsListItemFromCart,
   removeCartListItemFromCart
 }

@@ -60,7 +60,6 @@ import 'package:teta_widgets/src/elements/actions/state/website_validator.dart';
 import 'package:teta_widgets/src/elements/actions/stripe/stripe_add_list_item_to_cart.dart';
 import 'package:teta_widgets/src/elements/actions/stripe/stripe_cart_buy_all.dart';
 import 'package:teta_widgets/src/elements/actions/stripe/stripe_cart_remove_list_item_from_cart.dart';
-import 'package:teta_widgets/src/elements/actions/stripe/stripe_remove_list_item_to_cart.dart';
 import 'package:teta_widgets/src/elements/actions/stripe/stripe_show_receipt.dart';
 import 'package:teta_widgets/src/elements/actions/supabase/delete.dart';
 import 'package:teta_widgets/src/elements/actions/supabase/insert.dart';
@@ -1180,22 +1179,6 @@ class FActionElement extends Equatable {
               loop: loop,
             );
 
-            break;
-          case ActionStripe.removeProductsListItemFromCart:
-            await actionS(
-              () => FActionStripeRemoveProductsListItemFromCart.action(
-                context,
-                states,
-                stateName,
-                dataset,
-                loop,
-              ),
-              context: context,
-              params: params,
-              states: states,
-              dataset: dataset,
-              loop: loop,
-            );
             break;
           case ActionStripe.removeCartListItemFromCart:
             await actionS(
@@ -2321,16 +2304,6 @@ class FActionElement extends Equatable {
               ),
               context,
             );
-          case ActionStripe.removeProductsListItemFromCart:
-            return codeS(
-              FActionStripeRemoveProductsListItemFromCart.toCode(
-                context,
-                stateName,
-                body,
-              ),
-              context,
-            );
-          default:
             break;
         }
         break;
