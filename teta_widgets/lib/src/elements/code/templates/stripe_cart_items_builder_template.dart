@@ -27,7 +27,7 @@ class StripeCartItemsBuilderTemplate {
     }
     final code = '''
    FutureBuilder<TetaProductsResponse>(
-      future: TetaCMS.instance.store.getCartProducts(),
+      future: TetaCMS.instance.store.cart.get(),
       builder: ((context, snapshot) {
         if (!snapshot.hasData) {
           return Center(
