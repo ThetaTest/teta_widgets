@@ -31,7 +31,18 @@ class FActionStripeCartBuyAll {
     required final String shippingId,
   }) {
     return '''
-                      final purchaseData = (await TetaCMS.instance.store.cart.getPaymentIntent($shippingId)).data;
+                    final purchaseData = (await TetaCMS.instance.store.cart.getPaymentIntent(
+      $shippingId,
+      UserAddress(
+        email: $email,
+        phone: $phone,
+        city: $city,
+        state: $state,
+        line: $line,
+        postalCode: $postalCode,
+        country: $country,
+      ),
+    ),).data;
                       if(purchaseData != null){
                       Stripe.publishableKey = purchaseData.stripePublishableKey;
                       Stripe.merchantIdentifier = purchaseData.merchantIdentifier;
