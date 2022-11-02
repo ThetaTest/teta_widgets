@@ -108,6 +108,7 @@ import 'package:teta_widgets/src/elements/bodies/spacer.dart';
 import 'package:teta_widgets/src/elements/bodies/stack.dart';
 import 'package:teta_widgets/src/elements/bodies/stripe_cart_items_builder_body.dart';
 import 'package:teta_widgets/src/elements/bodies/stripe_products_builder.dart';
+import 'package:teta_widgets/src/elements/bodies/stripe_shipping_builder.dart';
 import 'package:teta_widgets/src/elements/bodies/stripe_transactions_builder.dart';
 import 'package:teta_widgets/src/elements/bodies/supabase/future_builder.dart';
 import 'package:teta_widgets/src/elements/bodies/supabase/future_stream_builder.dart';
@@ -246,6 +247,7 @@ final stateTypes = <IntrinsicStates>[
   revenueCatProductsListIntrinsicStates,
   revenueCatSubStatusIntrinsicStates,
   stripeProductsBuilder,
+  stripeShippingBuilder,
   stripeTransactionsBuilder,
   stripeCartItemsBuilderBodyIntrinsicStates,
   transformPerspectiveIntrinsicStates,
@@ -296,6 +298,8 @@ NodeBody getBody(final NType type) {
       return CheckBoxBody();
     case NType.stripeProductsBuilder:
       return StripeProductsBuilderBody();
+    case NType.stripeShippingBuilder:
+      return StripeShippingBuilderBody();
     case NType.stripeTransactionsBuilder:
       return StripeTransactionsBuilderBody();
     case NType.stripeCartItemsBuilder:
