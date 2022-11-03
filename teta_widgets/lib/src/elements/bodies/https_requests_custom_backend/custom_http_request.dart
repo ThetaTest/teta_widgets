@@ -1,11 +1,12 @@
 // Flutter imports:
-// ignore_for_file: lines_longer_than_80_chars
+// ignore_for_file: lines_longer_than_80_chars, avoid_dynamic_calls
 
 // Flutter imports:
 import 'package:flutter/material.dart';
 // Package imports:
 import 'package:teta_core/gen/assets.gen.dart';
 import 'package:teta_core/teta_core.dart';
+import 'package:teta_widgets/src/elements/controls/atoms/db_map.dart';
 
 // Project imports:
 import 'package:teta_widgets/src/elements/nodes/enum.dart';
@@ -63,6 +64,8 @@ class CustomHttpRequestBody extends NodeBody {
   // ignore: overridden_fields
   Map<String, dynamic> attributes = <String, dynamic>{
     DBKeys.customHttpRequestURL: FTextTypeInput(),
+    DBKeys.customHttpRequestList: <MapElement>[],
+    DBKeys.customHttpRequestHeader: <MapElement>[]
   };
 
   @override
@@ -74,6 +77,20 @@ class CustomHttpRequestBody extends NodeBody {
           value: attributes[DBKeys.customHttpRequestURL],
           description: 'Fetch all data with custom URL',
           valueType: VariableType.string,
+        ),
+        ControlObject(
+          title: 'Add Params',
+          type: ControlType.httpParamsControl,
+          key: DBKeys.customHttpRequestList,
+          value: attributes[DBKeys.customHttpRequestList] ?? <MapElement>[],
+          valueType: VariableType.dynamic,
+        ),
+        ControlObject(
+          title: 'Add Headers',
+          type: ControlType.httpParamsControl,
+          key: DBKeys.customHttpRequestHeader,
+          value: attributes[DBKeys.customHttpRequestHeader] ?? <MapElement>[],
+          valueType: VariableType.dynamic,
         ),
       ];
 
@@ -96,11 +113,16 @@ class CustomHttpRequestBody extends NodeBody {
         ${child ?? children}
         ${(attributes[DBKeys.customHttpRequestURL] as FTextTypeInput).toJson()}
         ${(attributes[DBKeys.customHttpRequestURL] as FTextTypeInput).getStateValue(states)}
-      ''',
+        ${attributes[DBKeys.customHttpRequestList]}
+        ${attributes[DBKeys.customHttpRequestHeader]}
+        ''',
       ),
       node: node,
       children: children ?? [],
       url: attributes[DBKeys.customHttpRequestURL] as FTextTypeInput,
+      addParams: attributes[DBKeys.customHttpRequestList] as List<MapElement>,
+      addHeaders:
+          attributes[DBKeys.customHttpRequestHeader] as List<MapElement>,
       forPlay: forPlay,
       params: params,
       states: states,

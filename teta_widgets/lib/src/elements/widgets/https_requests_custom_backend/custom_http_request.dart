@@ -19,6 +19,8 @@ class WCustomHttpRequest extends StatefulWidget {
     final Key? key, {
     required this.node,
     required this.url,
+    this.addParams,
+    this.addHeaders,
     required this.forPlay,
     required this.params,
     required this.states,
@@ -32,7 +34,8 @@ class WCustomHttpRequest extends StatefulWidget {
   final bool forPlay;
   final int? loop;
   final FTextTypeInput url;
-
+  final List<MapElement>? addParams;
+  final List<MapElement>? addHeaders;
   final List<VariableObject> params;
   final List<VariableObject> states;
   final List<DatasetObject> dataset;
@@ -58,17 +61,33 @@ class _WCustomHttpRequestState extends State<WCustomHttpRequest> {
       widget.loop,
       context,
     );
-    Logger.printWarning(
-      'url: $url',
-    );
     try {
-      final response = await http.get(Uri.parse(url), headers: {
+      var newURL = url;
+      for (var i = 0; i < widget.addParams!.length; i++) {
+        if (i == 0) {
+          newURL = url +
+              "?${widget.addParams![i].key.toString()}=${widget.addParams![i].value.value.toString()}";
+        } else {
+          newURL = newURL +
+              "&${widget.addParams![i].key.toString()}=${widget.addParams![i].value.value.toString()}";
+        }
+      }
+      // print("new URL : " + newURL);
+
+      var headers = {
         'Access-Control-Allow-Origin': '*',
         'Access-Control-Allow-Credentials': 'true',
         'Access-Control-Allow-Headers':
             'Origin,Content-Type,X-Amz-Date,Authorization,X-Api-Key,X-Amz-Security-Token,locale',
         'Access-Control-Allow-Methods': 'POST, OPTIONS'
-      });
+      };
+
+      for (var i = 0; i < widget.addHeaders!.length; i++) {
+        headers[widget.addHeaders![i].key.toString()] =
+            widget.addHeaders![i].value.value.toString();
+      }
+
+      final response = await http.get(Uri.parse(newURL), headers: headers);
 
       final json = response.body;
       final data = jsonDecode(json) as List<dynamic>;

@@ -23,11 +23,13 @@ import 'package:teta_widgets/src/elements/controls/atoms/cms_collections.dart';
 import 'package:teta_widgets/src/elements/controls/atoms/code_field.dart';
 import 'package:teta_widgets/src/elements/controls/atoms/cross_axis_alignment.dart';
 import 'package:teta_widgets/src/elements/controls/atoms/dataset.dart';
+import 'package:teta_widgets/src/elements/controls/atoms/db_map.dart';
 import 'package:teta_widgets/src/elements/controls/atoms/fill.dart';
 import 'package:teta_widgets/src/elements/controls/atoms/firebase/path.dart';
 import 'package:teta_widgets/src/elements/controls/atoms/flag.dart';
 import 'package:teta_widgets/src/elements/controls/atoms/google_maps_control.dart';
 import 'package:teta_widgets/src/elements/controls/atoms/google_maps_map_style_controls.dart';
+import 'package:teta_widgets/src/elements/controls/atoms/httpMethodControl.dart';
 import 'package:teta_widgets/src/elements/controls/atoms/icon.dart';
 import 'package:teta_widgets/src/elements/controls/atoms/icon_feather.dart';
 import 'package:teta_widgets/src/elements/controls/atoms/icon_fontawesome.dart';
@@ -47,6 +49,7 @@ import 'package:teta_widgets/src/elements/controls/atoms/webview_controller.dart
 import 'package:teta_widgets/src/elements/controls/control_model.dart';
 import 'package:teta_widgets/src/elements/controls/current_song_controll.dart';
 import 'package:teta_widgets/src/elements/controls/google_maps_cubit_control.dart';
+import 'package:teta_widgets/src/elements/controls/http_params.dart';
 import 'package:teta_widgets/src/elements/controls/key_constants.dart';
 import 'package:teta_widgets/src/elements/controls/prefabs/sizes_prefab_control.dart';
 import 'package:teta_widgets/src/elements/controls/prefabs/text_prefab_control.dart';
@@ -171,6 +174,8 @@ enum ControlType {
   googleMapsCubitController,
   cmsCollections,
   cmsCustomQuery,
+  httpParamsControl,
+  httpMethodControl
 }
 
 /// Set of funcs to generate the focused widget' controls.
@@ -934,6 +939,47 @@ class ControlBuilder {
         keyValue: control.key,
       );
     }
+    if (control.type == ControlType.httpParamsControl) {
+      return HttpParamsControl(
+        key: ValueKey('${node.nid}'),
+        node: node,
+        page: page,
+        title: control.title,
+        list: control.value as List<MapElement>,
+        callBack: (final value, final old) => {
+          node.body.attributes[control.key] = value,
+          ControlBuilder.toDB(
+            prj,
+            page,
+            node,
+            context,
+            control.key,
+            value,
+            old,
+          ),
+        },
+      );
+    }
+    if (control.type == ControlType.httpMethodControl) {
+      return HttpMethodControl(
+        key: ValueKey('${node.nid}'),
+        node: node,
+        title: control.title,
+        httpMethod: control.value as String,
+        callBack: (final value, final old) => {
+          node.body.attributes[control.key] = value,
+          ControlBuilder.toDB(
+            prj,
+            page,
+            node,
+            context,
+            control.key,
+            value,
+            old,
+          ),
+        },
+      );
+    }
     if (control.type == ControlType.params) {
       return descriptionControlWidget(
         description: control.description,
@@ -962,6 +1008,7 @@ class ControlBuilder {
         ),
       );
     }
+
     return const SizedBox();
   }
 

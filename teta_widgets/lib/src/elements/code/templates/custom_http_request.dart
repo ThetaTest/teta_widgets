@@ -1,6 +1,7 @@
 // Flutter imports:
 import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
+import 'package:teta_core/teta_core.dart';
 import 'package:teta_widgets/src/elements/controls/key_constants.dart';
 import 'package:teta_widgets/src/elements/features/text_type_input.dart';
 // Project imports:
@@ -23,11 +24,50 @@ class CustomHttpRequestCodeTemplate {
               resultType: ResultTypeEnum.string,
             )
             .replaceAll("'", '');
+    final params =
+        node.body.attributes[DBKeys.customHttpRequestList] as List<MapElement>;
+    final mapParams = <String, dynamic>{};
+    for (final e in params) {
+      mapParams[e.key] = e.value
+          .toCode(
+            0,
+            resultType: ResultTypeEnum.string,
+          )
+          .replaceAll("'", '');
+    }
+    final mapParamsString = StringBuffer()..write('{');
+    for (final key in mapParams.keys) {
+      mapParamsString.write("'$key': '${mapParams[key]}',");
+    }
+    mapParamsString.write('}');
+
+    final headers = node.body.attributes[DBKeys.customHttpRequestHeader]
+        as List<MapElement>;
+    final mapHeaders = <String, dynamic>{};
+    for (final e in headers) {
+      mapHeaders[e.key] = e.value
+          .toCode(
+            0,
+            resultType: ResultTypeEnum.string,
+          )
+          .replaceAll("'", '');
+    }
+    final mapHeadersString = StringBuffer()..write('{');
+    for (final key in mapHeaders.keys) {
+      mapHeadersString.write("'$key': '${mapHeaders[key]}',");
+    }
+    mapHeadersString.write('}');
     var child = 'const SizedBox()';
     if (children.isNotEmpty) {
       child = await children.first.toCode(context);
     }
     var loader = 'const Center(child: CircularProgressIndicator(),)';
+    var error = '''
+    const Text('Error')''';
+    var emptyData = '''
+    const Text('Empty data')''';
+    var connectionState = '''
+    Text('State: \${snapshot.connectionState}')''';
     if (children.length >= 2) {
       loader = await children[1].toCode(context);
     }
@@ -38,12 +78,24 @@ class CustomHttpRequestCodeTemplate {
     final code = '''
     TetaFutureBuilderHttp(
     url: "$url",
+    params: "$mapParamsString",
+    headers: "$mapHeadersString",
     builder: (context, snapshot) {
-      if (!snapshot.hasData) {
-        return $loader;
+      
+      if(snapshot.connectionState == ConnectionState.waiting){
+         return $loader;
+      }else if(snapshot.connectionState == ConnectionState.done){
+        if(snapshot.hasError){
+          return $error;
+        }else if (snapshot.hasData){
+          $func
+          return  $child;
+        }else{
+          return $emptyData;
+        }
+      }else{
+        return $connectionState;
       }
-      $func
-      return $child;
     }
   )
   ''';
