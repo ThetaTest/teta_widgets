@@ -23,7 +23,8 @@ class CustomHttpRequestCodeTemplate {
               loop,
               resultType: ResultTypeEnum.string,
             )
-            .replaceAll("'", '');
+            .replaceAll("'", '')
+            .replaceAll(" ", '');
     final params =
         node.body.attributes[DBKeys.customHttpRequestList] as List<MapElement>;
     final mapParams = <String, dynamic>{};
@@ -33,7 +34,8 @@ class CustomHttpRequestCodeTemplate {
             0,
             resultType: ResultTypeEnum.string,
           )
-          .replaceAll("'", '');
+          .replaceAll("'", '')
+          .replaceAll(" ", '');
     }
     final mapParamsString = StringBuffer()..write('{');
     for (final key in mapParams.keys) {
@@ -50,7 +52,8 @@ class CustomHttpRequestCodeTemplate {
             0,
             resultType: ResultTypeEnum.string,
           )
-          .replaceAll("'", '');
+          .replaceAll("'", '')
+          .replaceAll(" ", '');
     }
     final mapHeadersString = StringBuffer()..write('{');
     for (final key in mapHeaders.keys) {
@@ -78,8 +81,8 @@ class CustomHttpRequestCodeTemplate {
     final code = '''
     TetaFutureBuilderHttp(
     url: "$url",
-    params: "$mapParamsString",
-    headers: "$mapHeadersString",
+    params: $mapParamsString,
+    headers: $mapHeadersString,
     builder: (context, snapshot) {
       
       if(snapshot.connectionState == ConnectionState.waiting){
