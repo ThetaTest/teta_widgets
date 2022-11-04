@@ -12,4 +12,5 @@ enum ActionSupabaseDB {
   insert,
   update,
   delete,
+  edgeFunction,
 }

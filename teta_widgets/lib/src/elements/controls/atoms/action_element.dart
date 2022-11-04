@@ -1583,7 +1583,6 @@ class ActionElementControlState extends State<ActionElementControl> {
                         callBack: (final value, final old) {
                           final old = widget.element;
                           widget.element.valueTextTypeInput = value;
-                          widget.element.valueOfCondition = value;
                           widget.callBack(widget.element, old);
                         },
                       ),

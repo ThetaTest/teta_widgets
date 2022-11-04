@@ -2577,7 +2577,10 @@ class FActionElement extends Equatable {
           //   return '';
           case null:
             return '';
+          default:
+            return '';
         }
+
       case ActionType.camera:
         switch (actionCamera) {
           case ActionCamera.takePhoto:
