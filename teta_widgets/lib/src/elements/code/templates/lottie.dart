@@ -20,6 +20,7 @@ class LottieCodeTemplate {
     final value = abstract.toCode(
       loop,
       resultType: ResultTypeEnum.string,
+      defaultValue: '',
     );
     final code = '''
     Lottie.network(

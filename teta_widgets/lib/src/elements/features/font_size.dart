@@ -113,6 +113,10 @@ class FFontSize {
       return size.toString();
     }
 
+    if (size == (sizeTablet ?? size) && size == (sizeDesktop ?? size)) {
+      return _valueToCode(size);
+    }
+
     return '''
 getValueForScreenType<double>(
   context: context,

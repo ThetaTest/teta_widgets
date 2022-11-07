@@ -168,7 +168,10 @@ class FAlign {
   /// ```dart
   /// Alignment.topLeft
   /// ```
-  String toCode() => '''
+  String toCode() =>
+      align == (alignTablet ?? align) && align == (alignDesktop ?? align)
+          ? convertValueToCode(align)
+          : '''
   getValueForScreenType<Alignment>(
     context: context,
     mobile: ${convertValueToCode(align)},

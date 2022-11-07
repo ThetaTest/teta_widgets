@@ -20,6 +20,7 @@ class AnimConfigGridCodeTemplate {
     final position = (body.attributes[DBKeys.value] as FTextTypeInput).toCode(
       loop,
       resultType: ResultTypeEnum.int,
+      defaultValue: '0',
     );
     final duration =
         (body.attributes[DBKeys.duration] as FTextTypeInput).toCode(

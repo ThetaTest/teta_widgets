@@ -21,6 +21,7 @@ class VisibilityCodeTemplate {
     final visibility = abstract.toCode(
       loop,
       resultType: ResultTypeEnum.bool,
+      defaultValue: 'true',
     );
 
     if (abstract.type == FTextTypeEnum.text && abstract.value == 'true') {

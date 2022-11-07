@@ -334,7 +334,7 @@ class FFill {
 
     if (fill.paletteStyle != null) {
       if (currentPaletteElement != null) {
-        return "color: context.watch<ThemeCubit>().state ? TetaThemes.lightTheme['${currentPaletteElement.name}'] as Color : TetaThemes.darkTheme['${currentPaletteElement.name}'] as Color,";
+        return "color: BlocProvider.of<ThemeCubit>(context).getColor('${currentPaletteElement.name}'),";
       } else {
         return 'color: Colors.black,';
       }

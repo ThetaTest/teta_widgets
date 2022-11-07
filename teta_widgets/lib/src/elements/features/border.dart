@@ -120,6 +120,11 @@ class FBorder {
   ''';
     }
 
+    if (width!.margins! == (width!.marginsTablet ?? width!.margins!) &&
+        width!.margins! == (width!.marginsDesktop ?? width!.margins!)) {
+      return _valueToCode(width!.margins!);
+    }
+
     return '''
 getValueForScreenType<Border>(
   context: context,

@@ -92,7 +92,7 @@ class SizeControlsState extends State<SizeControl> {
                   flag = widget.size
                           .get(context: context, isWidth: widget.isWidth) !=
                       null;
-                  String? size;
+                  var size = widget.size.size;
                   if (device.identifier.type == DeviceType.phone) {
                     size = widget.size.size;
                   } else if (device.identifier.type == DeviceType.tablet) {
@@ -114,7 +114,7 @@ class SizeControlsState extends State<SizeControl> {
                             ? '100%'
                             : (size == 'auto')
                                 ? 'auto'
-                                : '${widget.size.get(context: context, isWidth: widget.isWidth)}';
+                                : '${widget.size.get(context: context, isWidth: widget.isWidth) ?? 0.0}';
                   }
                 }
               }
@@ -132,16 +132,14 @@ class SizeControlsState extends State<SizeControl> {
                         mainAxisSize: MainAxisSize.min,
                         children: [
                           Image.asset(
-                                  device.identifier.type ==
-                                          DeviceType.phone
-                                      ? Assets.icons.devices.smartphone.path
-                                      : device.identifier.type ==
-                                              DeviceType.tablet
-                                          ? Assets.icons.devices.tablet.path
-                                          : Assets.icons.devices.monitor.path,
-                                  width: 24,
-                                  height: 24,
-                                ),
+                            device.identifier.type == DeviceType.phone
+                                ? Assets.icons.devices.smartphone.path
+                                : device.identifier.type == DeviceType.tablet
+                                    ? Assets.icons.devices.tablet.path
+                                    : Assets.icons.devices.monitor.path,
+                            width: 24,
+                            height: 24,
+                          ),
                           CSwitch(
                             callback: (final v) {
                               final value = v

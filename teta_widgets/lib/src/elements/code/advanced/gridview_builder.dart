@@ -98,7 +98,7 @@ class GridViewBuilderCodeTemplate {
         crossAxisSpacing: $crossAxisSpacing,
         childAspectRatio: $childAspectRatio,
       ),
-      itemCount: this.datasets['$dataset'].length > 0 ? this.datasets['$dataset'].sublist($startFromIndex, $limit).length : 0,
+      itemCount: this.datasets['$dataset']?.length ?? 0 > 0 ? this.datasets['$dataset'].sublist($startFromIndex, $limit).length : 0,
       itemBuilder: (context, index) {
         return $childString;
       },

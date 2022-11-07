@@ -117,6 +117,11 @@ class FBorderRadius {
     )''';
     }
 
+    if (radius == (radiusTablet ?? radius) &&
+        radius == (radiusDesktop ?? radius)) {
+      return convertValueToCode(radius!);
+    }
+
     return '''
 getValueForScreenType<BorderRadius>(
   context: context,

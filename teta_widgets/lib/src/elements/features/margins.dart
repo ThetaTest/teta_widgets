@@ -135,6 +135,11 @@ class FMargins {
     )''';
     }
 
+    if (margins! == (marginsTablet ?? margins!) &&
+        margins! == (marginsDesktop ?? margins!)) {
+      return valueToCode(margins!);
+    }
+
     return '''
 getValueForScreenType<EdgeInsets>(
   context: context,

@@ -181,39 +181,46 @@ class PaddingsState extends State<TextControl> {
                         DropdownCustomMenuItem(
                           value: 'text',
                           child: Row(
+                            mainAxisSize: MainAxisSize.min,
+                            mainAxisAlignment: MainAxisAlignment.end,
                             children: const [
                               Icon(
                                 FeatherIcons.type,
                                 color: Palette.txtPrimary,
+                                size: 22,
                               ),
                               Gap(Grid.small),
-                              TParagraph('Text'),
+                              TDetailLabel('Text'),
                             ],
                           ),
                         ),
                         DropdownCustomMenuItem(
                           value: 'param',
                           child: Row(
+                            mainAxisSize: MainAxisSize.min,
                             children: const [
                               Icon(
                                 FeatherIcons.cpu,
                                 color: Palette.txtPrimary,
+                                size: 22,
                               ),
                               Gap(Grid.small),
-                              TParagraph('Parameter'),
+                              TDetailLabel('Param'),
                             ],
                           ),
                         ),
                         DropdownCustomMenuItem(
                           value: 'state',
                           child: Row(
+                            mainAxisSize: MainAxisSize.min,
                             children: const [
                               Icon(
                                 FeatherIcons.cpu,
                                 color: Palette.txtPrimary,
+                                size: 22,
                               ),
                               Gap(Grid.small),
-                              TParagraph('State'),
+                              TDetailLabel('State'),
                             ],
                           ),
                         ),
@@ -224,9 +231,10 @@ class PaddingsState extends State<TextControl> {
                               Icon(
                                 FeatherIcons.server,
                                 color: Palette.txtPrimary,
+                                size: 22,
                               ),
                               Gap(Grid.small),
-                              TParagraph('Collection / Dataset'),
+                              TDetailLabel('Dataset'),
                             ],
                           ),
                         ),
@@ -238,9 +246,10 @@ class PaddingsState extends State<TextControl> {
                                 Icon(
                                   FeatherIcons.server,
                                   color: Palette.txtPrimary,
+                                  size: 22,
                                 ),
                                 Gap(Grid.small),
-                                TParagraph('Combined value'),
+                                TDetailLabel('Combined'),
                               ],
                             ),
                           ),
@@ -251,9 +260,10 @@ class PaddingsState extends State<TextControl> {
                               Icon(
                                 FeatherIcons.globe,
                                 color: Palette.txtPrimary,
+                                size: 22,
                               ),
                               Gap(Grid.small),
-                              TParagraph('Language Terms'),
+                              TDetailLabel('Languages'),
                             ],
                           ),
                         ),

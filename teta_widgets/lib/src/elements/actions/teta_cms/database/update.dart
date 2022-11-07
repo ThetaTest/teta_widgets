@@ -59,6 +59,7 @@ class FATetaCMSUpdate {
     final eqValue = documentId?.toCode(
       loop,
       resultType: ResultTypeEnum.string,
+      defaultValue: '',
     );
     final mapString = StringBuffer()..write('{');
     for (final key in map.keys) {

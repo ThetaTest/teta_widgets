@@ -127,10 +127,10 @@ class FSize {
   static FSize fromJson(final Map<String, dynamic> json) {
     try {
       return FSize(
-        size: json['s'] as String?,
+        size: json['s'] as String? ?? '0',
         unit: json['u'] == 'i' ? SizeUnit.pixel : SizeUnit.percent,
-        sizeTablet: json['t'] as String? ?? json['s'] as String?,
-        sizeDesktop: json['d'] as String? ?? json['s'] as String?,
+        sizeTablet: json['t'] as String? ?? json['s'] as String? ?? '0',
+        sizeDesktop: json['d'] as String? ?? json['s'] as String? ?? '0',
         unitTablet: json['ut'] == 'i' || json['u'] == 'i'
             ? SizeUnit.pixel
             : SizeUnit.percent,
@@ -148,10 +148,10 @@ class FSize {
   }
 
   Map<String, dynamic> toJson() => <String, dynamic>{
-        's': size,
+        's': size ?? '0',
         'u': unit == SizeUnit.percent ? 'e' : 'i',
-        't': sizeTablet,
-        'd': sizeDesktop,
+        't': sizeTablet ?? '0',
+        'd': sizeDesktop ?? '0',
         'ut': unitTablet == SizeUnit.percent ? 'e' : 'i',
         'ud': unitDesktop == SizeUnit.percent ? 'e' : 'i',
       };
@@ -196,6 +196,13 @@ class FSize {
         return finalString;
       }
       return value ?? 'null';
+    }
+
+    if (_valueToCode(size!, unit!) ==
+            _valueToCode(sizeTablet ?? size!, unitTablet ?? unit!) &&
+        _valueToCode(size!, unit!) ==
+            _valueToCode(sizeDesktop ?? size!, unitDesktop ?? unit!)) {
+      return _valueToCode(size!, unit!);
     }
 
     return '''

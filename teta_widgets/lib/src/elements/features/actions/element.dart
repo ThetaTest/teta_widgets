@@ -29,7 +29,6 @@ import 'package:teta_widgets/src/elements/actions/camera/stop_recording.dart';
 import 'package:teta_widgets/src/elements/actions/camera/switch_camera.dart';
 import 'package:teta_widgets/src/elements/actions/camera/take_photo.dart';
 import 'package:teta_widgets/src/elements/actions/camera/torch_flash.dart';
-import 'package:teta_widgets/src/elements/actions/condition.dart';
 import 'package:teta_widgets/src/elements/actions/custom_functions/custom_function.dart';
 import 'package:teta_widgets/src/elements/actions/delay.dart';
 import 'package:teta_widgets/src/elements/actions/google_maps/reload_data.dart';
@@ -2012,21 +2011,13 @@ class FActionElement extends Equatable {
         }
         break;
       case ActionType.customFunctions:
-        return FCondition.toCode(
-              context,
-              condition,
-              valueOfCondition,
-              withCondition: withCondition ?? false,
-            ) +
-            FDelay.toCode(int.tryParse('${delay?.value}') ?? 0) +
-            FLoop.toCode(
-              int.tryParse(everyMilliseconds?.value ?? '0') ?? 0,
-              FActionCustomFunction.toCode(
-                context,
-                customFunctionId,
-              ),
-              withLoop: withLoop ?? false,
-            );
+        return codeS(
+          FActionCustomFunction.toCode(
+            context,
+            customFunctionId,
+          ),
+          context,
+        );
       case ActionType.tetaDatabase:
         switch (actionTetaDB) {
           case ActionTetaCmsDB.insert:
