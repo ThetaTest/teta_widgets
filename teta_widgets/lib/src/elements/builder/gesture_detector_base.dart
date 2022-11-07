@@ -286,7 +286,7 @@ class PerspectiveBase {
           loop,
           resultType: ResultTypeEnum.double,
         ) ??
-        '0';
+        '0.0';
     final identityV = double.tryParse(valueIdentityV) != null
         ? double.parse(valueIdentityV)
         : 0.0;
@@ -297,7 +297,7 @@ class PerspectiveBase {
           loop,
           resultType: ResultTypeEnum.double,
         ) ??
-        '0';
+        '0.0';
     final rotateX = double.tryParse(valueRotateX) != null
         ? double.parse(valueRotateX)
         : 0.0;
@@ -308,7 +308,7 @@ class PerspectiveBase {
           loop,
           resultType: ResultTypeEnum.double,
         ) ??
-        '0';
+        '0.0';
     final rotateY = double.tryParse(valueRotateY) != null
         ? double.parse(valueRotateY)
         : 0.0;
@@ -319,26 +319,26 @@ class PerspectiveBase {
           loop,
           resultType: ResultTypeEnum.double,
         ) ??
-        '0';
+        '0.0';
     final rotateZ = double.tryParse(valueRotateZ) != null
         ? double.parse(valueRotateZ)
         : 0.0;
 
     final matrix = Matrix4.identity();
     if (identityC != 0 && identityV != 0 && identityR != 0) {
-      matrix.setEntry(identityR, identityC, identityV);
+      matrix.setEntry(identityR, identityC, identityV.toDouble());
     }
 
     if (rotateX != 0) {
-      matrix.rotateX(rotateX);
+      matrix.rotateX(rotateX.toDouble());
     }
 
     if (rotateY != 0) {
-      matrix.rotateY(rotateY);
+      matrix.rotateY(rotateY.toDouble());
     }
 
     if (rotateZ != 0) {
-      matrix.rotateZ(rotateZ);
+      matrix.rotateZ(rotateZ.toDouble());
     }
 
     return Transform(

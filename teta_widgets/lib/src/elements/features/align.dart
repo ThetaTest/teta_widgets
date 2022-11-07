@@ -2,14 +2,21 @@
 // ignore_for_file: public_member_api_docs
 
 // Flutter imports:
+import 'package:device_frame/device_frame.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:teta_core/teta_core.dart';
 
 class FAlign {
   FAlign({
     this.align = Alignment.topLeft,
+    this.alignTablet,
+    this.alignDesktop,
   });
 
   final Alignment? align;
+  final Alignment? alignTablet;
+  final Alignment? alignDesktop;
 
   static List<String> get dropdownList => [
         'Top Left',
@@ -24,31 +31,70 @@ class FAlign {
       ];
 
   Alignment get(final BuildContext context) {
-    return align!;
-  }
-
-  String getStringForDropDown(final BuildContext context) {
-    return convertValueToDropDown(align!);
-  }
-
-  static FAlign fromJson(final String json) {
-    try {
-      return FAlign(
-        align: convertJsonToValue(json),
-      );
-    } catch (e) {
-      return FAlign();
+    final device = BlocProvider.of<DeviceModeCubit>(context).state;
+    if (device.identifier.type == DeviceType.phone) {
+      return align!;
+    } else if (device.identifier.type == DeviceType.tablet) {
+      return alignTablet ?? align!;
+    } else {
+      return alignDesktop ?? align!;
     }
   }
 
-  String toJson() {
-    return convertValueToJson(align!);
+  String getStringForDropDown(final BuildContext context) {
+    final device = BlocProvider.of<DeviceModeCubit>(context).state;
+    Logger.printMessage('getStringForDropDown: ${device.identifier.type}');
+    if (device.identifier.type == DeviceType.phone) {
+      return convertValueToDropDown(align!);
+    } else if (device.identifier.type == DeviceType.tablet) {
+      return convertValueToDropDown(alignTablet ?? align!);
+    } else {
+      return convertValueToDropDown(alignDesktop ?? align!);
+    }
   }
 
-  FAlign clone() => FAlign(align: align);
+  static FAlign fromJson(final dynamic json) {
+    if (json.runtimeType == String) {
+      return FAlign(
+        align: convertJsonToValue(json as String),
+      );
+    } else {
+      try {
+        return FAlign(
+          align: convertJsonToValue(json['m'] as String? ?? ''),
+          alignTablet: convertDropDownToValue(json['t'] as String? ?? ''),
+          alignDesktop: convertDropDownToValue(json['d'] as String? ?? ''),
+        );
+      } catch (e) {
+        return FAlign();
+      }
+    }
+  }
 
-  FAlign copyWith({final Alignment? align}) =>
-      FAlign(align: align ?? this.align);
+  Map<String, dynamic> toJson() {
+    return <String, dynamic>{
+      'm': convertValueToJson(align!),
+      't': convertValueToJson(alignTablet ?? align!),
+      'd': convertValueToJson(alignDesktop ?? align!),
+    };
+  }
+
+  FAlign clone() => FAlign(
+        align: align,
+        alignTablet: alignTablet,
+        alignDesktop: alignDesktop,
+      );
+
+  FAlign copyWith({
+    final Alignment? align,
+    final Alignment? alignTablet,
+    final Alignment? alignDesktop,
+  }) =>
+      FAlign(
+        align: align ?? this.align,
+        alignTablet: alignTablet ?? this.alignTablet,
+        alignDesktop: alignDesktop ?? this.alignDesktop,
+      );
 
   static Alignment convertJsonToValue(final String key) {
     var align = Alignment.topLeft;
@@ -122,7 +168,17 @@ class FAlign {
   /// ```dart
   /// Alignment.topLeft
   /// ```
-  String toCode() => convertValueToCode(align);
+  String toCode() =>
+      align == (alignTablet ?? align) && align == (alignDesktop ?? align)
+          ? convertValueToCode(align)
+          : '''
+  getValueForScreenType<Alignment>(
+    context: context,
+    mobile: ${convertValueToCode(align)},
+    tablet: ${convertValueToCode(alignTablet ?? align)},
+    desktop: ${convertValueToCode(alignDesktop ?? align)},
+  )
+  ''';
 }
 
 

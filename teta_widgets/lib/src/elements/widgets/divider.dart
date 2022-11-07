@@ -44,6 +44,7 @@ class WDivider extends StatelessWidget {
       if (element.id == fill.paletteStyle) model = element;
       if (element.name == fill.paletteStyle) model = element;
     });
+    final h = height.get(context: context, isWidth: false);
     return NodeSelectionBuilder(
       node: node,
       forPlay: forPlay,
@@ -56,7 +57,7 @@ class WDivider extends StatelessWidget {
         forPlay: forPlay,
         loop: loop,
         child: Divider(
-          thickness: height.get(context: context, isWidth: false),
+          height: (h ?? 0) <= 0 ? 1.0 : h,
           color: _getDividerColor(model, isLight),
         ),
       ),

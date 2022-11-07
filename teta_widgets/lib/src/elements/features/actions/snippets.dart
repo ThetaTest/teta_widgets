@@ -18,16 +18,16 @@ class AS {
     required final bool? withLoop,
   }) {
     return FCondition.toCode(
-          context,
-          condition,
-          valueOfCondition,
-          withCondition: withCondition ?? false,
-        ) +
-        FDelay.toCode(int.tryParse('${delay?.value}') ?? 0) +
-        FLoop.toCode(
-          int.tryParse(everyMilliseconds?.value ?? '0') ?? 0,
-          func,
-          withLoop: withLoop ?? false,
-        );
+      context,
+      condition,
+      valueOfCondition,
+      FDelay.toCode(int.tryParse('${delay?.value}') ?? 0) +
+          FLoop.toCode(
+            int.tryParse(everyMilliseconds?.value ?? '0') ?? 0,
+            func,
+            withLoop: withLoop ?? false,
+          ),
+      withCondition: withCondition ?? false,
+    );
   }
 }

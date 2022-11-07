@@ -2,6 +2,7 @@
 // ignore_for_file: public_member_api_docs, lines_longer_than_80_chars
 
 // Flutter imports:
+import 'package:device_frame/device_frame.dart';
 import 'package:flutter/material.dart';
 // Package imports:
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -53,207 +54,269 @@ class SizeControlsState extends State<SizeControl> {
 
   @override
   Widget build(final BuildContext context) {
-    return BlocBuilder<FocusBloc, List<CNode>>(
-      builder: (final context, final state) {
-        if (state.isNotEmpty) {
-          if (state.first.nid != nodeId) {
-            if (mounted) {
-              nodeId = state.first.nid;
-              flag =
-                  widget.size.get(context: context, isWidth: widget.isWidth) !=
+    return BlocListener<DeviceModeCubit, DeviceInfo>(
+      listener: (final context, final device) {
+        flag =
+            widget.size.get(context: context, isWidth: widget.isWidth) != null;
+        String? size;
+        if (device.identifier.type == DeviceType.phone) {
+          size = widget.size.size;
+        } else if (device.identifier.type == DeviceType.tablet) {
+          size = widget.size.sizeTablet;
+        } else {
+          size = widget.size.sizeDesktop;
+        }
+        final unit = widget.size.getUnit(context);
+        for (var i = 0; i < 2; i++) {
+          controller.text = (size == 'max' ||
+                  size == 'inf' && size == '100%' && unit == SizeUnit.pixel)
+              ? 'max'
+              : (size == 'max' ||
+                      size == 'inf' &&
+                          size == '100%' &&
+                          unit == SizeUnit.percent)
+                  ? '100%'
+                  : (widget.size.size == 'auto')
+                      ? 'auto'
+                      : '${widget.size.get(context: context, isWidth: widget.isWidth)}';
+        }
+      },
+      child: BlocBuilder<DeviceModeCubit, DeviceInfo>(
+        builder: (final context, final device) =>
+            BlocBuilder<FocusBloc, List<CNode>>(
+          builder: (final context, final state) {
+            if (state.isNotEmpty) {
+              if (state.first.nid != nodeId) {
+                if (mounted) {
+                  nodeId = state.first.nid;
+                  flag = widget.size
+                          .get(context: context, isWidth: widget.isWidth) !=
                       null;
-              for (var i = 0; i < 2; i++) {
-                controller.text = (widget.size.size == 'max' ||
-                        widget.size.size == 'inf' &&
-                            widget.size.size == '100%' &&
-                            widget.size.unit == SizeUnit.pixel)
-                    ? 'max'
-                    : (widget.size.size == 'max' ||
-                            widget.size.size == 'inf' &&
-                                widget.size.size == '100%' &&
-                                widget.size.unit == SizeUnit.percent)
-                        ? '100%'
-                        : (widget.size.size == 'auto')
-                            ? 'auto'
-                            : '${widget.size.get(context: context, isWidth: widget.isWidth)}';
+                  var size = widget.size.size;
+                  if (device.identifier.type == DeviceType.phone) {
+                    size = widget.size.size;
+                  } else if (device.identifier.type == DeviceType.tablet) {
+                    size = widget.size.sizeTablet;
+                  } else {
+                    size = widget.size.sizeDesktop;
+                  }
+                  final unit = widget.size.getUnit(context);
+                  for (var i = 0; i < 2; i++) {
+                    controller.text = (size == 'max' ||
+                            size == 'inf' &&
+                                size == '100%' &&
+                                unit == SizeUnit.pixel)
+                        ? 'max'
+                        : (size == 'max' ||
+                                size == 'inf' &&
+                                    size == '100%' &&
+                                    unit == SizeUnit.percent)
+                            ? '100%'
+                            : (size == 'auto')
+                                ? 'auto'
+                                : '${widget.size.get(context: context, isWidth: widget.isWidth) ?? 0.0}';
+                  }
+                }
               }
             }
-          }
-        }
 
-        return Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            Padding(
-              padding: const EdgeInsets.only(bottom: 8, right: 4),
-              child: Row(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                children: [
-                  Row(
-                    mainAxisSize: MainAxisSize.min,
+            return Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                Padding(
+                  padding: const EdgeInsets.only(bottom: 8, right: 4),
+                  child: Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
-                      CSwitch(
-                        callback: (final v) {
-                          final value = v
-                              ? widget.isWidth
-                                  ? 'max'
-                                  : '150'
-                              : 'null';
-                          setState(() {
-                            flag = v;
-                          });
-                          final szs = widget.size;
-                          final old = FSize.fromJson(widget.size.toJson());
-                          value.replaceAll('%', '');
-                          szs.size = value;
-                          widget.node.body.attributes[widget.keyAttr] = szs;
-                          widget.callBack(szs.toJson(), old.toJson());
-                        },
-                        value: flag,
-                      ),
-                      Padding(
-                        padding: const EdgeInsets.only(left: 8),
-                        child: THeadline3(
-                          widget.title,
-                        ),
-                      ),
-                    ],
-                  ),
-                  Visibility(
-                    visible: widget.size.get(
-                          context: context,
-                          isWidth: widget.isWidth,
-                        ) !=
-                        null,
-                    child: IgnorePointer(
-                      ignoring: widget.size
-                              .get(context: context, isWidth: widget.isWidth) ==
-                          null,
-                      child: Row(
+                      Row(
                         mainAxisSize: MainAxisSize.min,
                         children: [
-                          GestureDetector(
-                            onTap: () {
-                              final old = FSize.fromJson(widget.size.toJson());
-                              widget.size.unit = SizeUnit.pixel;
-                              final szs = widget.size;
-                              widget.node.body.attributes[widget.keyAttr] = szs;
-                              widget.callBack(szs.toJson(), old.toJson());
-                            },
-                            child: unitIcon(
-                              unit: SizeUnit.pixel,
-                              unitFromNode: widget.size.unit,
-                            ),
+                          Image.asset(
+                            device.identifier.type == DeviceType.phone
+                                ? Assets.icons.devices.smartphone.path
+                                : device.identifier.type == DeviceType.tablet
+                                    ? Assets.icons.devices.tablet.path
+                                    : Assets.icons.devices.monitor.path,
+                            width: 24,
+                            height: 24,
                           ),
-                          GestureDetector(
-                            onTap: () {
-                              final old = FSize.fromJson(widget.size.toJson());
-                              widget.size.unit = SizeUnit.percent;
+                          CSwitch(
+                            callback: (final v) {
+                              final value = v
+                                  ? widget.isWidth
+                                      ? 'max'
+                                      : '150'
+                                  : 'null';
+                              setState(() {
+                                flag = v;
+                              });
                               final szs = widget.size;
+                              final old = FSize.fromJson(widget.size.toJson());
+                              value.replaceAll('%', '');
+                              szs.updateSize(value, context);
                               widget.node.body.attributes[widget.keyAttr] = szs;
                               widget.callBack(szs.toJson(), old.toJson());
                             },
-                            child: unitIcon(
-                              unit: SizeUnit.percent,
-                              unitFromNode: widget.size.unit,
+                            value: flag,
+                          ),
+                          Padding(
+                            padding: const EdgeInsets.only(left: 8),
+                            child: THeadline3(
+                              widget.title,
                             ),
                           ),
                         ],
                       ),
-                    ),
-                  ),
-                ],
-              ),
-            ),
-            Visibility(
-              visible:
-                  widget.size.get(context: context, isWidth: widget.isWidth) !=
-                      null,
-              child: IgnorePointer(
-                ignoring: widget.size
-                        .get(context: context, isWidth: widget.isWidth) ==
-                    null,
-                child: Row(
-                  children: [
-                    SizedBox(
-                      width: MediaQuery.of(context).size.width >= 600
-                          ? 300
-                          : MediaQuery.of(context).size.width - 20,
-                      height: 60,
-                      child: Stack(
-                        fit: StackFit.expand,
-                        children: [
-                          Positioned(
-                            left: 0,
-                            right: 0,
-                            top: 0,
-                            bottom: 0,
-                            child: Padding(
-                              padding: const EdgeInsets.only(right: 4),
-                              child: CMiniTextField(
-                                controller: controller,
-                                text: widget.size.size,
-                                callBack: (final value) {
-                                  final szs = widget.size;
+                      Visibility(
+                        visible: widget.size.get(
+                              context: context,
+                              isWidth: widget.isWidth,
+                            ) !=
+                            null,
+                        child: IgnorePointer(
+                          ignoring: widget.size.get(
+                                context: context,
+                                isWidth: widget.isWidth,
+                              ) ==
+                              null,
+                          child: Row(
+                            mainAxisSize: MainAxisSize.min,
+                            children: [
+                              GestureDetector(
+                                onTap: () {
                                   final old =
                                       FSize.fromJson(widget.size.toJson());
-                                  value.replaceAll('%', '');
-                                  szs.size = value;
+                                  widget.size
+                                      .updateUnit(SizeUnit.pixel, context);
+                                  final szs = widget.size;
                                   widget.node.body.attributes[widget.keyAttr] =
                                       szs;
                                   widget.callBack(szs.toJson(), old.toJson());
                                 },
+                                child: unitIcon(
+                                  unit: SizeUnit.pixel,
+                                  unitFromNode: widget.size.getUnit(context),
+                                ),
                               ),
-                            ),
+                              GestureDetector(
+                                onTap: () {
+                                  final old =
+                                      FSize.fromJson(widget.size.toJson());
+                                  widget.size
+                                      .updateUnit(SizeUnit.percent, context);
+                                  final szs = widget.size;
+                                  widget.node.body.attributes[widget.keyAttr] =
+                                      szs;
+                                  widget.callBack(szs.toJson(), old.toJson());
+                                },
+                                child: unitIcon(
+                                  unit: SizeUnit.percent,
+                                  unitFromNode: widget.size.getUnit(context),
+                                ),
+                              ),
+                            ],
                           ),
-                          Positioned(
-                            top: 4,
-                            right: 12,
-                            bottom: 18,
-                            child: Container(
-                              color: Palette.bgTertiary,
-                              child: Column(
-                                mainAxisAlignment: MainAxisAlignment.center,
-                                children: [
-                                  GestureDetector(
-                                    onTap: () {
-                                      final old = FSize.fromJson(
-                                        widget.size.toJson(),
-                                      );
-                                      widget.size.size =
-                                          widget.size.unit == SizeUnit.pixel
-                                              ? 'max'
-                                              : '100%';
+                        ),
+                      ),
+                    ],
+                  ),
+                ),
+                Visibility(
+                  visible: widget.size
+                          .get(context: context, isWidth: widget.isWidth) !=
+                      null,
+                  child: IgnorePointer(
+                    ignoring: widget.size
+                            .get(context: context, isWidth: widget.isWidth) ==
+                        null,
+                    child: Row(
+                      children: [
+                        SizedBox(
+                          width: MediaQuery.of(context).size.width >= 600
+                              ? 300
+                              : MediaQuery.of(context).size.width - 20,
+                          height: 60,
+                          child: Stack(
+                            fit: StackFit.expand,
+                            children: [
+                              Positioned(
+                                left: 0,
+                                right: 0,
+                                top: 0,
+                                bottom: 0,
+                                child: Padding(
+                                  padding: const EdgeInsets.only(right: 4),
+                                  child: CMiniTextField(
+                                    controller: controller,
+                                    text: widget.size.size,
+                                    callBack: (final value) {
+                                      final szs = widget.size;
+                                      final old =
+                                          FSize.fromJson(widget.size.toJson());
+                                      value.replaceAll('%', '');
+                                      szs.updateSize(value, context);
                                       widget.node.body
-                                              .attributes[widget.keyAttr] =
-                                          widget.size;
+                                          .attributes[widget.keyAttr] = szs;
                                       widget.callBack(
-                                        widget.size.toJson(),
+                                        szs.toJson(),
                                         old.toJson(),
                                       );
-                                      controller.text =
-                                          widget.size.unit == SizeUnit.pixel
-                                              ? 'max'
-                                              : '100%';
                                     },
-                                    child: maxIcon(
-                                      unit: widget.size.unit,
-                                    ),
                                   ),
-                                ],
+                                ),
                               ),
-                            ),
-                          )
-                        ],
-                      ),
+                              Positioned(
+                                top: 4,
+                                right: 12,
+                                bottom: 18,
+                                child: Container(
+                                  color: Palette.bgTertiary,
+                                  child: Column(
+                                    mainAxisAlignment: MainAxisAlignment.center,
+                                    children: [
+                                      GestureDetector(
+                                        onTap: () {
+                                          final old = FSize.fromJson(
+                                            widget.size.toJson(),
+                                          );
+                                          widget.size.updateSize(
+                                            widget.size.unit == SizeUnit.pixel
+                                                ? 'max'
+                                                : '100%',
+                                            context,
+                                          );
+                                          widget.node.body
+                                                  .attributes[widget.keyAttr] =
+                                              widget.size;
+                                          widget.callBack(
+                                            widget.size.toJson(),
+                                            old.toJson(),
+                                          );
+                                          controller.text =
+                                              widget.size.unit == SizeUnit.pixel
+                                                  ? 'max'
+                                                  : '100%';
+                                        },
+                                        child: maxIcon(
+                                          unit: widget.size.unit,
+                                        ),
+                                      ),
+                                    ],
+                                  ),
+                                ),
+                              )
+                            ],
+                          ),
+                        ),
+                      ],
                     ),
-                  ],
+                  ),
                 ),
-              ),
-            ),
-          ],
-        );
-      },
+              ],
+            );
+          },
+        ),
+      ),
     );
   }
 

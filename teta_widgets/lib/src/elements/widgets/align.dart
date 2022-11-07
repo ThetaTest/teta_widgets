@@ -48,7 +48,7 @@ class WAlign extends StatelessWidget {
         forPlay: forPlay,
         loop: loop,
         child: Align(
-          alignment: align.align!,
+          alignment: align.get(context),
           child: ChildConditionBuilder(
             ValueKey('${node.nid} $loop'),
             name: node.intrinsicState.displayName,

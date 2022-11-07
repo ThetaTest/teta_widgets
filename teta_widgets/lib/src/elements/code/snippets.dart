@@ -239,7 +239,7 @@ class CS {
   ) async {
     final childString = await child;
     final originalType = NodeBody.get(node.globalType);
-    if (originalType.attributes[DBKeys.action] == null) {
+    if (originalType.attributes[DBKeys.action] != null) {
       return childString;
     }
 

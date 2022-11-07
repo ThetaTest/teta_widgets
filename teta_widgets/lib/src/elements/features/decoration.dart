@@ -24,7 +24,7 @@ class TetaBoxDecoration {
       final opacity = tempOpacity >= 0 && tempOpacity <= 1 ? tempOpacity : 1.0;
       return BoxDecoration(
         color: HexColor(fill.levels!.first.color).withOpacity(opacity),
-        borderRadius: borderRadius?.get,
+        borderRadius: borderRadius?.get(context),
         boxShadow: const [
           //shadows.get(context),
         ],
@@ -45,7 +45,7 @@ class TetaBoxDecoration {
           end: fill.end!,
           stops: fill.levels!.map((final e) => e.stop).toList(),
         ),
-        borderRadius: borderRadius?.get,
+        borderRadius: borderRadius?.get(context),
         boxShadow: const [
           //shadows.get(context),
         ],
@@ -54,7 +54,7 @@ class TetaBoxDecoration {
     } else if (fill.paletteStyle != null) {
       return BoxDecoration(
         color: HexColor(fill.get(context).getHexColor(context)),
-        borderRadius: borderRadius?.get,
+        borderRadius: borderRadius?.get(context),
         boxShadow: const [
           //shadows.get(context),
         ],
@@ -75,7 +75,7 @@ class TetaBoxDecoration {
           radius: fill.radius!,
           stops: fill.levels!.map((final e) => e.stop).toList(),
         ),
-        borderRadius: borderRadius?.get,
+        borderRadius: borderRadius?.get(context),
         boxShadow: const [
           //shadows.get(context),
         ],
@@ -85,7 +85,7 @@ class TetaBoxDecoration {
     //fill.type -> none
     else {
       return BoxDecoration(
-        borderRadius: borderRadius?.get,
+        borderRadius: borderRadius?.get(context),
         boxShadow: const [
           //shadows.get(context),
         ],
@@ -102,7 +102,8 @@ class TetaShapeCard {
     final FBorderRadius? borderRadius,
   }) {
     return RoundedRectangleBorder(
-      borderRadius: borderRadius != null ? borderRadius.get : BorderRadius.zero,
+      borderRadius:
+          borderRadius != null ? borderRadius.get(context) : BorderRadius.zero,
     );
   }
 }

@@ -80,7 +80,7 @@ class ListViewBuilderCodeTemplate {
             reverse: $reverse,
             physics: ${CS.physic(context, node.body)},
             shrinkWrap: $shrinkWrap,
-            itemCount: this.datasets['$dataset'].length > 0 ? this.datasets['$dataset'].sublist($startFromIndex, $limit).length : 0,
+            itemCount: this.datasets['$dataset']?.length ?? 0 > 0 ? this.datasets['$dataset'].sublist($startFromIndex, $limit).length : 0,
             itemBuilder: (context, index) {
               return $childString;
             },
@@ -128,7 +128,7 @@ class ListViewBuilderCodeTemplate {
             $_scrollDirection
             reverse: $reverse,
             shrinkWrap: $shrinkWrap,
-            itemCount: this.datasets['$dataset'].length > 0 ? this.datasets['$dataset'].length : 0,
+            itemCount: this.datasets['$dataset']?.length ?? 0 > 0 ? this.datasets['$dataset'].length : 0,
             itemBuilder: (context, index) {
               return $childString;
             },

@@ -21,6 +21,7 @@ class ButtonCodeTemplate {
     final value = abstract.toCode(
       loop,
       resultType: ResultTypeEnum.string,
+      defaultValue: '',
     );
     final code = '''
     GestureDetector(

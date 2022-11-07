@@ -19,9 +19,8 @@ class CmsStreamCodeTemplate {
     final NDynamic node,
     final List<CNode> children,
     final int? loop,
-      final int pageId,
+    final int pageId,
   ) async {
-
     final onEmitNewValue = CS.getActionsInFormOfFutureDelayed(
       pageId,
       context,
@@ -35,6 +34,7 @@ class CmsStreamCodeTemplate {
         (node.body.attributes[DBKeys.cmsCollection] as FTextTypeInput).toCode(
       loop,
       resultType: ResultTypeEnum.string,
+      defaultValue: '',
     );
     if (!collectionId.contains("'")) {
       collectionId = "'$collectionId'";
@@ -57,13 +57,13 @@ class CmsStreamCodeTemplate {
         (node.body.attributes[DBKeys.cmsLikeKey] as FTextTypeInput).toCode(
       loop,
       resultType: ResultTypeEnum.string,
-      defaultValue: 'null',
+      defaultValue: '',
     );
     final keyValue =
         (node.body.attributes[DBKeys.cmsLikeValue] as FTextTypeInput).toCode(
       loop,
       resultType: ResultTypeEnum.string,
-      defaultValue: 'null',
+      defaultValue: '',
     );
     final filter = keyName.replaceAll("'", '') != 'null ' &&
             keyValue.replaceAll("'", '') != 'null '

@@ -18,9 +18,8 @@ import 'package:teta_widgets/src/elements/nodes/children_enum.dart';
 import 'package:teta_widgets/src/elements/nodes/enum.dart';
 import 'package:teta_widgets/src/elements/nodes/node.dart';
 import 'package:teta_widgets/src/elements/nodes/node_body.dart';
+import 'package:teta_widgets/src/elements/nodes/suggestion.dart';
 import 'package:teta_widgets/src/elements/widgets/divider.dart';
-
-import '../nodes/suggestion.dart';
 
 const _globalType = NType.divider;
 
@@ -63,6 +62,11 @@ class DividerBody extends NodeBody {
   Map<String, dynamic> attributes = <String, dynamic>{
     DBKeys.height: FSize(
       size: '1.0',
+      sizeTablet: '1.0',
+      sizeDesktop: '1.0',
+      unit: SizeUnit.pixel,
+      unitTablet: SizeUnit.pixel,
+      unitDesktop: SizeUnit.pixel,
     ),
     DBKeys.fill: FFill(),
   };

@@ -55,6 +55,22 @@ class _WImageState extends State<WImage> {
 
   @override
   void initState() {
+    super.initState();
+  }
+
+  Future<void> calc() async {
+    if (bytes != null) {
+      final b = await (result as XFile).readAsBytes();
+      if (mounted) {
+        setState() {
+          bytes = b;
+        }
+      }
+    }
+  }
+
+  @override
+  Widget build(final BuildContext context) {
     result = widget.image.getForImages(
       widget.params,
       widget.states,
@@ -66,22 +82,6 @@ class _WImageState extends State<WImage> {
     if (result is XFile) {
       calc();
     }
-    super.initState();
-  }
-
-  Future<void> calc() async {
-    if (bytes != null) {
-      final b = await (result as XFile).readAsBytes();
-      if (mounted) {
-        setState(() {
-          bytes = b;
-        });
-      }
-    }
-  }
-
-  @override
-  Widget build(final BuildContext context) {
     return NodeSelectionBuilder(
       node: widget.node,
       forPlay: widget.forPlay,
@@ -94,7 +94,7 @@ class _WImageState extends State<WImage> {
         forPlay: widget.forPlay,
         loop: widget.loop,
         child: ClipRRect(
-          borderRadius: widget.borderRadius.get,
+          borderRadius: widget.borderRadius.get(context),
           child: SizedBox(
             width: widget.width.get(
               context: context,

@@ -30,7 +30,9 @@ class TetaTextStyles {
     final opacity = tempOpacity >= 0 && tempOpacity <= 1 ? tempOpacity : 1.0;
     return GoogleFonts.getFont(
       (model != null) ? model.fontFamily! : fontFamily,
-      fontSize: (model != null) ? model.fontSize!.get() : fontSize.get(),
+      fontSize: (model != null)
+          ? model.fontSize!.get(context)
+          : fontSize.get(context),
       fontWeight: (model != null) ? model.fontWeight!.get : fontWeight.get,
       color:
           HexColor(fill.get(context).getHexColor(context)).withOpacity(opacity),

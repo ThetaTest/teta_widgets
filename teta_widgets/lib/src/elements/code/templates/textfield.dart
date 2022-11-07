@@ -26,6 +26,7 @@ class TextFieldCodeTemplate {
         (body.attributes[DBKeys.labelText] as FTextTypeInput).toCode(
       loop,
       resultType: ResultTypeEnum.string,
+      defaultValue: '',
     );
     final maxLines =
         (body.attributes[DBKeys.maxLines] as FTextTypeInput).toCode(
@@ -121,7 +122,7 @@ class TextFieldCodeTemplate {
           borderSide: BorderSide(${bordersEnabled ? focusedBorderToCodeColor ?? 'color: Colors.transparent,' : 'color: Colors.transparent,'} width: $borderSize),
           ${CS.borderRadius(context, body)}
         ),  
-        hintText: r$labelText,
+        hintText: $labelText,
         hintStyle: TextStyle(
                 $fillHintToCodeColor),
         ${CS.margin(context, body, isMargin: false).replaceAll('padding', 'contentPadding')}

@@ -38,7 +38,7 @@ final supabaseLoggedUserIntrinsicStates = IntrinsicStates(
   advicedChildrenCanHaveAtLeastAChild: [],
   displayName: NodeType.name(_globalType),
   type: _globalType,
-  category: NodeCategories.unclassified,
+  category: NodeCategories.supabase,
   maxChildren: 1,
   canHave: ChildrenEnum.child,
   addChildLabels: [],

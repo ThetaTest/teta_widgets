@@ -126,7 +126,7 @@ class BordersControlState extends State<BordersControl> {
                 callBack: (final width, final old) {
                   final old = widget.borders.toJson();
                   widget.borders.width ??= FMargins();
-                  widget.borders.width!.margins = width;
+                  widget.borders.width = FMargins.fromJson(width);
                   widget.callBack(widget.borders.toJson(), old);
                 },
               ),

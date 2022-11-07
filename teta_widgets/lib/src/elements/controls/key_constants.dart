@@ -237,13 +237,13 @@ class DynamicAttributes {
         case DBKeys.actionValue:
           return FTextTypeInput.fromJson(value as Map<String, dynamic>);
         case DBKeys.align:
-          return FAlign.fromJson(value as String);
+          return FAlign.fromJson(value as dynamic);
         case DBKeys.physic:
           return FPhysic.fromJson(value as String);
         case DBKeys.bgFill:
           return FFill().fromJson(value as Map<String, dynamic>);
         case DBKeys.borderRadius:
-          return FBorderRadius.fromJson(value as List<dynamic>);
+          return FBorderRadius.fromJson(value as dynamic);
         case DBKeys.borders:
           return FBorder.fromJson(value as Map<String, dynamic>);
         case DBKeys.activeBorders:
@@ -321,9 +321,9 @@ class DynamicAttributes {
         case DBKeys.mainAxisSize:
           return FMainAxisSize.fromJson(value as String);
         case DBKeys.margins:
-          return FMargins.fromJson(value as List<dynamic>);
+          return FMargins.fromJson(value as dynamic);
         case DBKeys.padding:
-          return FMargins.fromJson(value as List<dynamic>);
+          return FMargins.fromJson(value as dynamic);
         case DBKeys.pageTransition:
           return FPageTransition.fromJson(value as String);
         case DBKeys.paramsToSend:

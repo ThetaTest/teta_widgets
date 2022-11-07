@@ -90,7 +90,7 @@ class _WTextFieldState extends State<WTextField> {
       textEditingController.text = widget.value.value!;
     }
 
-    final borderRadius = widget.borderRadius.get;
+    final borderRadius = widget.borderRadius.get(context);
     TextStyleModel? model;
     if (widget.textStyle.textStyleModel != null) {
       BlocProvider.of<TextStylesCubit>(context).state.forEach((final element) {
@@ -121,7 +121,7 @@ class _WTextFieldState extends State<WTextField> {
         child: TContainer(
           margin: widget.margins.get(context),
           decoration: BoxDecoration(
-            borderRadius: widget.borderRadius.get,
+            borderRadius: widget.borderRadius.get(context),
           ),
           child: TextField(
             controller: textEditingController,

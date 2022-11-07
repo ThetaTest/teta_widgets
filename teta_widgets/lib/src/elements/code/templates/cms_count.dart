@@ -22,6 +22,7 @@ class CmsCountCodeTemplate {
         (node.body.attributes[DBKeys.cmsCollection] as FTextTypeInput).toCode(
       loop,
       resultType: ResultTypeEnum.string,
+      defaultValue: '',
     );
     if (!collectionId.contains("'")) {
       collectionId = "'$collectionId'";
@@ -42,13 +43,13 @@ class CmsCountCodeTemplate {
         (node.body.attributes[DBKeys.cmsLikeKey] as FTextTypeInput).toCode(
       loop,
       resultType: ResultTypeEnum.string,
-      defaultValue: 'null',
+      defaultValue: '',
     );
     final keyValue =
         (node.body.attributes[DBKeys.cmsLikeValue] as FTextTypeInput).toCode(
       loop,
       resultType: ResultTypeEnum.string,
-      defaultValue: 'null',
+      defaultValue: '',
     );
     final filter =
         keyName.replaceAll("'", '') != '' && keyValue.replaceAll("'", '') != ''
