@@ -183,12 +183,12 @@ dev_dependencies:
   import_sorter: 4.6.0
 
 dependency_overrides:
-  teta_core:
-    path: ../../Teta/teta_core
-  teta_cms:
-    path: ../../teta-db
-  teta_repositories:
-    path: ../../Teta/teta_repositories
+  #teta_core:
+  #  path: ../../Teta/teta_core
+  #teta_cms:
+  #  path: ../../teta-db
+  #teta_repositories:
+  #  path: ../../Teta/teta_repositories
 
 
 
