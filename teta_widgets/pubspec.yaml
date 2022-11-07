@@ -16,12 +16,12 @@ dependencies:
     git:
       url: git@github.com:andreabuttarelli/Teta.git
       path: teta_core
-      ref: feat/new-db
+      ref: develop
   teta_repositories:
     git:
       url: git@github.com:andreabuttarelli/Teta.git
       path: teta_repositories
-      ref: feat/new-db
+      ref: develop
   teta_cms:
     git:
       url: https://github.com/teta-so/cms-dart.git
