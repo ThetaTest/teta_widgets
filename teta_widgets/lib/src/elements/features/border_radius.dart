@@ -16,8 +16,8 @@ class FBorderRadius {
     this.radiusDesktop,
   }) {
     radius ??= [0, 0, 0, 0];
-    radiusTablet ??= [0, 0, 0, 0];
-    radiusDesktop ??= [0, 0, 0, 0];
+    radiusTablet ??= radius;
+    radiusDesktop ??= radius;
   }
 
   /// The value of [FBorderRadius], used to display BorderRadius
@@ -50,11 +50,9 @@ class FBorderRadius {
 
   /// Instantiate [FBorderRadius] from Json
   static FBorderRadius fromJson(final dynamic json) {
-    if (json.runtimeType == List<dynamic>) {
+    if (json is List<dynamic>) {
       return FBorderRadius(
-        radius: (json as List<dynamic>)
-            .map((final dynamic e) => double.parse('$e'))
-            .toList(),
+        radius: json.map((final dynamic e) => double.parse('$e')).toList(),
       );
     } else {
       try {

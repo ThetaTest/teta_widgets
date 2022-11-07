@@ -56,10 +56,9 @@ class FMargins {
   }
 
   static FMargins fromJson(final dynamic json) {
-    if (json.runtimeType == List<dynamic>) {
+    if (json is List<dynamic>) {
       return FMargins(
-        margins:
-            (json as List<dynamic>).map((final dynamic e) => '$e').toList(),
+        margins: (json).map((final dynamic e) => '$e').toList(),
       );
     }
     try {
@@ -75,6 +74,7 @@ class FMargins {
             .toList(),
       );
     } catch (e) {
+      print('Error converting FMargins, error: $e');
       return FMargins();
     }
   }
