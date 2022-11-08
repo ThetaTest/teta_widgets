@@ -147,11 +147,7 @@ class _WScaffoldState extends State<WScaffold> {
             ),
           )
         : Scaffold(
-            backgroundColor: BlocProvider.of<PaletteDarkLightCubit>(
-              context,
-            ).state
-                ? Colors.white
-                : Colors.black,
+            backgroundColor: HexColor(widget.fill.getHexColor(context)),
             appBar: PreferredSize(
               preferredSize: const Size.fromHeight(120),
               child: widget.showAppBar && appBar != null

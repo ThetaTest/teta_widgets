@@ -276,12 +276,12 @@ class NDynamic extends CNode {
   bool get canHaveAtLeastOneChild =>
       (intrinsicState.canHave == ChildrenEnum.child && child == null) ||
       (intrinsicState.canHave == ChildrenEnum.children &&
-          childrenIds.ids.length < (intrinsicState.maxChildren ?? 50));
+          (children?.length ?? 0) < (intrinsicState.maxChildren ?? 50));
 
   bool get canWillHaveAtLeastOneNewChild =>
-      (intrinsicState.canHave == ChildrenEnum.child) ||
+      (intrinsicState.canHave == ChildrenEnum.child && child == null) ||
       (intrinsicState.canHave == ChildrenEnum.children &&
-          childrenIds.ids.length < (intrinsicState.maxChildren ?? 50) - 1);
+          (children?.length ?? 0) < (intrinsicState.maxChildren ?? 50));
 
   /// Instantiate a new node (deep copy)
   NDynamic clone() => NDynamic(
