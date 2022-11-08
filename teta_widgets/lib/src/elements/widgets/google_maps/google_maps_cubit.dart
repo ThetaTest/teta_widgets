@@ -58,7 +58,7 @@ class GoogleMapsCubit extends Cubit<GoogleMapsState> {
       final isLocationEnabled = await Geolocator.isLocationServiceEnabled();
       Position? location;
 
-      if(isLocationEnabled) {
+      if (isLocationEnabled) {
         await Geolocator.requestPermission();
         location = await Geolocator.getCurrentPosition();
 
@@ -69,7 +69,7 @@ class GoogleMapsCubit extends Cubit<GoogleMapsState> {
               distanceFilter: 20,
             ),
           ).listen(
-                (final event) async {
+            (final event) async {
               // emit new location
               unawaited(
                 _buildMarkersAndPath(
@@ -83,7 +83,7 @@ class GoogleMapsCubit extends Cubit<GoogleMapsState> {
                   googleMapsKey: configNames.googleMapsKey,
                   configNames: configNames,
                   datasets: datasets,
-                  moveCameraToUserLocation: true
+                  moveCameraToUserLocation: true,
                 ),
               );
             },
@@ -152,6 +152,8 @@ class GoogleMapsCubit extends Cubit<GoogleMapsState> {
               userLocationLat,
               userLocationLng,
             ),
+            //! Integrate onTap
+            //onTap:
           ),
         );
       }
@@ -288,7 +290,7 @@ class GoogleMapsCubit extends Cubit<GoogleMapsState> {
         ),
       ),
     );
-    if(moveCameraToUserLocation) {
+    if (moveCameraToUserLocation) {
       onEmitNewCameraPosition(
         userLocationLat,
         userLocationLng,
