@@ -100,7 +100,9 @@ class _WScaffoldState extends State<WScaffold> {
         ),
       );
     } else {
-      return _scaffold(context);
+      return BlocBuilder<PaletteDarkLightCubit, bool>(
+        builder: (final context, final theme) => _scaffold(context),
+      );
     }
   }
 

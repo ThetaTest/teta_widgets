@@ -409,30 +409,29 @@ class FTextTypeInput {
     // The value is a hard coded text
     if (type == FTextTypeEnum.text) {
       final v = (value?.replaceAll(' ', '').isNotEmpty ?? false)
-          ? value?.replaceAll("'", '')
+          ? value
           : (defaultValue ?? '0');
       final vT = valueTablet != null && valueTablet != ''
           ? (valueTablet?.replaceAll(' ', '').isNotEmpty ?? false)
-              ? valueTablet?.replaceAll("'", '')
+              ? valueTablet
               : v ?? (defaultValue ?? '0')
           : (value?.replaceAll(' ', '').isNotEmpty ?? false)
-              ? value?.replaceAll("'", '')
+              ? value
               : v ?? (defaultValue ?? '0');
       final vD = valueDesktop != null && valueDesktop != ''
           ? (valueDesktop?.replaceAll(' ', '').isNotEmpty ?? false)
-              ? valueDesktop?.replaceAll("'", '')
+              ? valueDesktop
               : v ?? (defaultValue ?? '0')
           : (value?.replaceAll(' ', '').isNotEmpty ?? false)
-              ? value?.replaceAll("'", '')
+              ? value
               : v ?? (defaultValue ?? '0');
 
       if (resultType == ResultTypeEnum.string) {
         final type = defaultValue != 'null' && defaultValue != null
             ? 'String'
             : 'String?';
-        const stringType = "'";
         if (v == vT && v == vD) {
-          return '''$v''';
+          return _calcStringType(v);
         }
         return '''
 getValueForScreenType<$type>(

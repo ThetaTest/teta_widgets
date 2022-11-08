@@ -127,7 +127,11 @@ class FFill {
         if (element.id == paletteStyle) model = element;
         if (element.name == paletteStyle) model = element;
       });
-      fill = (model != null) ? model!.fill! : FFill().ready(FFillType.solid);
+      fill = (model != null)
+          ? BlocProvider.of<PaletteDarkLightCubit>(context).state
+              ? model!.light!
+              : model!.fill!
+          : FFill().ready(FFillType.solid);
     }
     return fill.levels!.first.color.toUpperCase();
   }
