@@ -342,6 +342,18 @@ class __NewActionAlertState extends State<_NewActionAlert> {
         type: ActionSupabaseDB.values,
       ),
       _SelectionClass(
+        title: 'Supabase Functions',
+        actionType: ActionType.supabaseFunctions,
+        options: FActionElement.getSupabaseFunctions(prj.config),
+        type: ActionSupabaseFunctions.values,
+      ),
+      _SelectionClass(
+        title: 'Supabase Storage',
+        actionType: ActionType.supabaseStorage,
+        options: FActionElement.getSupabaseStorage(prj.config),
+        type: ActionSupabaseStorage.values,
+      ),
+      _SelectionClass(
         title: 'RevenueCat',
         actionType: ActionType.revenueCat,
         options: FActionElement.getRevenueCat(prj.config),
@@ -410,10 +422,8 @@ class __NewActionAlertState extends State<_NewActionAlert> {
           itemBuilder: (final context, final index) => Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              TParagraph(elements[index].title),
-              Divider(
-                color: Palette.txtPrimary.withOpacity(0.3),
-              ),
+              THeadline2(elements[index].title),
+              const Gap(Grid.small),
               Wrap(
                 children: elements[index]
                     .options
@@ -435,7 +445,7 @@ class __NewActionAlertState extends State<_NewActionAlert> {
                             vertical: 8,
                           ),
                           decoration: BoxDecoration(
-                            color: Palette.blue,
+                            color: Palette.bgGrey,
                             borderRadius: BR(40),
                           ),
                           child: TParagraph(e),

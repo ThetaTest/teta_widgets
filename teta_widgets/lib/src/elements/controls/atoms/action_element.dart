@@ -23,6 +23,8 @@ import 'package:teta_widgets/src/elements/controls/atoms/qonversion/buy.dart';
 import 'package:teta_widgets/src/elements/controls/atoms/revenuecat/buy.dart';
 import 'package:teta_widgets/src/elements/controls/atoms/subapase/delete.dart';
 import 'package:teta_widgets/src/elements/controls/atoms/subapase/insert.dart';
+import 'package:teta_widgets/src/elements/controls/atoms/subapase/invoke.dart';
+import 'package:teta_widgets/src/elements/controls/atoms/subapase/storage_upload.dart';
 import 'package:teta_widgets/src/elements/controls/atoms/subapase/update.dart';
 import 'package:teta_widgets/src/elements/controls/atoms/teta_cms/delete.dart';
 import 'package:teta_widgets/src/elements/controls/atoms/teta_cms/insert.dart';
@@ -173,7 +175,7 @@ class ActionElementControlState extends State<ActionElementControl> {
                 onTap: widget.callBackToDelete,
                 child: HoverWidget(
                   hoverChild: const Icon(
-                    FeatherIcons.trash,
+                    FeatherIcons.xCircle,
                     size: 24,
                     color: Colors.white,
                   ),
@@ -1531,6 +1533,76 @@ class ActionElementControlState extends State<ActionElementControl> {
                       widget.callBack(widget.element, old);
                     }
                   },
+                ),
+              if (widget.element.actionType == ActionType.supabaseFunctions)
+                Column(
+                  children: [
+                    CDropdown(
+                      value: FActionElement.convertValueToDropdown(
+                        widget.element.actionSupabaseFunctions,
+                      ),
+                      items:
+                          FActionElement.getSupabaseFunctions(widget.prj.config)
+                              .toSet()
+                              .toList(),
+                      onChange: (final newValue) {
+                        if (newValue != null) {
+                          final old = widget.element;
+                          widget.element.actionSupabaseFunctions =
+                              FActionElement.convertDropdownToValue(
+                            ActionSupabaseFunctions.values,
+                            newValue,
+                          ) as ActionSupabaseFunctions?;
+                          widget.callBack(widget.element, old);
+                        }
+                      },
+                    ),
+                    SupabaseInvokeControl(
+                      prj: widget.prj,
+                      page: widget.page,
+                      node: widget.node,
+                      action: widget.element,
+                      callback: () {
+                        final old = widget.element;
+                        widget.callBack(widget.element, old);
+                      },
+                    ),
+                  ],
+                ),
+              if (widget.element.actionType == ActionType.supabaseStorage)
+                Column(
+                  children: [
+                    CDropdown(
+                      value: FActionElement.convertValueToDropdown(
+                        widget.element.actionSupabaseStorage,
+                      ),
+                      items:
+                          FActionElement.getSupabaseStorage(widget.prj.config)
+                              .toSet()
+                              .toList(),
+                      onChange: (final newValue) {
+                        if (newValue != null) {
+                          final old = widget.element;
+                          widget.element.actionSupabaseStorage =
+                              FActionElement.convertDropdownToValue(
+                            ActionSupabaseStorage.values,
+                            newValue,
+                          ) as ActionSupabaseStorage?;
+                          widget.callBack(widget.element, old);
+                        }
+                      },
+                    ),
+                    SupabaseStorageUploadControl(
+                      prj: widget.prj,
+                      page: widget.page,
+                      node: widget.node,
+                      action: widget.element,
+                      callback: () {
+                        final old = widget.element;
+                        widget.callBack(widget.element, old);
+                      },
+                    ),
+                  ],
                 ),
               if (widget.element.actionType == ActionType.tetaDatabase)
                 CDropdown(

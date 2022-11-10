@@ -108,14 +108,24 @@ class PaddingsState extends State<TextControl> {
                     Row(
                       children: [
                         if (widget.value.type == FTextTypeEnum.text)
-                          Image.asset(
-                            device.identifier.type == DeviceType.phone
-                                ? Assets.icons.devices.smartphone.path
-                                : device.identifier.type == DeviceType.tablet
-                                    ? Assets.icons.devices.tablet.path
-                                    : Assets.icons.devices.monitor.path,
-                            width: 24,
-                            height: 24,
+                          BounceSmall(
+                            message: 'Change device',
+                            onTap: () {
+                              showDialog<void>(
+                                context: context,
+                                builder: (final ctx) =>
+                                    DevicesDialog(ctx: context),
+                              );
+                            },
+                            child: Image.asset(
+                              device.identifier.type == DeviceType.phone
+                                  ? Assets.icons.devices.smartphone.path
+                                  : device.identifier.type == DeviceType.tablet
+                                      ? Assets.icons.devices.tablet.path
+                                      : Assets.icons.devices.monitor.path,
+                              width: 24,
+                              height: 24,
+                            ),
                           ),
                         if (widget.value.type == FTextTypeEnum.text)
                           const Gap(Grid.small),

@@ -14,6 +14,8 @@ enum ActionType {
   firebaseStorage,
   supabaseAuth,
   supabaseDatabase,
+  supabaseFunctions,
+  supabaseStorage,
   camera,
   audioPlayer,
   webview,

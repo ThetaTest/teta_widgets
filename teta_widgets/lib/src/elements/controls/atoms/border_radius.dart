@@ -105,15 +105,25 @@ class BorderRadiusControlState extends State<BorderRadiusControl> {
                           padding: const EdgeInsets.only(bottom: 8),
                           child: Row(
                             children: [
-                              Image.asset(
-                                device.identifier.type == DeviceType.phone
-                                    ? Assets.icons.devices.smartphone.path
-                                    : device.identifier.type ==
-                                            DeviceType.tablet
-                                        ? Assets.icons.devices.tablet.path
-                                        : Assets.icons.devices.monitor.path,
-                                width: 24,
-                                height: 24,
+                              BounceSmall(
+                                message: 'Change device',
+                                onTap: () {
+                                  showDialog<void>(
+                                    context: context,
+                                    builder: (final ctx) =>
+                                        DevicesDialog(ctx: context),
+                                  );
+                                },
+                                child: Image.asset(
+                                  device.identifier.type == DeviceType.phone
+                                      ? Assets.icons.devices.smartphone.path
+                                      : device.identifier.type ==
+                                              DeviceType.tablet
+                                          ? Assets.icons.devices.tablet.path
+                                          : Assets.icons.devices.monitor.path,
+                                  width: 24,
+                                  height: 24,
+                                ),
                               ),
                               const Gap(Grid.small),
                               const THeadline3(

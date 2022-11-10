@@ -61,12 +61,14 @@ import 'package:teta_widgets/src/elements/actions/stripe/stripe_cart_buy_all.dar
 import 'package:teta_widgets/src/elements/actions/stripe/stripe_cart_remove_list_item_from_cart.dart';
 import 'package:teta_widgets/src/elements/actions/stripe/stripe_show_receipt.dart';
 import 'package:teta_widgets/src/elements/actions/supabase/delete.dart';
+import 'package:teta_widgets/src/elements/actions/supabase/function_invoke.dart';
 import 'package:teta_widgets/src/elements/actions/supabase/insert.dart';
 import 'package:teta_widgets/src/elements/actions/supabase/signin_w_apple.dart';
 import 'package:teta_widgets/src/elements/actions/supabase/signin_w_credentials.dart';
 import 'package:teta_widgets/src/elements/actions/supabase/signin_w_facebook.dart';
 import 'package:teta_widgets/src/elements/actions/supabase/signin_w_google.dart';
 import 'package:teta_widgets/src/elements/actions/supabase/signup_w_credentials.dart';
+import 'package:teta_widgets/src/elements/actions/supabase/storage_upload.dart';
 import 'package:teta_widgets/src/elements/actions/supabase/update.dart';
 import 'package:teta_widgets/src/elements/actions/teta_cms/auth/login.dart';
 import 'package:teta_widgets/src/elements/actions/teta_cms/auth/logout.dart';
@@ -113,6 +115,8 @@ class FActionElement extends Equatable {
     this.customFunctionId,
     this.actionSupabaseAuth,
     this.actionSupabaseDB,
+    this.actionSupabaseFunctions,
+    this.actionSupabaseStorage,
     this.actionTetaDB,
     this.actionTetaAuth,
     this.actionCamera,
@@ -195,6 +199,14 @@ class FActionElement extends Equatable {
     actionSupabaseDB =
         convertDropdownToValue(ActionSupabaseDB.values, doc['sD'] as String?)
             as ActionSupabaseDB?;
+    actionSupabaseFunctions = convertDropdownToValue(
+      ActionSupabaseFunctions.values,
+      doc['supaFuncs'] as String?,
+    ) as ActionSupabaseFunctions?;
+    actionSupabaseStorage = convertDropdownToValue(
+      ActionSupabaseStorage.values,
+      doc['supaStor'] as String?,
+    ) as ActionSupabaseStorage?;
     actionCamera =
         convertDropdownToValue(ActionCamera.values, doc['aC'] as String?)
             as ActionCamera?;
@@ -363,6 +375,8 @@ class FActionElement extends Equatable {
   int? customFunctionId;
   ActionSupabaseAuth? actionSupabaseAuth;
   ActionSupabaseDB? actionSupabaseDB;
+  ActionSupabaseFunctions? actionSupabaseFunctions;
+  ActionSupabaseStorage? actionSupabaseStorage;
   ActionCamera? actionCamera;
   ActionWebView? actionWebView;
   ActionAudioPlayerActions? actionAudioPlayer;
@@ -455,8 +469,10 @@ class FActionElement extends Equatable {
           'Languages',
           'Google Maps',
           if (kDebugMode) 'Custom Functions',
-          if (config.supabaseEnabled ?? false) 'Supabase auth',
-          if (config.supabaseEnabled ?? false) 'Supabase database',
+          if (config.isSupabaseReady) 'Supabase auth',
+          if (config.isSupabaseReady) 'Supabase database',
+          if (config.isSupabaseReady) 'Supabase functions',
+          if (config.isSupabaseReady) 'Supabase storage',
           if (config.isBraintreeReady) 'Braintree',
           if (config.isRevenueCatEnabled) 'RevenueCat',
           if (config.isQonversionReady) 'Qonversion',
@@ -576,6 +592,24 @@ class FActionElement extends Equatable {
     return [];
   }
 
+  static List<String> getSupabaseStorage(final ProjectConfig? config) {
+    if (config != null) {
+      if (config.isSupabaseReady) {
+        return enumsToListString(ActionSupabaseStorage.values);
+      }
+    }
+    return [];
+  }
+
+  static List<String> getSupabaseFunctions(final ProjectConfig? config) {
+    if (config != null) {
+      if (config.isSupabaseReady) {
+        return enumsToListString(ActionSupabaseFunctions.values);
+      }
+    }
+    return [];
+  }
+
   static List<String> getTetaDB() {
     return enumsToListString(ActionTetaCmsDB.values);
   }
@@ -677,6 +711,8 @@ class FActionElement extends Equatable {
         'g': convertValueToDropdown(actionGesture),
         'sA': convertValueToDropdown(actionSupabaseAuth),
         'sD': convertValueToDropdown(actionSupabaseDB),
+        'supaFuncs': convertValueToDropdown(actionSupabaseFunctions),
+        'supaStor': convertValueToDropdown(actionSupabaseStorage),
         'aC': convertValueToDropdown(actionCamera),
         'aW': convertValueToDropdown(actionWebView),
         'aAP': convertValueToDropdown(actionAudioPlayer),
@@ -1575,6 +1611,55 @@ class FActionElement extends Equatable {
               loop: loop,
             );
 
+            break;
+          case null:
+            break;
+        }
+        break;
+      case ActionType.supabaseStorage:
+        switch (actionSupabaseStorage) {
+          case ActionSupabaseStorage.upload:
+            await actionS(
+              () => FASupabaseStorageUpload.action(
+                context,
+                dbFrom,
+                valueTextTypeInput,
+                stateName,
+                stateName2,
+                params,
+                states,
+                dataset,
+                loop,
+              ),
+              context: context,
+              params: params,
+              states: states,
+              dataset: dataset,
+              loop: loop,
+            );
+            break;
+          case null:
+            break;
+        }
+        break;
+      case ActionType.supabaseFunctions:
+        switch (actionSupabaseFunctions) {
+          case ActionSupabaseFunctions.invoke:
+            await actionS(
+              () => FASupabaseFunctionsInvoke.action(
+                context,
+                dbFrom,
+                params,
+                states,
+                dataset,
+                loop,
+              ),
+              context: context,
+              params: params,
+              states: states,
+              dataset: dataset,
+              loop: loop,
+            );
             break;
           case null:
             break;
@@ -2489,6 +2574,33 @@ class FActionElement extends Equatable {
               context,
             );
 
+          case null:
+            return '';
+        }
+      case ActionType.supabaseStorage:
+        switch (actionSupabaseStorage) {
+          case ActionSupabaseStorage.upload:
+            return codeS(
+              FASupabaseStorageUpload.toCode(
+                context,
+                dbFrom,
+                valueTextTypeInput,
+                stateName ?? '',
+                stateName2 ?? '',
+                loop,
+              ),
+              context,
+            );
+          case null:
+            return '';
+        }
+      case ActionType.supabaseFunctions:
+        switch (actionSupabaseFunctions) {
+          case ActionSupabaseFunctions.invoke:
+            return codeS(
+              FASupabaseFunctionsInvoke.toCode(context, dbFrom),
+              context,
+            );
           case null:
             return '';
         }

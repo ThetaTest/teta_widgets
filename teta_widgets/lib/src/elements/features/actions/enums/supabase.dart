@@ -12,5 +12,12 @@ enum ActionSupabaseDB {
   insert,
   update,
   delete,
-  edgeFunction,
+}
+
+enum ActionSupabaseStorage {
+  upload,
+}
+
+enum ActionSupabaseFunctions {
+  invoke,
 }

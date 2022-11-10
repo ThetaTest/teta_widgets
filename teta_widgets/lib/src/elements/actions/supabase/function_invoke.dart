@@ -12,7 +12,7 @@ import 'package:teta_widgets/src/elements/actions/snippets/change_state.dart';
 import 'package:teta_widgets/src/elements/actions/snippets/take_state_from.dart';
 import 'package:teta_widgets/src/elements/features/text_type_input.dart';
 
-class FASupabaseInsert {
+class FASupabaseFunctionsInvoke {
   static Future action(
     final BuildContext context,
     final FTextTypeInput? supabaseFrom,
@@ -49,10 +49,7 @@ class FASupabaseInsert {
 
   static String toCode(
     final BuildContext context,
-    final String? nameOfPage,
-    final Map<String, dynamic>? paramsToSend,
     final FTextTypeInput? supabaseFrom,
-    final List<MapElement>? supabaseData,
   ) {
     final page = BlocProvider.of<PageCubit>(context).state;
     final status = takeStateFrom(page, 'status');
@@ -61,10 +58,11 @@ class FASupabaseInsert {
       final map = <String, dynamic>{};
 
       return '''
-        final response = await Supabase.instance.client.functions.invoke('${supabaseFrom?.toCode(
+        final response = await Supabase.instance.client.functions.invoke(${supabaseFrom?.toCode(
                 0,
                 resultType: ResultTypeEnum.string,
-              ) ?? ''}');
+                defaultValue: '',
+              ) ?? ''});
         if (response.error != null) {
           ${status != null ? "setState(() { status = 'Failed'; });" : ''}
         } else {
