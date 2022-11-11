@@ -9,4 +9,5 @@ enum ActionState {
   phoneValidator,
   websiteValidator,
   passwordValidator,
+  pickFile,
 }

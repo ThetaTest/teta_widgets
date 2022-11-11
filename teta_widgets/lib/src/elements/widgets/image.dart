@@ -52,25 +52,10 @@ class WImage extends StatefulWidget {
 class _WImageState extends State<WImage> {
   dynamic result;
   Uint8List? bytes;
+  bool isLoading = false;
 
   @override
   void initState() {
-    super.initState();
-  }
-
-  Future<void> calc() async {
-    if (bytes != null) {
-      final b = await (result as XFile).readAsBytes();
-      if (mounted) {
-        setState() {
-          bytes = b;
-        }
-      }
-    }
-  }
-
-  @override
-  Widget build(final BuildContext context) {
     result = widget.image.getForImages(
       widget.params,
       widget.states,
@@ -82,6 +67,35 @@ class _WImageState extends State<WImage> {
     if (result is XFile) {
       calc();
     }
+    super.initState();
+  }
+
+  Future<void> calc() async {
+    if (bytes == null) {
+      final b = await (result as XFile).readAsBytes();
+      setState(() {
+        result = result;
+        bytes = b;
+      });
+    }
+  }
+
+  @override
+  Widget build(final BuildContext context) {
+    if (isLoading) {
+      return SizedBox(
+        width: widget.width.get(
+          context: context,
+          isWidth: true,
+        ),
+        height: widget.height.get(
+          context: context,
+          isWidth: false,
+        ),
+        child: const CircularProgressIndicator(),
+      );
+    }
+
     return NodeSelectionBuilder(
       node: widget.node,
       forPlay: widget.forPlay,
@@ -105,7 +119,7 @@ class _WImageState extends State<WImage> {
               isWidth: false,
             ),
             child: _LocalImage(
-              key: ValueKey('Image ${widget.node.nid} $result'),
+              key: ValueKey('Image ${widget.node.nid} $bytes $result'),
               nid: widget.node.nid,
               result: result,
               bytes: bytes,
@@ -151,6 +165,9 @@ class _LocalImage extends StatefulWidget {
 class _LocalImageState extends State<_LocalImage> {
   @override
   Widget build(final BuildContext context) {
+    Logger.printDefault(
+      '_LocalImage, widget.result: ${widget.result}, widget.bytes: ${widget.bytes}',
+    );
     return widget.result is XFile
         ? widget.bytes == null
             ? const SizedBox()

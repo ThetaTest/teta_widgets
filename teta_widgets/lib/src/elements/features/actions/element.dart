@@ -55,6 +55,7 @@ import 'package:teta_widgets/src/elements/actions/state/email_validator.dart';
 import 'package:teta_widgets/src/elements/actions/state/increment.dart';
 import 'package:teta_widgets/src/elements/actions/state/password_validator.dart';
 import 'package:teta_widgets/src/elements/actions/state/phone_validator.dart';
+import 'package:teta_widgets/src/elements/actions/state/pick_file.dart';
 import 'package:teta_widgets/src/elements/actions/state/website_validator.dart';
 import 'package:teta_widgets/src/elements/actions/stripe/stripe_add_list_item_to_cart.dart';
 import 'package:teta_widgets/src/elements/actions/stripe/stripe_cart_buy_all.dart';
@@ -1276,6 +1277,23 @@ class FActionElement extends Equatable {
               loop: loop,
             );
             break;
+          case ActionState.pickFile:
+            await actionS(
+              () => FActionStateFilePicker.action(
+                context: context,
+                states: states,
+                params: params,
+                datasets: dataset,
+                stateName: stateName,
+                loop: loop ?? 0,
+              ),
+              context: context,
+              params: params,
+              states: states,
+              dataset: dataset,
+              loop: loop,
+            );
+            break;
           case ActionState.changeWithParams:
             await actionS(
               () => FActionStateChangeWithParam.action(
@@ -2405,6 +2423,16 @@ class FActionElement extends Equatable {
                 valueToChangeWith: valueTextTypeInput,
                 loop: loop,
                 isValueDefault: withValue,
+              ),
+              context,
+            );
+          case ActionState.pickFile:
+            return codeS(
+              FActionStateFilePicker.toCode(
+                pageId: pageId,
+                context: context,
+                stateName: stateName,
+                loop: loop,
               ),
               context,
             );

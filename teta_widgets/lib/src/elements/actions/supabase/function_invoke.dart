@@ -55,8 +55,6 @@ class FASupabaseFunctionsInvoke {
     final status = takeStateFrom(page, 'status');
     final client = BlocProvider.of<SupabaseCubit>(context).state;
     if (client != null) {
-      final map = <String, dynamic>{};
-
       return '''
         final response = await Supabase.instance.client.functions.invoke(${supabaseFrom?.toCode(
                 0,

@@ -678,6 +678,8 @@ class ActionElementControlState extends State<ActionElementControl> {
                 ),
               if ((widget.element.actionType == ActionType.state &&
                       widget.element.actionState == ActionState.changeWith) ||
+                  (widget.element.actionType == ActionType.state &&
+                      widget.element.actionState == ActionState.pickFile) ||
                   (widget.element.actionType == ActionType.translator &&
                       widget.element.actionTranslator ==
                           ActionTranslator.translate))
