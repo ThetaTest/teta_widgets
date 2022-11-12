@@ -52,6 +52,7 @@ class FATetaCMSLogin {
 
     await TetaCMS.instance.auth.signIn(
       provider: provider,
+      fromEditor: true,
       onSuccess: (final isFirstTime) async {
         await FActionNavigationOpenPage.action(
           node,
