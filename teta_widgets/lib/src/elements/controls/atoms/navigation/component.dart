@@ -339,16 +339,10 @@ class ElementState extends State<Element> {
                               .contains(dropdown ?? '')
                       ? dropdown
                       : null,
-                  items:
-                      dropdownDataset == 'States' || dropdownDataset == 'Params'
-                          ? listSecondDropwdown
-                              .map((final map) => map.keys.first)
-                              .toSet()
-                              .toList()
-                          : listSecondDropwdown.first.keys
-                              .map((final key) => key)
-                              .toSet()
-                              .toList(),
+                  items: listSecondDropwdown.first.keys
+                      .map((final key) => key)
+                      .toSet()
+                      .toList(),
                   onChange: (final String? newValue) {
                     if (newValue != null) {
                       setState(() {

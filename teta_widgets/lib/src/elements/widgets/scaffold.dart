@@ -164,7 +164,9 @@ class _WScaffoldState extends State<WScaffold> {
             body: SizedBox(
               width: double.maxFinite,
               height: double.maxFinite,
-              child: _stack(context),
+              child: IntrinsicHeight(
+                child: _stack(context),
+              ),
             ),
           );
   }

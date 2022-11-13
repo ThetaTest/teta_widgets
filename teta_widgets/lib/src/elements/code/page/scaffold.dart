@@ -218,15 +218,18 @@ Future<String> pageCodeTemplate(
           $appBarString
           $drawerString
           backgroundColor: const Color(0xFF$backgroundColor),
-          body: Stack(children: [
-            ${strChildren.toString()}
-            $bottomBarString
-          ],
-        ),
-      );''' : strChildren.toString().isNotEmpty ? strChildren.toString() : 'const SizedBox();'}
+          body: IntrinsicHeight(
+            child: Stack(
+            children: [
+                ${strChildren.toString()}
+                $bottomBarString
+              ],
+            ),
+          ),
+        );''' : strChildren.toString().isNotEmpty ? strChildren.toString() : 'const SizedBox();'}
+      }
     }
-  }
   
-  $additionalClasses
+    $additionalClasses
   ''';
 }

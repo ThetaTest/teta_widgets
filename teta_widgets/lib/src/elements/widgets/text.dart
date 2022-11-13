@@ -95,7 +95,7 @@ class _WTextState extends State<WText> {
             });
           }
           return GestureDetector(
-            onDoubleTap: () {
+            onTap: () {
               if (!widget.forPlay) {
                 _controller.text = widget.value.get(
                   widget.params,
@@ -108,6 +108,12 @@ class _WTextState extends State<WText> {
                 setState(() {
                   isEditing = !isEditing;
                 });
+                if (_controller.text.isNotEmpty) {
+                  _controller.selection = TextSelection(
+                    baseOffset: 0,
+                    extentOffset: _controller.text.length,
+                  );
+                }
                 BlocProvider.of<FocusBloc>(context).add(
                   OnFocus(node: widget.node),
                 );
