@@ -58,7 +58,7 @@ class DeleteControlState extends State<DeleteControl> {
             Padding(
               padding: const EdgeInsets.only(top: 8),
               child: CDangerousButton(
-                label: 'Delete this node only',
+                label: 'Delete node',
                 callback: () async => NodeRepository().removeNodeBetweenNodes(
                   context: context,
                   nodes:
@@ -69,17 +69,18 @@ class DeleteControlState extends State<DeleteControl> {
                 ),
               ),
             ),
-            Padding(
-              padding: const EdgeInsets.only(top: 8),
-              child: CDangerousButton(
-                label: widget.node.intrinsicState.canHave == ChildrenEnum.none
-                    ? 'Delete'
-                    : widget.node.intrinsicState.canHave == ChildrenEnum.child
-                        ? 'Delete with child'
-                        : 'Delete with children',
-                callback: delete,
+            if (false)
+              Padding(
+                padding: const EdgeInsets.only(top: 8),
+                child: CDangerousButton(
+                  label: widget.node.intrinsicState.canHave == ChildrenEnum.none
+                      ? 'Delete'
+                      : widget.node.intrinsicState.canHave == ChildrenEnum.child
+                          ? 'Delete with child'
+                          : 'Delete with children',
+                  callback: delete,
+                ),
               ),
-            ),
           ],
         ),
       );

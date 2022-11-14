@@ -3,9 +3,22 @@
 enum ActionSupabaseAuth {
   signInWithCredential,
   signUp,
-  signInWithGoogle,
   signInWithApple,
+  signInWithAzure,
+  signInWithBitbucket,
+  signInWithDiscord,
   signInWithFacebook,
+  signInWithGitHub,
+  signInWithGitLab,
+  signInWithGoogle,
+  //signInWithLinkedin,
+  //signInWithNotion,
+  signInWithTwitch,
+  signInWithTwitter,
+  signInWithSlack,
+  signInWithSpotify,
+  //signInWithWorkOS,
+  //signInWithZoom,
 }
 
 enum ActionSupabaseDB {

@@ -7,7 +7,6 @@ import 'package:flutter/material.dart';
 // Package imports:
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:supabase_flutter/supabase_flutter.dart';
-import 'package:teta_core/src/services/user_social_login/enums/login_provider.dart';
 import 'package:teta_core/src/services/user_social_login/services/social_login_service/index.dart';
 import 'package:teta_core/teta_core.dart';
 // Project imports:
@@ -19,7 +18,7 @@ import 'package:uni_links/uni_links.dart';
 import 'package:universal_platform/universal_platform.dart';
 import 'package:url_launcher/url_launcher.dart';
 
-class FASupabaseSignInWithGoogle {
+class FASupabaseSignInWithProvider {
   static Future action(
     final BuildContext context,
     final String value,
@@ -30,6 +29,7 @@ class FASupabaseSignInWithGoogle {
     final List<VariableObject> params,
     final List<VariableObject> states,
     final List<DatasetObject> dataset,
+    final Provider provider,
     final int? loop,
   ) async {
     final page = BlocProvider.of<PageCubit>(context).state;
@@ -41,7 +41,7 @@ class FASupabaseSignInWithGoogle {
     final client = BlocProvider.of<SupabaseCubit>(context).state;
     if (client != null) {
       final response = await UserSocialLoginService.instance
-          .executeLogin(client.supabaseUrl, LoginProvider.google);
+          .executeLogin(client.supabaseUrl, provider);
 
       if (!UniversalPlatform.isWeb) {
         uriLinkStream.listen(
@@ -62,7 +62,9 @@ class FASupabaseSignInWithGoogle {
         );
       }
 
-      if (response.jwt.isEmpty) changeState(status, context, 'Failed');
+      if (response != null && response.jwt.isEmpty) {
+        changeState(status, context, 'Failed');
+      }
       changeState(status, context, 'Success');
       await FActionNavigationOpenPage.action(
         node,
@@ -79,36 +81,39 @@ class FASupabaseSignInWithGoogle {
 
   static String toCode(
     final BuildContext context,
+    final Provider provider,
     final String? nameOfPage,
     final Map<String, dynamic>? paramsToSend,
   ) {
     return '''
-    await Supabase.instance.client.auth.signInWithProvider(Provider.google);
-    uriLinkStream.listen(
-      (final Uri? uri) async {
-        if (uri != null) {
-          if (uri.queryParameters['access_token'] != null &&
-              uri.queryParameters['access_token'] is String) {
-            await recoverSessionFromUrl(uri!);
-            await closeInAppWebView();
-            unawaited(
-              TetaCMS.instance.analytics.insertEvent(
-                TetaAnalyticsType.tetaAuthSignIn,
-                'Supabase Auth: signIn request',
-                <String, dynamic>{
-                  'device': 'mobile',
-                  'provider': EnumToString.convertToString(provider),
-                },
-                isUserIdPreferableIfExists: false,
-              ),
-            );
+    await Supabase.instance.client.auth.signInWithProvider($provider);
+    if (!UniversalPlatform.isWeb) {
+      uriLinkStream.listen(
+        (final Uri? uri) async {
+          if (uri != null) {
+            if (uri.queryParameters['access_token'] != null &&
+                uri.queryParameters['access_token'] is String) {
+              await recoverSessionFromUrl(uri!);
+              await closeInAppWebView();
+              unawaited(
+                TetaCMS.instance.analytics.insertEvent(
+                  TetaAnalyticsType.tetaAuthSignIn,
+                  'Supabase Auth: signIn request',
+                  <String, dynamic>{
+                    'device': 'mobile',
+                    'provider': EnumToString.convertToString(provider),
+                  },
+                  isUserIdPreferableIfExists: false,
+                ),
+              );
+            }
           }
-        }
-      },
-      onError: (final Object err) {
-        throw Exception('got err: \$err');
-      },
-    );
+        },
+        onError: (final Object err) {
+          throw Exception('got err: \$err');
+        },
+      );
+    }
     ${FActionNavigationOpenPage.toCode(context, nameOfPage, paramsToSend)}
     ''';
   }

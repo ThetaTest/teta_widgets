@@ -9,10 +9,11 @@ import 'package:equatable/equatable.dart';
 // Flutter imports:
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
+import 'package:supabase/supabase.dart';
 import 'package:teta_cms/teta_cms.dart';
 import 'package:teta_core/src/services/packages_service.dart';
-import 'package:teta_core/teta_core.dart';
 // Project imports:
+import 'package:teta_core/teta_core.dart';
 import 'package:teta_widgets/src/elements/actions/audio_player/loop_all.dart';
 import 'package:teta_widgets/src/elements/actions/audio_player/loop_off.dart';
 import 'package:teta_widgets/src/elements/actions/audio_player/loop_one.dart';
@@ -67,10 +68,8 @@ import 'package:teta_widgets/src/elements/actions/stripe/stripe_show_receipt.dar
 import 'package:teta_widgets/src/elements/actions/supabase/delete.dart';
 import 'package:teta_widgets/src/elements/actions/supabase/function_invoke.dart';
 import 'package:teta_widgets/src/elements/actions/supabase/insert.dart';
-import 'package:teta_widgets/src/elements/actions/supabase/signin_w_apple.dart';
 import 'package:teta_widgets/src/elements/actions/supabase/signin_w_credentials.dart';
-import 'package:teta_widgets/src/elements/actions/supabase/signin_w_facebook.dart';
-import 'package:teta_widgets/src/elements/actions/supabase/signin_w_google.dart';
+import 'package:teta_widgets/src/elements/actions/supabase/signin_w_provider.dart';
 import 'package:teta_widgets/src/elements/actions/supabase/signup_w_credentials.dart';
 import 'package:teta_widgets/src/elements/actions/supabase/storage_upload.dart';
 import 'package:teta_widgets/src/elements/actions/supabase/update.dart';
@@ -374,9 +373,11 @@ class FActionElement extends Equatable {
           )
         : FTextTypeInput();
     customHttpRequestURL = FTextTypeInput.fromJson(
-        doc['sCustomHttpRequestURL'] as Map<String, dynamic>?);
+      doc['sCustomHttpRequestURL'] as Map<String, dynamic>?,
+    );
     customHttpRequestExpectedStatusCode = FTextTypeInput.fromJson(
-        doc['sCustomHttpRequestExpectedStatusCode'] as Map<String, dynamic>?);
+      doc['sCustomHttpRequestExpectedStatusCode'] as Map<String, dynamic>?,
+    );
 
     customHttpRequestHeader =
         (doc['sCustomHttpRequestHeader'] as List<dynamic>? ?? <dynamic>[])
@@ -1719,7 +1720,7 @@ class FActionElement extends Equatable {
             break;
           case ActionSupabaseAuth.signInWithGoogle:
             await actionS(
-              () => FASupabaseSignInWithGoogle.action(
+              () => FASupabaseSignInWithProvider.action(
                 context,
                 value ?? this.value ?? '',
                 scaffold,
@@ -1729,6 +1730,7 @@ class FActionElement extends Equatable {
                 params,
                 states,
                 dataset,
+                Provider.google,
                 loop,
               ),
               context: context,
@@ -1741,7 +1743,7 @@ class FActionElement extends Equatable {
             break;
           case ActionSupabaseAuth.signInWithApple:
             await actionS(
-              () => FASupabaseSignInWithApple.action(
+              () => FASupabaseSignInWithProvider.action(
                 context,
                 value ?? this.value ?? '',
                 scaffold,
@@ -1751,6 +1753,7 @@ class FActionElement extends Equatable {
                 params,
                 states,
                 dataset,
+                Provider.apple,
                 loop,
               ),
               context: context,
@@ -1763,7 +1766,7 @@ class FActionElement extends Equatable {
             break;
           case ActionSupabaseAuth.signInWithFacebook:
             await actionS(
-              () => FASupabaseSignInWithFacebook.action(
+              () => FASupabaseSignInWithProvider.action(
                 context,
                 value ?? this.value ?? '',
                 scaffold,
@@ -1773,6 +1776,192 @@ class FActionElement extends Equatable {
                 params,
                 states,
                 dataset,
+                Provider.facebook,
+                loop,
+              ),
+              context: context,
+              params: params,
+              states: states,
+              dataset: dataset,
+              loop: loop,
+            );
+
+            break;
+
+          case ActionSupabaseAuth.signInWithAzure:
+            await actionS(
+              () => FASupabaseSignInWithProvider.action(
+                context,
+                value ?? this.value ?? '',
+                scaffold,
+                node,
+                nameOfPage,
+                paramsToSend,
+                params,
+                states,
+                dataset,
+                Provider.azure,
+                loop,
+              ),
+              context: context,
+              params: params,
+              states: states,
+              dataset: dataset,
+              loop: loop,
+            );
+
+            break;
+          case ActionSupabaseAuth.signInWithBitbucket:
+            await actionS(
+              () => FASupabaseSignInWithProvider.action(
+                context,
+                value ?? this.value ?? '',
+                scaffold,
+                node,
+                nameOfPage,
+                paramsToSend,
+                params,
+                states,
+                dataset,
+                Provider.bitbucket,
+                loop,
+              ),
+              context: context,
+              params: params,
+              states: states,
+              dataset: dataset,
+              loop: loop,
+            );
+
+            break;
+          case ActionSupabaseAuth.signInWithDiscord:
+            await actionS(
+              () => FASupabaseSignInWithProvider.action(
+                context,
+                value ?? this.value ?? '',
+                scaffold,
+                node,
+                nameOfPage,
+                paramsToSend,
+                params,
+                states,
+                dataset,
+                Provider.discord,
+                loop,
+              ),
+              context: context,
+              params: params,
+              states: states,
+              dataset: dataset,
+              loop: loop,
+            );
+
+            break;
+          case ActionSupabaseAuth.signInWithGitLab:
+            await actionS(
+              () => FASupabaseSignInWithProvider.action(
+                context,
+                value ?? this.value ?? '',
+                scaffold,
+                node,
+                nameOfPage,
+                paramsToSend,
+                params,
+                states,
+                dataset,
+                Provider.gitlab,
+                loop,
+              ),
+              context: context,
+              params: params,
+              states: states,
+              dataset: dataset,
+              loop: loop,
+            );
+
+            break;
+          case ActionSupabaseAuth.signInWithSlack:
+            await actionS(
+              () => FASupabaseSignInWithProvider.action(
+                context,
+                value ?? this.value ?? '',
+                scaffold,
+                node,
+                nameOfPage,
+                paramsToSend,
+                params,
+                states,
+                dataset,
+                Provider.slack,
+                loop,
+              ),
+              context: context,
+              params: params,
+              states: states,
+              dataset: dataset,
+              loop: loop,
+            );
+
+            break;
+          case ActionSupabaseAuth.signInWithSpotify:
+            await actionS(
+              () => FASupabaseSignInWithProvider.action(
+                context,
+                value ?? this.value ?? '',
+                scaffold,
+                node,
+                nameOfPage,
+                paramsToSend,
+                params,
+                states,
+                dataset,
+                Provider.spotify,
+                loop,
+              ),
+              context: context,
+              params: params,
+              states: states,
+              dataset: dataset,
+              loop: loop,
+            );
+
+            break;
+          case ActionSupabaseAuth.signInWithTwitch:
+            await actionS(
+              () => FASupabaseSignInWithProvider.action(
+                context,
+                value ?? this.value ?? '',
+                scaffold,
+                node,
+                nameOfPage,
+                paramsToSend,
+                params,
+                states,
+                dataset,
+                Provider.twitch,
+                loop,
+              ),
+              context: context,
+              params: params,
+              states: states,
+              dataset: dataset,
+              loop: loop,
+            );
+
+            break;
+          case ActionSupabaseAuth.signInWithTwitter:
+            await actionS(
+              () => FASupabaseSignInWithProvider.action(
+                context,
+                value ?? this.value ?? '',
+                scaffold,
+                node,
+                nameOfPage,
+                paramsToSend,
+                params,
+                states,
+                dataset,
+                Provider.twitter,
                 loop,
               ),
               context: context,
@@ -2769,8 +2958,9 @@ class FActionElement extends Equatable {
 
           case ActionSupabaseAuth.signInWithGoogle:
             return codeS(
-              FASupabaseSignInWithGoogle.toCode(
+              FASupabaseSignInWithProvider.toCode(
                 context,
+                Provider.google,
                 nameOfPage,
                 paramsToSend,
               ),
@@ -2779,8 +2969,9 @@ class FActionElement extends Equatable {
 
           case ActionSupabaseAuth.signInWithApple:
             return codeS(
-              FASupabaseSignInWithApple.toCode(
+              FASupabaseSignInWithProvider.toCode(
                 context,
+                Provider.apple,
                 nameOfPage,
                 paramsToSend,
               ),
@@ -2789,8 +2980,108 @@ class FActionElement extends Equatable {
 
           case ActionSupabaseAuth.signInWithFacebook:
             return codeS(
-              FASupabaseSignInWithFacebook.toCode(
+              FASupabaseSignInWithProvider.toCode(
                 context,
+                Provider.facebook,
+                nameOfPage,
+                paramsToSend,
+              ),
+              context,
+            );
+
+          case ActionSupabaseAuth.signInWithDiscord:
+            return codeS(
+              FASupabaseSignInWithProvider.toCode(
+                context,
+                Provider.discord,
+                nameOfPage,
+                paramsToSend,
+              ),
+              context,
+            );
+
+          case ActionSupabaseAuth.signInWithAzure:
+            return codeS(
+              FASupabaseSignInWithProvider.toCode(
+                context,
+                Provider.azure,
+                nameOfPage,
+                paramsToSend,
+              ),
+              context,
+            );
+
+          case ActionSupabaseAuth.signInWithBitbucket:
+            return codeS(
+              FASupabaseSignInWithProvider.toCode(
+                context,
+                Provider.bitbucket,
+                nameOfPage,
+                paramsToSend,
+              ),
+              context,
+            );
+
+          case ActionSupabaseAuth.signInWithGitHub:
+            return codeS(
+              FASupabaseSignInWithProvider.toCode(
+                context,
+                Provider.github,
+                nameOfPage,
+                paramsToSend,
+              ),
+              context,
+            );
+
+          case ActionSupabaseAuth.signInWithGitLab:
+            return codeS(
+              FASupabaseSignInWithProvider.toCode(
+                context,
+                Provider.gitlab,
+                nameOfPage,
+                paramsToSend,
+              ),
+              context,
+            );
+
+          case ActionSupabaseAuth.signInWithSlack:
+            return codeS(
+              FASupabaseSignInWithProvider.toCode(
+                context,
+                Provider.slack,
+                nameOfPage,
+                paramsToSend,
+              ),
+              context,
+            );
+
+          case ActionSupabaseAuth.signInWithSpotify:
+            return codeS(
+              FASupabaseSignInWithProvider.toCode(
+                context,
+                Provider.spotify,
+                nameOfPage,
+                paramsToSend,
+              ),
+              context,
+            );
+
+          case ActionSupabaseAuth.signInWithTwitch:
+            return codeS(
+              FASupabaseSignInWithProvider.toCode(
+                context,
+                Provider.twitch,
+                nameOfPage,
+                paramsToSend,
+              ),
+              context,
+            );
+
+          case ActionSupabaseAuth.signInWithTwitter:
+            return codeS(
+              FASupabaseSignInWithProvider.toCode(
+                context,
+                Provider.twitter,
                 nameOfPage,
                 paramsToSend,
               ),
