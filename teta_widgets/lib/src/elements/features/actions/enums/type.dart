@@ -21,6 +21,7 @@ enum ActionType {
   googleMaps,
   tetaDatabase,
   tetaAuth,
+  customHttpRequest,
   customFunctions,
   braintree,
   translator,

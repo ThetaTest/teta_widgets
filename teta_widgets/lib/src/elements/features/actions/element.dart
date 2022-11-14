@@ -37,6 +37,9 @@ import 'package:teta_widgets/src/elements/actions/delay.dart';
 import 'package:teta_widgets/src/elements/actions/google_maps/reload_data.dart';
 import 'package:teta_widgets/src/elements/actions/google_maps/set_camera_position.dart';
 import 'package:teta_widgets/src/elements/actions/google_maps/update_device_live_location.dart';
+import 'package:teta_widgets/src/elements/actions/https_requests_custom_backend/delete.dart';
+import 'package:teta_widgets/src/elements/actions/https_requests_custom_backend/post.dart';
+import 'package:teta_widgets/src/elements/actions/https_requests_custom_backend/update.dart';
 import 'package:teta_widgets/src/elements/actions/loop.dart';
 import 'package:teta_widgets/src/elements/actions/navigation/go_back.dart';
 import 'package:teta_widgets/src/elements/actions/navigation/in_app_review.dart';
@@ -86,6 +89,7 @@ import 'package:teta_widgets/src/elements/features/actions/enums/action_google_m
 import 'package:teta_widgets/src/elements/features/actions/enums/audio_player_actions.dart';
 import 'package:teta_widgets/src/elements/features/actions/enums/braintree.dart';
 import 'package:teta_widgets/src/elements/features/actions/enums/camera.dart';
+import 'package:teta_widgets/src/elements/features/actions/enums/custom_http_request.dart';
 import 'package:teta_widgets/src/elements/features/actions/enums/index.dart';
 import 'package:teta_widgets/src/elements/features/actions/enums/qonversion.dart';
 import 'package:teta_widgets/src/elements/features/actions/enums/revenue_cat.dart';
@@ -118,6 +122,7 @@ class FActionElement extends Equatable {
     this.actionSupabaseDB,
     this.actionTetaDB,
     this.actionTetaAuth,
+    this.actionCustomHttpRequest,
     this.actionCamera,
     this.actionWebView,
     this.actionAudioPlayer,
@@ -142,6 +147,11 @@ class FActionElement extends Equatable {
     this.withLoop,
     this.everyMilliseconds,
     this.valueTextTypeInput,
+    this.customHttpRequestURL,
+    this.customHttpRequestExpectedStatusCode,
+    this.customHttpRequestHeader,
+    this.customHttpRequestList,
+    this.customHttpRequestBody,
   }) {
     id ??= const Uuid().v1();
     delay ??= FTextTypeInput(value: '0');
@@ -214,6 +224,10 @@ class FActionElement extends Equatable {
     actionTetaAuth =
         convertDropdownToValue(ActionTetaCmsAuth.values, doc['aTAu'] as String?)
             as ActionTetaCmsAuth?;
+    actionCustomHttpRequest = convertDropdownToValue(
+      ActionCustomHttpRequest.values,
+      doc['aCHr'] as String?,
+    ) as ActionCustomHttpRequest?;
     stateName = doc['sN'] as String?;
     stateName2 = doc['sN2'] as String?;
     stateName3 = doc['sN3'] as String?;
@@ -343,6 +357,35 @@ class FActionElement extends Equatable {
             doc['qonversionProdId'] as Map<String, dynamic>,
           )
         : FTextTypeInput();
+    customHttpRequestURL = FTextTypeInput.fromJson(
+        doc['sCustomHttpRequestURL'] as Map<String, dynamic>?);
+    customHttpRequestExpectedStatusCode = FTextTypeInput.fromJson(
+        doc['sCustomHttpRequestExpectedStatusCode'] as Map<String, dynamic>?);
+
+    customHttpRequestHeader =
+        (doc['sCustomHttpRequestHeader'] as List<dynamic>? ?? <dynamic>[])
+            .map(
+              (final dynamic e) => MapElement.fromJson(
+                e as Map<String, dynamic>,
+              ),
+            )
+            .toList();
+    customHttpRequestList =
+        (doc['sCustomHttpRequestList'] as List<dynamic>? ?? <dynamic>[])
+            .map(
+              (final dynamic e) => MapElement.fromJson(
+                e as Map<String, dynamic>,
+              ),
+            )
+            .toList();
+    customHttpRequestBody =
+        (doc['sCustomHttpRequestBody'] as List<dynamic>? ?? <dynamic>[])
+            .map(
+              (final dynamic e) => MapElement.fromJson(
+                e as Map<String, dynamic>,
+              ),
+            )
+            .toList();
   }
 
   String? id;
@@ -365,6 +408,7 @@ class FActionElement extends Equatable {
   ActionAudioPlayerActions? actionAudioPlayer;
   ActionTetaCmsDB? actionTetaDB;
   ActionTetaCmsAuth? actionTetaAuth;
+  ActionCustomHttpRequest? actionCustomHttpRequest;
   FTextTypeInput? delay;
   FTextTypeInput? audioPlayerUrl = FTextTypeInput(value: 'url');
   bool? withCondition;
@@ -406,6 +450,13 @@ class FActionElement extends Equatable {
   FTextTypeInput? dbFrom;
   String? cmsCollectionId;
 
+  /// External Api - Custom Http Request
+  FTextTypeInput? customHttpRequestURL;
+  FTextTypeInput? customHttpRequestExpectedStatusCode;
+  List<MapElement>? customHttpRequestHeader;
+  List<MapElement>? customHttpRequestList;
+  List<MapElement>? customHttpRequestBody;
+
   /// Supabase data for insert / update map
   List<MapElement>? dbData;
 
@@ -435,6 +486,11 @@ class FActionElement extends Equatable {
         dbFrom,
         cmsCollectionId,
         dbData,
+        customHttpRequestURL,
+        customHttpRequestExpectedStatusCode,
+        customHttpRequestHeader,
+        customHttpRequestList,
+        customHttpRequestBody,
       ];
 
   /// Get avaiable action types for drop down list
@@ -446,6 +502,7 @@ class FActionElement extends Equatable {
           'Navigation',
           'Teta database',
           'Teta auth',
+          'Custom Http Request',
           'Theme',
           'Languages',
           'Google Maps',
@@ -579,6 +636,10 @@ class FActionElement extends Equatable {
     return enumsToListString(ActionTetaCmsAuth.values);
   }
 
+  static List<String> getCustomHttpRequest() {
+    return enumsToListString(ActionCustomHttpRequest.values);
+  }
+
   static List<String> getCamera() {
     return enumsToListString(ActionCamera.values);
   }
@@ -615,6 +676,10 @@ class FActionElement extends Equatable {
     if (type == ActionType.translator) {
       return 'Languages';
     }
+    if (type == ActionType.customHttpRequest) {
+      return 'Custom Http Request';
+    }
+
     if (type != null) {
       return EnumToString.convertToString(type, camelCase: true);
     }
@@ -647,6 +712,9 @@ class FActionElement extends Equatable {
     }
     if (value == 'Languages') {
       return ActionType.translator;
+    }
+    if (value == 'Custom Http Request') {
+      return ActionType.customHttpRequest;
     }
     if (value != null) {
       return EnumToString.fromString<dynamic>(list, value, camelCase: true);
@@ -683,6 +751,7 @@ class FActionElement extends Equatable {
         'actionGoogleMaps': convertValueToDropdown(actionGoogleMaps),
         'aTDb': convertValueToDropdown(actionTetaDB),
         'aTAu': convertValueToDropdown(actionTetaAuth),
+        'aCHr': convertValueToDropdown(actionCustomHttpRequest),
         'sN': stateName,
         'sN2': stateName2,
         'sN3': stateName3,
@@ -745,6 +814,22 @@ class FActionElement extends Equatable {
         'qonversionProdId': qonversionProductIdentifier != null
             ? qonversionProductIdentifier!.toJson()
             : null,
+        'sCustomHttpRequestHeader': customHttpRequestHeader != null
+            ? customHttpRequestHeader!.map((final e) => e.toJson()).toList()
+            : null,
+        'sCustomHttpRequestList': customHttpRequestList != null
+            ? customHttpRequestList!.map((final e) => e.toJson()).toList()
+            : null,
+        'sCustomHttpRequestBody': customHttpRequestBody != null
+            ? customHttpRequestBody!.map((final e) => e.toJson()).toList()
+            : null,
+        'sCustomHttpRequestURL': customHttpRequestURL != null
+            ? customHttpRequestURL!.toJson()
+            : null,
+        'sCustomHttpRequestExpectedStatusCode':
+            customHttpRequestExpectedStatusCode != null
+                ? customHttpRequestExpectedStatusCode!.toJson()
+                : null,
       }..removeWhere((final String key, final dynamic value) => value == null);
 
   Future getAction(
@@ -946,6 +1031,74 @@ class FActionElement extends Equatable {
             await actionS(
               () => FATetaCMSLogout.action(
                 context,
+              ),
+              context: context,
+              params: params,
+              states: states,
+              dataset: dataset,
+              loop: loop,
+            );
+            break;
+          default:
+            break;
+        }
+        break;
+      case ActionType.customHttpRequest:
+        switch (actionCustomHttpRequest) {
+          case ActionCustomHttpRequest.delete:
+            await actionS(
+              () => FACustomHttpRequestDelete.action(
+                context,
+                customHttpRequestURL,
+                customHttpRequestExpectedStatusCode,
+                customHttpRequestList,
+                customHttpRequestHeader,
+                params,
+                states,
+                dataset,
+                loop,
+              ),
+              context: context,
+              params: params,
+              states: states,
+              dataset: dataset,
+              loop: loop,
+            );
+            break;
+          case ActionCustomHttpRequest.post:
+            await actionS(
+              () => FACustomHttpRequestPost.action(
+                context,
+                customHttpRequestURL,
+                customHttpRequestExpectedStatusCode,
+                customHttpRequestList,
+                customHttpRequestBody,
+                customHttpRequestHeader,
+                params,
+                states,
+                dataset,
+                loop,
+              ),
+              context: context,
+              params: params,
+              states: states,
+              dataset: dataset,
+              loop: loop,
+            );
+            break;
+          case ActionCustomHttpRequest.update:
+            await actionS(
+              () => FACustomHttpRequestUpdate.action(
+                context,
+                customHttpRequestURL,
+                customHttpRequestExpectedStatusCode,
+                customHttpRequestList,
+                customHttpRequestBody,
+                customHttpRequestHeader,
+                params,
+                states,
+                dataset,
+                loop,
               ),
               context: context,
               params: params,
@@ -2029,6 +2182,48 @@ class FActionElement extends Equatable {
               ),
               context,
             );
+        }
+        break;
+      case ActionType.customHttpRequest:
+        switch (actionCustomHttpRequest) {
+          case ActionCustomHttpRequest.delete:
+            return codeS(
+              FACustomHttpRequestDelete.toCode(
+                customHttpRequestURL,
+                customHttpRequestExpectedStatusCode,
+                customHttpRequestList,
+                customHttpRequestHeader,
+                loop,
+              ),
+              context,
+            );
+          case ActionCustomHttpRequest.update:
+            return codeS(
+              FACustomHttpRequestUpdate.toCode(
+                customHttpRequestURL,
+                customHttpRequestExpectedStatusCode,
+                customHttpRequestList,
+                customHttpRequestBody,
+                customHttpRequestHeader,
+                loop,
+              ),
+              context,
+            );
+
+          case ActionCustomHttpRequest.post:
+            return codeS(
+              FACustomHttpRequestPost.toCode(
+                customHttpRequestURL,
+                customHttpRequestExpectedStatusCode,
+                customHttpRequestList,
+                customHttpRequestBody,
+                customHttpRequestHeader,
+                loop,
+              ),
+              context,
+            );
+          default:
+            break;
         }
         break;
       case ActionType.tetaAuth:

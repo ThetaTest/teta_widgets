@@ -90,13 +90,25 @@ class _WCustomHttpRequestState extends State<WCustomHttpRequest> {
       final response = await http.get(Uri.parse(newURL), headers: headers);
 
       final json = response.body;
-      final data = jsonDecode(json) as List<dynamic>;
 
-      if (mounted) {
-        setState(() {
-          list = data;
-          isInitialized = true;
-        });
+      dynamic resp = jsonDecode(json);
+      if (resp is List) {
+        final data = resp;
+        if (mounted) {
+          setState(() {
+            list = data;
+            isInitialized = true;
+          });
+        }
+      } else {
+        final data = <dynamic>[];
+        data.add(resp);
+        if (mounted) {
+          setState(() {
+            list = data;
+            isInitialized = true;
+          });
+        }
       }
     } catch (e) {
       print("error:" + e.toString());

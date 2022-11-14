@@ -21,6 +21,9 @@ import 'package:teta_widgets/src/elements/controls/atoms/actions/validator.dart'
 
 // Project imports:
 import 'package:teta_widgets/src/elements/controls/atoms/flag.dart';
+import 'package:teta_widgets/src/elements/controls/atoms/https_requests_custom_backend/delete.dart';
+import 'package:teta_widgets/src/elements/controls/atoms/https_requests_custom_backend/post.dart';
+import 'package:teta_widgets/src/elements/controls/atoms/https_requests_custom_backend/update.dart';
 import 'package:teta_widgets/src/elements/controls/atoms/qonversion/buy.dart';
 import 'package:teta_widgets/src/elements/controls/atoms/revenuecat/buy.dart';
 import 'package:teta_widgets/src/elements/controls/atoms/subapase/delete.dart';
@@ -35,6 +38,7 @@ import 'package:teta_widgets/src/elements/features/actions/enums/action_google_m
 import 'package:teta_widgets/src/elements/features/actions/enums/audio_player_actions.dart';
 import 'package:teta_widgets/src/elements/features/actions/enums/braintree.dart';
 import 'package:teta_widgets/src/elements/features/actions/enums/camera.dart';
+import 'package:teta_widgets/src/elements/features/actions/enums/custom_http_request.dart';
 import 'package:teta_widgets/src/elements/features/actions/enums/navigation.dart';
 import 'package:teta_widgets/src/elements/features/actions/enums/state.dart';
 import 'package:teta_widgets/src/elements/features/actions/enums/stripe.dart';
@@ -1526,6 +1530,24 @@ class ActionElementControlState extends State<ActionElementControl> {
                     }
                   },
                 ),
+              if (widget.element.actionType == ActionType.customHttpRequest)
+                CDropdown(
+                  value: FActionElement.convertValueToDropdown(
+                    widget.element.actionCustomHttpRequest,
+                  ),
+                  items: FActionElement.getCustomHttpRequest().toSet().toList(),
+                  onChange: (final newValue) {
+                    if (newValue != null) {
+                      final old = widget.element;
+                      widget.element.actionCustomHttpRequest =
+                          FActionElement.convertDropdownToValue(
+                        ActionCustomHttpRequest.values,
+                        newValue,
+                      ) as ActionCustomHttpRequest?;
+                      widget.callBack(widget.element, old);
+                    }
+                  },
+                ),
               if ((widget.element.actionType == ActionType.state &&
                       widget.element.actionState == ActionState.changeWith &&
                       !widget.node.intrinsicState.gestures
@@ -1912,6 +1934,45 @@ class ActionElementControlState extends State<ActionElementControl> {
               if (widget.element.actionType == ActionType.tetaDatabase &&
                   widget.element.actionTetaDB == ActionTetaCmsDB.delete)
                 TetaCmsDeleteControl(
+                  prj: widget.prj,
+                  page: widget.page,
+                  node: widget.node,
+                  action: widget.element,
+                  callback: () {
+                    final old = widget.element;
+                    widget.callBack(widget.element, old);
+                  },
+                ),
+              if (widget.element.actionType == ActionType.customHttpRequest &&
+                  widget.element.actionCustomHttpRequest ==
+                      ActionCustomHttpRequest.post)
+                CustomHttpRequestPostControl(
+                  prj: widget.prj,
+                  page: widget.page,
+                  node: widget.node,
+                  action: widget.element,
+                  callback: () {
+                    final old = widget.element;
+                    widget.callBack(widget.element, old);
+                  },
+                ),
+              if (widget.element.actionType == ActionType.customHttpRequest &&
+                  widget.element.actionCustomHttpRequest ==
+                      ActionCustomHttpRequest.update)
+                CustomHttpRequestUpdateControl(
+                  prj: widget.prj,
+                  page: widget.page,
+                  node: widget.node,
+                  action: widget.element,
+                  callback: () {
+                    final old = widget.element;
+                    widget.callBack(widget.element, old);
+                  },
+                ),
+              if (widget.element.actionType == ActionType.customHttpRequest &&
+                  widget.element.actionCustomHttpRequest ==
+                      ActionCustomHttpRequest.delete)
+                CustomHttpRequestDeleteControl(
                   prj: widget.prj,
                   page: widget.page,
                   node: widget.node,

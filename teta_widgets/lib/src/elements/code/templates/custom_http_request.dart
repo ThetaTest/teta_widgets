@@ -47,13 +47,16 @@ class CustomHttpRequestCodeTemplate {
         as List<MapElement>;
     final mapHeaders = <String, dynamic>{};
     for (final e in headers) {
-      mapHeaders[e.key] = e.value
+      var value = e.value
           .toCode(
             0,
             resultType: ResultTypeEnum.string,
           )
-          .replaceAll("'", '')
-          .replaceAll(" ", '');
+          .replaceAll("'", '');
+      if (value.substring(value.length - 1) == ' ') {
+        value = value.substring(0, value.length - 1);
+      }
+      mapHeaders[e.key] = value;
     }
     final mapHeadersString = StringBuffer()..write('{');
     for (final key in mapHeaders.keys) {
