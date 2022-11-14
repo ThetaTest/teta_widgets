@@ -135,6 +135,12 @@ class DBKeys {
   static const String hintTextColor = 'hintTC';
   static const String cursorColor = 'cursorC';
 
+  // Gap
+  static const String mainAxisExtend = 'mAxExt';
+  static const String crossAxisExtend  = 'cAxExt';
+  static const String isExpandedGap  = 'iExGap';
+
+
   static const String mainAxisSpacing = 'mAxSpc';
   static const String crossAxisCount = 'cAxCn';
   static const String crossAxisSpacing = 'cAxSpc';
