@@ -93,7 +93,7 @@ class FASupabaseSignInWithProvider {
           if (uri != null) {
             if (uri.queryParameters['access_token'] != null &&
                 uri.queryParameters['access_token'] is String) {
-              await recoverSessionFromUrl(uri!);
+              await recoverSessionFromUrl(uri);
               await closeInAppWebView();
               unawaited(
                 TetaCMS.instance.analytics.insertEvent(
@@ -101,7 +101,7 @@ class FASupabaseSignInWithProvider {
                   'Supabase Auth: signIn request',
                   <String, dynamic>{
                     'device': 'mobile',
-                    'provider': EnumToString.convertToString(provider),
+                    'provider': 'supabase',
                   },
                   isUserIdPreferableIfExists: false,
                 ),

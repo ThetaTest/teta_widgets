@@ -35,7 +35,7 @@ class GridViewCodeTemplate {
     final valueCrossAxisCount =
         (body.attributes[DBKeys.crossAxisCount] as FTextTypeInput).toCode(
       loop,
-      resultType: ResultTypeEnum.double,
+      resultType: ResultTypeEnum.int,
       defaultValue: '1',
     );
     //! Remove this
