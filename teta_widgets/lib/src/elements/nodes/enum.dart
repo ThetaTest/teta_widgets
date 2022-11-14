@@ -25,6 +25,7 @@ enum NType {
   icon,
   ignorePointer,
   image,
+  limitedBox,
   liquidSwipe,
   listView,
   listViewBuilder,
@@ -142,6 +143,9 @@ enum NType {
 
   // HTTP Requests
   httpRequest,
+
+  // HTTP Request from custom backend
+  customHttpRequest,
 
   // TetaCMS
   cmsFetch,

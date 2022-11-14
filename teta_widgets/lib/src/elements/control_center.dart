@@ -58,6 +58,7 @@ import 'package:teta_widgets/src/elements/bodies/gridview.dart';
 import 'package:teta_widgets/src/elements/bodies/gridview_builder.dart';
 import 'package:teta_widgets/src/elements/bodies/hero.dart';
 import 'package:teta_widgets/src/elements/bodies/https_requests/future_builder.dart';
+import 'package:teta_widgets/src/elements/bodies/https_requests_custom_backend/custom_http_request.dart';
 import 'package:teta_widgets/src/elements/bodies/icon.dart';
 import 'package:teta_widgets/src/elements/bodies/icon_feather.dart';
 import 'package:teta_widgets/src/elements/bodies/icon_font_awesome.dart';
@@ -65,6 +66,7 @@ import 'package:teta_widgets/src/elements/bodies/icon_line.dart';
 import 'package:teta_widgets/src/elements/bodies/ignore_pointer.dart';
 import 'package:teta_widgets/src/elements/bodies/image.dart';
 import 'package:teta_widgets/src/elements/bodies/index_stack.dart';
+import 'package:teta_widgets/src/elements/bodies/limitedbox.dart';
 import 'package:teta_widgets/src/elements/bodies/linear_progress_indicator.dart';
 import 'package:teta_widgets/src/elements/bodies/liquid_swipe.dart';
 import 'package:teta_widgets/src/elements/bodies/list_tile.dart';
@@ -267,6 +269,8 @@ final stateTypes = <IntrinsicStates>[
   qonversionProductsListIntrinsicStates,
   qonversionSubStatusIntrinsicStates,
   qrScannerIntrinsicStates,
+  limitedBoxIntrinsicStates,
+  customHttpRequestIntrinsicStates,
 ];
 
 /// Method to return any body
@@ -534,6 +538,10 @@ NodeBody getBody(final NType type) {
       return AutoAppBarBody();
     case NType.qrScanner:
       return QrScannerBody();
+    case NType.limitedBox:
+      return LimitedBoxBody();
+    case NType.customHttpRequest:
+      return CustomHttpRequestBody();
     case NType.listViewSeparated:
       break;
     case NType.nil:

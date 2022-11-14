@@ -15,6 +15,7 @@ import 'package:teta_widgets/src/elements/features/actions/enums/action_google_m
 import 'package:teta_widgets/src/elements/features/actions/enums/audio_player_actions.dart';
 import 'package:teta_widgets/src/elements/features/actions/enums/braintree.dart';
 import 'package:teta_widgets/src/elements/features/actions/enums/camera.dart';
+import 'package:teta_widgets/src/elements/features/actions/enums/custom_http_request.dart';
 import 'package:teta_widgets/src/elements/features/actions/enums/index.dart';
 import 'package:teta_widgets/src/elements/features/actions/enums/qonversion.dart';
 import 'package:teta_widgets/src/elements/features/actions/enums/revenue_cat.dart';
@@ -143,6 +144,10 @@ class ActionControlState extends State<ActionControl> {
                                     : null,
                                 actionTetaDB:
                                     (action is ActionTetaCmsDB) ? action : null,
+                                actionCustomHttpRequest:
+                                    (action is ActionCustomHttpRequest)
+                                        ? action
+                                        : null,
                                 actionTranslator: (action is ActionTranslator)
                                     ? action
                                     : null,
@@ -316,6 +321,12 @@ class __NewActionAlertState extends State<_NewActionAlert> {
         actionType: ActionType.tetaDatabase,
         options: FActionElement.getTetaDB(),
         type: ActionTetaCmsDB.values,
+      ),
+      _SelectionClass(
+        title: 'Custom Http Request',
+        actionType: ActionType.customHttpRequest,
+        options: FActionElement.getCustomHttpRequest(),
+        type: ActionCustomHttpRequest.values,
       ),
       _SelectionClass(
         title: 'Multi languages',

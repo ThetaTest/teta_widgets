@@ -5,6 +5,7 @@
 import 'package:flutter/foundation.dart';
 // Package imports:
 import 'package:teta_core/src/models/variable.dart';
+import 'package:teta_core/teta_core.dart';
 // Project imports:
 import 'package:teta_widgets/src/elements/features/font_weight.dart';
 import 'package:teta_widgets/src/elements/features/google_maps_map_style.dart';
@@ -181,6 +182,11 @@ class DBKeys {
   static const String supabaseSearchValue = 'spSeV';
   static const String supabaseEqName = 'spEqN';
   static const String supabaseEqValue = 'spEqV';
+
+  // Use for custom http request
+  static const String customHttpRequestURL = 'customHttpRequestURL';
+  static const String customHttpRequestList = 'customHttpRequestList';
+  static const String customHttpRequestHeader = 'customHttpRequestHeader';
 
   static const String cmsCollection = 'cmsColl';
   static const String cmsLimit = 'cmsLmt';
@@ -442,6 +448,28 @@ class DynamicAttributes {
           return value;
         case DBKeys.showDrawer:
           return value;
+        case DBKeys.customHttpRequestURL:
+          return FTextTypeInput.fromJson(value as Map<String, dynamic>);
+        case DBKeys.customHttpRequestList:
+          {
+            final list = <MapElement>[];
+            if (value != null) {
+              for (final e in value as List<dynamic>) {
+                list.add(MapElement.fromJson(e as Map<String, dynamic>));
+              }
+            }
+            return list;
+          }
+        case DBKeys.customHttpRequestHeader:
+          {
+            final list = <MapElement>[];
+            if (value != null) {
+              for (final e in value as List<dynamic>) {
+                list.add(MapElement.fromJson(e as Map<String, dynamic>));
+              }
+            }
+            return list;
+          }
         case DBKeys.cmsCollection:
           return FTextTypeInput.fromJson(value as Map<String, dynamic>);
         case DBKeys.cmsPage:
@@ -753,6 +781,16 @@ class DynamicAttributes {
                 .map((final e) => e.toJson())
                 .toList()
             : null;
+      case DBKeys.customHttpRequestURL:
+        return value != null ? value.toJson() : FTextTypeInput().toJson();
+      case DBKeys.customHttpRequestList:
+        return (value != null)
+            ? (value as List<MapElement>).map((final e) => e.toJson()).toList()
+            : <MapElement>[];
+      case DBKeys.customHttpRequestHeader:
+        return (value != null)
+            ? (value as List<MapElement>).map((final e) => e.toJson()).toList()
+            : <MapElement>[];
       case DBKeys.cmsCollection:
         return value != null ? value.toJson() : FTextTypeInput().toJson();
       case DBKeys.cmsPage:
