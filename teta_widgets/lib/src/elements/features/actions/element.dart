@@ -71,6 +71,7 @@ import 'package:teta_widgets/src/elements/actions/supabase/insert.dart';
 import 'package:teta_widgets/src/elements/actions/supabase/signin_w_credentials.dart';
 import 'package:teta_widgets/src/elements/actions/supabase/signin_w_provider.dart';
 import 'package:teta_widgets/src/elements/actions/supabase/signup_w_credentials.dart';
+import 'package:teta_widgets/src/elements/actions/supabase/storage_delete.dart';
 import 'package:teta_widgets/src/elements/actions/supabase/storage_upload.dart';
 import 'package:teta_widgets/src/elements/actions/supabase/update.dart';
 import 'package:teta_widgets/src/elements/actions/teta_cms/auth/login.dart';
@@ -1998,6 +1999,24 @@ class FActionElement extends Equatable {
               loop: loop,
             );
             break;
+          case ActionSupabaseStorage.remove:
+            await actionS(
+              () => FASupabaseStorageRemove.action(
+                context,
+                dbFrom,
+                valueTextTypeInput,
+                params,
+                states,
+                dataset,
+                loop,
+              ),
+              context: context,
+              params: params,
+              states: states,
+              dataset: dataset,
+              loop: loop,
+            );
+            break;
           case null:
             break;
         }
@@ -2009,6 +2028,8 @@ class FActionElement extends Equatable {
               () => FASupabaseFunctionsInvoke.action(
                 context,
                 dbFrom,
+                customHttpRequestBody,
+                customHttpRequestHeader,
                 params,
                 states,
                 dataset,
@@ -3105,6 +3126,16 @@ class FActionElement extends Equatable {
               ),
               context,
             );
+          case ActionSupabaseStorage.remove:
+            return codeS(
+              FASupabaseStorageRemove.toCode(
+                context,
+                dbFrom,
+                valueTextTypeInput,
+                loop,
+              ),
+              context,
+            );
           case null:
             return '';
         }
@@ -3112,7 +3143,12 @@ class FActionElement extends Equatable {
         switch (actionSupabaseFunctions) {
           case ActionSupabaseFunctions.invoke:
             return codeS(
-              FASupabaseFunctionsInvoke.toCode(context, dbFrom),
+              FASupabaseFunctionsInvoke.toCode(
+                context,
+                dbFrom,
+                customHttpRequestBody,
+                customHttpRequestHeader,
+              ),
               context,
             );
           case null:

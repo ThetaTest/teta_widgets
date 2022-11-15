@@ -123,11 +123,11 @@ class FASupabaseStorageUpload {
     final varName = ReCase(stateName).camelCase;
     final varName2 = ReCase(stateName2).camelCase;
     return '''
-final bytes = $varName.readAsBytes();
+final bytes = await $varName.readAsBytes();
 await Supabase.instance.client.storage.from($from).uploadBinary($path,bytes);
-final res = client.storage.from($from).getPublicUrl($path);
+final res = Supabase.instance.client.storage.from($from).getPublicUrl($path);
 if (res.error != null) {
-  Logger.printError(
+  debugPrint(
     'Error retriving the public url, error: \${res.error?.message}',
   );
 } else if (res.data != null) {

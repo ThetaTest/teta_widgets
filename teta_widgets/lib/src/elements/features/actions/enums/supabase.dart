@@ -27,9 +27,7 @@ enum ActionSupabaseDB {
   delete,
 }
 
-enum ActionSupabaseStorage {
-  upload,
-}
+enum ActionSupabaseStorage { upload, remove }
 
 enum ActionSupabaseFunctions {
   invoke,

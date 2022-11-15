@@ -27,6 +27,7 @@ import 'package:teta_widgets/src/elements/controls/atoms/revenuecat/buy.dart';
 import 'package:teta_widgets/src/elements/controls/atoms/subapase/delete.dart';
 import 'package:teta_widgets/src/elements/controls/atoms/subapase/insert.dart';
 import 'package:teta_widgets/src/elements/controls/atoms/subapase/invoke.dart';
+import 'package:teta_widgets/src/elements/controls/atoms/subapase/storage_remove.dart';
 import 'package:teta_widgets/src/elements/controls/atoms/subapase/storage_upload.dart';
 import 'package:teta_widgets/src/elements/controls/atoms/subapase/update.dart';
 import 'package:teta_widgets/src/elements/controls/atoms/teta_cms/delete.dart';
@@ -49,7 +50,6 @@ import 'package:teta_widgets/src/elements/features/actions/enums/translator.dart
 import 'package:teta_widgets/src/elements/features/actions/enums/type.dart';
 import 'package:teta_widgets/src/elements/features/actions/enums/webview.dart';
 import 'package:teta_widgets/src/elements/index.dart';
-import 'package:teta_widgets/src/elements/nodes/dynamic.dart';
 import 'package:uuid/uuid.dart';
 
 /// Widget to control a single action
@@ -1598,16 +1598,29 @@ class ActionElementControlState extends State<ActionElementControl> {
                         }
                       },
                     ),
-                    SupabaseStorageUploadControl(
-                      prj: widget.prj,
-                      page: widget.page,
-                      node: widget.node,
-                      action: widget.element,
-                      callback: () {
-                        final old = widget.element;
-                        widget.callBack(widget.element, old);
-                      },
-                    ),
+                    if (widget.element.actionSupabaseStorage ==
+                        ActionSupabaseStorage.upload)
+                      SupabaseStorageUploadControl(
+                        prj: widget.prj,
+                        page: widget.page,
+                        node: widget.node,
+                        action: widget.element,
+                        callback: () {
+                          final old = widget.element;
+                          widget.callBack(widget.element, old);
+                        },
+                      )
+                    else
+                      SupabaseStorageRemoveControl(
+                        prj: widget.prj,
+                        page: widget.page,
+                        node: widget.node,
+                        action: widget.element,
+                        callback: () {
+                          final old = widget.element;
+                          widget.callBack(widget.element, old);
+                        },
+                      ),
                   ],
                 ),
               if (widget.element.actionType == ActionType.tetaDatabase)

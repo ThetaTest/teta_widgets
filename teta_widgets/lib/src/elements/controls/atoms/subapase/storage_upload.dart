@@ -53,7 +53,7 @@ class SupabaseStorageUploadControl extends StatelessWidget {
           page: page,
           title: 'File path',
           callBack: (final value, final old) {
-            action.dbFrom = value;
+            action.valueTextTypeInput = value;
             callback();
           },
         ),
