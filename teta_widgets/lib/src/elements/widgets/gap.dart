@@ -13,8 +13,7 @@ class WGap extends StatelessWidget {
     required this.dataset,
     required this.forPlay,
     required this.mainAxisExtent,
-    this.crossAxisExtent,
-    this.color,
+    required this.crossAxisExtent,
     this.loop,
     this.isExpanded = false,
   }) : super(key: key);
@@ -22,8 +21,7 @@ class WGap extends StatelessWidget {
   final CNode node;
   final bool forPlay;
   final FSize mainAxisExtent;
-  final FSize? crossAxisExtent;
-  final Color? color;
+  final FSize crossAxisExtent;
   final int? loop;
   final bool isExpanded;
 
@@ -46,14 +44,12 @@ class WGap extends StatelessWidget {
         loop: loop,
         child: isExpanded
             ? Gap.expand(
-                mainAxisExtent.get(context: context, isWidth: true)!,
-                color: color,
+                mainAxisExtent.get(context: context, isWidth: true) ?? 0,
               )
             : Gap(
-                mainAxisExtent.get(context: context, isWidth: true)!,
-                color: color,
+                mainAxisExtent.get(context: context, isWidth: true) ?? 0,
                 crossAxisExtent:
-                    crossAxisExtent?.get(context: context, isWidth: true),
+                    crossAxisExtent.get(context: context, isWidth: true),
               ),
       ),
     );

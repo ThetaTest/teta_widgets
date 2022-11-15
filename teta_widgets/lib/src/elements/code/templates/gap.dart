@@ -12,17 +12,15 @@ class GapCodeTemplate {
     final CNode? child,
   ) async {
     final mainAxisExpanded = body.attributes[DBKeys.mainAxisExtend] as FSize;
-    FSize? crossAxisExpanded;
-    if (body.attributes.containsKey(DBKeys.mainAxisExtend)) {
-      crossAxisExpanded = body.attributes[DBKeys.mainAxisExtend] as FSize;
-    }
+    final crossAxisExpanded = body.attributes[DBKeys.mainAxisExtend] as FSize;
+
     late String code;
 
     if (!(body.attributes[DBKeys.isExpandedGap] as bool)) {
       code = '''
       Gap(
         ${mainAxisExpanded.get(context: context, isWidth: true)}
-        crossAxisExtent: ${crossAxisExpanded?.get(context: context, isWidth: false)},
+        crossAxisExtent: ${crossAxisExpanded.toCode(context: context, isWidth: true)},
       )
     ''';
     } else {

@@ -3,9 +3,11 @@
 
 // Flutter imports:
 import 'package:flutter/foundation.dart';
+
 // Package imports:
 import 'package:teta_core/src/models/variable.dart';
 import 'package:teta_core/teta_core.dart';
+
 // Project imports:
 import 'package:teta_widgets/src/elements/features/font_weight.dart';
 import 'package:teta_widgets/src/elements/features/google_maps_map_style.dart';
@@ -137,9 +139,8 @@ class DBKeys {
 
   // Gap
   static const String mainAxisExtend = 'mAxExt';
-  static const String crossAxisExtend  = 'cAxExt';
-  static const String isExpandedGap  = 'iExGap';
-
+  static const String crossAxisExtend = 'cAxExt';
+  static const String isExpandedGap = 'iExGap';
 
   static const String mainAxisSpacing = 'mAxSpc';
   static const String crossAxisCount = 'cAxCn';
@@ -428,6 +429,12 @@ class DynamicAttributes {
           return FSize.fromJson(value as Map<String, dynamic>);
         case DBKeys.maxWidth:
           return FSize.fromJson(value as Map<String, dynamic>);
+        case DBKeys.mainAxisExtend:
+          return FSize.fromJson(value as Map<String, dynamic>);
+        case DBKeys.crossAxisExtend:
+          return FSize.fromJson(value as Map<String, dynamic>);
+        case DBKeys.isExpandedGap:
+          return value as bool;
         case 'params':
           {
             final params = <VariableObject>[];
@@ -897,6 +904,12 @@ class DynamicAttributes {
         return value != null ? value.toJson() : FKeyboardType().toJson();
       case DBKeys.yTranslation:
         return value != null ? value.toJson() : FKeyboardType().toJson();
+      case DBKeys.isExpandedGap:
+        return value;
+      case DBKeys.mainAxisExtend:
+        return value != null ? value.toJson() : FSize().toJson();
+      case DBKeys.crossAxisExtend:
+        return value != null ? value.toJson() : FSize().toJson();
       default:
         return <String, dynamic>{};
     }

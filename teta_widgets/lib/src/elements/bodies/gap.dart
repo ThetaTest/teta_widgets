@@ -17,29 +17,30 @@ const _globalType = NType.gap;
 //Todo: change nodeIcon
 
 final gapIntrinsicStates = IntrinsicStates(
-    nodeIcon: Assets.wIcons.sizedBox,
-    nodeVideo: null,
-    nodeDescription: null,
-    advicedChildren: [],
-    blockedTypes: [],
-    synonymous: ['gap', 'spacer'],
-    advicedChildrenCanHaveAtLeastAChild: [],
-    displayName: NodeType.name(_globalType),
-    type: _globalType,
-    maxChildren: 0,
-    category: NodeCategories.space,
-    canHave: ChildrenEnum.none,
-    addChildLabels: [],
-    gestures: [],
-    permissions: [],
-    packages: []);
+  nodeIcon: Assets.wIcons.sizedBox,
+  nodeVideo: null,
+  nodeDescription: null,
+  advicedChildren: [],
+  blockedTypes: [],
+  synonymous: ['gap', 'spacer'],
+  advicedChildrenCanHaveAtLeastAChild: [],
+  displayName: NodeType.name(_globalType),
+  type: _globalType,
+  maxChildren: 0,
+  category: NodeCategories.space,
+  canHave: ChildrenEnum.none,
+  addChildLabels: [],
+  gestures: [],
+  permissions: [],
+  packages: [],
+);
 
 class GapBody extends NodeBody {
   @override
   Map<String, dynamic> get attributes => <String, dynamic>{
         DBKeys.mainAxisExtend: FSize(size: '0', unit: SizeUnit.pixel),
-        DBKeys.crossAxisExtend: FSize(size: '0', unit: SizeUnit.pixel),
-        DBKeys.isExpandedGap: bool,
+        DBKeys.crossAxisExtend: FSize(size: '', unit: SizeUnit.pixel),
+        DBKeys.isExpandedGap: false,
       };
 
   @override
@@ -61,6 +62,7 @@ class GapBody extends NodeBody {
             ${child ?? children}
             ${(attributes[DBKeys.mainAxisExtend] as FSize? ?? FSize()).toJson()}
             ${(attributes[DBKeys.crossAxisExtend] as FSize? ?? FSize()).toJson()}
+            ${attributes[DBKeys.isExpandedGap] as bool}
             ''',
         ),
         node: node,

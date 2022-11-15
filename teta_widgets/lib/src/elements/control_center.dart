@@ -550,6 +550,27 @@ NodeBody getBody(final NType type) {
       break;
     case NType.expansionPanel:
       break;
+    case NType.gap:
+      return GapBody();
+      break;
+    case NType.mapBox:
+      // TODO: Handle this case.
+      break;
+    case NType.transformRotate:
+      // TODO: Handle this case.
+      break;
+    case NType.transformTranslate:
+      // TODO: Handle this case.
+      break;
+    case NType.transformScale:
+      // TODO: Handle this case.
+      break;
+    case NType.animationConfigStaticList:
+      // TODO: Handle this case.
+      break;
+    case NType.airtableFetch:
+      // TODO: Handle this case.
+      break;
   }
   return NodeBody();
 }
