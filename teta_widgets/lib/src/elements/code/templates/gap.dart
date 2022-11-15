@@ -19,7 +19,7 @@ class GapCodeTemplate {
     if (!(body.attributes[DBKeys.isExpandedGap] as bool)) {
       code = '''
       Gap(
-        ${mainAxisExpanded.get(context: context, isWidth: true)}
+        ${mainAxisExpanded.get(context: context, isWidth: true)},
         crossAxisExtent: ${crossAxisExpanded.toCode(context: context, isWidth: true)},
       )
     ''';
