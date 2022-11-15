@@ -51,6 +51,7 @@ import 'package:teta_widgets/src/elements/bodies/firebase/is_authenticated.dart'
 import 'package:teta_widgets/src/elements/bodies/firebase/pagination.dart';
 import 'package:teta_widgets/src/elements/bodies/firebase/stream_builder.dart';
 import 'package:teta_widgets/src/elements/bodies/fitted_box.dart';
+import 'package:teta_widgets/src/elements/bodies/gap.dart';
 import 'package:teta_widgets/src/elements/bodies/gesture_detector.dart';
 import 'package:teta_widgets/src/elements/bodies/google_ad_mob_banner_ad_body.dart';
 import 'package:teta_widgets/src/elements/bodies/google_maps_body.dart';
@@ -150,6 +151,7 @@ final stateTypes = <IntrinsicStates>[
   decoratedBoxIntrinsicStates,
   dividerIntrinsicStates,
   expandedIntrinsicStates,
+  gapIntrinsicStates,
   gestureDetectorIntrinsicStates,
   gridIntrinsicStates,
   gridViewBuilderIntrinsicStates,
@@ -547,6 +549,27 @@ NodeBody getBody(final NType type) {
     case NType.nil:
       break;
     case NType.expansionPanel:
+      break;
+    case NType.gap:
+      return GapBody();
+      break;
+    case NType.mapBox:
+      // TODO: Handle this case.
+      break;
+    case NType.transformRotate:
+      // TODO: Handle this case.
+      break;
+    case NType.transformTranslate:
+      // TODO: Handle this case.
+      break;
+    case NType.transformScale:
+      // TODO: Handle this case.
+      break;
+    case NType.animationConfigStaticList:
+      // TODO: Handle this case.
+      break;
+    case NType.airtableFetch:
+      // TODO: Handle this case.
       break;
   }
   return NodeBody();
