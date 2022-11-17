@@ -35,9 +35,11 @@ class DBKeys {
   static const String padding = 'p';
   static const String childrenIds = 'ids';
   static const String width = 'wdh';
+  static const String widthFactor = 'wdhFct';
   static const String minWidth = 'miwdh';
   static const String maxWidth = 'mawdh';
   static const String height = 'hgh';
+  static const String heightFactor = 'hghFct';
   static const String minHeight = 'mihgh';
   static const String maxHeight = 'mahgh';
   static const String textAlign = 'txtAlg';
@@ -213,8 +215,7 @@ class DBKeys {
 
   static const String markerId = 'googleMapsMarkerIdKey';
 
-  static const String markerDrawPathToUserCurrentLocation =
-      'markerDrawPathToUserCurrentLocation';
+  static const String markerDrawPathToUserCurrentLocation = 'markerDrawPathToUserCurrentLocation';
 
   static const String mapConfig = 'googleMapsDatasetConfigNameKey';
 
@@ -299,6 +300,8 @@ class DynamicAttributes {
         case DBKeys.fontWeight:
           return FFontWeight().fromJson(value as String);
         case DBKeys.height:
+          return FSize.fromJson(value as Map<String, dynamic>);
+        case DBKeys.heightFactor:
           return FSize.fromJson(value as Map<String, dynamic>);
         case DBKeys.minHeight:
           return FSize.fromJson(value as Map<String, dynamic>);
@@ -417,6 +420,8 @@ class DynamicAttributes {
         case DBKeys.slideAnimationEnabled:
           return value;
         case DBKeys.width:
+          return FSize.fromJson(value as Map<String, dynamic>);
+        case DBKeys.widthFactor:
           return FSize.fromJson(value as Map<String, dynamic>);
         case DBKeys.minWidth:
           return FSize.fromJson(value as Map<String, dynamic>);
@@ -569,9 +574,7 @@ class DynamicAttributes {
         case DBKeys.borderFill:
           return FFill().fromJson(value as Map<String, dynamic>);
         case DBKeys.keyboardType:
-          return value is String
-              ? FKeyboardType.fromJson(value)
-              : FKeyboardType();
+          return value is String ? FKeyboardType.fromJson(value) : FKeyboardType();
         default:
           return value;
       }
@@ -640,6 +643,8 @@ class DynamicAttributes {
       case DBKeys.fontWeight:
         return value != null ? value.toJson() : FFontWeight().toJson();
       case DBKeys.height:
+        return value != null ? value.toJson() : FSize().toJson();
+      case DBKeys.heightFactor:
         return value != null ? value.toJson() : FSize().toJson();
       case DBKeys.minHeight:
         return value != null ? value.toJson() : FSize().toJson();
@@ -759,6 +764,8 @@ class DynamicAttributes {
         return value;
       case DBKeys.width:
         return value != null ? value.toJson() : FSize().toJson();
+      case DBKeys.widthFactor:
+        return value != null ? value.toJson() : FSize().toJson();
       case DBKeys.minWidth:
         return value != null ? value.toJson() : FSize().toJson();
       case DBKeys.maxWidth:
@@ -771,15 +778,11 @@ class DynamicAttributes {
         return value;
       case 'params':
         return (value != null)
-            ? (value as List<VariableObject>)
-                .map((final e) => e.toJson())
-                .toList()
+            ? (value as List<VariableObject>).map((final e) => e.toJson()).toList()
             : null;
       case 'states':
         return (value != null)
-            ? (value as List<VariableObject>)
-                .map((final e) => e.toJson())
-                .toList()
+            ? (value as List<VariableObject>).map((final e) => e.toJson()).toList()
             : null;
       case DBKeys.customHttpRequestURL:
         return value != null ? value.toJson() : FTextTypeInput().toJson();

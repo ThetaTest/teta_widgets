@@ -10,29 +10,31 @@ import 'package:teta_widgets/src/elements/builder/gesture_detector_base.dart';
 import 'package:teta_widgets/src/elements/index.dart';
 
 class WFractionallySizedBox extends StatelessWidget {
-  /// Returns a SizedBox widget in Teta
+  /// Returns a FractionallySizedBox widget in Teta
   const WFractionallySizedBox(
     final Key? key, {
     required this.node,
+    required this.forPlay,
     required this.widthFactor,
     required this.heightFactor,
-    required this.forPlay,
     required this.params,
     required this.states,
     required this.dataset,
-    this.alignment = Alignment.center,
     this.child,
     this.loop,
   }) : super(key: key);
 
+  /// Node params
   final CNode node;
   final CNode? child;
-  final AlignmentGeometry alignment;
-  final FSize? widthFactor;
-  final FSize? heightFactor;
   final bool forPlay;
   final int? loop;
 
+  // Widget params
+  final FSize? widthFactor;
+  final FSize? heightFactor;
+
+  // Widget states (inherit from page state)
   final List<VariableObject> params;
   final List<VariableObject> states;
   final List<DatasetObject> dataset;
@@ -53,7 +55,6 @@ class WFractionallySizedBox extends StatelessWidget {
         child: FractionallySizedBox(
           widthFactor: widthFactor?.get(context: context, isWidth: true),
           heightFactor: heightFactor?.get(context: context, isWidth: false),
-          alignment: alignment,
           child: ChildConditionBuilder(
             ValueKey('${node.nid} $loop'),
             name: node.intrinsicState.displayName,
