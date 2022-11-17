@@ -22,6 +22,8 @@ import 'package:teta_widgets/src/elements/controls/atoms/flag.dart';
 import 'package:teta_widgets/src/elements/controls/atoms/https_requests_custom_backend/delete.dart';
 import 'package:teta_widgets/src/elements/controls/atoms/https_requests_custom_backend/post.dart';
 import 'package:teta_widgets/src/elements/controls/atoms/https_requests_custom_backend/update.dart';
+import 'package:teta_widgets/src/elements/controls/atoms/mixpanel/set_user_id.dart';
+import 'package:teta_widgets/src/elements/controls/atoms/mixpanel/track.dart';
 import 'package:teta_widgets/src/elements/controls/atoms/qonversion/buy.dart';
 import 'package:teta_widgets/src/elements/controls/atoms/revenuecat/buy.dart';
 import 'package:teta_widgets/src/elements/controls/atoms/subapase/delete.dart';
@@ -40,6 +42,7 @@ import 'package:teta_widgets/src/elements/features/actions/enums/audio_player_ac
 import 'package:teta_widgets/src/elements/features/actions/enums/braintree.dart';
 import 'package:teta_widgets/src/elements/features/actions/enums/camera.dart';
 import 'package:teta_widgets/src/elements/features/actions/enums/custom_http_request.dart';
+import 'package:teta_widgets/src/elements/features/actions/enums/mixpanel.dart';
 import 'package:teta_widgets/src/elements/features/actions/enums/navigation.dart';
 import 'package:teta_widgets/src/elements/features/actions/enums/state.dart';
 import 'package:teta_widgets/src/elements/features/actions/enums/stripe.dart';
@@ -1621,6 +1624,52 @@ class ActionElementControlState extends State<ActionElementControl> {
                           widget.callBack(widget.element, old);
                         },
                       ),
+                  ],
+                ),
+              if (widget.element.actionType == ActionType.mixpanel)
+                Column(
+                  children: [
+                    CDropdown(
+                      value: FActionElement.convertValueToDropdown(
+                        widget.element.actionMixpanel,
+                      ),
+                      items: FActionElement.getMixpanel(widget.prj.config)
+                          .toSet()
+                          .toList(),
+                      onChange: (final newValue) {
+                        if (newValue != null) {
+                          final old = widget.element;
+                          widget.element.actionMixpanel =
+                              FActionElement.convertDropdownToValue(
+                            ActionMixpanel.values,
+                            newValue,
+                          ) as ActionMixpanel?;
+                          widget.callBack(widget.element, old);
+                        }
+                      },
+                    ),
+                    if (widget.element.actionMixpanel == ActionMixpanel.track)
+                      MixPanelTrack(
+                        prj: widget.prj,
+                        page: widget.page,
+                        node: widget.node,
+                        action: widget.element,
+                        callback: () {
+                          final old = widget.element;
+                          widget.callBack(widget.element, old);
+                        },
+                      )
+                    else
+                      MixPanelSetUserId(
+                        prj: widget.prj,
+                        page: widget.page,
+                        node: widget.node,
+                        action: widget.element,
+                        callback: () {
+                          final old = widget.element;
+                          widget.callBack(widget.element, old);
+                        },
+                      )
                   ],
                 ),
               if (widget.element.actionType == ActionType.tetaDatabase)

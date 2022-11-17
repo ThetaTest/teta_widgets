@@ -39,6 +39,8 @@ import 'package:teta_widgets/src/elements/actions/https_requests_custom_backend/
 import 'package:teta_widgets/src/elements/actions/https_requests_custom_backend/post.dart';
 import 'package:teta_widgets/src/elements/actions/https_requests_custom_backend/update.dart';
 import 'package:teta_widgets/src/elements/actions/loop.dart';
+import 'package:teta_widgets/src/elements/actions/mixpanel/set_user_id.dart';
+import 'package:teta_widgets/src/elements/actions/mixpanel/track.dart';
 import 'package:teta_widgets/src/elements/actions/navigation/go_back.dart';
 import 'package:teta_widgets/src/elements/actions/navigation/in_app_review.dart';
 import 'package:teta_widgets/src/elements/actions/navigation/launch_url.dart';
@@ -91,6 +93,7 @@ import 'package:teta_widgets/src/elements/features/actions/enums/braintree.dart'
 import 'package:teta_widgets/src/elements/features/actions/enums/camera.dart';
 import 'package:teta_widgets/src/elements/features/actions/enums/custom_http_request.dart';
 import 'package:teta_widgets/src/elements/features/actions/enums/index.dart';
+import 'package:teta_widgets/src/elements/features/actions/enums/mixpanel.dart';
 import 'package:teta_widgets/src/elements/features/actions/enums/qonversion.dart';
 import 'package:teta_widgets/src/elements/features/actions/enums/revenue_cat.dart';
 import 'package:teta_widgets/src/elements/features/actions/enums/stripe.dart';
@@ -110,6 +113,7 @@ class FActionElement extends Equatable {
     this.id,
     this.actionRevenueCat,
     this.actionQonversion,
+    this.actionMixpanel,
     this.actionTheme,
     this.actionStripe,
     this.actionGoogleMaps,
@@ -188,6 +192,10 @@ class FActionElement extends Equatable {
       ActionQonversion.values,
       doc['aQonversion'] as String?,
     ) as ActionQonversion?;
+    actionMixpanel = convertDropdownToValue(
+      ActionMixpanel.values,
+      doc['aMixpanel'] as String?,
+    ) as ActionMixpanel?;
     actionTheme =
         convertDropdownToValue(ActionTheme.values, doc['aTh'] as String?)
             as ActionTheme?;
@@ -413,6 +421,7 @@ class FActionElement extends Equatable {
   ActionState? actionState;
   ActionRevenueCat? actionRevenueCat;
   ActionQonversion? actionQonversion;
+  ActionMixpanel? actionMixpanel;
   ActionBraintree? actionBraintree;
   ActionTranslator? actionTranslator;
   ActionTheme? actionTheme;
@@ -536,6 +545,7 @@ class FActionElement extends Equatable {
           if (config.isBraintreeReady) 'Braintree',
           if (config.isRevenueCatEnabled) 'RevenueCat',
           if (config.isQonversionReady) 'Qonversion',
+          if (config.isMixpanelReady) 'Mixpanel',
           if (config.isStripeEnabled) 'Stripe',
           if ((page.flatList ?? <CNode>[]).indexWhere(
                 (final element) => element.intrinsicState.type == NType.camera,
@@ -604,6 +614,15 @@ class FActionElement extends Equatable {
     if (config != null) {
       if (config.isQonversionReady) {
         return enumsToListString(ActionQonversion.values);
+      }
+    }
+    return [];
+  }
+
+  static List<String> getMixpanel(final ProjectConfig? config) {
+    if (config != null) {
+      if (config.isMixpanelReady) {
+        return enumsToListString(ActionMixpanel.values);
       }
     }
     return [];
@@ -701,6 +720,9 @@ class FActionElement extends Equatable {
     if (type == ActionType.qonversion) {
       return 'Qonversion';
     }
+    if (type == ActionType.mixpanel) {
+      return 'Mixpanel';
+    }
     if (type == ActionType.stripe) {
       return 'Stripe';
     }
@@ -737,6 +759,9 @@ class FActionElement extends Equatable {
     }
     if (value == 'Qonversion') {
       return ActionType.qonversion;
+    }
+    if (value == 'Mixpanel') {
+      return ActionType.mixpanel;
     }
     if (value == 'Stripe') {
       return ActionType.stripe;
@@ -788,7 +813,8 @@ class FActionElement extends Equatable {
         'aW': convertValueToDropdown(actionWebView),
         'aAP': convertValueToDropdown(actionAudioPlayer),
         'aRC': convertValueToDropdown(actionRevenueCat),
-        'aQonversion': convertValueToDropdown(actionRevenueCat),
+        'aQonversion': convertValueToDropdown(actionQonversion),
+        'aMixpanel': convertValueToDropdown(actionMixpanel),
         'aBrain': convertValueToDropdown(actionBraintree),
         'aTrans': convertValueToDropdown(actionTranslator),
         'sPK': convertValueToDropdown(actionStripe),
@@ -1194,6 +1220,45 @@ class FActionElement extends Equatable {
             );
             break;
           default:
+            break;
+        }
+        break;
+      case ActionType.mixpanel:
+        switch (actionMixpanel) {
+          case ActionMixpanel.setUserId:
+            await actionS(
+              () => FAMixpanelSetUserId.action(
+                context,
+                valueTextTypeInput,
+                params,
+                states,
+                dataset,
+                loop ?? 0,
+              ),
+              context: context,
+              params: params,
+              states: states,
+              dataset: dataset,
+              loop: loop,
+            );
+            break;
+          case ActionMixpanel.track:
+            await actionS(
+              () => FAMixpanelTrack.action(
+                context,
+                valueTextTypeInput,
+                customHttpRequestBody,
+                params,
+                states,
+                dataset,
+                loop ?? 0,
+              ),
+              context: context,
+              params: params,
+              states: states,
+              dataset: dataset,
+              loop: loop,
+            );
             break;
         }
         break;
@@ -2638,6 +2703,27 @@ class FActionElement extends Equatable {
             );
           default:
             break;
+        }
+        break;
+      case ActionType.mixpanel:
+        switch (actionMixpanel) {
+          case ActionMixpanel.setUserId:
+            return codeS(
+              FAMixpanelSetUserId.toCode(
+                context,
+                valueTextTypeInput,
+              ),
+              context,
+            );
+          case ActionMixpanel.track:
+            return codeS(
+              FAMixpanelTrack.toCode(
+                context,
+                valueTextTypeInput,
+                customHttpRequestBody,
+              ),
+              context,
+            );
         }
         break;
       case ActionType.braintree:

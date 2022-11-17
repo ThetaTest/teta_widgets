@@ -17,6 +17,7 @@ import 'package:teta_widgets/src/elements/features/actions/enums/braintree.dart'
 import 'package:teta_widgets/src/elements/features/actions/enums/camera.dart';
 import 'package:teta_widgets/src/elements/features/actions/enums/custom_http_request.dart';
 import 'package:teta_widgets/src/elements/features/actions/enums/index.dart';
+import 'package:teta_widgets/src/elements/features/actions/enums/mixpanel.dart';
 import 'package:teta_widgets/src/elements/features/actions/enums/qonversion.dart';
 import 'package:teta_widgets/src/elements/features/actions/enums/revenue_cat.dart';
 import 'package:teta_widgets/src/elements/features/actions/enums/stripe.dart';
@@ -339,6 +340,12 @@ class __NewActionAlertState extends State<_NewActionAlert> {
         actionType: ActionType.theme,
         options: FActionElement.getTheme(),
         type: ActionTheme.values,
+      ),
+      _SelectionClass(
+        title: 'Mixpanel',
+        actionType: ActionType.mixpanel,
+        options: FActionElement.getMixpanel(prj.config),
+        type: ActionMixpanel.values,
       ),
       _SelectionClass(
         title: 'Supabase Auth',

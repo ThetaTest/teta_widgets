@@ -6,7 +6,7 @@ import 'package:teta_core/src/models/dataset.dart';
 import 'package:teta_core/src/models/variable.dart';
 import 'package:teta_widgets/src/elements/code/snippets.dart';
 // Project imports:
-import 'package:teta_widgets/src/elements/code/templates/github.dart';
+import 'package:teta_widgets/src/elements/code/templates/microsoft.dart';
 import 'package:teta_widgets/src/elements/controls/control_model.dart';
 import 'package:teta_widgets/src/elements/controls/key_constants.dart';
 import 'package:teta_widgets/src/elements/features/action.dart';
@@ -20,13 +20,13 @@ import 'package:teta_widgets/src/elements/nodes/enum.dart';
 import 'package:teta_widgets/src/elements/nodes/node.dart';
 import 'package:teta_widgets/src/elements/nodes/node_body.dart';
 import 'package:teta_widgets/src/elements/packages.dart';
-import 'package:teta_widgets/src/elements/widgets/cta/github.dart';
+import 'package:teta_widgets/src/elements/widgets/cta/microsoft.dart';
 
-const _globalType = NType.loginWithGitHub;
+const _globalType = NType.loginWithMicrosoft;
 
-/// Instrict State of GitHub Login
-final loginGitHubIntrinsicStates = IntrinsicStates(
-  nodeIcon: Assets.wIcons.loginGitHub,
+/// Instrict State of Facebook Login
+final loginMicrosoftIntrinsicStates = IntrinsicStates(
+  nodeIcon: Assets.wIcons.loginFacebook,
   nodeVideo: null,
   nodeDescription: null,
   advicedChildren: [
@@ -35,26 +35,26 @@ final loginGitHubIntrinsicStates = IntrinsicStates(
     NodeType.name(NType.row),
   ],
   blockedTypes: [],
-  synonymous: ['github', 'login', 'cta', 'button'],
+  synonymous: ['microsoft', 'login', 'cta', 'button'],
   advicedChildrenCanHaveAtLeastAChild: [],
-  displayName: 'Login with GitHub',
+  displayName: 'Login with Microsoft',
   type: _globalType,
   category: NodeCategories.input,
   maxChildren: 0,
   canHave: ChildrenEnum.none,
   addChildLabels: [],
-  gestures: [ActionGesture.onTap, ActionGesture.onLongPress],
+  gestures: <ActionGesture>[ActionGesture.onTap, ActionGesture.onLongPress],
   permissions: [],
   packages: [pAuthButton],
 );
 
-/// Instrict State of GitHub Login
-class LoginWithGitHubBody extends NodeBody {
+/// Facebook Login's body
+class LoginWithMicrosoftBody extends NodeBody {
   @override
   // ignore: overridden_fields
   Map<String, dynamic> attributes = <String, dynamic>{
-    DBKeys.action: FAction(),
     DBKeys.pageTransition: FPageTransition(),
+    DBKeys.action: FAction(),
     DBKeys.width: FSize(size: 'max', unit: SizeUnit.pixel),
     DBKeys.height: FSize(size: '42', unit: SizeUnit.pixel),
   };
@@ -81,7 +81,7 @@ class LoginWithGitHubBody extends NodeBody {
     final CNode? child,
     final List<CNode>? children,
   }) =>
-      WLoginWithGitHub(
+      WLoginWithMicrosoft(
         ValueKey('${node.nid} $loop'),
         node: node,
         child: child,
@@ -108,7 +108,13 @@ class LoginWithGitHubBody extends NodeBody {
         context,
         node,
         pageId,
-        LoginGitHubCodeTemplate.toCode(pageId, context, node, child, loop ?? 0),
+        LoginMicrosoftCodeTemplate.toCode(
+          pageId,
+          context,
+          node,
+          child,
+          loop ?? 0,
+        ),
         loop ?? 0,
       );
 }

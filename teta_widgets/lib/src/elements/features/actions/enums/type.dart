@@ -8,6 +8,7 @@ enum ActionType {
   theme,
   revenueCat,
   qonversion,
+  mixpanel,
   stripe,
   firebase,
   firebaseFirestore,
