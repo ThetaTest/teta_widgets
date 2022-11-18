@@ -129,6 +129,7 @@ class WListViewBuilderState extends State<WListViewBuilder> {
                   states: widget.states,
                   dataset: widget.dataset,
                   forPlay: widget.forPlay,
+                  loop: widget.loop,
                 );
               } else {
                 Logger.printMessage('At the bottom');
@@ -142,6 +143,7 @@ class WListViewBuilderState extends State<WListViewBuilder> {
                   states: widget.states,
                   dataset: widget.dataset,
                   forPlay: widget.forPlay,
+                  loop: widget.loop,
                 );
               }
             }
