@@ -11,7 +11,6 @@ import 'package:teta_widgets/src/elements/builder/gesture_detector_base.dart';
 import 'package:teta_widgets/src/elements/controls/key_constants.dart';
 // Project imports:
 import 'package:teta_widgets/src/elements/index.dart';
-import 'package:teta_widgets/src/elements/nodes/dynamic.dart';
 
 class WText extends StatefulWidget {
   /// Returns a Text widget in Teta
@@ -95,7 +94,7 @@ class _WTextState extends State<WText> {
             });
           }
           return GestureDetector(
-            onTap: () {
+            onDoubleTap: () {
               if (!widget.forPlay) {
                 _controller.text = widget.value.get(
                   widget.params,
