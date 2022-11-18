@@ -6,60 +6,37 @@ import 'package:teta_core/src/models/variable.dart';
 // Project imports:
 import 'package:teta_widgets/src/elements/builder/placeholder_child.dart';
 import 'package:teta_widgets/src/elements/nodes/node.dart';
+import 'package:teta_widgets/src/elements/widgets/teta_widget/teta_widget_state.dart';
 
 /// Builder
 class ChildConditionBuilder extends StatelessWidget {
   /// Returns the [child] widget or a placeholder with the name of the widget
   const ChildConditionBuilder(
     final Key? key, {
-    required this.node,
-    required this.name,
+    required this.state,
     required this.child,
-    required this.params,
-    required this.states,
-    required this.dataset,
-    required this.forPlay,
-    required this.loop,
   }) : super(key: key);
 
-  /// The CNode's name
-  final String name;
-
-  final CNode node;
+  final TetaWidgetState state;
 
   /// The optional child
   final CNode? child;
-
-  /// Params
-  final List<VariableObject> params;
-
-  /// States
-  final List<VariableObject> states;
-
-  /// Dataset
-  final List<DatasetObject> dataset;
-
-  /// ForPlay
-  final bool forPlay;
-
-  /// Loop
-  final int? loop;
 
   @override
   Widget build(final BuildContext context) {
     return (child != null)
         ? child!.toWidget(
-            loop: loop,
-            forPlay: forPlay,
-            params: params,
-            states: states,
-            dataset: dataset,
+            loop: state.loop,
+            forPlay: state.forPlay,
+            params: state.params,
+            states: state.states,
+            dataset: state.dataset,
           )
-        : !forPlay
+        : !state.forPlay
             ? PlaceholderChildBuilder(
-                name: name,
-                node: node,
-                forPlay: forPlay,
+                name: state.node.intrinsicState.displayName,
+                node: state.node,
+                forPlay: state.forPlay,
               )
             : const SizedBox();
   }

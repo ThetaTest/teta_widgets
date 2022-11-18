@@ -15,6 +15,7 @@ import 'package:teta_widgets/src/elements/nodes/categories.dart';
 import 'package:teta_widgets/src/elements/nodes/children_enum.dart';
 import 'package:teta_widgets/src/elements/nodes/node_body.dart';
 import 'package:teta_widgets/src/elements/nodes/suggestion.dart';
+import 'package:teta_widgets/src/elements/widgets/teta_widget/teta_widget_state.dart';
 
 /// globalType for SizedBox widget
 const _globalType = NType.fractionallySizedBox;
@@ -100,15 +101,17 @@ class FractionallySizedBoxBody extends NodeBody {
             ${(attributes[DBKeys.heightFactor] as FSize).toJson()}
             ''',
         ),
-        node: node,
-        child: child,
+        state: TetaWidgetState(
+          node: node,
+          forPlay: forPlay,
+          loop: loop,
+          params: params,
+          states: states,
+          dataset: dataset,
+        ),
         widthFactor: attributes[DBKeys.widthFactor] as FSize,
         heightFactor: attributes[DBKeys.heightFactor] as FSize,
-        forPlay: forPlay,
-        loop: loop,
-        params: params,
-        states: states,
-        dataset: dataset,
+        child: child,
       );
 
   @override
