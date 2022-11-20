@@ -7,71 +7,67 @@ import 'package:teta_widgets/src/elements/controls/key_constants.dart';
 // Project imports:
 import 'package:teta_widgets/src/elements/index.dart';
 import 'package:teta_widgets/src/elements/nodes/node_body.dart';
+import 'package:teta_widgets/src/core/teta_widget/teta_widget_state.dart';
 
 /// Builder
 class GestureBuilderBase {
   /// Get a gesture code based on FAction
   static Widget get({
     required final BuildContext context,
-    required final CNode node,
-    required final List<VariableObject> params,
-    required final List<VariableObject> states,
-    required final List<DatasetObject> dataset,
-    required final bool forPlay,
+    required final TetaWidgetState state,
     required final Widget child,
-    final int? loop,
   }) =>
       ResponsiveVisibilityBase.get(
         context: context,
-        node: node,
+        node: state.node,
         child: VisibilityBase.get(
-          node: node,
+          node: state.node,
           child: MarginOrPaddingBase.get(
             context: context,
-            node: node,
-            params: params,
-            states: states,
-            dataset: dataset,
-            forPlay: forPlay,
+            node: state.node,
+            params: state.params,
+            states: state.states,
+            dataset: state.dataset,
+            forPlay: state.forPlay,
             child: GestureBuilderBase.getGesture(
               context: context,
-              node: node,
-              params: params,
-              states: states,
-              dataset: dataset,
-              forPlay: forPlay,
+              node: state.node,
+              params: state.params,
+              states: state.states,
+              dataset: state.dataset,
+              forPlay: state.forPlay,
               child: TranslateBase.get(
                 context: context,
-                node: node,
-                params: params,
-                states: states,
-                dataset: dataset,
-                forPlay: forPlay,
+                node: state.node,
+                params: state.params,
+                states: state.states,
+                dataset: state.dataset,
+                forPlay: state.forPlay,
                 child: RotationBase.get(
                   context: context,
-                  node: node,
-                  params: params,
-                  states: states,
-                  dataset: dataset,
-                  forPlay: forPlay,
+                  node: state.node,
+                  params: state.params,
+                  states: state.states,
+                  dataset: state.dataset,
+                  forPlay: state.forPlay,
                   child: PerspectiveBase.get(
                     context: context,
-                    node: node,
-                    params: params,
-                    states: states,
-                    dataset: dataset,
-                    forPlay: forPlay,
+                    node: state.node,
+                    params: state.params,
+                    states: state.states,
+                    dataset: state.dataset,
+                    forPlay: state.forPlay,
                     child: MarginOrPaddingBase.get(
                       context: context,
-                      node: node,
-                      params: params,
-                      states: states,
-                      dataset: dataset,
-                      forPlay: forPlay,
+                      node: state.node,
+                      params: state.params,
+                      states: state.states,
+                      dataset: state.dataset,
+                      forPlay: state.forPlay,
                       child: EntryAnimationsBase().get(
-                        node: node,
+                        node: state.node,
                         child: child,
-                        loop: loop,
+                        loop: state.loop,
                       ),
                       isMargins: false,
                     ),
@@ -162,8 +158,7 @@ class MarginOrPaddingBase {
         final originalType = NodeBody.get(node.globalType);
         if (originalType.attributes[DBKeys.margins] == null) {
           return Padding(
-            padding:
-                (node.body.attributes[DBKeys.margins] as FMargins).get(context),
+            padding: (node.body.attributes[DBKeys.margins] as FMargins).get(context),
             child: child,
           );
         }
@@ -173,8 +168,7 @@ class MarginOrPaddingBase {
         final originalType = NodeBody.get(node.globalType);
         if (originalType.attributes[DBKeys.padding] == null) {
           return Padding(
-            padding:
-                (node.body.attributes[DBKeys.padding] as FMargins).get(context),
+            padding: (node.body.attributes[DBKeys.padding] as FMargins).get(context),
             child: child,
           );
         }
@@ -196,16 +190,12 @@ class TranslateBase {
     required final Widget child,
     final int? loop,
   }) {
-    final abstractX =
-        node.body.attributes[DBKeys.xTranslation] as FTextTypeInput?;
-    final valueX =
-        abstractX?.get(params, states, dataset, forPlay, loop, context) ?? '0';
+    final abstractX = node.body.attributes[DBKeys.xTranslation] as FTextTypeInput?;
+    final valueX = abstractX?.get(params, states, dataset, forPlay, loop, context) ?? '0';
     final transX = double.tryParse(valueX) != null ? double.parse(valueX) : 0.0;
 
-    final abstractY =
-        node.body.attributes[DBKeys.yTranslation] as FTextTypeInput?;
-    final valueY =
-        abstractY?.get(params, states, dataset, forPlay, loop, context) ?? '0';
+    final abstractY = node.body.attributes[DBKeys.yTranslation] as FTextTypeInput?;
+    final valueY = abstractY?.get(params, states, dataset, forPlay, loop, context) ?? '0';
     final transY = double.tryParse(valueY) != null ? double.parse(valueY) : 0.0;
 
     if (transX != 0 || transY != 0) {
@@ -231,8 +221,7 @@ class RotationBase {
     final int? loop,
   }) {
     final abstract = node.body.attributes[DBKeys.rotation] as FTextTypeInput?;
-    final value =
-        abstract?.get(params, states, dataset, forPlay, loop, context) ?? '1';
+    final value = abstract?.get(params, states, dataset, forPlay, loop, context) ?? '1';
     final rotation = int.tryParse(value) != null ? int.parse(value) : 1;
 
     final originalType = NodeBody.get(node.globalType);
@@ -260,69 +249,53 @@ class PerspectiveBase {
     required final Widget child,
     final int? loop,
   }) {
-    final abstractIdentityR =
-        node.body.attributes[DBKeys.xPerspective] as FTextTypeInput?;
+    final abstractIdentityR = node.body.attributes[DBKeys.xPerspective] as FTextTypeInput?;
     final valueIdentityR = abstractIdentityR?.toCode(
           loop,
           resultType: ResultTypeEnum.int,
         ) ??
         '0';
-    final identityR =
-        int.tryParse(valueIdentityR) != null ? int.parse(valueIdentityR) : 0;
+    final identityR = int.tryParse(valueIdentityR) != null ? int.parse(valueIdentityR) : 0;
 
-    final abstractIdentityC =
-        node.body.attributes[DBKeys.yPerspective] as FTextTypeInput?;
+    final abstractIdentityC = node.body.attributes[DBKeys.yPerspective] as FTextTypeInput?;
     final valueIdentityC = abstractIdentityC?.toCode(
           loop,
           resultType: ResultTypeEnum.int,
         ) ??
         '0';
-    final identityC =
-        int.tryParse(valueIdentityC) != null ? int.parse(valueIdentityC) : 0;
+    final identityC = int.tryParse(valueIdentityC) != null ? int.parse(valueIdentityC) : 0;
 
-    final abstractIdentityV =
-        node.body.attributes[DBKeys.zPerspective] as FTextTypeInput?;
+    final abstractIdentityV = node.body.attributes[DBKeys.zPerspective] as FTextTypeInput?;
     final valueIdentityV = abstractIdentityV?.toCode(
           loop,
           resultType: ResultTypeEnum.double,
         ) ??
         '0.0';
-    final identityV = double.tryParse(valueIdentityV) != null
-        ? double.parse(valueIdentityV)
-        : 0.0;
+    final identityV = double.tryParse(valueIdentityV) != null ? double.parse(valueIdentityV) : 0.0;
 
-    final abstractRotateX =
-        node.body.attributes[DBKeys.xRotation] as FTextTypeInput?;
+    final abstractRotateX = node.body.attributes[DBKeys.xRotation] as FTextTypeInput?;
     final valueRotateX = abstractRotateX?.toCode(
           loop,
           resultType: ResultTypeEnum.double,
         ) ??
         '0.0';
-    final rotateX = double.tryParse(valueRotateX) != null
-        ? double.parse(valueRotateX)
-        : 0.0;
+    final rotateX = double.tryParse(valueRotateX) != null ? double.parse(valueRotateX) : 0.0;
 
-    final abstractRotateY =
-        node.body.attributes[DBKeys.yRotation] as FTextTypeInput?;
+    final abstractRotateY = node.body.attributes[DBKeys.yRotation] as FTextTypeInput?;
     final valueRotateY = abstractRotateY?.toCode(
           loop,
           resultType: ResultTypeEnum.double,
         ) ??
         '0.0';
-    final rotateY = double.tryParse(valueRotateY) != null
-        ? double.parse(valueRotateY)
-        : 0.0;
+    final rotateY = double.tryParse(valueRotateY) != null ? double.parse(valueRotateY) : 0.0;
 
-    final abstractRotateZ =
-        node.body.attributes[DBKeys.zRotation] as FTextTypeInput?;
+    final abstractRotateZ = node.body.attributes[DBKeys.zRotation] as FTextTypeInput?;
     final valueRotateZ = abstractRotateZ?.toCode(
           loop,
           resultType: ResultTypeEnum.double,
         ) ??
         '0.0';
-    final rotateZ = double.tryParse(valueRotateZ) != null
-        ? double.parse(valueRotateZ)
-        : 0.0;
+    final rotateZ = double.tryParse(valueRotateZ) != null ? double.parse(valueRotateZ) : 0.0;
 
     final matrix = Matrix4.identity();
     if (identityC != 0 && identityV != 0 && identityR != 0) {
@@ -385,10 +358,8 @@ class EntryAnimationsBase {
     required final int? loop,
   }) {
     if ((node.body.attributes[DBKeys.fadeAnimationEnabled] as bool? ?? false) &&
-        (node.body.attributes[DBKeys.scaleAnimationEnabled] as bool? ??
-            false) &&
-        (node.body.attributes[DBKeys.slideAnimationEnabled] as bool? ??
-            false)) {
+        (node.body.attributes[DBKeys.scaleAnimationEnabled] as bool? ?? false) &&
+        (node.body.attributes[DBKeys.slideAnimationEnabled] as bool? ?? false)) {
       return AnimationConfiguration.staggeredList(
         position: loop ?? 0,
         child: fade(
@@ -434,12 +405,9 @@ class ResponsiveVisibilityBase {
     required final CNode node,
     required final Widget child,
   }) {
-    final visibleOnMobile =
-        node.body.attributes[DBKeys.visibleOnMobile] as bool? ?? true;
-    final visibleOnTablet =
-        node.body.attributes[DBKeys.visibleOnTablet] as bool? ?? true;
-    final visibleOnDesktop =
-        node.body.attributes[DBKeys.visibleOnDesktop] as bool? ?? true;
+    final visibleOnMobile = node.body.attributes[DBKeys.visibleOnMobile] as bool? ?? true;
+    final visibleOnTablet = node.body.attributes[DBKeys.visibleOnTablet] as bool? ?? true;
+    final visibleOnDesktop = node.body.attributes[DBKeys.visibleOnDesktop] as bool? ?? true;
 
     final originalType = NodeBody.get(node.globalType);
     if (originalType.attributes[DBKeys.visibleOnMobile] == null &&

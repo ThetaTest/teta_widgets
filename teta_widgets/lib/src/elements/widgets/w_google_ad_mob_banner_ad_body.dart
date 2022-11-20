@@ -4,49 +4,33 @@
 // Flutter imports:
 import 'package:flutter/material.dart';
 // Package imports:
-import 'package:teta_core/teta_core.dart';
 import 'package:teta_widgets/src/elements/builder/gesture_detector_base.dart';
 // Project imports:
 import 'package:teta_widgets/src/elements/index.dart';
+import 'package:teta_widgets/src/core/teta_widget/teta_widget_state.dart';
 
 class WGoogleAdMobBannerAd extends StatelessWidget {
-  /// Returns a  widget in Teta
+  /// Returns a widget in Teta
   const WGoogleAdMobBannerAd(
     final Key? key, {
     required this.adMobAdIosUnitId,
     required this.adMobAdAndroidUnitId,
-    required this.node,
-    required this.forPlay,
-    required this.params,
-    required this.states,
-    required this.dataset,
-    this.loop,
+    required this.state,
   }) : super(key: key);
 
   final FTextTypeInput adMobAdIosUnitId;
   final FTextTypeInput adMobAdAndroidUnitId;
 
-  final CNode node;
-  final bool forPlay;
-  final int? loop;
-
-  final List<VariableObject> params;
-  final List<VariableObject> states;
-  final List<DatasetObject> dataset;
+  final TetaWidgetState state;
 
   @override
   Widget build(final BuildContext context) {
     return NodeSelectionBuilder(
-      node: node,
-      forPlay: forPlay,
+      node: state.node,
+      forPlay: state.forPlay,
       child: GestureBuilderBase.get(
         context: context,
-        node: node,
-        params: params,
-        states: states,
-        dataset: dataset,
-        forPlay: forPlay,
-        loop: loop,
+        state: state,
         child: const SizedBox(
           width: double.maxFinite,
           child: Center(

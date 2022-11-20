@@ -1,12 +1,9 @@
 // Flutter imports:
 import 'package:flutter/material.dart';
-// Package imports:
-import 'package:teta_core/src/models/dataset.dart';
-import 'package:teta_core/src/models/variable.dart';
 // Project imports:
+import 'package:teta_widgets/src/core/teta_widget/index.dart';
 import 'package:teta_widgets/src/elements/builder/placeholder_child.dart';
 import 'package:teta_widgets/src/elements/nodes/node.dart';
-import 'package:teta_widgets/src/elements/widgets/teta_widget/teta_widget_state.dart';
 
 /// Builder
 class ChildConditionBuilder extends StatelessWidget {
@@ -26,11 +23,7 @@ class ChildConditionBuilder extends StatelessWidget {
   Widget build(final BuildContext context) {
     return (child != null)
         ? child!.toWidget(
-            loop: state.loop,
-            forPlay: state.forPlay,
-            params: state.params,
-            states: state.states,
-            dataset: state.dataset,
+            state: state,
           )
         : !state.forPlay
             ? PlaceholderChildBuilder(

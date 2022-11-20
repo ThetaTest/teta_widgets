@@ -9,6 +9,7 @@ import 'package:teta_core/teta_core.dart';
 import 'package:teta_widgets/src/elements/builder/gesture_detector_base.dart';
 // Project imports:
 import 'package:teta_widgets/src/elements/index.dart';
+import 'package:teta_widgets/src/core/teta_widget/teta_widget_state.dart';
 
 // ignore_for_file: public_member_api_docs
 
@@ -16,33 +17,20 @@ class WAudioPlayerProgressIndicator extends StatefulWidget {
   /// Returns a [WAudioPlayerProgressIndicator] widget in Teta
   const WAudioPlayerProgressIndicator(
     final Key? key, {
-    required this.node,
+    required this.state,
     required this.controller,
-    required this.forPlay,
-    required this.params,
-    required this.states,
-    required this.dataset,
     this.child,
-    this.loop,
   }) : super(key: key);
 
-  final CNode node;
+  final TetaWidgetState state;
   final CNode? child;
   final FTextTypeInput controller;
-  final bool forPlay;
-  final int? loop;
-
-  final List<VariableObject> params;
-  final List<VariableObject> states;
-  final List<DatasetObject> dataset;
 
   @override
-  State<WAudioPlayerProgressIndicator> createState() =>
-      _WAudioPlayerProgressIndicatorState();
+  State<WAudioPlayerProgressIndicator> createState() => _WAudioPlayerProgressIndicatorState();
 }
 
-class _WAudioPlayerProgressIndicatorState
-    extends State<WAudioPlayerProgressIndicator> {
+class _WAudioPlayerProgressIndicatorState extends State<WAudioPlayerProgressIndicator> {
   bool isInitialized = false;
   AudioPlayer? audioController;
 
@@ -56,11 +44,9 @@ class _WAudioPlayerProgressIndicatorState
     final page = BlocProvider.of<PageCubit>(context).state;
     VariableObject? variable;
     if (widget.controller.type == FTextTypeEnum.param) {
-      variable = page.params
-          .firstWhereOrNull((final e) => e.name == widget.controller.paramName);
+      variable = page.params.firstWhereOrNull((final e) => e.name == widget.controller.paramName);
     } else {
-      variable = page.states
-          .firstWhereOrNull((final e) => e.name == widget.controller.stateName);
+      variable = page.states.firstWhereOrNull((final e) => e.name == widget.controller.stateName);
     }
     if (variable?.audioController != null) {
       setState(() {
@@ -91,15 +77,9 @@ class _WAudioPlayerProgressIndicatorState
   Widget progressBar() => audioController != null
       ? GestureBuilderBase.get(
           context: context,
-          node: widget.node,
-          params: widget.params,
-          states: widget.states,
-          dataset: widget.dataset,
-          forPlay: widget.forPlay,
-          loop: widget.loop,
+          state: widget.state,
           child: StreamBuilder<Map<String, Duration>>(
-            stream: Rx.combineLatest3<Duration, Duration, Duration?,
-                Map<String, Duration>>(
+            stream: Rx.combineLatest3<Duration, Duration, Duration?, Map<String, Duration>>(
               audioController!.positionStream,
               audioController!.bufferedPositionStream,
               audioController!.durationStream,
@@ -118,8 +98,9 @@ class _WAudioPlayerProgressIndicatorState
               final positionData = snapshot.data;
               final duration = positionData?['duration'] ?? Duration.zero;
               final position = positionData?['position'] ?? Duration.zero;
-              final bufferedPosition =
-                  positionData?['bufferedPosition'] ?? Duration.zero;
+
+              /// Declared but not used
+              final bufferedPosition = positionData?['bufferedPosition'] ?? Duration.zero;
 
               return Column(
                 crossAxisAlignment: CrossAxisAlignment.stretch,

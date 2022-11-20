@@ -4,7 +4,7 @@
 // Flutter imports:
 import 'package:flutter/material.dart';
 // Package imports:
-import 'package:teta_core/teta_core.dart';
+import 'package:teta_widgets/src/core/teta_widget/index.dart';
 import 'package:teta_widgets/src/elements/builder/gesture_detector_base.dart';
 // Project imports:
 import 'package:teta_widgets/src/elements/index.dart';
@@ -14,54 +14,28 @@ class WWrap extends StatelessWidget {
   const WWrap(
     final Key? key, {
     required this.children,
-    required this.node,
-    required this.forPlay,
-    required this.params,
-    required this.states,
-    required this.dataset,
-    this.loop,
+    required this.state,
   }) : super(key: key);
 
-  final CNode node;
+  final TetaWidgetState state;
   final List<CNode> children;
-  final bool forPlay;
-  final int? loop;
-
-  final List<VariableObject> params;
-  final List<VariableObject> states;
-  final List<DatasetObject> dataset;
 
   @override
   Widget build(final BuildContext context) {
     return NodeSelectionBuilder(
-      node: node,
-      forPlay: forPlay,
+      node: state.node,
+      forPlay: state.forPlay,
       child: GestureBuilderBase.get(
         context: context,
-        node: node,
-        params: params,
-        states: states,
-        dataset: dataset,
-        forPlay: forPlay,
-        loop: loop,
+        state: state,
         child: Wrap(
           children: children.isNotEmpty
-              ? children
-                  .map(
-                    (final e) => e.toWidget(
-                      loop: loop,
-                      forPlay: forPlay,
-                      params: params,
-                      states: states,
-                      dataset: dataset,
-                    ),
-                  )
-                  .toList()
+              ? children.map((final e) => e.toWidget(state: state)).toList()
               : [
                   PlaceholderChildBuilder(
-                    name: node.intrinsicState.displayName,
-                    node: node,
-                    forPlay: forPlay,
+                    name: state.node.intrinsicState.displayName,
+                    node: state.node,
+                    forPlay: state.forPlay,
                   ),
                 ],
         ),

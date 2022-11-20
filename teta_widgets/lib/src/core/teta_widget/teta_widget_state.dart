@@ -17,4 +17,22 @@ class TetaWidgetState {
   final List<VariableObject> params;
   final List<VariableObject> states;
   final List<DatasetObject> dataset;
+
+  TetaWidgetState copyWith({
+    final CNode? node,
+    final bool? forPlay,
+    final int? loop,
+    final List<VariableObject>? params,
+    final List<VariableObject>? states,
+    final List<DatasetObject>? dataset,
+  }) {
+    return TetaWidgetState(
+      node: node ?? this.node,
+      forPlay: forPlay ?? this.forPlay,
+      loop: loop ?? this.loop,
+      params: params ?? this.params,
+      states: states ?? this.states,
+      dataset: dataset ?? this.dataset,
+    );
+  }
 }

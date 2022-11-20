@@ -15,16 +15,7 @@ import 'package:intl/intl.dart';
 import 'package:recase/recase.dart';
 import 'package:teta_core/teta_core.dart';
 
-enum FTextTypeEnum {
-  text,
-  imageUrl,
-  param,
-  state,
-  dataset,
-  asset,
-  combined,
-  languages
-}
+enum FTextTypeEnum { text, imageUrl, param, state, dataset, asset, combined, languages }
 
 enum ResultTypeEnum {
   string,
@@ -95,8 +86,7 @@ class FTextTypeInput {
     final List<VariableObject> states,
   ) {
     if (type == FTextTypeEnum.state) {
-      final state =
-          states.firstWhereOrNull((final element) => element.name == stateName);
+      final state = states.firstWhereOrNull((final element) => element.name == stateName);
       if (state?.type == VariableType.file) {
         return '${state?.file}';
       }
@@ -151,11 +141,9 @@ class FTextTypeInput {
         case ResultTypeEnum.string:
           return result;
         case ResultTypeEnum.int:
-          return int.tryParse(result as String) ??
-              'Impossible to convert to int type';
+          return int.tryParse(result as String) ?? 'Impossible to convert to int type';
         case ResultTypeEnum.double:
-          return double.tryParse(result as String) ??
-              'Impossible to convert to double type';
+          return double.tryParse(result as String) ?? 'Impossible to convert to double type';
         case ResultTypeEnum.bool:
           return (result as String?) == 'true'
               ? true
@@ -188,8 +176,7 @@ class FTextTypeInput {
   ) {
     if (type == FTextTypeEnum.param) {
       try {
-        final param = params
-            .firstWhereOrNull((final element) => element.name == paramName);
+        final param = params.firstWhereOrNull((final element) => element.name == paramName);
         if (param?.type == VariableType.file) {
           return param?.file;
         }
@@ -197,8 +184,7 @@ class FTextTypeInput {
       } catch (_) {}
     }
     if (type == FTextTypeEnum.state) {
-      final state =
-          states.firstWhereOrNull((final element) => element.name == stateName);
+      final state = states.firstWhereOrNull((final element) => element.name == stateName);
       if (state?.type == VariableType.file) {
         return state?.file;
       }
@@ -293,15 +279,12 @@ class FTextTypeInput {
         datasetName: json?['dN'] as String?,
         datasetAttr: json?['dA'] as String?,
         keyTranslator: json?['kTrans'] as String?,
-        file: json?['f'] != null
-            ? AssetFile.fromJson(json?['f'] as Map<String, dynamic>?)
-            : null,
+        file: json?['f'] != null ? AssetFile.fromJson(json?['f'] as Map<String, dynamic>?) : null,
         mapKey: json?['mK'] as String?,
         combination: json?['cmb'] != null
             ? (json?['cmb'] as List<dynamic>)
                 .map(
-                  (final dynamic e) =>
-                      FTextTypeInput.fromJson(e as Map<String, dynamic>),
+                  (final dynamic e) => FTextTypeInput.fromJson(e as Map<String, dynamic>),
                 )
                 .toList()
             : [],
@@ -375,8 +358,7 @@ class FTextTypeInput {
       return "TranslatorGenerator.instance.getString('''$keyTranslator''')";
     }
 
-    final code =
-        getRawToCode(loop, resultType: resultType, defaultValue: defaultValue);
+    final code = getRawToCode(loop, resultType: resultType, defaultValue: defaultValue);
 
     if (type == FTextTypeEnum.combined || whiteSpace == false) {
       return code;
@@ -408,9 +390,7 @@ class FTextTypeInput {
   }) {
     // The value is a hard coded text
     if (type == FTextTypeEnum.text) {
-      final v = (value?.replaceAll(' ', '').isNotEmpty ?? false)
-          ? value
-          : (defaultValue ?? '0');
+      final v = (value?.replaceAll(' ', '').isNotEmpty ?? false) ? value : (defaultValue ?? '0');
       final vT = valueTablet != null && valueTablet != ''
           ? (valueTablet?.replaceAll(' ', '').isNotEmpty ?? false)
               ? valueTablet
@@ -427,9 +407,7 @@ class FTextTypeInput {
               : v ?? (defaultValue ?? '0');
 
       if (resultType == ResultTypeEnum.string) {
-        final type = defaultValue != 'null' && defaultValue != null
-            ? 'String'
-            : 'String?';
+        final type = defaultValue != 'null' && defaultValue != null ? 'String' : 'String?';
         if (v == vT && v == vD) {
           return _calcStringType(v);
         }
@@ -441,8 +419,7 @@ getValueForScreenType<$type>(
   desktop: ${_calcStringType(vD)},
 )''';
       } else if (resultType == ResultTypeEnum.int) {
-        final type =
-            defaultValue != 'null' && defaultValue != null ? 'int' : 'int?';
+        final type = defaultValue != 'null' && defaultValue != null ? 'int' : 'int?';
         if (v == vT && v == vD) {
           return int.tryParse('$v') != null ? '$v' : (defaultValue ?? '1');
         }
@@ -454,9 +431,7 @@ getValueForScreenType<$type>(
   desktop: ${int.tryParse('$vD') != null ? '$vD' : (defaultValue ?? '1')},
 )""";
       } else if (resultType == ResultTypeEnum.double) {
-        final type = defaultValue != 'null' && defaultValue != null
-            ? 'double'
-            : 'double?';
+        final type = defaultValue != 'null' && defaultValue != null ? 'double' : 'double?';
         if (v == vT && v == vD) {
           return double.tryParse('$v') != null ? '$v' : (defaultValue ?? '1');
         }
@@ -468,8 +443,7 @@ getValueForScreenType<double>(
   desktop: ${double.tryParse('$vD') != null ? '$vD' : (defaultValue ?? '1')},
 )""";
       } else if (resultType == ResultTypeEnum.bool) {
-        final type =
-            defaultValue != 'null' && defaultValue != null ? 'bool' : 'bool?';
+        final type = defaultValue != 'null' && defaultValue != null ? 'bool' : 'bool?';
         if (v == vT && v == vD) {
           return '$v'.toLowerCase() == 'true' || '$v'.toLowerCase() == 'false'
               ? '$v'.toLowerCase()

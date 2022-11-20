@@ -5,8 +5,6 @@
 import 'package:equatable/equatable.dart';
 // Flutter imports:
 import 'package:flutter/material.dart';
-import 'package:teta_core/src/models/dataset.dart';
-import 'package:teta_core/src/models/variable.dart';
 // Project imports:
 import 'package:teta_widgets/src/elements/controls/control_model.dart';
 import 'package:teta_widgets/src/elements/features/children_ids.dart';
@@ -14,6 +12,7 @@ import 'package:teta_widgets/src/elements/intrinsic_states/class.dart';
 import 'package:teta_widgets/src/elements/nodes/dynamic.dart';
 import 'package:teta_widgets/src/elements/nodes/enum.dart';
 import 'package:teta_widgets/src/elements/nodes/node_body.dart';
+import 'package:teta_widgets/src/core/teta_widget/teta_widget_state.dart';
 
 /// CNode is the mother of all sub node classes.
 /// CNode = Custom Node.
@@ -64,8 +63,7 @@ abstract class CNode extends Equatable {
   FChildrenIds childrenIds;
 
   @override
-  String toString() =>
-      'Component: GlobalType: $globalType, Name: $name, Index: $index';
+  String toString() => 'Component: GlobalType: $globalType, Name: $name, Index: $index';
 
   /// Returns display name of any node
   static List<String> get nodes => NType.values.map(NodeType.type).toList();
@@ -74,14 +72,7 @@ abstract class CNode extends Equatable {
   static List<String> get names => NType.values.map(NodeType.name).toList();
 
   /// Render a Widget from node
-  Widget toWidget({
-    required final List<VariableObject> params,
-    required final List<VariableObject> states,
-    required final List<DatasetObject> dataset,
-    required final bool forPlay,
-    final int? loop,
-  }) =>
-      const SizedBox();
+  Widget toWidget({required final TetaWidgetState state}) => const SizedBox();
 
   @override
   List<Object?> get props => [
