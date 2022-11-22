@@ -7,6 +7,7 @@ import 'package:collection/collection.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:teta_core/teta_core.dart';
+import 'package:teta_widgets/src/core/teta_widget/index.dart';
 // Project imports:
 import 'package:teta_widgets/src/elements/index.dart';
 
@@ -14,36 +15,30 @@ class WScaffold extends StatefulWidget {
   /// Returns a Scaffold
   const WScaffold(
     final Key? key, {
+    required this.state,
     required this.children,
-    required this.node,
     required this.fill,
     required this.width,
     required this.height,
     required this.action,
-    required this.forPlay,
     required this.showAppBar,
     required this.showBottomBar,
     required this.showDrawer,
     required this.isScrollable,
     required this.isClipped,
     required this.bodyExtended,
-    required this.params,
-    required this.states,
-    required this.dataset,
     required this.flag,
     this.appBar,
     this.bottomBar,
     this.drawer,
-    this.loop,
   }) : super(key: key);
 
-  final CNode node;
+  final TetaWidgetState state;
   final List<CNode> children;
   final FFill fill;
   final FSize width;
   final FSize height;
   final FAction action;
-  final bool forPlay;
   final CNode? appBar;
   final CNode? bottomBar;
   final CNode? drawer;
@@ -54,11 +49,6 @@ class WScaffold extends StatefulWidget {
   final bool isClipped;
   final bool bodyExtended;
   final bool flag;
-  final int? loop;
-
-  final List<VariableObject> params;
-  final List<VariableObject> states;
-  final List<DatasetObject> dataset;
 
   @override
   State<WScaffold> createState() => _WScaffoldState();
@@ -67,18 +57,18 @@ class WScaffold extends StatefulWidget {
 class _WScaffoldState extends State<WScaffold> {
   @override
   void initState() {
-    if (widget.forPlay) {
+    if (widget.state.forPlay) {
       GestureBuilder.get(
         context: context,
-        node: widget.node,
+        node: widget.state.node,
         gesture: ActionGesture.initState,
         actionValue: null,
         action: widget.action,
-        params: widget.params,
-        states: widget.states,
-        dataset: widget.dataset,
-        forPlay: widget.forPlay,
-        loop: widget.loop,
+        params: widget.state.params,
+        states: widget.state.states,
+        dataset: widget.state.dataset,
+        forPlay: widget.state.forPlay,
+        loop: widget.state.loop,
       );
     }
     super.initState();
@@ -87,13 +77,13 @@ class _WScaffoldState extends State<WScaffold> {
   @override
   Widget build(final BuildContext context) {
     final isPage = BlocProvider.of<PageCubit>(context).state.isPage;
-    if (!isPage && !widget.forPlay) {
+    if (!isPage && !widget.state.forPlay) {
       return SizedBox(
         child: Center(
           child: _childWids(context),
         ),
       );
-    } else if (!isPage && widget.forPlay) {
+    } else if (!isPage && widget.state.forPlay) {
       return SizedBox(
         child: Center(
           child: _childWids(context),
@@ -117,29 +107,19 @@ class _WScaffoldState extends State<WScaffold> {
       (final element) => element.globalType == NType.appBar,
     );
 
-    return widget.forPlay
+    return widget.state.forPlay
         ? Scaffold(
             backgroundColor: HexColor(widget.fill.getHexColor(context)),
             resizeToAvoidBottomInset: widget.flag,
             appBar: PreferredSize(
               preferredSize: const Size.fromHeight(120),
               child: widget.showAppBar && appBar != null
-                  ? appBar.toWidget(
-                      forPlay: widget.forPlay,
-                      params: widget.params,
-                      states: widget.states,
-                      dataset: widget.dataset,
-                    )
+                  ? appBar.toWidget(state: widget.state)
                   : const SizedBox(),
             ),
             drawer: drawerNode != null
                 ? Drawer(
-                    child: drawerNode.toWidget(
-                      params: widget.params,
-                      states: widget.states,
-                      dataset: widget.dataset,
-                      forPlay: widget.forPlay,
-                    ),
+                    child: drawerNode.toWidget(state: widget.state),
                   )
                 : null,
             body: SizedBox(
@@ -153,12 +133,7 @@ class _WScaffoldState extends State<WScaffold> {
             appBar: PreferredSize(
               preferredSize: const Size.fromHeight(120),
               child: widget.showAppBar && appBar != null
-                  ? appBar.toWidget(
-                      forPlay: widget.forPlay,
-                      params: widget.params,
-                      states: widget.states,
-                      dataset: widget.dataset,
-                    )
+                  ? appBar.toWidget(state: widget.state)
                   : const SizedBox(),
             ),
             body: SizedBox(
@@ -194,7 +169,7 @@ class _WScaffoldState extends State<WScaffold> {
           height: double.maxFinite,
           child: _childWids(context),
         ),
-        if (widget.showDrawer && !widget.forPlay)
+        if (widget.showDrawer && !widget.state.forPlay)
           Positioned(
             top: 0,
             bottom: 0,
@@ -205,12 +180,7 @@ class _WScaffoldState extends State<WScaffold> {
               decoration: const BoxDecoration(color: Colors.black38),
               child: Drawer(
                 child: drawerNode != null
-                    ? drawerNode.toWidget(
-                        params: widget.params,
-                        states: widget.states,
-                        dataset: widget.dataset,
-                        forPlay: widget.forPlay,
-                      )
+                    ? drawerNode.toWidget(state: widget.state)
                     : const SizedBox(),
               ),
             ),
@@ -240,14 +210,7 @@ class _WScaffoldState extends State<WScaffold> {
             bottom: 0,
             left: 0,
             right: 0,
-            child: (bottomBar != null)
-                ? bottomBar.toWidget(
-                    forPlay: widget.forPlay,
-                    params: widget.params,
-                    states: widget.states,
-                    dataset: widget.dataset,
-                  )
-                : const SizedBox(),
+            child: (bottomBar != null) ? bottomBar.toWidget(state: widget.state) : const SizedBox(),
           ),
       ],
     );
@@ -262,13 +225,7 @@ class _WScaffoldState extends State<WScaffold> {
               e.intrinsicState.type != NType.drawer,
         )
         .map(
-          (final e) => e.toWidget(
-            forPlay: widget.forPlay,
-            params: widget.params,
-            states: widget.states,
-            dataset: widget.dataset,
-            loop: widget.loop,
-          ),
+          (final e) => e.toWidget(state: widget.state),
         )
         .toList();
     return widgets.isNotEmpty
@@ -281,9 +238,9 @@ class _WScaffoldState extends State<WScaffold> {
   Widget _placeholder(final BuildContext context) {
     return Center(
       child: PlaceholderChildBuilder(
-        name: widget.node.intrinsicState.displayName,
-        node: widget.node,
-        forPlay: widget.forPlay,
+        name: widget.state.node.intrinsicState.displayName,
+        node: widget.state.node,
+        forPlay: widget.state.forPlay,
       ),
     );
   }

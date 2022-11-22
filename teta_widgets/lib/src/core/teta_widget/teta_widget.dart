@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:teta_widgets/src/core/teta_widget/index.dart';
 import 'package:teta_widgets/src/elements/builder/gesture_detector_base.dart';
 import 'package:teta_widgets/src/elements/index.dart';
-import 'package:teta_widgets/src/core/teta_widget/teta_widget_state.dart';
 
 class TetaWidget extends StatelessWidget {
   const TetaWidget({
