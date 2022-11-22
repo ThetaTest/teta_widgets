@@ -2,7 +2,7 @@
 // Package imports:
 import 'package:custom_refresh_indicator/custom_refresh_indicator.dart';
 import 'package:flutter/material.dart';
-import 'package:teta_core/teta_core.dart';
+import 'package:teta_widgets/src/core/teta_widget/index.dart';
 // Project imports:
 import 'package:teta_widgets/src/elements/index.dart';
 
@@ -12,52 +12,36 @@ class WRefreshIndicator extends StatelessWidget {
   /// Returns a [Center] widget in Teta
   const WRefreshIndicator(
     final Key? key, {
-    required this.node,
-    required this.forPlay,
-    required this.params,
-    required this.states,
-    required this.dataset,
+    required this.state,
     required this.children,
     required this.height,
     required this.duration,
     required this.actionValue,
     this.action,
-    this.loop,
   }) : super(key: key);
 
-  final CNode node;
+  final TetaWidgetState state;
   final List<CNode> children;
-  final bool forPlay;
-  final int? loop;
 
   final FAction? action;
   final FTextTypeInput actionValue;
   final FSize height;
   final FTextTypeInput duration;
 
-  final List<VariableObject> params;
-  final List<VariableObject> states;
-  final List<DatasetObject> dataset;
-
   @override
   Widget build(final BuildContext context) {
     final val = height.get(context: context, isWidth: false) ?? 150;
     return NodeSelectionBuilder(
-      node: node,
-      forPlay: forPlay,
+      node: state.node,
+      forPlay: state.forPlay,
       child: CustomRefreshIndicator(
         offsetToArmed: val,
         child: children.isNotEmpty
-            ? children[0].toWidget(
-                params: params,
-                states: states,
-                dataset: dataset,
-                forPlay: forPlay,
-              )
+            ? children[0].toWidget(state: state)
             : PlaceholderChildBuilder(
-                name: node.intrinsicState.displayName,
-                node: node,
-                forPlay: forPlay,
+                name: state.node.intrinsicState.displayName,
+                node: state.node,
+                forPlay: state.forPlay,
               ),
 
         /// Custom indicator builder function
@@ -73,12 +57,7 @@ class WRefreshIndicator extends StatelessWidget {
                 builder: (final BuildContext context, final _) {
                   /// This part will be rebuild on every controller change
                   return children.length >= 2
-                      ? children[1].toWidget(
-                          params: params,
-                          states: states,
-                          dataset: dataset,
-                          forPlay: forPlay,
-                        )
+                      ? children[1].toWidget(state: state)
                       : const CircularProgressIndicator();
                 },
               ),
@@ -101,11 +80,11 @@ class WRefreshIndicator extends StatelessWidget {
         /// Should return [Future].
         onRefresh: () async {
           final val = duration.get(
-            params,
-            states,
-            dataset,
-            forPlay,
-            loop,
+            state.params,
+            state.states,
+            state.dataset,
+            state.forPlay,
+            state.loop,
             context,
           );
           await Future<void>.delayed(
@@ -115,14 +94,14 @@ class WRefreshIndicator extends StatelessWidget {
           );
           GestureBuilder.get(
             context: context,
-            node: node,
+            node: state.node,
             gesture: ActionGesture.onTap,
             action: action,
             actionValue: actionValue,
-            params: params,
-            states: states,
-            dataset: dataset,
-            forPlay: forPlay,
+            params: state.params,
+            states: state.states,
+            dataset: state.dataset,
+            forPlay: state.forPlay,
           );
           return;
         },

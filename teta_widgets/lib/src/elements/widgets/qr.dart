@@ -3,7 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:qr_flutter/qr_flutter.dart';
 // Package imports:
 import 'package:teta_core/teta_core.dart';
-import 'package:teta_widgets/src/elements/builder/gesture_detector_base.dart';
+import 'package:teta_widgets/src/core/teta_widget/index.dart';
 // Project imports:
 import 'package:teta_widgets/src/elements/index.dart';
 
@@ -15,73 +15,51 @@ class WQR extends StatelessWidget {
   /// Returns a QR widget in Teta
   const WQR(
     final Key? key, {
-    required this.node,
+    required this.state,
     required this.content,
     required this.image,
     required this.withImage,
     required this.size,
     required this.fill,
-    required this.forPlay,
-    required this.params,
-    required this.states,
-    required this.dataset,
-    this.loop,
   }) : super(key: key);
 
-  final CNode node;
+  final TetaWidgetState state;
   final FTextTypeInput content;
   final FTextTypeInput image;
   final bool withImage;
   final FSize size;
   final FFill fill;
-  final bool forPlay;
-  final int? loop;
-
-  final List<VariableObject> params;
-  final List<VariableObject> states;
-  final List<DatasetObject> dataset;
 
   @override
   Widget build(final BuildContext context) {
     final tempOpacity = fill.levels?.first.opacity ?? 1;
     final opacity = tempOpacity >= 0 && tempOpacity <= 1 ? tempOpacity : 1.0;
-    return NodeSelectionBuilder(
-      node: node,
-      forPlay: forPlay,
-      child: GestureBuilderBase.get(
-        context: context,
-        node: node,
-        params: params,
-        states: states,
-        dataset: dataset,
-        forPlay: forPlay,
-        loop: loop,
-        child: QrImage(
-          data: content.get(
-            params,
-            states,
-            dataset,
-            forPlay,
-            loop,
-            context,
-          ),
-          gapless: false,
-          size: size.get(context: context, isWidth: true),
-          foregroundColor:
-              HexColor(fill.getHexColor(context)).withOpacity(opacity),
-          embeddedImage: withImage
-              ? NetworkImage(
-                  image.get(
-                    params,
-                    states,
-                    dataset,
-                    forPlay,
-                    loop,
-                    context,
-                  ),
-                )
-              : null,
+    return TetaWidget(
+      state: state,
+      child: QrImage(
+        data: content.get(
+          state.params,
+          state.states,
+          state.dataset,
+          state.forPlay,
+          state.loop,
+          context,
         ),
+        gapless: false,
+        size: size.get(context: context, isWidth: true),
+        foregroundColor: HexColor(fill.getHexColor(context)).withOpacity(opacity),
+        embeddedImage: withImage
+            ? NetworkImage(
+                image.get(
+                  state.params,
+                  state.states,
+                  state.dataset,
+                  state.forPlay,
+                  state.loop,
+                  context,
+                ),
+              )
+            : null,
       ),
     );
   }
