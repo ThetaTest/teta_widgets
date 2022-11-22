@@ -14,6 +14,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:latlng/latlng.dart';
 import 'package:map/map.dart';
 import 'package:teta_core/teta_core.dart';
+import 'package:teta_widgets/src/core/teta_widget/index.dart';
 // Project imports:
 import 'package:teta_widgets/src/elements/builder/node_selection_builder.dart';
 import 'package:teta_widgets/src/elements/controls/key_constants.dart';
@@ -30,31 +31,20 @@ class WMapBuilder extends StatefulWidget {
   /// Returns a [Map] widget in Teta
   const WMapBuilder(
     final Key? key, {
-    required this.node,
+    required this.state,
     required this.controller,
-    required this.forPlay,
-    required this.params,
-    required this.states,
-    required this.dataset,
     required this.action,
     required this.flag,
     required this.datasetInput,
     this.child,
-    this.loop,
   }) : super(key: key);
 
-  final CNode node;
+  final TetaWidgetState state;
   final CNode? child;
-  final bool forPlay;
-  final int? loop;
   final FTextTypeInput controller;
   final FAction? action;
   final FDataset datasetInput;
   final bool flag;
-
-  final List<VariableObject> params;
-  final List<VariableObject> states;
-  final List<DatasetObject> dataset;
 
   @override
   State<WMapBuilder> createState() => _WMapBuilderState();
@@ -79,11 +69,9 @@ class _WMapBuilderState extends State<WMapBuilder> {
   Future<void> init() async {
     final page = BlocProvider.of<PageCubit>(context).state;
     if (widget.controller.type == FTextTypeEnum.param) {
-      variable = page.params
-          .firstWhereOrNull((final e) => e.name == widget.controller.paramName);
+      variable = page.params.firstWhereOrNull((final e) => e.name == widget.controller.paramName);
     } else {
-      variable = page.states
-          .firstWhereOrNull((final e) => e.name == widget.controller.stateName);
+      variable = page.states.firstWhereOrNull((final e) => e.name == widget.controller.stateName);
     }
     variable?.mapController ??= MapController(
       location: LatLng(41.52, 12.30),
@@ -171,18 +159,16 @@ class _WMapBuilderState extends State<WMapBuilder> {
 
     _setDataset();
     final index = widget.datasetInput.datasetName != null
-        ? widget.dataset.indexWhere(
-            (final element) =>
-                element.getName == widget.datasetInput.datasetName,
+        ? widget.state.dataset.indexWhere(
+            (final element) => element.getName == widget.datasetInput.datasetName,
           )
         : -1;
-    final db = index != -1 ? widget.dataset[index] : DatasetObject.empty();
+    final db = index != -1 ? widget.state.dataset[index] : DatasetObject.empty();
 
     return NodeSelectionBuilder(
-      node: widget.node,
-      forPlay: widget.forPlay,
-      child: !(BlocProvider.of<FocusProjectBloc>(context).state
-                  as ProjectLoaded)
+      node: widget.state.node,
+      forPlay: widget.state.forPlay,
+      child: !(BlocProvider.of<FocusProjectBloc>(context).state as ProjectLoaded)
               .prj
               .config!
               .mapEnabled
@@ -200,25 +186,22 @@ class _WMapBuilderState extends State<WMapBuilder> {
                 final markers = <LatLng>[];
 
                 for (var i = 0; i < db.getMap.length; i++) {
-                  if ((widget.child as NDynamic?)?.intrinsicState.type ==
-                      NType.marker) {
-                    final lat = (widget.child!.body.attributes[DBKeys.latitude]
-                            as FTextTypeInput)
-                        .get(
-                      widget.params,
-                      widget.states,
-                      widget.dataset,
-                      widget.forPlay,
+                  if ((widget.child as NDynamic?)?.intrinsicState.type == NType.marker) {
+                    final lat =
+                        (widget.child!.body.attributes[DBKeys.latitude] as FTextTypeInput).get(
+                      widget.state.params,
+                      widget.state.states,
+                      widget.state.dataset,
+                      widget.state.forPlay,
                       i,
                       context,
                     );
-                    final lng = (widget.child!.body.attributes[DBKeys.longitude]
-                            as FTextTypeInput)
-                        .get(
-                      widget.params,
-                      widget.states,
-                      widget.dataset,
-                      widget.forPlay,
+                    final lng =
+                        (widget.child!.body.attributes[DBKeys.longitude] as FTextTypeInput).get(
+                      widget.state.params,
+                      widget.state.states,
+                      widget.state.dataset,
+                      widget.state.forPlay,
                       i,
                       context,
                     );
@@ -235,28 +218,16 @@ class _WMapBuilderState extends State<WMapBuilder> {
                 final markersWidgets = <Widget>[];
                 final normalWidgets = db.getMap
                     .map(
-                      (final e) =>
-                          widget.child!.intrinsicState.type != NType.marker
-                              ? widget.child!.toWidget(
-                                  params: widget.params,
-                                  states: widget.states,
-                                  dataset: widget.dataset,
-                                  forPlay: widget.forPlay,
-                                )
-                              : const SizedBox(),
+                      (final e) => widget.child!.intrinsicState.type != NType.marker
+                          ? widget.child!.toWidget(state: widget.state)
+                          : const SizedBox(),
                     )
                     .toList();
 
                 for (var i = 0; i < markersChildren.length; i++) {
-                  if ((widget.child as NDynamic?)?.intrinsicState.type ==
-                      NType.marker) {
+                  if ((widget.child as NDynamic?)?.intrinsicState.type == NType.marker) {
                     markersWidgets.add(
-                      widget.child!.toWidget(
-                        params: widget.params,
-                        states: widget.states,
-                        dataset: widget.dataset,
-                        forPlay: widget.forPlay,
-                      ),
+                      widget.child!.toWidget(state: widget.state),
                     );
                   }
                 }
@@ -281,16 +252,15 @@ class _WMapBuilderState extends State<WMapBuilder> {
                         if (variable != null && variable?.mapController != null)
                           Map(
                             controller: variable!.mapController!,
-                            builder:
-                                (final context, final x, final y, final z) {
+                            builder: (final context, final x, final y, final z) {
                               final url =
                                   'https://api.mapbox.com/styles/v1/mapbox/streets-v11/tiles/$z/$x/$y?access_token=${(BlocProvider.of<FocusProjectBloc>(context).state as ProjectLoaded).prj.config?.mapboxKey}';
                               final darkUrl =
                                   'https://api.mapbox.com/styles/v1/mapbox/dark-v10/tiles/$z/$x/$y?access_token=${(BlocProvider.of<FocusProjectBloc>(context).state as ProjectLoaded).prj.config?.mapboxKey}';
                               return CNetworkImage(
-                                nid: widget.node.nid,
+                                nid: widget.state.node.nid,
                                 src: widget.flag ? darkUrl : url,
-                                loop: widget.loop ?? 0,
+                                loop: widget.state.loop ?? 0,
                                 width: double.maxFinite,
                                 height: double.maxFinite,
                                 fit: BoxFit.cover,
@@ -310,10 +280,10 @@ class _WMapBuilderState extends State<WMapBuilder> {
 
   void _setDataset() {
     try {
-      final index = widget.dataset.indexWhere(
+      final index = widget.state.dataset.indexWhere(
         (final element) => element.getName == widget.datasetInput.datasetName,
       );
-      final db = index != -1 ? widget.dataset[index] : DatasetObject.empty();
+      final db = index != -1 ? widget.state.dataset[index] : DatasetObject.empty();
       if (mounted) {
         if (db.getName != '') {
           setState(() {
@@ -385,9 +355,7 @@ double _eclipticObliquity(final double julianDay) {
           (46.836769 / 3600 -
               T *
                   (0.0001831 / 3600 +
-                      T *
-                          (0.00200340 / 3600 -
-                              T * (0.576e-6 / 3600 - T * 4.34e-8 / 3600))));
+                      T * (0.00200340 / 3600 - T * (0.576e-6 / 3600 - T * 4.34e-8 / 3600))));
   return epsilon;
 }
 

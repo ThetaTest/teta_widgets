@@ -6,7 +6,7 @@ import 'package:flutter/material.dart';
 // Package imports:
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:teta_core/teta_core.dart';
-import 'package:teta_widgets/src/elements/builder/gesture_detector_base.dart';
+import 'package:teta_widgets/src/core/teta_widget/index.dart';
 // Project imports:
 import 'package:teta_widgets/src/elements/index.dart';
 
@@ -14,30 +14,18 @@ class WInfiniteListView extends StatefulWidget {
   /// Returns a ListView in Teta
   const WInfiniteListView(
     final Key? key, {
+    required this.state,
     required this.children,
-    required this.node,
-    required this.forPlay,
     required this.flagValue,
     required this.value,
     required this.isVertical,
-    required this.params,
-    required this.states,
-    required this.dataset,
-    this.loop,
   }) : super(key: key);
 
-  final CNode node;
+  final TetaWidgetState state;
   final List<CNode> children;
-  final bool forPlay;
   final bool isVertical;
   final bool flagValue;
   final FTextTypeInput value;
-  final int? loop;
-
-  final List<VariableObject> params;
-  final List<VariableObject> states;
-  final List<DatasetObject> dataset;
-
   @override
   _WInfiniteListViewState createState() => _WInfiniteListViewState();
 }
@@ -53,30 +41,15 @@ class _WInfiniteListViewState extends State<WInfiniteListView> {
 
   @override
   Widget build(final BuildContext context) {
-    return NodeSelectionBuilder(
-      node: widget.node,
-      forPlay: widget.forPlay,
-      child: _body(context),
-    );
-  }
-
-  Widget _body(final BuildContext context) {
-    return MouseRegion(
-      onEnter: (final v) {
-        BlocProvider.of<ZoomableCubit>(context)
-            .changeZoomableFlag(value: false);
-      },
-      onExit: (final v) {
-        BlocProvider.of<ZoomableCubit>(context).changeZoomableFlag(value: true);
-      },
-      child: GestureBuilderBase.get(
-        context: context,
-        node: widget.node,
-        params: widget.params,
-        states: widget.states,
-        dataset: widget.dataset,
-        forPlay: widget.forPlay,
-        loop: widget.loop,
+    return TetaWidget(
+      state: widget.state,
+      child: MouseRegion(
+        onEnter: (final v) {
+          BlocProvider.of<ZoomableCubit>(context).changeZoomableFlag(value: false);
+        },
+        onExit: (final v) {
+          BlocProvider.of<ZoomableCubit>(context).changeZoomableFlag(value: true);
+        },
         child: _getBody(context),
       ),
     );
@@ -86,23 +59,11 @@ class _WInfiniteListViewState extends State<WInfiniteListView> {
     if (_array.isEmpty) {
       if (_loading) {
         return widget.children.length > 2
-            ? widget.children[2].toWidget(
-                loop: widget.loop,
-                forPlay: widget.forPlay,
-                params: widget.params,
-                states: widget.states,
-                dataset: widget.dataset,
-              )
+            ? widget.children[2].toWidget(state: widget.state)
             : const SizedBox(); //loading
       } else if (_error) {
         return widget.children.length > 1
-            ? widget.children[1].toWidget(
-                loop: widget.loop,
-                forPlay: widget.forPlay,
-                params: widget.params,
-                states: widget.states,
-                dataset: widget.dataset,
-              )
+            ? widget.children[1].toWidget(state: widget.state)
             : const SizedBox(); // error
       }
     } else {
@@ -118,37 +79,19 @@ class _WInfiniteListViewState extends State<WInfiniteListView> {
           if (index == _array.length) {
             if (_error) {
               return widget.children.length > 2
-                  ? widget.children[2].toWidget(
-                      loop: widget.loop,
-                      forPlay: widget.forPlay,
-                      params: widget.params,
-                      states: widget.states,
-                      dataset: widget.dataset,
-                    )
+                  ? widget.children[2].toWidget(state: widget.state)
                   : const SizedBox();
             }
             return widget.children.length > 1
-                ? widget.children[1].toWidget(
-                    loop: widget.loop,
-                    forPlay: widget.forPlay,
-                    params: widget.params,
-                    states: widget.states,
-                    dataset: widget.dataset,
-                  )
+                ? widget.children[1].toWidget(state: widget.state)
                 : const SizedBox();
           }
           return widget.children.isNotEmpty
-              ? widget.children.first.toWidget(
-                  loop: widget.loop,
-                  forPlay: widget.forPlay,
-                  params: widget.params,
-                  states: widget.states,
-                  dataset: widget.dataset,
-                )
+              ? widget.children.first.toWidget(state: widget.state)
               : PlaceholderChildBuilder(
-                  name: widget.node.intrinsicState.displayName,
-                  node: widget.node,
-                  forPlay: widget.forPlay,
+                  name: widget.state.node.intrinsicState.displayName,
+                  node: widget.state.node,
+                  forPlay: widget.state.forPlay,
                 );
         },
       );
