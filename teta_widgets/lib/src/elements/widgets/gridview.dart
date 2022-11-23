@@ -4,8 +4,7 @@
 // Flutter imports:
 import 'package:flutter/material.dart';
 // Package imports:
-import 'package:teta_core/teta_core.dart';
-import 'package:teta_widgets/src/elements/builder/gesture_detector_base.dart';
+import 'package:teta_widgets/src/core/teta_widget/index.dart';
 // Project imports:
 import 'package:teta_widgets/src/elements/index.dart';
 
@@ -13,26 +12,19 @@ class WGridView extends StatelessWidget {
   /// Returns a StaggeredGridView (children: [ ]) in Teta
   const WGridView(
     final Key? key, {
+    required this.state,
     required this.children,
-    required this.node,
-    required this.forPlay,
     required this.crossAxisCount,
     required this.mainAxisSpacing,
     required this.crossAxisSpacing,
     required this.isVertical,
-    required this.params,
-    required this.states,
-    required this.dataset,
     required this.isPrimary,
     required this.childAspectRatio,
     required this.shrinkWrap,
-    this.loop,
   }) : super(key: key);
 
-  final CNode node;
+  final TetaWidgetState state;
   final List<CNode> children;
-  final bool forPlay;
-  final int? loop;
 
   final bool isVertical;
   final bool isPrimary;
@@ -42,99 +34,78 @@ class WGridView extends StatelessWidget {
   final FTextTypeInput crossAxisSpacing;
   final FTextTypeInput childAspectRatio;
 
-  final List<VariableObject> params;
-  final List<VariableObject> states;
-  final List<DatasetObject> dataset;
-
   @override
   Widget build(final BuildContext context) {
-    return NodeSelectionBuilder(
-      node: node,
-      forPlay: forPlay,
-      child: _body(context),
-    );
+    return TetaWidget(state: state, child: _body(context));
   }
 
   /// Returns a MouseRegion to disable the zoom on editor screen
   /// and provides a StaggeredGridView
   Widget _body(final BuildContext context) {
     final crossAxisCountString = crossAxisCount.get(
-      params,
-      states,
-      dataset,
-      forPlay,
-      loop,
+      state.params,
+      state.states,
+      state.dataset,
+      state.forPlay,
+      state.loop,
       context,
     );
     final mainAxisSpacingString = mainAxisSpacing.get(
-      params,
-      states,
-      dataset,
-      forPlay,
-      loop,
+      state.params,
+      state.states,
+      state.dataset,
+      state.forPlay,
+      state.loop,
       context,
     );
     final crossAxisSpacingString = crossAxisSpacing.get(
-      params,
-      states,
-      dataset,
-      forPlay,
-      loop,
+      state.params,
+      state.states,
+      state.dataset,
+      state.forPlay,
+      state.loop,
       context,
     );
     final childAspectRatioString = childAspectRatio.get(
-      params,
-      states,
-      dataset,
-      forPlay,
-      loop,
+      state.params,
+      state.states,
+      state.dataset,
+      state.forPlay,
+      state.loop,
       context,
     );
-    return GestureBuilderBase.get(
-      context: context,
-      node: node,
-      params: params,
-      states: states,
-      dataset: dataset,
-      forPlay: forPlay,
-      loop: loop,
-      child: GridView.builder(
-        gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
-          crossAxisCount: int.tryParse(crossAxisCountString) != null &&
-                  (int.tryParse(crossAxisCountString) ?? 0) > 0.1
-              ? int.parse(crossAxisCountString)
-              : 2,
-          mainAxisSpacing: double.tryParse(mainAxisSpacingString) != null &&
-                  (double.tryParse(mainAxisSpacingString) ?? 0) > 0.1
-              ? double.parse(mainAxisSpacingString)
-              : 2,
-          crossAxisSpacing: double.tryParse(crossAxisSpacingString) != null &&
-                  (double.tryParse(crossAxisSpacingString) ?? 0) > 0.1
-              ? double.parse(crossAxisSpacingString)
-              : 2,
-          childAspectRatio: double.tryParse(childAspectRatioString) != null &&
-                  (double.tryParse(childAspectRatioString) ?? 0) > 0.1
-              ? double.parse(childAspectRatioString)
-              : 1,
-        ),
-        shrinkWrap: shrinkWrap,
-        primary: isPrimary,
-        scrollDirection: isVertical ? Axis.vertical : Axis.horizontal,
-        itemCount: children.isEmpty ? 1 : children.length,
-        itemBuilder: (final context, final index) => children.isNotEmpty
-            ? children[index].toWidget(
-                loop: index,
-                forPlay: forPlay,
-                params: params,
-                states: states,
-                dataset: dataset,
-              )
-            : PlaceholderChildBuilder(
-                name: node.intrinsicState.displayName,
-                node: node,
-                forPlay: forPlay,
-              ),
+    return GridView.builder(
+      gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
+        crossAxisCount: int.tryParse(crossAxisCountString) != null &&
+                (int.tryParse(crossAxisCountString) ?? 0) > 0.1
+            ? int.parse(crossAxisCountString)
+            : 2,
+        mainAxisSpacing: double.tryParse(mainAxisSpacingString) != null &&
+                (double.tryParse(mainAxisSpacingString) ?? 0) > 0.1
+            ? double.parse(mainAxisSpacingString)
+            : 2,
+        crossAxisSpacing: double.tryParse(crossAxisSpacingString) != null &&
+                (double.tryParse(crossAxisSpacingString) ?? 0) > 0.1
+            ? double.parse(crossAxisSpacingString)
+            : 2,
+        childAspectRatio: double.tryParse(childAspectRatioString) != null &&
+                (double.tryParse(childAspectRatioString) ?? 0) > 0.1
+            ? double.parse(childAspectRatioString)
+            : 1,
       ),
+      shrinkWrap: shrinkWrap,
+      primary: isPrimary,
+      scrollDirection: isVertical ? Axis.vertical : Axis.horizontal,
+      itemCount: children.isEmpty ? 1 : children.length,
+      itemBuilder: (final context, final index) => children.isNotEmpty
+          ? children[index].toWidget(
+              state: state.copyWith(loop: index),
+            )
+          : PlaceholderChildBuilder(
+              name: state.node.intrinsicState.displayName,
+              node: state.node,
+              forPlay: state.forPlay,
+            ),
     );
   }
 }

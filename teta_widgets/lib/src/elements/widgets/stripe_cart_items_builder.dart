@@ -86,7 +86,8 @@ class _WStripeCartItemsBuilderState extends State<WStripeCartItemsBuilder> {
         addDataset(context, widget.state.dataset, datasetObject);
       } else {
         debugPrint(
-            'Error in calc WStripeProductsCartList -> ${products.error?.message ?? 'no message'}');
+          'Error in calc WStripeProductsCartList -> ${products.error?.message ?? 'no message'}',
+        );
       }
     } catch (e) {
       debugPrint('Error in calc WStripeProductsCartList -> $e');

@@ -6,6 +6,7 @@
 import 'package:flutter/cupertino.dart';
 // Package imports:
 import 'package:teta_core/teta_core.dart';
+import 'package:teta_widgets/src/core/teta_widget/index.dart';
 // Project imports:
 import 'package:teta_widgets/src/elements/index.dart';
 
@@ -13,51 +14,34 @@ class WCupertinoSegmentedControl extends StatefulWidget {
   /// Returns a Gesture Detector
   const WCupertinoSegmentedControl(
     final Key? key, {
+    required this.state,
     required this.children,
-    required this.node,
-    required this.forPlay,
     required this.pressedColor,
     required this.selectedColor,
     required this.unselectedColor,
     required this.borderColor,
     //required this.action,
-    required this.params,
-    required this.states,
-    required this.dataset,
-    this.loop,
   }) : super(key: key);
 
-  final CNode node;
+  final TetaWidgetState state;
   final List<CNode> children;
-  final bool forPlay;
-  final int? loop;
   //final FAction action;
   final FFill pressedColor;
   final FFill selectedColor;
   final FFill unselectedColor;
   final FFill borderColor;
-  final List<VariableObject> params;
-  final List<VariableObject> states;
-  final List<DatasetObject> dataset;
 
   @override
-  State<WCupertinoSegmentedControl> createState() =>
-      _WCupertinoSegmentedControlState();
+  State<WCupertinoSegmentedControl> createState() => _WCupertinoSegmentedControlState();
 }
 
-class _WCupertinoSegmentedControlState
-    extends State<WCupertinoSegmentedControl> {
+class _WCupertinoSegmentedControlState extends State<WCupertinoSegmentedControl> {
   int value = 0;
   @override
   Widget build(final BuildContext context) {
     final map = <int, Widget>{};
     for (var i = 0; i < widget.children.length; i++) {
-      map[i] = widget.children[i].toWidget(
-        params: widget.params,
-        states: widget.states,
-        dataset: widget.dataset,
-        forPlay: widget.forPlay,
-      );
+      map[i] = widget.children[i].toWidget(state: widget.state);
     }
     if (map.keys.isEmpty) {
       map[0] = Container(
@@ -78,29 +62,28 @@ class _WCupertinoSegmentedControlState
       );
     }
     return NodeSelectionBuilder(
-      node: widget.node,
-      forPlay: widget.forPlay,
+      node: widget.state.node,
+      forPlay: widget.state.forPlay,
       child: IgnorePointer(
-        ignoring: !widget.forPlay,
+        ignoring: !widget.state.forPlay,
         child: CupertinoSegmentedControl<int>(
           children: map,
           groupValue: value,
           pressedColor: HexColor(widget.pressedColor.getHexColor(context)),
           selectedColor: HexColor(widget.selectedColor.getHexColor(context)),
-          unselectedColor:
-              HexColor(widget.unselectedColor.getHexColor(context)),
+          unselectedColor: HexColor(widget.unselectedColor.getHexColor(context)),
           borderColor: HexColor(widget.borderColor.getHexColor(context)),
           onValueChanged: (final v) {
             GestureBuilder.get(
               context: context,
-              node: widget.node,
-              action:null, //widget.action,
-              actionValue:null, //FTextTypeInput(value: '$v'),
+              node: widget.state.node,
+              action: null, //widget.action,
+              actionValue: null, //FTextTypeInput(value: '$v'),
               gesture: ActionGesture.onTap,
-              params: widget.params,
-              states: widget.states,
-              dataset: widget.dataset,
-              forPlay: widget.forPlay,
+              params: widget.state.params,
+              states: widget.state.states,
+              dataset: widget.state.dataset,
+              forPlay: widget.state.forPlay,
             );
             setState(() {
               value = v;

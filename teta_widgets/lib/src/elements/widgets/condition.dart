@@ -5,7 +5,7 @@
 import 'package:flutter/material.dart';
 // Package imports:
 import 'package:teta_core/teta_core.dart';
-import 'package:teta_widgets/src/elements/builder/gesture_detector_base.dart';
+import 'package:teta_widgets/src/core/teta_widget/index.dart';
 // Project imports:
 import 'package:teta_widgets/src/elements/index.dart';
 
@@ -14,88 +14,57 @@ class WCondition extends StatelessWidget {
   /// Returns a if condition widget
   const WCondition(
     final Key? key, {
+    required this.state,
     required this.children,
-    required this.node,
     required this.value,
     required this.valueOfCond,
     required this.conditionType,
-    required this.forPlay,
-    required this.params,
-    required this.states,
-    required this.dataset,
-    this.loop,
   }) : super(key: key);
 
-  final CNode node;
+  final TetaWidgetState state;
   final List<CNode> children;
-  final bool forPlay;
   final FTextTypeInput value;
   final FTextTypeInput valueOfCond;
   final ConditionType conditionType;
-  final int? loop;
-
-  final List<VariableObject> params;
-  final List<VariableObject> states;
-  final List<DatasetObject> dataset;
 
   @override
   Widget build(final BuildContext context) {
-    return NodeSelectionBuilder(
-      node: node,
-      forPlay: forPlay,
+    return TetaWidget(
+      state: state,
       child: _body(context),
     );
   }
 
   Widget _body(final BuildContext context) {
     final finalValue = value.get(
-      params,
-      states,
-      dataset,
-      forPlay,
-      loop,
+      state.params,
+      state.states,
+      state.dataset,
+      state.forPlay,
+      state.loop,
       context,
     );
     final finalValueOfCond = valueOfCond.get(
-      params,
-      states,
-      dataset,
-      forPlay,
-      loop,
+      state.params,
+      state.states,
+      state.dataset,
+      state.forPlay,
+      state.loop,
       context,
     );
 
-    return GestureBuilderBase.get(
-      context: context,
-      node: node,
-      params: params,
-      states: states,
-      dataset: dataset,
-      forPlay: forPlay,
-      loop: loop,
-      child: (finalValue == finalValueOfCond)
-          ? children.isNotEmpty
-              ? children.first.toWidget(
-                  params: params,
-                  states: states,
-                  dataset: dataset,
-                  forPlay: forPlay,
-                )
-              : PlaceholderChildBuilder(
-                  name: node.intrinsicState.displayName,
-                  node: node,
-                  forPlay: forPlay,
-                )
-          : children.isNotEmpty
-              ? children.length > 1
-                  ? children.last.toWidget(
-                      params: params,
-                      states: states,
-                      dataset: dataset,
-                      forPlay: forPlay,
-                    )
-                  : const SizedBox()
-              : const SizedBox(),
-    );
+    return (finalValue == finalValueOfCond)
+        ? children.isNotEmpty
+            ? children.first.toWidget(state: state)
+            : PlaceholderChildBuilder(
+                name: state.node.intrinsicState.displayName,
+                node: state.node,
+                forPlay: state.forPlay,
+              )
+        : children.isNotEmpty
+            ? children.length > 1
+                ? children.last.toWidget(state: state)
+                : const SizedBox()
+            : const SizedBox();
   }
 }

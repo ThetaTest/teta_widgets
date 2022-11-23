@@ -12,22 +12,12 @@ import 'package:teta_widgets/src/elements/controls/control_model.dart';
 import 'package:teta_widgets/src/elements/controls/key_constants.dart';
 import 'package:teta_widgets/src/elements/controls/type.dart';
 import 'package:teta_widgets/src/elements/features/actions/enums/permissions.dart';
-import 'package:teta_widgets/src/elements/features/border.dart';
-import 'package:teta_widgets/src/elements/features/border_radius.dart';
-import 'package:teta_widgets/src/elements/features/fill.dart';
-import 'package:teta_widgets/src/elements/features/margins.dart';
-import 'package:teta_widgets/src/elements/features/shadow.dart';
-import 'package:teta_widgets/src/elements/features/sizes.dart';
-import 'package:teta_widgets/src/elements/features/text_type_input.dart';
 import 'package:teta_widgets/src/elements/index.dart';
 import 'package:teta_widgets/src/elements/intrinsic_states/class.dart';
 import 'package:teta_widgets/src/elements/nodes/categories.dart';
 import 'package:teta_widgets/src/elements/nodes/children_enum.dart';
-import 'package:teta_widgets/src/elements/nodes/enum.dart';
-import 'package:teta_widgets/src/elements/nodes/node.dart';
 import 'package:teta_widgets/src/elements/nodes/node_body.dart';
 import 'package:teta_widgets/src/elements/packages.dart';
-import 'package:teta_widgets/src/elements/widgets/container.dart';
 
 const _globalType = NType.location;
 
@@ -167,12 +157,9 @@ class LocationBody extends NodeBody {
         pageId,
         context,
         //lat
-        (attributes[DBKeys.googleMapsController] as FTextTypeInput).stateName ??
-            '',
+        (attributes[DBKeys.googleMapsController] as FTextTypeInput).stateName ?? '',
         //lng
-        (attributes[DBKeys.googleMapsCubitController] as FTextTypeInput)
-                .stateName ??
-            '',
+        (attributes[DBKeys.googleMapsCubitController] as FTextTypeInput).stateName ?? '',
         loop,
         node,
       );

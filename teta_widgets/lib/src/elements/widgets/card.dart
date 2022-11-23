@@ -3,7 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 // Package imports:
 import 'package:teta_core/teta_core.dart';
-import 'package:teta_widgets/src/elements/builder/gesture_detector_base.dart';
+import 'package:teta_widgets/src/core/teta_widget/index.dart';
 // Project imports:
 import 'package:teta_widgets/src/elements/index.dart';
 
@@ -13,37 +13,27 @@ class WCard extends StatelessWidget {
   /// Returns a [Center] widget in Teta
   const WCard(
     final Key? key, {
-    required this.node,
-    required this.forPlay,
-    required this.params,
-    required this.states,
-    required this.dataset,
+    required this.state,
     required this.elevation,
     required this.color,
     required this.borderRadius,
     this.child,
-    this.loop,
   }) : super(key: key);
 
-  final CNode node;
+  final TetaWidgetState state;
   final CNode? child;
-  final bool forPlay;
-  final int? loop;
   final FTextTypeInput elevation;
   final FBorderRadius borderRadius;
   final FFill color;
-  final List<VariableObject> params;
-  final List<VariableObject> states;
-  final List<DatasetObject> dataset;
 
   @override
   Widget build(final BuildContext context) {
     final val = elevation.get(
-      params,
-      states,
-      dataset,
-      forPlay,
-      loop,
+      state.params,
+      state.states,
+      state.dataset,
+      state.forPlay,
+      state.loop,
       context,
     );
     final isLight = BlocProvider.of<PaletteDarkLightCubit>(context).state;
@@ -52,33 +42,16 @@ class WCard extends StatelessWidget {
       if (element.id == color.paletteStyle) model = element;
       if (element.name == color.paletteStyle) model = element;
     });
-    return NodeSelectionBuilder(
-      node: node,
-      forPlay: forPlay,
-      child: GestureBuilderBase.get(
-        context: context,
-        node: node,
-        params: params,
-        states: states,
-        dataset: dataset,
-        forPlay: forPlay,
-        loop: loop,
-        child: Card(
-          color: _getCardColor(model, isLight),
-          elevation: double.tryParse(val) != null ? double.parse(val) : 1,
-          shape:
-              TetaShapeCard.get(context: context, borderRadius: borderRadius),
-          child: ChildConditionBuilder(
-            ValueKey('${node.nid} $loop'),
-            name: node.intrinsicState.displayName,
-            node: node,
-            child: child,
-            params: params,
-            states: states,
-            dataset: dataset,
-            forPlay: forPlay,
-            loop: loop,
-          ),
+    return TetaWidget(
+      state: state,
+      child: Card(
+        color: _getCardColor(model, isLight),
+        elevation: double.tryParse(val) != null ? double.parse(val) : 1,
+        shape: TetaShapeCard.get(context: context, borderRadius: borderRadius),
+        child: ChildConditionBuilder(
+          ValueKey('${state.node.nid} ${state.loop}'),
+          state: state,
+          child: child,
         ),
       ),
     );
