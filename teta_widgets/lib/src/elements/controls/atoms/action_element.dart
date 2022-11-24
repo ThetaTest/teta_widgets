@@ -17,6 +17,7 @@ import 'package:teta_core/src/design_system/textfield/minitextfield.dart';
 import 'package:teta_core/teta_core.dart';
 import 'package:teta_repositories/src/node_repository.dart';
 import 'package:teta_widgets/src/elements/controls/atoms/actions/validator.dart';
+import 'package:teta_widgets/src/elements/controls/atoms/apicalls/apicalls.dart';
 // Project imports:
 import 'package:teta_widgets/src/elements/controls/atoms/flag.dart';
 import 'package:teta_widgets/src/elements/controls/atoms/https_requests_custom_backend/delete.dart';
@@ -36,6 +37,7 @@ import 'package:teta_widgets/src/elements/controls/atoms/teta_cms/update.dart';
 import 'package:teta_widgets/src/elements/controls/atoms/text.dart';
 import 'package:teta_widgets/src/elements/controls/type.dart';
 import 'package:teta_widgets/src/elements/features/actions/enums/action_google_maps.dart';
+import 'package:teta_widgets/src/elements/features/actions/enums/apicalls.dart';
 import 'package:teta_widgets/src/elements/features/actions/enums/audio_player_actions.dart';
 import 'package:teta_widgets/src/elements/features/actions/enums/braintree.dart';
 import 'package:teta_widgets/src/elements/features/actions/enums/camera.dart';
@@ -2086,6 +2088,18 @@ class ActionElementControlState extends State<ActionElementControl> {
                   widget.element.actionCustomHttpRequest ==
                       ActionCustomHttpRequest.delete)
                 CustomHttpRequestDeleteControl(
+                  prj: widget.prj,
+                  page: widget.page,
+                  node: widget.node,
+                  action: widget.element,
+                  callback: () {
+                    final old = widget.element;
+                    widget.callBack(widget.element, old);
+                  },
+                ),
+              if (widget.element.actionType == ActionType.apiCalls &&
+                  widget.element.actionApiCalls == ActionApiCalls.apiCalls)
+                ApiCallsControl(
                   prj: widget.prj,
                   page: widget.page,
                   node: widget.node,
