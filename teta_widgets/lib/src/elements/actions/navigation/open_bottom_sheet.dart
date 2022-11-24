@@ -13,6 +13,7 @@ import 'package:recase/recase.dart';
 import 'package:teta_core/src/rendering/nodes_original.dart';
 import 'package:teta_core/teta_core.dart';
 import 'package:teta_db/teta_db.dart';
+import 'package:teta_widgets/src/core/teta_widget/index.dart';
 import 'package:teta_widgets/src/elements/actions/navigation/pass_params_builder.dart';
 import 'package:teta_widgets/src/elements/code/formatter_test.dart';
 // Project imports:
@@ -23,19 +24,14 @@ class FActionNavigationOpenBottomSheet {
     final BuildContext context,
     final String? nameOfPage,
     final Map<String, dynamic>? paramsToSend,
-    final List<VariableObject> params,
-    final List<VariableObject> states,
-    final List<DatasetObject> dataset,
-    final int? loop,
+    final TetaWidgetState state,
   ) async {
     try {
       if (nameOfPage != null) {
-        final prj =
-            BlocProvider.of<FocusProjectBloc>(context).state as ProjectLoaded;
+        final prj = BlocProvider.of<FocusProjectBloc>(context).state as ProjectLoaded;
         final currentPage = BlocProvider.of<PageCubit>(context).state;
         PageObject? page;
-        page = prj.prj.pages!
-            .firstWhereOrNull((final element) => element.name == nameOfPage);
+        page = prj.prj.pages!.firstWhereOrNull((final element) => element.name == nameOfPage);
         if (page != null) {
           final list = await TetaDB.instance.client.selectList(
             'nodes',
@@ -62,16 +58,18 @@ class FActionNavigationOpenBottomSheet {
           await showModalBottomSheet<void>(
             context: context,
             builder: (final context) => page!.scaffold!.toWidget(
-              forPlay: true,
-              params: passParamsToNewPage(
-                page.params,
-                currentPage.params,
-                paramsToSend,
-                dataset,
-                loop: loop,
+              state: state.copyWith(
+                forPlay: true,
+                params: passParamsToNewPage(
+                  page.params,
+                  currentPage.params,
+                  paramsToSend,
+                  state.dataset,
+                  loop: state.loop,
+                ),
+                states: page.states,
+                dataset: page.datasets,
               ),
-              states: page.states,
-              dataset: page.datasets,
             ),
           );
         }
@@ -90,14 +88,12 @@ class FActionNavigationOpenBottomSheet {
     final Map<String, dynamic>? paramsToSend,
   ) {
     try {
-      final prj =
-          BlocProvider.of<FocusProjectBloc>(context).state as ProjectLoaded;
+      final prj = BlocProvider.of<FocusProjectBloc>(context).state as ProjectLoaded;
       if (nameOfPage == null ||
           (prj.prj.pages ?? <PageObject>[])
                   .indexWhere((final element) => element.name == nameOfPage) ==
               -1) return '';
-      final page = prj.prj.pages!
-          .firstWhere((final element) => element.name == nameOfPage);
+      final page = prj.prj.pages!.firstWhere((final element) => element.name == nameOfPage);
       final temp = removeDiacritics(
         page.name
             .replaceFirst('0', 'A0')
@@ -121,9 +117,8 @@ class FActionNavigationOpenBottomSheet {
         final name = ReCase(param.name);
         stringParamsToSend.write('${name.camelCase}: ');
         // ignore: avoid_dynamic_calls
-        final valueToSend = (paramsToSend ?? <String, dynamic>{})[param.id]
-                ?['label'] as String? ??
-            'null';
+        final valueToSend =
+            (paramsToSend ?? <String, dynamic>{})[param.id]?['label'] as String? ?? 'null';
         final rc = ReCase(valueToSend);
         stringParamsToSend.write('widget.${rc.camelCase}, ');
       }

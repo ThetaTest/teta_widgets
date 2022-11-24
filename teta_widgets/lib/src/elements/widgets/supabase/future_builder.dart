@@ -8,6 +8,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:supabase/supabase.dart';
 import 'package:teta_core/teta_core.dart';
+import 'package:teta_widgets/src/core/teta_widget/index.dart';
 // Project imports:
 import 'package:teta_widgets/src/elements/index.dart';
 
@@ -17,7 +18,7 @@ class WSupabaseFutureBuilder extends StatefulWidget {
   /// Construct
   const WSupabaseFutureBuilder(
     final Key? key, {
-    required this.node,
+    required this.state,
     required this.from,
     required this.select,
     required this.order,
@@ -28,16 +29,10 @@ class WSupabaseFutureBuilder extends StatefulWidget {
     required this.searchValue,
     required this.eqName,
     required this.eqValue,
-    required this.forPlay,
-    required this.params,
-    required this.states,
-    required this.dataset,
     required this.children,
-    this.loop,
   }) : super(key: key);
 
-  /// The original CNode
-  final CNode node;
+  final TetaWidgetState state;
 
   /// The from's value
   final FTextTypeInput from;
@@ -65,23 +60,6 @@ class WSupabaseFutureBuilder extends StatefulWidget {
   /// The opzional child of this widget
   final List<CNode> children;
 
-  /// Are we in Play Mode?
-  final bool forPlay;
-
-  /// The optional position inside a loop
-  /// Widgets can be instantiate inside ListView.builder and other list widgets
-  /// [loop] indicates the index position inside them
-  final int? loop;
-
-  /// The params of Scaffold
-  final List<VariableObject> params;
-
-  /// The states of Scaffold
-  final List<VariableObject> states;
-
-  /// The dataset list created by other widgets inside the same page
-  final List<DatasetObject> dataset;
-
   @override
   _WSupabaseFutureBuilderState createState() => _WSupabaseFutureBuilderState();
 }
@@ -103,91 +81,88 @@ class _WSupabaseFutureBuilderState extends State<WSupabaseFutureBuilder> {
 
   Future calc() async {
     final from = widget.from.get(
-      widget.params,
-      widget.states,
-      widget.dataset,
-      widget.forPlay,
-      widget.loop,
+      widget.state.params,
+      widget.state.states,
+      widget.state.dataset,
+      widget.state.forPlay,
+      widget.state.loop,
       context,
     );
     final select = widget.select.get(
-      widget.params,
-      widget.states,
-      widget.dataset,
-      widget.forPlay,
-      widget.loop,
+      widget.state.params,
+      widget.state.states,
+      widget.state.dataset,
+      widget.state.forPlay,
+      widget.state.loop,
       context,
     );
     final order = widget.order.get(
-      widget.params,
-      widget.states,
-      widget.dataset,
-      widget.forPlay,
-      widget.loop,
+      widget.state.params,
+      widget.state.states,
+      widget.state.dataset,
+      widget.state.forPlay,
+      widget.state.loop,
       context,
     );
     final fromRange = widget.fromRange.get(
-      widget.params,
-      widget.states,
-      widget.dataset,
-      widget.forPlay,
-      widget.loop,
+      widget.state.params,
+      widget.state.states,
+      widget.state.dataset,
+      widget.state.forPlay,
+      widget.state.loop,
       context,
     );
-    final valueFromRange =
-        int.tryParse(fromRange) != null ? int.parse(fromRange) : 0;
+    final valueFromRange = int.tryParse(fromRange) != null ? int.parse(fromRange) : 0;
     final toRange = widget.toRange.get(
-      widget.params,
-      widget.states,
-      widget.dataset,
-      widget.forPlay,
-      widget.loop,
+      widget.state.params,
+      widget.state.states,
+      widget.state.dataset,
+      widget.state.forPlay,
+      widget.state.loop,
       context,
     );
-    final valueToRange =
-        int.tryParse(toRange) != null ? int.parse(toRange) : 15;
+    final valueToRange = int.tryParse(toRange) != null ? int.parse(toRange) : 15;
     final numberPage = widget.numberPage.get(
-      widget.params,
-      widget.states,
-      widget.dataset,
-      widget.forPlay,
-      widget.loop,
+      widget.state.params,
+      widget.state.states,
+      widget.state.dataset,
+      widget.state.forPlay,
+      widget.state.loop,
       context,
     );
-    final valueToPage =
-        int.tryParse(numberPage) != null ? int.parse(numberPage) : 1;
+    final valueToPage = int.tryParse(numberPage) != null ? int.parse(numberPage) : 1;
 
     final searchName = widget.searchName.get(
-      widget.params,
-      widget.states,
-      widget.dataset,
-      widget.forPlay,
-      widget.loop,
+      widget.state.params,
+      widget.state.states,
+      widget.state.dataset,
+      widget.state.forPlay,
+      widget.state.loop,
       context,
     );
     final searchValue = widget.searchValue.get(
-      widget.params,
-      widget.states,
-      widget.dataset,
-      widget.forPlay,
-      widget.loop,
+      widget.state.params,
+      widget.state.states,
+      widget.state.dataset,
+      widget.state.forPlay,
+      widget.state.loop,
       context,
     );
 
     final eqName = widget.eqName.get(
-      widget.params,
-      widget.states,
-      widget.dataset,
-      widget.forPlay,
-      widget.loop,
+      widget.state.params,
+      widget.state.states,
+      widget.state.dataset,
+      widget.state.forPlay,
+      widget.state.loop,
       context,
     );
     final eqValue = widget.eqValue.get(
-      widget.params,
-      widget.states,
-      widget.dataset,
-      widget.forPlay,
-      widget.loop,
+      widget.state.params,
+      widget.state.states,
+      widget.state.dataset,
+      widget.state.forPlay,
+      widget.state.loop,
       context,
     );
 
@@ -228,19 +203,14 @@ class _WSupabaseFutureBuilderState extends State<WSupabaseFutureBuilder> {
     }
 
     return NodeSelectionBuilder(
-      node: widget.node,
-      forPlay: widget.forPlay,
+      node: widget.state.node,
+      forPlay: widget.state.forPlay,
       child: FutureBuilder(
         future: _future,
         builder: (final context, final snapshot) {
           if (!snapshot.hasData) {
             if (widget.children.isNotEmpty) {
-              return widget.children.last.toWidget(
-                params: widget.params,
-                states: widget.states,
-                dataset: widget.dataset,
-                forPlay: widget.forPlay,
-              );
+              return widget.children.last.toWidget(state: widget.state);
             } else {
               return const CircularProgressIndicator();
             }
@@ -257,20 +227,19 @@ class _WSupabaseFutureBuilderState extends State<WSupabaseFutureBuilder> {
           }
           final list = response?.data as List<dynamic>?;
           _map = _map.copyWith(
-            name: widget.node.name ?? widget.node.intrinsicState.displayName,
+            name: widget.state.node.name ?? widget.state.node.intrinsicState.displayName,
             map: (list ?? const <dynamic>[])
                 .map((final dynamic e) => e as Map<String, dynamic>)
                 .toList(),
           );
-          final datasets = addDataset(context, widget.dataset, _map);
+          final datasets = addDataset(context, widget.state.dataset, _map);
 
           // Returns child
           if (widget.children.isNotEmpty) {
             return widget.children.first.toWidget(
-              params: widget.params,
-              states: widget.states,
-              dataset: widget.dataset.isEmpty ? datasets : widget.dataset,
-              forPlay: widget.forPlay,
+              state: widget.state.copyWith(
+                dataset: widget.state.dataset.isEmpty ? datasets : widget.state.dataset,
+              ),
             );
           } else {
             return const SizedBox();

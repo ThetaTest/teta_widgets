@@ -7,6 +7,7 @@ import 'package:flutter/material.dart';
 // Package imports:
 import 'package:teta_cms/teta_cms.dart';
 import 'package:teta_core/teta_core.dart';
+import 'package:teta_widgets/src/core/teta_widget/index.dart';
 // Project imports:
 import 'package:teta_widgets/src/elements/index.dart';
 
@@ -16,23 +17,17 @@ class WCmsFetch extends StatefulWidget {
   /// Construct
   const WCmsFetch(
     final Key? key, {
-    required this.node,
+    required this.state,
     required this.collection,
     required this.limit,
     required this.page,
     required this.keyName,
     required this.keyValue,
     required this.showDrafts,
-    required this.forPlay,
-    required this.params,
-    required this.states,
-    required this.dataset,
     required this.children,
-    this.loop,
   }) : super(key: key);
 
-  /// The original CNode
-  final CNode node;
+  final TetaWidgetState state;
 
   /// The from's value
   final FTextTypeInput collection;
@@ -44,23 +39,6 @@ class WCmsFetch extends StatefulWidget {
 
   /// The opzional child of this widget
   final List<CNode> children;
-
-  /// Are we in Play Mode?
-  final bool forPlay;
-
-  /// The optional position inside a loop
-  /// Widgets can be instantiate inside ListView.builder and other list widgets
-  /// [loop] indicates the index position inside them
-  final int? loop;
-
-  /// The params of Scaffold
-  final List<VariableObject> params;
-
-  /// The states of Scaffold
-  final List<VariableObject> states;
-
-  /// The dataset list created by other widgets inside the same page
-  final List<DatasetObject> dataset;
 
   @override
   _WCmsFetchState createState() => _WCmsFetchState();
@@ -76,43 +54,43 @@ class _WCmsFetchState extends State<WCmsFetch> {
 
   Future<void> getDbElements() async {
     final collectionId = widget.collection.get(
-      widget.params,
-      widget.states,
-      widget.dataset,
-      widget.forPlay,
-      widget.loop,
+      widget.state.params,
+      widget.state.states,
+      widget.state.dataset,
+      widget.state.forPlay,
+      widget.state.loop,
       context,
     );
     final limit = widget.limit.get(
-      widget.params,
-      widget.states,
-      widget.dataset,
-      widget.forPlay,
-      widget.loop,
+      widget.state.params,
+      widget.state.states,
+      widget.state.dataset,
+      widget.state.forPlay,
+      widget.state.loop,
       context,
     );
     final page = widget.page.get(
-      widget.params,
-      widget.states,
-      widget.dataset,
-      widget.forPlay,
-      widget.loop,
+      widget.state.params,
+      widget.state.states,
+      widget.state.dataset,
+      widget.state.forPlay,
+      widget.state.loop,
       context,
     );
     final keyName = widget.keyName.get(
-      widget.params,
-      widget.states,
-      widget.dataset,
-      widget.forPlay,
-      widget.loop,
+      widget.state.params,
+      widget.state.states,
+      widget.state.dataset,
+      widget.state.forPlay,
+      widget.state.loop,
       context,
     );
     final keyValue = widget.keyValue.get(
-      widget.params,
-      widget.states,
-      widget.dataset,
-      widget.forPlay,
-      widget.loop,
+      widget.state.params,
+      widget.state.states,
+      widget.state.dataset,
+      widget.state.forPlay,
+      widget.state.loop,
       context,
     );
     Logger.printWarning(
@@ -121,8 +99,7 @@ class _WCmsFetchState extends State<WCmsFetch> {
     final dbElements = await TetaCMS.instance.client.getCollection(
       collectionId,
       filters: [
-        if (keyName.isNotEmpty && keyValue.isNotEmpty)
-          Filter(keyName, keyValue),
+        if (keyName.isNotEmpty && keyValue.isNotEmpty) Filter(keyName, keyValue),
       ],
       limit: int.tryParse(limit) ?? 20,
       page: int.tryParse(page) ?? 0,
@@ -151,10 +128,7 @@ class _WCmsFetchState extends State<WCmsFetch> {
       if (widget.children.length > 1) {
         return RepaintBoundary(
           child: widget.children.last.toWidget(
-            params: widget.params,
-            states: widget.states,
-            dataset: datasets,
-            forPlay: widget.forPlay,
+            state: widget.state.copyWith(dataset: datasets),
           ),
         );
       } else {
@@ -166,16 +140,13 @@ class _WCmsFetchState extends State<WCmsFetch> {
     }
 
     return NodeSelectionBuilder(
-      node: widget.node,
-      forPlay: widget.forPlay,
+      node: widget.state.node,
+      forPlay: widget.state.forPlay,
       child: widget.children.isEmpty
           ? const THeadline3('CMS Fetch requires at least one child')
           : RepaintBoundary(
               child: widget.children.first.toWidget(
-                params: widget.params,
-                states: widget.states,
-                dataset: datasets,
-                forPlay: widget.forPlay,
+                state: widget.state.copyWith(dataset: datasets),
               ),
             ),
     );
@@ -183,14 +154,12 @@ class _WCmsFetchState extends State<WCmsFetch> {
 
   List<DatasetObject> _addFetchDataToDataset(final List<dynamic>? list) {
     _map = _map.copyWith(
-      name: widget.node.name ?? widget.node.intrinsicState.displayName,
-      map: (list ?? const <dynamic>[])
-          .map((final dynamic e) => e as Map<String, dynamic>)
-          .toList(),
+      name: widget.state.node.name ?? widget.state.node.intrinsicState.displayName,
+      map: (list ?? const <dynamic>[]).map((final dynamic e) => e as Map<String, dynamic>).toList(),
     );
 
-    final datasets = addDataset(context, widget.dataset, _map);
+    final datasets = addDataset(context, widget.state.dataset, _map);
 
-    return widget.dataset.isEmpty ? datasets : widget.dataset;
+    return widget.state.dataset.isEmpty ? datasets : widget.state.dataset;
   }
 }

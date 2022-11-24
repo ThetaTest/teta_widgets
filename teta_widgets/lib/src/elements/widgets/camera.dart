@@ -5,6 +5,7 @@ import 'package:collection/collection.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:teta_core/teta_core.dart';
+import 'package:teta_widgets/src/core/teta_widget/index.dart';
 // Project imports:
 import 'package:teta_widgets/src/elements/index.dart';
 
@@ -14,25 +15,14 @@ class WCamera extends StatefulWidget {
   /// Returns a Camera widget in Teta
   const WCamera(
     final Key? key, {
-    required this.node,
+    required this.state,
     required this.controller,
-    required this.forPlay,
-    required this.params,
-    required this.states,
-    required this.dataset,
     this.child,
-    this.loop,
   }) : super(key: key);
 
-  final CNode node;
+  final TetaWidgetState state;
   final CNode? child;
   final FTextTypeInput controller;
-  final bool forPlay;
-  final int? loop;
-
-  final List<VariableObject> params;
-  final List<VariableObject> states;
-  final List<DatasetObject> dataset;
 
   @override
   State<WCamera> createState() => _WCameraState();
@@ -44,15 +34,13 @@ class _WCameraState extends State<WCamera> {
     final page = BlocProvider.of<PageCubit>(context).state;
     VariableObject? variable;
     if (widget.controller.type == FTextTypeEnum.param) {
-      variable = page.params
-          .firstWhereOrNull((final e) => e.name == widget.controller.paramName);
+      variable = page.params.firstWhereOrNull((final e) => e.name == widget.controller.paramName);
     } else {
-      variable = page.states
-          .firstWhereOrNull((final e) => e.name == widget.controller.stateName);
+      variable = page.states.firstWhereOrNull((final e) => e.name == widget.controller.stateName);
     }
     return NodeSelectionBuilder(
-      node: widget.node,
-      forPlay: widget.forPlay,
+      node: widget.state.node,
+      forPlay: widget.state.forPlay,
       child: variable?.controller != null
           ? SizedBox(
               width: double.infinity,

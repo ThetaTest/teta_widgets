@@ -6,6 +6,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:supabase/supabase.dart';
 import 'package:teta_core/teta_core.dart';
+import 'package:teta_widgets/src/core/teta_widget/index.dart';
 // Project imports:
 import 'package:teta_widgets/src/elements/index.dart';
 
@@ -15,20 +16,14 @@ class WSupabaseStreamBuilder extends StatefulWidget {
   /// Construct
   const WSupabaseStreamBuilder(
     final Key? key, {
-    required this.node,
+    required this.state,
     required this.from,
     required this.order,
     required this.fromRange,
-    required this.forPlay,
-    required this.params,
-    required this.states,
-    required this.dataset,
     required this.children,
-    this.loop,
   }) : super(key: key);
 
-  /// The original CNode
-  final CNode node;
+  final TetaWidgetState state;
 
   /// The from's value
   final FTextTypeInput from;
@@ -39,25 +34,8 @@ class WSupabaseStreamBuilder extends StatefulWidget {
   /// The select's value
   final FTextTypeInput fromRange;
 
-  /// The opzional child of this widget
+  /// The optional child of this widget
   final List<CNode> children;
-
-  /// Are we in Play Mode?
-  final bool forPlay;
-
-  /// The optional position inside a loop
-  /// Widgets can be instantiate inside ListView.builder and other list widgets
-  /// [loop] indicates the index position inside them
-  final int? loop;
-
-  /// The params of Scaffold
-  final List<VariableObject> params;
-
-  /// The states of Scaffold
-  final List<VariableObject> states;
-
-  /// The dataset list created by other widgets inside the same page
-  final List<DatasetObject> dataset;
 
   @override
   _WSupabaseStreamBuilderState createState() => _WSupabaseStreamBuilderState();
@@ -79,31 +57,30 @@ class _WSupabaseStreamBuilderState extends State<WSupabaseStreamBuilder> {
 
   Future calc() async {
     final from = widget.from.get(
-      widget.params,
-      widget.states,
-      widget.dataset,
-      widget.forPlay,
-      widget.loop,
+      widget.state.params,
+      widget.state.states,
+      widget.state.dataset,
+      widget.state.forPlay,
+      widget.state.loop,
       context,
     );
     final order = widget.order.get(
-      widget.params,
-      widget.states,
-      widget.dataset,
-      widget.forPlay,
-      widget.loop,
+      widget.state.params,
+      widget.state.states,
+      widget.state.dataset,
+      widget.state.forPlay,
+      widget.state.loop,
       context,
     );
     final fromRange = widget.fromRange.get(
-      widget.params,
-      widget.states,
-      widget.dataset,
-      widget.forPlay,
-      widget.loop,
+      widget.state.params,
+      widget.state.states,
+      widget.state.dataset,
+      widget.state.forPlay,
+      widget.state.loop,
       context,
     );
-    final valueFromRange =
-        int.tryParse(fromRange) != null ? int.parse(fromRange) : 0;
+    final valueFromRange = int.tryParse(fromRange) != null ? int.parse(fromRange) : 0;
 
     client = BlocProvider.of<SupabaseCubit>(context).state;
     final query = client!.from(from).stream(['id']);
@@ -132,8 +109,8 @@ class _WSupabaseStreamBuilderState extends State<WSupabaseStreamBuilder> {
     }
 
     return NodeSelectionBuilder(
-      node: widget.node,
-      forPlay: widget.forPlay,
+      node: widget.state.node,
+      forPlay: widget.state.forPlay,
       child: StreamBuilder(
         stream: _stream,
         builder: (final context, final snapshot) {
@@ -141,10 +118,7 @@ class _WSupabaseStreamBuilderState extends State<WSupabaseStreamBuilder> {
             // snapshot has no data yet
             if (widget.children.isNotEmpty) {
               return widget.children.last.toWidget(
-                params: widget.params,
-                states: widget.states,
-                dataset: widget.dataset,
-                forPlay: widget.forPlay,
+                state: widget.state,
               );
             } else {
               return const CircularProgressIndicator();
@@ -158,18 +132,17 @@ class _WSupabaseStreamBuilderState extends State<WSupabaseStreamBuilder> {
             // TODO: Returns a error widget
           }
           _map = _map.copyWith(
-            name: widget.node.name ?? widget.node.intrinsicState.displayName,
+            name: widget.state.node.name ?? widget.state.node.intrinsicState.displayName,
             map: response?.map((final Map<String, dynamic> e) => e).toList(),
           );
-          final datasets = addDataset(context, widget.dataset, _map);
+          final datasets = addDataset(context, widget.state.dataset, _map);
 
           // Returns child
           if (widget.children.isNotEmpty) {
             return widget.children.first.toWidget(
-              params: widget.params,
-              states: widget.states,
-              dataset: widget.dataset.isEmpty ? datasets : widget.dataset,
-              forPlay: widget.forPlay,
+              state: widget.state.copyWith(
+                dataset: widget.state.dataset.isEmpty ? datasets : widget.state.dataset,
+              ),
             );
           } else {
             return const SizedBox();

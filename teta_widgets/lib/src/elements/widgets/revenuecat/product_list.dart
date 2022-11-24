@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:purchases_flutter/purchases_flutter.dart';
 // Package imports:
 import 'package:teta_core/teta_core.dart';
+import 'package:teta_widgets/src/core/teta_widget/index.dart';
 import 'package:teta_widgets/src/elements/builder/gesture_detector_base.dart';
 // Project imports:
 import 'package:teta_widgets/src/elements/index.dart';
@@ -16,27 +17,15 @@ class WRevenueCatProductsList extends StatefulWidget {
   /// Returns a [WRevenueCatProductsList] widget in Teta
   const WRevenueCatProductsList(
     final Key? key, {
-    required this.node,
-    required this.forPlay,
-    required this.params,
-    required this.states,
-    required this.dataset,
+    required this.state,
     this.child,
-    this.loop,
   }) : super(key: key);
 
-  final CNode node;
+  final TetaWidgetState state;
   final CNode? child;
-  final bool forPlay;
-  final int? loop;
-
-  final List<VariableObject> params;
-  final List<VariableObject> states;
-  final List<DatasetObject> dataset;
 
   @override
-  State<WRevenueCatProductsList> createState() =>
-      _WRevenueCatProductsListState();
+  State<WRevenueCatProductsList> createState() => _WRevenueCatProductsListState();
 }
 
 class _WRevenueCatProductsListState extends State<WRevenueCatProductsList> {
@@ -48,7 +37,7 @@ class _WRevenueCatProductsListState extends State<WRevenueCatProductsList> {
   void initState() {
     getProducts();
     _map = DatasetObject(
-      name: widget.node.name ?? widget.node.intrinsicState.displayName,
+      name: widget.state.node.name ?? widget.state.node.intrinsicState.displayName,
       map: [<String, dynamic>{}],
     );
     super.initState();
@@ -58,11 +47,9 @@ class _WRevenueCatProductsListState extends State<WRevenueCatProductsList> {
     if (UniversalPlatform.isAndroid) {
       try {
         final offerings = await Purchases.getOfferings();
-        if (offerings.current != null &&
-            (offerings.current?.availablePackages ?? []).isNotEmpty) {
+        if (offerings.current != null && (offerings.current?.availablePackages ?? []).isNotEmpty) {
           final prods = <Product>[];
-          for (final product
-              in offerings.current?.availablePackages ?? <Package>[]) {
+          for (final product in offerings.current?.availablePackages ?? <Package>[]) {
             prods.add(product.product);
           }
           products = prods;
@@ -95,36 +82,22 @@ class _WRevenueCatProductsListState extends State<WRevenueCatProductsList> {
       );
     }
     _map = _map.copyWith(
-      name: widget.node.name ?? widget.node.intrinsicState.displayName,
+      name: widget.state.node.name ?? widget.state.node.intrinsicState.displayName,
       map: products.map((final e) => e.toJson()).toList(),
     );
-    final datasets = addDataset(context, widget.dataset, _map);
+    final datasets = addDataset(context, widget.state.dataset, _map);
 
-    return NodeSelectionBuilder(
-      node: widget.node,
-      forPlay: widget.forPlay,
-      child: GestureBuilderBase.get(
-        context: context,
-        node: widget.node,
-        params: widget.params,
-        states: widget.states,
-        dataset: widget.dataset,
-        forPlay: widget.forPlay,
-        loop: widget.loop,
-        child: ListView.builder(
-          shrinkWrap: true,
-          itemCount: widget.child == null ? 1 : products.length,
-          itemBuilder: (final context, final index) => ChildConditionBuilder(
-            ValueKey('${widget.node.nid} ${widget.loop}'),
-            name: NodeType.name(NType.align),
-            node: widget.node,
-            child: widget.child,
-            params: widget.params,
-            states: widget.states,
-            dataset: widget.dataset.isEmpty ? datasets : widget.dataset,
-            forPlay: widget.forPlay,
-            loop: widget.loop,
+    return TetaWidget(
+      state: widget.state,
+      child: ListView.builder(
+        shrinkWrap: true,
+        itemCount: widget.child == null ? 1 : products.length,
+        itemBuilder: (final context, final index) => ChildConditionBuilder(
+          ValueKey('${widget.state.node.nid} ${widget.state.loop}'),
+          state: widget.state.copyWith(
+            dataset: widget.state.dataset.isEmpty ? datasets : widget.state.dataset,
           ),
+          child: widget.child,
         ),
       ),
     );

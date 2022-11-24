@@ -4,10 +4,9 @@
 // Flutter imports:
 import 'package:flutter/material.dart';
 // Package imports:
-import 'package:teta_widgets/src/elements/builder/gesture_detector_base.dart';
+import 'package:teta_widgets/src/core/teta_widget/index.dart';
 // Project imports:
 import 'package:teta_widgets/src/elements/index.dart';
-import 'package:teta_widgets/src/core/teta_widget/teta_widget_state.dart';
 
 class WGoogleAdMobBannerAd extends StatelessWidget {
   /// Returns a widget in Teta
@@ -18,27 +17,21 @@ class WGoogleAdMobBannerAd extends StatelessWidget {
     required this.state,
   }) : super(key: key);
 
+  final TetaWidgetState state;
   final FTextTypeInput adMobAdIosUnitId;
   final FTextTypeInput adMobAdAndroidUnitId;
 
-  final TetaWidgetState state;
-
   @override
   Widget build(final BuildContext context) {
-    return NodeSelectionBuilder(
-      node: state.node,
-      forPlay: state.forPlay,
-      child: GestureBuilderBase.get(
-        context: context,
-        state: state,
-        child: const SizedBox(
-          width: double.maxFinite,
-          child: Center(
-            child: Text(
-              'Here will be you ad.',
-              style: TextStyle(
-                color: Colors.white,
-              ),
+    return TetaWidget(
+      state: state,
+      child: const SizedBox(
+        width: double.maxFinite,
+        child: Center(
+          child: Text(
+            'Here will be you ad.',
+            style: TextStyle(
+              color: Colors.white,
             ),
           ),
         ),

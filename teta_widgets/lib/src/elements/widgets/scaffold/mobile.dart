@@ -7,6 +7,7 @@ import 'package:flutter/material.dart';
 // Package imports:
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:teta_core/teta_core.dart';
+import 'package:teta_widgets/src/core/teta_widget/index.dart';
 // Project imports:
 import 'package:teta_widgets/src/elements/index.dart';
 import 'package:tinycolor/tinycolor.dart';
@@ -16,21 +17,17 @@ import 'package:tinycolor/tinycolor.dart';
 class ScaffoldMobile extends StatelessWidget {
   /// Returns a [Scaffold] widget for page
   const ScaffoldMobile({
+    required this.state,
     required this.children,
-    required this.node,
     required this.fill,
     required this.width,
     required this.height,
-    required this.forPlay,
     required this.showAppBar,
     required this.showBottomBar,
     required this.showDrawer,
     required this.isScrollable,
     required this.isClipped,
     required this.bodyExtended,
-    required this.params,
-    required this.states,
-    required this.dataset,
     final Key? key,
     this.index,
     this.appBar,
@@ -38,12 +35,11 @@ class ScaffoldMobile extends StatelessWidget {
     this.drawer,
   }) : super(key: key);
 
-  final CNode node;
+  final TetaWidgetState state;
   final List<CNode> children;
   final FFill fill;
   final FSize width;
   final FSize height;
-  final bool forPlay;
   final double? index;
   final CNode? appBar;
   final CNode? drawer;
@@ -55,10 +51,6 @@ class ScaffoldMobile extends StatelessWidget {
   final bool isClipped;
   final bool bodyExtended;
 
-  final List<VariableObject> params;
-  final List<VariableObject> states;
-  final List<DatasetObject> dataset;
-
   @override
   Widget build(final BuildContext context) {
     final isPage = BlocProvider.of<PageCubit>(context).state.isPage;
@@ -67,7 +59,7 @@ class ScaffoldMobile extends StatelessWidget {
               (final element) => element.globalType == NType.appBar,
             ) ==
             -1) {
-      return forPlay
+      return state.forPlay
           ? SizedBox(
               child: Column(
                 mainAxisSize: MainAxisSize.min,
@@ -99,17 +91,12 @@ class ScaffoldMobile extends StatelessWidget {
       }
     }
 
-    return forPlay
+    return state.forPlay
         ? Scaffold(
             resizeToAvoidBottomInset: false,
             drawer: drawerNode != null
                 ? Drawer(
-                    child: drawerNode.toWidget(
-                      params: params,
-                      states: states,
-                      dataset: dataset,
-                      forPlay: forPlay,
-                    ),
+                    child: drawerNode.toWidget(state: state),
                   )
                 : null,
             body: stack(context),
@@ -173,30 +160,16 @@ class ScaffoldMobile extends StatelessWidget {
         childWids(context),
         if (showAppBar)
           Positioned(
-            child: (appBar != null)
-                ? appBar.toWidget(
-                    forPlay: forPlay,
-                    params: params,
-                    states: states,
-                    dataset: dataset,
-                  )
-                : const SizedBox(),
+            child: (appBar != null) ? appBar.toWidget(state: state) : const SizedBox(),
           ),
         if (showBottomBar)
           Positioned(
             bottom: 0,
             left: 0,
             right: 0,
-            child: (bottomBar != null)
-                ? bottomBar.toWidget(
-                    forPlay: forPlay,
-                    params: params,
-                    states: states,
-                    dataset: dataset,
-                  )
-                : const SizedBox(),
+            child: (bottomBar != null) ? bottomBar.toWidget(state: state) : const SizedBox(),
           ),
-        if (showDrawer && !forPlay)
+        if (showDrawer && !state.forPlay)
           Positioned(
             top: 0,
             bottom: 0,
@@ -208,16 +181,13 @@ class ScaffoldMobile extends StatelessWidget {
               child: Drawer(
                 child: drawerNode != null
                     ? drawerNode.toWidget(
-                        params: params,
-                        states: states,
-                        dataset: dataset,
-                        forPlay: forPlay,
+                        state: state,
                       )
                     : const SizedBox(),
               ),
             ),
           ),
-        if (forPlay)
+        if (state.forPlay)
           Positioned(
             bottom: 0,
             left: 0,
@@ -249,12 +219,7 @@ class ScaffoldMobile extends StatelessWidget {
       return e.intrinsicState.type != NType.bottomBar &&
               e.intrinsicState.type != NType.appBar &&
               e.intrinsicState.type != NType.drawer
-          ? e.toWidget(
-              forPlay: forPlay,
-              params: params,
-              states: states,
-              dataset: dataset,
-            )
+          ? e.toWidget(state: state)
           : const SizedBox();
     }).toList();
   }
@@ -268,12 +233,7 @@ class ScaffoldMobile extends StatelessWidget {
               e.intrinsicState.type != NType.drawer,
         )
         .map(
-          (final e) => e.toWidget(
-            forPlay: forPlay,
-            params: params,
-            states: states,
-            dataset: dataset,
-          ),
+          (final e) => e.toWidget(state: state),
         )
         .toList();
     return widgets.isNotEmpty ? widgets.first : placeholder(context);
@@ -299,7 +259,9 @@ class ScaffoldMobile extends StatelessWidget {
           ),
           THeadline3(
             'New section',
-            color: TinyColor(HexColor(fill.levels![0].color)).isLight()
+            color: TinyColor(
+              HexColor(fill.levels![0].color),
+            ).isLight()
                 ? Colors.black
                 : Colors.white,
           ),

@@ -7,6 +7,7 @@ import 'package:enum_to_string/enum_to_string.dart';
 // Flutter imports:
 import 'package:flutter/material.dart';
 import 'package:teta_core/teta_core.dart';
+import 'package:teta_widgets/src/core/teta_widget/index.dart';
 // Project imports:
 import 'package:teta_widgets/src/elements/controls/control_model.dart';
 import 'package:teta_widgets/src/elements/controls/key_constants.dart';
@@ -136,14 +137,12 @@ class NDynamic extends CNode {
         if (entity.key == 'params' && globalType == NType.scaffold) {
           // for page params
           for (final element in entity.value ?? <dynamic>[]) {
-            params!
-                .add(VariableObject.fromJson(element as Map<String, dynamic>));
+            params!.add(VariableObject.fromJson(element as Map<String, dynamic>));
           }
         } else if (entity.key == 'states' && globalType == NType.scaffold) {
           // for page states
           for (final element in entity.value ?? <dynamic>[]) {
-            states!
-                .add(VariableObject.fromJson(element as Map<String, dynamic>));
+            states!.add(VariableObject.fromJson(element as Map<String, dynamic>));
           }
         } else {
           // for any attribute
@@ -153,8 +152,7 @@ class NDynamic extends CNode {
       }
       isUsingBody = true;
     } else {
-      for (final e
-          in doc[DBKeys.attributes] as List<dynamic>? ?? const <dynamic>[]) {
+      for (final e in doc[DBKeys.attributes] as List<dynamic>? ?? const <dynamic>[]) {
         final key = (e as Map<String, dynamic>)['name'] as String;
         dynamic value = e['value'] as dynamic;
         if (key == 'params' && globalType == NType.scaffold) {
@@ -216,24 +214,16 @@ class NDynamic extends CNode {
   Map<String, dynamic> attributesToJson() => body.toJson();
 
   @override
-  String toString() =>
-      '$globalType { nid: $nid, children: $children, child: $child }';
+  String toString() => '$globalType { nid: $nid, children: $children, child: $child }';
 
   @override
-  Widget toWidget({
-    required final List<VariableObject> params,
-    required final List<VariableObject> states,
-    required final List<DatasetObject> dataset,
-    required final bool forPlay,
-    final int? loop,
-    final int numberOfLoop = 0,
-  }) {
+  Widget toWidget({required final TetaWidgetState state}) {
     return body.toWidget(
-      params: params,
-      states: states,
-      dataset: dataset,
-      forPlay: forPlay,
-      loop: loop,
+      params: state.params,
+      states: state.states,
+      dataset: state.dataset,
+      forPlay: state.forPlay,
+      loop: state.loop,
       node: this,
       child: child,
       children: children,

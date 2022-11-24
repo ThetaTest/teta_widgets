@@ -8,6 +8,7 @@ import 'package:flutter/material.dart';
 // Package imports:
 import 'package:http/http.dart' as http;
 import 'package:teta_core/teta_core.dart';
+import 'package:teta_widgets/src/core/teta_widget/index.dart';
 // Project imports:
 import 'package:teta_widgets/src/elements/index.dart';
 
@@ -17,18 +18,12 @@ class WHTTPRequestFutureBuilder extends StatefulWidget {
   /// Construct
   const WHTTPRequestFutureBuilder(
     final Key? key, {
-    required this.node,
+    required this.state,
     required this.from,
-    required this.forPlay,
-    required this.params,
-    required this.states,
-    required this.dataset,
     required this.children,
-    this.loop,
   }) : super(key: key);
 
-  /// The original CNode
-  final CNode node;
+  final TetaWidgetState state;
 
   /// The from's value
   final FTextTypeInput from;
@@ -36,26 +31,8 @@ class WHTTPRequestFutureBuilder extends StatefulWidget {
   /// The opzional child of this widget
   final List<CNode> children;
 
-  /// Are we in Play Mode?
-  final bool forPlay;
-
-  /// The optional position inside a loop
-  /// Widgets can be instantiate inside ListView.builder and other list widgets
-  /// [loop] indicates the index position inside them
-  final int? loop;
-
-  /// The params of Scaffold
-  final List<VariableObject> params;
-
-  /// The states of Scaffold
-  final List<VariableObject> states;
-
-  /// The dataset list created by other widgets inside the same page
-  final List<DatasetObject> dataset;
-
   @override
-  _WHTTPRequestFutureBuilderState createState() =>
-      _WHTTPRequestFutureBuilderState();
+  _WHTTPRequestFutureBuilderState createState() => _WHTTPRequestFutureBuilderState();
 }
 
 class _WHTTPRequestFutureBuilderState extends State<WHTTPRequestFutureBuilder> {
@@ -82,11 +59,11 @@ class _WHTTPRequestFutureBuilderState extends State<WHTTPRequestFutureBuilder> {
 
   Future calc() async {
     final from = widget.from.get(
-      widget.params,
-      widget.states,
-      widget.dataset,
-      widget.forPlay,
-      widget.loop,
+      widget.state.params,
+      widget.state.states,
+      widget.state.dataset,
+      widget.state.forPlay,
+      widget.state.loop,
       context,
     );
 
@@ -96,18 +73,15 @@ class _WHTTPRequestFutureBuilderState extends State<WHTTPRequestFutureBuilder> {
   @override
   Widget build(final BuildContext context) {
     return NodeSelectionBuilder(
-      node: widget.node,
-      forPlay: widget.forPlay,
+      node: widget.state.node,
+      forPlay: widget.state.forPlay,
       child: FutureBuilder(
         future: _future,
         builder: (final context, final snapshot) {
           if (!snapshot.hasData) {
             if (widget.children.isNotEmpty) {
               return widget.children.last.toWidget(
-                params: widget.params,
-                states: widget.states,
-                dataset: widget.dataset,
-                forPlay: widget.forPlay,
+                state: widget.state,
               );
             } else {
               return const CircularProgressIndicator();
@@ -116,16 +90,15 @@ class _WHTTPRequestFutureBuilderState extends State<WHTTPRequestFutureBuilder> {
           final dataset = snapshot.data as DatasetObject?;
           var datasets = <DatasetObject>[];
           if (dataset != null) {
-            datasets = addDataset(context, widget.dataset, dataset);
+            datasets = addDataset(context, widget.state.dataset, dataset);
           }
 
           // Returns child
           if (widget.children.isNotEmpty) {
             return widget.children.first.toWidget(
-              params: widget.params,
-              states: widget.states,
-              dataset: widget.dataset.isEmpty ? datasets : widget.dataset,
-              forPlay: widget.forPlay,
+              state: widget.state.copyWith(
+                dataset: widget.state.dataset.isEmpty ? datasets : widget.state.dataset,
+              ),
             );
           } else {
             return const SizedBox();
@@ -192,10 +165,7 @@ class _WHTTPRequestFutureBuilderState extends State<WHTTPRequestFutureBuilder> {
   ) {
     map.forEach((final dynamic key, final dynamic value) {
       try {
-        if (value is String ||
-            value is int ||
-            value is double ||
-            value is bool) {
+        if (value is String || value is int || value is double || value is bool) {
           parent.children.add(
             TreeObject(
               id: idIndex,

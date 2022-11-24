@@ -7,6 +7,7 @@ import 'package:purchases_flutter/purchases_flutter.dart';
 // Package imports:
 import 'package:teta_cms/teta_cms.dart';
 import 'package:teta_core/teta_core.dart';
+import 'package:teta_widgets/src/core/teta_widget/index.dart';
 // Project imports:
 import 'package:teta_widgets/src/elements/index.dart';
 import 'package:universal_platform/universal_platform.dart';
@@ -15,37 +16,14 @@ class WCMSLoggedUser extends StatefulWidget {
   /// Construct
   const WCMSLoggedUser(
     final Key? key, {
-    required this.node,
-    required this.forPlay,
-    required this.params,
-    required this.states,
-    required this.dataset,
+    required this.state,
     required this.children,
-    this.loop,
   }) : super(key: key);
 
-  /// The original CNode
-  final CNode node;
+  final TetaWidgetState state;
 
-  /// The opzional child of this widget
+  /// The optional child of this widget
   final List<CNode> children;
-
-  /// Are we in Play Mode?
-  final bool forPlay;
-
-  /// The optional position inside a loop
-  /// Widgets can be instantiate inside ListView.builder and other list widgets
-  /// [loop] indicates the index position inside them
-  final int? loop;
-
-  /// The params of Scaffold
-  final List<VariableObject> params;
-
-  /// The states of Scaffold
-  final List<VariableObject> states;
-
-  /// The dataset list created by other widgets inside the same page
-  final List<DatasetObject> dataset;
 
   @override
   _WCMSLoggedUserState createState() => _WCMSLoggedUserState();
@@ -80,19 +58,14 @@ class _WCMSLoggedUserState extends State<WCMSLoggedUser> {
   @override
   Widget build(final BuildContext context) {
     return NodeSelectionBuilder(
-      node: widget.node,
-      forPlay: widget.forPlay,
+      node: widget.state.node,
+      forPlay: widget.state.forPlay,
       child: FutureBuilder(
         future: _future,
         builder: (final context, final snapshot) {
           if (!snapshot.hasData) {
             if (widget.children.isNotEmpty) {
-              return widget.children.last.toWidget(
-                params: widget.params,
-                states: widget.states,
-                dataset: widget.dataset,
-                forPlay: widget.forPlay,
-              );
+              return widget.children.last.toWidget(state: widget.state);
             } else {
               return const Center(
                 child: CircularProgressIndicator(),
@@ -113,13 +86,12 @@ class _WCMSLoggedUserState extends State<WCMSLoggedUser> {
             name: 'Teta Auth User',
             map: [map],
           );
-          final datasets = addDataset(context, widget.dataset, _map);
+          final datasets = addDataset(context, widget.state.dataset, _map);
           if (widget.children.isNotEmpty) {
             return widget.children.first.toWidget(
-              params: widget.params,
-              states: widget.states,
-              dataset: widget.dataset.isEmpty ? datasets : widget.dataset,
-              forPlay: widget.forPlay,
+              state: widget.state.copyWith(
+                dataset: widget.state.dataset.isEmpty ? datasets : widget.state.dataset,
+              ),
             );
           } else {
             return const SizedBox();

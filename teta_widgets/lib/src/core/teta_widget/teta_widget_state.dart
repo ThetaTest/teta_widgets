@@ -11,11 +11,24 @@ class TetaWidgetState {
     required this.dataset,
   });
 
+  /// The original CNode
   final CNode node;
+
+  /// Are we in Play Mode?
   final bool forPlay;
+
+  /// The optional position inside a loop
+  /// Widgets can be instantiate inside ListView.builder and other list widgets
+  /// [loop] indicates the index position inside them
   final int? loop;
+
+  /// The params of Scaffold
   final List<VariableObject> params;
+
+  /// The states of Scaffold
   final List<VariableObject> states;
+
+  /// The dataset list created by other widgets inside the same page
   final List<DatasetObject> dataset;
 
   TetaWidgetState copyWith({

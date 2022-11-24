@@ -6,13 +6,13 @@ import 'package:equatable/equatable.dart';
 // Flutter imports:
 import 'package:flutter/material.dart';
 // Project imports:
+import 'package:teta_widgets/src/core/teta_widget/teta_widget_state.dart';
 import 'package:teta_widgets/src/elements/controls/control_model.dart';
 import 'package:teta_widgets/src/elements/features/children_ids.dart';
 import 'package:teta_widgets/src/elements/intrinsic_states/class.dart';
 import 'package:teta_widgets/src/elements/nodes/dynamic.dart';
 import 'package:teta_widgets/src/elements/nodes/enum.dart';
 import 'package:teta_widgets/src/elements/nodes/node_body.dart';
-import 'package:teta_widgets/src/core/teta_widget/teta_widget_state.dart';
 
 /// CNode is the mother of all sub node classes.
 /// CNode = Custom Node.
