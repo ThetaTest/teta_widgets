@@ -88,7 +88,8 @@ class _WAdaptyProductsListState extends State<WAdaptyProductsList> {
     }
     _map = _map.copyWith(
       name: widget.state.node.name ?? widget.state.node.intrinsicState.displayName,
-      map: products.map((final e) => e.toJson()).toList(),
+      //! Commented out because .toJson() method is not available in AdaptyProduct
+      // map: products.map((final e) => e.toJson()).toList(),
     );
     final datasets = addDataset(context, widget.state.dataset, _map);
 
