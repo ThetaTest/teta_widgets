@@ -1,4 +1,3 @@
-// Flutter imports:
 // ignore_for_file: public_member_api_docs, avoid_dynamic_calls
 
 // Dart imports:
@@ -8,7 +7,6 @@ import 'dart:async';
 import 'package:flutter/material.dart';
 // Package imports:
 import 'package:tcard/tcard.dart';
-import 'package:teta_core/teta_core.dart';
 import 'package:teta_widgets/src/core/teta_widget/index.dart';
 // Project imports:
 import 'package:teta_widgets/src/elements/index.dart';

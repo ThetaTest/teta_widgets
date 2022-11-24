@@ -3,9 +3,8 @@
 // Flutter imports:
 import 'package:flutter/material.dart';
 // Project imports:
+import 'package:teta_widgets/src/core/teta_widget/index.dart';
 import 'package:teta_widgets/src/elements/index.dart';
-import 'package:teta_widgets/src/core/teta_widget/teta_widget.dart';
-import 'package:teta_widgets/src/core/teta_widget/teta_widget_state.dart';
 
 class WFractionallySizedBox extends StatelessWidget {
   /// Returns a FractionallySizedBox widget in Teta

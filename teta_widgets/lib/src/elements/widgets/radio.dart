@@ -1,7 +1,7 @@
 // Flutter imports:
 import 'package:flutter/material.dart';
 // Package imports:
-import 'package:teta_core/teta_core.dart';
+import 'package:teta_widgets/src/core/teta_widget/index.dart';
 // Project imports:
 import 'package:teta_widgets/src/elements/index.dart';
 
@@ -11,27 +11,16 @@ class WRadio extends StatefulWidget {
   /// Returns a Radio widget in Teta
   const WRadio(
     final Key? key, {
-    required this.node,
-    required this.forPlay,
+    required this.state,
     required this.action,
     required this.value,
     required this.groupValue,
-    required this.params,
-    required this.states,
-    required this.dataset,
-    this.loop,
   }) : super(key: key);
 
-  final CNode node;
-  final bool forPlay;
-  final int? loop;
+  final TetaWidgetState state;
   final FAction action;
   final FTextTypeInput value;
   final FTextTypeInput groupValue;
-
-  final List<VariableObject> params;
-  final List<VariableObject> states;
-  final List<DatasetObject> dataset;
 
   @override
   _WRadioState createState() => _WRadioState();
@@ -42,38 +31,38 @@ class _WRadioState extends State<WRadio> {
   @override
   Widget build(final BuildContext context) {
     return NodeSelectionBuilder(
-      node: widget.node,
-      forPlay: widget.forPlay,
+      node: widget.state.node,
+      forPlay: widget.state.forPlay,
       child: Radio<String>(
         groupValue: widget.groupValue.get(
-          widget.params,
-          widget.states,
-          widget.dataset,
-          widget.forPlay,
-          widget.loop,
+          widget.state.params,
+          widget.state.states,
+          widget.state.dataset,
+          widget.state.forPlay,
+          widget.state.loop,
           context,
         ),
         value: widget.value.get(
-          widget.params,
-          widget.states,
-          widget.dataset,
-          widget.forPlay,
-          widget.loop,
+          widget.state.params,
+          widget.state.states,
+          widget.state.dataset,
+          widget.state.forPlay,
+          widget.state.loop,
           context,
         ),
         onChanged: (final value) {
           GestureBuilder.get(
             context: context,
-            node: widget.node,
+            node: widget.state.node,
             gesture: ActionGesture.onTap,
             action: widget.action,
             actionValue: null,
-            params: widget.params,
-            states: widget.states,
-            dataset: widget.dataset,
-            forPlay: widget.forPlay,
+            params: widget.state.params,
+            states: widget.state.states,
+            dataset: widget.state.dataset,
+            forPlay: widget.state.forPlay,
           );
-          if (widget.forPlay) {
+          if (widget.state.forPlay) {
             if (mounted) {
               setState(() {
                 val = !val;

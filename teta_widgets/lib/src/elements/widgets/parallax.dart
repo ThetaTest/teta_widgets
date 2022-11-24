@@ -1,6 +1,4 @@
-// Flutter imports:
 // ignore_for_file: public_member_api_docs, import_of_legacy_library_into_null_safe, lines_longer_than_80_chars
-
 // Flutter imports:
 import 'package:flutter/material.dart';
 // Package imports:
@@ -31,19 +29,20 @@ class WParallax extends StatelessWidget {
           'Sorry, Parallax widget is deprecated',
         ),
       ),
-    ); /*Parallax.inside(
-        mainAxisExtent: height.get(context: context, isWidth: false),
-        child: ChildConditionBuilder(
-          ValueKey('${node.nid} $loop'),
-          name: node.intrinsicState.displayName,
-          child: child,
-          params: params,
-          states: states,
-          dataset: dataset,
-          forPlay: forPlay,
-          loop: loop,
-        ),
-      ),
-    );*/
+    );
+    // Parallax.inside(
+    //     mainAxisExtent: height.get(context: context, isWidth: false),
+    //     child: ChildConditionBuilder(
+    //       ValueKey('${node.nid} $loop'),
+    //       name: node.intrinsicState.displayName,
+    //       child: child,
+    //       params: params,
+    //       states: states,
+    //       dataset: dataset,
+    //       forPlay: forPlay,
+    //       loop: loop,
+    //     ),
+    //   ),
+    // );
   }
 }

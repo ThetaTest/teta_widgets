@@ -5,7 +5,6 @@
 import 'package:flutter/material.dart';
 // Package imports:
 import 'package:teta_widgets/src/core/teta_widget/index.dart';
-import 'package:teta_widgets/src/elements/builder/gesture_detector_base.dart';
 // Project imports:
 import 'package:teta_widgets/src/elements/index.dart';
 
@@ -41,22 +40,17 @@ class WPositioned extends StatelessWidget {
   Widget build(final BuildContext context) {
     final pos = _margins.get(context);
 
-    return NodeSelectionBuilder(
-      node: _state.node,
-      forPlay: _state.forPlay,
+    return TetaWidget(
+      state: _state,
       child: Positioned(
         top: _top ? pos.top : null,
         bottom: _bottom ? pos.bottom : null,
         left: _left ? pos.left : null,
         right: _right ? pos.right : null,
-        child: GestureBuilderBase.get(
-          context: context,
+        child: ChildConditionBuilder(
+          ValueKey('${_state.node.nid} ${_state.loop}'),
           state: _state,
-          child: ChildConditionBuilder(
-            ValueKey('${_state.node.nid} ${_state.loop}'),
-            state: _state,
-            child: _child,
-          ),
+          child: _child,
         ),
       ),
     );

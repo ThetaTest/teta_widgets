@@ -1,11 +1,12 @@
 // Flutter imports:
-// Package imports:
 import 'package:collection/collection.dart';
 import 'package:flutter/material.dart';
+// Package imports:
 import 'package:intl/intl.dart';
 import 'package:paged_vertical_calendar/paged_vertical_calendar.dart';
 import 'package:teta_core/teta_core.dart';
 // Project imports:
+import 'package:teta_widgets/src/core/teta_widget/index.dart';
 import 'package:teta_widgets/src/elements/index.dart';
 
 // ignore_for_file: public_member_api_docs
@@ -24,7 +25,7 @@ class WCalendar extends StatefulWidget {
   /// Returns a [Align] widget in Teta
   const WCalendar(
     final Key? key, {
-    required this.node,
+    required this.state,
     required this.value,
     required this.action,
     required this.textStyle,
@@ -35,15 +36,10 @@ class WCalendar extends StatefulWidget {
     required this.fill2,
     required this.borderRadius,
     required this.shadows,
-    required this.forPlay,
-    required this.params,
-    required this.states,
-    required this.dataset,
     required this.children,
-    this.loop,
   }) : super(key: key);
 
-  final CNode node;
+  final TetaWidgetState state;
   final List<CNode> children;
   final FDataset value;
   final FAction action;
@@ -55,12 +51,6 @@ class WCalendar extends StatefulWidget {
   final FFill fill2;
   final FBorderRadius borderRadius;
   final FShadow shadows;
-  final bool forPlay;
-  final int? loop;
-
-  final List<VariableObject> params;
-  final List<VariableObject> states;
-  final List<DatasetObject> dataset;
 
   @override
   State<WCalendar> createState() => _WCalendarState();
@@ -88,12 +78,10 @@ class _WCalendarState extends State<WCalendar> {
         var eventExists = false;
         final dayFlag = list.firstWhereOrNull(
           (final e) =>
-              e.date.year == date.year &&
-              e.date.month == date.month &&
-              e.date.day == date.day,
+              e.date.year == date.year && e.date.month == date.month && e.date.day == date.day,
         );
         if (dayFlag == null) {
-          dataset ??= widget.dataset.firstWhereOrNull(
+          dataset ??= widget.state.dataset.firstWhereOrNull(
             (final e) => e.getName == widget.value.datasetName,
           );
           if (dataset != null && widget.value.datasetAttrName != null) {
@@ -101,9 +89,7 @@ class _WCalendarState extends State<WCalendar> {
               final a = DateTime.tryParse(
                 element[widget.value.datasetAttrName] as String? ?? '',
               );
-              return a?.year == date.year &&
-                  a?.month == date.month &&
-                  a?.day == date.day;
+              return a?.year == date.year && a?.month == date.month && a?.day == date.day;
             });
             eventExists = element != null;
           }
@@ -118,9 +104,7 @@ class _WCalendarState extends State<WCalendar> {
           padding: widget.padding.get(context),
           decoration: TetaBoxDecoration.get(
             context: context,
-            fill: eventExists
-                ? widget.fill2.get(context)
-                : widget.fill.get(context),
+            fill: eventExists ? widget.fill2.get(context) : widget.fill.get(context),
             borderRadius: widget.borderRadius,
             shadow: widget.shadows,
           ),
@@ -131,11 +115,11 @@ class _WCalendarState extends State<WCalendar> {
                 textStyle: widget.textStyle,
                 value: FTextTypeInput(value: '${date.day}'),
                 maxLines: FTextTypeInput(value: '1'),
-                params: widget.params,
-                states: widget.states,
-                dataset: widget.dataset,
-                forPlay: widget.forPlay,
-                loop: widget.loop,
+                params: widget.state.params,
+                states: widget.state.states,
+                dataset: widget.state.dataset,
+                forPlay: widget.state.forPlay,
+                loop: widget.state.loop,
               ),
             ],
           ),
@@ -149,61 +133,59 @@ class _WCalendarState extends State<WCalendar> {
             textStyle: widget.textStyle2,
             value: FTextTypeInput(value: monthValue),
             maxLines: FTextTypeInput(value: '1'),
-            params: widget.params,
-            states: widget.states,
-            dataset: widget.dataset,
-            forPlay: widget.forPlay,
-            loop: widget.loop,
+            params: widget.state.params,
+            states: widget.state.states,
+            dataset: widget.state.dataset,
+            forPlay: widget.state.forPlay,
+            loop: widget.state.loop,
           ),
         );
       },
       onDayPressed: (final date) {
-        final data = widget.dataset.firstWhere(
+        final data = widget.state.dataset.firstWhere(
           (final element) => element.getName == 'Cms stream',
         );
         final loop = data.getMap.indexOf(
           data.getMap.firstWhere(
             (final element) =>
-                element[widget.value.datasetAttrName]
-                    .toString()
-                    .substring(0, 10) ==
+                element[widget.value.datasetAttrName].toString().substring(0, 10) ==
                 date.toString().substring(0, 10),
           ),
         );
         GestureBuilder.get(
           context: context,
-          node: widget.node,
+          node: widget.state.node,
           gesture: ActionGesture.onDayPressed,
           action: widget.action,
           actionValue: FTextTypeInput(value: date.toIso8601String()),
-          params: widget.params,
-          states: widget.states,
-          dataset: widget.dataset,
-          forPlay: widget.forPlay,
+          params: widget.state.params,
+          states: widget.state.states,
+          dataset: widget.state.dataset,
+          forPlay: widget.state.forPlay,
           loop: loop,
         );
       },
       onMonthLoaded: (final year, final month) => GestureBuilder.get(
         context: context,
-        node: widget.node,
+        node: widget.state.node,
         gesture: ActionGesture.onMonthLoaded,
         action: widget.action,
         actionValue: FTextTypeInput(value: '$month'),
-        params: widget.params,
-        states: widget.states,
-        dataset: widget.dataset,
-        forPlay: widget.forPlay,
-        loop: widget.loop,
+        params: widget.state.params,
+        states: widget.state.states,
+        dataset: widget.state.dataset,
+        forPlay: widget.state.forPlay,
+        loop: widget.state.loop,
       ),
     );
   }
 
   void _setDataset() {
     try {
-      final index = widget.dataset.indexWhere(
+      final index = widget.state.dataset.indexWhere(
         (final element) => element.getName == widget.value.datasetName,
       );
-      final db = index != -1 ? widget.dataset[index] : DatasetObject.empty();
+      final db = index != -1 ? widget.state.dataset[index] : DatasetObject.empty();
       if (mounted) {
         if (db.getName != '') {
           setState(() {
