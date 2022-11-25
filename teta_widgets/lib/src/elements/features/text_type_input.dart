@@ -54,6 +54,9 @@ class FTextTypeInput {
     this.stateName,
     this.datasetName,
     this.datasetAttr,
+    this.datasetSubListData,
+    this.datasetSubMapData,
+    this.datasetLength,
     this.keyTranslator,
     this.file,
     this.mapKey,
@@ -72,7 +75,10 @@ class FTextTypeInput {
   String? paramName;
   String? stateName;
   String? datasetName;
+  String? datasetLength;
   String? datasetAttr;
+  String? datasetSubListData;
+  String? datasetSubMapData;
   String? keyTranslator;
   AssetFile? file;
   String? mapKey;
@@ -205,11 +211,29 @@ class FTextTypeInput {
       return state?.get;
     }
     if (type == FTextTypeEnum.dataset) {
-      final db = dataset
+      Map<String, dynamic>? db = <String, dynamic>{};
+      var dbLength = dataset
           .firstWhereOrNull((final element) => element.getName == datasetName)
-          ?.getMap[loop ?? 0];
+          ?.getMap
+          .length;
+      if (dbLength == 1) {
+        db = dataset
+            .firstWhereOrNull((final element) => element.getName == datasetName)
+            ?.getMap[0];
+      } else {
+        db = dataset
+            .firstWhereOrNull((final element) => element.getName == datasetName)
+            ?.getMap[loop ?? 0];
+      }
+
       if (db != null) {
-        return '${db[datasetAttr]}';
+        if (db[datasetAttr] is Map) {
+          return '${db[datasetAttr][datasetSubMapData]}';
+        } else if (db[datasetAttr] is List) {
+          return '${db[datasetAttr][loop ?? 0][datasetSubListData]}';
+        } else {
+          return '${db[datasetAttr]}';
+        }
       } else {
         return placeholder;
       }
@@ -292,6 +316,9 @@ class FTextTypeInput {
         stateName: json?['sN'] as String?,
         datasetName: json?['dN'] as String?,
         datasetAttr: json?['dA'] as String?,
+        datasetSubListData: json?['dAO'] as String?,
+        datasetSubMapData: json?['dAT'] as String?,
+        datasetLength: json?['dL'] as String?,
         keyTranslator: json?['kTrans'] as String?,
         file: json?['f'] != null
             ? AssetFile.fromJson(json?['f'] as Map<String, dynamic>?)
@@ -345,6 +372,9 @@ class FTextTypeInput {
         'sN': stateName,
         'dN': datasetName,
         'dA': datasetAttr,
+        'dAO': datasetSubListData,
+        'dAT': datasetSubMapData,
+        'dL': datasetLength,
         'kTrans': keyTranslator,
         'mK': mapKey,
         'cmb': combination?.map((final e) => e.toJson()).toList(),
@@ -519,7 +549,22 @@ getValueForScreenType<$type>(
     // The value is a dataset
     if (type == FTextTypeEnum.dataset) {
       if (resultType == ResultTypeEnum.string) {
-        return "this.datasets[${_calcStringType(datasetName)}]?[${datasetName == 'Teta Auth User' ? '0' : 'index'}]?[${_calcStringType(datasetAttr)}]?.toString() ?? ''";
+        if (datasetSubListData != null && datasetSubListData != '') {
+          //Dataset->List->Data
+          return "this.datasets[${_calcStringType(datasetName)}]?[${'0'}]?[${_calcStringType(datasetAttr)}]?[${'index'}]?[${_calcStringType(datasetSubListData)}]?.toString() ?? ''";
+        } else if (datasetSubMapData != null && datasetSubMapData != '') {
+          //Dataset->Map->Data
+          return "this.datasets[${_calcStringType(datasetName)}]?[${'0'}]?[${_calcStringType(datasetAttr)}]?[${_calcStringType(datasetSubMapData)}]?.toString() ?? ''";
+        } else {
+          //this dataset has one element
+          if (datasetLength == '1') {
+            return "this.datasets[${_calcStringType(datasetName)}]?[${0}]?[${_calcStringType(datasetAttr)}]?.toString() ?? ''";
+          } else {
+            //this dataset has one then more element
+            //Dataset->Data
+            return "this.datasets[${_calcStringType(datasetName)}]?[${datasetName == 'Teta Auth User' ? '0' : 'index'}]?[${_calcStringType(datasetAttr)}]?.toString() ?? ''";
+          }
+        }
       } else if (resultType == ResultTypeEnum.int) {
         return '0';
       } else if (resultType == ResultTypeEnum.double) {

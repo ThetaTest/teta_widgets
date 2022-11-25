@@ -188,6 +188,9 @@ class DBKeys {
   static const String customHttpRequestList = 'customHttpRequestList';
   static const String customHttpRequestHeader = 'customHttpRequestHeader';
 
+//Api Calls
+  static const String requestName = 'apiCallRN';
+
   static const String cmsCollection = 'cmsColl';
   static const String cmsLimit = 'cmsLmt';
   static const String cmsPage = 'cmsPage';
@@ -472,6 +475,9 @@ class DynamicAttributes {
           }
         case DBKeys.cmsCollection:
           return FTextTypeInput.fromJson(value as Map<String, dynamic>);
+        case DBKeys.requestName:
+          return FTextTypeInput.fromJson(value as Map<String, dynamic>);
+
         case DBKeys.cmsPage:
           return FTextTypeInput.fromJson(value as Map<String, dynamic>);
         case DBKeys.cmsLimit:
@@ -891,6 +897,8 @@ class DynamicAttributes {
         return value != null ? value.toJson() : FKeyboardType().toJson();
       case DBKeys.yTranslation:
         return value != null ? value.toJson() : FKeyboardType().toJson();
+      case DBKeys.requestName:
+        return value != null ? value.toJson() : FTextTypeInput().toJson();
       default:
         return <String, dynamic>{};
     }

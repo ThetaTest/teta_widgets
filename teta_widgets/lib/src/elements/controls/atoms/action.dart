@@ -12,6 +12,7 @@ import 'package:teta_core/teta_core.dart';
 // Project imports:
 import 'package:teta_widgets/src/elements/controls/atoms/action_element.dart';
 import 'package:teta_widgets/src/elements/features/actions/enums/action_google_maps.dart';
+import 'package:teta_widgets/src/elements/features/actions/enums/apicalls.dart';
 import 'package:teta_widgets/src/elements/features/actions/enums/audio_player_actions.dart';
 import 'package:teta_widgets/src/elements/features/actions/enums/braintree.dart';
 import 'package:teta_widgets/src/elements/features/actions/enums/camera.dart';
@@ -149,6 +150,8 @@ class ActionControlState extends State<ActionControl> {
                                     (action is ActionCustomHttpRequest)
                                         ? action
                                         : null,
+                                actionApiCalls:
+                                    (action is ActionApiCalls) ? action : null,
                                 actionTranslator: (action is ActionTranslator)
                                     ? action
                                     : null,
@@ -328,6 +331,12 @@ class __NewActionAlertState extends State<_NewActionAlert> {
         actionType: ActionType.customHttpRequest,
         options: FActionElement.getCustomHttpRequest(),
         type: ActionCustomHttpRequest.values,
+      ),
+      _SelectionClass(
+        title: 'Api Calls',
+        actionType: ActionType.apiCalls,
+        options: FActionElement.getApiCalls(),
+        type: ActionApiCalls.values,
       ),
       _SelectionClass(
         title: 'Multi languages',

@@ -28,4 +28,5 @@ enum ActionType {
   customFunctions,
   braintree,
   translator,
+  apiCalls
 }

@@ -20,6 +20,9 @@ class ListViewBuilderCodeTemplate {
   ) async {
     final dataset =
         (node.body.attributes[DBKeys.datasetInput] as FDataset).datasetName;
+    final datasetAttr =
+        (node.body.attributes[DBKeys.datasetInput] as FDataset).datasetAttrName;
+
     final _scrollDirection =
         !(node.body.attributes[DBKeys.isVertical] as bool? ?? false)
             ? 'scrollDirection: Axis.horizontal,'
@@ -35,13 +38,23 @@ class ListViewBuilderCodeTemplate {
     if ((int.tryParse(startFromIndex) ?? 0) <= 0) {
       startFromIndex = '0';
     }
-    final limit =
-        (node.body.attributes[DBKeys.valueOfCondition] as FTextTypeInput)
+    final limit = (datasetAttr != null && datasetAttr != '')
+        ? (node.body.attributes[DBKeys.valueOfCondition] as FTextTypeInput)
             .toCode(
-      loop,
-      resultType: ResultTypeEnum.int,
-      defaultValue: "this.datasets['$dataset'].length",
-    );
+            loop,
+            resultType: ResultTypeEnum.int,
+            defaultValue: "this.datasets['$dataset'][0]['$datasetAttr'].length",
+          )
+        : (node.body.attributes[DBKeys.valueOfCondition] as FTextTypeInput)
+            .toCode(
+            loop,
+            resultType: ResultTypeEnum.int,
+            defaultValue: "this.datasets['$dataset'].length",
+          );
+    final itemCount = (datasetAttr != null && datasetAttr != '')
+        ? "(this.datasets['$dataset'] as List<dynamic>? ?? <dynamic>[]).isNotEmpty ? this.datasets['$dataset'][0]['$datasetAttr'].sublist($startFromIndex, $limit).length : 0,"
+        : "(this.datasets['$dataset'] as List<dynamic>? ?? <dynamic>[]).isNotEmpty ? this.datasets['$dataset'].sublist($startFromIndex, $limit).length : 0,";
+
     final childString =
         child != null ? await child.toCode(context) : 'const SizedBox()';
     final code = '''
@@ -80,7 +93,7 @@ class ListViewBuilderCodeTemplate {
             reverse: $reverse,
             physics: ${CS.physic(context, node.body)},
             shrinkWrap: $shrinkWrap,
-            itemCount: (this.datasets['$dataset'] as List<dynamic>? ?? <dynamic>[]).isNotEmpty ? this.datasets['$dataset'].sublist($startFromIndex, $limit).length : 0,
+            itemCount: $itemCount
             itemBuilder: (context, index) {
               return $childString;
             },
