@@ -13,6 +13,7 @@ import 'package:teta_repositories/src/project_styles_repository.dart';
 // Project imports:
 import 'package:teta_widgets/src/elements/controls/atoms/action.dart';
 import 'package:teta_widgets/src/elements/controls/atoms/aligns.dart';
+import 'package:teta_widgets/src/elements/controls/atoms/apicalls_request.dart';
 import 'package:teta_widgets/src/elements/controls/atoms/audio_controller.dart';
 import 'package:teta_widgets/src/elements/controls/atoms/barcode.dart';
 import 'package:teta_widgets/src/elements/controls/atoms/border_radius.dart';
@@ -175,7 +176,8 @@ enum ControlType {
   cmsCollections,
   cmsCustomQuery,
   httpParamsControl,
-  httpMethodControl
+  httpMethodControl,
+  apiCallsRequestControl,
 }
 
 /// Set of funcs to generate the focused widget' controls.
@@ -968,6 +970,27 @@ class ControlBuilder {
         httpMethod: control.value as String,
         callBack: (final value, final old) => {
           node.body.attributes[control.key] = value,
+          ControlBuilder.toDB(
+            prj,
+            page,
+            node,
+            context,
+            control.key,
+            value,
+            old,
+          ),
+        },
+      );
+    }
+    if (control.type == ControlType.apiCallsRequestControl) {
+      return ApiCallsRequestControl(
+        key: ValueKey('${node.nid}'),
+        node: node,
+        requestName: control.value as String,
+        callBack: (final value, final old, final apiCallsSelectedRequest) => {
+          node.body.attributes[control.key] = value,
+          node.body.attributes[DBKeys.apiCallsSelectedRequest] =
+              apiCallsSelectedRequest,
           ControlBuilder.toDB(
             prj,
             page,
