@@ -5,8 +5,8 @@
 import 'package:flutter/material.dart';
 // Package imports:
 import 'package:teta_core/gen/assets.gen.dart';
-import 'package:teta_core/src/models/dataset.dart';
 import 'package:teta_core/src/models/variable.dart';
+import 'package:teta_widgets/src/core/teta_widget/index.dart';
 import 'package:teta_widgets/src/elements/code/snippets.dart';
 // Project imports:
 import 'package:teta_widgets/src/elements/code/templates/textfield.dart';
@@ -57,8 +57,7 @@ final textFieldIntrinsicStates = IntrinsicStates(
     const Suggestion(
       title: 'Why use Textfield in Teta?',
       description: 'Test',
-      linkToOpen:
-          'https://docs.teta.so/teta-docs/widget/input-widgets/textfield',
+      linkToOpen: 'https://docs.teta.so/teta-docs/widget/input-widgets/textfield',
     )
   ],
 );
@@ -116,8 +115,7 @@ class TextFieldBody extends NodeBody {
           type: ControlType.value,
           key: DBKeys.labelText,
           value: attributes[DBKeys.labelText],
-          description:
-              'Text that suggests what sort of input the field accepts.',
+          description: 'Text that suggests what sort of input the field accepts.',
           valueType: VariableType.string,
         ),
         FillControlObject(
@@ -186,8 +184,7 @@ class TextFieldBody extends NodeBody {
           title: 'Obscure Text',
           key: DBKeys.obscureText,
           value: attributes[DBKeys.obscureText] as bool,
-          description:
-              'Whether to hide the text being edited (e.g., for passwords).',
+          description: 'Whether to hide the text being edited (e.g., for passwords).',
         ),
         FlagControlObject(
           title: 'Auto Correct',
@@ -206,8 +203,7 @@ class TextFieldBody extends NodeBody {
           title: 'Max Lines',
           key: DBKeys.maxLines,
           value: attributes[DBKeys.maxLines],
-          description:
-              'The maximum number of lines to show at one time, wrapping if necessary.',
+          description: 'The maximum number of lines to show at one time, wrapping if necessary.',
           valueType: VariableType.int,
         ),
         ControlObject(
@@ -215,8 +211,7 @@ class TextFieldBody extends NodeBody {
           title: 'Min Lines',
           key: DBKeys.minLines,
           value: attributes[DBKeys.minLines],
-          description:
-              'The minimum number of lines to occupy when the content spans fewer lines.',
+          description: 'The minimum number of lines to occupy when the content spans fewer lines.',
           valueType: VariableType.int,
         ),
         ControlObject(
@@ -224,28 +219,22 @@ class TextFieldBody extends NodeBody {
           title: 'Max Length',
           key: DBKeys.maxLenght,
           value: attributes[DBKeys.maxLenght],
-          description:
-              'The maximum number of characters to allow in the text field.',
+          description: 'The maximum number of characters to allow in the text field.',
           valueType: VariableType.int,
         ),
       ];
 
   @override
   Widget toWidget({
-    required final List<VariableObject> params,
-    required final List<VariableObject> states,
-    required final List<DatasetObject> dataset,
-    required final bool forPlay,
-    required final CNode node,
-    final int? loop,
+    required final TetaWidgetState state,
     final CNode? child,
     final List<CNode>? children,
   }) =>
       WTextField(
         ValueKey(
           '''
-            ${node.nid}
-            $loop
+            ${state.node.nid}
+            ${state.loop}
             ${child ?? children}
             ${(attributes[DBKeys.value] as FTextTypeInput? ?? FTextTypeInput()).toJson()}
             ${(attributes[DBKeys.textStyle] as FTextStyle? ?? FTextStyle()).toJson()}
@@ -270,11 +259,10 @@ class TextFieldBody extends NodeBody {
             ${attributes[DBKeys.showBorders] as bool? ?? false}
             ''',
         ),
-        node: node,
+        state: state,
         value: attributes[DBKeys.value] as FTextTypeInput? ?? FTextTypeInput(),
         textStyle: attributes[DBKeys.textStyle] as FTextStyle? ?? FTextStyle(),
-        labelText:
-            attributes[DBKeys.labelText] as FTextTypeInput? ?? FTextTypeInput(),
+        labelText: attributes[DBKeys.labelText] as FTextTypeInput? ?? FTextTypeInput(),
         fill: attributes[DBKeys.fill] as FFill,
         width: attributes[DBKeys.width] as FSize,
         margins: attributes[DBKeys.margins] as FMargins,
@@ -294,11 +282,6 @@ class TextFieldBody extends NodeBody {
         focusedBorderColor: attributes[DBKeys.focusedBorderColor] as FFill,
         showBorders: attributes[DBKeys.showBorders] as bool? ?? false,
         bordersSize: attributes[DBKeys.bordersSize] as FTextTypeInput,
-        forPlay: forPlay,
-        loop: loop,
-        params: params,
-        states: states,
-        dataset: dataset,
       );
 
   @override

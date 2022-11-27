@@ -2,8 +2,7 @@
 import 'package:flutter/material.dart';
 // Package imports:
 import 'package:teta_core/gen/assets.gen.dart';
-import 'package:teta_core/src/models/dataset.dart';
-import 'package:teta_core/src/models/variable.dart';
+import 'package:teta_widgets/src/core/teta_widget/index.dart';
 import 'package:teta_widgets/src/elements/code/snippets.dart';
 // Project imports:
 import 'package:teta_widgets/src/elements/code/templates/sizedbox.dart';
@@ -76,34 +75,24 @@ class SizedBoxBody extends NodeBody {
 
   @override
   Widget toWidget({
-    required final List<VariableObject> params,
-    required final List<VariableObject> states,
-    required final List<DatasetObject> dataset,
-    required final bool forPlay,
-    required final CNode node,
-    final int? loop,
+    required final TetaWidgetState state,
     final CNode? child,
     final List<CNode>? children,
   }) =>
       WSizedBox(
         ValueKey(
           '''
-            ${node.nid}
-            $loop
-            ${child ?? children}
-            ${(attributes[DBKeys.width] as FSize? ?? FSize()).toJson()}
-            ${(attributes[DBKeys.height] as FSize? ?? FSize()).toJson()}
-            ''',
+          ${state.node.nid}
+          ${state.loop}
+          ${child ?? children}
+          ${(attributes[DBKeys.width] as FSize? ?? FSize()).toJson()}
+          ${(attributes[DBKeys.height] as FSize? ?? FSize()).toJson()}
+          ''',
         ),
-        node: node,
+        state: state,
         child: child,
         width: attributes[DBKeys.width] as FSize? ?? FSize(),
         height: attributes[DBKeys.height] as FSize? ?? FSize(),
-        forPlay: forPlay,
-        loop: loop,
-        params: params,
-        states: states,
-        dataset: dataset,
       );
 
   @override

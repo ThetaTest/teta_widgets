@@ -2,8 +2,7 @@
 import 'package:flutter/material.dart';
 // Package imports:
 import 'package:teta_core/gen/assets.gen.dart';
-import 'package:teta_core/src/models/dataset.dart';
-import 'package:teta_core/src/models/variable.dart';
+import 'package:teta_widgets/src/core/teta_widget/index.dart';
 import 'package:teta_widgets/src/elements/code/snippets.dart';
 import 'package:teta_widgets/src/elements/code/templates/responsive_condition.dart';
 // Project imports:
@@ -30,14 +29,7 @@ final responsiveIntrinsicStates = IntrinsicStates(
     NodeType.name(NType.row),
   ],
   blockedTypes: [],
-  synonymous: [
-    'responsive condition',
-    'mobile',
-    'desktop',
-    'tablet',
-    'only',
-    'device'
-  ],
+  synonymous: ['responsive condition', 'mobile', 'desktop', 'tablet', 'only', 'device'],
   advicedChildrenCanHaveAtLeastAChild: [],
   displayName: NodeType.name(_globalType),
   type: _globalType,
@@ -84,35 +76,25 @@ class ResponsiveBody extends NodeBody {
 
   @override
   Widget toWidget({
-    required final List<VariableObject> params,
-    required final List<VariableObject> states,
-    required final List<DatasetObject> dataset,
-    required final bool forPlay,
-    required final CNode node,
-    final int? loop,
+    required final TetaWidgetState state,
     final CNode? child,
     final List<CNode>? children,
   }) =>
       WResponsiveCondition(
         ValueKey(
           '''
-            ${node.nid}
-            $loop
+            ${state.node.nid}
+            ${state.loop}
             ${child ?? children}
             ${attributes[DBKeys.visibleOnMobile] as bool}
             ${attributes[DBKeys.visibleOnTablet] as bool}
             ''',
         ),
-        node: node,
+        state: state,
         child: child,
         //visibleOnDesktop: attributes[DBKeys.visibleOnDesktop] as bool,
         visibleOnMobile: attributes[DBKeys.visibleOnMobile] as bool,
         visibleOnTablet: attributes[DBKeys.visibleOnTablet] as bool,
-        forPlay: forPlay,
-        loop: loop,
-        params: params,
-        states: states,
-        dataset: dataset,
       );
 
   @override

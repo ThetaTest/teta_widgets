@@ -5,8 +5,8 @@
 import 'package:flutter/material.dart';
 // Package imports:
 import 'package:teta_core/gen/assets.gen.dart';
-import 'package:teta_core/src/models/dataset.dart';
 import 'package:teta_core/src/models/variable.dart';
+import 'package:teta_widgets/src/core/teta_widget/index.dart';
 import 'package:teta_widgets/src/elements/code/snippets.dart';
 // Project imports:
 import 'package:teta_widgets/src/elements/code/templates/positioned.dart';
@@ -79,8 +79,7 @@ class PositionedBody extends NodeBody {
           title: 'Top',
           key: DBKeys.top,
           value: attributes[DBKeys.top],
-          description:
-              "The distance that the child's top edge is inset from the top of the stack.",
+          description: "The distance that the child's top edge is inset from the top of the stack.",
         ),
         FlagControlObject(
           title: 'Right',
@@ -100,20 +99,15 @@ class PositionedBody extends NodeBody {
 
   @override
   Widget toWidget({
-    required final List<VariableObject> params,
-    required final List<VariableObject> states,
-    required final List<DatasetObject> dataset,
-    required final bool forPlay,
-    required final CNode node,
-    final int? loop,
+    required final TetaWidgetState state,
     final CNode? child,
     final List<CNode>? children,
   }) =>
       WPositioned(
         ValueKey(
           '''
-            ${node.nid}
-            $loop
+            ${state.node.nid}
+            ${state.loop}
             ${child ?? children}
             ${(attributes[DBKeys.margins] as FMargins).toJson()}, 
             ${attributes[DBKeys.left] as bool}, 
@@ -122,18 +116,13 @@ class PositionedBody extends NodeBody {
             ${attributes[DBKeys.bottom] as bool}
             ''',
         ),
-        node: node,
+        state: state,
         child: child,
         margins: attributes[DBKeys.margins] as FMargins,
         left: attributes[DBKeys.left] as bool,
         top: attributes[DBKeys.top] as bool,
         right: attributes[DBKeys.right] as bool,
         bottom: attributes[DBKeys.bottom] as bool,
-        forPlay: forPlay,
-        loop: loop,
-        params: params,
-        states: states,
-        dataset: dataset,
       );
 
   @override

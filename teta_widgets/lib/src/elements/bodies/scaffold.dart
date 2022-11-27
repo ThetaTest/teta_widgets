@@ -7,6 +7,7 @@ import 'package:collection/collection.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:teta_core/teta_core.dart';
+import 'package:teta_widgets/src/core/teta_widget/index.dart';
 import 'package:teta_widgets/src/elements/code/page/code_component.dart';
 // Project imports:
 import 'package:teta_widgets/src/elements/code/page/scaffold.dart';
@@ -150,20 +151,15 @@ class ScaffoldBody extends NodeBody {
 
   @override
   Widget toWidget({
-    required final List<VariableObject> params,
-    required final List<VariableObject> states,
-    required final List<DatasetObject> dataset,
-    required final bool forPlay,
-    required final CNode node,
-    final int? loop,
+    required final TetaWidgetState state,
     final CNode? child,
     final List<CNode>? children,
   }) =>
       WScaffold(
         ValueKey(
           '''
-            ${node.nid}
-            $loop
+            ${state.node.nid}
+            ${state.loop}
             ${child ?? children}
             ${(attributes[DBKeys.fill] as FFill).toJson()}
             ${(attributes[DBKeys.width] as FSize).toJson()}
@@ -175,13 +171,27 @@ class ScaffoldBody extends NodeBody {
             ${attributes[DBKeys.flag] as bool}
             ''',
         ),
-        node: node,
+        state: state.copyWith(
+          params: params.map((final e) {
+            if (state.forPlay) {
+              try {
+                final par = params.firstWhereOrNull((final element) => element.id == e.id);
+
+                e.value = par?.value ?? par?.defaultValue;
+              } catch (e) {
+                debugPrint('$e');
+              }
+            }
+            return e;
+          }).toList(),
+          states: states,
+          dataset: dataset,
+        ),
         children: children ?? [],
         fill: attributes[DBKeys.fill] as FFill,
         width: attributes[DBKeys.width] as FSize,
         height: attributes[DBKeys.height] as FSize,
         action: attributes[DBKeys.action] as FAction,
-        forPlay: forPlay,
         appBar: appBar,
         bottomBar: bottomBar,
         drawer: drawer,
@@ -192,22 +202,6 @@ class ScaffoldBody extends NodeBody {
         isScrollable: false,
         isClipped: false,
         bodyExtended: false,
-        params: params.map((final e) {
-          if (forPlay) {
-            try {
-              final par = params
-                  .firstWhereOrNull((final element) => element.id == e.id);
-
-              e.value = par?.value ?? par?.defaultValue;
-            } catch (e) {
-              debugPrint('$e');
-            }
-          }
-          return e;
-        }).toList(),
-        states: states,
-        dataset: dataset,
-        loop: loop,
       );
 
   @override
@@ -219,8 +213,7 @@ class ScaffoldBody extends NodeBody {
     final int pageId,
     final int? loop,
   ) {
-    final prj =
-        (BlocProvider.of<FocusProjectBloc>(context).state as ProjectLoaded).prj;
+    final prj = (BlocProvider.of<FocusProjectBloc>(context).state as ProjectLoaded).prj;
     final page = prj.pages!.firstWhere((final element) => element.id == pageId);
     if (!page.isHardCoded) {
       return pageCodeTemplate(

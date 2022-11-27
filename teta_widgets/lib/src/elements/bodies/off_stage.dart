@@ -5,8 +5,7 @@
 import 'package:flutter/material.dart';
 // Package imports:
 import 'package:teta_core/gen/assets.gen.dart';
-import 'package:teta_core/src/models/dataset.dart';
-import 'package:teta_core/src/models/variable.dart';
+import 'package:teta_widgets/src/core/teta_widget/index.dart';
 import 'package:teta_widgets/src/elements/code/snippets.dart';
 // Project imports:
 import 'package:teta_widgets/src/elements/code/templates/off_stage.dart';
@@ -18,9 +17,8 @@ import 'package:teta_widgets/src/elements/nodes/children_enum.dart';
 import 'package:teta_widgets/src/elements/nodes/enum.dart';
 import 'package:teta_widgets/src/elements/nodes/node.dart';
 import 'package:teta_widgets/src/elements/nodes/node_body.dart';
+import 'package:teta_widgets/src/elements/nodes/suggestion.dart';
 import 'package:teta_widgets/src/elements/widgets/off_stage.dart';
-
-import '../nodes/suggestion.dart';
 
 const _globalType = NType.offStage;
 
@@ -52,8 +50,7 @@ final offStageIntrinsicStates = IntrinsicStates(
     const Suggestion(
       title: 'Why use Off Stage in Teta?',
       description: 'Test',
-      linkToOpen:
-          'https://docs.teta.so/teta-docs/widget/advanced-widgets/off-stage',
+      linkToOpen: 'https://docs.teta.so/teta-docs/widget/advanced-widgets/off-stage',
     )
   ],
 );
@@ -79,32 +76,22 @@ class OffStageBody extends NodeBody {
 
   @override
   Widget toWidget({
-    required final List<VariableObject> params,
-    required final List<VariableObject> states,
-    required final List<DatasetObject> dataset,
-    required final bool forPlay,
-    required final CNode node,
-    final int? loop,
+    required final TetaWidgetState state,
     final CNode? child,
     final List<CNode>? children,
   }) {
     return WOffStage(
       ValueKey(
         '''
-      ${node.nid}
-      $loop
-            ${child ?? children}
+      ${state.node.nid}
+      ${state.loop}
+      ${child ?? children}
       ${attributes[DBKeys.flag] as bool}
       ''',
       ),
-      node: node,
+      state: state,
       child: child,
-      forPlay: forPlay,
       offStage: attributes[DBKeys.flag] as bool,
-      loop: loop,
-      params: params,
-      states: states,
-      dataset: dataset,
     );
   }
 
