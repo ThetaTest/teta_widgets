@@ -4,24 +4,22 @@
 // Flutter imports:
 import 'package:flutter/material.dart';
 // Package imports:
-import 'package:teta_core/gen/assets.gen.dart';
 import 'package:teta_core/teta_core.dart';
-import 'package:teta_widgets/src/elements/controls/atoms/db_map.dart';
-
-// Project imports:
-import 'package:teta_widgets/src/elements/nodes/enum.dart';
+import 'package:teta_widgets/src/core/teta_widget/index.dart';
+import 'package:teta_widgets/src/elements/code/templates/custom_http_request.dart';
+import 'package:teta_widgets/src/elements/controls/control_model.dart';
+import 'package:teta_widgets/src/elements/controls/key_constants.dart';
+import 'package:teta_widgets/src/elements/controls/type.dart';
+import 'package:teta_widgets/src/elements/features/text_type_input.dart';
 import 'package:teta_widgets/src/elements/intrinsic_states/class.dart';
 import 'package:teta_widgets/src/elements/nodes/categories.dart';
 import 'package:teta_widgets/src/elements/nodes/children_enum.dart';
-import 'package:teta_widgets/src/elements/controls/key_constants.dart';
-import 'package:teta_widgets/src/elements/features/text_type_input.dart';
+import 'package:teta_widgets/src/elements/nodes/dynamic.dart';
+// Project imports:
+import 'package:teta_widgets/src/elements/nodes/enum.dart';
 import 'package:teta_widgets/src/elements/nodes/node.dart';
 import 'package:teta_widgets/src/elements/nodes/node_body.dart';
-import 'package:teta_widgets/src/elements/controls/control_model.dart';
-import 'package:teta_widgets/src/elements/controls/type.dart';
 import 'package:teta_widgets/src/elements/widgets/https_requests_custom_backend/custom_http_request.dart';
-import 'package:teta_widgets/src/elements/code/templates/custom_http_request.dart';
-import 'package:teta_widgets/src/elements/nodes/dynamic.dart';
 
 const _globalType = NType.customHttpRequest;
 
@@ -96,37 +94,27 @@ class CustomHttpRequestBody extends NodeBody {
 
   @override
   Widget toWidget({
-    required final List<VariableObject> params,
-    required final List<VariableObject> states,
-    required final List<DatasetObject> dataset,
-    required final bool forPlay,
-    required final CNode node,
-    final int? loop,
+    required final TetaWidgetState state,
     final CNode? child,
     final List<CNode>? children,
   }) {
     return WCustomHttpRequest(
       ValueKey(
         '''
-        ${node.nid}
-        $loop
+        ${state.node.nid}
+        ${state.loop}
         ${child ?? children}
         ${(attributes[DBKeys.customHttpRequestURL] as FTextTypeInput).toJson()}
-        ${(attributes[DBKeys.customHttpRequestURL] as FTextTypeInput).getStateValue(states)}
+        ${(attributes[DBKeys.customHttpRequestURL] as FTextTypeInput).getStateValue(state.states)}
         ${attributes[DBKeys.customHttpRequestList]}
         ${attributes[DBKeys.customHttpRequestHeader]}
         ''',
       ),
-      node: node,
+      state: state,
       children: children ?? [],
       url: attributes[DBKeys.customHttpRequestURL] as FTextTypeInput,
       addParams: attributes[DBKeys.customHttpRequestList] as List<MapElement>,
-      addHeaders:
-          attributes[DBKeys.customHttpRequestHeader] as List<MapElement>,
-      forPlay: forPlay,
-      params: params,
-      states: states,
-      dataset: dataset,
+      addHeaders: attributes[DBKeys.customHttpRequestHeader] as List<MapElement>,
     );
   }
 
