@@ -2,8 +2,7 @@
 import 'package:flutter/material.dart';
 // Package imports:
 import 'package:teta_core/gen/assets.gen.dart';
-import 'package:teta_core/src/models/dataset.dart';
-import 'package:teta_core/src/models/variable.dart';
+import 'package:teta_widgets/src/core/teta_widget/index.dart';
 import 'package:teta_widgets/src/elements/code/snippets.dart';
 // Project imports:
 import 'package:teta_widgets/src/elements/code/templates/fitted_box.dart';
@@ -15,9 +14,8 @@ import 'package:teta_widgets/src/elements/nodes/children_enum.dart';
 import 'package:teta_widgets/src/elements/nodes/enum.dart';
 import 'package:teta_widgets/src/elements/nodes/node.dart';
 import 'package:teta_widgets/src/elements/nodes/node_body.dart';
+import 'package:teta_widgets/src/elements/nodes/suggestion.dart';
 import 'package:teta_widgets/src/elements/widgets/fitted_box.dart';
-
-import '../nodes/suggestion.dart';
 
 const _globalType = NType.fittedBox;
 
@@ -49,8 +47,7 @@ final fittedBoxIntrinsicStates = IntrinsicStates(
     const Suggestion(
       title: 'Why use Fitted Box in Teta?',
       description: 'Test',
-      linkToOpen:
-          'https://docs.teta.so/teta-docs/widget/advanced-widgets/fitted-box',
+      linkToOpen: 'https://docs.teta.so/teta-docs/widget/advanced-widgets/fitted-box',
     )
   ],
 );
@@ -66,31 +63,21 @@ class FittedBoxBody extends NodeBody {
 
   @override
   Widget toWidget({
-    required final List<VariableObject> params,
-    required final List<VariableObject> states,
-    required final List<DatasetObject> dataset,
-    required final bool forPlay,
-    required final CNode node,
-    final int? loop,
+    required final TetaWidgetState state,
     final CNode? child,
     final List<CNode>? children,
   }) {
     return WFittedBox(
       ValueKey(
         '''
-      ${node.nid}
-      $loop
-            ${child ?? children}
-      ''',
+        ${state.node.nid}
+        ${state.loop}
+        ${child ?? children}
+        ''',
       ),
-      node: node,
+      state: state,
       child: child,
       boxFit: FBoxFit(fit: BoxFit.contain),
-      forPlay: forPlay,
-      loop: loop,
-      params: params,
-      states: states,
-      dataset: dataset,
     );
   }
 

@@ -5,8 +5,8 @@
 import 'package:flutter/material.dart';
 // Package imports:
 import 'package:teta_core/gen/assets.gen.dart';
-import 'package:teta_core/src/models/dataset.dart';
 import 'package:teta_core/src/models/variable.dart';
+import 'package:teta_widgets/src/core/teta_widget/index.dart';
 // Project imports:
 import 'package:teta_widgets/src/elements/code/advanced/gridview_builder.dart';
 import 'package:teta_widgets/src/elements/code/snippets.dart';
@@ -53,8 +53,7 @@ final gridViewBuilderIntrinsicStates = IntrinsicStates(
     const Suggestion(
       title: 'Why use GridView Builder in Teta?',
       description: 'Test',
-      linkToOpen:
-          'https://docs.teta.so/teta-docs/widget/list-widgets/gridview-builder',
+      linkToOpen: 'https://docs.teta.so/teta-docs/widget/list-widgets/gridview-builder',
     )
   ],
 );
@@ -125,8 +124,7 @@ class GridViewBuilderBody extends NodeBody {
           type: ControlType.value,
           key: DBKeys.mainAxisSpacing,
           value: attributes[DBKeys.mainAxisSpacing],
-          description:
-              'The number of logical pixels between each child along the main axis.',
+          description: 'The number of logical pixels between each child along the main axis.',
           valueType: VariableType.int,
         ),
         ControlObject(
@@ -142,8 +140,7 @@ class GridViewBuilderBody extends NodeBody {
           type: ControlType.value,
           key: DBKeys.crossAxisSpacing,
           value: attributes[DBKeys.crossAxisSpacing],
-          description:
-              'The number of logical pixels between each child along the cross axis.',
+          description: 'The number of logical pixels between each child along the cross axis.',
           valueType: VariableType.int,
         ),
         ControlObject(
@@ -151,42 +148,36 @@ class GridViewBuilderBody extends NodeBody {
           type: ControlType.value,
           key: DBKeys.childAspectRatio,
           value: attributes[DBKeys.childAspectRatio],
-          description:
-              'The ratio of the cross-axis to the main-axis extent of each child.',
+          description: 'The ratio of the cross-axis to the main-axis extent of each child.',
           valueType: VariableType.double,
         ),
       ];
 
   @override
   Widget toWidget({
-    required final List<VariableObject> params,
-    required final List<VariableObject> states,
-    required final List<DatasetObject> dataset,
-    required final bool forPlay,
-    required final CNode node,
-    final int? loop,
+    required final TetaWidgetState state,
     final CNode? child,
     final List<CNode>? children,
   }) =>
       WGridViewBuilder(
         ValueKey(
           '''
-      ${node.nid}
-      $loop
-            ${child ?? children}
-      ${(attributes[DBKeys.datasetInput] as FDataset).toJson()}
-      ${attributes[DBKeys.isPrimary] as bool}
-      ${attributes[DBKeys.isVertical] as bool}
-      ${attributes[DBKeys.flag] as bool}
-      ${(attributes[DBKeys.mainAxisSpacing] as FTextTypeInput).toJson()}
-      ${(attributes[DBKeys.childAspectRatio] as FTextTypeInput).toJson()}
-      ${(attributes[DBKeys.crossAxisCount] as FTextTypeInput).toJson()}
-      ${(attributes[DBKeys.crossAxisSpacing] as FTextTypeInput).toJson()}
-      ${(attributes[DBKeys.value] as FTextTypeInput).toJson()}
-      ${(attributes[DBKeys.valueOfCondition] as FTextTypeInput).toJson()}
-      ''',
+          ${state.node.nid}
+          ${state.loop}
+          ${child ?? children}
+          ${(attributes[DBKeys.datasetInput] as FDataset).toJson()}
+          ${attributes[DBKeys.isPrimary] as bool}
+          ${attributes[DBKeys.isVertical] as bool}
+          ${attributes[DBKeys.flag] as bool}
+          ${(attributes[DBKeys.mainAxisSpacing] as FTextTypeInput).toJson()}
+          ${(attributes[DBKeys.childAspectRatio] as FTextTypeInput).toJson()}
+          ${(attributes[DBKeys.crossAxisCount] as FTextTypeInput).toJson()}
+          ${(attributes[DBKeys.crossAxisSpacing] as FTextTypeInput).toJson()}
+          ${(attributes[DBKeys.value] as FTextTypeInput).toJson()}
+          ${(attributes[DBKeys.valueOfCondition] as FTextTypeInput).toJson()}
+          ''',
         ),
-        node: node,
+        state: state,
         child: child,
         value: attributes[DBKeys.datasetInput] as FDataset,
         primary: attributes[DBKeys.isPrimary] as bool,
@@ -198,11 +189,6 @@ class GridViewBuilderBody extends NodeBody {
         crossAxisSpacing: attributes[DBKeys.crossAxisSpacing] as FTextTypeInput,
         startFromIndex: attributes[DBKeys.value] as FTextTypeInput,
         limit: attributes[DBKeys.valueOfCondition] as FTextTypeInput,
-        forPlay: forPlay,
-        loop: loop,
-        params: params,
-        states: states,
-        dataset: dataset,
       );
 
   @override

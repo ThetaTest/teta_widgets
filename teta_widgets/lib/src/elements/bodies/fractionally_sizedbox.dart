@@ -2,8 +2,7 @@
 import 'package:flutter/material.dart';
 // Package imports:
 import 'package:teta_core/gen/assets.gen.dart';
-import 'package:teta_core/src/models/dataset.dart';
-import 'package:teta_core/src/models/variable.dart';
+import 'package:teta_widgets/src/core/teta_widget/index.dart';
 import 'package:teta_widgets/src/elements/code/snippets.dart';
 import 'package:teta_widgets/src/elements/code/templates/fractionally_sizedbox.dart';
 // Project imports:
@@ -15,7 +14,6 @@ import 'package:teta_widgets/src/elements/nodes/categories.dart';
 import 'package:teta_widgets/src/elements/nodes/children_enum.dart';
 import 'package:teta_widgets/src/elements/nodes/node_body.dart';
 import 'package:teta_widgets/src/elements/nodes/suggestion.dart';
-import 'package:teta_widgets/src/core/teta_widget/teta_widget_state.dart';
 
 /// globalType for SizedBox widget
 const _globalType = NType.fractionallySizedBox;
@@ -82,33 +80,21 @@ class FractionallySizedBoxBody extends NodeBody {
 
   @override
   Widget toWidget({
-    required final List<VariableObject> params,
-    required final List<VariableObject> states,
-    required final List<DatasetObject> dataset,
-    required final bool forPlay,
-    required final CNode node,
-    final int? loop,
+    required final TetaWidgetState state,
     final CNode? child,
     final List<CNode>? children,
   }) =>
       WFractionallySizedBox(
         ValueKey(
           '''
-            ${node.nid}
-            $loop
-            ${child ?? children}
-            ${(attributes[DBKeys.widthFactor] as FSize).toJson()}
-            ${(attributes[DBKeys.heightFactor] as FSize).toJson()}
-            ''',
+          ${state.node.nid}
+          ${state.loop}
+          ${child ?? children}
+          ${(attributes[DBKeys.widthFactor] as FSize).toJson()}
+          ${(attributes[DBKeys.heightFactor] as FSize).toJson()}
+          ''',
         ),
-        state: TetaWidgetState(
-          node: node,
-          forPlay: forPlay,
-          loop: loop,
-          params: params,
-          states: states,
-          dataset: dataset,
-        ),
+        state: state,
         widthFactor: attributes[DBKeys.widthFactor] as FSize,
         heightFactor: attributes[DBKeys.heightFactor] as FSize,
         child: child,

@@ -7,6 +7,7 @@ import 'package:flutter/material.dart';
 import 'package:teta_core/gen/assets.gen.dart';
 import 'package:teta_core/src/models/dataset.dart';
 import 'package:teta_core/src/models/variable.dart';
+import 'package:teta_widgets/src/core/teta_widget/index.dart';
 // Project imports:
 import 'package:teta_widgets/src/elements/code/advanced/listview_builder.dart';
 import 'package:teta_widgets/src/elements/code/snippets.dart';
@@ -18,7 +19,6 @@ import 'package:teta_widgets/src/elements/index.dart';
 import 'package:teta_widgets/src/elements/intrinsic_states/class.dart';
 import 'package:teta_widgets/src/elements/nodes/categories.dart';
 import 'package:teta_widgets/src/elements/nodes/children_enum.dart';
-import 'package:teta_widgets/src/elements/nodes/dynamic.dart';
 import 'package:teta_widgets/src/elements/nodes/node_body.dart';
 import 'package:teta_widgets/src/elements/nodes/suggestion.dart';
 
@@ -54,8 +54,7 @@ final listViewBuilderIntrinsicStates = IntrinsicStates(
     const Suggestion(
       title: 'Why use ListView Builder in Teta?',
       description: 'Test',
-      linkToOpen:
-          'https://docs.teta.so/teta-docs/widget/list-widgets/listview-builder',
+      linkToOpen: 'https://docs.teta.so/teta-docs/widget/list-widgets/listview-builder',
     )
   ],
 );
@@ -124,40 +123,34 @@ class ListViewBuilderBody extends NodeBody {
           type: ControlType.physics,
           key: DBKeys.physic,
           value: attributes[DBKeys.physic],
-          description:
-              'Use the physics in order to have different scrolling behaviours',
+          description: 'Use the physics in order to have different scrolling behaviours',
           valueType: VariableType.string,
         ),
       ];
 
   @override
   Widget toWidget({
-    required final List<VariableObject> params,
-    required final List<VariableObject> states,
-    required final List<DatasetObject> dataset,
-    required final bool forPlay,
-    required final CNode node,
-    final int? loop,
+    required final TetaWidgetState state,
     final CNode? child,
     final List<CNode>? children,
   }) =>
       WListViewBuilder(
         ValueKey(
           '''
-      ${node.nid}
-      $loop
-            ${child ?? children}
-      ${(attributes[DBKeys.datasetInput] as FDataset).toJson()}
-      ${attributes[DBKeys.isVertical] as bool}
-      ${attributes[DBKeys.flag] as bool}
-      ${attributes[DBKeys.isFullWidth] as bool}
-      ${(attributes[DBKeys.physic] as FPhysic).toJson()}
-      ${(attributes[DBKeys.action] as FAction).toJson()}
-      ${(attributes[DBKeys.value] as FTextTypeInput).toJson()}
-      ${(attributes[DBKeys.valueOfCondition] as FTextTypeInput).toJson()}
-      ''',
+          ${state.node.nid}
+          ${state.loop}
+          ${child ?? children}
+          ${(attributes[DBKeys.datasetInput] as FDataset).toJson()}
+          ${attributes[DBKeys.isVertical] as bool}
+          ${attributes[DBKeys.flag] as bool}
+          ${attributes[DBKeys.isFullWidth] as bool}
+          ${(attributes[DBKeys.physic] as FPhysic).toJson()}
+          ${(attributes[DBKeys.action] as FAction).toJson()}
+          ${(attributes[DBKeys.value] as FTextTypeInput).toJson()}
+          ${(attributes[DBKeys.valueOfCondition] as FTextTypeInput).toJson()}
+          ''',
         ),
-        node: node,
+        state: state,
         child: child,
         value: attributes[DBKeys.datasetInput] as FDataset,
         isVertical: attributes[DBKeys.isVertical] as bool,
@@ -167,11 +160,6 @@ class ListViewBuilderBody extends NodeBody {
         action: attributes[DBKeys.action] as FAction,
         startFromIndex: attributes[DBKeys.value] as FTextTypeInput,
         limit: attributes[DBKeys.valueOfCondition] as FTextTypeInput,
-        forPlay: forPlay,
-        loop: loop,
-        params: params,
-        states: states,
-        dataset: dataset,
       );
 
   @override
