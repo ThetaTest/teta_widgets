@@ -2,8 +2,8 @@
 import 'package:flutter/material.dart';
 // Package imports:
 import 'package:teta_core/gen/assets.gen.dart';
-import 'package:teta_core/src/models/dataset.dart';
 import 'package:teta_core/src/models/variable.dart';
+import 'package:teta_widgets/src/core/teta_widget/index.dart';
 import 'package:teta_widgets/src/elements/code/snippets.dart';
 // Project imports:
 import 'package:teta_widgets/src/elements/code/templates/animated_opacity.dart';
@@ -76,36 +76,26 @@ class AnimatedOpacityBody extends NodeBody {
 
   @override
   Widget toWidget({
-    required final List<VariableObject> params,
-    required final List<VariableObject> states,
-    required final List<DatasetObject> dataset,
-    required final bool forPlay,
-    required final CNode node,
-    final int? loop,
+    required final TetaWidgetState state,
     final CNode? child,
     final List<CNode>? children,
   }) =>
       WAnimatedOpacity(
         ValueKey(
           '''
-          ${node.nid}
-          $loop
-            ${child ?? children}
+          ${state.node.nid}
+          ${state.loop}
+          ${child ?? children}
           ${(attributes[DBKeys.value] as FTextTypeInput).value}
           ${(attributes[DBKeys.value] as FTextTypeInput).type}
           ${(attributes[DBKeys.duration] as FTextTypeInput).value}
           ${(attributes[DBKeys.duration] as FTextTypeInput).type}
         ''',
         ),
-        node: node,
+        state: state,
         child: child,
         value: attributes[DBKeys.value] as FTextTypeInput,
         duration: attributes[DBKeys.duration] as FTextTypeInput,
-        forPlay: forPlay,
-        loop: loop,
-        params: params,
-        states: states,
-        dataset: dataset,
       );
 
   @override

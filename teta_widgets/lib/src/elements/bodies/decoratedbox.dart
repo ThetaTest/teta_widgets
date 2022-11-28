@@ -2,8 +2,8 @@
 import 'package:flutter/material.dart';
 // Package imports:
 import 'package:teta_core/gen/assets.gen.dart';
-import 'package:teta_core/src/models/dataset.dart';
 import 'package:teta_core/src/models/variable.dart';
+import 'package:teta_widgets/src/core/teta_widget/index.dart';
 import 'package:teta_widgets/src/elements/code/snippets.dart';
 // Project imports:
 import 'package:teta_widgets/src/elements/code/templates/decoratedbox.dart';
@@ -19,9 +19,8 @@ import 'package:teta_widgets/src/elements/nodes/children_enum.dart';
 import 'package:teta_widgets/src/elements/nodes/enum.dart';
 import 'package:teta_widgets/src/elements/nodes/node.dart';
 import 'package:teta_widgets/src/elements/nodes/node_body.dart';
+import 'package:teta_widgets/src/elements/nodes/suggestion.dart';
 import 'package:teta_widgets/src/elements/widgets/decoratedbox.dart';
-
-import '../nodes/suggestion.dart';
 
 const _globalType = NType.decoratedBox;
 
@@ -52,8 +51,7 @@ final decoratedBoxIntrinsicStates = IntrinsicStates(
     const Suggestion(
       title: 'Why use Decorated Box in Teta?',
       description: 'Test',
-      linkToOpen:
-          'https://docs.teta.so/teta-docs/widget/advanced-widgets/decorated-box',
+      linkToOpen: 'https://docs.teta.so/teta-docs/widget/advanced-widgets/decorated-box',
     )
   ],
 );
@@ -95,36 +93,26 @@ class DecoratedBoxBody extends NodeBody {
 
   @override
   Widget toWidget({
-    required final List<VariableObject> params,
-    required final List<VariableObject> states,
-    required final List<DatasetObject> dataset,
-    required final bool forPlay,
-    required final CNode node,
-    final int? loop,
+    required final TetaWidgetState state,
     final CNode? child,
     final List<CNode>? children,
   }) =>
       WDecoratedBox(
         ValueKey(
           '''
-      ${node.nid}
-      $loop
-            ${child ?? children}
-      ${(attributes[DBKeys.borderRadius] as FBorderRadius).toJson()}
-      ${(attributes[DBKeys.shadows] as FShadow).toJson()}
-      ${(attributes[DBKeys.fill] as FFill).toJson()}
-      ''',
+          ${state.node.nid}
+          ${state.loop}
+          ${child ?? children}
+          ${(attributes[DBKeys.borderRadius] as FBorderRadius).toJson()}
+          ${(attributes[DBKeys.shadows] as FShadow).toJson()}
+          ${(attributes[DBKeys.fill] as FFill).toJson()}
+          ''',
         ),
-        node: node,
+        state: state,
         child: child,
         borderRadius: attributes[DBKeys.borderRadius] as FBorderRadius,
         shadows: attributes[DBKeys.shadows] as FShadow,
         fill: attributes[DBKeys.fill] as FFill,
-        forPlay: forPlay,
-        loop: loop,
-        params: params,
-        states: states,
-        dataset: dataset,
       );
 
   @override

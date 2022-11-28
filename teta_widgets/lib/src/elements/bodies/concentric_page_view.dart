@@ -2,8 +2,7 @@
 import 'package:flutter/material.dart';
 // Package imports:
 import 'package:teta_core/gen/assets.gen.dart';
-import 'package:teta_core/src/models/dataset.dart';
-import 'package:teta_core/src/models/variable.dart';
+import 'package:teta_widgets/src/core/teta_widget/index.dart';
 import 'package:teta_widgets/src/elements/code/snippets.dart';
 // Project imports:
 import 'package:teta_widgets/src/elements/code/templates/concentric_page_view.dart';
@@ -16,10 +15,9 @@ import 'package:teta_widgets/src/elements/nodes/children_enum.dart';
 import 'package:teta_widgets/src/elements/nodes/enum.dart';
 import 'package:teta_widgets/src/elements/nodes/node.dart';
 import 'package:teta_widgets/src/elements/nodes/node_body.dart';
+import 'package:teta_widgets/src/elements/nodes/suggestion.dart';
 import 'package:teta_widgets/src/elements/packages.dart';
 import 'package:teta_widgets/src/elements/widgets/concentric_page_view.dart';
-
-import '../nodes/suggestion.dart';
 
 const _globalType = NType.concentricPageView;
 
@@ -50,8 +48,7 @@ final concentricPageViewIntrinsicStates = IntrinsicStates(
     const Suggestion(
       title: 'Why use Concentric PageView in Teta?',
       description: 'Test',
-      linkToOpen:
-          'https://docs.teta.so/teta-docs/widget/list-widgets/concentric-pageview',
+      linkToOpen: 'https://docs.teta.so/teta-docs/widget/list-widgets/concentric-pageview',
     )
   ],
 );
@@ -79,32 +76,22 @@ class ConcentricPageViewBody extends NodeBody {
 
   @override
   Widget toWidget({
-    required final List<VariableObject> params,
-    required final List<VariableObject> states,
-    required final List<DatasetObject> dataset,
-    required final bool forPlay,
-    required final CNode node,
-    final int? loop,
+    required final TetaWidgetState state,
     final CNode? child,
     final List<CNode>? children,
   }) =>
       WConcentricPageView(
         ValueKey(
           '''
-            ${node.nid}
-            $loop
-            ${child ?? children}
-            ${(attributes[DBKeys.fill] as FFill).toJson()}, 
-            ''',
+          ${state.node.nid}
+          $state.loop
+          ${child ?? children}
+          ${(attributes[DBKeys.fill] as FFill).toJson()}, 
+          ''',
         ),
-        node: node,
+        state: state,
         children: children ?? [],
         fill: attributes[DBKeys.fill] as FFill,
-        forPlay: forPlay,
-        loop: loop,
-        params: params,
-        states: states,
-        dataset: dataset,
       );
 
   @override

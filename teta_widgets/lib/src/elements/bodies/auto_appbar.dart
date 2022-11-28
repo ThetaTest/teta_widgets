@@ -4,8 +4,8 @@
 import 'package:flutter/material.dart';
 // Package imports:
 import 'package:teta_core/gen/assets.gen.dart';
-import 'package:teta_core/src/models/dataset.dart';
 import 'package:teta_core/src/models/variable.dart';
+import 'package:teta_widgets/src/core/teta_widget/index.dart';
 import 'package:teta_widgets/src/elements/code/snippets.dart';
 // Project imports:
 import 'package:teta_widgets/src/elements/controls/control_model.dart';
@@ -87,36 +87,26 @@ class AutoAppBarBody extends NodeBody {
 
   @override
   Widget toWidget({
-    required final List<VariableObject> params,
-    required final List<VariableObject> states,
-    required final List<DatasetObject> dataset,
-    required final bool forPlay,
-    required final CNode node,
-    final int? loop,
+    required final TetaWidgetState state,
     final CNode? child,
     final List<CNode>? children,
   }) =>
       WAutoAppBar(
         ValueKey(
           '''
-          ${node.nid}
-          $loop
-            ${child ?? children}
+          ${state.node.nid}
+          ${state.loop}
+          ${child ?? children}
           ${(attributes[DBKeys.textStyle] as FTextStyle).toJson()}
           ${(attributes[DBKeys.value] as FTextTypeInput).toJson()}
           ${(attributes[DBKeys.fill] as FFill).toJson()}
         ''',
         ),
+        state: state,
         style: attributes[DBKeys.textStyle] as FTextStyle,
         value: attributes[DBKeys.value] as FTextTypeInput,
         fill: attributes[DBKeys.fill] as FFill,
-        node: node,
         children: children ?? <CNode>[],
-        forPlay: forPlay,
-        loop: loop,
-        params: params,
-        states: states,
-        dataset: dataset,
       );
 
   @override

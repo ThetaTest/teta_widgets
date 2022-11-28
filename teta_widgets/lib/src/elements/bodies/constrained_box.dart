@@ -2,8 +2,7 @@
 import 'package:flutter/material.dart';
 // Package imports:
 import 'package:teta_core/gen/assets.gen.dart';
-import 'package:teta_core/src/models/dataset.dart';
-import 'package:teta_core/src/models/variable.dart';
+import 'package:teta_widgets/src/core/teta_widget/index.dart';
 import 'package:teta_widgets/src/elements/code/snippets.dart';
 // Project imports:
 import 'package:teta_widgets/src/elements/code/templates/constrained_box.dart';
@@ -17,9 +16,8 @@ import 'package:teta_widgets/src/elements/nodes/children_enum.dart';
 import 'package:teta_widgets/src/elements/nodes/enum.dart';
 import 'package:teta_widgets/src/elements/nodes/node.dart';
 import 'package:teta_widgets/src/elements/nodes/node_body.dart';
+import 'package:teta_widgets/src/elements/nodes/suggestion.dart';
 import 'package:teta_widgets/src/elements/widgets/constrained_box.dart';
-
-import '../nodes/suggestion.dart';
 
 const _globalType = NType.constrainedBox;
 
@@ -50,8 +48,7 @@ final constrainedBoxIntrinsicStates = IntrinsicStates(
     const Suggestion(
       title: 'Why use Constrained Box in Teta?',
       description: 'Test',
-      linkToOpen:
-          'https://docs.teta.so/teta-docs/widget/advanced-widgets/constrained-box',
+      linkToOpen: 'https://docs.teta.so/teta-docs/widget/advanced-widgets/constrained-box',
     )
   ],
 );
@@ -101,20 +98,15 @@ class ConstrainedBoxBody extends NodeBody {
 
   @override
   Widget toWidget({
-    required final List<VariableObject> params,
-    required final List<VariableObject> states,
-    required final List<DatasetObject> dataset,
-    required final bool forPlay,
-    required final CNode node,
-    final int? loop,
+    required final TetaWidgetState state,
     final CNode? child,
     final List<CNode>? children,
   }) =>
       WConstrainedBox(
         ValueKey(
           '''
-            ${node.nid}
-            $loop
+            ${state.node.nid}
+            ${state.loop}
             ${child ?? children}
             ${(attributes[DBKeys.minWidth] as FSize).toJson()}, 
             ${(attributes[DBKeys.minHeight] as FSize).toJson()}, 
@@ -122,17 +114,12 @@ class ConstrainedBoxBody extends NodeBody {
             ${(attributes[DBKeys.maxHeight] as FSize).toJson()}, 
             ''',
         ),
-        node: node,
+        state: state,
         child: child,
-        loop: loop,
-        forPlay: forPlay,
         minWidth: attributes[DBKeys.minWidth] as FSize,
         minHeight: attributes[DBKeys.minHeight] as FSize,
         maxWidth: attributes[DBKeys.maxWidth] as FSize,
         maxHeight: attributes[DBKeys.maxHeight] as FSize,
-        params: params,
-        states: states,
-        dataset: dataset,
       );
 
   @override

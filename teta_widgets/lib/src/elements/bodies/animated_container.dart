@@ -2,8 +2,8 @@
 import 'package:flutter/material.dart';
 // Package imports:
 import 'package:teta_core/gen/assets.gen.dart';
-import 'package:teta_core/src/models/dataset.dart';
 import 'package:teta_core/src/models/variable.dart';
+import 'package:teta_widgets/src/core/teta_widget/index.dart';
 import 'package:teta_widgets/src/elements/code/snippets.dart';
 // Project imports:
 import 'package:teta_widgets/src/elements/code/templates/animated_container.dart';
@@ -127,21 +127,16 @@ class AnimatedContainerBody extends NodeBody {
 
   @override
   Widget toWidget({
-    required final List<VariableObject> params,
-    required final List<VariableObject> states,
-    required final List<DatasetObject> dataset,
-    required final bool forPlay,
-    required final CNode node,
-    final int? loop,
+    required final TetaWidgetState state,
     final CNode? child,
     final List<CNode>? children,
   }) {
     return WAnimatedContainer(
       ValueKey(
         '''
-          ${node.nid}
-          $loop
-            ${child ?? children}
+          ${state.node.nid}
+          ${state.loop}
+          ${child ?? children}
           ${(attributes[DBKeys.width] as FSize).size}
           ${(attributes[DBKeys.height] as FSize).size}
           ${(attributes[DBKeys.margins] as FMargins).margins}
@@ -152,7 +147,7 @@ class AnimatedContainerBody extends NodeBody {
           ${(attributes[DBKeys.duration] as FTextTypeInput).toJson()}
         ''',
       ),
-      node: node,
+      state: state,
       child: child,
       width: attributes[DBKeys.width] as FSize,
       height: attributes[DBKeys.height] as FSize,
@@ -163,11 +158,6 @@ class AnimatedContainerBody extends NodeBody {
       fill: attributes[DBKeys.fill] as FFill,
       value: attributes[DBKeys.value] as FTextTypeInput,
       duration: attributes[DBKeys.duration] as FTextTypeInput,
-      forPlay: forPlay,
-      loop: loop,
-      params: params,
-      states: states,
-      dataset: dataset,
     );
   }
 

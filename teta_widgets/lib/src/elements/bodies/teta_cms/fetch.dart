@@ -5,8 +5,8 @@
 import 'package:flutter/material.dart';
 // Package imports:
 import 'package:teta_core/gen/assets.gen.dart';
-import 'package:teta_core/src/models/dataset.dart';
 import 'package:teta_core/src/models/variable.dart';
+import 'package:teta_widgets/src/core/teta_widget/index.dart';
 import 'package:teta_widgets/src/elements/code/templates/cms_fetch.dart';
 // Project imports:
 import 'package:teta_widgets/src/elements/controls/control_model.dart';
@@ -116,27 +116,21 @@ class CmsFetchBody extends NodeBody {
           title: 'Show drafts',
           key: DBKeys.flag,
           value: attributes[DBKeys.flag],
-          description:
-              'Show doc drafts. Valid only in editor, not in production',
+          description: 'Show doc drafts. Valid only in editor, not in production',
         ),
       ];
 
   @override
   Widget toWidget({
-    required final List<VariableObject> params,
-    required final List<VariableObject> states,
-    required final List<DatasetObject> dataset,
-    required final bool forPlay,
-    required final CNode node,
-    final int? loop,
+    required final TetaWidgetState state,
     final CNode? child,
     final List<CNode>? children,
   }) {
     return WCmsFetch(
       ValueKey(
         '''
-        ${node.nid}
-        $loop
+        ${state.node.nid}
+        ${state.loop}
         ${child ?? children}
         ${(attributes[DBKeys.cmsCollection] as FTextTypeInput).toJson()}
         ${(attributes[DBKeys.cmsLimit] as FTextTypeInput).toJson()}
@@ -144,13 +138,13 @@ class CmsFetchBody extends NodeBody {
         ${(attributes[DBKeys.cmsLikeKey] as FTextTypeInput).toJson()}
         ${(attributes[DBKeys.cmsLikeValue] as FTextTypeInput).toJson()}
         ${attributes[DBKeys.flag] as bool}
-        ${(attributes[DBKeys.cmsLikeValue] as FTextTypeInput).getStateValue(states)}
-        ${(attributes[DBKeys.cmsLikeKey] as FTextTypeInput).getStateValue(states)}
-        ${(attributes[DBKeys.cmsLimit] as FTextTypeInput).getStateValue(states)}
-        ${(attributes[DBKeys.cmsPage] as FTextTypeInput).getStateValue(states)}
+        ${(attributes[DBKeys.cmsLikeValue] as FTextTypeInput).getStateValue(state.states)}
+        ${(attributes[DBKeys.cmsLikeKey] as FTextTypeInput).getStateValue(state.states)}
+        ${(attributes[DBKeys.cmsLimit] as FTextTypeInput).getStateValue(state.states)}
+        ${(attributes[DBKeys.cmsPage] as FTextTypeInput).getStateValue(state.states)}
       ''',
       ),
-      node: node,
+      state: state,
       children: children ?? [],
       collection: attributes[DBKeys.cmsCollection] as FTextTypeInput,
       limit: attributes[DBKeys.cmsLimit] as FTextTypeInput,
@@ -158,10 +152,6 @@ class CmsFetchBody extends NodeBody {
       keyName: attributes[DBKeys.cmsLikeKey] as FTextTypeInput,
       keyValue: attributes[DBKeys.cmsLikeValue] as FTextTypeInput,
       showDrafts: attributes[DBKeys.flag] as bool? ?? false,
-      forPlay: forPlay,
-      params: params,
-      states: states,
-      dataset: dataset,
     );
   }
 

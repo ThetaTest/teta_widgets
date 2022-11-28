@@ -2,8 +2,8 @@
 import 'package:flutter/material.dart';
 // Package imports:
 import 'package:teta_core/gen/assets.gen.dart';
-import 'package:teta_core/src/models/dataset.dart';
 import 'package:teta_core/src/models/variable.dart';
+import 'package:teta_widgets/src/core/teta_widget/index.dart';
 import 'package:teta_widgets/src/elements/code/snippets.dart';
 // Project imports:
 import 'package:teta_widgets/src/elements/code/templates/container.dart';
@@ -61,8 +61,7 @@ final containerIntrinsicStates = IntrinsicStates(
     const Suggestion(
       title: 'Why use Container in Teta?',
       description: 'Test',
-      linkToOpen:
-          'https://docs.teta.so/teta-docs/widget/basic-widgets/container',
+      linkToOpen: 'https://docs.teta.so/teta-docs/widget/basic-widgets/container',
     )
   ],
 );
@@ -128,32 +127,27 @@ class ContainerBody extends NodeBody {
 
   @override
   Widget toWidget({
-    required final List<VariableObject> params,
-    required final List<VariableObject> states,
-    required final List<DatasetObject> dataset,
-    required final bool forPlay,
-    required final CNode node,
-    final int? loop,
+    required final TetaWidgetState state,
     final CNode? child,
     final List<CNode>? children,
   }) {
     return WContainer(
       ValueKey(
         '''
-      ${node.nid}
-      $loop
-            ${child ?? children}
-      ${(attributes[DBKeys.width] as FSize).toJson()}
-      ${(attributes[DBKeys.height] as FSize).toJson()}
-      ${(attributes[DBKeys.margins] as FMargins).toJson()}
-      ${(attributes[DBKeys.padding] as FMargins).toJson()}
-      ${(attributes[DBKeys.borderRadius] as FBorderRadius).toJson()}
-      ${(attributes[DBKeys.shadows] as FShadow).toJson()}
-      ${(attributes[DBKeys.fill] as FFill).toJson()}
-      ${(attributes[DBKeys.borders] as FBorder).toJson()}
-      ''',
+        ${state.node.nid}
+        ${state.loop}
+        ${child ?? children}
+        ${(attributes[DBKeys.width] as FSize).toJson()}
+        ${(attributes[DBKeys.height] as FSize).toJson()}
+        ${(attributes[DBKeys.margins] as FMargins).toJson()}
+        ${(attributes[DBKeys.padding] as FMargins).toJson()}
+        ${(attributes[DBKeys.borderRadius] as FBorderRadius).toJson()}
+        ${(attributes[DBKeys.shadows] as FShadow).toJson()}
+        ${(attributes[DBKeys.fill] as FFill).toJson()}
+        ${(attributes[DBKeys.borders] as FBorder).toJson()}
+        ''',
       ),
-      node: node,
+      state: state,
       child: child,
       width: attributes[DBKeys.width] as FSize,
       height: attributes[DBKeys.height] as FSize,
@@ -163,11 +157,6 @@ class ContainerBody extends NodeBody {
       shadows: attributes[DBKeys.shadows] as FShadow,
       fill: attributes[DBKeys.fill] as FFill,
       borders: attributes[DBKeys.borders] as FBorder,
-      forPlay: forPlay,
-      loop: loop,
-      params: params,
-      states: states,
-      dataset: dataset,
     );
   }
 
