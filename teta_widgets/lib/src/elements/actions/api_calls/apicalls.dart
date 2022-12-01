@@ -34,8 +34,9 @@ class FAApiCalls {
       loop,
       context,
     );
-    final apiCallsResponseNameNew =
+    var apiCallsResponseNameNew =
         apiCallsResponseName?.get(params, states, dataset, true, loop, context);
+    // ignore: prefer_conditional_assignment
     var mapParameters = <String, dynamic>{};
     var mapHeaders = <String, dynamic>{};
     var mapBody = <String, dynamic>{};
@@ -177,7 +178,7 @@ class FAApiCalls {
         );
         if (response.data != null) {
           _map = _map.copyWith(
-            name: apiCallsResponseNameNew,
+            name: apiCallsResponseNameNew ?? 'Api Calls',
             map: (response.data ?? const <dynamic>[])
                 .map((final dynamic e) => <String, dynamic>{...e})
                 .toList(),
@@ -185,7 +186,7 @@ class FAApiCalls {
         }
         if (response.error != null) {
           _map = _map.copyWith(
-            name: apiCallsResponseNameNew,
+            name: apiCallsResponseNameNew ?? 'Api Calls',
             map: (response.error!).map((final dynamic e) {
               return e as Map<String, dynamic>;
             }).toList(),
@@ -204,7 +205,7 @@ class FAApiCalls {
         );
         if (response.data != null) {
           _map = _map.copyWith(
-            name: apiCallsResponseNameNew,
+            name: apiCallsResponseNameNew ?? 'Api Calls',
             map: (response.data ?? const <dynamic>[])
                 .map((final dynamic e) => <String, dynamic>{...e})
                 .toList(),
@@ -212,7 +213,7 @@ class FAApiCalls {
         }
         if (response.error != null) {
           _map = _map.copyWith(
-            name: apiCallsResponseNameNew,
+            name: apiCallsResponseNameNew ?? 'Api Calls',
             map: (response.error!).map((final dynamic e) {
               return e as Map<String, dynamic>;
             }).toList(),
@@ -230,7 +231,7 @@ class FAApiCalls {
         );
         if (response.data != null) {
           _map = _map.copyWith(
-            name: apiCallsResponseNameNew,
+            name: apiCallsResponseNameNew ?? 'Api Calls',
             map: (response.data ?? const <dynamic>[])
                 .map((final dynamic e) => <String, dynamic>{...e})
                 .toList(),
@@ -238,7 +239,7 @@ class FAApiCalls {
         }
         if (response.error != null) {
           _map = _map.copyWith(
-            name: apiCallsResponseNameNew,
+            name: apiCallsResponseNameNew ?? 'Api Calls',
             map: (response.error!).map((final dynamic e) {
               return e as Map<String, dynamic>;
             }).toList(),
@@ -256,7 +257,7 @@ class FAApiCalls {
         );
         if (response.data != null) {
           _map = _map.copyWith(
-            name: apiCallsResponseNameNew,
+            name: apiCallsResponseNameNew ?? 'Api Calls',
             map: (response.data ?? const <dynamic>[])
                 .map(
                   (final dynamic e) => <String, dynamic>{...e},
@@ -267,7 +268,7 @@ class FAApiCalls {
 
         if (response.error != null) {
           _map = _map.copyWith(
-            name: apiCallsResponseNameNew,
+            name: apiCallsResponseNameNew ?? 'Api Calls',
             map: (response.error!)
                 .map(
                   (final dynamic e) => <String, dynamic>{
