@@ -884,7 +884,6 @@ class FActionElement extends Equatable {
         FLoop.action(
           () => FActionCustomFunction.action(
             context,
-            state.loop,
             customFunctionId,
           ),
           everyMilliseconds,
@@ -944,14 +943,10 @@ class FActionElement extends Equatable {
           case ActionTetaCmsAuth.signInWithGoogle:
             await actionS(
               () => FATetaCMSLogin.action(
-                state.node,
-                nameOfPage,
                 context,
+                state,
+                nameOfPage,
                 paramsToSend,
-                state.params,
-                state.states,
-                state.dataset,
-                state.loop,
                 TetaProvider.google,
               ),
               context: context,
@@ -961,14 +956,10 @@ class FActionElement extends Equatable {
           case ActionTetaCmsAuth.signInWithGitHub:
             await actionS(
               () => FATetaCMSLogin.action(
-                state.node,
-                nameOfPage,
                 context,
+                state,
+                nameOfPage,
                 paramsToSend,
-                state.params,
-                state.states,
-                state.dataset,
-                state.loop,
                 TetaProvider.github,
               ),
               context: context,
@@ -978,14 +969,10 @@ class FActionElement extends Equatable {
           case ActionTetaCmsAuth.signInWithTwitter:
             await actionS(
               () => FATetaCMSLogin.action(
-                state.node,
-                nameOfPage,
                 context,
+                state,
+                nameOfPage,
                 paramsToSend,
-                state.params,
-                state.states,
-                state.dataset,
-                state.loop,
                 TetaProvider.twitter,
               ),
               context: context,
@@ -995,14 +982,10 @@ class FActionElement extends Equatable {
           case ActionTetaCmsAuth.signInWithApple:
             await actionS(
               () => FATetaCMSLogin.action(
-                state.node,
-                nameOfPage,
                 context,
+                state,
+                nameOfPage,
                 paramsToSend,
-                state.params,
-                state.states,
-                state.dataset,
-                state.loop,
                 TetaProvider.apple,
               ),
               context: context,
@@ -1028,14 +1011,11 @@ class FActionElement extends Equatable {
             await actionS(
               () => FACustomHttpRequestDelete.action(
                 context,
+                state,
                 customHttpRequestURL,
                 customHttpRequestExpectedStatusCode,
                 customHttpRequestList,
                 customHttpRequestHeader,
-                state.params,
-                state.states,
-                state.dataset,
-                state.loop,
               ),
               context: context,
               state: state,
@@ -1045,15 +1025,12 @@ class FActionElement extends Equatable {
             await actionS(
               () => FACustomHttpRequestPost.action(
                 context,
+                state,
                 customHttpRequestURL,
                 customHttpRequestExpectedStatusCode,
                 customHttpRequestList,
                 customHttpRequestBody,
                 customHttpRequestHeader,
-                state.params,
-                state.states,
-                state.dataset,
-                state.loop,
               ),
               context: context,
               state: state,
@@ -1063,15 +1040,12 @@ class FActionElement extends Equatable {
             await actionS(
               () => FACustomHttpRequestUpdate.action(
                 context,
+                state,
                 customHttpRequestURL,
                 customHttpRequestExpectedStatusCode,
                 customHttpRequestList,
                 customHttpRequestBody,
                 customHttpRequestHeader,
-                state.params,
-                state.states,
-                state.dataset,
-                state.loop,
               ),
               context: context,
               state: state,
@@ -1087,13 +1061,9 @@ class FActionElement extends Equatable {
             await actionS(
               () => FActionRevenueCatBuy.action(
                 context,
+                state.copyWith(loop: state.loop ?? 0),
                 revenueCatProductIdentifier,
-                state.params,
-                state.states,
-                state.dataset,
                 stateName,
-                true,
-                state.loop ?? 0,
               ),
               context: context,
               state: state,
@@ -1103,7 +1073,7 @@ class FActionElement extends Equatable {
             await actionS(
               () => FActionRevenueCatRestorePurchases.action(
                 context,
-                state.states,
+                state,
                 stateName,
               ),
               context: context,
@@ -1120,13 +1090,9 @@ class FActionElement extends Equatable {
             await actionS(
               () => FActionQonversionBuy.action(
                 context,
+                state.copyWith(loop: state.loop ?? 0),
                 qonversionProductIdentifier,
-                state.params,
-                state.states,
-                state.dataset,
                 stateName,
-                true,
-                state.loop ?? 0,
               ),
               context: context,
               state: state,
@@ -1151,7 +1117,7 @@ class FActionElement extends Equatable {
         switch (actionBraintree) {
           case ActionBraintree.pay:
             await actionS(
-              () => FActionBraintreeBuy.action(context, state.states, stateName),
+              () => FActionBraintreeBuy.action(context, state, stateName),
               context: context,
               state: state,
             );
@@ -1203,10 +1169,9 @@ class FActionElement extends Equatable {
             await actionS(
               () => FActionGoogleMapsUpdateDeviceLiveLocation.action(
                 context,
-                state.states,
+                state,
                 stateName,
                 stateName2,
-                state.loop,
               ),
               context: context,
               state: state,
@@ -1324,8 +1289,7 @@ class FActionElement extends Equatable {
             await actionS(
               () => FActionStateChangeWithParam.action(
                 context,
-                state.states,
-                state.params,
+                state,
                 stateName,
                 this.value,
               ),
@@ -1418,10 +1382,9 @@ class FActionElement extends Equatable {
             await actionS(
               () => FActionNavigationLaunchURL.action(
                 context: context,
-                params: state.params,
-                states: state.states,
-                datasets: state.dataset,
-                loop: state.loop ?? 0,
+                state: state.copyWith(
+                  loop: state.loop ?? 0,
+                ),
                 value: valueTextTypeInput ?? FTextTypeInput(),
               ),
               context: context,
@@ -1432,11 +1395,6 @@ class FActionElement extends Equatable {
             await actionS(
               () => FActionNavigationShare.action(
                 context: context,
-                params: state.params,
-                states: state.states,
-                datasets: state.dataset,
-                loop: state.loop ?? 0,
-                value: valueTextTypeInput ?? FTextTypeInput(),
               ),
               context: context,
               state: state,
@@ -1446,9 +1404,9 @@ class FActionElement extends Equatable {
             await actionS(
               () => FActionNavigationOpenBottomSheet.action(
                 context,
+                state,
                 nameOfPage,
                 paramsToSend,
-                state,
               ),
               context: context,
               state: state,
@@ -1471,9 +1429,8 @@ class FActionElement extends Equatable {
             await actionS(
               () => FActionNavigationOpenDatePicker.action(
                 context,
-                state.states,
+                state,
                 stateName,
-                state.loop,
               ),
               context: context,
               state: state,
@@ -1770,11 +1727,8 @@ class FActionElement extends Equatable {
             await actionS(
               () => FACameraTakePhoto.action(
                 context,
+                state,
                 stateName,
-                state.params,
-                state.states,
-                state.dataset,
-                state.loop,
               ),
               context: context,
               state: state,
@@ -1786,10 +1740,6 @@ class FActionElement extends Equatable {
               () => FACameraSwitch.action(
                 context,
                 stateName,
-                state.params,
-                state.states,
-                state.dataset,
-                state.loop,
               ),
               context: context,
               state: state,
@@ -1797,53 +1747,28 @@ class FActionElement extends Equatable {
             break;
           case ActionCamera.offFlash:
             await actionS(
-              () => FACameraOffFlash.action(
-                context,
-                stateName,
-                state.params,
-                state.states,
-                state.dataset,
-                state.loop,
-              ),
+              () => FACameraOffFlash.action(context),
               context: context,
               state: state,
             );
             break;
           case ActionCamera.alwaysFlash:
             await actionS(
-              () => FACameraAlwaysFlash.action(
-                context,
-                state.states,
-                stateName,
-              ),
+              () => FACameraAlwaysFlash.action(context),
               context: context,
               state: state,
             );
             break;
           case ActionCamera.autoFlash:
             await actionS(
-              () => FACameraAutoFlash.action(
-                context,
-                stateName,
-                state.params,
-                state.states,
-                state.dataset,
-                state.loop,
-              ),
+              () => FACameraAutoFlash.action(context, state),
               context: context,
               state: state,
             );
             break;
           case ActionCamera.torchFlash:
             await actionS(
-              () => FACameraTorchFlash.action(
-                context,
-                stateName,
-                state.params,
-                state.states,
-                state.dataset,
-                state.loop,
-              ),
+              () => FACameraTorchFlash.action(context, stateName),
               context: context,
               state: state,
             );
@@ -1852,11 +1777,8 @@ class FActionElement extends Equatable {
             await actionS(
               () => FACameraStopRecording.action(
                 context,
+                state,
                 stateName,
-                state.params,
-                state.states,
-                state.dataset,
-                state.loop,
               ),
               context: context,
               state: state,
@@ -1927,9 +1849,8 @@ class FActionElement extends Equatable {
             await actionS(
               () => FAudioPlayerPlay.action(
                 context,
-                state.states,
+                state,
                 stateName,
-                state.loop,
               ),
               context: context,
               state: state,
@@ -1939,7 +1860,7 @@ class FActionElement extends Equatable {
             await actionS(
               () => FAudioPlayerPlayNextTrack.action(
                 context,
-                state.states,
+                state,
                 stateName,
                 audioPlayerUrl!.get(
                   state.params,
@@ -1958,7 +1879,7 @@ class FActionElement extends Equatable {
             await actionS(
               () => FAudioPlayerPlayPreviousTrack.action(
                 context,
-                state.states,
+                state,
                 stateName,
                 audioPlayerUrl!.get(
                   state.params,
@@ -1977,7 +1898,7 @@ class FActionElement extends Equatable {
             await actionS(
               () => FAudioPlayerPause.action(
                 context,
-                state.states,
+                state,
                 stateName,
               ),
               context: context,
@@ -1988,7 +1909,7 @@ class FActionElement extends Equatable {
             await actionS(
               () => FAudioPlayerReload.action(
                 context,
-                state.states,
+                state,
                 stateName,
               ),
               context: context,
@@ -1999,7 +1920,7 @@ class FActionElement extends Equatable {
             await actionS(
               () => FAudioPlayerLoopOff.action(
                 context,
-                state.states,
+                state,
                 stateName,
               ),
               context: context,
@@ -2011,7 +1932,7 @@ class FActionElement extends Equatable {
             await actionS(
               () => FAudioPlayerLoopOne.action(
                 context,
-                state.states,
+                state,
                 stateName,
               ),
               context: context,
@@ -2021,11 +1942,7 @@ class FActionElement extends Equatable {
             break;
           case ActionAudioPlayerActions.loopAll:
             await actionS(
-              () => FAudioPlayerLoopAll.action(
-                context,
-                state.states,
-                stateName,
-              ),
+              () => FAudioPlayerLoopAll.action(state, stateName),
               context: context,
               state: state,
             );

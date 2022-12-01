@@ -14,11 +14,6 @@ class FActionNavigationShare {
 
   static Future action({
     required final BuildContext context,
-    required final List<VariableObject> params,
-    required final List<VariableObject> states,
-    required final List<DatasetObject> datasets,
-    required final FTextTypeInput value,
-    required final int loop,
   }) async {
     await showDialog<void>(
       context: context,

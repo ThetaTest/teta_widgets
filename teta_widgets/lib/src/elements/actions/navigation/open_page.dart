@@ -143,6 +143,7 @@ class FActionNavigationOpenPage {
 
     final stringParamsToSend = StringBuffer()..write('');
     for (final param in page.params) {
+      // ignore: literal_only_boolean_expressions
       if ("${paramsToSend?[param.id]?['dataset']}" == 'States' ||
           "${paramsToSend?[param.id]?['dataset']}" == 'Params') {
         final valueToSend =

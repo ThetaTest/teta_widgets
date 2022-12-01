@@ -4,6 +4,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:teta_core/teta_core.dart';
+import 'package:teta_widgets/src/core/teta_widget/index.dart';
 import 'package:teta_widgets/src/elements/code/formatter_test.dart';
 import 'package:teta_widgets/src/elements/index.dart';
 import 'package:teta_widgets/src/elements/packages.dart';
@@ -16,18 +17,15 @@ class FActionNavigationLaunchURL {
 
   static Future action({
     required final BuildContext context,
-    required final List<VariableObject> params,
-    required final List<VariableObject> states,
-    required final List<DatasetObject> datasets,
+    required final TetaWidgetState state,
     required final FTextTypeInput value,
-    required final int loop,
   }) async {
     final valueCode = value.get(
-      params,
-      states,
-      datasets,
+      state.params,
+      state.states,
+      state.dataset,
       true,
-      loop,
+      state.loop,
       context,
     );
     if (await canLaunchUrlString(valueCode)) {

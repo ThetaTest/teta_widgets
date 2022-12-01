@@ -22,9 +22,9 @@ import 'package:teta_widgets/src/elements/nodes/node.dart';
 class FActionNavigationOpenBottomSheet {
   static Future action(
     final BuildContext context,
+    final TetaWidgetState state,
     final String? nameOfPage,
     final Map<String, dynamic>? paramsToSend,
-    final TetaWidgetState state,
   ) async {
     try {
       if (nameOfPage != null) {

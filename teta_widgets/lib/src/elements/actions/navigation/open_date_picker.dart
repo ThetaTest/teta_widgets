@@ -6,7 +6,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:recase/recase.dart';
 // Package imports:
-import 'package:teta_core/teta_core.dart';
+import 'package:teta_widgets/src/core/teta_widget/index.dart';
 import 'package:teta_widgets/src/elements/code/formatter_test.dart';
 
 // Project imports:
@@ -14,12 +14,10 @@ import 'package:teta_widgets/src/elements/code/formatter_test.dart';
 class FActionNavigationOpenDatePicker {
   static Future action(
     final BuildContext context,
-    final List<VariableObject> states,
+    final TetaWidgetState state,
     final String? stateName,
-    final int? loop,
   ) async {
-    final index =
-        states.indexWhere((final element) => element.name == stateName);
+    final index = state.states.indexWhere((final element) => element.name == stateName);
     final datePicked = await showDatePicker(
       context: context,
       initialDate: DateTime.now(),
@@ -39,11 +37,11 @@ class FActionNavigationOpenDatePicker {
         hourPicked.hour,
         hourPicked.minute,
       );
-      states[index].value = dateToPass.toIso8601String();
+      state.states[index].value = dateToPass.toIso8601String();
     } else if (datePicked != null && hourPicked == null) {
-      states[index].value = datePicked.toIso8601String();
+      state.states[index].value = datePicked.toIso8601String();
     } else {
-      states[index].value = '';
+      state.states[index].value = '';
     }
   }
 

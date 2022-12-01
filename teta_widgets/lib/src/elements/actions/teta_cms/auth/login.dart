@@ -12,14 +12,13 @@ import 'package:teta_core/src/services/track_service.dart';
 import 'package:teta_core/teta_core.dart';
 import 'package:teta_widgets/src/core/teta_widget/index.dart';
 import 'package:teta_widgets/src/elements/actions/navigation/open_page.dart';
-import 'package:teta_widgets/src/elements/index.dart';
 // Project imports:
 
 class FATetaCMSLogin {
   static Future action(
+    final BuildContext context,
     final TetaWidgetState state,
     final String? nameOfPage,
-    final BuildContext context,
     final Map<String, dynamic>? paramsToSend,
     final TetaProvider provider,
   ) async {
