@@ -7,6 +7,7 @@
 import 'package:flutter/material.dart';
 import 'package:teta_cms/teta_cms.dart';
 import 'package:teta_core/teta_core.dart';
+import 'package:teta_widgets/src/core/teta_widget/index.dart';
 import 'package:teta_widgets/src/elements/index.dart';
 // Project imports:
 
@@ -15,19 +16,16 @@ class FATetaCMSInsert {
     final BuildContext context,
     final String? collectionId,
     final List<MapElement>? dbData,
-    final List<VariableObject> params,
-    final List<VariableObject> states,
-    final List<DatasetObject> dataset,
-    final int? loop,
+    final TetaWidgetState state,
   ) async {
     final map = <String, dynamic>{};
     for (final e in dbData ?? <MapElement>[]) {
       map[e.key] = e.value.get(
-        params,
-        states,
-        dataset,
+        state.params,
+        state.states,
+        state.dataset,
         true,
-        loop,
+        state.loop,
         context,
       );
     }

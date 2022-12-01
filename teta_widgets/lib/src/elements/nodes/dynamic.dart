@@ -219,12 +219,7 @@ class NDynamic extends CNode {
   @override
   Widget toWidget({required final TetaWidgetState state}) {
     return body.toWidget(
-      params: state.params,
-      states: state.states,
-      dataset: state.dataset,
-      forPlay: state.forPlay,
-      loop: state.loop,
-      node: this,
+      state: state.copyWith(node: this),
       child: child,
       children: children,
     );

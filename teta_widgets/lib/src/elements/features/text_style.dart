@@ -6,7 +6,6 @@ import 'package:flutter/material.dart';
 // Package imports:
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:recase/recase.dart';
-import 'package:teta_core/src/models/text_style.dart';
 import 'package:teta_core/teta_core.dart';
 // Project imports:
 import 'package:teta_widgets/src/elements/controls/key_constants.dart';
@@ -80,9 +79,8 @@ class FTextStyle {
                 type: FFillType.solid,
                 levels: [FFillElement(color: '000000', stop: 0)],
               ),
-        fontSize: doc[DBKeys.fontSize] != null
-            ? FFontSize().fromJson(doc[DBKeys.fontSize])
-            : FFontSize(),
+        fontSize:
+            doc[DBKeys.fontSize] != null ? FFontSize().fromJson(doc[DBKeys.fontSize]) : FFontSize(),
         fontFamily: doc[DBKeys.fontFamily] as String? ?? 'Poppins',
         fontWeight: doc[DBKeys.fontWeight] != null
             ? FFontWeight().fromJson(doc[DBKeys.fontWeight] as String)
@@ -125,22 +123,15 @@ class FTextStyle {
                 type: FFillType.solid,
                 levels: [FFillElement(color: '000000', stop: 0)],
               ).toJson(),
-        DBKeys.fontSize:
-            (fontSize != null) ? fontSize!.toJson() : FFontSize().toJson(),
+        DBKeys.fontSize: (fontSize != null) ? fontSize!.toJson() : FFontSize().toJson(),
         DBKeys.fontFamily: fontFamily ?? 'Poppins',
-        DBKeys.fontWeight: (fontWeight != null)
-            ? fontWeight!.toJson()
-            : FFontWeight().toJson(),
-        DBKeys.textDecoration: (textDecoration != null)
-            ? textDecoration!.toJson()
-            : FTextDecoration().toJson(),
-        DBKeys.textAlign:
-            (textAlign != null) ? textAlign!.toJson() : FTextAlign().toJson(),
-        DBKeys.fontStyle:
-            (fontStyle != null) ? fontStyle!.toJson() : FFontStyle().toJson(),
-        DBKeys.textDirection: (textDirection != null)
-            ? textDirection!.toJson()
-            : FTextDirection().toJson(),
+        DBKeys.fontWeight: (fontWeight != null) ? fontWeight!.toJson() : FFontWeight().toJson(),
+        DBKeys.textDecoration:
+            (textDecoration != null) ? textDecoration!.toJson() : FTextDecoration().toJson(),
+        DBKeys.textAlign: (textAlign != null) ? textAlign!.toJson() : FTextAlign().toJson(),
+        DBKeys.fontStyle: (fontStyle != null) ? fontStyle!.toJson() : FFontStyle().toJson(),
+        DBKeys.textDirection:
+            (textDirection != null) ? textDirection!.toJson() : FTextDirection().toJson(),
         DBKeys.textStyleModel: textStyleModel,
       };
 

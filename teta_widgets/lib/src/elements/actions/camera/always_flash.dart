@@ -13,14 +13,10 @@ import 'package:teta_core/teta_core.dart';
 import 'package:teta_widgets/src/elements/actions/snippets/get_page_on_code.dart';
 
 class FACameraAlwaysFlash {
-  static Future action(
-    final BuildContext context,
-    final List<VariableObject> states,
-    final String? stateName,
-  ) async {
+  static Future action(final BuildContext context) async {
     final page = BlocProvider.of<PageCubit>(context).state;
-    final state = page.states
-        .firstWhereOrNull((final e) => e.type == VariableType.cameraController);
+    final state =
+        page.states.firstWhereOrNull((final e) => e.type == VariableType.cameraController);
     final controller = state?.controller;
     if (controller != null) {
       await controller.setFlashMode(FlashMode.always);
@@ -28,15 +24,13 @@ class FACameraAlwaysFlash {
   }
 
   static String toCode(
-    final int pageId,
     final BuildContext context,
-    final String? nameOfPage,
-    final Map<String, dynamic>? paramsToSend,
+    final int pageId,
   ) {
     final page = getPageOnToCode(pageId, context);
     if (page == null) return '';
-    final state = page.states
-        .firstWhereOrNull((final e) => e.type == VariableType.cameraController);
+    final state =
+        page.states.firstWhereOrNull((final e) => e.type == VariableType.cameraController);
     if (state == null) return '';
     final rc = ReCase(state.name);
     return '''

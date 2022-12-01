@@ -7,8 +7,6 @@ import 'package:collection/collection.dart';
 // Flutter imports:
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:teta_core/src/models/dataset.dart';
-import 'package:teta_core/src/models/variable.dart';
 import 'package:teta_core/teta_core.dart';
 // Project imports:
 import 'package:teta_widgets/src/elements/actions/navigation/open_page.dart';
@@ -19,14 +17,11 @@ class FACameraSwitch {
   static Future action(
     final BuildContext context,
     final String? stateName,
-    final List<VariableObject> params,
-    final List<VariableObject> states,
-    final List<DatasetObject> dataset,
-    final int? loop,
   ) async {
     final page = BlocProvider.of<PageCubit>(context).state;
-    final state = page.states
-        .firstWhereOrNull((final e) => e.type == VariableType.cameraController);
+    final state = page.states.firstWhereOrNull(
+      (final e) => e.type == VariableType.cameraController,
+    );
     final controller = state?.controller;
     if (controller != null) {
       //controller.
@@ -35,8 +30,8 @@ class FACameraSwitch {
   }
 
   static String toCode(
-    final int pageId,
     final BuildContext context,
+    final int pageId,
     final String? nameOfPage,
     final Map<String, dynamic>? paramsToSend,
   ) {

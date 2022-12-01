@@ -9,6 +9,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:supabase_flutter/supabase_flutter.dart';
 import 'package:teta_core/src/services/user_social_login/services/social_login_service/index.dart';
 import 'package:teta_core/teta_core.dart';
+import 'package:teta_widgets/src/core/teta_widget/index.dart';
 // Project imports:
 import 'package:teta_widgets/src/elements/actions/navigation/open_page.dart';
 import 'package:teta_widgets/src/elements/actions/snippets/change_state.dart';
@@ -21,16 +22,12 @@ import 'package:url_launcher/url_launcher.dart';
 class FASupabaseSignInWithProvider {
   static Future action(
     final BuildContext context,
+    final TetaWidgetState state,
     final String value,
     final CNode scaffold,
-    final CNode node,
     final String? nameOfPage,
     final Map<String, dynamic>? paramsToSend,
-    final List<VariableObject> params,
-    final List<VariableObject> states,
-    final List<DatasetObject> dataset,
     final Provider provider,
-    final int? loop,
   ) async {
     final page = BlocProvider.of<PageCubit>(context).state;
 
@@ -40,15 +37,14 @@ class FASupabaseSignInWithProvider {
     changeState(status, context, 'Loading');
     final client = BlocProvider.of<SupabaseCubit>(context).state;
     if (client != null) {
-      final response = await UserSocialLoginService.instance
-          .executeLogin(client.supabaseUrl, provider);
+      final response =
+          await UserSocialLoginService.instance.executeLogin(client.supabaseUrl, provider);
 
       if (!UniversalPlatform.isWeb) {
         uriLinkStream.listen(
           (final Uri? uri) {
             if (uri != null) {
-              final uriParameters =
-                  SupabaseAuth.instance.parseUriParameters(Uri.base);
+              final uriParameters = SupabaseAuth.instance.parseUriParameters(Uri.base);
               if (uriParameters.containsKey('access_token') &&
                   uriParameters.containsKey('refresh_token') &&
                   uriParameters.containsKey('expires_in')) {
@@ -67,14 +63,10 @@ class FASupabaseSignInWithProvider {
       }
       changeState(status, context, 'Success');
       await FActionNavigationOpenPage.action(
-        node,
         context,
+        state,
         nameOfPage,
         paramsToSend,
-        params,
-        states,
-        dataset,
-        loop,
       );
     }
   }

@@ -10,24 +10,20 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:teta_cms/teta_cms.dart';
 import 'package:teta_core/src/services/track_service.dart';
 import 'package:teta_core/teta_core.dart';
+import 'package:teta_widgets/src/core/teta_widget/index.dart';
 import 'package:teta_widgets/src/elements/actions/navigation/open_page.dart';
 import 'package:teta_widgets/src/elements/index.dart';
 // Project imports:
 
 class FATetaCMSLogin {
   static Future action(
-    final CNode node,
+    final TetaWidgetState state,
     final String? nameOfPage,
     final BuildContext context,
     final Map<String, dynamic>? paramsToSend,
-    final List<VariableObject> params,
-    final List<VariableObject> states,
-    final List<DatasetObject> dataset,
-    final int? loop,
     final TetaProvider provider,
   ) async {
-    final prj =
-        (BlocProvider.of<FocusProjectBloc>(context).state as ProjectLoaded).prj;
+    final prj = (BlocProvider.of<FocusProjectBloc>(context).state as ProjectLoaded).prj;
 
     // final page = BlocProvider.of<PageCubit>(context).state;
     // final status = takeStateFrom(page, 'status');
@@ -55,14 +51,10 @@ class FATetaCMSLogin {
       fromEditor: true,
       onSuccess: (final isFirstTime) async {
         await FActionNavigationOpenPage.action(
-          node,
           context,
+          state,
           nameOfPage,
           paramsToSend,
-          params,
-          states,
-          dataset,
-          loop,
         );
       },
     );
@@ -74,8 +66,7 @@ class FATetaCMSLogin {
     final String? nameOfPage,
     final Map<String, dynamic>? paramsToSend,
   ) {
-    final prj =
-        (BlocProvider.of<FocusProjectBloc>(context).state as ProjectLoaded).prj;
+    final prj = (BlocProvider.of<FocusProjectBloc>(context).state as ProjectLoaded).prj;
     final isRevenueCatEnabled = prj.config?.isRevenueCatEnabled ?? false;
     final providerStr = provider == TetaProvider.google
         ? 'TetaProvider.google'

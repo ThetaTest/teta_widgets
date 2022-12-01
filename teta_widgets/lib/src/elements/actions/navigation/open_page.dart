@@ -13,6 +13,7 @@ import 'package:recase/recase.dart';
 import 'package:teta_core/src/rendering/nodes_original.dart';
 import 'package:teta_core/teta_core.dart';
 import 'package:teta_db/teta_db.dart';
+import 'package:teta_widgets/src/core/teta_widget/index.dart';
 import 'package:teta_widgets/src/elements/actions/navigation/pass_params_builder.dart';
 import 'package:teta_widgets/src/elements/code/formatter_test.dart';
 // Project imports:
@@ -30,8 +31,7 @@ void goTo(final CNode node, final BuildContext context, final Widget child) {
       T.Transition(
         child: child,
         transitionEffect:
-            (node.body.attributes[DBKeys.pageTransition] as FPageTransition)
-                .transitionEffect!,
+            (node.body.attributes[DBKeys.pageTransition] as FPageTransition).transitionEffect!,
       ),
     );
   } else {
@@ -46,22 +46,16 @@ void goTo(final CNode node, final BuildContext context, final Widget child) {
 
 class FActionNavigationOpenPage {
   static Future<void> action(
-    final CNode node,
     final BuildContext context,
+    final TetaWidgetState state,
     final String? nameOfPage,
     final Map<String, dynamic>? paramsToSend,
-    final List<VariableObject> params,
-    final List<VariableObject> states,
-    final List<DatasetObject> dataset,
-    final int? loop,
   ) async {
     try {
-      final prj =
-          BlocProvider.of<FocusProjectBloc>(context).state as ProjectLoaded;
+      final prj = BlocProvider.of<FocusProjectBloc>(context).state as ProjectLoaded;
       final currentPage = BlocProvider.of<PageCubit>(context).state;
       PageObject? page;
-      page = prj.prj.pages!
-          .firstWhereOrNull((final element) => element.name == nameOfPage);
+      page = prj.prj.pages!.firstWhereOrNull((final element) => element.name == nameOfPage);
       if (page != null) {
         final list = await TetaDB.instance.client.selectList(
           'nodes',
@@ -90,19 +84,21 @@ class FActionNavigationOpenPage {
           context,
           MaterialPageRoute(
             builder: (final context) => BlocProvider(
-              create: (final context) => PageCubit()
-                ..onFocus(prj: prj.prj, page: page!, context: context),
+              create: (final context) =>
+                  PageCubit()..onFocus(prj: prj.prj, page: page!, context: context),
               child: page!.scaffold!.toWidget(
-                forPlay: true,
-                params: passParamsToNewPage(
-                  page.params,
-                  currentPage.params,
-                  paramsToSend,
-                  dataset,
-                  loop: loop,
+                state: state.copyWith(
+                  forPlay: true,
+                  states: page.states,
+                  dataset: page.datasets,
+                  params: passParamsToNewPage(
+                    page.params,
+                    currentPage.params,
+                    paramsToSend,
+                    state.dataset,
+                    loop: state.loop,
+                  ),
                 ),
-                states: page.states,
-                dataset: page.datasets,
               ),
             ),
           ),
@@ -121,14 +117,12 @@ class FActionNavigationOpenPage {
     final String? nameOfPage,
     final Map<String, dynamic>? paramsToSend,
   ) {
-    final prj =
-        BlocProvider.of<FocusProjectBloc>(context).state as ProjectLoaded;
+    final prj = BlocProvider.of<FocusProjectBloc>(context).state as ProjectLoaded;
     if (nameOfPage == null ||
         (prj.prj.pages ?? <PageObject>[])
                 .indexWhere((final element) => element.name == nameOfPage) ==
             -1) return '';
-    final page = prj.prj.pages!
-        .firstWhere((final element) => element.name == nameOfPage);
+    final page = prj.prj.pages!.firstWhere((final element) => element.name == nameOfPage);
     final temp = removeDiacritics(
       page.name
           .replaceFirst('0', 'A0')
@@ -151,9 +145,8 @@ class FActionNavigationOpenPage {
     for (final param in page.params) {
       if ("${paramsToSend?[param.id]?['dataset']}" == 'States' ||
           "${paramsToSend?[param.id]?['dataset']}" == 'Params') {
-        final valueToSend = (paramsToSend ?? <String, dynamic>{})[param.id]
-                ?['label'] as String? ??
-            'null';
+        final valueToSend =
+            (paramsToSend ?? <String, dynamic>{})[param.id]?['label'] as String? ?? 'null';
         if (valueToSend != 'null') {
           final name = ReCase(param.name);
           stringParamsToSend.write('${name.camelCase}: ');

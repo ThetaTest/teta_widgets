@@ -37,12 +37,11 @@ class GestureBuilder {
         );
       }
       if (action != null) {
-        action.actions!
-            .where((final element) => element.actionGesture == gesture)
-            .forEach(
+        action.actions!.where((final element) => element.actionGesture == gesture).forEach(
           (final element) {
             element.getAction(
               context,
+              state,
               finalValue,
               BlocProvider.of<PageCubit>(context).state.scaffold!,
               node,
