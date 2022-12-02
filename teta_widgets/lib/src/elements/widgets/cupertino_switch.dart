@@ -37,19 +37,13 @@ class _WCupertinoSwitchState extends State<WCupertinoSwitch> {
         onChanged: (final value) {
           GestureBuilder.get(
             context: context,
-            node: widget.state.node,
+            state: widget.state,
             action: widget.action,
             actionValue: null,
             gesture: ActionGesture.onTap,
-            params: widget.state.params,
-            states: widget.state.states,
-            dataset: widget.state.dataset,
-            forPlay: widget.state.forPlay,
           );
           if (mounted) {
-            setState(() {
-              flag = value;
-            });
+            setState(() => flag = value);
           }
         },
         value: flag,

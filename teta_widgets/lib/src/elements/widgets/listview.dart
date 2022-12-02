@@ -51,27 +51,19 @@ class WListView extends StatelessWidget {
               Logger.printMessage('At the top');
               GestureBuilder.get(
                 context: context,
-                node: state.node,
+                state: state,
                 gesture: ActionGesture.scrollToTop,
                 action: action,
                 actionValue: null,
-                params: state.params,
-                states: state.states,
-                dataset: state.dataset,
-                forPlay: state.forPlay,
               );
             } else {
               Logger.printMessage('At the bottom');
               GestureBuilder.get(
                 context: context,
-                node: state.node,
+                state: state,
                 gesture: ActionGesture.scrollToBottom,
                 action: action,
                 actionValue: null,
-                params: state.params,
-                states: state.states,
-                dataset: state.dataset,
-                forPlay: state.forPlay,
               );
             }
           }

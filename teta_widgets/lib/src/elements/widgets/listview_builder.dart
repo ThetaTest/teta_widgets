@@ -54,7 +54,8 @@ class WListViewBuilderState extends State<WListViewBuilder> {
             (final element) => element.getName == widget.value.datasetName,
           )
         : -1;
-    final db = index != -1 ? widget.state.dataset[index] : DatasetObject.empty();
+    final db =
+        index != -1 ? widget.state.dataset[index] : DatasetObject.empty();
     var startFromIndex = int.tryParse(
           widget.startFromIndex.get(
             widget.state.params,
@@ -101,27 +102,19 @@ class WListViewBuilderState extends State<WListViewBuilder> {
               Logger.printMessage('At the top');
               GestureBuilder.get(
                 context: context,
-                node: widget.state.node,
+                state: widget.state,
                 gesture: ActionGesture.scrollToTop,
                 action: widget.action,
                 actionValue: null,
-                params: widget.state.params,
-                states: widget.state.states,
-                dataset: widget.state.dataset,
-                forPlay: widget.state.forPlay,
               );
             } else {
               Logger.printMessage('At the bottom');
               GestureBuilder.get(
                 context: context,
-                node: widget.state.node,
+                state: widget.state,
                 gesture: ActionGesture.scrollToBottom,
                 action: widget.action,
                 actionValue: null,
-                params: widget.state.params,
-                states: widget.state.states,
-                dataset: widget.state.dataset,
-                forPlay: widget.state.forPlay,
               );
             }
           }
@@ -135,11 +128,13 @@ class WListViewBuilderState extends State<WListViewBuilder> {
             addAutomaticKeepAlives: false,
             addRepaintBoundaries: false,
             shrinkWrap: widget.shrinkWrap,
-            scrollDirection: widget.isVertical ? Axis.vertical : Axis.horizontal,
+            scrollDirection:
+                widget.isVertical ? Axis.vertical : Axis.horizontal,
             itemCount: db.getMap.sublist(startFromIndex, limit).length,
             itemBuilder: (final context, final index) {
               return widget.child != null
-                  ? widget.child!.toWidget(state: widget.state.copyWith(loop: index))
+                  ? widget.child!
+                      .toWidget(state: widget.state.copyWith(loop: index))
                   : PlaceholderChildBuilder(
                       name: widget.state.node.intrinsicState.displayName,
                       node: widget.state.node,
@@ -157,7 +152,8 @@ class WListViewBuilderState extends State<WListViewBuilder> {
       final index = widget.state.dataset.indexWhere(
         (final element) => element.getName == widget.value.datasetName,
       );
-      final db = index != -1 ? widget.state.dataset[index] : DatasetObject.empty();
+      final db =
+          index != -1 ? widget.state.dataset[index] : DatasetObject.empty();
       if (mounted) {
         if (db.getName != '') {
           if (mounted) {

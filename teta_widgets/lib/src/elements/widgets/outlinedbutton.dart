@@ -28,14 +28,10 @@ class WOutlinedButton extends StatelessWidget {
       child: OutlinedButton(
         onPressed: () => GestureBuilder.get(
           context: context,
-          node: state.node,
+          state: state,
           gesture: ActionGesture.onTap,
           action: action,
           actionValue: null,
-          params: state.params,
-          states: state.states,
-          dataset: state.dataset,
-          forPlay: state.forPlay,
         ),
         child: ChildConditionBuilder(
           ValueKey('${state.node.nid} ${state.loop}'),

@@ -42,7 +42,9 @@ class WTCardBuilder extends StatefulWidget {
 class _WTCardState extends State<WTCardBuilder> {
   DatasetObject map = DatasetObject.empty();
   final _controller = TCardController();
-  List<Widget> list = <Widget>[const Center(child: CircularProgressIndicator())];
+  List<Widget> list = <Widget>[
+    const Center(child: CircularProgressIndicator())
+  ];
   bool isLoaded = false;
   Timer? _timer;
 
@@ -97,15 +99,10 @@ class _WTCardState extends State<WTCardBuilder> {
           onEnd: () {
             GestureBuilder.get(
               context: context,
-              node: widget.state.node,
+              state: widget.state,
               gesture: ActionGesture.onEnd,
               action: widget.action,
               actionValue: null,
-              params: widget.state.params,
-              states: widget.state.states,
-              dataset: widget.state.dataset,
-              forPlay: widget.state.forPlay,
-              loop: widget.state.loop,
             );
           },
           onForward: (final index, final info) {
@@ -113,29 +110,19 @@ class _WTCardState extends State<WTCardBuilder> {
               // swipe right
               GestureBuilder.get(
                 context: context,
-                node: widget.state.node,
+                state: widget.state,
                 gesture: ActionGesture.swipeRight,
                 action: widget.action,
                 actionValue: null,
-                params: widget.state.params,
-                states: widget.state.states,
-                dataset: widget.state.dataset,
-                forPlay: widget.state.forPlay,
-                loop: widget.state.loop,
               );
             } else {
               // swipe left
               GestureBuilder.get(
                 context: context,
-                node: widget.state.node,
+                state: widget.state,
                 gesture: ActionGesture.swipeLeft,
                 action: widget.action,
                 actionValue: null,
-                params: widget.state.params,
-                states: widget.state.states,
-                dataset: widget.state.dataset,
-                forPlay: widget.state.forPlay,
-                loop: widget.state.loop,
               );
             }
           },
@@ -155,7 +142,8 @@ class _WTCardState extends State<WTCardBuilder> {
             (final element) => element.getName == widget.value.datasetName,
           )
         : -1;
-    final db = index != -1 ? widget.state.dataset[index] : DatasetObject.empty();
+    final db =
+        index != -1 ? widget.state.dataset[index] : DatasetObject.empty();
     if (mounted) {
       final temp = <Widget>[];
       for (var i = 0; i < db.getMap.length; i++) {
@@ -182,7 +170,8 @@ class _WTCardState extends State<WTCardBuilder> {
       final index = widget.state.dataset.indexWhere(
         (final element) => element.getName == widget.value.datasetName,
       );
-      final db = index != -1 ? widget.state.dataset[index] : DatasetObject.empty();
+      final db =
+          index != -1 ? widget.state.dataset[index] : DatasetObject.empty();
       if (mounted) {
         if (db.getName != '') {
           setState(() {

@@ -90,15 +90,20 @@ class _WTextFieldState extends State<WTextField> {
     final tempOpacity = widget.fill.levels?.first.opacity ?? 1;
     final opacity = tempOpacity >= 0 && tempOpacity <= 1 ? tempOpacity : 1.0;
 
-    final tempBorderOpacity = widget.enabledBorderColor.levels?.first.opacity ?? 1;
-    final borderOpacity =
-        tempBorderOpacity >= 0 && tempBorderOpacity <= 1 ? tempBorderOpacity : 1.0;
+    final tempBorderOpacity =
+        widget.enabledBorderColor.levels?.first.opacity ?? 1;
+    final borderOpacity = tempBorderOpacity >= 0 && tempBorderOpacity <= 1
+        ? tempBorderOpacity
+        : 1.0;
 
-    final tempFocusOpacity = widget.focusedBorderColor.levels?.first.opacity ?? 1;
-    final focusOpacity = tempFocusOpacity >= 0 && tempFocusOpacity <= 1 ? tempFocusOpacity : 1.0;
+    final tempFocusOpacity =
+        widget.focusedBorderColor.levels?.first.opacity ?? 1;
+    final focusOpacity =
+        tempFocusOpacity >= 0 && tempFocusOpacity <= 1 ? tempFocusOpacity : 1.0;
 
     final tempHintOpacity = widget.hintTextColor.levels?.first.opacity ?? 1;
-    final hintOpacity = tempHintOpacity >= 0 && tempHintOpacity <= 1 ? tempHintOpacity : 1.0;
+    final hintOpacity =
+        tempHintOpacity >= 0 && tempHintOpacity <= 1 ? tempHintOpacity : 1.0;
     return NodeSelectionBuilder(
       node: widget.state.node,
       forPlay: widget.state.forPlay,
@@ -112,10 +117,11 @@ class _WTextFieldState extends State<WTextField> {
             controller: textEditingController,
             decoration: InputDecoration(
               filled: true,
-              fillColor:
-                  HexColor(widget.fill.get(context).getHexColor(context)).withOpacity(opacity),
+              fillColor: HexColor(widget.fill.get(context).getHexColor(context))
+                  .withOpacity(opacity),
               counterStyle: TextStyle(
-                color: HexColor(widget.fill.get(context).getHexColor(context)).withOpacity(opacity),
+                color: HexColor(widget.fill.get(context).getHexColor(context))
+                    .withOpacity(opacity),
               ),
               border: OutlineInputBorder(
                 borderRadius: borderRadius,
@@ -124,7 +130,9 @@ class _WTextFieldState extends State<WTextField> {
                 borderSide: BorderSide(
                   color: widget.showBorders
                       ? HexColor(
-                          widget.enabledBorderColor.get(context).getHexColor(context),
+                          widget.enabledBorderColor
+                              .get(context)
+                              .getHexColor(context),
                         ).withOpacity(
                           borderOpacity,
                         )
@@ -147,7 +155,9 @@ class _WTextFieldState extends State<WTextField> {
                 borderSide: BorderSide(
                   color: widget.showBorders
                       ? HexColor(
-                          widget.focusedBorderColor.get(context).getHexColor(context),
+                          widget.focusedBorderColor
+                              .get(context)
+                              .getHexColor(context),
                         ).withOpacity(
                           focusOpacity,
                         )
@@ -221,27 +231,17 @@ class _WTextFieldState extends State<WTextField> {
             ),
             onChanged: (final text) => GestureBuilder.get(
               context: context,
-              node: widget.state.node,
+              state: widget.state,
               gesture: ActionGesture.onChange,
               action: widget.action,
               actionValue: FTextTypeInput(value: text),
-              params: widget.state.params,
-              states: widget.state.states,
-              dataset: widget.state.dataset,
-              forPlay: widget.state.forPlay,
-              loop: widget.state.loop,
             ),
             onSubmitted: (final text) => GestureBuilder.get(
               context: context,
-              node: widget.state.node,
+              state: widget.state,
               gesture: ActionGesture.onSubmitted,
               action: widget.action,
               actionValue: FTextTypeInput(value: text),
-              params: widget.state.params,
-              states: widget.state.states,
-              dataset: widget.state.dataset,
-              forPlay: widget.state.forPlay,
-              loop: widget.state.loop,
             ),
           ),
         ),

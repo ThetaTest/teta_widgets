@@ -106,15 +106,10 @@ class _WTCardState extends State<WTCard> {
           onEnd: () {
             GestureBuilder.get(
               context: context,
-              node: widget.state.node,
+              state: widget.state,
               gesture: ActionGesture.onEnd,
               action: widget.action,
               actionValue: null,
-              params: widget.state.params,
-              states: widget.state.states,
-              dataset: widget.state.dataset,
-              forPlay: widget.state.forPlay,
-              loop: widget.state.loop,
             );
           },
           onForward: (final index, final info) {
@@ -122,29 +117,19 @@ class _WTCardState extends State<WTCard> {
               // swipe right
               GestureBuilder.get(
                 context: context,
-                node: widget.state.node,
+                state: widget.state,
                 gesture: ActionGesture.swipeRight,
                 action: widget.action,
                 actionValue: null,
-                params: widget.state.params,
-                states: widget.state.states,
-                dataset: widget.state.dataset,
-                forPlay: widget.state.forPlay,
-                loop: widget.state.loop,
               );
             } else {
               // swipe left
               GestureBuilder.get(
                 context: context,
-                node: widget.state.node,
+                state: widget.state,
                 gesture: ActionGesture.swipeLeft,
                 action: widget.action,
                 actionValue: null,
-                params: widget.state.params,
-                states: widget.state.states,
-                dataset: widget.state.dataset,
-                forPlay: widget.state.forPlay,
-                loop: widget.state.loop,
               );
             }
           },

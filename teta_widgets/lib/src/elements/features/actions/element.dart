@@ -168,9 +168,11 @@ class FActionElement extends Equatable {
 
   FActionElement.fromJson(final Map<String, dynamic> doc) {
     id = doc['id'] as String?;
-    actionType = convertDropdownToValue(ActionType.values, doc['aT'] as String?) as ActionType?;
+    actionType = convertDropdownToValue(ActionType.values, doc['aT'] as String?)
+        as ActionType?;
     actionNavigation =
-        convertDropdownToValue(ActionNavigation.values, doc['aN'] as String?) as ActionNavigation?;
+        convertDropdownToValue(ActionNavigation.values, doc['aN'] as String?)
+            as ActionNavigation?;
     customFunctionId = doc['cFid'] as int?;
     actionBraintree = convertDropdownToValue(
       ActionBraintree.values,
@@ -181,25 +183,34 @@ class FActionElement extends Equatable {
       doc['aTrans'] as String?,
     ) as ActionTranslator?;
     actionRevenueCat =
-        convertDropdownToValue(ActionRevenueCat.values, doc['aRC'] as String?) as ActionRevenueCat?;
+        convertDropdownToValue(ActionRevenueCat.values, doc['aRC'] as String?)
+            as ActionRevenueCat?;
     actionQonversion = convertDropdownToValue(
       ActionQonversion.values,
       doc['aQonversion'] as String?,
     ) as ActionQonversion?;
-    actionTheme = convertDropdownToValue(ActionTheme.values, doc['aTh'] as String?) as ActionTheme?;
+    actionTheme =
+        convertDropdownToValue(ActionTheme.values, doc['aTh'] as String?)
+            as ActionTheme?;
     actionStripe =
-        convertDropdownToValue(ActionStripe.values, doc['sPK'] as String?) as ActionStripe?;
+        convertDropdownToValue(ActionStripe.values, doc['sPK'] as String?)
+            as ActionStripe?;
     actionGoogleMaps = convertDropdownToValue(
       ActionGoogleMaps.values,
       doc['actionGoogleMaps'] as String?,
     ) as ActionGoogleMaps?;
-    actionState = convertDropdownToValue(ActionState.values, doc['aS'] as String?) as ActionState?;
+    actionState =
+        convertDropdownToValue(ActionState.values, doc['aS'] as String?)
+            as ActionState?;
     actionGesture =
-        convertDropdownToValue(ActionGesture.values, doc['g'] as String?) as ActionGesture?;
-    actionSupabaseAuth = convertDropdownToValue(ActionSupabaseAuth.values, doc['sA'] as String?)
-        as ActionSupabaseAuth?;
+        convertDropdownToValue(ActionGesture.values, doc['g'] as String?)
+            as ActionGesture?;
+    actionSupabaseAuth =
+        convertDropdownToValue(ActionSupabaseAuth.values, doc['sA'] as String?)
+            as ActionSupabaseAuth?;
     actionSupabaseDB =
-        convertDropdownToValue(ActionSupabaseDB.values, doc['sD'] as String?) as ActionSupabaseDB?;
+        convertDropdownToValue(ActionSupabaseDB.values, doc['sD'] as String?)
+            as ActionSupabaseDB?;
     actionSupabaseFunctions = convertDropdownToValue(
       ActionSupabaseFunctions.values,
       doc['supaFuncs'] as String?,
@@ -209,17 +220,21 @@ class FActionElement extends Equatable {
       doc['supaStor'] as String?,
     ) as ActionSupabaseStorage?;
     actionCamera =
-        convertDropdownToValue(ActionCamera.values, doc['aC'] as String?) as ActionCamera?;
+        convertDropdownToValue(ActionCamera.values, doc['aC'] as String?)
+            as ActionCamera?;
     actionWebView =
-        convertDropdownToValue(ActionWebView.values, doc['aW'] as String?) as ActionWebView?;
+        convertDropdownToValue(ActionWebView.values, doc['aW'] as String?)
+            as ActionWebView?;
     actionAudioPlayer = convertDropdownToValue(
       ActionAudioPlayerActions.values,
       doc['aAP'] as String?,
     ) as ActionAudioPlayerActions?;
     actionTetaDB =
-        convertDropdownToValue(ActionTetaCmsDB.values, doc['aTDb'] as String?) as ActionTetaCmsDB?;
-    actionTetaAuth = convertDropdownToValue(ActionTetaCmsAuth.values, doc['aTAu'] as String?)
-        as ActionTetaCmsAuth?;
+        convertDropdownToValue(ActionTetaCmsDB.values, doc['aTDb'] as String?)
+            as ActionTetaCmsDB?;
+    actionTetaAuth =
+        convertDropdownToValue(ActionTetaCmsAuth.values, doc['aTAu'] as String?)
+            as ActionTetaCmsAuth?;
     actionCustomHttpRequest = convertDropdownToValue(
       ActionCustomHttpRequest.values,
       doc['aCHr'] as String?,
@@ -230,7 +245,8 @@ class FActionElement extends Equatable {
     stateName4 = doc['sN4'] as String?;
     nameOfPage = doc['pN'] as String?;
     paramsToSend = doc['pTS'] as Map<String, dynamic>?;
-    valueTextTypeInput = doc['v'] != null ? FTextTypeInput(value: doc['v'] as String?) : null;
+    valueTextTypeInput =
+        doc['v'] != null ? FTextTypeInput(value: doc['v'] as String?) : null;
     valueTextTypeInput = valueTextTypeInput ??
         (doc['vTTI'] != null
             ? FTextTypeInput.fromJson(doc['vTTI'] as Map<String, dynamic>)
@@ -331,7 +347,8 @@ class FActionElement extends Equatable {
     audioPlayerUrl = doc['audioPlayerUrl'] != null
         ? FTextTypeInput.fromJson(doc['audioPlayerUrl'] as Map<String, dynamic>)
         : FTextTypeInput(value: 'no_url');
-    withCondition = doc['wCond'] != null ? doc['wCond'] as bool? ?? false : false;
+    withCondition =
+        doc['wCond'] != null ? doc['wCond'] as bool? ?? false : false;
     condition = doc['cond'] != null
         ? FTextTypeInput.fromJson(doc['cond'] as Map<String, dynamic>)
         : FTextTypeInput();
@@ -364,27 +381,30 @@ class FActionElement extends Equatable {
       doc['sCustomHttpRequestExpectedStatusCode'] as Map<String, dynamic>?,
     );
 
-    customHttpRequestHeader = (doc['sCustomHttpRequestHeader'] as List<dynamic>? ?? <dynamic>[])
-        .map(
-          (final dynamic e) => MapElement.fromJson(
-            e as Map<String, dynamic>,
-          ),
-        )
-        .toList();
-    customHttpRequestList = (doc['sCustomHttpRequestList'] as List<dynamic>? ?? <dynamic>[])
-        .map(
-          (final dynamic e) => MapElement.fromJson(
-            e as Map<String, dynamic>,
-          ),
-        )
-        .toList();
-    customHttpRequestBody = (doc['sCustomHttpRequestBody'] as List<dynamic>? ?? <dynamic>[])
-        .map(
-          (final dynamic e) => MapElement.fromJson(
-            e as Map<String, dynamic>,
-          ),
-        )
-        .toList();
+    customHttpRequestHeader =
+        (doc['sCustomHttpRequestHeader'] as List<dynamic>? ?? <dynamic>[])
+            .map(
+              (final dynamic e) => MapElement.fromJson(
+                e as Map<String, dynamic>,
+              ),
+            )
+            .toList();
+    customHttpRequestList =
+        (doc['sCustomHttpRequestList'] as List<dynamic>? ?? <dynamic>[])
+            .map(
+              (final dynamic e) => MapElement.fromJson(
+                e as Map<String, dynamic>,
+              ),
+            )
+            .toList();
+    customHttpRequestBody =
+        (doc['sCustomHttpRequestBody'] as List<dynamic>? ?? <dynamic>[])
+            .map(
+              (final dynamic e) => MapElement.fromJson(
+                e as Map<String, dynamic>,
+              ),
+            )
+            .toList();
   }
 
   String? id;
@@ -524,7 +544,8 @@ class FActionElement extends Equatable {
               -1)
             'Camera',
           if ((page.flatList ?? <CNode>[]).indexWhere(
-                (final element) => element.intrinsicState.type == NType.audioPlayer,
+                (final element) =>
+                    element.intrinsicState.type == NType.audioPlayer,
               ) !=
               -1)
             'Audio player',
@@ -785,43 +806,62 @@ class FActionElement extends Equatable {
         'v': value,
         'sFrom': dbFrom != null ? dbFrom!.toJson() : null,
         'cmsCId': cmsCollectionId,
-        'sData': dbData != null ? dbData!.map((final e) => e.toJson()).toList() : null,
+        'sData': dbData != null
+            ? dbData!.map((final e) => e.toJson()).toList()
+            : null,
         'sEq': dbEq != null ? dbEq!.toJson() : null,
         'delay': delay != null ? delay!.toJson() : null,
-        'audioPlayerUrl': audioPlayerUrl != null ? audioPlayerUrl!.toJson() : null,
+        'audioPlayerUrl':
+            audioPlayerUrl != null ? audioPlayerUrl!.toJson() : null,
         'wCond': withCondition,
         'cond': condition != null ? condition!.toJson() : null,
         'vCond': valueOfCondition != null ? valueOfCondition!.toJson() : null,
         'wLoop': withLoop,
-        'evrMll': everyMilliseconds != null ? everyMilliseconds!.toJson() : null,
-        'vTTI': valueTextTypeInput != null ? valueTextTypeInput!.toJson() : null,
+        'evrMll':
+            everyMilliseconds != null ? everyMilliseconds!.toJson() : null,
+        'vTTI':
+            valueTextTypeInput != null ? valueTextTypeInput!.toJson() : null,
         //email, phone, city, state, line1, postalCode, country
-        'stripeBillingInfoEmail':
-            stripeBillingInfoEmail != null ? stripeBillingInfoEmail!.toJson() : null,
-        'stripePaymentIntentId':
-            stripePaymentIntentId != null ? stripePaymentIntentId!.toJson() : null,
-        'stripeBillingInfoPhone':
-            stripeBillingInfoPhone != null ? stripeBillingInfoPhone!.toJson() : null,
-        'stripeBillingInfoCity':
-            stripeBillingInfoCity != null ? stripeBillingInfoCity!.toJson() : null,
-        'stripeBillingInfoState':
-            stripeBillingInfoState != null ? stripeBillingInfoState!.toJson() : null,
-        'stripeBillingInfoLine':
-            stripeBillingInfoLine != null ? stripeBillingInfoLine!.toJson() : null,
-        'stripeBillingInfoPostalCode':
-            stripeBillingInfoPostalCode != null ? stripeBillingInfoPostalCode!.toJson() : null,
-        'stripeBillingInfoCountry':
-            stripeBillingInfoCountry != null ? stripeBillingInfoCountry!.toJson() : null,
-        'stripeShippingId': stripeShippingId != null ? stripeShippingId!.toJson() : null,
+        'stripeBillingInfoEmail': stripeBillingInfoEmail != null
+            ? stripeBillingInfoEmail!.toJson()
+            : null,
+        'stripePaymentIntentId': stripePaymentIntentId != null
+            ? stripePaymentIntentId!.toJson()
+            : null,
+        'stripeBillingInfoPhone': stripeBillingInfoPhone != null
+            ? stripeBillingInfoPhone!.toJson()
+            : null,
+        'stripeBillingInfoCity': stripeBillingInfoCity != null
+            ? stripeBillingInfoCity!.toJson()
+            : null,
+        'stripeBillingInfoState': stripeBillingInfoState != null
+            ? stripeBillingInfoState!.toJson()
+            : null,
+        'stripeBillingInfoLine': stripeBillingInfoLine != null
+            ? stripeBillingInfoLine!.toJson()
+            : null,
+        'stripeBillingInfoPostalCode': stripeBillingInfoPostalCode != null
+            ? stripeBillingInfoPostalCode!.toJson()
+            : null,
+        'stripeBillingInfoCountry': stripeBillingInfoCountry != null
+            ? stripeBillingInfoCountry!.toJson()
+            : null,
+        'stripeShippingId':
+            stripeShippingId != null ? stripeShippingId!.toJson() : null,
         //lat, lng, zoom
         'googleMapsLat': googleMapsLat != null ? googleMapsLat!.toJson() : null,
         'googleMapsLng': googleMapsLng != null ? googleMapsLng!.toJson() : null,
-        'googleMapsZoom': googleMapsZoom != null ? googleMapsZoom!.toJson() : null,
-        'revenueCatEntitle': revenueCatEntitlement != null ? revenueCatEntitlement!.toJson() : null,
-        'revenueCatProdId':
-            revenueCatProductIdentifier != null ? revenueCatProductIdentifier!.toJson() : null,
-        'qonversionProdId':
-            qonversionProductIdentifier != null ? qonversionProductIdentifier!.toJson() : null,
+        'googleMapsZoom':
+            googleMapsZoom != null ? googleMapsZoom!.toJson() : null,
+        'revenueCatEntitle': revenueCatEntitlement != null
+            ? revenueCatEntitlement!.toJson()
+            : null,
+        'revenueCatProdId': revenueCatProductIdentifier != null
+            ? revenueCatProductIdentifier!.toJson()
+            : null,
+        'qonversionProdId': qonversionProductIdentifier != null
+            ? qonversionProductIdentifier!.toJson()
+            : null,
         'sCustomHttpRequestHeader': customHttpRequestHeader != null
             ? customHttpRequestHeader!.map((final e) => e.toJson()).toList()
             : null,
@@ -831,11 +871,13 @@ class FActionElement extends Equatable {
         'sCustomHttpRequestBody': customHttpRequestBody != null
             ? customHttpRequestBody!.map((final e) => e.toJson()).toList()
             : null,
-        'sCustomHttpRequestURL':
-            customHttpRequestURL != null ? customHttpRequestURL!.toJson() : null,
-        'sCustomHttpRequestExpectedStatusCode': customHttpRequestExpectedStatusCode != null
-            ? customHttpRequestExpectedStatusCode!.toJson()
+        'sCustomHttpRequestURL': customHttpRequestURL != null
+            ? customHttpRequestURL!.toJson()
             : null,
+        'sCustomHttpRequestExpectedStatusCode':
+            customHttpRequestExpectedStatusCode != null
+                ? customHttpRequestExpectedStatusCode!.toJson()
+                : null,
       }..removeWhere((final String key, final dynamic value) => value == null);
 
   Future getAction(
@@ -1130,7 +1172,8 @@ class FActionElement extends Equatable {
         switch (actionTranslator) {
           case ActionTranslator.translate:
             await actionS(
-              () => FActionTranslatorTranslate.action(context, state.states, stateName),
+              () => FActionTranslatorTranslate.action(
+                  context, state.states, stateName),
               context: context,
               state: state,
             );
@@ -1243,14 +1286,16 @@ class FActionElement extends Equatable {
         switch (actionState) {
           case ActionState.increment:
             await actionS(
-              () => FActionStateIncrement.action(context, state.states, stateName),
+              () => FActionStateIncrement.action(
+                  context, state.states, stateName),
               context: context,
               state: state,
             );
             break;
           case ActionState.decrement:
             await actionS(
-              () => FActionStateDecrement.action(context, state.states, stateName),
+              () => FActionStateDecrement.action(
+                  context, state.states, stateName),
               context: context,
               state: state,
             );
@@ -1378,7 +1423,8 @@ class FActionElement extends Equatable {
             );
             break;
           case ActionNavigation.launchURL:
-            PackagesService.instance.insertPackages(FActionNavigationLaunchURL.packages);
+            PackagesService.instance
+                .insertPackages(FActionNavigationLaunchURL.packages);
             await actionS(
               () => FActionNavigationLaunchURL.action(
                 context: context,
@@ -2289,11 +2335,10 @@ class FActionElement extends Equatable {
           case ActionGoogleMaps.updateLiveLocation:
             return codeS(
               FActionGoogleMapsUpdateDeviceLiveLocation.toCode(
-                pageId,
                 context,
+                pageId,
                 stateName3,
                 stateName4,
-                loop,
               ),
               context,
             );
@@ -2799,8 +2844,8 @@ class FActionElement extends Equatable {
           case ActionCamera.switchCamera:
             return codeS(
               FACameraSwitch.toCode(
-                pageId,
                 context,
+                pageId,
                 stateName,
                 paramsToSend,
               ),
@@ -2809,23 +2854,13 @@ class FActionElement extends Equatable {
 
           case ActionCamera.offFlash:
             return codeS(
-              FACameraOffFlash.toCode(
-                pageId,
-                context,
-                stateName,
-                paramsToSend,
-              ),
+              FACameraOffFlash.toCode(context, pageId),
               context,
             );
 
           case ActionCamera.alwaysFlash:
             return codeS(
-              FACameraAlwaysFlash.toCode(
-                pageId,
-                context,
-                nameOfPage,
-                paramsToSend,
-              ),
+              FACameraAlwaysFlash.toCode(context, pageId),
               context,
             );
 
@@ -2888,11 +2923,6 @@ class FActionElement extends Equatable {
                 pageId,
                 context,
                 stateName,
-                audioPlayerUrl!.toCode(
-                  loop,
-                  resultType: ResultTypeEnum.string,
-                ),
-                null,
               ),
               context,
             );
@@ -2903,11 +2933,6 @@ class FActionElement extends Equatable {
                 pageId,
                 context,
                 stateName,
-                audioPlayerUrl!.toCode(
-                  loop,
-                  resultType: ResultTypeEnum.string,
-                ),
-                loop,
               ),
               context,
             );
@@ -2918,11 +2943,6 @@ class FActionElement extends Equatable {
                 pageId,
                 context,
                 stateName,
-                audioPlayerUrl!.toCode(
-                  loop,
-                  resultType: ResultTypeEnum.string,
-                ),
-                loop,
               ),
               context,
             );

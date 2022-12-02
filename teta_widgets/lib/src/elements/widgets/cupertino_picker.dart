@@ -40,14 +40,10 @@ class _WCupertinoPickerState extends State<WCupertinoPicker> {
         onSelectedItemChanged: (final index) {
           GestureBuilder.get(
             context: context,
-            node: widget.state.node,
+            state: widget.state,
             action: widget.action,
             actionValue: null,
             gesture: ActionGesture.onChange,
-            params: widget.state.params,
-            states: widget.state.states,
-            dataset: widget.state.dataset,
-            forPlay: widget.state.forPlay,
           );
         },
         looping: widget.loopingFlag,

@@ -50,49 +50,45 @@ class _WPageViewState extends State<WPageView> {
           scrollDirection: widget.isVertical ? Axis.vertical : Axis.horizontal,
           onPageChanged: (final i) => GestureBuilder.get(
             context: context,
-            node: widget.state.node,
+            state: widget.state,
             gesture: ActionGesture.onChange,
             action: widget.action,
             actionValue: FTextTypeInput(value: '$i'),
-            params: widget.state.params,
-            states: widget.state.states,
-            dataset: widget.state.dataset,
-            forPlay: widget.state.forPlay,
-            loop: widget.state.loop,
           ),
           itemCount: widget.children.length,
-          itemBuilder: (final context, final index) => widget.children.isNotEmpty
-              ? widget.children
-                  .map(
-                    (final e) => e.toWidget(state: widget.state),
-                  )
-                  .toList()[index]
-              : [
-                  const Padding(
-                    padding: EdgeInsets.all(16),
-                    child: Center(
-                      child: THeadline3(
-                        'PageView - Page 1',
+          itemBuilder: (final context, final index) =>
+              widget.children.isNotEmpty
+                  ? widget.children
+                      .map(
+                        (final e) => e.toWidget(state: widget.state),
+                      )
+                      .toList()[index]
+                  : [
+                      const Padding(
+                        padding: EdgeInsets.all(16),
+                        child: Center(
+                          child: THeadline3(
+                            'PageView - Page 1',
+                          ),
+                        ),
                       ),
-                    ),
-                  ),
-                  const Padding(
-                    padding: EdgeInsets.all(16),
-                    child: Center(
-                      child: THeadline3(
-                        'PageView - Page 2',
+                      const Padding(
+                        padding: EdgeInsets.all(16),
+                        child: Center(
+                          child: THeadline3(
+                            'PageView - Page 2',
+                          ),
+                        ),
                       ),
-                    ),
-                  ),
-                  const Padding(
-                    padding: EdgeInsets.all(16),
-                    child: Center(
-                      child: THeadline3(
-                        'PageView - Page 3',
+                      const Padding(
+                        padding: EdgeInsets.all(16),
+                        child: Center(
+                          child: THeadline3(
+                            'PageView - Page 3',
+                          ),
+                        ),
                       ),
-                    ),
-                  ),
-                ][index],
+                    ][index],
         ),
       ),
     );

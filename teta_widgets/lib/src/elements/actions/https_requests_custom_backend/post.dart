@@ -33,7 +33,8 @@ class FACustomHttpRequestPost {
       state.loop,
       context,
     );
-    final customHttpRequestExpectedStatusCodeNew = customHttpRequestExpectedStatusCode?.get(
+    final customHttpRequestExpectedStatusCodeNew =
+        customHttpRequestExpectedStatusCode?.get(
       state.params,
       state.states,
       state.dataset,
@@ -76,8 +77,12 @@ class FACustomHttpRequestPost {
     }
 
     if (urlNew != null && customHttpRequestExpectedStatusCodeNew != null) {
-      final response = await TetaCMS.instance.httpRequest
-          .post(urlNew, customHttpRequestExpectedStatusCodeNew, mapParameters, mapBody, mapHeaders);
+      final response = await TetaCMS.instance.httpRequest.post(
+          urlNew,
+          customHttpRequestExpectedStatusCodeNew,
+          mapParameters,
+          mapBody,
+          mapHeaders);
       if (response.data != null) {
         _map = _map.copyWith(
           name: 'Custom Http Request Post',
@@ -100,12 +105,12 @@ class FACustomHttpRequestPost {
   }
 
   static String toCode(
-    final TetaWidgetState state,
     final FTextTypeInput? url,
     final FTextTypeInput? customHttpRequestExpectedStatusCode,
     final List<MapElement>? parameters,
     final List<MapElement>? body,
     final List<MapElement>? headers,
+    final int? loop,
   ) {
     //parameters
     final mapParameters = <String, dynamic>{};
@@ -168,18 +173,19 @@ class FACustomHttpRequestPost {
     //url
     final urlNew = url
         ?.toCode(
-          state.loop,
+          loop,
           resultType: ResultTypeEnum.string,
         )
         .replaceAll("'", '')
         .replaceAll(' ', '');
-    final customHttpRequestExpectedStatusCodeNew = customHttpRequestExpectedStatusCode
-        ?.toCode(
-          state.loop,
-          resultType: ResultTypeEnum.string,
-        )
-        .replaceAll("'", '')
-        .replaceAll(' ', '');
+    final customHttpRequestExpectedStatusCodeNew =
+        customHttpRequestExpectedStatusCode
+            ?.toCode(
+              loop,
+              resultType: ResultTypeEnum.string,
+            )
+            .replaceAll("'", '')
+            .replaceAll(' ', '');
     return '''
       final response = await TetaCMS.instance.httpRequest.post(
         '$urlNew',
@@ -188,10 +194,14 @@ class FACustomHttpRequestPost {
         <String, dynamic>$mapBodyString,
         <String, dynamic>$mapHeadersString,
       );
-      
+
       List<dynamic>? list;
-      if (response.data != null){ list = response.data as List<dynamic>?; };
-      if (response.error != null){ list = response.error as List<dynamic>?; };
+      if (response.data != null) {
+        list = response.data as List<dynamic>?;
+      };
+      if (response.error != null) {
+        list = response.error as List<dynamic>?;
+      };
       datasets['Custom Http Request Post'] = list ?? const <dynamic>[];
       ''';
   }

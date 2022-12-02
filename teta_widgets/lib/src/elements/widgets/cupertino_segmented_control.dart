@@ -32,10 +32,12 @@ class WCupertinoSegmentedControl extends StatefulWidget {
   final FFill borderColor;
 
   @override
-  State<WCupertinoSegmentedControl> createState() => _WCupertinoSegmentedControlState();
+  State<WCupertinoSegmentedControl> createState() =>
+      _WCupertinoSegmentedControlState();
 }
 
-class _WCupertinoSegmentedControlState extends State<WCupertinoSegmentedControl> {
+class _WCupertinoSegmentedControlState
+    extends State<WCupertinoSegmentedControl> {
   int value = 0;
   @override
   Widget build(final BuildContext context) {
@@ -71,19 +73,16 @@ class _WCupertinoSegmentedControlState extends State<WCupertinoSegmentedControl>
           groupValue: value,
           pressedColor: HexColor(widget.pressedColor.getHexColor(context)),
           selectedColor: HexColor(widget.selectedColor.getHexColor(context)),
-          unselectedColor: HexColor(widget.unselectedColor.getHexColor(context)),
+          unselectedColor:
+              HexColor(widget.unselectedColor.getHexColor(context)),
           borderColor: HexColor(widget.borderColor.getHexColor(context)),
           onValueChanged: (final v) {
             GestureBuilder.get(
               context: context,
-              node: widget.state.node,
+              state: widget.state,
               action: null, //widget.action,
               actionValue: null, //FTextTypeInput(value: '$v'),
               gesture: ActionGesture.onTap,
-              params: widget.state.params,
-              states: widget.state.states,
-              dataset: widget.state.dataset,
-              forPlay: widget.state.forPlay,
             );
             setState(() {
               value = v;

@@ -94,14 +94,10 @@ class WRefreshIndicator extends StatelessWidget {
           );
           GestureBuilder.get(
             context: context,
-            node: state.node,
+            state: state,
             gesture: ActionGesture.onTap,
             action: action,
             actionValue: actionValue,
-            params: state.params,
-            states: state.states,
-            dataset: state.dataset,
-            forPlay: state.forPlay,
           );
           return;
         },

@@ -53,14 +53,10 @@ class _WRadioState extends State<WRadio> {
         onChanged: (final value) {
           GestureBuilder.get(
             context: context,
-            node: widget.state.node,
+            state: widget.state,
             gesture: ActionGesture.onTap,
             action: widget.action,
             actionValue: null,
-            params: widget.state.params,
-            states: widget.state.states,
-            dataset: widget.state.dataset,
-            forPlay: widget.state.forPlay,
           );
           if (widget.state.forPlay) {
             if (mounted) {

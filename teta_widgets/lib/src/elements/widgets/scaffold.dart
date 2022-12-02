@@ -60,15 +60,10 @@ class _WScaffoldState extends State<WScaffold> {
     if (widget.state.forPlay) {
       GestureBuilder.get(
         context: context,
-        node: widget.state.node,
+        state: widget.state,
         gesture: ActionGesture.initState,
         actionValue: null,
         action: widget.action,
-        params: widget.state.params,
-        states: widget.state.states,
-        dataset: widget.state.dataset,
-        forPlay: widget.state.forPlay,
-        loop: widget.state.loop,
       );
     }
     super.initState();
@@ -210,7 +205,9 @@ class _WScaffoldState extends State<WScaffold> {
             bottom: 0,
             left: 0,
             right: 0,
-            child: (bottomBar != null) ? bottomBar.toWidget(state: widget.state) : const SizedBox(),
+            child: (bottomBar != null)
+                ? bottomBar.toWidget(state: widget.state)
+                : const SizedBox(),
           ),
       ],
     );

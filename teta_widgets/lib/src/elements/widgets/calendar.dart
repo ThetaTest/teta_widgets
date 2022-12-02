@@ -78,7 +78,9 @@ class _WCalendarState extends State<WCalendar> {
         var eventExists = false;
         final dayFlag = list.firstWhereOrNull(
           (final e) =>
-              e.date.year == date.year && e.date.month == date.month && e.date.day == date.day,
+              e.date.year == date.year &&
+              e.date.month == date.month &&
+              e.date.day == date.day,
         );
         if (dayFlag == null) {
           dataset ??= widget.state.dataset.firstWhereOrNull(
@@ -89,7 +91,9 @@ class _WCalendarState extends State<WCalendar> {
               final a = DateTime.tryParse(
                 element[widget.value.datasetAttrName] as String? ?? '',
               );
-              return a?.year == date.year && a?.month == date.month && a?.day == date.day;
+              return a?.year == date.year &&
+                  a?.month == date.month &&
+                  a?.day == date.day;
             });
             eventExists = element != null;
           }
@@ -104,7 +108,9 @@ class _WCalendarState extends State<WCalendar> {
           padding: widget.padding.get(context),
           decoration: TetaBoxDecoration.get(
             context: context,
-            fill: eventExists ? widget.fill2.get(context) : widget.fill.get(context),
+            fill: eventExists
+                ? widget.fill2.get(context)
+                : widget.fill.get(context),
             borderRadius: widget.borderRadius,
             shadow: widget.shadows,
           ),
@@ -148,34 +154,28 @@ class _WCalendarState extends State<WCalendar> {
         final loop = data.getMap.indexOf(
           data.getMap.firstWhere(
             (final element) =>
-                element[widget.value.datasetAttrName].toString().substring(0, 10) ==
+                element[widget.value.datasetAttrName]
+                    .toString()
+                    .substring(0, 10) ==
                 date.toString().substring(0, 10),
           ),
         );
         GestureBuilder.get(
           context: context,
-          node: widget.state.node,
+          state: widget.state.copyWith(
+            loop: loop,
+          ),
           gesture: ActionGesture.onDayPressed,
           action: widget.action,
           actionValue: FTextTypeInput(value: date.toIso8601String()),
-          params: widget.state.params,
-          states: widget.state.states,
-          dataset: widget.state.dataset,
-          forPlay: widget.state.forPlay,
-          loop: loop,
         );
       },
       onMonthLoaded: (final year, final month) => GestureBuilder.get(
         context: context,
-        node: widget.state.node,
+        state: widget.state,
         gesture: ActionGesture.onMonthLoaded,
         action: widget.action,
         actionValue: FTextTypeInput(value: '$month'),
-        params: widget.state.params,
-        states: widget.state.states,
-        dataset: widget.state.dataset,
-        forPlay: widget.state.forPlay,
-        loop: widget.state.loop,
       ),
     );
   }
@@ -185,7 +185,8 @@ class _WCalendarState extends State<WCalendar> {
       final index = widget.state.dataset.indexWhere(
         (final element) => element.getName == widget.value.datasetName,
       );
-      final db = index != -1 ? widget.state.dataset[index] : DatasetObject.empty();
+      final db =
+          index != -1 ? widget.state.dataset[index] : DatasetObject.empty();
       if (mounted) {
         if (db.getName != '') {
           setState(() {

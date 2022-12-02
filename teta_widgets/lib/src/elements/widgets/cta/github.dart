@@ -38,25 +38,17 @@ class WLoginWithGitHub extends StatelessWidget {
         child: GithubAuthButton(
           onPressed: () => GestureBuilder.get(
             context: context,
-            node: state.node,
+            state: state,
             gesture: ActionGesture.onTap,
             action: action,
             actionValue: null,
-            params: state.params,
-            states: state.states,
-            dataset: state.dataset,
-            forPlay: state.forPlay,
           ),
           onLongPress: () => GestureBuilder.get(
             context: context,
-            node: state.node,
+            state: state,
             gesture: ActionGesture.onLongPress,
             action: action,
             actionValue: null,
-            params: state.params,
-            states: state.states,
-            dataset: state.dataset,
-            forPlay: state.forPlay,
           ),
           style: const AuthButtonStyle(
             padding: EdgeInsets.symmetric(vertical: 16),
