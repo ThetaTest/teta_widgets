@@ -226,6 +226,25 @@ class NDynamic extends CNode {
   }
 
   @override
+  Widget toWidgetFromParams({
+    required final bool forPlay,
+    required final List<VariableObject> params,
+    required final List<VariableObject> states,
+    required final List<DatasetObject> datasets,
+  }) {
+    return body.toWidget(
+      state: TetaWidgetState(
+        node: this,
+        forPlay: forPlay,
+        loop: null,
+        params: params,
+        states: states,
+        dataset: datasets,
+      ),
+    );
+  }
+
+  @override
   Future<String> toCode(final BuildContext context) =>
       body.toCode(context, this, child, children, pageId!, null);
 
