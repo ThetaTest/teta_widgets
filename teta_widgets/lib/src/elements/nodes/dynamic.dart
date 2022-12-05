@@ -233,6 +233,8 @@ class NDynamic extends CNode {
     required final List<DatasetObject> datasets,
   }) {
     return body.toWidget(
+      child: child,
+      children: children,
       state: TetaWidgetState(
         node: this,
         forPlay: forPlay,
