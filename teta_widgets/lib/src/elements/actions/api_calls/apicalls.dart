@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 // Package imports:
 import 'package:teta_cms/teta_cms.dart';
 import 'package:teta_core/teta_core.dart';
+import 'package:teta_widgets/src/elements/builder/save_dataset.dart';
 // Project imports:
 import 'package:teta_widgets/src/elements/index.dart';
 
@@ -193,7 +194,7 @@ class FAApiCalls {
           );
         }
 
-        addDataset(context, dataset, _map);
+        await saveDatasets(context, dataset, _map);
       }
       if (requestType == 'Post') {
         final response = await TetaCMS.instance.httpRequest.post(
@@ -220,7 +221,7 @@ class FAApiCalls {
           );
         }
 
-        addDataset(context, dataset, _map);
+        await saveDatasets(context, dataset, _map);
       }
       if (requestType == 'Delete') {
         final response = await TetaCMS.instance.httpRequest.delete(
@@ -245,7 +246,7 @@ class FAApiCalls {
             }).toList(),
           );
         }
-        addDataset(context, dataset, _map);
+        await saveDatasets(context, dataset, _map);
       }
       if (requestType == 'Update') {
         final response = await TetaCMS.instance.httpRequest.update(
@@ -278,7 +279,7 @@ class FAApiCalls {
                 .toList(),
           );
         }
-        addDataset(context, dataset, _map);
+        await saveDatasets(context, dataset, _map);
       }
     }
   }
@@ -462,7 +463,10 @@ class FAApiCalls {
         .replaceAll("'", '')
         .replaceAll(' ', '');
     var requestTypeToString = '';
-
+    var hive = '''if (Hive.isBoxOpen('datasets')) {
+      final box = Hive.box('datasets');
+      await box.put('$apiCallsResponseNameNew',list ?? const <dynamic>[]);
+    }''';
     var toCode = '''''';
     if (requestType == 'Delete') {
       requestTypeToString = 'delete';
@@ -472,7 +476,9 @@ class FAApiCalls {
       List<dynamic>? list;
       if (response.data != null){  list = response.data as List<dynamic>?;};
       if (response.error != null){  list = response.error as List<dynamic>?;};
-      datasets['$apiCallsResponseNameNew'] = list ?? const <dynamic>[];''';
+      datasets['$apiCallsResponseNameNew'] = list ?? const <dynamic>[];
+      $hive
+      ''';
     }
     if (requestType == 'Post') {
       requestTypeToString = 'post';
@@ -482,7 +488,8 @@ class FAApiCalls {
       List<dynamic>? list;
       if (response.data != null){  list = response.data as List<dynamic>?;};
       if (response.error != null){  list = response.error as List<dynamic>?;};
-      datasets['$apiCallsResponseNameNew'] = list ?? const <dynamic>[];''';
+      datasets['$apiCallsResponseNameNew'] = list ?? const <dynamic>[];
+      $hive''';
     }
     if (requestType == 'Update') {
       requestTypeToString = 'update';
@@ -492,7 +499,8 @@ class FAApiCalls {
       List<dynamic>? list;
       if (response.data != null){  list = response.data as List<dynamic>?;};
       if (response.error != null){  list = response.error as List<dynamic>?;};
-      datasets['$apiCallsResponseNameNew'] = list ?? const <dynamic>[];''';
+      datasets['$apiCallsResponseNameNew'] = list ?? const <dynamic>[];
+      $hive''';
     }
     if (requestType == 'Get') {
       requestTypeToString = 'get';
@@ -502,7 +510,8 @@ class FAApiCalls {
       List<dynamic>? list;
       if (response.data != null){  list = response.data as List<dynamic>?;};
       if (response.error != null){  list = response.error as List<dynamic>?;};
-      datasets['$apiCallsResponseNameNew'] = list ?? const <dynamic>[];''';
+      datasets['$apiCallsResponseNameNew'] = list ?? const <dynamic>[];
+      $hive''';
     }
     return toCode;
   }
