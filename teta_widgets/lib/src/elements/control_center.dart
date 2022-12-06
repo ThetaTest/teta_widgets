@@ -9,6 +9,7 @@ import 'package:teta_widgets/src/elements/bodies/animations/anim_config_list.dar
 import 'package:teta_widgets/src/elements/bodies/animations/fade_in.dart';
 import 'package:teta_widgets/src/elements/bodies/animations/scale.dart';
 import 'package:teta_widgets/src/elements/bodies/animations/slide.dart';
+import 'package:teta_widgets/src/elements/bodies/api_calls/api_calls_fetch.dart';
 import 'package:teta_widgets/src/elements/bodies/aspect_ratio.dart';
 import 'package:teta_widgets/src/elements/bodies/audio_player_body.dart';
 import 'package:teta_widgets/src/elements/bodies/audio_player_progress_indicator_body.dart';
@@ -275,6 +276,7 @@ final stateTypes = <IntrinsicStates>[
   qrScannerIntrinsicStates,
   limitedBoxIntrinsicStates,
   customHttpRequestIntrinsicStates,
+  apiCallsFetchIntrinsicStates,
 ];
 
 /// Method to return any body
@@ -573,6 +575,8 @@ NodeBody getBody(final NType type) {
     case NType.airtableFetch:
       // TODO: Handle this case.
       break;
+    case NType.apiCallsFetch:
+      return ApiCallsFetchBody();
   }
   return NodeBody();
 }

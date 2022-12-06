@@ -265,8 +265,8 @@ class FActionElement extends Equatable {
       doc['aCHr'] as String?,
     ) as ActionCustomHttpRequest?;
     actionApiCalls =
-    convertDropdownToValue(ActionApiCalls.values, doc['aAC'] as String?)
-    as ActionApiCalls?;
+            convertDropdownToValue(ActionApiCalls.values, doc['aAC'] as String?)
+            as ActionApiCalls?;
     stateName = doc['sN'] as String?;
     stateName2 = doc['sN2'] as String?;
     stateName3 = doc['sN3'] as String?;
@@ -451,6 +451,19 @@ class FActionElement extends Equatable {
               ),
         )
             .toList();
+    apiCallsRequestName = doc['aCRN'] as String?;
+    apiCallsSelectedRequest = doc['aCSR'] as Map<String, dynamic>?;
+    apiCallsResponseName = FTextTypeInput.fromJson(
+      doc['aCResN'] as Map<String, dynamic>?,
+    );
+    apiCallsDynamicValue =
+        (doc['sApiCallsDynamicValue'] as List<dynamic>? ?? <dynamic>[])
+            .map(
+              (final dynamic e) => MapElement.fromJson(
+                e as Map<String, dynamic>,
+              ),
+            )
+            .toList();
   }
 
   String? id;
@@ -537,7 +550,6 @@ class FActionElement extends Equatable {
 
   /// Airtable
   FTextTypeInput? airtableRecordName;
-
   /// Api Calls
   String? apiCallsRequestName;
   Map<String, dynamic>? apiCallsSelectedRequest;
@@ -817,7 +829,6 @@ class FActionElement extends Equatable {
     if (type == ActionType.apiCalls) {
       return 'Api Calls';
     }
-
     if (type == ActionType.airtable) return 'Airtable Database';
 
     if (type != null) {
@@ -981,12 +992,17 @@ class FActionElement extends Equatable {
             ? customHttpRequestURL!.toJson()
             : null,
         'sCustomHttpRequestExpectedStatusCode':
-        customHttpRequestExpectedStatusCode != null
-            ? customHttpRequestExpectedStatusCode!.toJson()
-            : null,
+            customHttpRequestExpectedStatusCode != null
+                ? customHttpRequestExpectedStatusCode!.toJson()
+                : null,
         'aCRN': apiCallsRequestName,
         'aCSR': apiCallsSelectedRequest,
         'aCResN': apiCallsResponseName,
+
+        'sApiCallsDynamicValue': apiCallsDynamicValue != null
+            ? apiCallsDynamicValue!.map((final e) => e.toJson()).toList()
+            : null,
+      }..removeWhere((final String key, final dynamic value) => value == null);
 
         'sApiCallsDynamicValue': apiCallsDynamicValue != null
             ? apiCallsDynamicValue!.map((final e) => e.toJson()).toList()
@@ -1311,6 +1327,33 @@ class FActionElement extends Equatable {
             break;
         }
         break;
+      case ActionType.apiCalls:
+        switch (actionApiCalls) {
+          case ActionApiCalls.apiCalls:
+            await actionS(
+              () => FAApiCalls.action(
+                context,
+                apiCallsRequestName,
+                apiCallsSelectedRequest,
+                customHttpRequestExpectedStatusCode,
+                apiCallsResponseName,
+                apiCallsDynamicValue,
+                params,
+                states,
+                dataset,
+                loop,
+              ),
+              context: context,
+              params: params,
+              states: states,
+              dataset: dataset,
+              loop: loop,
+            );
+            break;
+          default:
+            break;
+        }
+        break;
       case ActionType.revenueCat:
         switch (actionRevenueCat) {
           case ActionRevenueCat.buy:
@@ -1356,15 +1399,14 @@ class FActionElement extends Equatable {
         switch (actionMixpanel) {
           case ActionMixpanel.setUserId:
             await actionS(
-                  () =>
-                  FAMixpanelSetUserId.action(
-                    context,
-                    valueTextTypeInput,
-                    params,
-                    states,
-                    dataset,
-                    loop ?? 0,
-                  ),
+              () => FAMixpanelSetUserId.action(
+                context,
+                valueTextTypeInput,
+                params,
+                states,
+                dataset,
+                loop ?? 0,
+              ),
               context: context,
               params: params,
               states: states,
@@ -1374,16 +1416,15 @@ class FActionElement extends Equatable {
             break;
           case ActionMixpanel.track:
             await actionS(
-                  () =>
-                  FAMixpanelTrack.action(
-                    context,
-                    valueTextTypeInput,
-                    customHttpRequestBody,
-                    params,
-                    states,
-                    dataset,
-                    loop ?? 0,
-                  ),
+              () => FAMixpanelTrack.action(
+                context,
+                valueTextTypeInput,
+                customHttpRequestBody,
+                params,
+                states,
+                dataset,
+                loop ?? 0,
+              ),
               context: context,
               params: params,
               states: states,

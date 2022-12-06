@@ -178,6 +178,7 @@ dependencies:
   # Responsive values / builder
   responsive_builder: ^0.4.3
   device_frame:
+  reorderables:
 
 dev_dependencies:
   flutter_test:

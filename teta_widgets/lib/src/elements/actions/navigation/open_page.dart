@@ -86,6 +86,9 @@ class FActionNavigationOpenPage {
         final scaffold = NodeRendering.renderTree(nodes);
         page = page.copyWith(flatList: nodes, scaffold: scaffold);
 
+        BlocProvider.of<PageCubit>(context)
+            .onFocus(prj: prj.prj, page: page, context: context);
+
         await Navigator.push<void>(
           context,
           MaterialPageRoute(

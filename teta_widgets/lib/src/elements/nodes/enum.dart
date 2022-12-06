@@ -169,7 +169,10 @@ enum NType {
   location,
 
   // Airtable
-  airtableFetch
+  airtableFetch,
+
+  // Api Calls
+  apiCallsFetch,
 }
 
 extension NodeType on NType {

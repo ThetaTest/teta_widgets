@@ -166,6 +166,7 @@ Future<String> pageCodeTemplate(
     import 'dart:async';
     import 'package:myapp/src/teta_files/imports.dart';
     import 'package:myapp/constants.dart' as constantz;
+    import 'package:hive_flutter/hive_flutter.dart';
     ${page.isAuthenticatedRequired ? "import 'package:myapp/auth/auth_required_state.dart';" : "import 'package:myapp/auth/auth_state.dart';"}
     ${prj.config?.isAdaptyReady ?? false ? "import 'package:adapty_flutter/adapty_flutter.dart';" : ''}
     ${prj.config?.isRevenueCatEnabled ?? false ? "import 'package:purchases_flutter/purchases_flutter.dart';" : ''}
@@ -194,6 +195,7 @@ Future<String> pageCodeTemplate(
 
       @override
       void initState() {
+        getDatasetsObject();
         super.initState();
         TetaCMS.instance.analytics.insertEvent(
           TetaAnalyticsType.usage,
@@ -208,7 +210,15 @@ Future<String> pageCodeTemplate(
         $onInitActions
         \n
       }
-
+  void getDatasetsObject() {
+    if (Hive.isBoxOpen('datasets')) {
+      final box = Hive.box('datasets');
+      var boxMap = box.toMap();
+      for (dynamic key in boxMap.keys) {
+        datasets[key.toString()] = boxMap[key];
+      }
+    }
+  }
       @override
       Widget build(BuildContext context) {
         return ${page.isPage ? '''
