@@ -101,8 +101,31 @@ class DatasetControlState extends State<DatasetControl> {
   }
 
   Widget _buildAttrSelection(BuildContext context) {
+    var isAttrRequired = widget.isAttrRequired;
+
+    if (databaseName != '') {
+      bool hasSubList;
+      widget.page.datasets
+              .where(
+                (final element) => element.getName == databaseName,
+              )
+              .first
+              .getMap
+              .isNotEmpty
+          ? hasSubList = widget.page.datasets
+              .where(
+                (final element) => element.getName == databaseName,
+              )
+              .first
+              .hasSubList()
+          : hasSubList = false;
+      if (hasSubList == true) {
+        isAttrRequired = true;
+      }
+    }
+
     try {
-      if ((widget.isAttrRequired ?? false) && databaseName != '') {
+      if (((isAttrRequired ?? false) && databaseName != '')) {
         return CDropdown(
           value: (widget.page.datasets
                           .where(

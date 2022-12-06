@@ -61,9 +61,6 @@ class NodeSelectionState extends State<NodeSelection> {
       child: GestureDetector(
         onTap: () {
           BlocProvider.of<FocusBloc>(context).add(OnFocus(node: widget.node));
-        },
-        onDoubleTap: () {
-          BlocProvider.of<FocusBloc>(context).add(OnFocus(node: widget.node));
           BlocProvider.of<JumpToCubit>(context).jumpTo(context, widget.node);
         },
         child: body(),

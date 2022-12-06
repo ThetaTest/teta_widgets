@@ -74,7 +74,7 @@ class CustomHttpRequestUpdateControl extends StatelessWidget {
         HttpParamsControl(
           node: node,
           page: page,
-          title: 'Add Paramaters',
+          title: 'Add Params',
           list: action.customHttpRequestList ?? <MapElement>[],
           callBack: (final value, final old) {
             action.customHttpRequestList = value;
@@ -86,7 +86,7 @@ class CustomHttpRequestUpdateControl extends StatelessWidget {
           child: Padding(
             padding: EdgeInsets.only(bottom: 8),
             child: TDetailLabel(
-              'Add Paramaters. Example : www.example.com/key/\${value}',
+              'Add Params. Example : www.example.com/users/?key=\${value}',
             ),
           ),
         ),

@@ -55,6 +55,10 @@ class PaddingsState extends State<TextControl> {
   late TextEditingController keyController;
   String databaseName = '';
   String databaseAttribute = '';
+  String datasetSubListData = '';
+  String datasetSubMapData = '';
+  String datasetLength = '';
+
   FTextTypeEnum typeOfInput = FTextTypeEnum.text;
   bool isChanged = false;
 
@@ -71,6 +75,9 @@ class PaddingsState extends State<TextControl> {
         databaseName = widget.value.datasetName!;
       }
       databaseAttribute = widget.value.datasetAttr!;
+      datasetSubListData = widget.value.datasetSubListData!;
+      datasetSubMapData = widget.value.datasetSubMapData!;
+      datasetLength = widget.value.datasetLength!;
     } catch (_) {}
     keyController.text = widget.value.mapKey ?? '';
     super.initState();
@@ -494,13 +501,105 @@ class PaddingsState extends State<TextControl> {
                         onChange: (final newValue) {
                           setState(() {
                             databaseAttribute = newValue!;
+                            datasetLength = (dataset.getMap.isNotEmpty
+                                    ? dataset.getMap
+                                    : <dynamic>[])
+                                .length
+                                .toString();
                           });
                           final old = widget.value;
                           widget.value.datasetAttr = newValue;
+                          widget.value.datasetLength =
+                              (dataset.getMap.isNotEmpty
+                                      ? dataset.getMap
+                                      : <dynamic>[])
+                                  .length
+                                  .toString();
+                          widget.value.datasetSubListData = '';
+                          widget.value.datasetSubMapData = '';
                           widget.callBack(widget.value, old);
                         },
                       ),
                     ),
+                //////////
+                if (widget.valueType == VariableType.string ||
+                    widget.valueType == VariableType.dynamic)
+                  if (widget.value.type == FTextTypeEnum.dataset &&
+                      widget.value.datasetName != null &&
+                      widget.value.datasetAttr != null &&
+                      dataset.isSubMap(widget.value.datasetAttr ?? ''))
+                    Padding(
+                      padding: EI.smT,
+                      child: CDropdown(
+                        value: (dataset.getMap.first[widget.value.datasetAttr]
+                                    as Map<String, dynamic>)
+                                .keys
+                                .toSet()
+                                .contains(widget.value.datasetSubMapData)
+                            ? widget.value.datasetSubMapData
+                            : null,
+                        items: (dataset.getMap.first[widget.value.datasetAttr]
+                                as Map<String, dynamic>)
+                            .keys
+                            .toSet()
+                            .toList(),
+                        onChange: (final newValue) {
+                          setState(() {
+                            datasetSubMapData = newValue!;
+                          });
+                          final old = widget.value;
+                          widget.value.datasetSubMapData = newValue;
+                          widget.value.datasetSubListData = '';
+                          widget.callBack(widget.value, old);
+                        },
+                      ),
+                    ),
+
+                if (widget.valueType == VariableType.string ||
+                    widget.valueType == VariableType.dynamic)
+                  if (widget.value.type == FTextTypeEnum.dataset &&
+                      widget.value.datasetName != null &&
+                      widget.value.datasetAttr != null &&
+                      dataset.isSubList(widget.value.datasetAttr ?? ''))
+                    Padding(
+                      padding: EI.smT,
+                      child: CDropdown(
+                        value: ((dataset.getMap.first[widget.value.datasetAttr]
+                                        as List)
+                                    .map(
+                                      (final dynamic e) =>
+                                          <String, dynamic>{...e},
+                                    )
+                                    .toList())
+                                .first
+                                .keys
+                                .toSet()
+                                .contains(widget.value.datasetSubListData)
+                            ? widget.value.datasetSubListData
+                            : null,
+                        items: ((dataset.getMap.first[widget.value.datasetAttr]
+                                    as List)
+                                .map(
+                                  (final dynamic e) => <String, dynamic>{...e},
+                                )
+                                .toList())
+                            .first
+                            .keys
+                            .toSet()
+                            .toList(),
+                        onChange: (final newValue) {
+                          setState(() {
+                            datasetSubListData = newValue!;
+                          });
+                          final old = widget.value;
+                          widget.value.datasetSubListData = newValue;
+                          widget.value.datasetSubMapData = '';
+
+                          widget.callBack(widget.value, old);
+                        },
+                      ),
+                    ),
+                /////////
                 if (widget.value.type == FTextTypeEnum.combined)
                   TContainer(
                     decoration: BoxDecoration(

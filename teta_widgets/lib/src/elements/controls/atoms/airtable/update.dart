@@ -7,8 +7,8 @@ import 'package:teta_widgets/src/elements/nodes/node.dart';
 import 'package:teta_widgets/src/elements/features/text_type_input.dart';
 
 
-class AirtableInsertControl extends StatelessWidget {
-  const AirtableInsertControl({
+class AirtableUpdateControl extends StatelessWidget {
+  const AirtableUpdateControl({
     required this.prj,
     required this.node,
     required this.page,

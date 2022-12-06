@@ -6,9 +6,8 @@ import 'package:teta_widgets/src/elements/features/actions/element.dart';
 import 'package:teta_widgets/src/elements/nodes/node.dart';
 import 'package:teta_widgets/src/elements/features/text_type_input.dart';
 
-
-class AirtableInsertControl extends StatelessWidget {
-  const AirtableInsertControl({
+class AirtableDeleteControl extends StatelessWidget {
+  const AirtableDeleteControl({
     required this.prj,
     required this.node,
     required this.page,

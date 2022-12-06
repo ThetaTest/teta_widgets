@@ -59,6 +59,7 @@ enum NType {
   loginWithApple,
   loginWithGoogle,
   loginWithFacebook,
+  loginWithMicrosoft,
   loginWithGitHub,
   loginWithTwitter,
   nil,

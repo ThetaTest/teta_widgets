@@ -1,4 +1,5 @@
 // Project imports:
+import 'package:teta_widgets/src/elements/bodies/airtable/fetch.dart';
 import 'package:teta_widgets/src/elements/bodies/align.dart';
 import 'package:teta_widgets/src/elements/bodies/animated_align.dart';
 import 'package:teta_widgets/src/elements/bodies/animated_container.dart';
@@ -139,6 +140,7 @@ import 'package:teta_widgets/src/elements/nodes/node_body.dart';
 
 /// The list of the all instrict states
 final stateTypes = <IntrinsicStates>[
+  airtableFetchIntrinsicStates,
   alignIntrinsicStates,
   badgeIntrinsicStates,
   buttonIntrinsicStates,
