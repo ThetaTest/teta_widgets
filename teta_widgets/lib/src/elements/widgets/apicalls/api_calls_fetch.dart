@@ -292,8 +292,15 @@ class _WApiCallsFetchState extends State<WApiCallsFetch> {
       widget.loop,
       context,
     );
+    String datasetName;
+    if (apiCallsResponseNameNew.isEmpty) {
+      datasetName = 'Api Calls Fetch';
+    } else {
+      datasetName = apiCallsResponseNameNew;
+    }
+
     final _map = DatasetObject(
-      name: apiCallsResponseNameNew,
+      name: datasetName,
       map: (list ?? const <dynamic>[])
           .map((final dynamic e) => e as Map<String, dynamic>)
           .toList(),
