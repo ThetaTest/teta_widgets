@@ -6,13 +6,14 @@ import 'package:flutter/material.dart';
 import 'package:gap/gap.dart';
 // Package imports:
 import 'package:teta_core/teta_core.dart';
+import 'package:teta_widgets/src/elements/controls/atoms/apicalls_request.dart';
 import 'package:teta_widgets/src/elements/controls/atoms/text.dart';
 import 'package:teta_widgets/src/elements/controls/http_params.dart';
 // Project imports:
 import 'package:teta_widgets/src/elements/index.dart';
 
-class CustomHttpRequestDeleteControl extends StatelessWidget {
-  const CustomHttpRequestDeleteControl({
+class ApiCallsControl extends StatelessWidget {
+  const ApiCallsControl({
     required this.prj,
     required this.page,
     required this.node,
@@ -33,23 +34,15 @@ class CustomHttpRequestDeleteControl extends StatelessWidget {
       mainAxisSize: MainAxisSize.min,
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
-        Container(
-          padding: const EdgeInsets.all(16),
-          decoration: BoxDecoration(
-            color: Colors.black26,
-            borderRadius: BorderRadius.circular(8),
-          ),
-          child: TextControl(
-            valueType: VariableType.string,
-            node: node,
-            value: action.customHttpRequestURL ?? FTextTypeInput(),
-            page: page,
-            title: 'URL',
-            callBack: (final value, final old) {
-              action.customHttpRequestURL = value;
-              callback();
-            },
-          ),
+        ApiCallsRequestControl(
+          node: node,
+          //TODO request name must be unique! kasapiniz
+          requestName: action.apiCallsRequestName ?? '',
+          callBack: (final value, final old, final apiCallsSelectedRequest) {
+            action.apiCallsRequestName = value;
+            action.apiCallsSelectedRequest = apiCallsSelectedRequest;
+            callback();
+          },
         ),
         const Gap(Grid.small),
         Container(
@@ -71,32 +64,33 @@ class CustomHttpRequestDeleteControl extends StatelessWidget {
             },
           ),
         ),
-        HttpParamsControl(
-          node: node,
-          page: page,
-          title: 'Add Params',
-          list: action.customHttpRequestList ?? <MapElement>[],
-          callBack: (final value, final old) {
-            action.customHttpRequestList = value;
-            callback();
-          },
-        ),
-        const Padding(
-          padding: EdgeInsets.only(top: 16),
-          child: Padding(
-            padding: EdgeInsets.only(bottom: 8),
-            child: TDetailLabel(
-              'Add Params. Example : www.example.com/users/?key=\${value}',
-            ),
+        const Gap(Grid.small),
+        Container(
+          padding: const EdgeInsets.all(16),
+          decoration: BoxDecoration(
+            color: Colors.black26,
+            borderRadius: BorderRadius.circular(8),
+          ),
+          child: TextControl(
+            valueType: VariableType.string,
+            node: node,
+            value: action.apiCallsResponseName ?? FTextTypeInput(),
+            page: page,
+            title: 'Response Name',
+            callBack: (final value, final old) {
+              action.apiCallsResponseName = value;
+              callback();
+            },
           ),
         ),
+        const Gap(Grid.small),
         HttpParamsControl(
           node: node,
           page: page,
-          title: 'Add Headers',
-          list: action.customHttpRequestHeader ?? <MapElement>[],
+          title: 'Add Dynamic Value',
+          list: action.apiCallsDynamicValue ?? <MapElement>[],
           callBack: (final value, final old) {
-            action.customHttpRequestHeader = value;
+            action.apiCallsDynamicValue = value;
             callback();
           },
         ),

@@ -2,10 +2,11 @@
 import 'package:flutter/material.dart';
 // Package imports:
 import 'package:teta_core/gen/assets.gen.dart';
-import 'package:teta_widgets/src/core/teta_widget/index.dart';
+import 'package:teta_core/src/models/dataset.dart';
+import 'package:teta_core/src/models/variable.dart';
 import 'package:teta_widgets/src/elements/code/snippets.dart';
 // Project imports:
-import 'package:teta_widgets/src/elements/code/templates/facebook.dart';
+import 'package:teta_widgets/src/elements/code/templates/microsoft.dart';
 import 'package:teta_widgets/src/elements/controls/control_model.dart';
 import 'package:teta_widgets/src/elements/controls/key_constants.dart';
 import 'package:teta_widgets/src/elements/features/action.dart';
@@ -19,12 +20,12 @@ import 'package:teta_widgets/src/elements/nodes/enum.dart';
 import 'package:teta_widgets/src/elements/nodes/node.dart';
 import 'package:teta_widgets/src/elements/nodes/node_body.dart';
 import 'package:teta_widgets/src/elements/packages.dart';
-import 'package:teta_widgets/src/elements/widgets/cta/facebook.dart';
+import 'package:teta_widgets/src/elements/widgets/cta/microsoft.dart';
 
-const _globalType = NType.loginWithFacebook;
+const _globalType = NType.loginWithMicrosoft;
 
 /// Instrict State of Facebook Login
-final loginFacebookIntrinsicStates = IntrinsicStates(
+final loginMicrosoftIntrinsicStates = IntrinsicStates(
   nodeIcon: Assets.wIcons.loginFacebook,
   nodeVideo: null,
   nodeDescription: null,
@@ -34,9 +35,9 @@ final loginFacebookIntrinsicStates = IntrinsicStates(
     NodeType.name(NType.row),
   ],
   blockedTypes: [],
-  synonymous: ['facebook', 'login', 'cta', 'button'],
+  synonymous: ['microsoft', 'login', 'cta', 'button'],
   advicedChildrenCanHaveAtLeastAChild: [],
-  displayName: 'Login with Facebook',
+  displayName: 'Login with Microsoft',
   type: _globalType,
   category: NodeCategories.input,
   maxChildren: 0,
@@ -48,7 +49,7 @@ final loginFacebookIntrinsicStates = IntrinsicStates(
 );
 
 /// Facebook Login's body
-class LoginWithFacebookBody extends NodeBody {
+class LoginWithMicrosoftBody extends NodeBody {
   @override
   // ignore: overridden_fields
   Map<String, dynamic> attributes = <String, dynamic>{
@@ -71,17 +72,27 @@ class LoginWithFacebookBody extends NodeBody {
 
   @override
   Widget toWidget({
-    required final TetaWidgetState state,
+    required final List<VariableObject> params,
+    required final List<VariableObject> states,
+    required final List<DatasetObject> dataset,
+    required final bool forPlay,
+    required final CNode node,
+    final int? loop,
     final CNode? child,
     final List<CNode>? children,
   }) =>
-      WLoginWithFacebook(
-        ValueKey('${state.node.nid} ${state.loop}'),
-        state: state,
+      WLoginWithMicrosoft(
+        ValueKey('${node.nid} $loop'),
+        node: node,
         child: child,
+        forPlay: forPlay,
+        loop: loop,
         action: attributes[DBKeys.action] as FAction,
         width: attributes[DBKeys.width] as FSize,
         height: attributes[DBKeys.height] as FSize,
+        params: params,
+        states: states,
+        dataset: dataset,
       );
 
   @override
@@ -97,7 +108,7 @@ class LoginWithFacebookBody extends NodeBody {
         context,
         node,
         pageId,
-        LoginFacebookCodeTemplate.toCode(
+        LoginMicrosoftCodeTemplate.toCode(
           pageId,
           context,
           node,

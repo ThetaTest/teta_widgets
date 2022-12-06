@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 // Package imports:
 import 'package:teta_core/gen/assets.gen.dart';
 import 'package:teta_widgets/src/core/teta_widget/index.dart';
+import 'package:teta_widgets/src/elements/code/snippets.dart';
 // Project imports:
 import 'package:teta_widgets/src/elements/code/templates/twitter.dart';
 import 'package:teta_widgets/src/elements/controls/control_model.dart';
@@ -92,5 +93,17 @@ class LoginWithTwitterBody extends NodeBody {
     final int pageId,
     final int? loop,
   ) =>
-      LoginTwitterCodeTemplate.toCode(pageId, context, node, child, loop ?? 0);
+      CS.defaultWidgets(
+        context,
+        node,
+        pageId,
+        LoginTwitterCodeTemplate.toCode(
+          pageId,
+          context,
+          node,
+          child,
+          loop ?? 0,
+        ),
+        loop ?? 0,
+      );
 }

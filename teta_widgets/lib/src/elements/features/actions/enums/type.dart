@@ -8,6 +8,7 @@ enum ActionType {
   theme,
   revenueCat,
   qonversion,
+  mixpanel,
   stripe,
   firebase,
   firebaseFirestore,
@@ -27,4 +28,5 @@ enum ActionType {
   customFunctions,
   braintree,
   translator,
+  apiCalls
 }

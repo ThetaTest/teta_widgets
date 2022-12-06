@@ -29,6 +29,7 @@ class GestureBuilderBase {
             states: state.states,
             dataset: state.dataset,
             forPlay: state.forPlay,
+            loop: state.loop,
             child: GestureBuilderBase.getGesture(
               context: context,
               state: state,
@@ -39,6 +40,7 @@ class GestureBuilderBase {
                 states: state.states,
                 dataset: state.dataset,
                 forPlay: state.forPlay,
+                loop: state.loop,
                 child: RotationBase.get(
                   context: context,
                   node: state.node,
@@ -46,6 +48,7 @@ class GestureBuilderBase {
                   states: state.states,
                   dataset: state.dataset,
                   forPlay: state.forPlay,
+                  loop: state.loop,
                   child: PerspectiveBase.get(
                     context: context,
                     node: state.node,
@@ -53,6 +56,7 @@ class GestureBuilderBase {
                     states: state.states,
                     dataset: state.dataset,
                     forPlay: state.forPlay,
+                    loop: state.loop,
                     child: MarginOrPaddingBase.get(
                       context: context,
                       node: state.node,
@@ -60,6 +64,7 @@ class GestureBuilderBase {
                       states: state.states,
                       dataset: state.dataset,
                       forPlay: state.forPlay,
+                      loop: state.loop,
                       child: EntryAnimationsBase().get(
                         node: state.node,
                         child: child,

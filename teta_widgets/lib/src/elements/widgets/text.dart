@@ -75,14 +75,16 @@ class _WTextState extends State<WText> {
 
           TextStyleModel? model;
           if (widget.textStyle.textStyleModel != null) {
-            BlocProvider.of<TextStylesCubit>(context).state.forEach((final element) {
+            BlocProvider.of<TextStylesCubit>(context)
+                .state
+                .forEach((final element) {
               if (element.name == widget.textStyle.textStyleModel) {
                 model = element;
               }
             });
           }
           return GestureDetector(
-            onTap: () {
+            onDoubleTap: () {
               if (!widget.state.forPlay) {
                 _controller.text = widget.value.get(
                   widget.state.params,
@@ -120,9 +122,11 @@ class _WTextState extends State<WText> {
                               controller: _controller,
                               autofocus: true,
                               style: widget.textStyle.get(context, model),
-                              textAlign: widget.textStyle.textAlign?.get ?? TextAlign.start,
+                              textAlign: widget.textStyle.textAlign?.get ??
+                                  TextAlign.start,
                               decoration: const InputDecoration(
-                                contentPadding: EdgeInsets.symmetric(vertical: 4),
+                                contentPadding:
+                                    EdgeInsets.symmetric(vertical: 4),
                                 isDense: true,
                                 border: InputBorder.none,
                               ),
@@ -137,7 +141,8 @@ class _WTextState extends State<WText> {
                                     ),
                                   ) ??
                                   1,
-                              onSubmitted: (final text) => updateTextOnSubmit(text, context),
+                              onSubmitted: (final text) =>
+                                  updateTextOnSubmit(text, context),
                             ),
                           )
                         : SizedBox(
@@ -146,9 +151,11 @@ class _WTextState extends State<WText> {
                               controller: _controller,
                               autofocus: true,
                               style: widget.textStyle.get(context, model),
-                              textAlign: widget.textStyle.textAlign?.get ?? TextAlign.start,
+                              textAlign: widget.textStyle.textAlign?.get ??
+                                  TextAlign.start,
                               decoration: const InputDecoration(
-                                contentPadding: EdgeInsets.symmetric(vertical: 4),
+                                contentPadding:
+                                    EdgeInsets.symmetric(vertical: 4),
                                 isDense: true,
                                 border: InputBorder.none,
                               ),
@@ -163,7 +170,8 @@ class _WTextState extends State<WText> {
                                     ),
                                   ) ??
                                   1,
-                              onSubmitted: (final text) => updateTextOnSubmit(text, context),
+                              onSubmitted: (final text) =>
+                                  updateTextOnSubmit(text, context),
                             ),
                           ),
                   )

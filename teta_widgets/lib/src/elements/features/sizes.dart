@@ -7,7 +7,6 @@ import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 // Package imports:
-import 'package:sizer/sizer.dart';
 import 'package:teta_core/src/utils/expression/expression.dart';
 import 'package:teta_core/teta_core.dart';
 
@@ -46,6 +45,9 @@ class FSize {
     required final BuildContext context,
     required final bool isWidth,
   }) {
+    Logger.printWarning(
+      'Get size',
+    );
     var size = sizeDesktop ?? this.size!;
     var unit = unitDesktop ?? this.unit!;
     final device = BlocProvider.of<DeviceModeCubit>(context).state;
@@ -57,6 +59,10 @@ class FSize {
       unit = unitTablet ?? this.unit!;
     }
 
+    Logger.printWarning(
+      'Calculating % size',
+    );
+
     double? value = 0;
     if (unit == SizeUnit.pixel &&
         (size.toLowerCase() == 'max' ||
@@ -65,7 +71,7 @@ class FSize {
       value = double.maxFinite;
     } else {
       if (size.toLowerCase() == 'null' || size.toLowerCase() == 'auto') {
-        value = null;
+        return null;
       } else {
         final exp = MathExpression.parse(
           context: context,
@@ -76,12 +82,19 @@ class FSize {
         }
       }
     }
-    if (value != null && unit == SizeUnit.percent) {
+
+    Logger.printWarning(
+      'Calculating % size, $value',
+    );
+
+    if (unit == SizeUnit.percent ||
+        unit == SizeUnit.width ||
+        unit == SizeUnit.height) {
       final screen = BlocProvider.of<DeviceModeCubit>(context).state.screenSize;
-      value = isWidth ? screen.width : screen.height * (value / 100);
-    }
-    if (value != null && unit == SizeUnit.width) {
-      value = isWidth ? value.w : value.h;
+      Logger.printWarning(
+        'Calculating % size, ${screen.width} : ${screen.height} * ($value / 100), result: ${(isWidth ? screen.width : screen.height) * (value / 100)} ',
+      );
+      return (isWidth ? screen.width : screen.height) * (value.toInt() / 100);
     }
     return value;
   }

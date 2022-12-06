@@ -56,6 +56,16 @@ class WListViewBuilderState extends State<WListViewBuilder> {
         : -1;
     final db =
         index != -1 ? widget.state.dataset[index] : DatasetObject.empty();
+    List<Map<String, dynamic>> newDB;
+    if (db.isSubList(widget.value.datasetAttrName ?? '')) {
+      newDB = (db.getMap.first[widget.value.datasetAttrName] as List)
+          .map(
+            (final dynamic e) => <String, dynamic>{...e},
+          )
+          .toList();
+    } else {
+      newDB = db.getMap;
+    }
     var startFromIndex = int.tryParse(
           widget.startFromIndex.get(
             widget.state.params,
@@ -70,7 +80,7 @@ class WListViewBuilderState extends State<WListViewBuilder> {
     if (startFromIndex < 0) {
       startFromIndex = 0;
     }
-    if (startFromIndex >= db.getMap.length) {
+    if (startFromIndex >= newDB.length) {
       startFromIndex = 0;
     }
     var limit = int.tryParse(
@@ -83,13 +93,13 @@ class WListViewBuilderState extends State<WListViewBuilder> {
             context,
           ),
         ) ??
-        db.getMap.length;
+        newDB.length;
     Logger.printWarning('Listview.builder limit: $limit');
     if (limit <= 0) {
-      limit = db.getMap.length;
+      limit = newDB.length;
     }
-    if (limit > db.getMap.length) {
-      limit = db.getMap.length;
+    if (limit > newDB.length) {
+      limit = newDB.length;
     }
     return TetaWidget(
       state: widget.state,
@@ -130,11 +140,14 @@ class WListViewBuilderState extends State<WListViewBuilder> {
             shrinkWrap: widget.shrinkWrap,
             scrollDirection:
                 widget.isVertical ? Axis.vertical : Axis.horizontal,
-            itemCount: db.getMap.sublist(startFromIndex, limit).length,
+            itemCount: newDB.sublist(startFromIndex, limit).length,
             itemBuilder: (final context, final index) {
               return widget.child != null
-                  ? widget.child!
-                      .toWidget(state: widget.state.copyWith(loop: index))
+                  ? widget.child!.toWidget(
+                      state: widget.state.copyWith(
+                        loop: index,
+                      ),
+                    )
                   : PlaceholderChildBuilder(
                       name: widget.state.node.intrinsicState.displayName,
                       node: widget.state.node,

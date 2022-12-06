@@ -15,6 +15,7 @@ import 'package:teta_core/src/services/packages_service.dart';
 // Project imports:
 import 'package:teta_core/teta_core.dart';
 import 'package:teta_widgets/src/core/teta_widget/index.dart';
+import 'package:teta_widgets/src/elements/actions/api_calls/apicalls.dart';
 import 'package:teta_widgets/src/elements/actions/audio_player/loop_all.dart';
 import 'package:teta_widgets/src/elements/actions/audio_player/loop_off.dart';
 import 'package:teta_widgets/src/elements/actions/audio_player/loop_one.dart';
@@ -40,6 +41,8 @@ import 'package:teta_widgets/src/elements/actions/https_requests_custom_backend/
 import 'package:teta_widgets/src/elements/actions/https_requests_custom_backend/post.dart';
 import 'package:teta_widgets/src/elements/actions/https_requests_custom_backend/update.dart';
 import 'package:teta_widgets/src/elements/actions/loop.dart';
+import 'package:teta_widgets/src/elements/actions/mixpanel/set_user_id.dart';
+import 'package:teta_widgets/src/elements/actions/mixpanel/track.dart';
 import 'package:teta_widgets/src/elements/actions/navigation/go_back.dart';
 import 'package:teta_widgets/src/elements/actions/navigation/in_app_review.dart';
 import 'package:teta_widgets/src/elements/actions/navigation/launch_url.dart';
@@ -87,11 +90,13 @@ import 'package:teta_widgets/src/elements/actions/webview/forward.dart';
 import 'package:teta_widgets/src/elements/actions/webview/navigate_to.dart';
 import 'package:teta_widgets/src/elements/actions/webview/reload.dart';
 import 'package:teta_widgets/src/elements/features/actions/enums/action_google_maps.dart';
+import 'package:teta_widgets/src/elements/features/actions/enums/apicalls.dart';
 import 'package:teta_widgets/src/elements/features/actions/enums/audio_player_actions.dart';
 import 'package:teta_widgets/src/elements/features/actions/enums/braintree.dart';
 import 'package:teta_widgets/src/elements/features/actions/enums/camera.dart';
 import 'package:teta_widgets/src/elements/features/actions/enums/custom_http_request.dart';
 import 'package:teta_widgets/src/elements/features/actions/enums/index.dart';
+import 'package:teta_widgets/src/elements/features/actions/enums/mixpanel.dart';
 import 'package:teta_widgets/src/elements/features/actions/enums/qonversion.dart';
 import 'package:teta_widgets/src/elements/features/actions/enums/revenue_cat.dart';
 import 'package:teta_widgets/src/elements/features/actions/enums/stripe.dart';
@@ -111,6 +116,7 @@ class FActionElement extends Equatable {
     this.id,
     this.actionRevenueCat,
     this.actionQonversion,
+    this.actionMixpanel,
     this.actionTheme,
     this.actionStripe,
     this.actionGoogleMaps,
@@ -126,6 +132,7 @@ class FActionElement extends Equatable {
     this.actionTetaDB,
     this.actionTetaAuth,
     this.actionCustomHttpRequest,
+    this.actionApiCalls,
     this.actionCamera,
     this.actionWebView,
     this.actionAudioPlayer,
@@ -155,6 +162,10 @@ class FActionElement extends Equatable {
     this.customHttpRequestHeader,
     this.customHttpRequestList,
     this.customHttpRequestBody,
+    this.apiCallsRequestName,
+    this.apiCallsSelectedRequest,
+    this.apiCallsResponseName,
+    this.apiCallsDynamicValue,
   }) {
     id ??= const Uuid().v1();
     delay ??= FTextTypeInput(value: '0');
@@ -189,6 +200,10 @@ class FActionElement extends Equatable {
       ActionQonversion.values,
       doc['aQonversion'] as String?,
     ) as ActionQonversion?;
+    actionMixpanel = convertDropdownToValue(
+      ActionMixpanel.values,
+      doc['aMixpanel'] as String?,
+    ) as ActionMixpanel?;
     actionTheme =
         convertDropdownToValue(ActionTheme.values, doc['aTh'] as String?)
             as ActionTheme?;
@@ -239,6 +254,9 @@ class FActionElement extends Equatable {
       ActionCustomHttpRequest.values,
       doc['aCHr'] as String?,
     ) as ActionCustomHttpRequest?;
+    actionApiCalls =
+        convertDropdownToValue(ActionApiCalls.values, doc['aAC'] as String?)
+            as ActionApiCalls?;
     stateName = doc['sN'] as String?;
     stateName2 = doc['sN2'] as String?;
     stateName3 = doc['sN3'] as String?;
@@ -405,6 +423,19 @@ class FActionElement extends Equatable {
               ),
             )
             .toList();
+    apiCallsRequestName = doc['aCRN'] as String?;
+    apiCallsSelectedRequest = doc['aCSR'] as Map<String, dynamic>?;
+    apiCallsResponseName = FTextTypeInput.fromJson(
+      doc['aCResN'] as Map<String, dynamic>?,
+    );
+    apiCallsDynamicValue =
+        (doc['sApiCallsDynamicValue'] as List<dynamic>? ?? <dynamic>[])
+            .map(
+              (final dynamic e) => MapElement.fromJson(
+                e as Map<String, dynamic>,
+              ),
+            )
+            .toList();
   }
 
   String? id;
@@ -414,6 +445,7 @@ class FActionElement extends Equatable {
   ActionState? actionState;
   ActionRevenueCat? actionRevenueCat;
   ActionQonversion? actionQonversion;
+  ActionMixpanel? actionMixpanel;
   ActionBraintree? actionBraintree;
   ActionTranslator? actionTranslator;
   ActionTheme? actionTheme;
@@ -430,6 +462,7 @@ class FActionElement extends Equatable {
   ActionTetaCmsDB? actionTetaDB;
   ActionTetaCmsAuth? actionTetaAuth;
   ActionCustomHttpRequest? actionCustomHttpRequest;
+  ActionApiCalls? actionApiCalls;
   FTextTypeInput? delay;
   FTextTypeInput? audioPlayerUrl = FTextTypeInput(value: 'url');
   bool? withCondition;
@@ -486,6 +519,12 @@ class FActionElement extends Equatable {
   /// Supabase name of column for condition
   MapElement? dbEq;
 
+  /// Api Calls
+  String? apiCallsRequestName;
+  Map<String, dynamic>? apiCallsSelectedRequest;
+  FTextTypeInput? apiCallsResponseName;
+  List<MapElement>? apiCallsDynamicValue;
+
   @override
   List<Object?> get props => [
         id,
@@ -514,6 +553,10 @@ class FActionElement extends Equatable {
         customHttpRequestHeader,
         customHttpRequestList,
         customHttpRequestBody,
+        apiCallsRequestName,
+        apiCallsSelectedRequest,
+        apiCallsResponseName,
+        apiCallsDynamicValue,
       ];
 
   /// Get avaiable action types for drop down list
@@ -526,6 +569,7 @@ class FActionElement extends Equatable {
           'Teta database',
           'Teta auth',
           'Custom Http Request',
+          'Api Calls',
           'Theme',
           'Languages',
           'Google Maps',
@@ -537,6 +581,7 @@ class FActionElement extends Equatable {
           if (config.isBraintreeReady) 'Braintree',
           if (config.isRevenueCatEnabled) 'RevenueCat',
           if (config.isQonversionReady) 'Qonversion',
+          if (config.isMixpanelReady) 'Mixpanel',
           if (config.isStripeEnabled) 'Stripe',
           if ((page.flatList ?? <CNode>[]).indexWhere(
                 (final element) => element.intrinsicState.type == NType.camera,
@@ -605,6 +650,15 @@ class FActionElement extends Equatable {
     if (config != null) {
       if (config.isQonversionReady) {
         return enumsToListString(ActionQonversion.values);
+      }
+    }
+    return [];
+  }
+
+  static List<String> getMixpanel(final ProjectConfig? config) {
+    if (config != null) {
+      if (config.isMixpanelReady) {
+        return enumsToListString(ActionMixpanel.values);
       }
     }
     return [];
@@ -683,6 +737,10 @@ class FActionElement extends Equatable {
     return enumsToListString(ActionCustomHttpRequest.values);
   }
 
+  static List<String> getApiCalls() {
+    return enumsToListString(ActionApiCalls.values);
+  }
+
   static List<String> getCamera() {
     return enumsToListString(ActionCamera.values);
   }
@@ -701,6 +759,9 @@ class FActionElement extends Equatable {
     }
     if (type == ActionType.qonversion) {
       return 'Qonversion';
+    }
+    if (type == ActionType.mixpanel) {
+      return 'Mixpanel';
     }
     if (type == ActionType.stripe) {
       return 'Stripe';
@@ -722,6 +783,9 @@ class FActionElement extends Equatable {
     if (type == ActionType.customHttpRequest) {
       return 'Custom Http Request';
     }
+    if (type == ActionType.apiCalls) {
+      return 'Api Calls';
+    }
 
     if (type != null) {
       return EnumToString.convertToString(type, camelCase: true);
@@ -738,6 +802,9 @@ class FActionElement extends Equatable {
     }
     if (value == 'Qonversion') {
       return ActionType.qonversion;
+    }
+    if (value == 'Mixpanel') {
+      return ActionType.mixpanel;
     }
     if (value == 'Stripe') {
       return ActionType.stripe;
@@ -758,6 +825,9 @@ class FActionElement extends Equatable {
     }
     if (value == 'Custom Http Request') {
       return ActionType.customHttpRequest;
+    }
+    if (value == 'Api Calls') {
+      return ActionType.apiCalls;
     }
     if (value != null) {
       return EnumToString.fromString<dynamic>(list, value, camelCase: true);
@@ -789,7 +859,8 @@ class FActionElement extends Equatable {
         'aW': convertValueToDropdown(actionWebView),
         'aAP': convertValueToDropdown(actionAudioPlayer),
         'aRC': convertValueToDropdown(actionRevenueCat),
-        'aQonversion': convertValueToDropdown(actionRevenueCat),
+        'aQonversion': convertValueToDropdown(actionQonversion),
+        'aMixpanel': convertValueToDropdown(actionMixpanel),
         'aBrain': convertValueToDropdown(actionBraintree),
         'aTrans': convertValueToDropdown(actionTranslator),
         'sPK': convertValueToDropdown(actionStripe),
@@ -797,6 +868,7 @@ class FActionElement extends Equatable {
         'aTDb': convertValueToDropdown(actionTetaDB),
         'aTAu': convertValueToDropdown(actionTetaAuth),
         'aCHr': convertValueToDropdown(actionCustomHttpRequest),
+        'aAC': convertValueToDropdown(actionApiCalls),
         'sN': stateName,
         'sN2': stateName2,
         'sN3': stateName3,
@@ -878,6 +950,13 @@ class FActionElement extends Equatable {
             customHttpRequestExpectedStatusCode != null
                 ? customHttpRequestExpectedStatusCode!.toJson()
                 : null,
+        'aCRN': apiCallsRequestName,
+        'aCSR': apiCallsSelectedRequest,
+        'aCResN': apiCallsResponseName,
+
+        'sApiCallsDynamicValue': apiCallsDynamicValue != null
+            ? apiCallsDynamicValue!.map((final e) => e.toJson()).toList()
+            : null,
       }..removeWhere((final String key, final dynamic value) => value == null);
 
   Future getAction(
@@ -1097,6 +1176,30 @@ class FActionElement extends Equatable {
             break;
         }
         break;
+      case ActionType.apiCalls:
+        switch (actionApiCalls) {
+          case ActionApiCalls.apiCalls:
+            await actionS(
+              () => FAApiCalls.action(
+                context,
+                apiCallsRequestName,
+                apiCallsSelectedRequest,
+                customHttpRequestExpectedStatusCode,
+                apiCallsResponseName,
+                apiCallsDynamicValue,
+                state.params,
+                state.states,
+                state.dataset,
+                state.loop,
+              ),
+              context: context,
+              state: state,
+            );
+            break;
+          default:
+            break;
+        }
+        break;
       case ActionType.revenueCat:
         switch (actionRevenueCat) {
           case ActionRevenueCat.buy:
@@ -1123,6 +1226,39 @@ class FActionElement extends Equatable {
             );
             break;
           default:
+            break;
+        }
+        break;
+      case ActionType.mixpanel:
+        switch (actionMixpanel) {
+          case ActionMixpanel.setUserId:
+            await actionS(
+              () => FAMixpanelSetUserId.action(
+                context,
+                valueTextTypeInput,
+                state.params,
+                state.states,
+                state.dataset,
+                state.loop ?? 0,
+              ),
+              context: context,
+              state: state,
+            );
+            break;
+          case ActionMixpanel.track:
+            await actionS(
+              () => FAMixpanelTrack.action(
+                context,
+                valueTextTypeInput,
+                customHttpRequestBody,
+                state.params,
+                state.states,
+                state.dataset,
+                state.loop ?? 0,
+              ),
+              context: context,
+              state: state,
+            );
             break;
         }
         break;
@@ -2167,6 +2303,25 @@ class FActionElement extends Equatable {
             break;
         }
         break;
+      case ActionType.apiCalls:
+        switch (actionApiCalls) {
+          case ActionApiCalls.apiCalls:
+            return codeS(
+              FAApiCalls.toCode(
+                apiCallsRequestName,
+                apiCallsSelectedRequest,
+                customHttpRequestExpectedStatusCode,
+                apiCallsResponseName,
+                apiCallsDynamicValue,
+                loop,
+              ),
+              context,
+            );
+          default:
+            break;
+        }
+
+        break;
       case ActionType.tetaAuth:
         switch (actionTetaAuth) {
           case ActionTetaCmsAuth.signInWithGoogle:
@@ -2265,6 +2420,27 @@ class FActionElement extends Equatable {
             );
           default:
             break;
+        }
+        break;
+      case ActionType.mixpanel:
+        switch (actionMixpanel) {
+          case ActionMixpanel.setUserId:
+            return codeS(
+              FAMixpanelSetUserId.toCode(
+                context,
+                valueTextTypeInput,
+              ),
+              context,
+            );
+          case ActionMixpanel.track:
+            return codeS(
+              FAMixpanelTrack.toCode(
+                context,
+                valueTextTypeInput,
+                customHttpRequestBody,
+              ),
+              context,
+            );
         }
         break;
       case ActionType.braintree:
