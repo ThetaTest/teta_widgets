@@ -21,12 +21,8 @@ Future<List<DatasetObject>> saveDatasets(
     Box<List<dynamic>> box;
     if (!Hive.isBoxOpen('datasets${prj.id}')) {
       box = await Hive.openBox<List<dynamic>>('datasets${prj.id}');
-      Logger.printMessage("box first open" + box.keys.toString());
-      Logger.printMessage("box prj.id" + prj.id.toString());
     } else {
       box = Hive.box<List<dynamic>>('datasets${prj.id}');
-      Logger.printMessage("box still open" + box.keys.toString());
-      Logger.printMessage("box prj.id" + prj.id.toString());
     }
     await box.put(map.getName, map.getMap);
 
@@ -35,7 +31,6 @@ Future<List<DatasetObject>> saveDatasets(
     final list2 = <DatasetObject>[];
 
     for (final dynamic key in boxMap.keys) {
-      Logger.printMessage("value alındı" + key.toString());
       final map2 = box.get(key)!;
       final map3 =
           map2.map((dynamic e) => (e as Map).cast<String, dynamic>()).toList();
@@ -56,7 +51,6 @@ Future<List<DatasetObject>> saveDatasets(
     }
 
     if (prjState is ProjectLoaded) {
-      Logger.printMessage("prjState");
       for (final page in prjState.prj.pages!) {
         for (var element in list2) {
           var flag = true;

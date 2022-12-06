@@ -29,8 +29,6 @@ List<DatasetObject> addDataset(
     if (flag) pageFocused.datasets = [...pageFocused.datasets, map];
 
     if (prjState is ProjectLoaded) {
-      Logger.printMessage("prjState 1");
-
       for (final page in prjState.prj.pages!) {
         if (page.id == pageFocused.id) {
           var flag = true;
@@ -47,7 +45,6 @@ List<DatasetObject> addDataset(
     Box<List<dynamic>> box;
     if (Hive.isBoxOpen('datasets${prj.id}')) {
       final list2 = <DatasetObject>[];
-      Logger.printMessage("prjState box still open");
       box = Hive.box<List<dynamic>>('datasets${prj.id}');
       final boxMap = box.toMap();
 
