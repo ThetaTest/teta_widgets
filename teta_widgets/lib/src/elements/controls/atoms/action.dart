@@ -6,12 +6,15 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_feather_icons/flutter_feather_icons.dart';
 import 'package:gap/gap.dart';
+
 // Package imports:
 import 'package:teta_core/src/design_system/buttons/element_button.dart';
 import 'package:teta_core/teta_core.dart';
+
 // Project imports:
 import 'package:teta_widgets/src/elements/controls/atoms/action_element.dart';
 import 'package:teta_widgets/src/elements/features/actions/enums/action_google_maps.dart';
+import 'package:teta_widgets/src/elements/features/actions/enums/airtable.dart';
 import 'package:teta_widgets/src/elements/features/actions/enums/apicalls.dart';
 import 'package:teta_widgets/src/elements/features/actions/enums/audio_player_actions.dart';
 import 'package:teta_widgets/src/elements/features/actions/enums/braintree.dart';
@@ -139,6 +142,9 @@ class ActionControlState extends State<ActionControl> {
                                         ? action
                                         : null,
                                 actionSupabaseDB: (action is ActionSupabaseDB)
+                                    ? action
+                                    : null,
+                                actionAirtableDB: (action is ActionAirtableDB)
                                     ? action
                                     : null,
                                 actionTetaAuth: (action is ActionTetaCmsAuth)
@@ -379,6 +385,12 @@ class __NewActionAlertState extends State<_NewActionAlert> {
         actionType: ActionType.supabaseStorage,
         options: FActionElement.getSupabaseStorage(prj.config),
         type: ActionSupabaseStorage.values,
+      ),
+      _SelectionClass(
+        title: "Airtable Database",
+        actionType: ActionType.airtable,
+        options: FActionElement.getAirtableDB(prj.config),
+        type: ActionAirtableDB.values,
       ),
       _SelectionClass(
         title: 'RevenueCat',

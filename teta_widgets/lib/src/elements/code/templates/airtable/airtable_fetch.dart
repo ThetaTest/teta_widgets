@@ -1,7 +1,11 @@
 // Flutter imports:
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_test/flutter_test.dart';
+import 'package:teta_cms/teta_cms.dart';
+import 'package:teta_core/src/pages/editor_page/cubits/airtable.dart';
 import 'package:teta_widgets/src/elements/code/formatter_test.dart';
+
 // Project imports:
 import 'package:teta_widgets/src/elements/controls/key_constants.dart';
 import 'package:teta_widgets/src/elements/features/text_type_input.dart';
@@ -18,43 +22,8 @@ class AirtableFetchCodeTemplate {
     final List<CNode> children,
     final int? loop,
   ) async {
-    final recordName =
-        (node.body.attributes[DBKeys.value] as FTextTypeInput).toCode(
-      loop,
-      resultType: ResultTypeEnum.string,
-    );
-
-    var child = 'const SizedBox()';
-    if (children.isNotEmpty) {
-      child = await children.first.toCode(context);
-    }
-    var loader = 'const Center(child: CircularProgressIndicator(),)';
-    if (children.length >= 2) {
-      loader = await children[1].toCode(context);
-    }
-    final func = '''
-  final list = snapshot.data as List<dynamic>?;
-  datasets['${node.name ?? node.intrinsicState.displayName}'] = list ?? const <dynamic>[];
-  ''';
-
-    final code = '''
-  TetaFutureBuilder<List<AirtableRecord>>(
-    future: BlocProvider.of<AirtableCubit>(context).getAllRecords(recordName)
-    builder: (context, snapshot) {
-      if (!snapshot.hasData) {
-        return $loader;
-      }
-      $func
-      return $child;
-    }
-  )
-  ''';
-    final res = FormatterTest.format(code);
-    if (res) {
-      return code;
-    } else {
-      return 'const SizedBox()';
-    }
+    final code = await children.first.toCode(context);
+    return code;
   }
 
   static void testCode() {

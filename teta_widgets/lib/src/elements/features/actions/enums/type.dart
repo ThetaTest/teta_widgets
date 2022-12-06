@@ -2,6 +2,7 @@
 // ignore_for_file: public_member_api_docs
 
 enum ActionType {
+  airtable,
   navigation,
   state,
   shopify,

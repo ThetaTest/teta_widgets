@@ -6,10 +6,15 @@
 import 'package:dart_airtable/dart_airtable.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+
 // Package imports:
 import 'package:teta_core/teta_core.dart';
+
 // Project imports:
 import 'package:teta_widgets/src/elements/index.dart';
+
+import 'package:teta_core/src/pages/editor_page/cubits/airtable.dart';
+
 
 // ignore_for_file: public_member_api_docs
 
@@ -79,18 +84,16 @@ class _WAirtableFetchState extends State<WAirtableFetch> {
             .prj
             .config;
     var dbElements = <AirtableRecord>[];
-    if (config != null && config.airtableEnabled) {
-      final airtable = Airtable(
-        apiKey: config.airtableKey!,
-        projectBase: config.airtableProjectBase!,
-      );
-      dbElements = await airtable.getAllRecords(recordName);
+    if (config != null && config.isAirtableReady) {
+      final airtable = context.read<AirtableCubit>();
+      dbElements = await airtable.getAllRecords(recordName: recordName);
     } else {
       dbElements = <AirtableRecord>[];
     }
 
     if (mounted) {
       setState(() {
+        list = dbElements;
         isInitialized = true;
       });
     }
@@ -141,6 +144,8 @@ class _WAirtableFetchState extends State<WAirtableFetch> {
   }
 
   List<DatasetObject> _addFetchDataToDataset(final List<dynamic>? list) {
+    print('list in fetch airtable widget: $list');
+
     _map = _map.copyWith(
       name: widget.node.name ?? widget.node.intrinsicState.displayName,
       map: (list ?? const <dynamic>[])
@@ -148,7 +153,13 @@ class _WAirtableFetchState extends State<WAirtableFetch> {
           .toList(),
     );
 
+    print('map in fetch airtable widget: $_map');
+
+
     final datasets = addDataset(context, widget.dataset, _map);
+
+    print('dataset in fetch airtable widget: $datasets');
+
 
     return widget.dataset.isEmpty ? datasets : widget.dataset;
   }
