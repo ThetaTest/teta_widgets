@@ -1,4 +1,5 @@
 // Project imports:
+import 'package:teta_widgets/src/elements/bodies/airtable/fetch.dart';
 import 'package:teta_widgets/src/elements/bodies/align.dart';
 import 'package:teta_widgets/src/elements/bodies/animated_align.dart';
 import 'package:teta_widgets/src/elements/bodies/animated_container.dart';
@@ -8,6 +9,7 @@ import 'package:teta_widgets/src/elements/bodies/animations/anim_config_list.dar
 import 'package:teta_widgets/src/elements/bodies/animations/fade_in.dart';
 import 'package:teta_widgets/src/elements/bodies/animations/scale.dart';
 import 'package:teta_widgets/src/elements/bodies/animations/slide.dart';
+import 'package:teta_widgets/src/elements/bodies/api_calls/api_calls_fetch.dart';
 import 'package:teta_widgets/src/elements/bodies/aspect_ratio.dart';
 import 'package:teta_widgets/src/elements/bodies/audio_player_body.dart';
 import 'package:teta_widgets/src/elements/bodies/audio_player_progress_indicator_body.dart';
@@ -52,6 +54,7 @@ import 'package:teta_widgets/src/elements/bodies/firebase/pagination.dart';
 import 'package:teta_widgets/src/elements/bodies/firebase/stream_builder.dart';
 import 'package:teta_widgets/src/elements/bodies/fitted_box.dart';
 import 'package:teta_widgets/src/elements/bodies/fractionally_sizedbox.dart';
+import 'package:teta_widgets/src/elements/bodies/gap.dart';
 import 'package:teta_widgets/src/elements/bodies/gesture_detector.dart';
 import 'package:teta_widgets/src/elements/bodies/google_ad_mob_banner_ad_body.dart';
 import 'package:teta_widgets/src/elements/bodies/google_maps_body.dart';
@@ -139,6 +142,7 @@ import 'package:teta_widgets/src/elements/nodes/node_body.dart';
 
 /// The list of the all instrict states
 final stateTypes = <IntrinsicStates>[
+  airtableFetchIntrinsicStates,
   alignIntrinsicStates,
   badgeIntrinsicStates,
   buttonIntrinsicStates,
@@ -151,6 +155,7 @@ final stateTypes = <IntrinsicStates>[
   decoratedBoxIntrinsicStates,
   dividerIntrinsicStates,
   expandedIntrinsicStates,
+  gapIntrinsicStates,
   gestureDetectorIntrinsicStates,
   gridIntrinsicStates,
   gridViewBuilderIntrinsicStates,
@@ -273,6 +278,7 @@ final stateTypes = <IntrinsicStates>[
   qrScannerIntrinsicStates,
   limitedBoxIntrinsicStates,
   customHttpRequestIntrinsicStates,
+  apiCallsFetchIntrinsicStates,
 ];
 
 /// Method to return any body
@@ -552,6 +558,29 @@ NodeBody getBody(final NType type) {
       break;
     case NType.expansionPanel:
       break;
+    case NType.gap:
+      return GapBody();
+      break;
+    case NType.mapBox:
+      // TODO: Handle this case.
+      break;
+    case NType.transformRotate:
+      // TODO: Handle this case.
+      break;
+    case NType.transformTranslate:
+      // TODO: Handle this case.
+      break;
+    case NType.transformScale:
+      // TODO: Handle this case.
+      break;
+    case NType.animationConfigStaticList:
+      // TODO: Handle this case.
+      break;
+    case NType.airtableFetch:
+      // TODO: Handle this case.
+      break;
+    case NType.apiCallsFetch:
+      return ApiCallsFetchBody();
   }
   return NodeBody();
 }

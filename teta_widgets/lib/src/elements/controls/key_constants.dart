@@ -3,9 +3,11 @@
 
 // Flutter imports:
 import 'package:flutter/foundation.dart';
+
 // Package imports:
 import 'package:teta_core/src/models/variable.dart';
 import 'package:teta_core/teta_core.dart';
+
 // Project imports:
 import 'package:teta_widgets/src/elements/features/font_weight.dart';
 import 'package:teta_widgets/src/elements/features/google_maps_map_style.dart';
@@ -137,6 +139,11 @@ class DBKeys {
   static const String hintTextColor = 'hintTC';
   static const String cursorColor = 'cursorC';
 
+  // Gap
+  static const String mainAxisExtend = 'mAxExt';
+  static const String crossAxisExtend = 'cAxExt';
+  static const String isExpandedGap = 'iExGap';
+
   static const String mainAxisSpacing = 'mAxSpc';
   static const String crossAxisCount = 'cAxCn';
   static const String crossAxisSpacing = 'cAxSpc';
@@ -190,8 +197,11 @@ class DBKeys {
   static const String customHttpRequestList = 'customHttpRequestList';
   static const String customHttpRequestHeader = 'customHttpRequestHeader';
 
-//Api Calls
+  //Api Calls
   static const String requestName = 'apiCallRN';
+  static const String apiCallsResponseName = 'apiCallResN';
+  static const String apiCallsDynamicValue = 'apiCallsDV';
+  static const String apiCallsSelectedRequest = 'apiCallSR';
 
   static const String cmsCollection = 'cmsColl';
   static const String cmsLimit = 'cmsLmt';
@@ -430,6 +440,12 @@ class DynamicAttributes {
           return FSize.fromJson(value as Map<String, dynamic>);
         case DBKeys.maxWidth:
           return FSize.fromJson(value as Map<String, dynamic>);
+        case DBKeys.mainAxisExtend:
+          return FSize.fromJson(value as Map<String, dynamic>);
+        case DBKeys.crossAxisExtend:
+          return FSize.fromJson(value as Map<String, dynamic>);
+        case DBKeys.isExpandedGap:
+          return value as bool;
         case 'params':
           {
             final params = <VariableObject>[];
@@ -481,8 +497,27 @@ class DynamicAttributes {
         case DBKeys.cmsCollection:
           return FTextTypeInput.fromJson(value as Map<String, dynamic>);
         case DBKeys.requestName:
+          return value;
+        case DBKeys.apiCallsResponseName:
           return FTextTypeInput.fromJson(value as Map<String, dynamic>);
-
+        case DBKeys.apiCallsDynamicValue:
+          {
+            final list = <MapElement>[];
+            if (value != null) {
+              for (final e in value as List<dynamic>) {
+                list.add(MapElement.fromJson(e as Map<String, dynamic>));
+              }
+            }
+            return list;
+          }
+        case DBKeys.apiCallsSelectedRequest:
+          {
+            var map = <String, dynamic>{};
+            if (value != null) {
+              map = value as Map<String, dynamic>;
+            }
+            return map;
+          }
         case DBKeys.cmsPage:
           return FTextTypeInput.fromJson(value as Map<String, dynamic>);
         case DBKeys.cmsLimit:
@@ -900,8 +935,27 @@ class DynamicAttributes {
         return value != null ? value.toJson() : FKeyboardType().toJson();
       case DBKeys.yTranslation:
         return value != null ? value.toJson() : FKeyboardType().toJson();
+      case DBKeys.isExpandedGap:
+        return value;
+      case DBKeys.mainAxisExtend:
+        return value != null ? value.toJson() : FSize().toJson();
+      case DBKeys.crossAxisExtend:
+        return value != null ? value.toJson() : FSize().toJson();
       case DBKeys.requestName:
         return value != null ? value.toJson() : FTextTypeInput().toJson();
+      case DBKeys.requestName:
+        return value;
+      case DBKeys.apiCallsResponseName:
+        return value != null ? value.toJson() : FTextTypeInput().toJson();
+      case DBKeys.apiCallsDynamicValue:
+        return (value != null)
+            ? (value as List<MapElement>).map((final e) => e.toJson()).toList()
+            : <MapElement>[];
+      case DBKeys.apiCallsSelectedRequest:
+        return (value != null)
+            ? (value as Map<String, dynamic>)
+            : <String, dynamic>{};
+
       default:
         return <String, dynamic>{};
     }

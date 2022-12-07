@@ -15,6 +15,9 @@ import 'package:teta_core/src/services/packages_service.dart';
 // Project imports:
 import 'package:teta_core/teta_core.dart';
 import 'package:teta_widgets/src/core/teta_widget/index.dart';
+import 'package:teta_widgets/src/elements/actions/airtable/delete.dart';
+import 'package:teta_widgets/src/elements/actions/airtable/insert.dart';
+import 'package:teta_widgets/src/elements/actions/airtable/update.dart';
 import 'package:teta_widgets/src/elements/actions/api_calls/apicalls.dart';
 import 'package:teta_widgets/src/elements/actions/audio_player/loop_all.dart';
 import 'package:teta_widgets/src/elements/actions/audio_player/loop_off.dart';
@@ -90,6 +93,7 @@ import 'package:teta_widgets/src/elements/actions/webview/forward.dart';
 import 'package:teta_widgets/src/elements/actions/webview/navigate_to.dart';
 import 'package:teta_widgets/src/elements/actions/webview/reload.dart';
 import 'package:teta_widgets/src/elements/features/actions/enums/action_google_maps.dart';
+import 'package:teta_widgets/src/elements/features/actions/enums/airtable.dart';
 import 'package:teta_widgets/src/elements/features/actions/enums/apicalls.dart';
 import 'package:teta_widgets/src/elements/features/actions/enums/audio_player_actions.dart';
 import 'package:teta_widgets/src/elements/features/actions/enums/braintree.dart';
@@ -127,6 +131,7 @@ class FActionElement extends Equatable {
     this.customFunctionId,
     this.actionSupabaseAuth,
     this.actionSupabaseDB,
+    this.actionAirtableDB,
     this.actionSupabaseFunctions,
     this.actionSupabaseStorage,
     this.actionTetaDB,
@@ -223,9 +228,13 @@ class FActionElement extends Equatable {
     actionSupabaseAuth =
         convertDropdownToValue(ActionSupabaseAuth.values, doc['sA'] as String?)
             as ActionSupabaseAuth?;
+    print("docsA: ${doc['sA']}");
     actionSupabaseDB =
         convertDropdownToValue(ActionSupabaseDB.values, doc['sD'] as String?)
             as ActionSupabaseDB?;
+    actionAirtableDB =
+        convertDropdownToValue(ActionAirtableDB.values, doc['aD'] as String?)
+            as ActionAirtableDB?;
     actionSupabaseFunctions = convertDropdownToValue(
       ActionSupabaseFunctions.values,
       doc['supaFuncs'] as String?,
@@ -436,6 +445,19 @@ class FActionElement extends Equatable {
               ),
             )
             .toList();
+    apiCallsRequestName = doc['aCRN'] as String?;
+    apiCallsSelectedRequest = doc['aCSR'] as Map<String, dynamic>?;
+    apiCallsResponseName = FTextTypeInput.fromJson(
+      doc['aCResN'] as Map<String, dynamic>?,
+    );
+    apiCallsDynamicValue =
+        (doc['sApiCallsDynamicValue'] as List<dynamic>? ?? <dynamic>[])
+            .map(
+              (final dynamic e) => MapElement.fromJson(
+                e as Map<String, dynamic>,
+              ),
+            )
+            .toList();
   }
 
   String? id;
@@ -456,6 +478,7 @@ class FActionElement extends Equatable {
   ActionSupabaseDB? actionSupabaseDB;
   ActionSupabaseFunctions? actionSupabaseFunctions;
   ActionSupabaseStorage? actionSupabaseStorage;
+  ActionAirtableDB? actionAirtableDB;
   ActionCamera? actionCamera;
   ActionWebView? actionWebView;
   ActionAudioPlayerActions? actionAudioPlayer;
@@ -519,6 +542,9 @@ class FActionElement extends Equatable {
   /// Supabase name of column for condition
   MapElement? dbEq;
 
+  /// Airtable
+  FTextTypeInput? airtableRecordName;
+
   /// Api Calls
   String? apiCallsRequestName;
   Map<String, dynamic>? apiCallsSelectedRequest;
@@ -533,6 +559,7 @@ class FActionElement extends Equatable {
         actionNavigation,
         actionState,
         actionWebView,
+        actionAirtableDB,
         stateName,
         actionBraintree,
         actionTranslator,
@@ -583,6 +610,7 @@ class FActionElement extends Equatable {
           if (config.isQonversionReady) 'Qonversion',
           if (config.isMixpanelReady) 'Mixpanel',
           if (config.isStripeEnabled) 'Stripe',
+          if (config.isAirtableReady) 'Airtable Database',
           if ((page.flatList ?? <CNode>[]).indexWhere(
                 (final element) => element.intrinsicState.type == NType.camera,
               ) !=
@@ -707,6 +735,15 @@ class FActionElement extends Equatable {
     return [];
   }
 
+  static List<String> getAirtableDB(final ProjectConfig? config) {
+    if (config != null) {
+      if (config.isAirtableReady) {
+        return enumsToListString(ActionAirtableDB.values);
+      }
+    }
+    return [];
+  }
+
   static List<String> getSupabaseStorage(final ProjectConfig? config) {
     if (config != null) {
       if (config.isSupabaseReady) {
@@ -786,6 +823,7 @@ class FActionElement extends Equatable {
     if (type == ActionType.apiCalls) {
       return 'Api Calls';
     }
+    if (type == ActionType.airtable) return 'Airtable Database';
 
     if (type != null) {
       return EnumToString.convertToString(type, camelCase: true);
@@ -829,6 +867,7 @@ class FActionElement extends Equatable {
     if (value == 'Api Calls') {
       return ActionType.apiCalls;
     }
+    if (value == 'Airtable Database') return ActionType.airtable;
     if (value != null) {
       return EnumToString.fromString<dynamic>(list, value, camelCase: true);
     }
@@ -853,6 +892,7 @@ class FActionElement extends Equatable {
         'g': convertValueToDropdown(actionGesture),
         'sA': convertValueToDropdown(actionSupabaseAuth),
         'sD': convertValueToDropdown(actionSupabaseDB),
+        'sA': convertValueToDropdown(actionAirtableDB),
         'supaFuncs': convertValueToDropdown(actionSupabaseFunctions),
         'supaStor': convertValueToDropdown(actionSupabaseStorage),
         'aC': convertValueToDropdown(actionCamera),
@@ -1628,6 +1668,57 @@ class FActionElement extends Equatable {
             );
             break;
           case null:
+            break;
+        }
+        break;
+      case ActionType.airtable:
+        switch (actionAirtableDB) {
+          case null:
+            break;
+          case ActionAirtableDB.insert:
+            await actionS(
+              () => FAAirtableInsert.action(
+                context,
+                airtableRecordName,
+                dbData ?? [],
+                state.params,
+                state.states,
+                state.dataset,
+                state.loop,
+              ),
+              context: context,
+              state: state,
+            );
+            break;
+          case ActionAirtableDB.delete:
+            await actionS(
+              () => FAAirtableDelete.action(
+                context,
+                airtableRecordName,
+                dbData ?? [],
+                state.params,
+                state.states,
+                state.dataset,
+                state.loop,
+              ),
+              context: context,
+              state: state,
+            );
+            break;
+          case ActionAirtableDB.update:
+            await actionS(
+              () => FAAirtableUpdate.action(
+                context,
+                airtableRecordName,
+                dbData ?? [],
+                state.params,
+                state.states,
+                state.dataset,
+                state.loop,
+              ),
+              context: context,
+              state: state,
+            );
             break;
         }
         break;
@@ -3003,11 +3094,46 @@ class FActionElement extends Equatable {
           //   return '';
           // case ActionSupabaseDB.onDelete:
           //   return '';
+
           case null:
             return '';
           default:
             return '';
         }
+
+      case ActionType.airtable:
+        switch (actionAirtableDB) {
+          case ActionAirtableDB.insert:
+            return codeS(
+              FAAirtableInsert.toCode(
+                context,
+                valueTextTypeInput,
+                dbData ?? [],
+              ),
+              context,
+            );
+          case ActionAirtableDB.delete:
+            return codeS(
+              FAAirtableDelete.toCode(
+                context,
+                valueTextTypeInput,
+                dbData ?? [],
+              ),
+              context,
+            );
+          case ActionAirtableDB.update:
+            return codeS(
+              FAAirtableUpdate.toCode(
+                context,
+                valueTextTypeInput,
+                dbData ?? [],
+              ),
+              context,
+            );
+          case null:
+            break;
+        }
+        break;
 
       case ActionType.camera:
         switch (actionCamera) {

@@ -7,6 +7,7 @@ import 'package:dart_airtable/dart_airtable.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 // Package imports:
+import 'package:teta_core/src/pages/editor_page/cubits/airtable.dart';
 import 'package:teta_core/teta_core.dart';
 import 'package:teta_widgets/src/core/teta_widget/index.dart';
 // Project imports:
@@ -52,13 +53,13 @@ class _WAirtableFetchState extends State<WAirtableFetch> {
       widget.state.loop,
       context,
     );
-    final config = (BlocProvider.of<FocusProjectBloc>(context).state as ProjectLoaded).prj.config;
+    final config =
+        (BlocProvider.of<FocusProjectBloc>(context).state as ProjectLoaded)
+            .prj
+            .config;
     var dbElements = <AirtableRecord>[];
-    if (config != null && config.airtableEnabled != null && config.airtableEnabled!) {
-      final airtable = Airtable(
-        apiKey: config.airtableKey!,
-        projectBase: config.airtableProjectBase!,
-      );
+    if (config != null && config.isAirtableReady) {
+      final airtable = context.read<AirtableCubit>();
       dbElements = await airtable.getAllRecords(recordName);
     } else {
       dbElements = <AirtableRecord>[];
@@ -66,6 +67,7 @@ class _WAirtableFetchState extends State<WAirtableFetch> {
 
     if (mounted) {
       setState(() {
+        list = dbElements;
         isInitialized = true;
       });
     }
@@ -114,12 +116,19 @@ class _WAirtableFetchState extends State<WAirtableFetch> {
   }
 
   List<DatasetObject> _addFetchDataToDataset(final List<dynamic>? list) {
+    print('list in fetch airtable widget: $list');
+
     _map = _map.copyWith(
-      name: widget.state.node.name ?? widget.state.node.intrinsicState.displayName,
-      map: (list ?? const <dynamic>[]).map((final dynamic e) => e as Map<String, dynamic>).toList(),
+      name: widget.state.node.name ??
+          widget.state.node.intrinsicState.displayName,
+      map: (list ?? const <dynamic>[])
+          .map((final dynamic e) => e as Map<String, dynamic>)
+          .toList(),
     );
+    print('map in fetch airtable widget: $_map');
 
     final datasets = addDataset(context, widget.state.dataset, _map);
+    print('dataset in fetch airtable widget: $datasets');
 
     return widget.state.dataset.isEmpty ? datasets : widget.state.dataset;
   }

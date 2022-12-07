@@ -19,6 +19,7 @@ enum NType {
   divider,
   expanded,
   fractionallySizedBox,
+  gap,
   gestureDetector,
   gridView,
   gridViewBuilder,
@@ -169,7 +170,10 @@ enum NType {
   location,
 
   // Airtable
-  airtableFetch
+  airtableFetch,
+
+  // Api Calls
+  apiCallsFetch,
 }
 
 extension NodeType on NType {
@@ -177,10 +181,12 @@ extension NodeType on NType {
   static String type(final NType type) => EnumToString.convertToString(type);
 
   ///Get node's display name from NType enum value
-  static String name(final NType type) => EnumToString.convertToString(type, camelCase: true);
+  static String name(final NType type) =>
+      EnumToString.convertToString(type, camelCase: true);
 
   ///Get NType enum value from string
-  static NType fromString(final String x) => EnumToString.fromString(NType.values, x) ?? NType.nil;
+  static NType fromString(final String x) =>
+      EnumToString.fromString(NType.values, x) ?? NType.nil;
 
   static NType fromStringCamelCase(final String x) =>
       EnumToString.fromString(NType.values, x, camelCase: true) ?? NType.nil;

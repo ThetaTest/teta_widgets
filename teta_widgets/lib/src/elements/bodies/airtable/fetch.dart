@@ -7,7 +7,7 @@ import 'package:flutter/material.dart';
 import 'package:teta_core/gen/assets.gen.dart';
 import 'package:teta_core/src/models/variable.dart';
 import 'package:teta_widgets/src/core/teta_widget/index.dart';
-import 'package:teta_widgets/src/elements/code/templates/cms_fetch.dart';
+import 'package:teta_widgets/src/elements/code/templates/airtable/airtable_fetch.dart';
 // Project imports:
 import 'package:teta_widgets/src/elements/controls/control_model.dart';
 import 'package:teta_widgets/src/elements/controls/key_constants.dart';
@@ -25,14 +25,13 @@ import 'package:teta_widgets/src/elements/widgets/airtable/fetch.dart';
 const _globalType = NType.airtableFetch;
 
 /// IS
-final cmsFetchIntrinsicStates = IntrinsicStates(
+final airtableFetchIntrinsicStates = IntrinsicStates(
   nodeIcon: Assets.icons.left.dataset,
   nodeVideo: null,
   nodeDescription: null,
   advicedChildren: [
-    NodeType.name(NType.container),
+    NodeType.name(NType.listViewBuilder),
     NodeType.name(NType.column),
-    NodeType.name(NType.row)
   ],
   blockedTypes: [],
   synonymous: [
@@ -58,7 +57,7 @@ final cmsFetchIntrinsicStates = IntrinsicStates(
 );
 
 /// Body
-class CmsFetchBody extends NodeBody {
+class AirtableFetchBody extends NodeBody {
   @override
   // ignore: overridden_fields
   Map<String, dynamic> attributes = <String, dynamic>{
@@ -107,7 +106,7 @@ class CmsFetchBody extends NodeBody {
     final int pageId,
     final int? loop,
   ) =>
-      CmsFetchCodeTemplate.toCode(
+      AirtableFetchCodeTemplate.toCode(
         context,
         node as NDynamic,
         children ?? <CNode>[],
