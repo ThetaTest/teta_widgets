@@ -7,7 +7,7 @@ import 'package:http/http.dart' as http;
 
 // Package imports:
 import 'package:teta_core/teta_core.dart';
-import 'package:teta_cms/teta_cms.dart';
+import 'package:teta_widgets/src/core/teta_widget/index.dart';
 
 // Project imports:
 import 'package:teta_widgets/src/elements/index.dart';
@@ -15,30 +15,20 @@ import 'package:teta_widgets/src/elements/index.dart';
 class WApiCallsFetch extends StatefulWidget {
   const WApiCallsFetch(
     final Key? key, {
-    required this.node,
+    required this.state,
+    required this.children,
     required this.requestName,
     required this.apiCallsResponseName,
     required this.apiCallsDynamicValue,
     this.apiCallsSelectedRequest,
-    required this.forPlay,
-    required this.params,
-    required this.states,
-    required this.dataset,
-    required this.children,
-    this.loop,
   }) : super(key: key);
 
-  final CNode node;
+  final TetaWidgetState state;
   final List<CNode> children;
-  final bool forPlay;
-  final int? loop;
   final String requestName;
   final FTextTypeInput apiCallsResponseName;
   final List<MapElement>? apiCallsDynamicValue;
   final Map<String, dynamic>? apiCallsSelectedRequest;
-  final List<VariableObject> params;
-  final List<VariableObject> states;
-  final List<DatasetObject> dataset;
 
   @override
   State<WApiCallsFetch> createState() => _WApiCallsFetchState();
@@ -254,10 +244,9 @@ class _WApiCallsFetchState extends State<WApiCallsFetch> {
       if (widget.children.length > 1) {
         return RepaintBoundary(
           child: widget.children.last.toWidget(
-            params: widget.params,
-            states: widget.states,
-            dataset: datasets,
-            forPlay: widget.forPlay,
+            state: widget.state.copyWith(
+              dataset: datasets,
+            ),
           ),
         );
       } else {
@@ -268,16 +257,15 @@ class _WApiCallsFetchState extends State<WApiCallsFetch> {
       }
     }
     return NodeSelectionBuilder(
-      node: widget.node,
-      forPlay: widget.forPlay,
+      node: widget.state.node,
+      forPlay: widget.state.forPlay,
       child: widget.children.isEmpty
           ? const THeadline3('Api Calls Fetch requires at least one child')
           : RepaintBoundary(
               child: widget.children.first.toWidget(
-                params: widget.params,
-                states: widget.states,
-                dataset: datasets,
-                forPlay: widget.forPlay,
+                state: widget.state.copyWith(
+                  dataset: datasets,
+                ),
               ),
             ),
     );
@@ -285,11 +273,11 @@ class _WApiCallsFetchState extends State<WApiCallsFetch> {
 
   List<DatasetObject> _addFetchDataToDataset(final List<dynamic>? list) {
     final apiCallsResponseNameNew = widget.apiCallsResponseName.get(
-      widget.params,
-      widget.states,
-      widget.dataset,
-      widget.forPlay,
-      widget.loop,
+      widget.state.params,
+      widget.state.states,
+      widget.state.dataset,
+      widget.state.forPlay,
+      widget.state.loop,
       context,
     );
     String datasetName;
@@ -306,8 +294,8 @@ class _WApiCallsFetchState extends State<WApiCallsFetch> {
           .toList(),
     );
 
-    final datasets = addDataset(context, widget.dataset, _map);
+    final datasets = addDataset(context, widget.state.dataset, _map);
 
-    return widget.dataset.isEmpty ? datasets : widget.dataset;
+    return widget.state.dataset.isEmpty ? datasets : widget.state.dataset;
   }
 }

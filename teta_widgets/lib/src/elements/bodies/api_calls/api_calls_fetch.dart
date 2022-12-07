@@ -6,6 +6,7 @@ import 'package:flutter/material.dart';
 // Package imports:
 import 'package:teta_core/gen/assets.gen.dart';
 import 'package:teta_core/teta_core.dart';
+import 'package:teta_widgets/src/core/teta_widget/index.dart';
 import 'package:teta_widgets/src/elements/code/templates/apiCallsFetch.dart';
 import 'package:teta_widgets/src/elements/controls/atoms/db_map.dart';
 
@@ -99,29 +100,24 @@ class ApiCallsFetchBody extends NodeBody {
 
   @override
   Widget toWidget({
-    required final List<VariableObject> params,
-    required final List<VariableObject> states,
-    required final List<DatasetObject> dataset,
-    required final bool forPlay,
-    required final CNode node,
-    final int? loop,
+    required final TetaWidgetState state,
     final CNode? child,
     final List<CNode>? children,
   }) {
     return WApiCallsFetch(
       ValueKey(
         '''
-        ${node.nid}
-        $loop
+        ${state.node.nid}
+        ${state.loop}
         ${child ?? children}
         ${attributes[DBKeys.requestName] as String}
         ${(attributes[DBKeys.apiCallsResponseName] as FTextTypeInput).toJson()}
-        ${(attributes[DBKeys.apiCallsResponseName] as FTextTypeInput).getStateValue(states)}
+        ${(attributes[DBKeys.apiCallsResponseName] as FTextTypeInput).getStateValue(state.states)}
         ${attributes[DBKeys.apiCallsDynamicValue]}
         ${attributes[DBKeys.apiCallsSelectedRequest] as Map}
         ''',
       ),
-      node: node,
+      state: state,
       children: children ?? [],
       requestName: attributes[DBKeys.requestName] as String,
       apiCallsResponseName:
@@ -130,10 +126,6 @@ class ApiCallsFetchBody extends NodeBody {
           attributes[DBKeys.apiCallsDynamicValue] as List<MapElement>,
       apiCallsSelectedRequest:
           attributes[DBKeys.apiCallsSelectedRequest] as Map<String, dynamic>,
-      forPlay: forPlay,
-      params: params,
-      states: states,
-      dataset: dataset,
     );
   }
 

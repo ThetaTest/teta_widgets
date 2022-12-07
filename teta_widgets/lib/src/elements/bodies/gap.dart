@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:teta_core/teta_core.dart';
+import 'package:teta_widgets/src/core/teta_widget/index.dart';
 import 'package:teta_widgets/src/elements/code/snippets.dart';
 import 'package:teta_widgets/src/elements/code/templates/gap.dart';
 import 'package:teta_widgets/src/elements/controls/key_constants.dart';
@@ -45,31 +46,22 @@ class GapBody extends NodeBody {
 
   @override
   Widget toWidget({
-    required final List<VariableObject> params,
-    required final List<VariableObject> states,
-    required final List<DatasetObject> dataset,
-    required final bool forPlay,
-    required final CNode node,
-    final int? loop,
+    required final TetaWidgetState state,
     final CNode? child,
     final List<CNode>? children,
   }) =>
       WGap(
         ValueKey(
           '''
-            ${node.nid}
-            $loop
+            ${state.node.nid}
+            ${state.loop}
             ${child ?? children}
             ${(attributes[DBKeys.mainAxisExtend] as FSize? ?? FSize()).toJson()}
             ${(attributes[DBKeys.crossAxisExtend] as FSize? ?? FSize()).toJson()}
             ${attributes[DBKeys.isExpandedGap] as bool}
             ''',
         ),
-        node: node,
-        params: params,
-        states: states,
-        dataset: dataset,
-        forPlay: forPlay,
+        state: state,
         mainAxisExtent: attributes[DBKeys.mainAxisExtend] as FSize,
         crossAxisExtent: attributes[DBKeys.crossAxisExtend] as FSize,
         isExpanded: attributes[DBKeys.isExpandedGap] as bool,
