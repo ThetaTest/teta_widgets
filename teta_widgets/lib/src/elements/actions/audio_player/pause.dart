@@ -6,7 +6,7 @@ import 'package:collection/collection.dart';
 // Flutter imports:
 import 'package:flutter/material.dart';
 import 'package:recase/recase.dart';
-import 'package:teta_core/src/models/variable.dart';
+import 'package:teta_widgets/src/core/teta_widget/index.dart';
 import 'package:teta_widgets/src/elements/actions/snippets/get_page_on_code.dart';
 // Project imports:
 import 'package:teta_widgets/src/elements/actions/snippets/take_state_from.dart';
@@ -14,11 +14,10 @@ import 'package:teta_widgets/src/elements/actions/snippets/take_state_from.dart'
 class FAudioPlayerPause {
   static Future action(
     final BuildContext context,
-    final List<VariableObject> states,
+    final TetaWidgetState state,
     final String? stateName,
   ) async {
-    final variable =
-        states.firstWhereOrNull((final element) => element.name == stateName);
+    final variable = state.states.firstWhereOrNull((final element) => element.name == stateName);
     if (variable?.audioController != null) {
       await variable?.audioController?.pause();
     }

@@ -2,8 +2,7 @@
 import 'package:flutter/material.dart';
 // Package imports:
 import 'package:teta_core/gen/assets.gen.dart';
-import 'package:teta_core/src/models/dataset.dart';
-import 'package:teta_core/src/models/variable.dart';
+import 'package:teta_widgets/src/core/teta_widget/index.dart';
 import 'package:teta_widgets/src/elements/code/snippets.dart';
 // Project imports:
 import 'package:teta_widgets/src/elements/code/templates/clip_oval.dart';
@@ -53,30 +52,20 @@ class ClipOvalBody extends NodeBody {
 
   @override
   Widget toWidget({
-    required final List<VariableObject> params,
-    required final List<VariableObject> states,
-    required final List<DatasetObject> dataset,
-    required final bool forPlay,
-    required final CNode node,
-    final int? loop,
+    required final TetaWidgetState state,
     final CNode? child,
     final List<CNode>? children,
   }) =>
       WClipOval(
         ValueKey(
           '''
-            ${node.nid}
-            $loop
+            ${state.node.nid}
+            ${state.loop}
             ${child ?? children}
             ''',
         ),
-        node: node,
+        state: state,
         child: child,
-        loop: loop,
-        forPlay: forPlay,
-        params: params,
-        states: states,
-        dataset: dataset,
       );
 
   @override

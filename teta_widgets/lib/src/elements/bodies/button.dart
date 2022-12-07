@@ -2,8 +2,8 @@
 import 'package:flutter/material.dart';
 // Package imports:
 import 'package:teta_core/gen/assets.gen.dart';
-import 'package:teta_core/src/models/dataset.dart';
 import 'package:teta_core/src/models/variable.dart';
+import 'package:teta_widgets/src/core/teta_widget/index.dart';
 import 'package:teta_widgets/src/elements/code/snippets.dart';
 // Project imports:
 import 'package:teta_widgets/src/elements/code/templates/button.dart';
@@ -53,11 +53,7 @@ final buttonIntrinsicStates = IntrinsicStates(
   maxChildren: 0,
   canHave: ChildrenEnum.none,
   addChildLabels: [],
-  gestures: [
-    ActionGesture.onTap,
-    ActionGesture.onLongPress,
-    ActionGesture.onDoubleTap
-  ],
+  gestures: [ActionGesture.onTap, ActionGesture.onLongPress, ActionGesture.onDoubleTap],
   permissions: [],
   packages: [],
   suggestionsTitle: 'Why use Button in Teta?',
@@ -142,49 +138,39 @@ class ButtonBody extends NodeBody {
 
   @override
   Widget toWidget({
-    required final List<VariableObject> params,
-    required final List<VariableObject> states,
-    required final List<DatasetObject> dataset,
-    required final bool forPlay,
-    required final CNode node,
-    final int? loop,
+    required final TetaWidgetState state,
     final CNode? child,
     final List<CNode>? children,
   }) =>
       WButton(
         ValueKey(
           '''
-      ${node.nid}
-      $loop
-            ${child ?? children}
-      ${(attributes[DBKeys.width] as FSize).toJson()}
-      ${(attributes[DBKeys.height] as FSize).toJson()}
-      ${(attributes[DBKeys.value] as FTextTypeInput).toJson()}
-      ${(attributes[DBKeys.borderRadius] as FBorderRadius).toJson()}
-      ${(attributes[DBKeys.fill] as FFill).toJson()}
-      ${(attributes[DBKeys.textStyle] as FTextStyle).toJson()}
-      ${(attributes[DBKeys.align] as FAlign).toJson()}
-      ${(attributes[DBKeys.action] as FAction).toJson()}
-      ${(attributes[DBKeys.actionValue] as FTextTypeInput).toJson()}
-      ${(attributes[DBKeys.pageTransition] as FPageTransition).toJson()}
-      ''',
+          ${state.node.nid}
+          ${state.loop}
+          ${child ?? children}
+          ${(attributes[DBKeys.width] as FSize).toJson()}
+          ${(attributes[DBKeys.height] as FSize).toJson()}
+          ${(attributes[DBKeys.value] as FTextTypeInput).toJson()}
+          ${(attributes[DBKeys.borderRadius] as FBorderRadius).toJson()}
+          ${(attributes[DBKeys.fill] as FFill).toJson()}
+          ${(attributes[DBKeys.textStyle] as FTextStyle).toJson()}
+          ${(attributes[DBKeys.align] as FAlign).toJson()}
+          ${(attributes[DBKeys.action] as FAction).toJson()}
+          ${(attributes[DBKeys.actionValue] as FTextTypeInput).toJson()}
+          ${(attributes[DBKeys.pageTransition] as FPageTransition).toJson()}
+          ''',
         ),
-        node: node,
+        state: state,
         width: attributes[DBKeys.width] as FSize,
         height: attributes[DBKeys.height] as FSize,
         value: attributes[DBKeys.value] as FTextTypeInput,
         borderRadius: attributes[DBKeys.borderRadius] as FBorderRadius,
         fill: attributes[DBKeys.fill] as FFill,
         textStyle: attributes[DBKeys.textStyle] as FTextStyle,
-        forPlay: forPlay,
         textAlignPosition: attributes[DBKeys.align] as FAlign,
         action: attributes[DBKeys.action] as FAction,
         actionValue: attributes[DBKeys.actionValue] as FTextTypeInput,
         pageTransition: attributes[DBKeys.pageTransition] as FPageTransition,
-        loop: loop,
-        params: params,
-        states: states,
-        dataset: dataset,
       );
 
   @override

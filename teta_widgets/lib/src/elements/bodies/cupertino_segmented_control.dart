@@ -2,8 +2,7 @@
 import 'package:flutter/material.dart';
 // Package imports:
 import 'package:teta_core/gen/assets.gen.dart';
-import 'package:teta_core/src/models/dataset.dart';
-import 'package:teta_core/src/models/variable.dart';
+import 'package:teta_widgets/src/core/teta_widget/index.dart';
 // Project imports:
 import 'package:teta_widgets/src/elements/code/templates/cupertino_segmented_control.dart';
 import 'package:teta_widgets/src/elements/controls/control_model.dart';
@@ -16,9 +15,8 @@ import 'package:teta_widgets/src/elements/nodes/children_enum.dart';
 import 'package:teta_widgets/src/elements/nodes/enum.dart';
 import 'package:teta_widgets/src/elements/nodes/node.dart';
 import 'package:teta_widgets/src/elements/nodes/node_body.dart';
+import 'package:teta_widgets/src/elements/nodes/suggestion.dart';
 import 'package:teta_widgets/src/elements/widgets/cupertino_segmented_control.dart';
-
-import '../nodes/suggestion.dart';
 
 const _globalType = NType.cupertinoSegmentedControl;
 
@@ -39,14 +37,7 @@ final cupertinoSegmentedControlIntrinsicStates = IntrinsicStates(
     NodeType.name(NType.image),
   ],
   blockedTypes: [],
-  synonymous: [
-    'cupertinoSwitch',
-    'checkbox',
-    'radio',
-    'ontap',
-    'onpressed',
-    'click'
-  ],
+  synonymous: ['cupertinoSwitch', 'checkbox', 'radio', 'ontap', 'onpressed', 'click'],
   advicedChildrenCanHaveAtLeastAChild: [],
   displayName: NodeType.name(_globalType),
   type: _globalType,
@@ -64,8 +55,7 @@ final cupertinoSegmentedControlIntrinsicStates = IntrinsicStates(
     const Suggestion(
       title: 'Why use Cupertino Segmented Control in Teta?',
       description: 'Test',
-      linkToOpen:
-          'https://docs.teta.so/teta-docs/widget/input-widgets/cupertino-segmented-control',
+      linkToOpen: 'https://docs.teta.so/teta-docs/widget/input-widgets/cupertino-segmented-control',
     )
   ],
 );
@@ -145,40 +135,29 @@ class CupertinoSegmentedControlBody extends NodeBody {
 
   @override
   Widget toWidget({
-    required final List<VariableObject> params,
-    required final List<VariableObject> states,
-    required final List<DatasetObject> dataset,
-    required final bool forPlay,
-    required final CNode node,
-    final int? loop,
+    required final TetaWidgetState state,
     final CNode? child,
     final List<CNode>? children,
   }) =>
       WCupertinoSegmentedControl(
         ValueKey(
           '''
-      ${node.nid}
-      $loop
-            ${child ?? children}
-      ${(attributes[DBKeys.textFill] as FFill).toJson()}
-      
-      ${(attributes[DBKeys.activeFill] as FFill).toJson()}
-      ${(attributes[DBKeys.fill] as FFill).toJson()}
-      ${(attributes[DBKeys.bgFill] as FFill).toJson()}
-      ''',
+          ${state.node.nid}
+          ${state.loop}
+          ${child ?? children}
+          ${(attributes[DBKeys.textFill] as FFill).toJson()}
+          ${(attributes[DBKeys.activeFill] as FFill).toJson()}
+          ${(attributes[DBKeys.fill] as FFill).toJson()}
+          ${(attributes[DBKeys.bgFill] as FFill).toJson()}
+          ''',
         ),
-        node: node,
+        state: state,
         children: children ?? <CNode>[],
         pressedColor: attributes[DBKeys.textFill] as FFill,
         borderColor: attributes[DBKeys.activeFill] as FFill,
         selectedColor: attributes[DBKeys.fill] as FFill,
         unselectedColor: attributes[DBKeys.bgFill] as FFill,
-        forPlay: forPlay,
-        loop: loop,
         //action: attributes[DBKeys.action] as FAction,
-        params: params,
-        states: states,
-        dataset: dataset,
       );
 
   @override

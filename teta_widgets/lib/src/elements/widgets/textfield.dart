@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 // Package imports:
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:teta_core/teta_core.dart';
+import 'package:teta_widgets/src/core/teta_widget/index.dart';
 // Project imports:
 import 'package:teta_widgets/src/elements/index.dart';
 
@@ -10,7 +11,7 @@ class WTextField extends StatefulWidget {
   /// Returns a TextField widget in Teta
   const WTextField(
     final Key? key, {
-    required this.node,
+    required this.state,
     required this.width,
     required this.value,
     required this.labelText,
@@ -18,7 +19,6 @@ class WTextField extends StatefulWidget {
     required this.paddings,
     required this.fill,
     required this.textStyle,
-    required this.forPlay,
     required this.cursorColor,
     required this.hintTextColor,
     required this.maxLines,
@@ -34,21 +34,15 @@ class WTextField extends StatefulWidget {
     required this.enabledBorderColor,
     required this.focusedBorderColor,
     required this.action,
-    required this.params,
-    required this.states,
-    required this.dataset,
-    this.loop,
   }) : super(key: key);
 
-  final CNode node;
+  final TetaWidgetState state;
   final FTextTypeInput value;
   final FTextTypeInput labelText;
   final FSize width;
   final FMargins margins;
   final FMargins paddings;
   final FFill fill;
-  final bool forPlay;
-  final int? loop;
   final FFill cursorColor;
   final FFill hintTextColor;
   final FTextTypeInput maxLines;
@@ -67,10 +61,6 @@ class WTextField extends StatefulWidget {
   final FFill focusedBorderColor;
   final FAction action;
 
-  final List<VariableObject> params;
-  final List<VariableObject> states;
-  final List<DatasetObject> dataset;
-
   @override
   _WTextFieldState createState() => _WTextFieldState();
 }
@@ -86,7 +76,7 @@ class _WTextFieldState extends State<WTextField> {
 
   @override
   Widget build(final BuildContext context) {
-    if (!widget.forPlay) {
+    if (!widget.state.forPlay) {
       textEditingController.text = widget.value.value!;
     }
 
@@ -115,8 +105,8 @@ class _WTextFieldState extends State<WTextField> {
     final hintOpacity =
         tempHintOpacity >= 0 && tempHintOpacity <= 1 ? tempHintOpacity : 1.0;
     return NodeSelectionBuilder(
-      node: widget.node,
-      forPlay: widget.forPlay,
+      node: widget.state.node,
+      forPlay: widget.state.forPlay,
       child: Center(
         child: TContainer(
           margin: widget.margins.get(context),
@@ -149,11 +139,11 @@ class _WTextFieldState extends State<WTextField> {
                       : Colors.transparent,
                   width: double.tryParse(
                         widget.bordersSize.get(
-                          widget.params,
-                          widget.states,
-                          widget.dataset,
-                          widget.forPlay,
-                          widget.loop,
+                          widget.state.params,
+                          widget.state.states,
+                          widget.state.dataset,
+                          widget.state.forPlay,
+                          widget.state.loop,
                           context,
                         ),
                       ) ??
@@ -174,11 +164,11 @@ class _WTextFieldState extends State<WTextField> {
                       : Colors.transparent,
                   width: double.tryParse(
                         widget.bordersSize.get(
-                          widget.params,
-                          widget.states,
-                          widget.dataset,
-                          widget.forPlay,
-                          widget.loop,
+                          widget.state.params,
+                          widget.state.states,
+                          widget.state.dataset,
+                          widget.state.forPlay,
+                          widget.state.loop,
                           context,
                         ),
                       ) ??
@@ -187,11 +177,11 @@ class _WTextFieldState extends State<WTextField> {
                 borderRadius: borderRadius,
               ),
               hintText: widget.labelText.get(
-                widget.params,
-                widget.states,
-                widget.dataset,
-                widget.forPlay,
-                widget.loop,
+                widget.state.params,
+                widget.state.states,
+                widget.state.dataset,
+                widget.state.forPlay,
+                widget.state.loop,
                 context,
               ),
               hintStyle: TextStyle(
@@ -207,61 +197,51 @@ class _WTextFieldState extends State<WTextField> {
             textAlign: widget.textStyle.textAlign!.get,
             autocorrect: widget.autoCorrect,
             obscureText: widget.obscureText,
-            enabled: widget.forPlay,
+            enabled: widget.state.forPlay,
             maxLength: int.tryParse(
               widget.maxLenght.get(
-                widget.params,
-                widget.states,
-                widget.dataset,
-                widget.forPlay,
-                widget.loop,
+                widget.state.params,
+                widget.state.states,
+                widget.state.dataset,
+                widget.state.forPlay,
+                widget.state.loop,
                 context,
               ),
             ),
             maxLines: int.tryParse(
                   widget.maxLines.get(
-                    widget.params,
-                    widget.states,
-                    widget.dataset,
-                    widget.forPlay,
-                    widget.loop,
+                    widget.state.params,
+                    widget.state.states,
+                    widget.state.dataset,
+                    widget.state.forPlay,
+                    widget.state.loop,
                     context,
                   ),
                 ) ??
                 1,
             minLines: int.tryParse(
               widget.minLines.get(
-                widget.params,
-                widget.states,
-                widget.dataset,
-                widget.forPlay,
-                widget.loop,
+                widget.state.params,
+                widget.state.states,
+                widget.state.dataset,
+                widget.state.forPlay,
+                widget.state.loop,
                 context,
               ),
             ),
             onChanged: (final text) => GestureBuilder.get(
               context: context,
-              node: widget.node,
+              state: widget.state,
               gesture: ActionGesture.onChange,
               action: widget.action,
               actionValue: FTextTypeInput(value: text),
-              params: widget.params,
-              states: widget.states,
-              dataset: widget.dataset,
-              forPlay: widget.forPlay,
-              loop: widget.loop,
             ),
             onSubmitted: (final text) => GestureBuilder.get(
               context: context,
-              node: widget.node,
+              state: widget.state,
               gesture: ActionGesture.onSubmitted,
               action: widget.action,
               actionValue: FTextTypeInput(value: text),
-              params: widget.params,
-              states: widget.states,
-              dataset: widget.dataset,
-              forPlay: widget.forPlay,
-              loop: widget.loop,
             ),
           ),
         ),

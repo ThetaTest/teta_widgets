@@ -7,6 +7,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 // Package imports:
 import 'package:teta_core/teta_core.dart';
 import 'package:teta_repositories/src/node_repository.dart';
+import 'package:teta_widgets/src/core/teta_widget/index.dart';
 import 'package:teta_widgets/src/elements/builder/gesture_detector_base.dart';
 import 'package:teta_widgets/src/elements/controls/key_constants.dart';
 // Project imports:
@@ -16,29 +17,18 @@ class WText extends StatefulWidget {
   /// Returns a Text widget in Teta
   const WText(
     final Key? key, {
+    required this.state,
     required this.value,
-    required this.node,
     required this.textStyle,
-    required this.forPlay,
     required this.isFullWidth,
-    required this.params,
-    required this.states,
-    required this.dataset,
     required this.maxLines,
-    this.loop,
   }) : super(key: key);
 
-  final CNode node;
+  final TetaWidgetState state;
   final FTextTypeInput value;
   final FTextStyle textStyle;
-  final bool forPlay;
-  final int? loop;
   final bool isFullWidth;
   final FTextTypeInput maxLines;
-
-  final List<VariableObject> params;
-  final List<VariableObject> states;
-  final List<DatasetObject> dataset;
 
   @override
   State<WText> createState() => _WTextState();
@@ -53,11 +43,11 @@ class _WTextState extends State<WText> {
   void initState() {
     super.initState();
     _controller.text = widget.value.get(
-      widget.params,
-      widget.states,
-      widget.dataset,
-      widget.forPlay,
-      widget.loop,
+      widget.state.params,
+      widget.state.states,
+      widget.state.dataset,
+      widget.state.forPlay,
+      widget.state.loop,
       context,
     );
   }
@@ -65,8 +55,8 @@ class _WTextState extends State<WText> {
   @override
   Widget build(final BuildContext context) {
     return NodeSelectionBuilder(
-      node: widget.node,
-      forPlay: widget.forPlay,
+      node: widget.state.node,
+      forPlay: widget.state.forPlay,
       child: BlocBuilder<ColorStylesCubit, List<PaletteModel>>(
         buildWhen: (final previous, final current) => current != previous,
         builder: (final context, final state) {
@@ -95,13 +85,13 @@ class _WTextState extends State<WText> {
           }
           return GestureDetector(
             onDoubleTap: () {
-              if (!widget.forPlay) {
+              if (!widget.state.forPlay) {
                 _controller.text = widget.value.get(
-                  widget.params,
-                  widget.states,
-                  widget.dataset,
-                  widget.forPlay,
-                  widget.loop,
+                  widget.state.params,
+                  widget.state.states,
+                  widget.state.dataset,
+                  widget.state.forPlay,
+                  widget.state.loop,
                   context,
                 );
                 setState(() {
@@ -114,7 +104,7 @@ class _WTextState extends State<WText> {
                   );
                 }
                 BlocProvider.of<FocusBloc>(context).add(
-                  OnFocus(node: widget.node),
+                  OnFocus(node: widget.state.node),
                 );
               }
             },
@@ -142,11 +132,11 @@ class _WTextState extends State<WText> {
                               ),
                               maxLines: int.tryParse(
                                     widget.maxLines.get(
-                                      widget.params,
-                                      widget.states,
-                                      widget.dataset,
-                                      widget.forPlay,
-                                      widget.loop,
+                                      widget.state.params,
+                                      widget.state.states,
+                                      widget.state.dataset,
+                                      widget.state.forPlay,
+                                      widget.state.loop,
                                       context,
                                     ),
                                   ) ??
@@ -171,11 +161,11 @@ class _WTextState extends State<WText> {
                               ),
                               maxLines: int.tryParse(
                                     widget.maxLines.get(
-                                      widget.params,
-                                      widget.states,
-                                      widget.dataset,
-                                      widget.forPlay,
-                                      widget.loop,
+                                      widget.state.params,
+                                      widget.state.states,
+                                      widget.state.dataset,
+                                      widget.state.forPlay,
+                                      widget.state.loop,
                                       context,
                                     ),
                                   ) ??
@@ -187,12 +177,7 @@ class _WTextState extends State<WText> {
                   )
                 : GestureBuilderBase.get(
                     context: context,
-                    node: widget.node,
-                    params: widget.params,
-                    states: widget.states,
-                    dataset: widget.dataset,
-                    forPlay: widget.forPlay,
-                    loop: widget.loop,
+                    state: widget.state,
                     child: widget.isFullWidth
                         ? SizedBox(
                             width: double.maxFinite,
@@ -200,22 +185,22 @@ class _WTextState extends State<WText> {
                               textStyle: widget.textStyle,
                               value: widget.value,
                               maxLines: widget.maxLines,
-                              params: widget.params,
-                              states: widget.states,
-                              dataset: widget.dataset,
-                              forPlay: widget.forPlay,
-                              loop: widget.loop,
+                              params: widget.state.params,
+                              states: widget.state.states,
+                              dataset: widget.state.dataset,
+                              forPlay: widget.state.forPlay,
+                              loop: widget.state.loop,
                             ),
                           )
                         : TextBuilder(
                             textStyle: widget.textStyle,
                             value: widget.value,
                             maxLines: widget.maxLines,
-                            params: widget.params,
-                            states: widget.states,
-                            dataset: widget.dataset,
-                            forPlay: widget.forPlay,
-                            loop: widget.loop,
+                            params: widget.state.params,
+                            states: widget.state.states,
+                            dataset: widget.state.dataset,
+                            forPlay: widget.state.forPlay,
+                            loop: widget.state.loop,
                           ),
                   ),
           );
@@ -228,12 +213,12 @@ class _WTextState extends State<WText> {
     setState(() {
       isEditing = !isEditing;
     });
-    widget.node.body.attributes[DBKeys.value] = FTextTypeInput(
+    widget.state.node.body.attributes[DBKeys.value] = FTextTypeInput(
       value: text,
     );
     NodeRepository.change(
-      nodeId: widget.node.nid,
-      node: widget.node as NDynamic,
+      nodeId: widget.state.node.nid,
+      node: widget.state.node as NDynamic,
       pageId: BlocProvider.of<PageCubit>(context).state.id,
       key: DBKeys.value,
       value: FTextTypeInput(

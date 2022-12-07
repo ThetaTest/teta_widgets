@@ -53,6 +53,7 @@ import 'package:teta_widgets/src/elements/bodies/firebase/is_authenticated.dart'
 import 'package:teta_widgets/src/elements/bodies/firebase/pagination.dart';
 import 'package:teta_widgets/src/elements/bodies/firebase/stream_builder.dart';
 import 'package:teta_widgets/src/elements/bodies/fitted_box.dart';
+import 'package:teta_widgets/src/elements/bodies/fractionally_sizedbox.dart';
 import 'package:teta_widgets/src/elements/bodies/gap.dart';
 import 'package:teta_widgets/src/elements/bodies/gesture_detector.dart';
 import 'package:teta_widgets/src/elements/bodies/google_ad_mob_banner_ad_body.dart';
@@ -178,6 +179,7 @@ final stateTypes = <IntrinsicStates>[
   safeareaIntrinsicStates,
   scaffoldIntrinsicStates,
   sizedBoxIntrinsicStates,
+  fractionallySizedBoxIntrinsicStates,
   spacerIntrinsicStates,
   stackIntrinsicStates,
   textIntrinsicStates,
@@ -390,6 +392,8 @@ NodeBody getBody(final NType type) {
       return SafeAreaBody();
     case NType.scaffold:
       return ScaffoldBody();
+    case NType.fractionallySizedBox:
+      return FractionallySizedBoxBody();
     case NType.sizedBox:
       return SizedBoxBody();
     case NType.spacer:

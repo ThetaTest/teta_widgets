@@ -1,7 +1,7 @@
 // Flutter imports:
 import 'package:flutter/material.dart';
 // Package imports:
-import 'package:teta_core/teta_core.dart';
+import 'package:teta_widgets/src/core/teta_widget/index.dart';
 import 'package:teta_widgets/src/elements/builder/gesture_detector_base.dart';
 // Project imports:
 import 'package:teta_widgets/src/elements/index.dart';
@@ -12,94 +12,63 @@ class WButton extends StatelessWidget {
   /// Returns a Button widget in Teta
   const WButton(
     final Key? key, {
+    required this.state,
     required this.value,
-    required this.node,
     required this.width,
     required this.height,
     required this.fill,
     required this.textStyle,
     required this.borderRadius,
-    required this.forPlay,
     required this.textAlignPosition,
     required this.action,
     required this.actionValue,
     required this.pageTransition,
-    required this.params,
-    required this.states,
-    required this.dataset,
-    this.loop,
   }) : super(key: key);
 
-  final CNode node;
+  final TetaWidgetState state;
   final FTextTypeInput value;
   final FSize width;
   final FSize height;
   final FFill fill;
   final FBorderRadius borderRadius;
   final FTextStyle textStyle;
-  final bool forPlay;
   final FAlign textAlignPosition;
   final FAction action;
   final FTextTypeInput actionValue;
   final FPageTransition pageTransition;
-  final int? loop;
-
-  final List<VariableObject> params;
-  final List<VariableObject> states;
-  final List<DatasetObject> dataset;
 
   @override
   Widget build(final BuildContext context) {
     return NodeSelectionBuilder(
-      node: node,
-      forPlay: forPlay,
+      node: state.node,
+      forPlay: state.forPlay,
       child: IgnorePointer(
-        ignoring: !forPlay,
+        ignoring: !state.forPlay,
         child: GestureDetector(
           onTap: () => GestureBuilder.get(
             context: context,
-            node: node,
+            state: state,
             gesture: ActionGesture.onTap,
             action: action,
             actionValue: null,
-            params: params,
-            states: states,
-            dataset: dataset,
-            forPlay: forPlay,
-            loop: loop,
           ),
           onDoubleTap: () => GestureBuilder.get(
             context: context,
-            node: node,
+            state: state,
             gesture: ActionGesture.onDoubleTap,
             action: action,
             actionValue: null,
-            params: params,
-            states: states,
-            dataset: dataset,
-            forPlay: forPlay,
-            loop: loop,
           ),
           onLongPress: () => GestureBuilder.get(
             context: context,
-            node: node,
+            state: state,
             gesture: ActionGesture.onLongPress,
             action: action,
             actionValue: null,
-            params: params,
-            states: states,
-            dataset: dataset,
-            forPlay: forPlay,
-            loop: loop,
           ),
           child: GestureBuilderBase.get(
             context: context,
-            node: node,
-            params: params,
-            states: states,
-            dataset: dataset,
-            forPlay: forPlay,
-            loop: loop,
+            state: state,
             child: SizedBox(
               width: width.get(context: context, isWidth: true),
               height: height.get(context: context, isWidth: false),
@@ -115,11 +84,11 @@ class WButton extends StatelessWidget {
                     child: TextBuilder(
                       textStyle: textStyle,
                       value: value,
-                      params: params,
-                      states: states,
-                      dataset: dataset,
-                      forPlay: forPlay,
-                      loop: loop,
+                      params: state.params,
+                      states: state.states,
+                      dataset: state.dataset,
+                      forPlay: state.forPlay,
+                      loop: state.loop,
                     ),
                   ),
                 ),

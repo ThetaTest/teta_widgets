@@ -7,6 +7,7 @@ import 'package:purchases_flutter/purchases_flutter.dart';
 import 'package:recase/recase.dart';
 // Package imports:
 import 'package:teta_core/teta_core.dart';
+import 'package:teta_widgets/src/core/teta_widget/index.dart';
 import 'package:teta_widgets/src/elements/actions/snippets/get_page_on_code.dart';
 import 'package:teta_widgets/src/elements/actions/snippets/take_state_from.dart';
 import 'package:teta_widgets/src/elements/actions/snippets/update.dart';
@@ -15,7 +16,7 @@ import 'package:universal_platform/universal_platform.dart';
 class FActionRevenueCatRestorePurchases {
   static Future action(
     final BuildContext context,
-    final List<VariableObject> states,
+    final TetaWidgetState state,
     final String? stateName,
   ) async {
     if (!UniversalPlatform.isAndroid) {
@@ -49,12 +50,10 @@ class FActionRevenueCatRestorePurchases {
     } else {
       try {
         final restoredInfo = await Purchases.restoreTransactions();
-        final index =
-            states.indexWhere((final element) => element.name == stateName);
+        final index = state.states.indexWhere((final element) => element.name == stateName);
         if (index >= 0) {
-          states[index].value = restoredInfo.entitlements.active.isNotEmpty
-              ? 'Success'
-              : 'Failed';
+          state.states[index].value =
+              restoredInfo.entitlements.active.isNotEmpty ? 'Success' : 'Failed';
           update(context);
         }
       } on PlatformException catch (e) {

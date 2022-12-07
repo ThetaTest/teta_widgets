@@ -41,6 +41,7 @@ export './firebase/firebase_is_authenticated.dart';
 export './firebase/firebase_pagination.dart';
 export './firebase/firebase_stream_builder.dart';
 export './fitted_box.dart';
+export './fractionally_sizedbox.dart';
 export './gesture_detector.dart';
 export './google_maps/google_maps_cubit.dart';
 export './gridview.dart';

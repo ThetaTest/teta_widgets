@@ -8,6 +8,7 @@ import 'package:purchases_flutter/purchases_flutter.dart';
 import 'package:recase/recase.dart';
 // Package imports:
 import 'package:teta_core/teta_core.dart';
+import 'package:teta_widgets/src/core/teta_widget/index.dart';
 import 'package:teta_widgets/src/elements/actions/snippets/get_page_on_code.dart';
 import 'package:teta_widgets/src/elements/actions/snippets/take_state_from.dart';
 import 'package:teta_widgets/src/elements/actions/snippets/update.dart';
@@ -17,13 +18,9 @@ import 'package:universal_platform/universal_platform.dart';
 class FActionRevenueCatBuy {
   static Future action(
     final BuildContext context,
+    final TetaWidgetState state,
     final FTextTypeInput? productIdentifier,
-    final List<VariableObject> params,
-    final List<VariableObject> states,
-    final List<DatasetObject> datasets,
     final String? stateName,
-    final bool forPlay,
-    final int loop,
   ) async {
     if (productIdentifier == null) return;
     if (!UniversalPlatform.isAndroid) {
@@ -58,18 +55,17 @@ class FActionRevenueCatBuy {
       try {
         final purchaserInfo = await Purchases.purchaseProduct(
           productIdentifier.get(
-            params,
-            states,
-            datasets,
-            forPlay,
-            loop,
+            state.params,
+            state.states,
+            state.dataset,
+            state.forPlay,
+            state.loop,
             context,
           ),
         );
-        final index =
-            states.indexWhere((final element) => element.name == stateName);
+        final index = state.states.indexWhere((final element) => element.name == stateName);
         if (index >= 0) {
-          states[index].value =
+          state.states[index].value =
               purchaserInfo.entitlements.active.isEmpty ? 'Success' : 'Failed';
           update(context);
         }

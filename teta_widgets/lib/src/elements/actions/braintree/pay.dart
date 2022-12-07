@@ -7,6 +7,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:recase/recase.dart';
 // Package imports:
 import 'package:teta_core/teta_core.dart';
+import 'package:teta_widgets/src/core/teta_widget/index.dart';
 import 'package:teta_widgets/src/elements/actions/snippets/get_page_on_code.dart';
 import 'package:teta_widgets/src/elements/actions/snippets/take_state_from.dart';
 import 'package:teta_widgets/src/elements/index.dart';
@@ -14,7 +15,7 @@ import 'package:teta_widgets/src/elements/index.dart';
 class FActionBraintreeBuy {
   static Future action(
     final BuildContext context,
-    final List<VariableObject> states,
+    final TetaWidgetState state,
     final String? stateName,
   ) async {
     await showDialog<void>(
@@ -38,12 +39,10 @@ class FActionBraintreeBuy {
     final String? stateName, {
     final int loop = 0,
   }) {
-    final prj =
-        (BlocProvider.of<FocusProjectBloc>(context).state as ProjectLoaded).prj;
+    final prj = (BlocProvider.of<FocusProjectBloc>(context).state as ProjectLoaded).prj;
     final isSandbox = prj.config?.braintreeIsSandbox ?? true;
-    final token = !isSandbox
-        ? prj.config?.braintreeClientToken
-        : prj.config?.braintreeClientTokenSandbox;
+    final token =
+        !isSandbox ? prj.config?.braintreeClientToken : prj.config?.braintreeClientTokenSandbox;
     final companyName = prj.config?.companyName ?? '';
     final currencyCode = prj.config?.braintreeCurrencyCode ?? '';
     final countryCode = prj.config?.countryCode ?? '';

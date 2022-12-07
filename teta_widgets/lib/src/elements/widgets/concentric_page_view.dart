@@ -7,7 +7,7 @@ import 'package:concentric_transition/concentric_transition.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:teta_core/teta_core.dart';
-import 'package:teta_widgets/src/elements/builder/gesture_detector_base.dart';
+import 'package:teta_widgets/src/core/teta_widget/index.dart';
 // Project imports:
 import 'package:teta_widgets/src/elements/index.dart';
 
@@ -15,24 +15,14 @@ class WConcentricPageView extends StatefulWidget {
   /// Returns a PageViewwidget
   const WConcentricPageView(
     final Key? key, {
+    required this.state,
     required this.children,
     required this.fill,
-    required this.node,
-    required this.forPlay,
-    required this.params,
-    required this.states,
-    required this.dataset,
-    this.loop,
   }) : super(key: key);
 
-  final CNode node;
+  final TetaWidgetState state;
   final List<CNode> children;
   final FFill fill;
-  final bool forPlay;
-  final int? loop;
-  final List<VariableObject> params;
-  final List<VariableObject> states;
-  final List<DatasetObject> dataset;
 
   @override
   _WConcentricPageViewState createState() => _WConcentricPageViewState();
@@ -55,32 +45,14 @@ class _WConcentricPageViewState extends State<WConcentricPageView> {
       if (element.id == widget.fill.paletteStyle) model = element;
       if (element.name == widget.fill.paletteStyle) model = element;
     });
-    return NodeSelectionBuilder(
-      node: widget.node,
-      forPlay: widget.forPlay,
-      child: GestureBuilderBase.get(
-        context: context,
-        node: widget.node,
-        params: widget.params,
-        states: widget.states,
-        dataset: widget.dataset,
-        forPlay: widget.forPlay,
-        loop: widget.loop,
-        child: ConcentricPageView(
-          colors: [
-            _getConcentricPageColor(model, isLight),
-            _getConcentricPageColor(model, isLight)
-          ],
-          itemCount: widget.children.length,
-          itemBuilder: (final int index) {
-            return widget.children[index].toWidget(
-              params: widget.params,
-              states: widget.states,
-              dataset: widget.dataset,
-              forPlay: widget.forPlay,
-            );
-          },
-        ),
+    return TetaWidget(
+      state: widget.state,
+      child: ConcentricPageView(
+        colors: [_getConcentricPageColor(model, isLight), _getConcentricPageColor(model, isLight)],
+        itemCount: widget.children.length,
+        itemBuilder: (final int index) {
+          return widget.children[index].toWidget(state: widget.state);
+        },
       ),
     );
   }

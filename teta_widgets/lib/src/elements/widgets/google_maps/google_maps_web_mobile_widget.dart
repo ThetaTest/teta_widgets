@@ -11,6 +11,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:teta_core/teta_core.dart';
+import 'package:teta_widgets/src/core/teta_widget/index.dart';
 import 'package:teta_widgets/src/elements/features/features.dart';
 import 'package:teta_widgets/src/elements/features/google_maps_map_style.dart';
 // Project imports:
@@ -24,11 +25,7 @@ class WGoogleMaps extends WGoogleMapsBase {
   /// Returns a [Map] widget in Teta
   const WGoogleMaps(
     final Key? key, {
-    required this.node,
-    required this.forPlay,
-    required this.params,
-    required this.states,
-    required this.dataset,
+    required this.state,
     required this.mapControllerName,
     required this.markersDatasetName,
     required this.markerId,
@@ -47,17 +44,10 @@ class WGoogleMaps extends WGoogleMapsBase {
     required this.pathColor,
     required this.cubitName,
     this.child,
-    this.loop,
   }) : super(key: key);
 
-  final CNode node;
+  final TetaWidgetState state;
   final CNode? child;
-  final bool forPlay;
-  final int? loop;
-
-  final List<VariableObject> params;
-  final List<VariableObject> states;
-  final List<DatasetObject> dataset;
 
   final String markersDatasetName;
   final String mapControllerName;
@@ -148,8 +138,7 @@ class _WGoogleMapsState extends State<WGoogleMaps> {
                 }
               } else if (state is GoogleMapsChangeMapStyleState) {
                 if (googleMapsController.isCompleted) {
-                  await (await googleMapsController.future)
-                      .setMapStyle(state.uiModel.style);
+                  await (await googleMapsController.future).setMapStyle(state.uiModel.style);
                 }
               } else if (state is GoogleMapsReloadDataState) {
                 if (kDebugMode) {
@@ -157,10 +146,9 @@ class _WGoogleMapsState extends State<WGoogleMaps> {
                 }
                 List<Map<String, dynamic>> markersDataset;
                 try {
-                  markersDataset = widget.dataset
+                  markersDataset = widget.state.dataset
                       .firstWhere(
-                        (final element) =>
-                            element.getName == widget.markersDatasetName,
+                        (final element) => element.getName == widget.markersDatasetName,
                       )
                       .getMap;
                 } catch (e) {
@@ -188,7 +176,7 @@ class _WGoogleMapsState extends State<WGoogleMaps> {
                       googleMapsKey: googleMapsKey,
                       pathColor: widget.pathColor.getHexColor(context),
                     ),
-                    widget.dataset,
+                    widget.state.dataset,
                     context,
                   ),
                 );
@@ -203,12 +191,11 @@ class _WGoogleMapsState extends State<WGoogleMaps> {
 
   Future<void> initData() async {
     try {
-      googleMapsKey =
-          (BlocProvider.of<FocusProjectBloc>(context).state as ProjectLoaded)
-                  .prj
-                  .config
-                  ?.googleMapsKey ??
-              '';
+      googleMapsKey = (BlocProvider.of<FocusProjectBloc>(context).state as ProjectLoaded)
+              .prj
+              .config
+              ?.googleMapsKey ??
+          '';
       final page = BlocProvider.of<PageCubit>(context).state;
       final VariableObject? variable;
 

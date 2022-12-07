@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:teta_core/teta_core.dart';
 // Package imports:
 import 'package:teta_repositories/src/node_repository.dart';
+import 'package:teta_widgets/src/core/teta_widget/index.dart';
 // Project imports:
 import 'package:teta_widgets/src/elements/code/templates/navigation/appbar.dart';
 import 'package:teta_widgets/src/elements/controls/control_model.dart';
@@ -75,23 +76,14 @@ class AppBarBody extends NodeBody {
 
   @override
   Widget toWidget({
-    required final List<VariableObject> params,
-    required final List<VariableObject> states,
-    required final List<DatasetObject> dataset,
-    required final bool forPlay,
-    required final CNode node,
-    final int? loop,
+    required final TetaWidgetState state,
     final CNode? child,
     final List<CNode>? children,
   }) =>
       WAppBar(
         const ValueKey('AppBar'),
-        node: node,
+        state: state,
         child: child,
-        forPlay: forPlay,
-        params: params,
-        states: states,
-        dataset: dataset,
       );
 
   @override

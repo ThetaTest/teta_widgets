@@ -5,7 +5,7 @@ import 'package:device_info_plus/device_info_plus.dart';
 // Flutter imports:
 import 'package:flutter/material.dart';
 import 'package:teta_core/teta_core.dart';
-import 'package:teta_widgets/src/elements/builder/gesture_detector_base.dart';
+import 'package:teta_widgets/src/core/teta_widget/index.dart';
 // Project imports:
 import 'package:teta_widgets/src/elements/index.dart';
 
@@ -16,23 +16,12 @@ class WDeviceInfo extends StatefulWidget {
   /// which provides info for the actual device.
   const WDeviceInfo(
     final Key? key, {
-    required this.node,
-    required this.forPlay,
-    required this.params,
-    required this.states,
-    required this.dataset,
+    required this.state,
     this.child,
-    this.loop,
   }) : super(key: key);
 
-  final CNode node;
+  final TetaWidgetState state;
   final CNode? child;
-  final bool forPlay;
-  final int? loop;
-
-  final List<VariableObject> params;
-  final List<VariableObject> states;
-  final List<DatasetObject> dataset;
 
   @override
   _WDeviceInfoState createState() => _WDeviceInfoState();
@@ -61,30 +50,16 @@ class _WDeviceInfoState extends State<WDeviceInfo> {
 
   @override
   Widget build(final BuildContext context) {
-    final list = addDataset(context, widget.dataset, _map);
+    final list = addDataset(context, widget.state.dataset, _map);
 
-    return NodeSelectionBuilder(
-      node: widget.node,
-      forPlay: widget.forPlay,
-      child: GestureBuilderBase.get(
-        context: context,
-        node: widget.node,
-        params: widget.params,
-        states: widget.states,
-        dataset: widget.dataset,
-        forPlay: widget.forPlay,
-        loop: widget.loop,
-        child: ChildConditionBuilder(
-          ValueKey('${widget.node.nid} ${widget.loop}'),
-          name: widget.node.intrinsicState.displayName,
-          node: widget.node,
-          child: widget.child,
-          params: widget.params,
-          states: widget.states,
-          dataset: list.isNotEmpty ? list : widget.dataset,
-          forPlay: widget.forPlay,
-          loop: widget.loop,
+    return TetaWidget(
+      state: widget.state,
+      child: ChildConditionBuilder(
+        ValueKey('${widget.state.node.nid} ${widget.state.loop}'),
+        state: widget.state.copyWith(
+          dataset: list.isNotEmpty ? list : widget.state.dataset,
         ),
+        child: widget.child,
       ),
     );
   }

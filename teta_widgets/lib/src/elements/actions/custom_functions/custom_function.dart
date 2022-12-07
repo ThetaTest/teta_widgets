@@ -7,7 +7,6 @@ import 'package:teta_core/teta_core.dart';
 class FActionCustomFunction {
   static Future action(
     final BuildContext context,
-    final int? loop,
     final int? customFunctionId,
   ) async {
     await showDialog<void>(
@@ -37,8 +36,7 @@ class FActionCustomFunction {
       final functions = BlocProvider.of<CustomFunctionsCubit>(context).state;
       String code;
       if (functions.isNotEmpty) {
-        final func = functions
-            .firstWhere((final element) => element.id == customFunctionId);
+        final func = functions.firstWhere((final element) => element.id == customFunctionId);
         code = func.code!;
       } else {
         code = '''print('default custom function');''';

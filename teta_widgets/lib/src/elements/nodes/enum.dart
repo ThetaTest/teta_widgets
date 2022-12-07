@@ -18,6 +18,7 @@ enum NType {
   decoratedBox,
   divider,
   expanded,
+  fractionallySizedBox,
   gap,
   gestureDetector,
   gridView,

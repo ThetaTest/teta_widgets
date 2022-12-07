@@ -8,6 +8,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:hive/hive.dart';
 import 'package:teta_core/teta_core.dart';
+import 'package:teta_widgets/src/core/teta_widget/index.dart';
 // Project imports:
 import 'package:teta_widgets/src/elements/actions/navigation/open_page.dart';
 import 'package:teta_widgets/src/elements/actions/snippets/change_state.dart';
@@ -17,15 +18,11 @@ import 'package:teta_widgets/src/elements/nodes/node.dart';
 class FASupabaseSignInWithCredentials {
   static Future action(
     final BuildContext context,
+    final TetaWidgetState state,
     final String value,
     final CNode scaffold,
-    final CNode node,
     final String? nameOfPage,
     final Map<String, dynamic>? paramsToSend,
-    final List<VariableObject> params,
-    final List<VariableObject> states,
-    final List<DatasetObject> dataset,
-    final int? loop,
   ) async {
     final page = BlocProvider.of<PageCubit>(context).state;
 
@@ -42,8 +39,8 @@ class FASupabaseSignInWithCredentials {
       changeState(status, context, 'Loading');
       final client = BlocProvider.of<SupabaseCubit>(context).state;
       if (client != null) {
-        final response = await client.auth
-            .signIn(email: '${email.get}', password: '${password.get}');
+        final response =
+            await client.auth.signIn(email: '${email.get}', password: '${password.get}');
         if (response.error != null) {
           changeState(status, context, '${response.error?.message}');
         } else {
@@ -53,14 +50,10 @@ class FASupabaseSignInWithCredentials {
           final box = await Hive.openBox<dynamic>('social_login');
           await box.put('key', {'email': '${email.get}'});
           await FActionNavigationOpenPage.action(
-            node,
             context,
+            state,
             nameOfPage,
             paramsToSend,
-            params,
-            states,
-            dataset,
-            loop,
           );
         }
       }

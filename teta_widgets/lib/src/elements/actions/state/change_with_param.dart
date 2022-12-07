@@ -6,6 +6,7 @@ import 'package:flutter/material.dart';
 // Package imports:
 import 'package:recase/recase.dart';
 import 'package:teta_core/src/models/variable.dart';
+import 'package:teta_widgets/src/core/teta_widget/index.dart';
 import 'package:teta_widgets/src/elements/actions/snippets/get_page_on_code.dart';
 // Project imports:
 import 'package:teta_widgets/src/elements/actions/snippets/take_param_from.dart';
@@ -15,24 +16,24 @@ import 'package:teta_widgets/src/elements/actions/snippets/update.dart';
 class FActionStateChangeWithParam {
   static Future action(
     final BuildContext context,
-    final List<VariableObject> states,
-    final List<VariableObject> params,
+    final TetaWidgetState state,
     final String? stateName,
     final String? paramName,
   ) async {
     try {
-      final index = states.indexWhere(
+      final index = state.states.indexWhere(
         (final element) => element.name == stateName,
       );
-      final indexParam = params.indexWhere(
+      final indexParam = state.params.indexWhere(
         (final element) => element.name == paramName,
       );
-      states[index].value =
-          params[indexParam].value ?? params[indexParam].defaultValue;
-      states[index].controller = params[index].controller;
-      states[index].file = params[index].file;
+
+      state.states[index]
+        ..value = state.params[indexParam].value ?? state.params[indexParam].defaultValue
+        ..controller = state.params[index].controller
+        ..file = state.params[index].file
+        ..webViewController = state.params[index].webViewController;
       // states[index].audioController = params[index].audioController;
-      states[index].webViewController = params[index].webViewController;
       update(context);
     } catch (e) {
       debugPrint('$e');
@@ -49,10 +50,7 @@ class FActionStateChangeWithParam {
     if (page == null) return '';
     final variable = takeStateFrom(page, '$stateName');
     final param = takeParamFrom(page, '$paramN');
-    if (param == null ||
-        stateName == null ||
-        variable == null ||
-        paramN == null) return '';
+    if (param == null || stateName == null || variable == null || paramN == null) return '';
 
     final varName = ReCase(stateName).camelCase;
     final paramName = ReCase(paramN).camelCase;

@@ -2,8 +2,7 @@
 import 'package:flutter/material.dart';
 // Package imports:
 import 'package:teta_core/gen/assets.gen.dart';
-import 'package:teta_core/src/models/dataset.dart';
-import 'package:teta_core/src/models/variable.dart';
+import 'package:teta_widgets/src/core/teta_widget/index.dart';
 import 'package:teta_widgets/src/elements/code/snippets.dart';
 // Project imports:
 import 'package:teta_widgets/src/elements/code/templates/textbutton.dart';
@@ -50,8 +49,7 @@ final textButtonIntrinsicStates = IntrinsicStates(
     const Suggestion(
       title: 'Why use Textbutton in Teta?',
       description: 'Test',
-      linkToOpen:
-          'https://docs.teta.so/teta-docs/widget/input-widgets/textbutton',
+      linkToOpen: 'https://docs.teta.so/teta-docs/widget/input-widgets/textbutton',
     )
   ],
 );
@@ -82,32 +80,22 @@ class TextButtonBody extends NodeBody {
 
   @override
   Widget toWidget({
-    required final List<VariableObject> params,
-    required final List<VariableObject> states,
-    required final List<DatasetObject> dataset,
-    required final bool forPlay,
-    required final CNode node,
-    final int? loop,
+    required final TetaWidgetState state,
     final CNode? child,
     final List<CNode>? children,
   }) =>
       WTextButton(
         ValueKey(
           '''
-            ${node.nid}
-            $loop
+            ${state.node.nid}
+            ${state.loop}
             ${child ?? children}
             ${(attributes[DBKeys.action] as FAction).toJson()}
             ''',
         ),
-        node: node,
+        state: state,
         child: child,
-        forPlay: forPlay,
         action: attributes[DBKeys.action] as FAction,
-        loop: loop,
-        params: params,
-        states: states,
-        dataset: dataset,
       );
 
   @override

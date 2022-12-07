@@ -4,28 +4,17 @@
 // Flutter imports:
 import 'package:flutter/material.dart';
 // Package imports:
-import 'package:teta_core/teta_core.dart';
+import 'package:teta_widgets/src/core/teta_widget/index.dart';
 // Project imports:
 import 'package:teta_widgets/src/elements/index.dart';
 
 class WNumericStepButton extends StatefulWidget {
   const WNumericStepButton(
     final Key? key, {
-    required this.node,
-    required this.forPlay,
-    required this.params,
-    required this.states,
-    required this.dataset,
-    this.loop,
+    required this.state,
   }) : super(key: key);
 
-  final CNode node;
-  final bool forPlay;
-  final int? loop;
-
-  final List<VariableObject> params;
-  final List<VariableObject> states;
-  final List<DatasetObject> dataset;
+  final TetaWidgetState state;
 
   @override
   _WNumericStepButtonState createState() => _WNumericStepButtonState();
@@ -43,8 +32,8 @@ class _WNumericStepButtonState extends State<WNumericStepButton> {
   @override
   Widget build(final BuildContext context) {
     return NodeSelectionBuilder(
-      node: widget.node,
-      forPlay: widget.forPlay,
+      node: widget.state.node,
+      forPlay: widget.state.forPlay,
       child: Row(
         mainAxisAlignment: MainAxisAlignment.spaceAround,
         children: [

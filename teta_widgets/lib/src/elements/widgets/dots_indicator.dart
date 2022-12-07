@@ -4,7 +4,7 @@
 // Flutter imports:
 import 'package:flutter/material.dart';
 // Package imports:
-import 'package:teta_core/teta_core.dart';
+import 'package:teta_widgets/src/core/teta_widget/index.dart';
 // Project imports:
 import 'package:teta_widgets/src/elements/index.dart';
 
@@ -16,8 +16,7 @@ class WDotsIndicator extends StatelessWidget {
   /// Returns a DotsIndicator widget
   const WDotsIndicator(
     final Key? key, {
-    required this.node,
-    required this.forPlay,
+    required this.state,
     required this.dotsCount,
     required this.position,
     required this.margins,
@@ -29,14 +28,10 @@ class WDotsIndicator extends StatelessWidget {
     required this.color,
     required this.activeColor,
     required this.shadow,
-    required this.params,
-    required this.states,
-    required this.dataset,
     this.child,
-    this.loop,
   }) : super(key: key);
 
-  final CNode node;
+  final TetaWidgetState state;
   final CNode? child;
   final FTextTypeInput dotsCount;
   final FTextTypeInput position;
@@ -49,12 +44,6 @@ class WDotsIndicator extends StatelessWidget {
   final FSize height;
   final FFill color;
   final FFill activeColor;
-  final bool forPlay;
-  final int? loop;
-
-  final List<VariableObject> params;
-  final List<VariableObject> states;
-  final List<DatasetObject> dataset;
 
   @override
   Widget build(final BuildContext context) {
@@ -65,11 +54,11 @@ class WDotsIndicator extends StatelessWidget {
             i <
                 (int.tryParse(
                       dotsCount.get(
-                        params,
-                        states,
-                        dataset,
-                        forPlay,
-                        loop,
+                        state.params,
+                        state.states,
+                        state.dataset,
+                        state.forPlay,
+                        state.loop,
                         context,
                       ),
                     ) ??
@@ -84,11 +73,11 @@ class WDotsIndicator extends StatelessWidget {
               fill: i ==
                       (int.tryParse(
                             position.get(
-                              params,
-                              states,
-                              dataset,
-                              forPlay,
-                              loop,
+                              state.params,
+                              state.states,
+                              state.dataset,
+                              state.forPlay,
+                              state.loop,
                               context,
                             ),
                           ) ??

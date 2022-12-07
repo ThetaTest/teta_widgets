@@ -1,13 +1,14 @@
 // Flutter imports:
-// Package imports:
 import 'package:collection/collection.dart';
 import 'package:flutter/material.dart';
+// Package imports:
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:just_audio/just_audio.dart';
 import 'package:rxdart/rxdart.dart';
 import 'package:teta_core/teta_core.dart';
-import 'package:teta_widgets/src/elements/builder/gesture_detector_base.dart';
 // Project imports:
+import 'package:teta_widgets/src/core/teta_widget/teta_widget_state.dart';
+import 'package:teta_widgets/src/elements/builder/gesture_detector_base.dart';
 import 'package:teta_widgets/src/elements/index.dart';
 
 // ignore_for_file: public_member_api_docs
@@ -16,33 +17,20 @@ class WAudioPlayerVolumeIndicator extends StatefulWidget {
   /// Returns a [WAudioPlayerVolumeIndicator] widget in Teta
   const WAudioPlayerVolumeIndicator(
     final Key? key, {
-    required this.node,
+    required this.state,
     required this.controller,
-    required this.forPlay,
-    required this.params,
-    required this.states,
-    required this.dataset,
     this.child,
-    this.loop,
   }) : super(key: key);
 
-  final CNode node;
+  final TetaWidgetState state;
   final CNode? child;
   final FTextTypeInput controller;
-  final bool forPlay;
-  final int? loop;
-
-  final List<VariableObject> params;
-  final List<VariableObject> states;
-  final List<DatasetObject> dataset;
 
   @override
-  State<WAudioPlayerVolumeIndicator> createState() =>
-      _WAudioPlayerVolumeIndicatorState();
+  State<WAudioPlayerVolumeIndicator> createState() => _WAudioPlayerVolumeIndicatorState();
 }
 
-class _WAudioPlayerVolumeIndicatorState
-    extends State<WAudioPlayerVolumeIndicator> {
+class _WAudioPlayerVolumeIndicatorState extends State<WAudioPlayerVolumeIndicator> {
   bool isInitialized = false;
   AudioPlayer? audioController;
 
@@ -56,11 +44,9 @@ class _WAudioPlayerVolumeIndicatorState
     final page = BlocProvider.of<PageCubit>(context).state;
     VariableObject? variable;
     if (widget.controller.type == FTextTypeEnum.param) {
-      variable = page.params
-          .firstWhereOrNull((final e) => e.name == widget.controller.paramName);
+      variable = page.params.firstWhereOrNull((final e) => e.name == widget.controller.paramName);
     } else {
-      variable = page.states
-          .firstWhereOrNull((final e) => e.name == widget.controller.stateName);
+      variable = page.states.firstWhereOrNull((final e) => e.name == widget.controller.stateName);
     }
     if (variable?.audioController != null) {
       if (mounted) {
@@ -91,15 +77,9 @@ class _WAudioPlayerVolumeIndicatorState
   Widget progressBar() => audioController != null
       ? GestureBuilderBase.get(
           context: context,
-          node: widget.node,
-          params: widget.params,
-          states: widget.states,
-          dataset: widget.dataset,
-          forPlay: widget.forPlay,
-          loop: widget.loop,
+          state: widget.state,
           child: StreamBuilder<Map<String, Object>>(
-            stream: Rx.combineLatest3<Duration, Duration, double,
-                Map<String, Object>>(
+            stream: Rx.combineLatest3<Duration, Duration, double, Map<String, Object>>(
               audioController!.positionStream,
               audioController!.bufferedPositionStream,
               audioController!.volumeStream,
@@ -111,7 +91,7 @@ class _WAudioPlayerVolumeIndicatorState
                   {
                 'position': position,
                 'bufferedPosition': bufferedPosition,
-                'volume': volume
+                'volume': volume,
               },
             ),
             builder: (final context, final snapshot) {

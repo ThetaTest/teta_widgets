@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_staggered_animations/flutter_staggered_animations.dart';
 // Package imports:
 import 'package:teta_core/teta_core.dart';
+import 'package:teta_widgets/src/core/teta_widget/teta_widget_state.dart';
 import 'package:teta_widgets/src/elements/controls/key_constants.dart';
 // Project imports:
 import 'package:teta_widgets/src/elements/index.dart';
@@ -13,71 +14,61 @@ class GestureBuilderBase {
   /// Get a gesture code based on FAction
   static Widget get({
     required final BuildContext context,
-    required final CNode node,
-    required final List<VariableObject> params,
-    required final List<VariableObject> states,
-    required final List<DatasetObject> dataset,
-    required final bool forPlay,
+    required final TetaWidgetState state,
     required final Widget child,
-    final int? loop,
   }) =>
       ResponsiveVisibilityBase.get(
         context: context,
-        node: node,
+        node: state.node,
         child: VisibilityBase.get(
-          node: node,
+          node: state.node,
           child: MarginOrPaddingBase.get(
             context: context,
-            node: node,
-            params: params,
-            states: states,
-            dataset: dataset,
-            forPlay: forPlay,
-            loop: loop,
+            node: state.node,
+            params: state.params,
+            states: state.states,
+            dataset: state.dataset,
+            forPlay: state.forPlay,
+            loop: state.loop,
             child: GestureBuilderBase.getGesture(
               context: context,
-              node: node,
-              params: params,
-              states: states,
-              dataset: dataset,
-              forPlay: forPlay,
-              loop: loop,
+              state: state,
               child: TranslateBase.get(
                 context: context,
-                node: node,
-                params: params,
-                states: states,
-                dataset: dataset,
-                forPlay: forPlay,
-                loop: loop,
+                node: state.node,
+                params: state.params,
+                states: state.states,
+                dataset: state.dataset,
+                forPlay: state.forPlay,
+                loop: state.loop,
                 child: RotationBase.get(
                   context: context,
-                  node: node,
-                  params: params,
-                  states: states,
-                  dataset: dataset,
-                  forPlay: forPlay,
-                  loop: loop,
+                  node: state.node,
+                  params: state.params,
+                  states: state.states,
+                  dataset: state.dataset,
+                  forPlay: state.forPlay,
+                  loop: state.loop,
                   child: PerspectiveBase.get(
                     context: context,
-                    node: node,
-                    params: params,
-                    states: states,
-                    dataset: dataset,
-                    forPlay: forPlay,
-                    loop: loop,
+                    node: state.node,
+                    params: state.params,
+                    states: state.states,
+                    dataset: state.dataset,
+                    forPlay: state.forPlay,
+                    loop: state.loop,
                     child: MarginOrPaddingBase.get(
                       context: context,
-                      node: node,
-                      params: params,
-                      states: states,
-                      dataset: dataset,
-                      forPlay: forPlay,
-                      loop: loop,
+                      node: state.node,
+                      params: state.params,
+                      states: state.states,
+                      dataset: state.dataset,
+                      forPlay: state.forPlay,
+                      loop: state.loop,
                       child: EntryAnimationsBase().get(
-                        node: node,
+                        node: state.node,
                         child: child,
-                        loop: loop,
+                        loop: state.loop,
                       ),
                       isMargins: false,
                     ),
@@ -92,55 +83,35 @@ class GestureBuilderBase {
 
   static Widget getGesture({
     required final BuildContext context,
-    required final CNode node,
-    required final List<VariableObject> params,
-    required final List<VariableObject> states,
-    required final List<DatasetObject> dataset,
-    required final bool forPlay,
+    required final TetaWidgetState state,
     required final Widget child,
-    final int? loop,
   }) {
-    if (node.body.attributes[DBKeys.action] != null) {
-      final originalType = NodeBody.get(node.globalType);
+    if (state.node.body.attributes[DBKeys.action] != null) {
+      final originalType = NodeBody.get(state.node.globalType);
       if (originalType.attributes[DBKeys.action] == null) {
         return GestureDetector(
           onTap: () {
             GestureBuilder.get(
               context: context,
-              node: node,
+              state: state,
               gesture: ActionGesture.onTap,
-              action: node.body.attributes[DBKeys.action] as FAction,
+              action: state.node.body.attributes[DBKeys.action] as FAction,
               actionValue: null,
-              params: params,
-              states: states,
-              dataset: dataset,
-              loop: loop,
-              forPlay: forPlay,
             );
           },
           onDoubleTap: () => GestureBuilder.get(
             context: context,
-            node: node,
+            state: state,
             gesture: ActionGesture.onDoubleTap,
-            action: node.body.attributes[DBKeys.action] as FAction,
+            action: state.node.body.attributes[DBKeys.action] as FAction,
             actionValue: null,
-            params: params,
-            states: states,
-            dataset: dataset,
-            loop: loop,
-            forPlay: forPlay,
           ),
           onLongPress: () => GestureBuilder.get(
             context: context,
-            node: node,
+            state: state,
             gesture: ActionGesture.onLongPress,
-            action: node.body.attributes[DBKeys.action] as FAction,
+            action: state.node.body.attributes[DBKeys.action] as FAction,
             actionValue: null,
-            params: params,
-            states: states,
-            dataset: dataset,
-            loop: loop,
-            forPlay: forPlay,
           ),
           child: child,
         );

@@ -2,8 +2,8 @@
 import 'package:flutter/material.dart';
 // Package imports:
 import 'package:teta_core/gen/assets.gen.dart';
-import 'package:teta_core/src/models/dataset.dart';
 import 'package:teta_core/src/models/variable.dart';
+import 'package:teta_widgets/src/core/teta_widget/index.dart';
 // Project imports:
 import 'package:teta_widgets/src/elements/controls/control_model.dart';
 import 'package:teta_widgets/src/elements/controls/key_constants.dart';
@@ -94,10 +94,7 @@ class DotsIndicatorBody extends NodeBody {
         ),
         SizesControlObject(
           keys: const [DBKeys.width, DBKeys.height],
-          values: [
-            attributes[DBKeys.width] as FSize,
-            attributes[DBKeys.height] as FSize
-          ],
+          values: [attributes[DBKeys.width] as FSize, attributes[DBKeys.height] as FSize],
         ),
         ControlObject(
           type: ControlType.borderRadius,
@@ -127,36 +124,31 @@ class DotsIndicatorBody extends NodeBody {
 
   @override
   Widget toWidget({
-    required final List<VariableObject> params,
-    required final List<VariableObject> states,
-    required final List<DatasetObject> dataset,
-    required final bool forPlay,
-    required final CNode node,
-    final int? loop,
+    required final TetaWidgetState state,
     final CNode? child,
     final List<CNode>? children,
   }) =>
       WDotsIndicator(
         ValueKey(
           '''
-      ${node.nid}
-      $loop
-            ${child ?? children}
-      ${(attributes[DBKeys.height] as FSize).toJson()}
-      ${(attributes[DBKeys.fill] as FFill).toJson()}
-      ${(attributes[DBKeys.bgFill] as FFill).toJson()}
-      ${(attributes[DBKeys.value] as FTextTypeInput).toJson()}
-      ${(attributes[DBKeys.valueOfCondition] as FTextTypeInput).toJson()}
-      ${(attributes[DBKeys.margins] as FMargins).toJson()}
-      ${(attributes[DBKeys.borderRadius] as FBorderRadius).toJson()}
-      ${(attributes[DBKeys.width] as FSize).toJson()}
-      ${(attributes[DBKeys.height] as FSize).toJson()}
-      ${(attributes[DBKeys.shadows] as FShadow).toJson()}
-      ${(attributes[DBKeys.borders] as FBorder).toJson()}
-      ${(attributes[DBKeys.activeBorders] as FBorder).toJson()}
-      ''',
+          ${state.node.nid}
+          ${state.loop}
+          ${child ?? children}
+          ${(attributes[DBKeys.height] as FSize).toJson()}
+          ${(attributes[DBKeys.fill] as FFill).toJson()}
+          ${(attributes[DBKeys.bgFill] as FFill).toJson()}
+          ${(attributes[DBKeys.value] as FTextTypeInput).toJson()}
+          ${(attributes[DBKeys.valueOfCondition] as FTextTypeInput).toJson()}
+          ${(attributes[DBKeys.margins] as FMargins).toJson()}
+          ${(attributes[DBKeys.borderRadius] as FBorderRadius).toJson()}
+          ${(attributes[DBKeys.width] as FSize).toJson()}
+          ${(attributes[DBKeys.height] as FSize).toJson()}
+          ${(attributes[DBKeys.shadows] as FShadow).toJson()}
+          ${(attributes[DBKeys.borders] as FBorder).toJson()}
+          ${(attributes[DBKeys.activeBorders] as FBorder).toJson()}
+          ''',
         ),
-        node: node,
+        state: state,
         child: child,
         activeColor: attributes[DBKeys.fill] as FFill,
         color: attributes[DBKeys.bgFill] as FFill,
@@ -169,11 +161,6 @@ class DotsIndicatorBody extends NodeBody {
         shadow: attributes[DBKeys.shadows] as FShadow,
         border: attributes[DBKeys.borders] as FBorder,
         activeBorder: attributes[DBKeys.activeBorders] as FBorder,
-        forPlay: forPlay,
-        loop: loop,
-        params: params,
-        states: states,
-        dataset: dataset,
       );
 
   //! TODO

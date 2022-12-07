@@ -9,7 +9,7 @@ import 'package:cross_file/cross_file.dart';
 // Flutter imports:
 import 'package:flutter/material.dart';
 import 'package:teta_core/teta_core.dart';
-import 'package:teta_widgets/src/elements/builder/gesture_detector_base.dart';
+import 'package:teta_widgets/src/core/teta_widget/index.dart';
 // Project imports:
 import 'package:teta_widgets/src/elements/index.dart';
 
@@ -17,33 +17,22 @@ class WImage extends StatefulWidget {
   /// Returns a Image
   const WImage(
     final Key? key, {
+    required this.state,
     required this.image,
-    required this.node,
     required this.width,
     required this.height,
     required this.boxFit,
     required this.borderRadius,
     required this.shadows,
-    required this.forPlay,
-    required this.params,
-    required this.states,
-    required this.dataset,
-    this.loop,
   }) : super(key: key);
 
-  final CNode node;
+  final TetaWidgetState state;
   final FSize width;
   final FSize height;
   final FTextTypeInput image;
   final FBoxFit boxFit;
   final FBorderRadius borderRadius;
   final FShadow shadows;
-  final bool forPlay;
-  final int? loop;
-
-  final List<VariableObject> params;
-  final List<VariableObject> states;
-  final List<DatasetObject> dataset;
 
   @override
   State<WImage> createState() => _WImageState();
@@ -57,11 +46,11 @@ class _WImageState extends State<WImage> {
   @override
   void initState() {
     result = widget.image.getForImages(
-      widget.params,
-      widget.states,
-      widget.dataset,
-      widget.loop,
-      forPlay: widget.forPlay,
+      widget.state.params,
+      widget.state.states,
+      widget.state.dataset,
+      widget.state.loop,
+      forPlay: widget.state.forPlay,
       context: context,
     );
     if (result is XFile) {
@@ -96,20 +85,25 @@ class _WImageState extends State<WImage> {
       );
     }
 
-    return NodeSelectionBuilder(
-      node: widget.node,
-      forPlay: widget.forPlay,
-      child: GestureBuilderBase.get(
-        context: context,
-        node: widget.node,
-        params: widget.params,
-        states: widget.states,
-        dataset: widget.dataset,
-        forPlay: widget.forPlay,
-        loop: widget.loop,
-        child: ClipRRect(
-          borderRadius: widget.borderRadius.get(context),
-          child: SizedBox(
+    return TetaWidget(
+      state: widget.state,
+      child: ClipRRect(
+        borderRadius: widget.borderRadius.get(context),
+        child: SizedBox(
+          width: widget.width.get(
+            context: context,
+            isWidth: true,
+          ),
+          height: widget.height.get(
+            context: context,
+            isWidth: false,
+          ),
+          child: _LocalImage(
+            key: ValueKey('Image ${widget.state.node.nid} $bytes $result'),
+            nid: widget.state.node.nid,
+            result: result,
+            bytes: bytes,
+            loop: widget.state.loop,
             width: widget.width.get(
               context: context,
               isWidth: true,
@@ -118,21 +112,7 @@ class _WImageState extends State<WImage> {
               context: context,
               isWidth: false,
             ),
-            child: _LocalImage(
-              key: ValueKey('Image ${widget.node.nid} $bytes $result'),
-              nid: widget.node.nid,
-              result: result,
-              bytes: bytes,
-              width: widget.width.get(
-                context: context,
-                isWidth: true,
-              ),
-              height: widget.height.get(
-                context: context,
-                isWidth: false,
-              ),
-              fit: widget.boxFit.get,
-            ),
+            fit: widget.boxFit.get,
           ),
         ),
       ),
@@ -141,22 +121,23 @@ class _WImageState extends State<WImage> {
 }
 
 class _LocalImage extends StatefulWidget {
-  _LocalImage({
+  const _LocalImage({
     required this.nid,
     required this.result,
     required this.bytes,
     required this.width,
     required this.height,
     required this.fit,
+    required this.loop,
     final Key? key,
   }) : super(key: key);
 
-  int nid;
-  int? loop;
-  dynamic result;
-  Uint8List? bytes;
-  double? width, height;
-  BoxFit fit;
+  final int nid;
+  final int? loop;
+  final dynamic result;
+  final Uint8List? bytes;
+  final double? width, height;
+  final BoxFit fit;
 
   @override
   State<_LocalImage> createState() => _LocalImageState();

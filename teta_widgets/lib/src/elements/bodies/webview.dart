@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:teta_core/gen/assets.gen.dart';
 import 'package:teta_core/src/models/dataset.dart';
 import 'package:teta_core/src/models/variable.dart';
+import 'package:teta_widgets/src/core/teta_widget/index.dart';
 import 'package:teta_widgets/src/elements/code/snippets.dart';
 // Project imports:
 import 'package:teta_widgets/src/elements/code/templates/web_view_x_template.dart';
@@ -48,8 +49,7 @@ final webviewIntrinsicStates = IntrinsicStates(
     const Suggestion(
       title: 'Why use Webview in Teta?',
       description: 'Test',
-      linkToOpen:
-          'https://docs.teta.so/teta-docs/widget/advanced-widgets/webview',
+      linkToOpen: 'https://docs.teta.so/teta-docs/widget/advanced-widgets/webview',
     )
   ],
 );
@@ -90,33 +90,23 @@ class WebViewBody extends NodeBody {
 
   @override
   Widget toWidget({
-    required final List<VariableObject> params,
-    required final List<VariableObject> states,
-    required final List<DatasetObject> dataset,
-    required final bool forPlay,
-    required final CNode node,
-    final int? loop,
+    required final TetaWidgetState state,
     final CNode? child,
     final List<CNode>? children,
   }) =>
       WWebViewXPage(
         ValueKey(
           '''
-            ${node.nid}
-            $loop
+            ${state.node.nid}
+            ${state.loop}
             ${child ?? children}
             ${(attributes[DBKeys.value] as FTextTypeInput).toJson()}
             ${(attributes[DBKeys.valueOfCondition] as FTextTypeInput).toJson()}
             ''',
         ),
+        state: state,
         controller: attributes[DBKeys.value] as FTextTypeInput,
         url: attributes[DBKeys.valueOfCondition] as FTextTypeInput,
-        node: node,
-        forPlay: forPlay,
-        loop: loop,
-        params: params,
-        states: states,
-        dataset: dataset,
       );
 
   @override

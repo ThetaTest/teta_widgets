@@ -5,8 +5,8 @@
 import 'package:flutter/material.dart';
 // Package imports:
 import 'package:teta_core/gen/assets.gen.dart';
-import 'package:teta_core/src/models/dataset.dart';
 import 'package:teta_core/src/models/variable.dart';
+import 'package:teta_widgets/src/core/teta_widget/index.dart';
 import 'package:teta_widgets/src/elements/code/snippets.dart';
 // Project imports:
 import 'package:teta_widgets/src/elements/code/templates/video.dart';
@@ -80,8 +80,7 @@ class VideoBody extends NodeBody {
           title: 'Show Controls',
           key: DBKeys.showControls,
           value: attributes[DBKeys.showControls],
-          description:
-              'Indicates whether the video player controls are displayed.',
+          description: 'Indicates whether the video player controls are displayed.',
         ),
         FlagControlObject(
           title: 'Full Screen',
@@ -93,27 +92,21 @@ class VideoBody extends NodeBody {
           title: 'Looped',
           key: DBKeys.loopVideo,
           value: attributes[DBKeys.loopVideo],
-          description:
-              'Enables or disables the player to play the initial video again and again.',
+          description: 'Enables or disables the player to play the initial video again and again.',
         ),
       ];
 
   @override
   Widget toWidget({
-    required final List<VariableObject> params,
-    required final List<VariableObject> states,
-    required final List<DatasetObject> dataset,
-    required final bool forPlay,
-    required final CNode node,
-    final int? loop,
+    required final TetaWidgetState state,
     final CNode? child,
     final List<CNode>? children,
   }) =>
       WVideo(
         ValueKey(
           '''
-            ${node.nid}
-            $loop
+            ${state.node.nid}
+            ${state.loop}
             ${child ?? children}
             ${(attributes[DBKeys.value] as FTextTypeInput? ?? FTextTypeInput()).toJson()}
             ${attributes[DBKeys.startAt] as int? ?? 0}
@@ -122,18 +115,12 @@ class VideoBody extends NodeBody {
             ${attributes[DBKeys.loopVideo] as bool? ?? false}
             ''',
         ),
-        node: node,
-        value: attributes[DBKeys.value] as FTextTypeInput? ??
-            FTextTypeInput(value: 'K18cpp_-gP8'),
+        state: state,
+        value: attributes[DBKeys.value] as FTextTypeInput? ?? FTextTypeInput(value: 'K18cpp_-gP8'),
         startAt: attributes[DBKeys.startAt] as int? ?? 0,
         showControls: attributes[DBKeys.showControls] as bool? ?? false,
         showFullScreen: attributes[DBKeys.isFullWidth] as bool? ?? false,
-        forPlay: forPlay,
-        loop: loop,
-        params: params,
-        states: states,
         loopVideo: attributes[DBKeys.loopVideo] as bool? ?? false,
-        dataset: dataset,
       );
 
   @override

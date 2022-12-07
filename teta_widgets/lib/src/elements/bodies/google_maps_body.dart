@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 // Package imports:
 import 'package:teta_core/teta_core.dart';
+import 'package:teta_widgets/src/core/teta_widget/index.dart';
 import 'package:teta_widgets/src/elements/code/snippets.dart';
 import 'package:teta_widgets/src/elements/code/templates/google_maps_cubit_template.dart';
 import 'package:teta_widgets/src/elements/code/templates/google_maps_template.dart';
@@ -22,12 +23,11 @@ import 'package:teta_widgets/src/elements/nodes/children_enum.dart';
 import 'package:teta_widgets/src/elements/nodes/enum.dart';
 import 'package:teta_widgets/src/elements/nodes/node.dart';
 import 'package:teta_widgets/src/elements/nodes/node_body.dart';
+import 'package:teta_widgets/src/elements/nodes/suggestion.dart';
 import 'package:teta_widgets/src/elements/packages.dart';
 import 'package:teta_widgets/src/elements/widgets/google_maps/google_maps_stub_widget.dart'
     if (dart.library.io) 'package:teta_widgets/src/elements/widgets/google_maps/google_maps_web_mobile_widget.dart'
     if (dart.library.html) 'package:teta_widgets/src/elements/widgets/google_maps/google_maps_web_mobile_widget.dart';
-
-import '../nodes/suggestion.dart';
 
 const _globalType = NType.googleMaps;
 
@@ -71,8 +71,7 @@ final googleMapsIntrinsicStates = IntrinsicStates(
     const Suggestion(
       title: 'Why use Google Maps in Teta?',
       description: 'Test',
-      linkToOpen:
-          'https://docs.teta.so/teta-docs/widget/map-widgets/google-maps',
+      linkToOpen: 'https://docs.teta.so/teta-docs/widget/map-widgets/google-maps',
     )
   ],
 );
@@ -125,8 +124,7 @@ class GoogleMapsBody extends NodeBody {
           type: ControlType.googleMapsMapStyle,
           key: DBKeys.mapCustomStyle,
           value: attributes[DBKeys.mapCustomStyle],
-          description:
-              'JSON String. See more at https://mapstyle.withgoogle.com/ .',
+          description: 'JSON String. See more at https://mapstyle.withgoogle.com/ .',
           flag: true,
           valueType: VariableType.string,
         ),
@@ -180,8 +178,7 @@ class GoogleMapsBody extends NodeBody {
           key: DBKeys.markerId,
           value: attributes[DBKeys.markerId] as FDataset,
           flag: true,
-          description:
-              'String UUID. Generate https://www.uuidgenerator.net/version4',
+          description: 'String UUID. Generate https://www.uuidgenerator.net/version4',
           valueType: VariableType.string,
         ),
         ControlObject(
@@ -250,73 +247,41 @@ class GoogleMapsBody extends NodeBody {
 
   @override
   Widget toWidget({
-    required final List<VariableObject> params,
-    required final List<VariableObject> states,
-    required final List<DatasetObject> dataset,
-    required final bool forPlay,
-    required final CNode node,
-    final int? loop,
+    required final TetaWidgetState state,
     final CNode? child,
     final List<CNode>? children,
   }) =>
       WGoogleMaps(
         ValueKey(
           '''
-      ${node.nid}
-      ''',
+          ${state.node.nid}
+          ''',
         ),
-        node: node,
+        state: state,
         child: child,
         mapControllerName:
-            (attributes[DBKeys.googleMapsController] as FTextTypeInput)
-                    .stateName ??
-                '',
-        markersDatasetName:
-            (attributes[DBKeys.datasetInput] as FDataset).datasetName ?? '',
-        markerId:
-            (attributes[DBKeys.markerId] as FDataset).datasetAttrName ?? '',
-        markerLatitude:
-            (attributes[DBKeys.markerLatitude] as FDataset).datasetAttrName ??
-                '',
-        markerLongitude:
-            (attributes[DBKeys.markerLongitude] as FDataset).datasetAttrName ??
-                '',
-        markerIconUrl:
-            (attributes[DBKeys.markerIconUrl] as FDataset).datasetAttrName ??
-                '',
-        markerIconWidth:
-            (attributes[DBKeys.markerIconWidth] as FDataset).datasetAttrName ??
-                '',
-        markerIconHeight:
-            (attributes[DBKeys.markerIconHeight] as FDataset).datasetAttrName ??
-                '',
+            (attributes[DBKeys.googleMapsController] as FTextTypeInput).stateName ?? '',
+        markersDatasetName: (attributes[DBKeys.datasetInput] as FDataset).datasetName ?? '',
+        markerId: (attributes[DBKeys.markerId] as FDataset).datasetAttrName ?? '',
+        markerLatitude: (attributes[DBKeys.markerLatitude] as FDataset).datasetAttrName ?? '',
+        markerLongitude: (attributes[DBKeys.markerLongitude] as FDataset).datasetAttrName ?? '',
+        markerIconUrl: (attributes[DBKeys.markerIconUrl] as FDataset).datasetAttrName ?? '',
+        markerIconWidth: (attributes[DBKeys.markerIconWidth] as FDataset).datasetAttrName ?? '',
+        markerIconHeight: (attributes[DBKeys.markerIconHeight] as FDataset).datasetAttrName ?? '',
         drawPathFromUserGeolocationToMarker:
-            (attributes[DBKeys.markerDrawPathToUserCurrentLocation] as FDataset)
-                    .datasetAttrName ??
+            (attributes[DBKeys.markerDrawPathToUserCurrentLocation] as FDataset).datasetAttrName ??
                 '',
         mapStyle: attributes[DBKeys.mapCustomStyle] as FGoogleMapsMapStyle,
-        initialPositionLat:
-            (attributes[DBKeys.mapInitialPositionLat] as FTextTypeInput)
-                .toCode(loop, resultType: ResultTypeEnum.double),
-        initialPositionLng:
-            (attributes[DBKeys.mapInitialPositionLng] as FTextTypeInput)
-                .toCode(loop, resultType: ResultTypeEnum.double),
-        forPlay: forPlay,
-        loop: loop,
-        params: params,
-        states: states,
-        dataset: dataset,
-        showMyLocationMarker:
-            attributes[DBKeys.mapConfigShowMyLocationMarker] as bool,
-        initialZoomLevel:
-            (attributes[DBKeys.mapCustomInitialZoomLevel] as FTextTypeInput)
-                .toCode(loop, resultType: ResultTypeEnum.double),
+        initialPositionLat: (attributes[DBKeys.mapInitialPositionLat] as FTextTypeInput)
+            .toCode(state.loop, resultType: ResultTypeEnum.double),
+        initialPositionLng: (attributes[DBKeys.mapInitialPositionLng] as FTextTypeInput)
+            .toCode(state.loop, resultType: ResultTypeEnum.double),
+        showMyLocationMarker: attributes[DBKeys.mapConfigShowMyLocationMarker] as bool,
+        initialZoomLevel: (attributes[DBKeys.mapCustomInitialZoomLevel] as FTextTypeInput)
+            .toCode(state.loop, resultType: ResultTypeEnum.double),
         trackMyLocation: attributes[DBKeys.mapConfigTrackMyLocation] as bool,
         pathColor: attributes[DBKeys.fill] as FFill,
-        cubitName:
-            (attributes[DBKeys.googleMapsCubitController] as FTextTypeInput)
-                    .stateName ??
-                '',
+        cubitName: (attributes[DBKeys.googleMapsCubitController] as FTextTypeInput).stateName ?? '',
       );
 
   @override
@@ -331,52 +296,31 @@ class GoogleMapsBody extends NodeBody {
   ) =>
       GoogleMapsTemplate.toCodeOnInit(
         mapControllerName:
-            (attributes[DBKeys.googleMapsController] as FTextTypeInput)
-                    .stateName ??
-                '',
-        markersDatasetName:
-            (attributes[DBKeys.datasetInput] as FDataset).datasetName ?? '',
-        markerId:
-            (attributes[DBKeys.markerId] as FDataset).datasetAttrName ?? '',
-        markerLatitude:
-            (attributes[DBKeys.markerLatitude] as FDataset).datasetAttrName ??
-                '',
-        markerLongitude:
-            (attributes[DBKeys.markerLongitude] as FDataset).datasetAttrName ??
-                '',
-        markerIconUrl:
-            (attributes[DBKeys.markerIconUrl] as FDataset).datasetAttrName ??
-                '',
-        markerIconWidth:
-            (attributes[DBKeys.markerIconWidth] as FDataset).datasetAttrName ??
-                '',
+            (attributes[DBKeys.googleMapsController] as FTextTypeInput).stateName ?? '',
+        markersDatasetName: (attributes[DBKeys.datasetInput] as FDataset).datasetName ?? '',
+        markerId: (attributes[DBKeys.markerId] as FDataset).datasetAttrName ?? '',
+        markerLatitude: (attributes[DBKeys.markerLatitude] as FDataset).datasetAttrName ?? '',
+        markerLongitude: (attributes[DBKeys.markerLongitude] as FDataset).datasetAttrName ?? '',
+        markerIconUrl: (attributes[DBKeys.markerIconUrl] as FDataset).datasetAttrName ?? '',
+        markerIconWidth: (attributes[DBKeys.markerIconWidth] as FDataset).datasetAttrName ?? '',
         markerDrawPath:
-            (attributes[DBKeys.markerDrawPathToUserCurrentLocation] as FDataset)
-                    .datasetAttrName ??
+            (attributes[DBKeys.markerDrawPathToUserCurrentLocation] as FDataset).datasetAttrName ??
                 '',
-        customMapStyle:
-            (attributes[DBKeys.mapCustomStyle] as FGoogleMapsMapStyle).get,
-        initialPositionLat:
-            (attributes[DBKeys.mapInitialPositionLat] as FTextTypeInput)
-                .toCode(loop, resultType: ResultTypeEnum.double),
-        initialPositionLng:
-            (attributes[DBKeys.mapInitialPositionLng] as FTextTypeInput).toCode(
+        customMapStyle: (attributes[DBKeys.mapCustomStyle] as FGoogleMapsMapStyle).get,
+        initialPositionLat: (attributes[DBKeys.mapInitialPositionLat] as FTextTypeInput)
+            .toCode(loop, resultType: ResultTypeEnum.double),
+        initialPositionLng: (attributes[DBKeys.mapInitialPositionLng] as FTextTypeInput).toCode(
           loop,
           resultType: ResultTypeEnum.double,
         ),
-        showMyLocationMarker:
-            attributes[DBKeys.mapConfigShowMyLocationMarker] as bool,
-        initialZoomLevel:
-            (attributes[DBKeys.mapCustomInitialZoomLevel] as FTextTypeInput)
-                .toCode(
+        showMyLocationMarker: attributes[DBKeys.mapConfigShowMyLocationMarker] as bool,
+        initialZoomLevel: (attributes[DBKeys.mapCustomInitialZoomLevel] as FTextTypeInput).toCode(
           loop,
           resultType: ResultTypeEnum.double,
         ),
         trackMyLocation: attributes[DBKeys.mapConfigTrackMyLocation] as bool,
         googleMapsBlocName:
-            (attributes[DBKeys.googleMapsCubitController] as FTextTypeInput)
-                    .stateName ??
-                '',
+            (attributes[DBKeys.googleMapsCubitController] as FTextTypeInput).stateName ?? '',
         pathColor: (attributes[DBKeys.fill] as FFill).getHexColor(context),
       );
 
@@ -392,53 +336,32 @@ class GoogleMapsBody extends NodeBody {
   ) =>
       GoogleMapsCubitTemplate.toCode(
         mapControllerName:
-            (attributes[DBKeys.googleMapsController] as FTextTypeInput)
-                    .stateName ??
-                '',
-        markersDatasetName:
-            (attributes[DBKeys.datasetInput] as FDataset).datasetName ?? '',
-        markerId:
-            (attributes[DBKeys.markerId] as FDataset).datasetAttrName ?? '',
-        markerLatitude:
-            (attributes[DBKeys.markerLatitude] as FDataset).datasetAttrName ??
-                '',
-        markerLongitude:
-            (attributes[DBKeys.markerLongitude] as FDataset).datasetAttrName ??
-                '',
-        markerIconUrl:
-            (attributes[DBKeys.markerIconUrl] as FDataset).datasetAttrName ??
-                '',
-        markerIconWidth:
-            (attributes[DBKeys.markerIconWidth] as FDataset).datasetAttrName ??
-                '',
+            (attributes[DBKeys.googleMapsController] as FTextTypeInput).stateName ?? '',
+        markersDatasetName: (attributes[DBKeys.datasetInput] as FDataset).datasetName ?? '',
+        markerId: (attributes[DBKeys.markerId] as FDataset).datasetAttrName ?? '',
+        markerLatitude: (attributes[DBKeys.markerLatitude] as FDataset).datasetAttrName ?? '',
+        markerLongitude: (attributes[DBKeys.markerLongitude] as FDataset).datasetAttrName ?? '',
+        markerIconUrl: (attributes[DBKeys.markerIconUrl] as FDataset).datasetAttrName ?? '',
+        markerIconWidth: (attributes[DBKeys.markerIconWidth] as FDataset).datasetAttrName ?? '',
         markerDrawPath:
-            (attributes[DBKeys.markerDrawPathToUserCurrentLocation] as FDataset)
-                    .datasetAttrName ??
+            (attributes[DBKeys.markerDrawPathToUserCurrentLocation] as FDataset).datasetAttrName ??
                 '',
-        customMapStyle:
-            (attributes[DBKeys.mapCustomStyle] as FGoogleMapsMapStyle).get,
-        initialPositionLat:
-            (attributes[DBKeys.mapInitialPositionLat] as FTextTypeInput)
-                .toCode(loop, resultType: ResultTypeEnum.double),
-        initialPositionLng:
-            (attributes[DBKeys.mapInitialPositionLng] as FTextTypeInput)
-                .toCode(loop, resultType: ResultTypeEnum.double),
-        showMyLocationMarker:
-            attributes[DBKeys.mapConfigShowMyLocationMarker] as bool,
-        initialZoomLevel:
-            (attributes[DBKeys.mapCustomInitialZoomLevel] as FTextTypeInput)
-                .toCode(loop, resultType: ResultTypeEnum.double),
+        customMapStyle: (attributes[DBKeys.mapCustomStyle] as FGoogleMapsMapStyle).get,
+        initialPositionLat: (attributes[DBKeys.mapInitialPositionLat] as FTextTypeInput)
+            .toCode(loop, resultType: ResultTypeEnum.double),
+        initialPositionLng: (attributes[DBKeys.mapInitialPositionLng] as FTextTypeInput)
+            .toCode(loop, resultType: ResultTypeEnum.double),
+        showMyLocationMarker: attributes[DBKeys.mapConfigShowMyLocationMarker] as bool,
+        initialZoomLevel: (attributes[DBKeys.mapCustomInitialZoomLevel] as FTextTypeInput)
+            .toCode(loop, resultType: ResultTypeEnum.double),
         trackMyLocation: attributes[DBKeys.mapConfigTrackMyLocation] as bool,
-        googleMapsKey:
-            (BlocProvider.of<FocusProjectBloc>(context).state as ProjectLoaded)
-                    .prj
-                    .config
-                    ?.googleMapsKey ??
-                '',
+        googleMapsKey: (BlocProvider.of<FocusProjectBloc>(context).state as ProjectLoaded)
+                .prj
+                .config
+                ?.googleMapsKey ??
+            '',
         googleMapsCubitName:
-            (attributes[DBKeys.googleMapsCubitController] as FTextTypeInput)
-                    .stateName ??
-                '',
+            (attributes[DBKeys.googleMapsCubitController] as FTextTypeInput).stateName ?? '',
         pathColor: (attributes[DBKeys.fill] as FFill).getHexColor(context),
       );
 
@@ -458,51 +381,29 @@ class GoogleMapsBody extends NodeBody {
         GoogleMapsTemplate.toCode(
           context: context,
           mapControllerName:
-              (attributes[DBKeys.googleMapsController] as FTextTypeInput)
-                      .stateName ??
-                  '',
-          markersDatasetName:
-              (attributes[DBKeys.datasetInput] as FDataset).datasetName ?? '',
-          markerId:
-              (attributes[DBKeys.markerId] as FDataset).datasetAttrName ?? '',
-          markerLatitude:
-              (attributes[DBKeys.markerLatitude] as FDataset).datasetAttrName ??
-                  '',
-          markerLongitude: (attributes[DBKeys.markerLongitude] as FDataset)
+              (attributes[DBKeys.googleMapsController] as FTextTypeInput).stateName ?? '',
+          markersDatasetName: (attributes[DBKeys.datasetInput] as FDataset).datasetName ?? '',
+          markerId: (attributes[DBKeys.markerId] as FDataset).datasetAttrName ?? '',
+          markerLatitude: (attributes[DBKeys.markerLatitude] as FDataset).datasetAttrName ?? '',
+          markerLongitude: (attributes[DBKeys.markerLongitude] as FDataset).datasetAttrName ?? '',
+          markerIconUrl: (attributes[DBKeys.markerIconUrl] as FDataset).datasetAttrName ?? '',
+          markerIconWidth: (attributes[DBKeys.markerIconWidth] as FDataset).datasetAttrName ?? '',
+          markerDrawPath: (attributes[DBKeys.markerDrawPathToUserCurrentLocation] as FDataset)
                   .datasetAttrName ??
               '',
-          markerIconUrl:
-              (attributes[DBKeys.markerIconUrl] as FDataset).datasetAttrName ??
-                  '',
-          markerIconWidth: (attributes[DBKeys.markerIconWidth] as FDataset)
-                  .datasetAttrName ??
-              '',
-          markerDrawPath:
-              (attributes[DBKeys.markerDrawPathToUserCurrentLocation]
-                          as FDataset)
-                      .datasetAttrName ??
-                  '',
-          customMapStyle:
-              (attributes[DBKeys.mapCustomStyle] as FGoogleMapsMapStyle).get,
-          initialPositionLat:
-              (attributes[DBKeys.mapInitialPositionLat] as FTextTypeInput)
-                  .toCode(loop, resultType: ResultTypeEnum.double),
-          initialPositionLng:
-              (attributes[DBKeys.mapInitialPositionLng] as FTextTypeInput)
-                  .toCode(loop, resultType: ResultTypeEnum.double),
-          showMyLocationMarker:
-              attributes[DBKeys.mapConfigShowMyLocationMarker] as bool,
-          initialZoomLevel:
-              (attributes[DBKeys.mapCustomInitialZoomLevel] as FTextTypeInput)
-                  .toCode(
+          customMapStyle: (attributes[DBKeys.mapCustomStyle] as FGoogleMapsMapStyle).get,
+          initialPositionLat: (attributes[DBKeys.mapInitialPositionLat] as FTextTypeInput)
+              .toCode(loop, resultType: ResultTypeEnum.double),
+          initialPositionLng: (attributes[DBKeys.mapInitialPositionLng] as FTextTypeInput)
+              .toCode(loop, resultType: ResultTypeEnum.double),
+          showMyLocationMarker: attributes[DBKeys.mapConfigShowMyLocationMarker] as bool,
+          initialZoomLevel: (attributes[DBKeys.mapCustomInitialZoomLevel] as FTextTypeInput).toCode(
             loop,
             resultType: ResultTypeEnum.double,
           ),
           trackMyLocation: attributes[DBKeys.mapConfigTrackMyLocation] as bool,
           googleMapsCubitName:
-              (attributes[DBKeys.googleMapsCubitController] as FTextTypeInput)
-                      .stateName ??
-                  '',
+              (attributes[DBKeys.googleMapsCubitController] as FTextTypeInput).stateName ?? '',
           pathColor: (attributes[DBKeys.fill] as FFill).getHexColor(context),
         ),
         loop ?? 0,

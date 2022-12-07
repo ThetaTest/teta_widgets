@@ -2,8 +2,8 @@
 import 'package:flutter/material.dart';
 // Package imports:
 import 'package:teta_core/gen/assets.gen.dart';
-import 'package:teta_core/src/models/dataset.dart';
 import 'package:teta_core/src/models/variable.dart';
+import 'package:teta_widgets/src/core/teta_widget/index.dart';
 // Project imports:
 import 'package:teta_widgets/src/elements/code/templates/calendar.dart';
 import 'package:teta_widgets/src/elements/controls/control_model.dart';
@@ -24,10 +24,9 @@ import 'package:teta_widgets/src/elements/nodes/children_enum.dart';
 import 'package:teta_widgets/src/elements/nodes/enum.dart';
 import 'package:teta_widgets/src/elements/nodes/node.dart';
 import 'package:teta_widgets/src/elements/nodes/node_body.dart';
+import 'package:teta_widgets/src/elements/nodes/suggestion.dart';
 import 'package:teta_widgets/src/elements/packages.dart';
 import 'package:teta_widgets/src/elements/widgets/calendar.dart';
-
-import '../nodes/suggestion.dart';
 
 const _globalType = NType.calendar;
 
@@ -59,8 +58,7 @@ final calendarIntrinsicStates = IntrinsicStates(
     const Suggestion(
       title: 'Why use Calendar in Teta?',
       description: 'Test',
-      linkToOpen:
-          'https://docs.teta.so/teta-docs/widget/advanced-widgets/calendar',
+      linkToOpen: 'https://docs.teta.so/teta-docs/widget/advanced-widgets/calendar',
     )
   ],
 );
@@ -160,34 +158,29 @@ class CalendarBody extends NodeBody {
 
   @override
   Widget toWidget({
-    required final List<VariableObject> params,
-    required final List<VariableObject> states,
-    required final List<DatasetObject> dataset,
-    required final bool forPlay,
-    required final CNode node,
-    final int? loop,
+    required final TetaWidgetState state,
     final CNode? child,
     final List<CNode>? children,
   }) =>
       WCalendar(
         ValueKey(
           '''
-          ${node.nid}
-          $loop
-            ${child ?? children}
-            ${(attributes[DBKeys.action] as FAction).toJson()}, 
-            ${(attributes[DBKeys.datasetInput] as FDataset).toJson()}, 
-            ${(attributes[DBKeys.textStyle] as FTextStyle).toJson()},
-            ${(attributes[DBKeys.textStyle2] as FTextStyle).toJson()},
-            ${(attributes[DBKeys.margins] as FMargins).toJson()},
-            ${(attributes[DBKeys.padding] as FMargins).toJson()},
-            ${(attributes[DBKeys.borderRadius] as FBorderRadius).toJson()},
-            ${(attributes[DBKeys.shadows] as FShadow).toJson()},
-            ${(attributes[DBKeys.fill] as FFill).toJson()},
-            ${(attributes[DBKeys.bgFill] as FFill).toJson()},
-            ''',
+          ${state.node.nid}
+          ${state.loop}
+          ${child ?? children}
+          ${(attributes[DBKeys.action] as FAction).toJson()}, 
+          ${(attributes[DBKeys.datasetInput] as FDataset).toJson()}, 
+          ${(attributes[DBKeys.textStyle] as FTextStyle).toJson()},
+          ${(attributes[DBKeys.textStyle2] as FTextStyle).toJson()},
+          ${(attributes[DBKeys.margins] as FMargins).toJson()},
+          ${(attributes[DBKeys.padding] as FMargins).toJson()},
+          ${(attributes[DBKeys.borderRadius] as FBorderRadius).toJson()},
+          ${(attributes[DBKeys.shadows] as FShadow).toJson()},
+          ${(attributes[DBKeys.fill] as FFill).toJson()},
+          ${(attributes[DBKeys.bgFill] as FFill).toJson()},
+          ''',
         ),
-        node: node,
+        state: state,
         children: children ?? <CNode>[],
         value: attributes[DBKeys.datasetInput] as FDataset,
         action: attributes[DBKeys.action] as FAction,
@@ -199,11 +192,6 @@ class CalendarBody extends NodeBody {
         shadows: attributes[DBKeys.shadows] as FShadow,
         fill: attributes[DBKeys.fill] as FFill,
         fill2: attributes[DBKeys.bgFill] as FFill,
-        forPlay: forPlay,
-        loop: loop,
-        params: params,
-        states: states,
-        dataset: dataset,
       );
 
   @override

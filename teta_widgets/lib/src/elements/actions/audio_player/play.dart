@@ -6,7 +6,7 @@ import 'package:collection/collection.dart';
 // Flutter imports:
 import 'package:flutter/material.dart';
 import 'package:recase/recase.dart';
-import 'package:teta_core/src/models/variable.dart';
+import 'package:teta_widgets/src/core/teta_widget/index.dart';
 import 'package:teta_widgets/src/elements/actions/snippets/get_page_on_code.dart';
 // Project imports:
 import 'package:teta_widgets/src/elements/actions/snippets/take_state_from.dart';
@@ -14,18 +14,16 @@ import 'package:teta_widgets/src/elements/actions/snippets/take_state_from.dart'
 class FAudioPlayerPlay {
   static Future action(
     final BuildContext context,
-    final List<VariableObject> states,
+    final TetaWidgetState state,
     final String? stateName,
-    final int? loop,
   ) async {
-    final variable =
-        states.firstWhereOrNull((final element) => element.name == stateName);
+    final variable = state.states.firstWhereOrNull((final element) => element.name == stateName);
     final audioPlayer = variable?.audioController;
     try {
       if (audioPlayer != null) {
-        if (loop != null) {
-          if (audioPlayer.currentIndex != loop) {
-            await audioPlayer.seek(Duration.zero, index: loop);
+        if (state.loop != null) {
+          if (audioPlayer.currentIndex != state.loop) {
+            await audioPlayer.seek(Duration.zero, index: state.loop);
           }
         }
         await audioPlayer.play();
@@ -39,8 +37,6 @@ class FAudioPlayerPlay {
     final int pageId,
     final BuildContext context,
     final String? stateName,
-    final String url,
-    final int? loop,
   ) {
     final page = getPageOnToCode(pageId, context);
     if (page == null) return '';

@@ -6,15 +6,12 @@
 import 'package:dart_airtable/dart_airtable.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-
 // Package imports:
+import 'package:teta_core/src/pages/editor_page/cubits/airtable.dart';
 import 'package:teta_core/teta_core.dart';
-
+import 'package:teta_widgets/src/core/teta_widget/index.dart';
 // Project imports:
 import 'package:teta_widgets/src/elements/index.dart';
-
-import 'package:teta_core/src/pages/editor_page/cubits/airtable.dart';
-
 
 // ignore_for_file: public_member_api_docs
 
@@ -22,41 +19,18 @@ class WAirtableFetch extends StatefulWidget {
   /// Construct
   const WAirtableFetch(
     final Key? key, {
-    required this.node,
+    required this.state,
     required this.recordName,
-    required this.forPlay,
-    required this.params,
-    required this.states,
-    required this.dataset,
     required this.children,
-    this.loop,
   }) : super(key: key);
 
-  /// The original CNode
-  final CNode node;
+  final TetaWidgetState state;
 
   /// The from's value
   final FTextTypeInput recordName;
 
   /// The opzional child of this widget
   final List<CNode> children;
-
-  /// Are we in Play Mode?
-  final bool forPlay;
-
-  /// The optional position inside a loop
-  /// Widgets can be instantiate inside ListView.builder and other list widgets
-  /// [loop] indicates the index position inside them
-  final int? loop;
-
-  /// The params of Scaffold
-  final List<VariableObject> params;
-
-  /// The states of Scaffold
-  final List<VariableObject> states;
-
-  /// The dataset list created by other widgets inside the same page
-  final List<DatasetObject> dataset;
 
   @override
   _WAirtableFetchState createState() => _WAirtableFetchState();
@@ -72,11 +46,11 @@ class _WAirtableFetchState extends State<WAirtableFetch> {
 
   Future<void> getDbElements() async {
     final recordName = widget.recordName.get(
-      widget.params,
-      widget.states,
-      widget.dataset,
-      widget.forPlay,
-      widget.loop,
+      widget.state.params,
+      widget.state.states,
+      widget.state.dataset,
+      widget.state.forPlay,
+      widget.state.loop,
       context,
     );
     final config =
@@ -86,7 +60,7 @@ class _WAirtableFetchState extends State<WAirtableFetch> {
     var dbElements = <AirtableRecord>[];
     if (config != null && config.isAirtableReady) {
       final airtable = context.read<AirtableCubit>();
-      dbElements = await airtable.getAllRecords(recordName: recordName);
+      dbElements = await airtable.getAllRecords(recordName);
     } else {
       dbElements = <AirtableRecord>[];
     }
@@ -113,10 +87,9 @@ class _WAirtableFetchState extends State<WAirtableFetch> {
       if (widget.children.length > 1) {
         return RepaintBoundary(
           child: widget.children.last.toWidget(
-            params: widget.params,
-            states: widget.states,
-            dataset: datasets,
-            forPlay: widget.forPlay,
+            state: widget.state.copyWith(
+              dataset: datasets,
+            ),
           ),
         );
       } else {
@@ -128,16 +101,15 @@ class _WAirtableFetchState extends State<WAirtableFetch> {
     }
 
     return NodeSelectionBuilder(
-      node: widget.node,
-      forPlay: widget.forPlay,
+      node: widget.state.node,
+      forPlay: widget.state.forPlay,
       child: widget.children.isEmpty
           ? const THeadline3('This node requires at least one child')
           : RepaintBoundary(
               child: widget.children.first.toWidget(
-                params: widget.params,
-                states: widget.states,
-                dataset: datasets,
-                forPlay: widget.forPlay,
+                state: widget.state.copyWith(
+                  dataset: datasets,
+                ),
               ),
             ),
     );
@@ -147,20 +119,17 @@ class _WAirtableFetchState extends State<WAirtableFetch> {
     print('list in fetch airtable widget: $list');
 
     _map = _map.copyWith(
-      name: widget.node.name ?? widget.node.intrinsicState.displayName,
+      name: widget.state.node.name ??
+          widget.state.node.intrinsicState.displayName,
       map: (list ?? const <dynamic>[])
           .map((final dynamic e) => e as Map<String, dynamic>)
           .toList(),
     );
-
     print('map in fetch airtable widget: $_map');
 
-
-    final datasets = addDataset(context, widget.dataset, _map);
-
+    final datasets = addDataset(context, widget.state.dataset, _map);
     print('dataset in fetch airtable widget: $datasets');
 
-
-    return widget.dataset.isEmpty ? datasets : widget.dataset;
+    return widget.state.dataset.isEmpty ? datasets : widget.state.dataset;
   }
 }

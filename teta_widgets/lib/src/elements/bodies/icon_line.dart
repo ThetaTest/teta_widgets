@@ -2,8 +2,8 @@
 import 'package:flutter/material.dart';
 // Package imports:
 import 'package:teta_core/gen/assets.gen.dart';
-import 'package:teta_core/src/models/dataset.dart';
 import 'package:teta_core/src/models/variable.dart';
+import 'package:teta_widgets/src/core/teta_widget/index.dart';
 import 'package:teta_widgets/src/elements/code/snippets.dart';
 import 'package:teta_widgets/src/elements/code/templates/icon_line.dart';
 // Project imports:
@@ -18,10 +18,9 @@ import 'package:teta_widgets/src/elements/nodes/children_enum.dart';
 import 'package:teta_widgets/src/elements/nodes/enum.dart';
 import 'package:teta_widgets/src/elements/nodes/node.dart';
 import 'package:teta_widgets/src/elements/nodes/node_body.dart';
+import 'package:teta_widgets/src/elements/nodes/suggestion.dart';
 import 'package:teta_widgets/src/elements/packages.dart';
 import 'package:teta_widgets/src/elements/widgets/icon_line.dart';
-
-import '../nodes/suggestion.dart';
 
 const _globalType = NType.lineIcon;
 
@@ -52,8 +51,7 @@ final lineIconIntrinsicStates = IntrinsicStates(
     const Suggestion(
       title: 'Why use Line Icons in Teta?',
       description: 'Test',
-      linkToOpen:
-          'https://docs.teta.so/teta-docs/widget/icon-widgets/line-icons',
+      linkToOpen: 'https://docs.teta.so/teta-docs/widget/icon-widgets/line-icons',
     )
   ],
 );
@@ -96,34 +94,24 @@ class LineIconBody extends NodeBody {
 
   @override
   Widget toWidget({
-    required final List<VariableObject> params,
-    required final List<VariableObject> states,
-    required final List<DatasetObject> dataset,
-    required final bool forPlay,
-    required final CNode node,
-    final int? loop,
+    required final TetaWidgetState state,
     final CNode? child,
     final List<CNode>? children,
   }) =>
       WLineIcon(
         ValueKey(
           '''
-      ${node.nid}
-      $loop
-      ${(attributes[DBKeys.width] as FSize).toJson()}
-      ${attributes[DBKeys.lineIcon]}
-      ${(attributes[DBKeys.fill] as FFill).toJson()}
-      ''',
+          ${state.node.nid}
+          ${state.loop}
+          ${(attributes[DBKeys.width] as FSize).toJson()}
+          ${attributes[DBKeys.lineIcon]}
+          ${(attributes[DBKeys.fill] as FFill).toJson()}
+          ''',
         ),
-        node: node,
+        state: state,
         width: attributes[DBKeys.width] as FSize,
         icon: attributes[DBKeys.lineIcon] as String? ?? 'plus',
         fill: attributes[DBKeys.fill] as FFill,
-        forPlay: forPlay,
-        loop: loop,
-        params: params,
-        states: states,
-        dataset: dataset,
       );
 
   @override

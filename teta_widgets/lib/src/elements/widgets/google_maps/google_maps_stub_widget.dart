@@ -3,14 +3,13 @@
 // Flutter imports:
 import 'package:flutter/material.dart';
 import 'package:teta_core/teta_core.dart';
+import 'package:teta_widgets/src/core/teta_widget/index.dart';
 import 'package:teta_widgets/src/elements/features/features.dart';
 import 'package:teta_widgets/src/elements/features/google_maps_map_style.dart';
 
 // Project imports:
 import 'package:teta_widgets/src/elements/nodes/node.dart';
 import 'package:teta_widgets/src/elements/widgets/google_maps/google_maps_base_widget.dart';
-import 'package:teta_widgets/src/elements/widgets/google_maps/google_maps_cubit.dart';
-import 'package:teta_widgets/src/elements/widgets/google_maps/maps/map_style.dart';
 
 // ignore_for_file: public_member_api_docs
 
@@ -18,11 +17,7 @@ class WGoogleMaps extends WGoogleMapsBase {
   /// Returns a [Map] widget in Teta
   const WGoogleMaps(
     final Key? key, {
-    required this.node,
-    required this.forPlay,
-    required this.params,
-    required this.states,
-    required this.dataset,
+    required this.state,
     required this.mapControllerName,
     required this.markersDatasetName,
     required this.markerId,
@@ -41,17 +36,10 @@ class WGoogleMaps extends WGoogleMapsBase {
     required final FFill pathColor,
     required final String cubitName,
     this.child,
-    this.loop,
   }) : super(key: key);
 
-  final CNode node;
+  final TetaWidgetState state;
   final CNode? child;
-  final bool forPlay;
-  final int? loop;
-
-  final List<VariableObject> params;
-  final List<VariableObject> states;
-  final List<DatasetObject> dataset;
 
   final String markersDatasetName;
   final String mapControllerName;

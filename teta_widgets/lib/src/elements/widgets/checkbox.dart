@@ -1,7 +1,7 @@
 // Flutter imports:
 import 'package:flutter/material.dart';
 // Package imports:
-import 'package:teta_core/teta_core.dart';
+import 'package:teta_widgets/src/core/teta_widget/index.dart';
 // Project imports:
 import 'package:teta_widgets/src/elements/index.dart';
 
@@ -11,23 +11,12 @@ class WCheckBox extends StatefulWidget {
   /// Returns a CheckBox widget in Teta
   const WCheckBox(
     final Key? key, {
-    required this.node,
-    required this.forPlay,
+    required this.state,
     required this.value,
-    required this.params,
-    required this.states,
-    required this.dataset,
-    this.loop,
   }) : super(key: key);
 
-  final CNode node;
-  final bool forPlay;
-  final int? loop;
+  final TetaWidgetState state;
   final FTextTypeInput value;
-
-  final List<VariableObject> params;
-  final List<VariableObject> states;
-  final List<DatasetObject> dataset;
 
   @override
   State<WCheckBox> createState() => _WCheckBoxState();
@@ -40,11 +29,11 @@ class _WCheckBoxState extends State<WCheckBox> {
   void initState() {
     super.initState();
     val = widget.value.get(
-      widget.params,
-      widget.states,
-      widget.dataset,
-      widget.forPlay,
-      widget.loop,
+      widget.state.params,
+      widget.state.states,
+      widget.state.dataset,
+      widget.state.forPlay,
+      widget.state.loop,
       context,
     );
   }
@@ -53,11 +42,11 @@ class _WCheckBoxState extends State<WCheckBox> {
   @override
   Widget build(final BuildContext context) {
     return NodeSelectionBuilder(
-      node: widget.node,
-      forPlay: widget.forPlay,
+      node: widget.state.node,
+      forPlay: widget.state.forPlay,
       child: Checkbox(
         onChanged: (final value) {
-          if (widget.forPlay) {
+          if (widget.state.forPlay) {
             setState(() {
               if (val == 'true') {
                 val = 'false';
@@ -69,8 +58,7 @@ class _WCheckBoxState extends State<WCheckBox> {
         },
         value: val == 'true',
         mouseCursor: const FCursor().get(),
-        fillColor:
-            MaterialStateProperty.resolveWith((final states) => Colors.black),
+        fillColor: MaterialStateProperty.resolveWith((final states) => Colors.black),
       ),
     );
   }

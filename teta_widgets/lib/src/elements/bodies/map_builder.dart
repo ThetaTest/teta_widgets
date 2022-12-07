@@ -2,8 +2,8 @@
 import 'package:flutter/material.dart';
 // Package imports:
 import 'package:teta_core/gen/assets.gen.dart';
-import 'package:teta_core/src/models/dataset.dart';
 import 'package:teta_core/src/models/variable.dart';
+import 'package:teta_widgets/src/core/teta_widget/index.dart';
 import 'package:teta_widgets/src/elements/code/snippets.dart';
 // Project imports:
 import 'package:teta_widgets/src/elements/code/templates/map.dart';
@@ -85,38 +85,28 @@ class MapBuilderBody extends NodeBody {
 
   @override
   Widget toWidget({
-    required final List<VariableObject> params,
-    required final List<VariableObject> states,
-    required final List<DatasetObject> dataset,
-    required final bool forPlay,
-    required final CNode node,
-    final int? loop,
+    required final TetaWidgetState state,
     final CNode? child,
     final List<CNode>? children,
   }) =>
       WMapBuilder(
         ValueKey(
           '''
-      ${node.nid}
-      $loop
-            ${child ?? children}
+      ${state.node.nid}
+      ${state.loop}
+      ${child ?? children}
       ${(attributes[DBKeys.datasetInput] as FDataset).toJson()}
       ${attributes[DBKeys.flag] as bool}
       ${(attributes[DBKeys.valueOfCondition] as FTextTypeInput).toJson()}
       ${(attributes[DBKeys.action] as FAction).toJson()}
       ''',
         ),
-        node: node,
+        state: state,
         child: child,
         datasetInput: attributes[DBKeys.datasetInput] as FDataset,
         controller: attributes[DBKeys.valueOfCondition] as FTextTypeInput,
         action: attributes[DBKeys.action] as FAction,
         flag: attributes[DBKeys.flag] as bool? ?? false,
-        forPlay: forPlay,
-        loop: loop,
-        params: params,
-        states: states,
-        dataset: dataset,
       );
 
   @override
@@ -132,8 +122,7 @@ class MapBuilderBody extends NodeBody {
         context,
         node,
         pageId,
-        MapCodeTemplate.toCode(
-            context, this, node, child, children ?? [], loop),
+        MapCodeTemplate.toCode(context, this, node, child, children ?? [], loop),
         loop ?? 0,
       );
 }

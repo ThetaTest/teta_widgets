@@ -6,6 +6,7 @@ import 'package:collection/collection.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:teta_core/teta_core.dart';
+import 'package:teta_widgets/src/core/teta_widget/teta_widget_state.dart';
 import 'package:teta_widgets/src/elements/builder/gesture_detector_base.dart';
 // Project imports:
 import 'package:teta_widgets/src/elements/index.dart';
@@ -17,25 +18,14 @@ class WWebViewXPage extends StatefulWidget {
   /// Returns a WebView widget in Teta
   const WWebViewXPage(
     final Key? key, {
-    required this.node,
-    required this.forPlay,
-    required this.params,
-    required this.states,
-    required this.dataset,
     required this.controller,
     required this.url,
-    this.loop,
+    required this.state,
   }) : super(key: key);
 
-  final CNode node;
-  final bool forPlay;
-  final int? loop;
+  final TetaWidgetState state;
   final FTextTypeInput controller;
   final FTextTypeInput url;
-
-  final List<VariableObject> params;
-  final List<VariableObject> states;
-  final List<DatasetObject> dataset;
 
   @override
   State<WWebViewXPage> createState() => _WWebViewXPageState();
@@ -50,11 +40,9 @@ class _WWebViewXPageState extends State<WWebViewXPage> {
     final page = BlocProvider.of<PageCubit>(context).state;
 
     if (widget.controller.type == FTextTypeEnum.param) {
-      variable = page.params
-          .firstWhereOrNull((final e) => e.name == widget.controller.paramName);
+      variable = page.params.firstWhereOrNull((final e) => e.name == widget.controller.paramName);
     } else {
-      variable = page.states
-          .firstWhereOrNull((final e) => e.name == widget.controller.stateName);
+      variable = page.states.firstWhereOrNull((final e) => e.name == widget.controller.stateName);
     }
 
     super.initState();
@@ -70,12 +58,7 @@ class _WWebViewXPageState extends State<WWebViewXPage> {
   Widget build(final BuildContext context) {
     return GestureBuilderBase.get(
       context: context,
-      node: widget.node,
-      params: widget.params,
-      states: widget.states,
-      dataset: widget.dataset,
-      forPlay: widget.forPlay,
-      loop: widget.loop,
+      state: widget.state,
       child: WebViewX(
         key: const ValueKey('webviewx'),
         onWebViewCreated: (final controller) {
@@ -91,11 +74,11 @@ class _WWebViewXPageState extends State<WWebViewXPage> {
   void _setUrl() {
     variable?.webViewController?.loadContent(
       widget.url.get(
-        widget.params,
-        widget.states,
-        widget.dataset,
-        widget.forPlay,
-        widget.loop,
+        widget.state.params,
+        widget.state.states,
+        widget.state.dataset,
+        widget.state.forPlay,
+        widget.state.loop,
         context,
       ),
       SourceType.url,

@@ -5,6 +5,7 @@
 import 'package:flutter/material.dart';
 // Package imports:
 import 'package:teta_core/teta_core.dart';
+import 'package:teta_widgets/src/core/teta_widget/index.dart';
 import 'package:teta_widgets/src/elements/code/snippets.dart';
 import 'package:teta_widgets/src/elements/code/templates/ad_mob_banner_ad_template.dart';
 import 'package:teta_widgets/src/elements/controls/control_model.dart';
@@ -15,10 +16,9 @@ import 'package:teta_widgets/src/elements/intrinsic_states/class.dart';
 import 'package:teta_widgets/src/elements/nodes/categories.dart';
 import 'package:teta_widgets/src/elements/nodes/children_enum.dart';
 import 'package:teta_widgets/src/elements/nodes/node_body.dart';
+import 'package:teta_widgets/src/elements/nodes/suggestion.dart';
 import 'package:teta_widgets/src/elements/packages.dart';
 import 'package:teta_widgets/src/elements/widgets/w_google_ad_mob_banner_ad_body.dart';
-
-import '../nodes/suggestion.dart';
 
 /// GlobalType for [] widget
 const _globalType = NType.adMobBanner;
@@ -46,8 +46,7 @@ final googleAdMobBannerAdIntrinsicStates = IntrinsicStates(
     const Suggestion(
       title: 'Why use Ad mob banner in Teta?',
       description: 'Test',
-      linkToOpen:
-          'https://docs.teta.so/teta-docs/widget/advanced-widgets/ad-mob-banner',
+      linkToOpen: 'https://docs.teta.so/teta-docs/widget/advanced-widgets/ad-mob-banner',
     )
   ],
 );
@@ -83,37 +82,25 @@ class GoogleAdMobBannerAdBody extends NodeBody {
 
   @override
   Widget toWidget({
-    required final List<VariableObject> params,
-    required final List<VariableObject> states,
-    required final List<DatasetObject> dataset,
-    required final bool forPlay,
-    required final CNode node,
-    final int? loop,
+    required final TetaWidgetState state,
     final CNode? child,
     final List<CNode>? children,
   }) =>
       WGoogleAdMobBannerAd(
         ValueKey(
           '''
-            ${node.nid}
-            $loop
+            ${state.node.nid}
+            ${state.loop}
             ${child ?? children}
             ${(attributes[DBKeys.adMobAdIosUnitId] as FTextTypeInput? ?? FTextTypeInput()).toJson()}
             ${(attributes[DBKeys.adMobAdAndroidUnitId] as FTextTypeInput? ?? FTextTypeInput()).toJson()}
             ''',
         ),
-        node: node,
+        state: state,
         adMobAdIosUnitId:
-            attributes[DBKeys.adMobAdIosUnitId] as FTextTypeInput? ??
-                FTextTypeInput(),
+            attributes[DBKeys.adMobAdIosUnitId] as FTextTypeInput? ?? FTextTypeInput(),
         adMobAdAndroidUnitId:
-            attributes[DBKeys.adMobAdAndroidUnitId] as FTextTypeInput? ??
-                FTextTypeInput(),
-        forPlay: forPlay,
-        loop: loop,
-        params: params,
-        states: states,
-        dataset: dataset,
+            attributes[DBKeys.adMobAdAndroidUnitId] as FTextTypeInput? ?? FTextTypeInput(),
       );
 
   @override

@@ -2,8 +2,8 @@
 import 'package:flutter/material.dart';
 // Package imports:
 import 'package:teta_core/gen/assets.gen.dart';
-import 'package:teta_core/src/models/dataset.dart';
 import 'package:teta_core/src/models/variable.dart';
+import 'package:teta_widgets/src/core/teta_widget/index.dart';
 import 'package:teta_widgets/src/elements/code/snippets.dart';
 // Project imports:
 import 'package:teta_widgets/src/elements/code/templates/row.dart';
@@ -19,9 +19,8 @@ import 'package:teta_widgets/src/elements/nodes/children_enum.dart';
 import 'package:teta_widgets/src/elements/nodes/enum.dart';
 import 'package:teta_widgets/src/elements/nodes/node.dart';
 import 'package:teta_widgets/src/elements/nodes/node_body.dart';
+import 'package:teta_widgets/src/elements/nodes/suggestion.dart';
 import 'package:teta_widgets/src/elements/widgets/row.dart';
-
-import '../nodes/suggestion.dart';
 
 const _globalType = NType.row;
 
@@ -29,8 +28,7 @@ const _globalType = NType.row;
 final rowIntrinsicStates = IntrinsicStates(
   nodeIcon: Assets.wIcons.row,
   nodeVideo: null,
-  nodeDescription:
-      'Layout a list of child widgets in the horizontal direction.',
+  nodeDescription: 'Layout a list of child widgets in the horizontal direction.',
   advicedChildren: [
     NodeType.name(NType.text),
     NodeType.name(NType.icon),
@@ -92,38 +90,26 @@ class RowBody extends NodeBody {
 
   @override
   Widget toWidget({
-    required final List<VariableObject> params,
-    required final List<VariableObject> states,
-    required final List<DatasetObject> dataset,
-    required final bool forPlay,
-    required final CNode node,
-    final int? loop,
+    required final TetaWidgetState state,
     final CNode? child,
     final List<CNode>? children,
   }) =>
       WRow(
         ValueKey(
           '''
-            ${node.nid}
-            $loop
+            ${state.node.nid}
+            ${state.loop}
             ${child ?? children}
             ${(attributes[DBKeys.mainAxisAlignment] as FMainAxisAlignment).toJson()}
             ${(attributes[DBKeys.crossAxisAlignment] as FCrossAxisAlignment).toJson()}
             ${(attributes[DBKeys.mainAxisSize] as FMainAxisSize).toJson()}
             ''',
         ),
-        node: node,
+        state: state,
         children: children ?? [],
-        mainAxisAlignment:
-            attributes[DBKeys.mainAxisAlignment] as FMainAxisAlignment,
-        crossAxisAlignment:
-            attributes[DBKeys.crossAxisAlignment] as FCrossAxisAlignment,
+        mainAxisAlignment: attributes[DBKeys.mainAxisAlignment] as FMainAxisAlignment,
+        crossAxisAlignment: attributes[DBKeys.crossAxisAlignment] as FCrossAxisAlignment,
         mainAxisSize: attributes[DBKeys.mainAxisSize] as FMainAxisSize,
-        forPlay: forPlay,
-        loop: loop,
-        params: params,
-        states: states,
-        dataset: dataset,
       );
 
   @override

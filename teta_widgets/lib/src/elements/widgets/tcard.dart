@@ -1,4 +1,3 @@
-// Flutter imports:
 // ignore_for_file: public_member_api_docs, avoid_dynamic_calls
 
 // Dart imports:
@@ -8,7 +7,7 @@ import 'dart:async';
 import 'package:flutter/material.dart';
 // Package imports:
 import 'package:tcard/tcard.dart';
-import 'package:teta_core/teta_core.dart';
+import 'package:teta_widgets/src/core/teta_widget/index.dart';
 // Project imports:
 import 'package:teta_widgets/src/elements/index.dart';
 
@@ -16,29 +15,19 @@ class WTCard extends StatefulWidget {
   /// Returns a PageViewwidget
   const WTCard(
     final Key? key, {
+    required this.state,
     required this.children,
     required this.lockYAxis,
     required this.slideSpeed,
     required this.delaySlideFor,
-    required this.node,
-    required this.forPlay,
-    required this.params,
-    required this.states,
-    required this.dataset,
     required this.action,
-    this.loop,
   }) : super(key: key);
 
-  final CNode node;
+  final TetaWidgetState state;
   final List<CNode> children;
   final bool lockYAxis;
   final FTextTypeInput slideSpeed;
   final FTextTypeInput delaySlideFor;
-  final bool forPlay;
-  final int? loop;
-  final List<VariableObject> params;
-  final List<VariableObject> states;
-  final List<DatasetObject> dataset;
   final FAction action;
 
   @override
@@ -56,28 +45,24 @@ class _WTCardState extends State<WTCard> {
     list = widget.children
         .map(
           (final e) => e.toWidget(
-            loop: widget.children.indexOf(e),
-            forPlay: widget.forPlay,
-            params: widget.params,
-            states: widget.states,
-            dataset: widget.dataset,
+            state: widget.state.copyWith(
+              loop: widget.children.indexOf(e),
+            ),
           ),
         )
         .toList();
-    if (!widget.forPlay) {
+    if (!widget.state.forPlay) {
       _timer = Timer.periodic(const Duration(seconds: 2), (final timer) {
         list = widget.children
             .map(
               (final e) => e.toWidget(
-                loop: widget.children.indexOf(e),
-                forPlay: widget.forPlay,
-                params: widget.params,
-                states: widget.states,
-                dataset: widget.dataset,
+                state: widget.state.copyWith(
+                  loop: widget.children.indexOf(e),
+                ),
               ),
             )
             .toList();
-        if (!widget.forPlay) {
+        if (!widget.state.forPlay) {
           _controller.reset(cards: list);
         }
       });
@@ -94,42 +79,37 @@ class _WTCardState extends State<WTCard> {
   @override
   Widget build(final BuildContext context) {
     final slideSpeedStr = widget.slideSpeed.get(
-      widget.params,
-      widget.states,
-      widget.dataset,
-      widget.forPlay,
-      widget.loop,
+      widget.state.params,
+      widget.state.states,
+      widget.state.dataset,
+      widget.state.forPlay,
+      widget.state.loop,
       context,
     );
     final slideSpeed = double.tryParse(slideSpeedStr) ?? 20;
     final delayStr = widget.delaySlideFor.get(
-      widget.params,
-      widget.states,
-      widget.dataset,
-      widget.forPlay,
-      widget.loop,
+      widget.state.params,
+      widget.state.states,
+      widget.state.dataset,
+      widget.state.forPlay,
+      widget.state.loop,
       context,
     );
     final delay = int.tryParse(delayStr) ?? 500;
     return NodeSelectionBuilder(
-      node: widget.node,
-      forPlay: widget.forPlay,
+      node: widget.state.node,
+      forPlay: widget.state.forPlay,
       child: IgnorePointer(
-        ignoring: !widget.forPlay,
+        ignoring: !widget.state.forPlay,
         child: TCard(
           controller: _controller,
           onEnd: () {
             GestureBuilder.get(
               context: context,
-              node: widget.node,
+              state: widget.state,
               gesture: ActionGesture.onEnd,
               action: widget.action,
               actionValue: null,
-              params: widget.params,
-              states: widget.states,
-              dataset: widget.dataset,
-              forPlay: widget.forPlay,
-              loop: widget.loop,
             );
           },
           onForward: (final index, final info) {
@@ -137,29 +117,19 @@ class _WTCardState extends State<WTCard> {
               // swipe right
               GestureBuilder.get(
                 context: context,
-                node: widget.node,
+                state: widget.state,
                 gesture: ActionGesture.swipeRight,
                 action: widget.action,
                 actionValue: null,
-                params: widget.params,
-                states: widget.states,
-                dataset: widget.dataset,
-                forPlay: widget.forPlay,
-                loop: widget.loop,
               );
             } else {
               // swipe left
               GestureBuilder.get(
                 context: context,
-                node: widget.node,
+                state: widget.state,
                 gesture: ActionGesture.swipeLeft,
                 action: widget.action,
                 actionValue: null,
-                params: widget.params,
-                states: widget.states,
-                dataset: widget.dataset,
-                forPlay: widget.forPlay,
-                loop: widget.loop,
               );
             }
           },

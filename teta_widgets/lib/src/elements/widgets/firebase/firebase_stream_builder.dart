@@ -3,7 +3,7 @@
 // Flutter imports:
 import 'package:flutter/material.dart';
 // Package imports:
-import 'package:teta_core/teta_core.dart';
+import 'package:teta_widgets/src/core/teta_widget/index.dart';
 // Project imports:
 import 'package:teta_widgets/src/elements/index.dart';
 
@@ -14,27 +14,14 @@ class WFirebaseStreamBuilder extends StatefulWidget {
   /// Needs a [FFirestorePath] to connect to the coll / doc
   const WFirebaseStreamBuilder(
     final Key? key, {
-    required this.node,
+    required this.state,
     required this.path,
-    required this.forPlay,
-    required this.params,
-    required this.states,
-    required this.dataset,
     this.child,
-    this.loop,
   }) : super(key: key);
 
-  /// The original CNode
-  final CNode node;
-
+  final TetaWidgetState state;
   final CNode? child;
   final FFirestorePath path;
-  final bool forPlay;
-  final int? loop;
-
-  final List<VariableObject> params;
-  final List<VariableObject> states;
-  final List<DatasetObject> dataset;
 
   @override
   WFirebaseStreamBuilderState createState() => WFirebaseStreamBuilderState();
@@ -44,8 +31,8 @@ class WFirebaseStreamBuilderState extends State<WFirebaseStreamBuilder> {
   @override
   Widget build(final BuildContext context) {
     return NodeSelectionBuilder(
-      node: widget.node,
-      forPlay: widget.forPlay,
+      node: widget.state.node,
+      forPlay: widget.state.forPlay,
       child: const SizedBox(),
     );
   }

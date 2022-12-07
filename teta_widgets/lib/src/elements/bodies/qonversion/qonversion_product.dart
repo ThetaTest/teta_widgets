@@ -5,9 +5,8 @@
 import 'package:flutter/material.dart';
 import 'package:teta_core/gen/assets.gen.dart';
 // Package imports:
-import 'package:teta_core/src/models/dataset.dart';
-import 'package:teta_core/src/models/variable.dart';
 import 'package:teta_core/src/pages/assets_constants.dart';
+import 'package:teta_widgets/src/core/teta_widget/index.dart';
 import 'package:teta_widgets/src/elements/code/templates/qonversion/qonversion_products.dart';
 // Project imports:
 import 'package:teta_widgets/src/elements/features/actions/enums/permissions.dart';
@@ -62,23 +61,13 @@ final qonversionProductsListIntrinsicStates = IntrinsicStates(
 class QonversionProductListBody extends NodeBody {
   @override
   Widget toWidget({
-    required final List<VariableObject> params,
-    required final List<VariableObject> states,
-    required final List<DatasetObject> dataset,
-    required final bool forPlay,
-    required final CNode node,
-    final int? loop,
+    required final TetaWidgetState state,
     final CNode? child,
     final List<CNode>? children,
   }) {
     return WQonversionProductsList(
       ValueKey('Qonversion ProductList $child'),
-      node: node,
-      forPlay: forPlay,
-      params: params,
-      states: states,
-      dataset: dataset,
-      loop: loop,
+      state: state,
       child: child,
     );
   }

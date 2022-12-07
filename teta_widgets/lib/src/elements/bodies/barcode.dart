@@ -4,8 +4,8 @@
 import 'package:flutter/material.dart';
 // Package imports:
 import 'package:teta_core/gen/assets.gen.dart';
-import 'package:teta_core/src/models/dataset.dart';
 import 'package:teta_core/src/models/variable.dart';
+import 'package:teta_widgets/src/core/teta_widget/index.dart';
 import 'package:teta_widgets/src/elements/code/snippets.dart';
 // Project imports:
 import 'package:teta_widgets/src/elements/controls/control_model.dart';
@@ -96,21 +96,16 @@ class BarcodeBody extends NodeBody {
 
   @override
   Widget toWidget({
-    required final List<VariableObject> params,
-    required final List<VariableObject> states,
-    required final List<DatasetObject> dataset,
-    required final bool forPlay,
-    required final CNode node,
-    final int? loop,
+    required final TetaWidgetState state,
     final CNode? child,
     final List<CNode>? children,
   }) =>
       WBarcode(
         ValueKey(
           '''
-          ${node.nid}
-          $loop
-            ${child ?? children}
+          ${state.node.nid}
+          ${state.loop}
+          ${child ?? children}
           ${(attributes[DBKeys.value] as FTextTypeInput).toJson()}
           ${(attributes[DBKeys.image] as FTextTypeInput).toJson()}
           ${(attributes[DBKeys.width] as FSize).toJson()}
@@ -118,18 +113,13 @@ class BarcodeBody extends NodeBody {
           ${(attributes[DBKeys.fill] as FFill).toJson()}
         ''',
         ),
-        node: node,
+        state: state,
         child: child,
         data: attributes[DBKeys.value] as FTextTypeInput,
         barcodeType: attributes[DBKeys.image] as FTextTypeInput,
         width: attributes[DBKeys.width] as FSize,
         height: attributes[DBKeys.height] as FSize,
         fill: attributes[DBKeys.fill] as FFill,
-        forPlay: forPlay,
-        loop: loop,
-        params: params,
-        states: states,
-        dataset: dataset,
       );
 
   //! TODO

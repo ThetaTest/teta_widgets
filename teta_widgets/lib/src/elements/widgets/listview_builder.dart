@@ -6,7 +6,7 @@ import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 // Package imports:
 import 'package:teta_core/teta_core.dart';
-import 'package:teta_widgets/src/elements/builder/gesture_detector_base.dart';
+import 'package:teta_widgets/src/core/teta_widget/index.dart';
 import 'package:teta_widgets/src/elements/features/physic.dart';
 // Project imports:
 import 'package:teta_widgets/src/elements/index.dart';
@@ -15,9 +15,8 @@ class WListViewBuilder extends StatefulWidget {
   /// Returns a ListView.builder in Teta
   const WListViewBuilder(
     final Key? key, {
+    required this.state,
     required this.child,
-    required this.node,
-    required this.forPlay,
     required this.value,
     required this.startFromIndex,
     required this.limit,
@@ -26,15 +25,10 @@ class WListViewBuilder extends StatefulWidget {
     required this.isReverse,
     required this.action,
     required this.physic,
-    required this.params,
-    required this.states,
-    required this.dataset,
-    this.loop,
   }) : super(key: key);
 
-  final CNode node;
+  final TetaWidgetState state;
   final CNode? child;
-  final bool forPlay;
   final FTextTypeInput startFromIndex;
   final FTextTypeInput limit;
   final bool shrinkWrap;
@@ -43,11 +37,6 @@ class WListViewBuilder extends StatefulWidget {
   final FAction action;
   final FDataset value;
   final FPhysic physic;
-  final int? loop;
-
-  final List<VariableObject> params;
-  final List<VariableObject> states;
-  final List<DatasetObject> dataset;
 
   @override
   WListViewBuilderState createState() => WListViewBuilderState();
@@ -61,11 +50,12 @@ class WListViewBuilderState extends State<WListViewBuilder> {
   Widget build(final BuildContext context) {
     _setDataset();
     final index = widget.value.datasetName != null
-        ? widget.dataset.indexWhere(
+        ? widget.state.dataset.indexWhere(
             (final element) => element.getName == widget.value.datasetName,
           )
         : -1;
-    final db = index != -1 ? widget.dataset[index] : DatasetObject.empty();
+    final db =
+        index != -1 ? widget.state.dataset[index] : DatasetObject.empty();
     List<Map<String, dynamic>> newDB;
     if (db.isSubList(widget.value.datasetAttrName ?? '')) {
       newDB = (db.getMap.first[widget.value.datasetAttrName] as List)
@@ -78,11 +68,11 @@ class WListViewBuilderState extends State<WListViewBuilder> {
     }
     var startFromIndex = int.tryParse(
           widget.startFromIndex.get(
-            widget.params,
-            widget.states,
-            widget.dataset,
-            widget.forPlay,
-            widget.loop,
+            widget.state.params,
+            widget.state.states,
+            widget.state.dataset,
+            widget.state.forPlay,
+            widget.state.loop,
             context,
           ),
         ) ??
@@ -95,11 +85,11 @@ class WListViewBuilderState extends State<WListViewBuilder> {
     }
     var limit = int.tryParse(
           widget.limit.get(
-            widget.params,
-            widget.states,
-            widget.dataset,
-            widget.forPlay,
-            widget.loop,
+            widget.state.params,
+            widget.state.states,
+            widget.state.dataset,
+            widget.state.forPlay,
+            widget.state.loop,
             context,
           ),
         ) ??
@@ -111,81 +101,59 @@ class WListViewBuilderState extends State<WListViewBuilder> {
     if (limit > newDB.length) {
       limit = newDB.length;
     }
-    return NodeSelectionBuilder(
-      node: widget.node,
-      forPlay: widget.forPlay,
-      child: GestureBuilderBase.get(
-        context: context,
-        node: widget.node,
-        params: widget.params,
-        states: widget.states,
-        dataset: widget.dataset,
-        forPlay: widget.forPlay,
-        loop: widget.loop,
-        child: NotificationListener<ScrollEndNotification>(
-          onNotification: (final scrollEnd) {
-            final metrics = scrollEnd.metrics;
-            if (metrics.atEdge) {
-              final isTop = metrics.pixels == 0;
-              if (isTop) {
-                Logger.printMessage('At the top');
-                GestureBuilder.get(
-                  context: context,
-                  node: widget.node,
-                  gesture: ActionGesture.scrollToTop,
-                  action: widget.action,
-                  actionValue: null,
-                  params: widget.params,
-                  states: widget.states,
-                  dataset: widget.dataset,
-                  forPlay: widget.forPlay,
-                  loop: widget.loop,
-                );
-              } else {
-                Logger.printMessage('At the bottom');
-                GestureBuilder.get(
-                  context: context,
-                  node: widget.node,
-                  gesture: ActionGesture.scrollToBottom,
-                  action: widget.action,
-                  actionValue: null,
-                  params: widget.params,
-                  states: widget.states,
-                  dataset: widget.dataset,
-                  forPlay: widget.forPlay,
-                  loop: widget.loop,
-                );
-              }
+    return TetaWidget(
+      state: widget.state,
+      child: NotificationListener<ScrollEndNotification>(
+        onNotification: (final scrollEnd) {
+          final metrics = scrollEnd.metrics;
+          if (metrics.atEdge) {
+            final isTop = metrics.pixels == 0;
+            if (isTop) {
+              Logger.printMessage('At the top');
+              GestureBuilder.get(
+                context: context,
+                state: widget.state,
+                gesture: ActionGesture.scrollToTop,
+                action: widget.action,
+                actionValue: null,
+              );
+            } else {
+              Logger.printMessage('At the bottom');
+              GestureBuilder.get(
+                context: context,
+                state: widget.state,
+                gesture: ActionGesture.scrollToBottom,
+                action: widget.action,
+                actionValue: null,
+              );
             }
-            return true;
-          },
-          child: ScrollConfiguration(
-            behavior: _MyCustomScrollBehavior(),
-            child: ListView.builder(
-              reverse: widget.isReverse,
-              physics: widget.physic.physics,
-              addAutomaticKeepAlives: false,
-              addRepaintBoundaries: false,
-              shrinkWrap: widget.shrinkWrap,
-              scrollDirection:
-                  widget.isVertical ? Axis.vertical : Axis.horizontal,
-              itemCount: newDB.sublist(startFromIndex, limit).length,
-              itemBuilder: (final context, final index) {
-                return widget.child != null
-                    ? widget.child!.toWidget(
-                        forPlay: widget.forPlay,
-                        params: widget.params,
-                        states: widget.states,
-                        dataset: widget.dataset,
+          }
+          return true;
+        },
+        child: ScrollConfiguration(
+          behavior: _MyCustomScrollBehavior(),
+          child: ListView.builder(
+            reverse: widget.isReverse,
+            physics: widget.physic.physics,
+            addAutomaticKeepAlives: false,
+            addRepaintBoundaries: false,
+            shrinkWrap: widget.shrinkWrap,
+            scrollDirection:
+                widget.isVertical ? Axis.vertical : Axis.horizontal,
+            itemCount: newDB.sublist(startFromIndex, limit).length,
+            itemBuilder: (final context, final index) {
+              return widget.child != null
+                  ? widget.child!.toWidget(
+                      state: widget.state.copyWith(
                         loop: index,
-                      )
-                    : PlaceholderChildBuilder(
-                        name: widget.node.intrinsicState.displayName,
-                        node: widget.node,
-                        forPlay: widget.forPlay,
-                      );
-              },
-            ),
+                      ),
+                    )
+                  : PlaceholderChildBuilder(
+                      name: widget.state.node.intrinsicState.displayName,
+                      node: widget.state.node,
+                      forPlay: widget.state.forPlay,
+                    );
+            },
           ),
         ),
       ),
@@ -194,10 +162,11 @@ class WListViewBuilderState extends State<WListViewBuilder> {
 
   void _setDataset() {
     try {
-      final index = widget.dataset.indexWhere(
+      final index = widget.state.dataset.indexWhere(
         (final element) => element.getName == widget.value.datasetName,
       );
-      final db = index != -1 ? widget.dataset[index] : DatasetObject.empty();
+      final db =
+          index != -1 ? widget.state.dataset[index] : DatasetObject.empty();
       if (mounted) {
         if (db.getName != '') {
           if (mounted) {

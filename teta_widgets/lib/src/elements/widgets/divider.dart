@@ -6,7 +6,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 // Package imports:
 import 'package:teta_core/teta_core.dart';
-import 'package:teta_widgets/src/elements/builder/gesture_detector_base.dart';
+import 'package:teta_widgets/src/core/teta_widget/index.dart';
 // Project imports:
 import 'package:teta_widgets/src/elements/index.dart';
 
@@ -14,27 +14,16 @@ class WDivider extends StatelessWidget {
   /// Returns a Divider widget
   const WDivider(
     final Key? key, {
-    required this.node,
+    required this.state,
     required this.height,
     required this.fill,
-    required this.forPlay,
-    required this.params,
-    required this.states,
-    required this.dataset,
     this.child,
-    this.loop,
   }) : super(key: key);
 
-  final CNode node;
+  final TetaWidgetState state;
   final CNode? child;
   final FSize height;
   final FFill fill;
-  final bool forPlay;
-  final int? loop;
-
-  final List<VariableObject> params;
-  final List<VariableObject> states;
-  final List<DatasetObject> dataset;
 
   @override
   Widget build(final BuildContext context) {
@@ -45,21 +34,11 @@ class WDivider extends StatelessWidget {
       if (element.name == fill.paletteStyle) model = element;
     });
     final h = height.get(context: context, isWidth: false);
-    return NodeSelectionBuilder(
-      node: node,
-      forPlay: forPlay,
-      child: GestureBuilderBase.get(
-        context: context,
-        node: node,
-        params: params,
-        states: states,
-        dataset: dataset,
-        forPlay: forPlay,
-        loop: loop,
-        child: Divider(
-          height: (h ?? 0) <= 0 ? 1.0 : h,
-          color: _getDividerColor(model, isLight),
-        ),
+    return TetaWidget(
+      state: state,
+      child: Divider(
+        height: (h ?? 0) <= 0 ? 1.0 : h,
+        color: _getDividerColor(model, isLight),
       ),
     );
   }

@@ -2,8 +2,7 @@
 import 'package:flutter/material.dart';
 // Package imports:
 import 'package:teta_core/gen/assets.gen.dart';
-import 'package:teta_core/src/models/dataset.dart';
-import 'package:teta_core/src/models/variable.dart';
+import 'package:teta_widgets/src/core/teta_widget/index.dart';
 import 'package:teta_widgets/src/elements/code/snippets.dart';
 // Project imports:
 import 'package:teta_widgets/src/elements/code/templates/parallax.dart';
@@ -67,32 +66,22 @@ class ParallaxBoxBody extends NodeBody {
 
   @override
   Widget toWidget({
-    required final List<VariableObject> params,
-    required final List<VariableObject> states,
-    required final List<DatasetObject> dataset,
-    required final bool forPlay,
-    required final CNode node,
-    final int? loop,
+    required final TetaWidgetState state,
     final CNode? child,
     final List<CNode>? children,
   }) =>
       WParallax(
         ValueKey(
           '''
-            ${node.nid}
-            $loop
+            ${state.node.nid}
+            ${state.loop}
             ${child ?? children}
             ${(attributes[DBKeys.height] as FSize? ?? FSize()).toJson()}, 
             ''',
         ),
-        node: node,
+        state: state,
         child: child,
         height: attributes[DBKeys.height] as FSize? ?? FSize(),
-        forPlay: forPlay,
-        loop: loop,
-        params: params,
-        states: states,
-        dataset: dataset,
       );
 
   @override
@@ -103,12 +92,12 @@ class ParallaxBoxBody extends NodeBody {
     final List<CNode>? children,
     final int pageId,
     final int? loop,
-  ) => CS.defaultWidgets(
+  ) =>
+      CS.defaultWidgets(
         context,
         node,
         pageId,
-          ParallaxCodeTemplate.toCode(context, this, child),
+        ParallaxCodeTemplate.toCode(context, this, child),
         loop ?? 0,
       );
-     
 }

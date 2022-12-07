@@ -14,6 +14,7 @@ import 'package:teta_cms/teta_cms.dart';
 import 'package:teta_core/src/services/packages_service.dart';
 // Project imports:
 import 'package:teta_core/teta_core.dart';
+import 'package:teta_widgets/src/core/teta_widget/index.dart';
 import 'package:teta_widgets/src/elements/actions/airtable/delete.dart';
 import 'package:teta_widgets/src/elements/actions/airtable/insert.dart';
 import 'package:teta_widgets/src/elements/actions/airtable/update.dart';
@@ -1000,13 +1001,9 @@ class FActionElement extends Equatable {
 
   Future getAction(
     final BuildContext context,
+    final TetaWidgetState state,
     final String? value,
     final CNode scaffold,
-    final CNode node,
-    final List<VariableObject> params,
-    final List<VariableObject> states,
-    final List<DatasetObject> dataset,
-    final int? loop,
   ) async {
     Logger.printSuccess(actionType.toString());
     switch (actionType) {
@@ -1016,10 +1013,7 @@ class FActionElement extends Equatable {
             await actionS(
               () => FActionChangeTheme.action(context),
               context: context,
-              params: params,
-              states: states,
-              dataset: dataset,
-              loop: loop,
+              state: state,
             );
             break;
           default:
@@ -1028,13 +1022,20 @@ class FActionElement extends Equatable {
         break;
       case ActionType.customFunctions:
         if (withCondition == true) {
-          if (condition?.get(params, states, dataset, true, loop, context) !=
-              valueOfCondition?.get(
-                params,
-                states,
-                dataset,
+          if (condition?.get(
+                state.params,
+                state.states,
+                state.dataset,
                 true,
-                loop,
+                state.loop,
+                context,
+              ) !=
+              valueOfCondition?.get(
+                state.params,
+                state.states,
+                state.dataset,
+                true,
+                state.loop,
                 context,
               )) {
             break;
@@ -1044,7 +1045,6 @@ class FActionElement extends Equatable {
         FLoop.action(
           () => FActionCustomFunction.action(
             context,
-            loop,
             customFunctionId,
           ),
           everyMilliseconds,
@@ -1060,16 +1060,10 @@ class FActionElement extends Equatable {
                 context,
                 cmsCollectionId,
                 dbData,
-                params,
-                states,
-                dataset,
-                loop,
+                state,
               ),
               context: context,
-              params: params,
-              states: states,
-              dataset: dataset,
-              loop: loop,
+              state: state,
             );
             break;
           case ActionTetaCmsDB.update:
@@ -1079,16 +1073,13 @@ class FActionElement extends Equatable {
                 cmsCollectionId,
                 dbData,
                 dbFrom,
-                params,
-                states,
-                dataset,
-                loop,
+                state.params,
+                state.states,
+                state.dataset,
+                state.loop,
               ),
               context: context,
-              params: params,
-              states: states,
-              dataset: dataset,
-              loop: loop,
+              state: state,
             );
             break;
           case ActionTetaCmsDB.delete:
@@ -1097,16 +1088,13 @@ class FActionElement extends Equatable {
                 context,
                 cmsCollectionId,
                 dbFrom,
-                params,
-                states,
-                dataset,
-                loop,
+                state.params,
+                state.states,
+                state.dataset,
+                state.loop,
               ),
               context: context,
-              params: params,
-              states: states,
-              dataset: dataset,
-              loop: loop,
+              state: state,
             );
             break;
         }
@@ -1116,81 +1104,53 @@ class FActionElement extends Equatable {
           case ActionTetaCmsAuth.signInWithGoogle:
             await actionS(
               () => FATetaCMSLogin.action(
-                node,
-                nameOfPage,
                 context,
+                state,
+                nameOfPage,
                 paramsToSend,
-                params,
-                states,
-                dataset,
-                loop,
                 TetaProvider.google,
               ),
               context: context,
-              params: params,
-              states: states,
-              dataset: dataset,
-              loop: loop,
+              state: state,
             );
             break;
           case ActionTetaCmsAuth.signInWithGitHub:
             await actionS(
               () => FATetaCMSLogin.action(
-                node,
-                nameOfPage,
                 context,
+                state,
+                nameOfPage,
                 paramsToSend,
-                params,
-                states,
-                dataset,
-                loop,
                 TetaProvider.github,
               ),
               context: context,
-              params: params,
-              states: states,
-              dataset: dataset,
-              loop: loop,
+              state: state,
             );
             break;
           case ActionTetaCmsAuth.signInWithTwitter:
             await actionS(
               () => FATetaCMSLogin.action(
-                node,
-                nameOfPage,
                 context,
+                state,
+                nameOfPage,
                 paramsToSend,
-                params,
-                states,
-                dataset,
-                loop,
                 TetaProvider.twitter,
               ),
               context: context,
-              params: params,
-              states: states,
-              dataset: dataset,
-              loop: loop,
+              state: state,
             );
             break;
           case ActionTetaCmsAuth.signInWithApple:
             await actionS(
               () => FATetaCMSLogin.action(
-                node,
-                nameOfPage,
                 context,
+                state,
+                nameOfPage,
                 paramsToSend,
-                params,
-                states,
-                dataset,
-                loop,
                 TetaProvider.apple,
               ),
               context: context,
-              params: params,
-              states: states,
-              dataset: dataset,
-              loop: loop,
+              state: state,
             );
             break;
           case ActionTetaCmsAuth.logout:
@@ -1199,10 +1159,7 @@ class FActionElement extends Equatable {
                 context,
               ),
               context: context,
-              params: params,
-              states: states,
-              dataset: dataset,
-              loop: loop,
+              state: state,
             );
             break;
           default:
@@ -1215,62 +1172,44 @@ class FActionElement extends Equatable {
             await actionS(
               () => FACustomHttpRequestDelete.action(
                 context,
+                state,
                 customHttpRequestURL,
                 customHttpRequestExpectedStatusCode,
                 customHttpRequestList,
                 customHttpRequestHeader,
-                params,
-                states,
-                dataset,
-                loop,
               ),
               context: context,
-              params: params,
-              states: states,
-              dataset: dataset,
-              loop: loop,
+              state: state,
             );
             break;
           case ActionCustomHttpRequest.post:
             await actionS(
               () => FACustomHttpRequestPost.action(
                 context,
+                state,
                 customHttpRequestURL,
                 customHttpRequestExpectedStatusCode,
                 customHttpRequestList,
                 customHttpRequestBody,
                 customHttpRequestHeader,
-                params,
-                states,
-                dataset,
-                loop,
               ),
               context: context,
-              params: params,
-              states: states,
-              dataset: dataset,
-              loop: loop,
+              state: state,
             );
             break;
           case ActionCustomHttpRequest.update:
             await actionS(
               () => FACustomHttpRequestUpdate.action(
                 context,
+                state,
                 customHttpRequestURL,
                 customHttpRequestExpectedStatusCode,
                 customHttpRequestList,
                 customHttpRequestBody,
                 customHttpRequestHeader,
-                params,
-                states,
-                dataset,
-                loop,
               ),
               context: context,
-              params: params,
-              states: states,
-              dataset: dataset,
-              loop: loop,
+              state: state,
             );
             break;
           default:
@@ -1288,16 +1227,13 @@ class FActionElement extends Equatable {
                 customHttpRequestExpectedStatusCode,
                 apiCallsResponseName,
                 apiCallsDynamicValue,
-                params,
-                states,
-                dataset,
-                loop,
+                state.params,
+                state.states,
+                state.dataset,
+                state.loop,
               ),
               context: context,
-              params: params,
-              states: states,
-              dataset: dataset,
-              loop: loop,
+              state: state,
             );
             break;
           default:
@@ -1310,33 +1246,23 @@ class FActionElement extends Equatable {
             await actionS(
               () => FActionRevenueCatBuy.action(
                 context,
+                state.copyWith(loop: state.loop ?? 0),
                 revenueCatProductIdentifier,
-                params,
-                states,
-                dataset,
                 stateName,
-                true,
-                loop ?? 0,
               ),
               context: context,
-              params: params,
-              states: states,
-              dataset: dataset,
-              loop: loop,
+              state: state,
             );
             break;
           case ActionRevenueCat.restorePurchases:
             await actionS(
               () => FActionRevenueCatRestorePurchases.action(
                 context,
-                states,
+                state,
                 stateName,
               ),
               context: context,
-              params: params,
-              states: states,
-              dataset: dataset,
-              loop: loop,
+              state: state,
             );
             break;
           default:
@@ -1350,16 +1276,13 @@ class FActionElement extends Equatable {
               () => FAMixpanelSetUserId.action(
                 context,
                 valueTextTypeInput,
-                params,
-                states,
-                dataset,
-                loop ?? 0,
+                state.params,
+                state.states,
+                state.dataset,
+                state.loop ?? 0,
               ),
               context: context,
-              params: params,
-              states: states,
-              dataset: dataset,
-              loop: loop,
+              state: state,
             );
             break;
           case ActionMixpanel.track:
@@ -1368,16 +1291,13 @@ class FActionElement extends Equatable {
                 context,
                 valueTextTypeInput,
                 customHttpRequestBody,
-                params,
-                states,
-                dataset,
-                loop ?? 0,
+                state.params,
+                state.states,
+                state.dataset,
+                state.loop ?? 0,
               ),
               context: context,
-              params: params,
-              states: states,
-              dataset: dataset,
-              loop: loop,
+              state: state,
             );
             break;
         }
@@ -1388,33 +1308,23 @@ class FActionElement extends Equatable {
             await actionS(
               () => FActionQonversionBuy.action(
                 context,
+                state.copyWith(loop: state.loop ?? 0),
                 qonversionProductIdentifier,
-                params,
-                states,
-                dataset,
                 stateName,
-                true,
-                loop ?? 0,
               ),
               context: context,
-              params: params,
-              states: states,
-              dataset: dataset,
-              loop: loop,
+              state: state,
             );
             break;
           case ActionQonversion.restorePurchases:
             await actionS(
               () => FActionQonversionRestorePurchases.action(
                 context,
-                states,
+                state.states,
                 stateName,
               ),
               context: context,
-              params: params,
-              states: states,
-              dataset: dataset,
-              loop: loop,
+              state: state,
             );
             break;
           default:
@@ -1425,12 +1335,9 @@ class FActionElement extends Equatable {
         switch (actionBraintree) {
           case ActionBraintree.pay:
             await actionS(
-              () => FActionBraintreeBuy.action(context, states, stateName),
+              () => FActionBraintreeBuy.action(context, state, stateName),
               context: context,
-              params: params,
-              states: states,
-              dataset: dataset,
-              loop: loop,
+              state: state,
             );
             break;
           default:
@@ -1441,13 +1348,10 @@ class FActionElement extends Equatable {
         switch (actionTranslator) {
           case ActionTranslator.translate:
             await actionS(
-              () =>
-                  FActionTranslatorTranslate.action(context, states, stateName),
+              () => FActionTranslatorTranslate.action(
+                  context, state.states, stateName),
               context: context,
-              params: params,
-              states: states,
-              dataset: dataset,
-              loop: loop,
+              state: state,
             );
             break;
           default:
@@ -1460,46 +1364,36 @@ class FActionElement extends Equatable {
             await actionS(
               () => FActionGoogleMapsReloadData.action(
                 context,
-                states,
+                state.states,
                 stateName,
-                loop,
+                state.loop,
               ),
               context: context,
-              params: params,
-              states: states,
-              dataset: dataset,
-              loop: loop,
+              state: state,
             );
             break;
           case ActionGoogleMaps.setCameraPosition:
             await actionS(
               () => FActionGoogleMapsSetCameraPosition.action(
                 context,
-                states,
+                state.states,
                 stateName,
-                loop,
+                state.loop,
               ),
               context: context,
-              params: params,
-              states: states,
-              dataset: dataset,
-              loop: loop,
+              state: state,
             );
             break;
           case ActionGoogleMaps.updateLiveLocation:
             await actionS(
               () => FActionGoogleMapsUpdateDeviceLiveLocation.action(
                 context,
-                states,
+                state,
                 stateName,
                 stateName2,
-                loop,
               ),
               context: context,
-              params: params,
-              states: states,
-              dataset: dataset,
-              loop: loop,
+              state: state,
             );
         }
         break;
@@ -1509,16 +1403,13 @@ class FActionElement extends Equatable {
             await actionS(
               () => FActionStripeShowReceipt.action(
                 context,
-                states,
+                state.states,
                 stateName,
-                dataset,
-                loop,
+                state.dataset,
+                state.loop,
               ),
               context: context,
-              params: params,
-              states: states,
-              dataset: dataset,
-              loop: loop,
+              state: state,
             );
 
             break;
@@ -1526,16 +1417,13 @@ class FActionElement extends Equatable {
             await actionS(
               () => FActionStripeCartBuyAll.action(
                 context,
-                states,
+                state.states,
                 stateName,
-                dataset,
-                loop,
+                state.dataset,
+                state.loop,
               ),
               context: context,
-              params: params,
-              states: states,
-              dataset: dataset,
-              loop: loop,
+              state: state,
             );
 
             break;
@@ -1543,16 +1431,13 @@ class FActionElement extends Equatable {
             await actionS(
               () => FActionStripeAddProductsListItemToCart.action(
                 context,
-                states,
+                state.states,
                 stateName,
-                dataset,
-                loop,
+                state.dataset,
+                state.loop,
               ),
               context: context,
-              params: params,
-              states: states,
-              dataset: dataset,
-              loop: loop,
+              state: state,
             );
 
             break;
@@ -1560,16 +1445,13 @@ class FActionElement extends Equatable {
             await actionS(
               () => FActionStripeCartRemoveProductsListItemFromCart.action(
                 context,
-                states,
+                state.states,
                 stateName,
-                dataset,
-                loop,
+                state.dataset,
+                state.loop,
               ),
               context: context,
-              params: params,
-              states: states,
-              dataset: dataset,
-              loop: loop,
+              state: state,
             );
             break;
           default:
@@ -1580,134 +1462,108 @@ class FActionElement extends Equatable {
         switch (actionState) {
           case ActionState.increment:
             await actionS(
-              () => FActionStateIncrement.action(context, states, stateName),
+              () => FActionStateIncrement.action(
+                  context, state.states, stateName),
               context: context,
-              params: params,
-              states: states,
-              dataset: dataset,
-              loop: loop,
+              state: state,
             );
             break;
           case ActionState.decrement:
             await actionS(
-              () => FActionStateDecrement.action(context, states, stateName),
+              () => FActionStateDecrement.action(
+                  context, state.states, stateName),
               context: context,
-              params: params,
-              states: states,
-              dataset: dataset,
-              loop: loop,
+              state: state,
             );
             break;
           case ActionState.changeWith:
             await actionS(
               () => FActionStateChangeWith.action(
                 context: context,
-                states: states,
-                params: params,
-                datasets: dataset,
+                states: state.states,
+                params: state.params,
+                datasets: state.dataset,
                 stateName: stateName,
                 valueToChangeWith: valueTextTypeInput ?? FTextTypeInput(),
                 value: value,
-                loop: loop ?? 0,
+                loop: state.loop ?? 0,
               ),
               context: context,
-              params: params,
-              states: states,
-              dataset: dataset,
-              loop: loop,
+              state: state,
             );
             break;
           case ActionState.pickFile:
             await actionS(
               () => FActionStateFilePicker.action(
                 context: context,
-                states: states,
-                params: params,
-                datasets: dataset,
+                states: state.states,
+                params: state.params,
+                datasets: state.dataset,
                 stateName: stateName,
-                loop: loop ?? 0,
+                loop: state.loop ?? 0,
               ),
               context: context,
-              params: params,
-              states: states,
-              dataset: dataset,
-              loop: loop,
+              state: state,
             );
             break;
           case ActionState.changeWithParams:
             await actionS(
               () => FActionStateChangeWithParam.action(
                 context,
-                states,
-                params,
+                state,
                 stateName,
                 this.value,
               ),
               context: context,
-              params: params,
-              states: states,
-              dataset: dataset,
-              loop: loop,
+              state: state,
             );
             break;
           case ActionState.emailValidator:
             await actionS(
               () => FActionEmailValidator.action(
                 context: context,
-                states: states,
+                states: state.states,
                 stateName: stateName,
                 stateName2: stateName2,
               ),
               context: context,
-              params: params,
-              states: states,
-              dataset: dataset,
-              loop: loop,
+              state: state,
             );
             break;
           case ActionState.passwordValidator:
             await actionS(
               () => FActionPasswordValidator.action(
                 context: context,
-                states: states,
+                states: state.states,
                 stateName: stateName,
                 stateName2: stateName2,
               ),
               context: context,
-              params: params,
-              states: states,
-              dataset: dataset,
-              loop: loop,
+              state: state,
             );
             break;
           case ActionState.websiteValidator:
             await actionS(
               () => FActionWebsiteValidator.action(
                 context: context,
-                states: states,
+                states: state.states,
                 stateName: stateName,
                 stateName2: stateName2,
               ),
               context: context,
-              params: params,
-              states: states,
-              dataset: dataset,
-              loop: loop,
+              state: state,
             );
             break;
           case ActionState.phoneValidator:
             await actionS(
               () => FActionPhoneValidator.action(
                 context: context,
-                states: states,
+                states: state.states,
                 stateName: stateName,
                 stateName2: stateName2,
               ),
               context: context,
-              params: params,
-              states: states,
-              dataset: dataset,
-              loop: loop,
+              state: state,
             );
             break;
           case null:
@@ -1720,39 +1576,26 @@ class FActionElement extends Equatable {
             await actionS(
               () => FActionNavigationGoBack.action(context),
               context: context,
-              params: params,
-              states: states,
-              dataset: dataset,
-              loop: loop,
+              state: state,
             );
             break;
           case ActionNavigation.openDrawer:
             await actionS(
               () => FActionNavigationOpenDrawer.action(context),
               context: context,
-              params: params,
-              states: states,
-              dataset: dataset,
-              loop: loop,
+              state: state,
             );
             break;
           case ActionNavigation.openPage:
             await actionS(
               () => FActionNavigationOpenPage.action(
-                node,
                 context,
+                state,
                 nameOfPage,
                 paramsToSend,
-                params,
-                states,
-                dataset,
-                loop,
               ),
               context: context,
-              params: params,
-              states: states,
-              dataset: dataset,
-              loop: loop,
+              state: state,
             );
             break;
           case ActionNavigation.launchURL:
@@ -1761,70 +1604,46 @@ class FActionElement extends Equatable {
             await actionS(
               () => FActionNavigationLaunchURL.action(
                 context: context,
-                params: params,
-                states: states,
-                datasets: dataset,
-                loop: loop ?? 0,
+                state: state.copyWith(
+                  loop: state.loop ?? 0,
+                ),
                 value: valueTextTypeInput ?? FTextTypeInput(),
               ),
               context: context,
-              params: params,
-              states: states,
-              dataset: dataset,
-              loop: loop,
+              state: state,
             );
             break;
           case ActionNavigation.share:
             await actionS(
               () => FActionNavigationShare.action(
                 context: context,
-                params: params,
-                states: states,
-                datasets: dataset,
-                loop: loop ?? 0,
-                value: valueTextTypeInput ?? FTextTypeInput(),
               ),
               context: context,
-              params: params,
-              states: states,
-              dataset: dataset,
-              loop: loop,
+              state: state,
             );
             break;
           case ActionNavigation.openBottomSheet:
             await actionS(
               () => FActionNavigationOpenBottomSheet.action(
                 context,
+                state,
                 nameOfPage,
                 paramsToSend,
-                params,
-                states,
-                dataset,
-                loop,
               ),
               context: context,
-              params: params,
-              states: states,
-              dataset: dataset,
-              loop: loop,
+              state: state,
             );
             break;
           case ActionNavigation.openSnackBar:
             await actionS(
               () => FActionNavigationOpenSnackBar.action(
                 context,
+                state,
                 nameOfPage,
                 paramsToSend,
-                params,
-                states,
-                dataset,
-                loop,
               ),
               context: context,
-              params: params,
-              states: states,
-              dataset: dataset,
-              loop: loop,
+              state: state,
             );
 
             break;
@@ -1832,15 +1651,11 @@ class FActionElement extends Equatable {
             await actionS(
               () => FActionNavigationOpenDatePicker.action(
                 context,
-                states,
+                state,
                 stateName,
-                loop,
               ),
               context: context,
-              params: params,
-              states: states,
-              dataset: dataset,
-              loop: loop,
+              state: state,
             );
             break;
           case ActionNavigation.inAppReview:
@@ -1849,10 +1664,7 @@ class FActionElement extends Equatable {
                 context,
               ),
               context: context,
-              params: params,
-              states: states,
-              dataset: dataset,
-              loop: loop,
+              state: state,
             );
             break;
           case null:
@@ -1869,16 +1681,13 @@ class FActionElement extends Equatable {
                 context,
                 airtableRecordName,
                 dbData ?? [],
-                params,
-                states,
-                dataset,
-                loop,
+                state.params,
+                state.states,
+                state.dataset,
+                state.loop,
               ),
               context: context,
-              dataset: dataset,
-              loop: loop,
-              params: params,
-              states: states,
+              state: state,
             );
             break;
           case ActionAirtableDB.delete:
@@ -1887,16 +1696,13 @@ class FActionElement extends Equatable {
                 context,
                 airtableRecordName,
                 dbData ?? [],
-                params,
-                states,
-                dataset,
-                loop,
+                state.params,
+                state.states,
+                state.dataset,
+                state.loop,
               ),
               context: context,
-              dataset: dataset,
-              loop: loop,
-              params: params,
-              states: states,
+              state: state,
             );
             break;
           case ActionAirtableDB.update:
@@ -1905,16 +1711,13 @@ class FActionElement extends Equatable {
                 context,
                 airtableRecordName,
                 dbData ?? [],
-                params,
-                states,
-                dataset,
-                loop,
+                state.params,
+                state.states,
+                state.dataset,
+                state.loop,
               ),
               context: context,
-              dataset: dataset,
-              loop: loop,
-              params: params,
-              states: states,
+              state: state,
             );
             break;
         }
@@ -1925,42 +1728,28 @@ class FActionElement extends Equatable {
             await actionS(
               () => FASupabaseSignUp.action(
                 context,
+                state,
                 value ?? this.value ?? '',
                 scaffold,
-                node,
                 nameOfPage,
                 paramsToSend,
-                params,
-                states,
-                dataset,
-                loop,
               ),
               context: context,
-              params: params,
-              states: states,
-              dataset: dataset,
-              loop: loop,
+              state: state,
             );
             break;
           case ActionSupabaseAuth.signInWithCredential:
             await actionS(
               () => FASupabaseSignInWithCredentials.action(
                 context,
+                state,
                 value ?? this.value ?? '',
                 scaffold,
-                node,
                 nameOfPage,
                 paramsToSend,
-                params,
-                states,
-                dataset,
-                loop,
               ),
               context: context,
-              params: params,
-              states: states,
-              dataset: dataset,
-              loop: loop,
+              state: state,
             );
 
             break;
@@ -1968,22 +1757,15 @@ class FActionElement extends Equatable {
             await actionS(
               () => FASupabaseSignInWithProvider.action(
                 context,
+                state,
                 value ?? this.value ?? '',
                 scaffold,
-                node,
                 nameOfPage,
                 paramsToSend,
-                params,
-                states,
-                dataset,
                 Provider.google,
-                loop,
               ),
               context: context,
-              params: params,
-              states: states,
-              dataset: dataset,
-              loop: loop,
+              state: state,
             );
 
             break;
@@ -1991,22 +1773,15 @@ class FActionElement extends Equatable {
             await actionS(
               () => FASupabaseSignInWithProvider.action(
                 context,
+                state,
                 value ?? this.value ?? '',
                 scaffold,
-                node,
                 nameOfPage,
                 paramsToSend,
-                params,
-                states,
-                dataset,
                 Provider.apple,
-                loop,
               ),
               context: context,
-              params: params,
-              states: states,
-              dataset: dataset,
-              loop: loop,
+              state: state,
             );
 
             break;
@@ -2014,22 +1789,15 @@ class FActionElement extends Equatable {
             await actionS(
               () => FASupabaseSignInWithProvider.action(
                 context,
+                state,
                 value ?? this.value ?? '',
                 scaffold,
-                node,
                 nameOfPage,
                 paramsToSend,
-                params,
-                states,
-                dataset,
                 Provider.facebook,
-                loop,
               ),
               context: context,
-              params: params,
-              states: states,
-              dataset: dataset,
-              loop: loop,
+              state: state,
             );
 
             break;
@@ -2038,22 +1806,15 @@ class FActionElement extends Equatable {
             await actionS(
               () => FASupabaseSignInWithProvider.action(
                 context,
+                state,
                 value ?? this.value ?? '',
                 scaffold,
-                node,
                 nameOfPage,
                 paramsToSend,
-                params,
-                states,
-                dataset,
                 Provider.azure,
-                loop,
               ),
               context: context,
-              params: params,
-              states: states,
-              dataset: dataset,
-              loop: loop,
+              state: state,
             );
 
             break;
@@ -2061,22 +1822,15 @@ class FActionElement extends Equatable {
             await actionS(
               () => FASupabaseSignInWithProvider.action(
                 context,
+                state,
                 value ?? this.value ?? '',
                 scaffold,
-                node,
                 nameOfPage,
                 paramsToSend,
-                params,
-                states,
-                dataset,
                 Provider.bitbucket,
-                loop,
               ),
               context: context,
-              params: params,
-              states: states,
-              dataset: dataset,
-              loop: loop,
+              state: state,
             );
 
             break;
@@ -2084,22 +1838,15 @@ class FActionElement extends Equatable {
             await actionS(
               () => FASupabaseSignInWithProvider.action(
                 context,
+                state,
                 value ?? this.value ?? '',
                 scaffold,
-                node,
                 nameOfPage,
                 paramsToSend,
-                params,
-                states,
-                dataset,
                 Provider.discord,
-                loop,
               ),
               context: context,
-              params: params,
-              states: states,
-              dataset: dataset,
-              loop: loop,
+              state: state,
             );
 
             break;
@@ -2107,22 +1854,15 @@ class FActionElement extends Equatable {
             await actionS(
               () => FASupabaseSignInWithProvider.action(
                 context,
+                state,
                 value ?? this.value ?? '',
                 scaffold,
-                node,
                 nameOfPage,
                 paramsToSend,
-                params,
-                states,
-                dataset,
                 Provider.gitlab,
-                loop,
               ),
               context: context,
-              params: params,
-              states: states,
-              dataset: dataset,
-              loop: loop,
+              state: state,
             );
 
             break;
@@ -2130,22 +1870,15 @@ class FActionElement extends Equatable {
             await actionS(
               () => FASupabaseSignInWithProvider.action(
                 context,
+                state,
                 value ?? this.value ?? '',
                 scaffold,
-                node,
                 nameOfPage,
                 paramsToSend,
-                params,
-                states,
-                dataset,
                 Provider.slack,
-                loop,
               ),
               context: context,
-              params: params,
-              states: states,
-              dataset: dataset,
-              loop: loop,
+              state: state,
             );
 
             break;
@@ -2153,22 +1886,15 @@ class FActionElement extends Equatable {
             await actionS(
               () => FASupabaseSignInWithProvider.action(
                 context,
+                state,
                 value ?? this.value ?? '',
                 scaffold,
-                node,
                 nameOfPage,
                 paramsToSend,
-                params,
-                states,
-                dataset,
                 Provider.spotify,
-                loop,
               ),
               context: context,
-              params: params,
-              states: states,
-              dataset: dataset,
-              loop: loop,
+              state: state,
             );
 
             break;
@@ -2176,22 +1902,15 @@ class FActionElement extends Equatable {
             await actionS(
               () => FASupabaseSignInWithProvider.action(
                 context,
+                state,
                 value ?? this.value ?? '',
                 scaffold,
-                node,
                 nameOfPage,
                 paramsToSend,
-                params,
-                states,
-                dataset,
                 Provider.twitch,
-                loop,
               ),
               context: context,
-              params: params,
-              states: states,
-              dataset: dataset,
-              loop: loop,
+              state: state,
             );
 
             break;
@@ -2199,22 +1918,15 @@ class FActionElement extends Equatable {
             await actionS(
               () => FASupabaseSignInWithProvider.action(
                 context,
+                state,
                 value ?? this.value ?? '',
                 scaffold,
-                node,
                 nameOfPage,
                 paramsToSend,
-                params,
-                states,
-                dataset,
                 Provider.twitter,
-                loop,
               ),
               context: context,
-              params: params,
-              states: states,
-              dataset: dataset,
-              loop: loop,
+              state: state,
             );
 
             break;
@@ -2232,16 +1944,13 @@ class FActionElement extends Equatable {
                 valueTextTypeInput,
                 stateName,
                 stateName2,
-                params,
-                states,
-                dataset,
-                loop,
+                state.params,
+                state.states,
+                state.dataset,
+                state.loop,
               ),
               context: context,
-              params: params,
-              states: states,
-              dataset: dataset,
-              loop: loop,
+              state: state,
             );
             break;
           case ActionSupabaseStorage.remove:
@@ -2250,16 +1959,13 @@ class FActionElement extends Equatable {
                 context,
                 dbFrom,
                 valueTextTypeInput,
-                params,
-                states,
-                dataset,
-                loop,
+                state.params,
+                state.states,
+                state.dataset,
+                state.loop,
               ),
               context: context,
-              params: params,
-              states: states,
-              dataset: dataset,
-              loop: loop,
+              state: state,
             );
             break;
           case null:
@@ -2275,16 +1981,13 @@ class FActionElement extends Equatable {
                 dbFrom,
                 customHttpRequestBody,
                 customHttpRequestHeader,
-                params,
-                states,
-                dataset,
-                loop,
+                state.params,
+                state.states,
+                state.dataset,
+                state.loop,
               ),
               context: context,
-              params: params,
-              states: states,
-              dataset: dataset,
-              loop: loop,
+              state: state,
             );
             break;
           case null:
@@ -2297,17 +2000,11 @@ class FActionElement extends Equatable {
             await actionS(
               () => FACameraTakePhoto.action(
                 context,
+                state,
                 stateName,
-                params,
-                states,
-                dataset,
-                loop,
               ),
               context: context,
-              params: params,
-              states: states,
-              dataset: dataset,
-              loop: loop,
+              state: state,
             );
 
             break;
@@ -2316,98 +2013,48 @@ class FActionElement extends Equatable {
               () => FACameraSwitch.action(
                 context,
                 stateName,
-                params,
-                states,
-                dataset,
-                loop,
               ),
               context: context,
-              params: params,
-              states: states,
-              dataset: dataset,
-              loop: loop,
+              state: state,
             );
             break;
           case ActionCamera.offFlash:
             await actionS(
-              () => FACameraOffFlash.action(
-                context,
-                stateName,
-                params,
-                states,
-                dataset,
-                loop,
-              ),
+              () => FACameraOffFlash.action(context),
               context: context,
-              params: params,
-              states: states,
-              dataset: dataset,
-              loop: loop,
+              state: state,
             );
             break;
           case ActionCamera.alwaysFlash:
             await actionS(
-              () => FACameraAlwaysFlash.action(
-                context,
-                states,
-                stateName,
-              ),
+              () => FACameraAlwaysFlash.action(context),
               context: context,
-              params: params,
-              states: states,
-              dataset: dataset,
-              loop: loop,
+              state: state,
             );
             break;
           case ActionCamera.autoFlash:
             await actionS(
-              () => FACameraAutoFlash.action(
-                context,
-                stateName,
-                params,
-                states,
-                dataset,
-                loop,
-              ),
+              () => FACameraAutoFlash.action(context, state),
               context: context,
-              params: params,
-              states: states,
-              dataset: dataset,
-              loop: loop,
+              state: state,
             );
             break;
           case ActionCamera.torchFlash:
             await actionS(
-              () => FACameraTorchFlash.action(
-                context,
-                stateName,
-                params,
-                states,
-                dataset,
-                loop,
-              ),
+              () => FACameraTorchFlash.action(context, stateName),
               context: context,
-              params: params,
-              states: states,
-              dataset: dataset,
-              loop: loop,
+              state: state,
             );
             break;
           case ActionCamera.toggleRecording:
             await actionS(
               () => FACameraStopRecording.action(
                 context,
+                state,
                 stateName,
-                params,
-                states,
-                dataset,
-                loop,
               ),
               context: context,
-              params: params,
-              states: states,
-              dataset: dataset,
-              loop: loop,
+              state: state,
             );
             break;
 
@@ -2421,60 +2068,48 @@ class FActionElement extends Equatable {
             await actionS(
               () => FActionWebViewNavigateTo.action(
                 context: context,
-                params: params,
-                states: states,
-                datasets: dataset,
+                params: state.params,
+                states: state.states,
+                datasets: state.dataset,
                 stateName: stateName,
                 valueToChangeWith: valueTextTypeInput ?? FTextTypeInput(),
-                loop: loop ?? 0,
+                loop: state.loop ?? 0,
               ),
               context: context,
-              params: params,
-              states: states,
-              dataset: dataset,
-              loop: loop,
+              state: state,
             );
             break;
           case ActionWebView.goBack:
             await actionS(
               () => FActionWebViewBack.action(
                 context,
-                states,
+                state.states,
                 stateName,
               ),
               context: context,
-              params: params,
-              states: states,
-              dataset: dataset,
-              loop: loop,
+              state: state,
             );
             break;
           case ActionWebView.reload:
             await actionS(
               () => FActionWebViewReload.action(
                 context,
-                states,
+                state.states,
                 stateName,
               ),
               context: context,
-              params: params,
-              states: states,
-              dataset: dataset,
-              loop: loop,
+              state: state,
             );
             break;
           case ActionWebView.goForward:
             await actionS(
               () => FActionWebViewForward.action(
                 context,
-                states,
+                state.states,
                 stateName,
               ),
               context: context,
-              params: params,
-              states: states,
-              dataset: dataset,
-              loop: loop,
+              state: state,
             );
             break;
           case null:
@@ -2487,89 +2122,82 @@ class FActionElement extends Equatable {
             await actionS(
               () => FAudioPlayerPlay.action(
                 context,
-                states,
+                state,
                 stateName,
-                loop,
               ),
               context: context,
-              params: params,
-              states: states,
-              dataset: dataset,
-              loop: loop,
+              state: state,
             );
             break;
           case ActionAudioPlayerActions.playNextTrack:
             await actionS(
               () => FAudioPlayerPlayNextTrack.action(
                 context,
-                states,
+                state,
                 stateName,
-                audioPlayerUrl!
-                    .get(params, states, dataset, true, loop, context),
+                audioPlayerUrl!.get(
+                  state.params,
+                  state.states,
+                  state.dataset,
+                  true,
+                  state.loop,
+                  context,
+                ),
               ),
               context: context,
-              params: params,
-              states: states,
-              dataset: dataset,
-              loop: loop,
+              state: state,
             );
             break;
           case ActionAudioPlayerActions.playPreviousTrack:
             await actionS(
               () => FAudioPlayerPlayPreviousTrack.action(
                 context,
-                states,
+                state,
                 stateName,
-                audioPlayerUrl!
-                    .get(params, states, dataset, true, loop, context),
+                audioPlayerUrl!.get(
+                  state.params,
+                  state.states,
+                  state.dataset,
+                  true,
+                  state.loop,
+                  context,
+                ),
               ),
               context: context,
-              params: params,
-              states: states,
-              dataset: dataset,
-              loop: loop,
+              state: state,
             );
             break;
           case ActionAudioPlayerActions.pause:
             await actionS(
               () => FAudioPlayerPause.action(
                 context,
-                states,
+                state,
                 stateName,
               ),
               context: context,
-              params: params,
-              states: states,
-              dataset: dataset,
-              loop: loop,
+              state: state,
             );
             break;
           case ActionAudioPlayerActions.reload:
             await actionS(
               () => FAudioPlayerReload.action(
                 context,
-                states,
+                state,
                 stateName,
               ),
               context: context,
-              params: params,
-              states: states,
-              dataset: dataset,
-              loop: loop,
+              state: state,
             );
             break;
           case ActionAudioPlayerActions.loopOff:
             await actionS(
               () => FAudioPlayerLoopOff.action(
                 context,
-                states,
+                state,
                 stateName,
               ),
               context: context,
-              params: params,
-              states: states,
-              dataset: dataset,
-              loop: loop,
+              state: state,
             );
 
             break;
@@ -2577,29 +2205,19 @@ class FActionElement extends Equatable {
             await actionS(
               () => FAudioPlayerLoopOne.action(
                 context,
-                states,
+                state,
                 stateName,
               ),
               context: context,
-              params: params,
-              states: states,
-              dataset: dataset,
-              loop: loop,
+              state: state,
             );
 
             break;
           case ActionAudioPlayerActions.loopAll:
             await actionS(
-              () => FAudioPlayerLoopAll.action(
-                context,
-                states,
-                stateName,
-              ),
+              () => FAudioPlayerLoopAll.action(state, stateName),
               context: context,
-              params: params,
-              states: states,
-              dataset: dataset,
-              loop: loop,
+              state: state,
             );
 
             break;
@@ -2626,16 +2244,13 @@ class FActionElement extends Equatable {
                 context,
                 dbFrom,
                 dbData,
-                params,
-                states,
-                dataset,
-                loop,
+                state.params,
+                state.states,
+                state.dataset,
+                state.loop,
               ),
               context: context,
-              params: params,
-              states: states,
-              dataset: dataset,
-              loop: loop,
+              state: state,
             );
             break;
           case ActionSupabaseDB.delete:
@@ -2645,16 +2260,13 @@ class FActionElement extends Equatable {
                 context,
                 dbFrom,
                 dbEq!,
-                params,
-                states,
-                dataset,
-                loop,
+                state.params,
+                state.states,
+                state.dataset,
+                state.loop,
               ),
               context: context,
-              params: params,
-              states: states,
-              dataset: dataset,
-              loop: loop,
+              state: state,
             );
             break;
           case ActionSupabaseDB.update:
@@ -2665,16 +2277,13 @@ class FActionElement extends Equatable {
                 dbFrom,
                 dbData,
                 dbEq!,
-                params,
-                states,
-                dataset,
-                loop,
+                state.params,
+                state.states,
+                state.dataset,
+                state.loop,
               ),
               context: context,
-              params: params,
-              states: states,
-              dataset: dataset,
-              loop: loop,
+              state: state,
             );
             break;
           case null:
@@ -2993,11 +2602,10 @@ class FActionElement extends Equatable {
           case ActionGoogleMaps.updateLiveLocation:
             return codeS(
               FActionGoogleMapsUpdateDeviceLiveLocation.toCode(
-                pageId,
                 context,
+                pageId,
                 stateName3,
                 stateName4,
-                loop,
               ),
               context,
             );
@@ -3538,8 +3146,8 @@ class FActionElement extends Equatable {
           case ActionCamera.switchCamera:
             return codeS(
               FACameraSwitch.toCode(
-                pageId,
                 context,
+                pageId,
                 stateName,
                 paramsToSend,
               ),
@@ -3548,23 +3156,13 @@ class FActionElement extends Equatable {
 
           case ActionCamera.offFlash:
             return codeS(
-              FACameraOffFlash.toCode(
-                pageId,
-                context,
-                stateName,
-                paramsToSend,
-              ),
+              FACameraOffFlash.toCode(context, pageId),
               context,
             );
 
           case ActionCamera.alwaysFlash:
             return codeS(
-              FACameraAlwaysFlash.toCode(
-                pageId,
-                context,
-                nameOfPage,
-                paramsToSend,
-              ),
+              FACameraAlwaysFlash.toCode(context, pageId),
               context,
             );
 
@@ -3627,11 +3225,6 @@ class FActionElement extends Equatable {
                 pageId,
                 context,
                 stateName,
-                audioPlayerUrl!.toCode(
-                  loop,
-                  resultType: ResultTypeEnum.string,
-                ),
-                null,
               ),
               context,
             );
@@ -3642,11 +3235,6 @@ class FActionElement extends Equatable {
                 pageId,
                 context,
                 stateName,
-                audioPlayerUrl!.toCode(
-                  loop,
-                  resultType: ResultTypeEnum.string,
-                ),
-                loop,
               ),
               context,
             );
@@ -3657,11 +3245,6 @@ class FActionElement extends Equatable {
                 pageId,
                 context,
                 stateName,
-                audioPlayerUrl!.toCode(
-                  loop,
-                  resultType: ResultTypeEnum.string,
-                ),
-                loop,
               ),
               context,
             );
@@ -3709,14 +3292,25 @@ class FActionElement extends Equatable {
   Future<void> actionS(
     final Function() func, {
     required final BuildContext context,
-    required final List<VariableObject> params,
-    required final List<VariableObject> states,
-    required final List<DatasetObject> dataset,
-    required final int? loop,
+    required final TetaWidgetState state,
   }) async {
     if (withCondition == true) {
-      if (condition?.get(params, states, dataset, true, loop, context) !=
-          valueOfCondition?.get(params, states, dataset, true, loop, context)) {
+      if (condition?.get(
+            state.params,
+            state.states,
+            state.dataset,
+            true,
+            state.loop,
+            context,
+          ) !=
+          valueOfCondition?.get(
+            state.params,
+            state.states,
+            state.dataset,
+            true,
+            state.loop,
+            context,
+          )) {
         return;
       }
     }
