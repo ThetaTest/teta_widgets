@@ -51,7 +51,7 @@ class FAAirtableInsert {
     );
 
     return '''
-        context<AirtableCubit>.read().insert(recordName: ${airtableRecordName?.toCode(
+        AirtableInstance.instance.insert(recordName: ${airtableRecordName?.toCode(
               0,
               resultType: ResultTypeEnum.string,
             ) ?? ''}, record: $record);

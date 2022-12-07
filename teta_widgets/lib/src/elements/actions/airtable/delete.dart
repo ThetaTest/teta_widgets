@@ -50,7 +50,7 @@ class FAAirtableDelete {
     );
 
     return '''
-        context<AirtableCubit>.read().delete(recordName: ${airtableRecordName?.toCode(
+        AirtableInstance.instance.delete(recordName: ${airtableRecordName?.toCode(
       0,
       resultType: ResultTypeEnum.string,
     ) ?? ''}, record: $record)

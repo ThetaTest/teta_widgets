@@ -51,7 +51,7 @@ class FAAirtableUpdate {
     );
 
     return '''
-        context<AirtableCubit>.read().update(recordName: ${airtableRecordName?.toCode(
+        AirtableInstance.instance.update(recordName: ${airtableRecordName?.toCode(
       0,
       resultType: ResultTypeEnum.string,
     ) ?? ''}, record: $record)
