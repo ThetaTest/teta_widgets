@@ -117,7 +117,6 @@ dependencies:
   encrypt: 5.0.1
   after_layout: 1.2.0
   recase: 4.0.0
-  flutter_gen: 4.3.0
   version: 2.0.0
   fast_immutable_collections: 7.4.1
   enum_to_string: 2.0.1
@@ -182,6 +181,7 @@ dev_dependencies:
     sdk: flutter
 
   import_sorter: 4.6.0
+  flutter_gen: ^5.1.0+1
 
 dependency_overrides:
   teta_core:
