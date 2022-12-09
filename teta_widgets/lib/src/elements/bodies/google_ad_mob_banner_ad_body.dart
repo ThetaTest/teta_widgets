@@ -25,7 +25,7 @@ const _globalType = NType.adMobBanner;
 
 /// IntrinsicStates for [] widget
 final googleAdMobBannerAdIntrinsicStates = IntrinsicStates(
-  nodeIcon: Assets.wIcons.adMob,
+  nodeIcon: Assets.wIcons.admob,
   nodeVideo: null,
   nodeDescription: null,
   advicedChildren: [],
@@ -46,7 +46,8 @@ final googleAdMobBannerAdIntrinsicStates = IntrinsicStates(
     const Suggestion(
       title: 'Why use Ad mob banner in Teta?',
       description: 'Test',
-      linkToOpen: 'https://docs.teta.so/teta-docs/widget/advanced-widgets/ad-mob-banner',
+      linkToOpen:
+          'https://docs.teta.so/teta-docs/widget/advanced-widgets/ad-mob-banner',
     )
   ],
 );
@@ -98,9 +99,11 @@ class GoogleAdMobBannerAdBody extends NodeBody {
         ),
         state: state,
         adMobAdIosUnitId:
-            attributes[DBKeys.adMobAdIosUnitId] as FTextTypeInput? ?? FTextTypeInput(),
+            attributes[DBKeys.adMobAdIosUnitId] as FTextTypeInput? ??
+                FTextTypeInput(),
         adMobAdAndroidUnitId:
-            attributes[DBKeys.adMobAdAndroidUnitId] as FTextTypeInput? ?? FTextTypeInput(),
+            attributes[DBKeys.adMobAdAndroidUnitId] as FTextTypeInput? ??
+                FTextTypeInput(),
       );
 
   @override

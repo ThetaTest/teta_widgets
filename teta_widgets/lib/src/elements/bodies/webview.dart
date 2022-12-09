@@ -2,7 +2,6 @@
 import 'package:flutter/material.dart';
 // Package imports:
 import 'package:teta_core/gen/assets.gen.dart';
-import 'package:teta_core/src/models/dataset.dart';
 import 'package:teta_core/src/models/variable.dart';
 import 'package:teta_widgets/src/core/teta_widget/index.dart';
 import 'package:teta_widgets/src/elements/code/snippets.dart';
@@ -26,7 +25,7 @@ const _globalType = NType.webview;
 
 /// IS
 final webviewIntrinsicStates = IntrinsicStates(
-  nodeIcon: Assets.wIcons.webView,
+  nodeIcon: Assets.wIcons.webview,
   nodeVideo: null,
   nodeDescription: null,
   advicedChildren: [],
@@ -49,7 +48,8 @@ final webviewIntrinsicStates = IntrinsicStates(
     const Suggestion(
       title: 'Why use Webview in Teta?',
       description: 'Test',
-      linkToOpen: 'https://docs.teta.so/teta-docs/widget/advanced-widgets/webview',
+      linkToOpen:
+          'https://docs.teta.so/teta-docs/widget/advanced-widgets/webview',
     )
   ],
 );

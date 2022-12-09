@@ -24,7 +24,7 @@ const _globalType = NType.audioPlayerProgressIndicator;
 
 /// Audio Player Instrinsic State
 final audioPlayerProgressIndicatorIntrinsicStates = IntrinsicStates(
-  nodeIcon: Assets.wIcons.audioPlayerProgressIndicator,
+  nodeIcon: Assets.wIcons.audioplayerProgressidicator,
   nodeVideo: null,
   nodeDescription: null,
   advicedChildren: [],
@@ -106,7 +106,9 @@ class AudioPlayerProgressIndicatorBody extends NodeBody {
         pageId,
         AudioPlayerProgressIndicatorTemplate.toCode(
           context: context,
-          audioPlayerName: ((attributes[DBKeys.value] as FTextTypeInput).stateName ?? '').camelCase,
+          audioPlayerName:
+              ((attributes[DBKeys.value] as FTextTypeInput).stateName ?? '')
+                  .camelCase,
         ),
         loop ?? 0,
       );

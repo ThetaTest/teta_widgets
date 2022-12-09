@@ -25,7 +25,7 @@ const _globalType = NType.audioPlayerVolumeIndicator;
 
 /// Audio Player Instrinsic State
 final audioPlayerVolumeIndicatorIntrinsicStates = IntrinsicStates(
-  nodeIcon: Assets.wIcons.audioPlayerVolumeIndicator,
+  nodeIcon: Assets.wIcons.audioplayerVolumeidicator,
   nodeVideo: null,
   nodeDescription: null,
   advicedChildren: [],
@@ -107,7 +107,9 @@ class AudioPlayerVolumeIndicatorBody extends NodeBody {
         pageId,
         AudioPlayerVolumeIndicatorTemplate.toCode(
           context: context,
-          audioPlayerName: ((attributes[DBKeys.value] as FTextTypeInput).stateName ?? '').camelCase,
+          audioPlayerName:
+              ((attributes[DBKeys.value] as FTextTypeInput).stateName ?? '')
+                  .camelCase,
         ),
         loop ?? 0,
       );

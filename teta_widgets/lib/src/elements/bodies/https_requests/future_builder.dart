@@ -21,7 +21,7 @@ const _globalType = NType.httpRequest;
 
 /// Intrinsic States of HTTP Request FB
 final httpRequestFutureBuilderIntrinsicStates = IntrinsicStates(
-  nodeIcon: Assets.wIcons.supabaseLogoIcon,
+  nodeIcon: Assets.icons.left.api,
   nodeVideo: null,
   nodeDescription: null,
   advicedChildren: [
@@ -72,7 +72,8 @@ class HTTPRequestFutureBuilderBody extends NodeBody {
     final CNode? child,
     final List<CNode>? children,
   }) {
-    final str = StringBuffer()..write((attributes[DBKeys.supabaseFrom] as FTextTypeInput).toJson());
+    final str = StringBuffer()
+      ..write((attributes[DBKeys.supabaseFrom] as FTextTypeInput).toJson());
     return WHTTPRequestFutureBuilder(
       ValueKey(str.toString()),
       state: state,

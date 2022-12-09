@@ -26,7 +26,7 @@ const _globalType = NType.bouncingWidget;
 
 /// Instrict State of Bouncing Widget
 final bouncingWidgetIntrinsicStates = IntrinsicStates(
-  nodeIcon: Assets.wIcons.bouncing_widget,
+  nodeIcon: Assets.wIcons.bouncingWidget,
   nodeVideo: 'c1xLMaTUWCY',
   nodeDescription: '''''',
   advicedChildren: [
@@ -53,7 +53,8 @@ final bouncingWidgetIntrinsicStates = IntrinsicStates(
     const Suggestion(
       title: 'Why use Button in Teta?',
       description: 'Test',
-      linkToOpen: 'https://docs.teta.so/teta-docs/widget/animated-widgets/bouncing-widget',
+      linkToOpen:
+          'https://docs.teta.so/teta-docs/widget/animated-widgets/bouncing-widget',
     )
   ],
 );
