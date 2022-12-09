@@ -21,6 +21,9 @@ class FAApiCalls {
     final List<DatasetObject> dataset,
     final int? loop,
   ) async {
+    Logger.printWarning(
+        "selected Request: " + apiCallsSelectedRequest.toString());
+
     final apiCallsDynamicValues = <String, dynamic>{};
     for (final e in apiCallsDynamicValue ?? <MapElement>[]) {
       apiCallsDynamicValues[e.key] =
@@ -43,9 +46,15 @@ class FAApiCalls {
     var mapBody = <String, dynamic>{};
     var requestType = '';
     var url = '';
+    var authorizationType = '';
+    var mapBasicAuth = <String, dynamic>{};
+    var mapBearerToken = <String, dynamic>{};
     apiCallsSelectedRequest!.forEach((final key, final dynamic value) {
       if (key == 'requestType') {
         requestType = value as String;
+      }
+      if (key == 'authorizationType') {
+        authorizationType = value as String;
       }
       if (key == 'requestURL') {
         url = value as String;
@@ -61,6 +70,77 @@ class FAApiCalls {
           },
         );
       }
+
+      ///
+
+      if (key == 'basicAuth') {
+        mapBasicAuth = value as Map<String, dynamic>;
+        var mapBasicAuth2 = <String, dynamic>{};
+        mapBasicAuth.forEach(
+          (final key, final dynamic value) {
+            var changeKey = key;
+            var changeValue = value.toString();
+            apiCallsDynamicValues.forEach(
+              (final keyDynamic, final dynamic valueDynamic) {
+                // check if dynamicValue  both key and value
+                if (changeKey.contains(keyDynamic) &&
+                    changeValue.contains(keyDynamic)) {
+                  changeKey = changeKey.replaceAll(keyDynamic, '$valueDynamic');
+                  changeValue =
+                      value.toString().replaceAll(keyDynamic, '$valueDynamic');
+                }
+                //check if dynamicValue in key
+                else if (changeKey.contains(keyDynamic)) {
+                  changeKey = changeKey.replaceAll(keyDynamic, '$valueDynamic');
+                }
+                //check if dynamicValue in value
+                else if (changeValue.contains(keyDynamic)) {
+                  changeValue =
+                      changeValue.replaceAll(keyDynamic, '$valueDynamic');
+                }
+              },
+            );
+            //Update new map
+            mapBasicAuth2[changeKey] = changeValue;
+          },
+        );
+        mapBasicAuth = mapBasicAuth2;
+      }
+      if (key == 'bearerToken') {
+        mapBearerToken = value as Map<String, dynamic>;
+        var mapBearerToken2 = <String, dynamic>{};
+        mapBearerToken.forEach(
+          (final key, final dynamic value) {
+            var changeKey = key;
+            var changeValue = value.toString();
+            apiCallsDynamicValues.forEach(
+              (final keyDynamic, final dynamic valueDynamic) {
+                // check if dynamicValue  both key and value
+                if (changeKey.contains(keyDynamic) &&
+                    changeValue.contains(keyDynamic)) {
+                  changeKey = changeKey.replaceAll(keyDynamic, '$valueDynamic');
+                  changeValue =
+                      value.toString().replaceAll(keyDynamic, '$valueDynamic');
+                }
+                //check if dynamicValue in key
+                else if (changeKey.contains(keyDynamic)) {
+                  changeKey = changeKey.replaceAll(keyDynamic, '$valueDynamic');
+                }
+                //check if dynamicValue in value
+                else if (changeValue.contains(keyDynamic)) {
+                  changeValue =
+                      changeValue.replaceAll(keyDynamic, '$valueDynamic');
+                }
+              },
+            );
+            //Update new map
+            mapBearerToken2[changeKey] = changeValue;
+          },
+        );
+        mapBearerToken = mapBearerToken2;
+      }
+
+      ///
       if (key == 'headers') {
         mapHeaders = value as Map<String, dynamic>;
         var mapHeaders2 = <String, dynamic>{};
@@ -94,6 +174,29 @@ class FAApiCalls {
         );
         mapHeaders = mapHeaders2;
       }
+      //update headers with authorization
+      if (authorizationType == 'Bearer token') {
+        if (mapBearerToken.isNotEmpty) {
+          String token = mapBearerToken['Token'] as String;
+          if (token.isNotEmpty) {
+            var map = {'authorization': 'Bearer $token'};
+            mapHeaders.addAll(map);
+          }
+        }
+      } else if (authorizationType == 'Basic auth') {
+        if (mapBasicAuth.isNotEmpty) {
+          String username = mapBasicAuth['Username'] as String;
+          String password = mapBasicAuth['Password'] as String;
+          if (username.isNotEmpty || password.isNotEmpty) {
+            var auth =
+                'Basic ' + base64Encode(utf8.encode('$username:$password'));
+            var map = {'authorization': auth};
+            mapHeaders.addAll(map);
+          }
+        }
+      }
+
+      ///
       if (key == 'body') {
         mapBody = value as Map<String, dynamic>;
         var mapBody2 = <String, dynamic>{};
