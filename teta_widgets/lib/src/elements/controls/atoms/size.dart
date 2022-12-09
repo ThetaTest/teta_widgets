@@ -78,7 +78,7 @@ class SizeControlsState extends State<SizeControl> {
                   ? '100%'
                   : (widget.size.size == 'auto')
                       ? 'auto'
-                      : '${widget.size.get(context: context, isWidth: widget.isWidth)}';
+                      : '$size';
         }
       },
       child: BlocBuilder<DeviceModeCubit, DeviceInfo>(
@@ -114,7 +114,7 @@ class SizeControlsState extends State<SizeControl> {
                             ? '100%'
                             : (size == 'auto')
                                 ? 'auto'
-                                : '${widget.size.get(context: context, isWidth: widget.isWidth) ?? 0.0}';
+                                : '$size';
                   }
                 }
               }
@@ -258,7 +258,13 @@ class SizeControlsState extends State<SizeControl> {
                                   padding: const EdgeInsets.only(right: 4),
                                   child: CMiniTextField(
                                     controller: controller,
-                                    text: widget.size.size,
+                                    text: (device.identifier.type ==
+                                            DeviceType.phone)
+                                        ? widget.size.size
+                                        : (device.identifier.type ==
+                                                DeviceType.tablet)
+                                            ? widget.size.sizeTablet
+                                            : widget.size.sizeDesktop,
                                     callBack: (final value) {
                                       final szs = widget.size;
                                       final old =

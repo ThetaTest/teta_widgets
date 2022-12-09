@@ -6,6 +6,7 @@ import 'package:device_frame/device_frame.dart' as frame;
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:sizer/sizer.dart';
 // Package imports:
 import 'package:teta_core/src/utils/expression/expression.dart';
 import 'package:teta_core/teta_core.dart';
@@ -94,7 +95,7 @@ class FSize {
       Logger.printWarning(
         'Calculating % size, ${screen.width} : ${screen.height} * ($value / 100), result: ${(isWidth ? screen.width : screen.height) * (value / 100)} ',
       );
-      return (isWidth ? screen.width : screen.height) * (value.toInt() / 100);
+      return isWidth ? value.toInt().w : value.toInt().h;
     }
     return value;
   }
