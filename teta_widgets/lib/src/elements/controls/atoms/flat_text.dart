@@ -58,7 +58,7 @@ class FlatTextControlState extends State<FlatTextControl> {
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          const THeadline3(
+          const TParagraph(
             'Flat Text',
           ),
           CTextField(

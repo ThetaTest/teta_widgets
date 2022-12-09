@@ -3,12 +3,10 @@
 
 // Flutter imports:
 import 'package:flutter/material.dart';
-
 // Package imports:
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:teta_core/teta_core.dart';
 import 'package:teta_widgets/src/elements/features/google_maps_map_style.dart';
-
 // Project imports:
 import 'package:teta_widgets/src/elements/nodes/node.dart';
 
@@ -67,7 +65,7 @@ class GoogleMapsMapStyleControlsState
                 ),
                 child: Row(
                   children: const [
-                    THeadline3(
+                    TParagraph(
                       'Map Style',
                     ),
                   ],
@@ -76,12 +74,14 @@ class GoogleMapsMapStyleControlsState
               CDropdownCustom<String>(
                 value: dropdown,
                 items: [
-                  buildMapStyleMenuItem('Standard', 'assets/images/standard.png'),
+                  buildMapStyleMenuItem(
+                      'Standard', 'assets/images/standard.png'),
                   buildMapStyleMenuItem('Silver', 'assets/images/silver.png'),
                   buildMapStyleMenuItem('Retro', 'assets/images/retro.png'),
                   buildMapStyleMenuItem('Dark', 'assets/images/dark.png'),
                   buildMapStyleMenuItem('Night', 'assets/images/night.png'),
-                  buildMapStyleMenuItem('Aubergine', 'assets/images/aubergine.png'),
+                  buildMapStyleMenuItem(
+                      'Aubergine', 'assets/images/aubergine.png'),
                 ],
                 onChange: (final newValue) {
                   if (newValue != null) {
@@ -103,7 +103,8 @@ class GoogleMapsMapStyleControlsState
     );
   }
 
-  DropdownCustomMenuItem<String> buildMapStyleMenuItem(final String value, final String asset) =>
+  DropdownCustomMenuItem<String> buildMapStyleMenuItem(
+          final String value, final String asset) =>
       DropdownCustomMenuItem<String>(
         value: value,
         child: Row(
@@ -119,7 +120,9 @@ class GoogleMapsMapStyleControlsState
                 width: 40,
               ),
             ),
-            const SizedBox(width: 8,),
+            const SizedBox(
+              width: 8,
+            ),
             TParagraph(value),
             const Spacer(),
           ],

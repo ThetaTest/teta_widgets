@@ -62,7 +62,7 @@ class MapElementControlState extends State<MapElementControl> {
         children: [
           const Padding(
             padding: EdgeInsets.only(bottom: 8),
-            child: THeadline3(
+            child: TParagraph(
               'Column',
             ),
           ),

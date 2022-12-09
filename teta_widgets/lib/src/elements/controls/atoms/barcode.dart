@@ -53,7 +53,7 @@ class BarcodeControlState extends State<BarcodeControl> {
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          const THeadline3(
+          const TParagraph(
             'Barcode Type',
           ),
           CDropdown(

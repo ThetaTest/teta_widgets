@@ -47,7 +47,7 @@ class IconFontAwesomeControlState extends State<IconFontAwesomeControl> {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
-        const THeadline3(
+        const TParagraph(
           'FontAwesome Icon',
         ),
         BounceSmall(

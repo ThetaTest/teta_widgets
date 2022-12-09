@@ -68,7 +68,7 @@ class BordersControlState extends State<BordersControl> {
                 child: Row(
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
-                    const THeadline3(
+                    const TParagraph(
                       'Borders',
                     ),
                     GestureDetector(

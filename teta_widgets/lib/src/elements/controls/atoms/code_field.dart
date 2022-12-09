@@ -52,7 +52,7 @@ class CodeFieldControlState extends State<CodeFieldControl> {
         Row(
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: [
-            const THeadline3(
+            const TParagraph(
               'Write your query using AYAYA',
             ),
             CButton(

@@ -3,8 +3,8 @@ import 'package:teta_core/teta_core.dart';
 import 'package:teta_widgets/src/elements/controls/atoms/db_map.dart';
 import 'package:teta_widgets/src/elements/controls/atoms/text.dart';
 import 'package:teta_widgets/src/elements/features/actions/element.dart';
-import 'package:teta_widgets/src/elements/nodes/node.dart';
 import 'package:teta_widgets/src/elements/features/text_type_input.dart';
+import 'package:teta_widgets/src/elements/nodes/node.dart';
 
 class AirtableDeleteControl extends StatelessWidget {
   const AirtableDeleteControl({
@@ -35,7 +35,7 @@ class AirtableDeleteControl extends StatelessWidget {
               Image.asset(Assets.icons.left.dataset.path, width: 24),
               const Padding(
                 padding: EdgeInsets.only(left: 8),
-                child: THeadline3(
+                child: TParagraph(
                   'INSERT NEW DATA',
                   color: Color(0xFFe7e7e7),
                 ),

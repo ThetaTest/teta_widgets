@@ -86,7 +86,7 @@ class PaddingsState extends State<VideoUrlControl> {
               controller: controllerVideo,
             ),
           ),
-        const THeadline3(
+        const TParagraph(
           'URL Video',
         ),
         CTextField(

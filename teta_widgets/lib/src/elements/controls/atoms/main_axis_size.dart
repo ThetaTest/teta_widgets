@@ -62,7 +62,7 @@ class MainAxisSizeControlState extends State<MainAxisSizeControl> {
                 ),
                 child: Row(
                   children: const [
-                    THeadline3(
+                    TParagraph(
                       'Main Axis Size',
                     ),
                   ],

@@ -58,7 +58,7 @@ class SupabaseStorageUploadControl extends StatelessWidget {
           },
         ),
         const Gap(Grid.medium),
-        const THeadline3('File state'),
+        const TParagraph('File state'),
         const TDetailLabel(
           'Choose the state from which you want to obtain the file.',
         ),
@@ -93,7 +93,7 @@ class SupabaseStorageUploadControl extends StatelessWidget {
           },
         ),
         const Gap(Grid.medium),
-        const THeadline3('Public URL'),
+        const TParagraph('Public URL'),
         const TDetailLabel(
           'Choose the state where you want to save the public url retrieved from the uploaded file.',
         ),

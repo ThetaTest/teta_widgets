@@ -62,7 +62,7 @@ class TextDirectionControlState extends State<TextDirectionControl> {
                 ),
                 child: Row(
                   children: const [
-                    THeadline3(
+                    TParagraph(
                       'Text Direction',
                     ),
                   ],

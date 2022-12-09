@@ -64,7 +64,7 @@ class MainAxisAlignmentControlsState extends State<MainAxisAlignmentControls> {
                 ),
                 child: Row(
                   children: const [
-                    THeadline3(
+                    TParagraph(
                       'Main Axis Alignment',
                     ),
                   ],

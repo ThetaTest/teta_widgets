@@ -126,7 +126,7 @@ class BorderRadiusControlState extends State<BorderRadiusControl> {
                                 ),
                               ),
                               const Gap(Grid.small),
-                              const THeadline3(
+                              const TParagraph(
                                 'Border radius',
                               ),
                             ],

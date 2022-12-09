@@ -81,7 +81,7 @@ class TextPrefabControl extends StatelessWidget {
             children: [
               Padding(
                 padding: const EdgeInsets.only(top: 16),
-                child: THeadline3(
+                child: TParagraph(
                   title ?? 'Text Properties',
                 ),
               ),

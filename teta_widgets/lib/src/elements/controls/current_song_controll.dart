@@ -71,7 +71,7 @@ class CurrentSongControlState extends State<CurrentSongControl> {
             Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
-                THeadline3(
+                TParagraph(
                   widget.title,
                 ),
                 CDropdownForType(

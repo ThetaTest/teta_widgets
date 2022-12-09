@@ -63,7 +63,7 @@ class HttpParamsElementControlState extends State<HttpParamsElementControl> {
         children: [
           const Padding(
             padding: EdgeInsets.only(bottom: 8),
-            child: THeadline3(
+            child: TParagraph(
               'Key',
             ),
           ),

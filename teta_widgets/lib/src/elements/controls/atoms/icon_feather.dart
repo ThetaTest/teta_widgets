@@ -47,7 +47,7 @@ class IconFeatherControlState extends State<IconFeatherControl> {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
-        const THeadline3(
+        const TParagraph(
           'Feather Icon',
         ),
         BounceSmall(

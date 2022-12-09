@@ -71,7 +71,7 @@ class WebViewControllerControlState extends State<WebViewControllerControl> {
             Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
-                THeadline3(
+                TParagraph(
                   widget.title,
                 ),
                 CDropdownForType(

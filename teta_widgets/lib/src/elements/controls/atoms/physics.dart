@@ -41,7 +41,7 @@ class PhysicsControlState extends State<PhysicsControl> {
       children: [
         const Padding(
           padding: EdgeInsets.only(bottom: 8),
-          child: THeadline3(
+          child: TParagraph(
             'Physics',
           ),
         ),

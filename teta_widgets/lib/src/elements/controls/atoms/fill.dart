@@ -86,7 +86,7 @@ class FillControlState extends State<FillControl> {
               Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
-                  THeadline3(
+                  TParagraph(
                     widget.title ?? 'Fill',
                   ),
                   CDropdownForType(

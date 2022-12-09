@@ -49,7 +49,7 @@ class NameState extends State<NameControl> {
           children: [
             Padding(
               padding: const EdgeInsets.only(bottom: 8),
-              child: THeadline3(
+              child: TParagraph(
                 widget.title ?? 'Name',
               ),
             ),

@@ -79,7 +79,7 @@ class PlaceholderChildBuilder extends StatelessWidget {
                         color: Colors.white,
                       ),
                       const Gap(Grid.small),
-                      THeadline3(
+                      TParagraph(
                         BlocProvider.of<PageCubit>(context).state.isPage
                             ? 'Add in $name'
                             : 'Add in ${name.contains('Page') ? name.replaceFirst('Page', 'Component') : name}',
@@ -104,7 +104,7 @@ class PlaceholderChildBuilder extends StatelessWidget {
                         color: Colors.white,
                       ),
                       const Gap(Grid.small),
-                      THeadline3(
+                      TParagraph(
                         BlocProvider.of<PageCubit>(context).state.isPage
                             ? 'Add in $name'
                             : 'Add in ${name.contains('Page') ? name.replaceFirst('Page', 'Component') : name}',

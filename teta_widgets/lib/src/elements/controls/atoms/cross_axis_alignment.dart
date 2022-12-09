@@ -63,7 +63,7 @@ class CrossAxisAlignmentControlsState
                 padding: EdgeInsets.only(
                   bottom: 8,
                 ),
-                child: THeadline3(
+                child: TParagraph(
                   'Cross Axis Alignment',
                 ),
               ),

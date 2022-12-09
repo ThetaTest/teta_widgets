@@ -34,9 +34,11 @@ class _WCameraState extends State<WCamera> {
     final page = BlocProvider.of<PageCubit>(context).state;
     VariableObject? variable;
     if (widget.controller.type == FTextTypeEnum.param) {
-      variable = page.params.firstWhereOrNull((final e) => e.name == widget.controller.paramName);
+      variable = page.params
+          .firstWhereOrNull((final e) => e.name == widget.controller.paramName);
     } else {
-      variable = page.states.firstWhereOrNull((final e) => e.name == widget.controller.stateName);
+      variable = page.states
+          .firstWhereOrNull((final e) => e.name == widget.controller.stateName);
     }
     return NodeSelectionBuilder(
       node: widget.state.node,
@@ -48,7 +50,7 @@ class _WCameraState extends State<WCamera> {
               child: CameraPreview(variable!.controller!),
             )
           : const Center(
-              child: THeadline3(
+              child: TParagraph(
                 'Camera Controller is not initialized yet',
               ),
             ),

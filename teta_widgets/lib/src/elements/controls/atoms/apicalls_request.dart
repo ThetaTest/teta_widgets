@@ -47,7 +47,7 @@ class ApiCallsRequestControlState extends State<ApiCallsRequestControl> {
     nodeId = widget.node.nid;
   }
 
-  void getRequest() async {
+  Future<void> getRequest() async {
     allCollections = await TetaCMS.instance.client.getCollections();
     collectionID = allCollections
         .where(
@@ -103,7 +103,7 @@ class ApiCallsRequestControlState extends State<ApiCallsRequestControl> {
                 ),
                 child: Row(
                   children: const [
-                    THeadline3(
+                    TParagraph(
                       'Request',
                     ),
                   ],

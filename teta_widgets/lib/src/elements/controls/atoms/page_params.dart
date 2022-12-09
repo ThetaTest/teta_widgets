@@ -39,7 +39,7 @@ class PaddingsState extends State<PageParamsControl> {
         Row(
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: [
-            const THeadline3(
+            const TParagraph(
               'Page Params',
             ),
             BounceSmall(
@@ -177,7 +177,7 @@ class PaddingsState extends State<PageParamsControl> {
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            THeadline3(
+            TParagraph(
               '${variable.name}: ${variable.defaultValue}',
             ),
             Row(
@@ -267,7 +267,7 @@ class PaddingsState extends State<PageParamsControl> {
                   child: Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
-                      const THeadline3(
+                      const TParagraph(
                         'Name',
                       ),
                       Padding(
@@ -315,7 +315,7 @@ class PaddingsState extends State<PageParamsControl> {
                             'Please provide a unique name',
                           ),
                         ),
-                      const THeadline3(
+                      const TParagraph(
                         'Type',
                       ),
                       Container(
@@ -368,7 +368,7 @@ class PaddingsState extends State<PageParamsControl> {
                                     (final String value) {
                               return DropdownMenuItem<String>(
                                 value: value,
-                                child: THeadline3(
+                                child: TParagraph(
                                   value,
                                 ),
                               );
@@ -376,7 +376,7 @@ class PaddingsState extends State<PageParamsControl> {
                           ),
                         ),
                       ),
-                      const THeadline3(
+                      const TParagraph(
                         'Default Value',
                       ),
                       Padding(
@@ -397,7 +397,7 @@ class PaddingsState extends State<PageParamsControl> {
                           },
                         ),
                       ),
-                      const THeadline3(
+                      const TParagraph(
                         'Description',
                       ),
                       Padding(

@@ -47,7 +47,7 @@ class IconLineControlState extends State<IconLineControl> {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
-        const THeadline3(
+        const TParagraph(
           'Line Icon',
         ),
         BounceSmall(

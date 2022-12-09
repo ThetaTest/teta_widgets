@@ -113,7 +113,7 @@ class FontSizeState extends State<FontSizeControl> {
                         ),
                       ),
                       const Gap(Grid.small),
-                      const THeadline3(
+                      const TParagraph(
                         'Font Size',
                       ),
                     ],

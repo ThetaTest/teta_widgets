@@ -8,7 +8,6 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:hovering/hovering.dart';
 import 'package:teta_core/teta_core.dart';
 // Project imports:
-import 'package:teta_widgets/src/elements/controls/atoms/map_element.dart';
 import 'package:teta_widgets/src/elements/controls/http_params_element.dart';
 import 'package:teta_widgets/src/elements/features/text_type_input.dart';
 import 'package:teta_widgets/src/elements/nodes/node.dart';
@@ -68,7 +67,7 @@ class HttpParamsControlState extends State<HttpParamsControl> {
               child: Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
-                  THeadline3(
+                  TParagraph(
                     widget.title ?? 'Add Params',
                   ),
                   Row(

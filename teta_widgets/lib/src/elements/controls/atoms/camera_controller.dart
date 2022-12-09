@@ -70,7 +70,7 @@ class CameraControllerControlState extends State<CameraControllerControl> {
             Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
-                THeadline3(
+                TParagraph(
                   widget.title,
                 ),
                 CDropdownForType(

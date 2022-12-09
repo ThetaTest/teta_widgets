@@ -38,7 +38,7 @@ class StatesControlState extends State<StatesControl> {
         Row(
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: [
-            const THeadline3(
+            const TParagraph(
               'States',
             ),
             BounceSmall(
@@ -172,7 +172,7 @@ class StatesControlState extends State<StatesControl> {
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            THeadline3(
+            TParagraph(
               '${variable.name}: ${variable.defaultValue}',
             ),
             Row(
@@ -263,7 +263,7 @@ class StatesControlState extends State<StatesControl> {
                   child: Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
-                      const THeadline3(
+                      const TParagraph(
                         'Name',
                       ),
                       Padding(
@@ -311,7 +311,7 @@ class StatesControlState extends State<StatesControl> {
                             'Please provide a unique name',
                           ),
                         ),
-                      const THeadline3(
+                      const TParagraph(
                         'Type',
                       ),
                       Container(
@@ -362,7 +362,7 @@ class StatesControlState extends State<StatesControl> {
                                 (final String value) {
                               return DropdownMenuItem<String>(
                                 value: value,
-                                child: THeadline3(
+                                child: TParagraph(
                                   value,
                                 ),
                               );
@@ -370,7 +370,7 @@ class StatesControlState extends State<StatesControl> {
                           ),
                         ),
                       ),
-                      const THeadline3(
+                      const TParagraph(
                         'Default Value',
                       ),
                       Padding(
@@ -391,7 +391,7 @@ class StatesControlState extends State<StatesControl> {
                           },
                         ),
                       ),
-                      const THeadline3(
+                      const TParagraph(
                         'Description',
                       ),
                       Padding(

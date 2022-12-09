@@ -39,7 +39,7 @@ class _HttpMethodControlState extends State<HttpMethodControl> {
   }
 
   @override
-  Widget build(BuildContext context) {
+  Widget build(final BuildContext context) {
     return BlocListener<FocusBloc, List<CNode>>(
       listener: (final context, final state) {
         if (state.isNotEmpty) {
@@ -63,7 +63,7 @@ class _HttpMethodControlState extends State<HttpMethodControl> {
                 ),
                 child: Row(
                   children: [
-                    THeadline3(
+                    TParagraph(
                       widget.title ?? 'Http Methods',
                     ),
                   ],

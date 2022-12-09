@@ -41,7 +41,7 @@ class TetaCmsDeleteControl extends StatelessWidget {
               Image.asset(Assets.icons.left.dataset.path, width: 24),
               const Padding(
                 padding: EdgeInsets.only(left: 8),
-                child: THeadline3(
+                child: TParagraph(
                   'DELETE DATA',
                   color: Color(0xFFe7e7e7),
                 ),
@@ -61,7 +61,7 @@ class TetaCmsDeleteControl extends StatelessWidget {
           padding: EdgeInsets.only(top: 16),
           child: Padding(
             padding: EdgeInsets.only(bottom: 8),
-            child: THeadline3(
+            child: TParagraph(
               'Where',
             ),
           ),

@@ -37,7 +37,7 @@ class PaddingsState extends State<TextAreaControl> {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
-        const THeadline3(
+        const TParagraph(
           'Code',
         ),
         CTextField(

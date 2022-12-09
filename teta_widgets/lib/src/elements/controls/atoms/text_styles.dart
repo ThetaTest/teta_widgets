@@ -50,7 +50,7 @@ class TextStylesControlState extends State<TextStylesControl> {
         Row(
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: [
-            const THeadline3(
+            const TParagraph(
               'Styles',
               color: Colors.white,
             ),

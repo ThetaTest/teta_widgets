@@ -65,7 +65,7 @@ class CMSCollectionControlState extends State<CMSCollectionControl> {
                 ),
                 child: Row(
                   children: const [
-                    THeadline3(
+                    TParagraph(
                       'Collection',
                     ),
                   ],

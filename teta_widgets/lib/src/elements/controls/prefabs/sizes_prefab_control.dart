@@ -32,7 +32,7 @@ class SizesPrefabControl extends StatelessWidget {
       children: [
         const Padding(
           padding: EdgeInsets.only(top: 16, bottom: 8),
-          child: THeadline3(
+          child: TParagraph(
             'Sizes',
           ),
         ),

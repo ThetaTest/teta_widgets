@@ -71,7 +71,7 @@ class GoogleMapsControlState extends State<GoogleMapsControl> {
             Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
-                THeadline3(
+                TParagraph(
                   widget.title,
                 ),
                 CDropdownForType(

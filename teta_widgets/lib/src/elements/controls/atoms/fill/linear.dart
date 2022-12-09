@@ -232,7 +232,7 @@ class ColorControlState extends State<LinearFillControl> {
                 width: double.maxFinite,
                 height: 300,
                 child: GradientSwiper(
-                  child: THeadline3('Ciao'),
+                  child: TParagraph('Ciao'),
                 ),
               ),
             Row(

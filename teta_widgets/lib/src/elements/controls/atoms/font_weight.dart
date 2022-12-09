@@ -42,7 +42,7 @@ class FontWeightControlState extends State<FontWeightControl> {
       children: [
         const Padding(
           padding: EdgeInsets.only(bottom: 8),
-          child: THeadline3(
+          child: TParagraph(
             'Font Weight',
           ),
         ),

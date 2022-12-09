@@ -42,7 +42,7 @@ class VideoStartAtControlState extends State<VideoStartAtControl> {
         Row(
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: const [
-            THeadline3(
+            TParagraph(
               'Start at',
             ),
             Icon(

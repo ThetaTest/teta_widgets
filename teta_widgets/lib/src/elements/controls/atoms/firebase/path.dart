@@ -45,7 +45,7 @@ class FirestorePathControlState extends State<FirestorePathControl> {
           Row(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
-              THeadline3(
+              TParagraph(
                 !widget.isForAddData ? 'Query' : 'Path',
                 color: Colors.white,
               ),

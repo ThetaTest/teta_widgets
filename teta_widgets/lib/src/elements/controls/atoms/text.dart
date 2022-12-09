@@ -130,14 +130,14 @@ class PaddingsState extends State<TextControl> {
                                   : device.identifier.type == DeviceType.tablet
                                       ? Assets.icons.devices.tablet.path
                                       : Assets.icons.devices.monitor.path,
-                              width: 24,
-                              height: 24,
+                              width: 20,
+                              height: 20,
                             ),
                           ),
                         if (widget.value.type == FTextTypeEnum.text)
                           const Gap(Grid.small),
                         if (!widget.isSubControl)
-                          THeadline3(
+                          TParagraph(
                             widget.title,
                           ),
                       ],
@@ -613,7 +613,7 @@ class PaddingsState extends State<TextControl> {
                         Row(
                           mainAxisAlignment: MainAxisAlignment.spaceBetween,
                           children: [
-                            const THeadline3('Combination'),
+                            const TParagraph('Combination'),
                             Row(
                               children: [
                                 BounceSmall(
@@ -841,7 +841,7 @@ class PaddingsState extends State<TextControl> {
                               ),
                               child: ListTile(
                                 key: ValueKey('Element $i'),
-                                title: THeadline3(
+                                title: TParagraph(
                                   'Element $i',
                                 ),
                                 textColor: Palette.txtPrimary,

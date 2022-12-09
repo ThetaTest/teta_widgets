@@ -146,8 +146,8 @@ class SizeControlsState extends State<SizeControl> {
                                   : device.identifier.type == DeviceType.tablet
                                       ? Assets.icons.devices.tablet.path
                                       : Assets.icons.devices.monitor.path,
-                              width: 24,
-                              height: 24,
+                              width: 20,
+                              height: 20,
                             ),
                           ),
                           CSwitch(
@@ -171,7 +171,7 @@ class SizeControlsState extends State<SizeControl> {
                           ),
                           Padding(
                             padding: const EdgeInsets.only(left: 8),
-                            child: THeadline3(
+                            child: TParagraph(
                               widget.title,
                             ),
                           ),

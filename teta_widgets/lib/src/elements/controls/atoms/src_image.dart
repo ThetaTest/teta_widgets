@@ -100,7 +100,7 @@ class SrcImageControlState extends State<SrcImageControl> {
                   Row(
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
-                      THeadline3(
+                      TParagraph(
                         widget.title,
                       ),
                       CDropdownForType(

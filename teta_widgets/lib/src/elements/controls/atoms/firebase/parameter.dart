@@ -81,7 +81,7 @@ class ParameterState extends State<FirestoreParameterControl> {
             Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
-                THeadline3(
+                TParagraph(
                   widget.title,
                 ),
                 CDropdownForType(

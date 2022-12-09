@@ -43,7 +43,7 @@ class TextStyleControlsState extends State<FontStyleControls> {
           children: [
             const Padding(
               padding: EdgeInsets.only(bottom: 8),
-              child: THeadline3(
+              child: TParagraph(
                 'Font Style',
               ),
             ),

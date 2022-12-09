@@ -46,7 +46,7 @@ class FontFamilyState extends State<FontFamilyControl> {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
-        const THeadline3(
+        const TParagraph(
           'Font Family',
         ),
         Padding(

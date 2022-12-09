@@ -20,7 +20,7 @@ class AValidatorControl extends StatelessWidget {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
-        const THeadline3('Text variable'),
+        const TParagraph('Text variable'),
         const Gap(Grid.small),
         TDetailLabel(
           'Variable where is stored the String value to check.',
@@ -52,7 +52,7 @@ class AValidatorControl extends StatelessWidget {
           },
         ),
         const Gap(Grid.medium),
-        const THeadline3('Status variable'),
+        const TParagraph('Status variable'),
         const Gap(Grid.small),
         TDetailLabel(
           'This variable will receive the result of this validator.',

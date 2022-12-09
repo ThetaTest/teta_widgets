@@ -82,7 +82,7 @@ class ComponentControlState extends State<ComponentControl> {
         children: [
           const Padding(
             padding: EdgeInsets.only(bottom: 8),
-            child: THeadline3(
+            child: TParagraph(
               'Component',
             ),
           ),
@@ -263,7 +263,7 @@ class ElementState extends State<Element> {
             children: [
               Padding(
                 padding: const EdgeInsets.only(bottom: 8),
-                child: THeadline3(
+                child: TParagraph(
                   widget.variable.name,
                 ),
               ),

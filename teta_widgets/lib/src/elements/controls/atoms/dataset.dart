@@ -3,11 +3,9 @@
 
 // Flutter imports:
 import 'package:flutter/material.dart';
-
 // Package imports:
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:teta_core/teta_core.dart';
-
 // Project imports:
 import 'package:teta_widgets/src/elements/features/dataset.dart';
 import 'package:teta_widgets/src/elements/nodes/node.dart';
@@ -69,7 +67,7 @@ class DatasetControlState extends State<DatasetControl> {
           Row(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
-              THeadline3(
+              TParagraph(
                 widget.title,
               ),
             ],
@@ -100,7 +98,7 @@ class DatasetControlState extends State<DatasetControl> {
     );
   }
 
-  Widget _buildAttrSelection(BuildContext context) {
+  Widget _buildAttrSelection(final BuildContext context) {
     var isAttrRequired = widget.isAttrRequired;
 
     if (databaseName != '') {
@@ -125,7 +123,7 @@ class DatasetControlState extends State<DatasetControl> {
     }
 
     try {
-      if (((isAttrRequired ?? false) && databaseName != '')) {
+      if ((isAttrRequired ?? false) && databaseName != '') {
         return CDropdown(
           value: (widget.page.datasets
                           .where(

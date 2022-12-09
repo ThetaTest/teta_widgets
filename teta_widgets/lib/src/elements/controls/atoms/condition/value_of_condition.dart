@@ -73,7 +73,7 @@ class ValueOfConditionControlState extends State<ValueOfConditionControl> {
           Row(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
-              THeadline3(
+              TParagraph(
                 widget.title,
               ),
               Theme(
@@ -93,7 +93,7 @@ class ValueOfConditionControlState extends State<ValueOfConditionControl> {
                       .map((final String value) {
                     return DropdownMenuItem<String>(
                       value: value,
-                      child: THeadline3(
+                      child: TParagraph(
                         value,
                       ),
                     );
@@ -154,7 +154,7 @@ class ValueOfConditionControlState extends State<ValueOfConditionControl> {
                     .map<DropdownMenuItem<String>>((final value) {
                   return DropdownMenuItem<String>(
                     value: value,
-                    child: THeadline3(
+                    child: TParagraph(
                       value,
                     ),
                   );
@@ -185,7 +185,7 @@ class ValueOfConditionControlState extends State<ValueOfConditionControl> {
                     .map<DropdownMenuItem<String>>((final value) {
                   return DropdownMenuItem<String>(
                     value: value,
-                    child: THeadline3(
+                    child: TParagraph(
                       value,
                     ),
                   );
@@ -220,7 +220,7 @@ class ValueOfConditionControlState extends State<ValueOfConditionControl> {
                     .map<DropdownMenuItem<String>>((final String value) {
                   return DropdownMenuItem<String>(
                     value: value,
-                    child: THeadline3(
+                    child: TParagraph(
                       value,
                     ),
                   );
@@ -264,7 +264,7 @@ class ValueOfConditionControlState extends State<ValueOfConditionControl> {
                     .map<DropdownMenuItem<String>>((final String value) {
                   return DropdownMenuItem<String>(
                     value: value,
-                    child: THeadline3(
+                    child: TParagraph(
                       value,
                     ),
                   );

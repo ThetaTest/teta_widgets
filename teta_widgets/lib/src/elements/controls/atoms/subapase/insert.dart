@@ -42,7 +42,7 @@ class SupabaseInsertControl extends StatelessWidget {
               Image.asset(Assets.icons.left.dataset.path, width: 24),
               const Padding(
                 padding: EdgeInsets.only(left: 8),
-                child: THeadline3(
+                child: TParagraph(
                   'INSERT NEW DATA',
                   color: Color(0xFFe7e7e7),
                 ),

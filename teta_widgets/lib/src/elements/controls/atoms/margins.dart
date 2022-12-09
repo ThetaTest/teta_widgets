@@ -149,12 +149,12 @@ class MarginsState extends State<Margins> {
                                             DeviceType.tablet
                                         ? Assets.icons.devices.tablet.path
                                         : Assets.icons.devices.monitor.path,
-                                width: 24,
-                                height: 24,
+                                width: 20,
+                                height: 20,
                               ),
                             ),
                             const Gap(Grid.small),
-                            THeadline3(
+                            TParagraph(
                               widget.title,
                             ),
                           ],

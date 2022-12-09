@@ -66,7 +66,7 @@ class AlignsControlState extends State<AlignsControl> {
                   ),
                 ),
                 const Gap(Grid.small),
-                const THeadline3(
+                const TParagraph(
                   'Align with the parent',
                 ),
               ],

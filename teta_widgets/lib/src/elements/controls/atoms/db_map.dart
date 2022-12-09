@@ -65,7 +65,7 @@ class DBMapControlState extends State<DBMapControl> {
               child: Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
-                  const THeadline3(
+                  const TParagraph(
                     'Map data',
                   ),
                   Row(

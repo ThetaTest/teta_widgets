@@ -51,7 +51,7 @@ class FlagControlState extends State<FlagControl> {
     return Row(
       mainAxisAlignment: MainAxisAlignment.spaceBetween,
       children: [
-        THeadline3(
+        TParagraph(
           widget.title,
         ),
         CSwitch(

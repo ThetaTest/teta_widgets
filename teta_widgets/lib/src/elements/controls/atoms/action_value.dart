@@ -58,7 +58,7 @@ class PaddingsState extends State<ActionvalueControl> {
         Row(
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: [
-            THeadline3(
+            TParagraph(
               widget.title,
             ),
             Theme(
@@ -78,7 +78,7 @@ class PaddingsState extends State<ActionvalueControl> {
                     .map((final String value) {
                   return DropdownMenuItem<String>(
                     value: value,
-                    child: THeadline3(
+                    child: TParagraph(
                       value,
                     ),
                   );
@@ -139,7 +139,7 @@ class PaddingsState extends State<ActionvalueControl> {
                   .map<DropdownMenuItem<String>>((final String value) {
                 return DropdownMenuItem<String>(
                   value: value,
-                  child: THeadline3(
+                  child: TParagraph(
                     value,
                   ),
                 );
@@ -170,7 +170,7 @@ class PaddingsState extends State<ActionvalueControl> {
                   .map<DropdownMenuItem<String>>((final String value) {
                 return DropdownMenuItem<String>(
                   value: value,
-                  child: THeadline3(
+                  child: TParagraph(
                     value,
                   ),
                 );
@@ -215,7 +215,7 @@ class PaddingsState extends State<ActionvalueControl> {
                   .map<DropdownMenuItem<String>>((final String value) {
                 return DropdownMenuItem<String>(
                   value: value,
-                  child: THeadline3(
+                  child: TParagraph(
                     value,
                   ),
                 );
@@ -269,7 +269,7 @@ class PaddingsState extends State<ActionvalueControl> {
                   .map<DropdownMenuItem<String>>((final String value) {
                 return DropdownMenuItem<String>(
                   value: value,
-                  child: THeadline3(
+                  child: TParagraph(
                     value,
                   ),
                 );
