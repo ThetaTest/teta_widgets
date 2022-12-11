@@ -3,11 +3,9 @@
 
 // Flutter imports:
 import 'package:flutter/foundation.dart';
-
 // Package imports:
 import 'package:teta_core/src/models/variable.dart';
 import 'package:teta_core/teta_core.dart';
-
 // Project imports:
 import 'package:teta_widgets/src/elements/features/font_weight.dart';
 import 'package:teta_widgets/src/elements/features/google_maps_map_style.dart';
@@ -228,7 +226,8 @@ class DBKeys {
 
   static const String markerId = 'googleMapsMarkerIdKey';
 
-  static const String markerDrawPathToUserCurrentLocation = 'markerDrawPathToUserCurrentLocation';
+  static const String markerDrawPathToUserCurrentLocation =
+      'markerDrawPathToUserCurrentLocation';
 
   static const String mapConfig = 'googleMapsDatasetConfigNameKey';
 
@@ -615,7 +614,9 @@ class DynamicAttributes {
         case DBKeys.borderFill:
           return FFill().fromJson(value as Map<String, dynamic>);
         case DBKeys.keyboardType:
-          return value is String ? FKeyboardType.fromJson(value) : FKeyboardType();
+          return value is String
+              ? FKeyboardType.fromJson(value)
+              : FKeyboardType();
         default:
           return value;
       }
@@ -819,11 +820,15 @@ class DynamicAttributes {
         return value;
       case 'params':
         return (value != null)
-            ? (value as List<VariableObject>).map((final e) => e.toJson()).toList()
+            ? (value as List<VariableObject>)
+                .map((final e) => e.toJson())
+                .toList()
             : null;
       case 'states':
         return (value != null)
-            ? (value as List<VariableObject>).map((final e) => e.toJson()).toList()
+            ? (value as List<VariableObject>)
+                .map((final e) => e.toJson())
+                .toList()
             : null;
       case DBKeys.customHttpRequestURL:
         return value != null ? value.toJson() : FTextTypeInput().toJson();
@@ -941,8 +946,6 @@ class DynamicAttributes {
         return value != null ? value.toJson() : FSize().toJson();
       case DBKeys.crossAxisExtend:
         return value != null ? value.toJson() : FSize().toJson();
-      case DBKeys.requestName:
-        return value != null ? value.toJson() : FTextTypeInput().toJson();
       case DBKeys.requestName:
         return value;
       case DBKeys.apiCallsResponseName:
