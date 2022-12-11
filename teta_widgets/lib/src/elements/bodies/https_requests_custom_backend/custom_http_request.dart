@@ -24,7 +24,7 @@ import 'package:teta_widgets/src/elements/widgets/https_requests_custom_backend/
 const _globalType = NType.customHttpRequest;
 
 final customHttpRequestIntrinsicStates = IntrinsicStates(
-  nodeIcon: Assets.icons.left.dataset,
+  nodeIcon: Assets.icons.left.api,
   nodeVideo: null,
   nodeDescription: null,
   advicedChildren: [
@@ -114,7 +114,8 @@ class CustomHttpRequestBody extends NodeBody {
       children: children ?? [],
       url: attributes[DBKeys.customHttpRequestURL] as FTextTypeInput,
       addParams: attributes[DBKeys.customHttpRequestList] as List<MapElement>,
-      addHeaders: attributes[DBKeys.customHttpRequestHeader] as List<MapElement>,
+      addHeaders:
+          attributes[DBKeys.customHttpRequestHeader] as List<MapElement>,
     );
   }
 

@@ -22,7 +22,7 @@ const _globalType = NType.autoAppBar;
 
 /// Instrict State of Align
 final autoAppBarIntrinsicStates = IntrinsicStates(
-  nodeIcon: Assets.wIcons.appbar,
+  nodeIcon: Assets.wIcons.appBar,
   nodeVideo: null,
   nodeDescription: null,
   advicedChildren: [],

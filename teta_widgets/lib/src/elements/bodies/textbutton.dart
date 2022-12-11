@@ -25,7 +25,7 @@ const _globalType = NType.textButton;
 
 /// IntrinsicStates for [TextButton] widget
 final textButtonIntrinsicStates = IntrinsicStates(
-  nodeIcon: Assets.wIcons.textbutton,
+  nodeIcon: Assets.wIcons.textButton,
   nodeVideo: null,
   nodeDescription: null,
   advicedChildren: [
@@ -49,7 +49,8 @@ final textButtonIntrinsicStates = IntrinsicStates(
     const Suggestion(
       title: 'Why use Textbutton in Teta?',
       description: 'Test',
-      linkToOpen: 'https://docs.teta.so/teta-docs/widget/input-widgets/textbutton',
+      linkToOpen:
+          'https://docs.teta.so/teta-docs/widget/input-widgets/textbutton',
     )
   ],
 );

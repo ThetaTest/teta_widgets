@@ -23,7 +23,7 @@ const _globalType = NType.clipRoundedRect;
 
 /// Intrinsic States of Center node type
 final clipRRectIntrinsicStates = IntrinsicStates(
-  nodeIcon: Assets.wIcons.clipRRect,
+  nodeIcon: Assets.wIcons.clipRrect,
   nodeVideo: null,
   nodeDescription: 'A widget that centers its child within itself.',
   advicedChildren: [

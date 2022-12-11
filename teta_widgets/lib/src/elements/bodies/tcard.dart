@@ -31,7 +31,7 @@ const _globalType = NType.tcard;
 
 /// IS
 final tcardIntrinsicStates = IntrinsicStates(
-  nodeIcon: Assets.wIcons.tCardBuilder,
+  nodeIcon: Assets.wIcons.tcardBuilder,
   nodeVideo: null,
   nodeDescription: null,
   advicedChildren: [

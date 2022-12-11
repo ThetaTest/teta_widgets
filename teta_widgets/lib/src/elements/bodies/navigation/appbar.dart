@@ -22,7 +22,7 @@ const _globalType = NType.appBar;
 
 /// IS
 final appBarIntrinsicStates = IntrinsicStates(
-  nodeIcon: Assets.wIcons.appbar,
+  nodeIcon: Assets.wIcons.appBar,
   nodeVideo: null,
   nodeDescription: null,
   advicedChildren: [],

@@ -32,7 +32,7 @@ const _globalType = NType.tcardBuilder;
 
 /// IS
 final tcardBuilderIntrinsicStates = IntrinsicStates(
-  nodeIcon: Assets.wIcons.tCardBuilder,
+  nodeIcon: Assets.wIcons.tcardBuilder,
   nodeVideo: null,
   nodeDescription: null,
   advicedChildren: [
@@ -41,7 +41,14 @@ final tcardBuilderIntrinsicStates = IntrinsicStates(
     NodeType.name(NType.stack),
   ],
   blockedTypes: [],
-  synonymous: ['tcard builder', 'tinder', 'card', 'online meet', 'swipe', 'pageview'],
+  synonymous: [
+    'tcard builder',
+    'tinder',
+    'card',
+    'online meet',
+    'swipe',
+    'pageview'
+  ],
   advicedChildrenCanHaveAtLeastAChild: [],
   displayName: NodeType.name(_globalType),
   type: _globalType,
@@ -61,7 +68,8 @@ final tcardBuilderIntrinsicStates = IntrinsicStates(
     const Suggestion(
       title: 'Why use Tcard Builder in Teta?',
       description: 'Test',
-      linkToOpen: 'https://docs.teta.so/teta-docs/widget/list-widgets/tcard-builder',
+      linkToOpen:
+          'https://docs.teta.so/teta-docs/widget/list-widgets/tcard-builder',
     )
   ],
 );

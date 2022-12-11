@@ -23,7 +23,7 @@ const _globalType = NType.constrainedBox;
 
 /// Intrinsic States of Center node type
 final constrainedBoxIntrinsicStates = IntrinsicStates(
-  nodeIcon: Assets.wIcons.constrained_box,
+  nodeIcon: Assets.wIcons.constrainedBox,
   nodeVideo: null,
   nodeDescription: 'A widget that centers its child within itself.',
   advicedChildren: [
@@ -48,7 +48,8 @@ final constrainedBoxIntrinsicStates = IntrinsicStates(
     const Suggestion(
       title: 'Why use Constrained Box in Teta?',
       description: 'Test',
-      linkToOpen: 'https://docs.teta.so/teta-docs/widget/advanced-widgets/constrained-box',
+      linkToOpen:
+          'https://docs.teta.so/teta-docs/widget/advanced-widgets/constrained-box',
     )
   ],
 );

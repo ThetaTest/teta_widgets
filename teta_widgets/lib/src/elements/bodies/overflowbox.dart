@@ -23,7 +23,7 @@ const _globalType = NType.overflowbox;
 
 /// Intrinsic States of Center node type
 final overFlowBoxIntrinsicStates = IntrinsicStates(
-  nodeIcon: Assets.wIcons.overflowBox,
+  nodeIcon: Assets.wIcons.overflowbox,
   nodeVideo: null,
   nodeDescription: 'A widget that centers its child within itself.',
   advicedChildren: [
@@ -48,7 +48,8 @@ final overFlowBoxIntrinsicStates = IntrinsicStates(
     const Suggestion(
       title: 'Why use Overflowbox in Teta?',
       description: 'Test',
-      linkToOpen: 'https://docs.teta.so/teta-docs/widget/advanced-widgets/overflowbox',
+      linkToOpen:
+          'https://docs.teta.so/teta-docs/widget/advanced-widgets/overflowbox',
     )
   ],
 );
