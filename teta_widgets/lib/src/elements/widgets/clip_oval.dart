@@ -24,7 +24,7 @@ class WClipOval extends StatelessWidget {
       state: state,
       child: ClipOval(
         child: ChildConditionBuilder(
-          ValueKey('${state.node.nid} ${state.loop}'),
+          ValueKey(state.toKey),
           state: state,
           child: child,
         ),

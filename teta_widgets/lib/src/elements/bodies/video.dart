@@ -80,7 +80,8 @@ class VideoBody extends NodeBody {
           title: 'Show Controls',
           key: DBKeys.showControls,
           value: attributes[DBKeys.showControls],
-          description: 'Indicates whether the video player controls are displayed.',
+          description:
+              'Indicates whether the video player controls are displayed.',
         ),
         FlagControlObject(
           title: 'Full Screen',
@@ -92,7 +93,8 @@ class VideoBody extends NodeBody {
           title: 'Looped',
           key: DBKeys.loopVideo,
           value: attributes[DBKeys.loopVideo],
-          description: 'Enables or disables the player to play the initial video again and again.',
+          description:
+              'Enables or disables the player to play the initial video again and again.',
         ),
       ];
 
@@ -105,8 +107,7 @@ class VideoBody extends NodeBody {
       WVideo(
         ValueKey(
           '''
-            ${state.node.nid}
-            ${state.loop}
+            ${state.toKey}
             ${child ?? children}
             ${(attributes[DBKeys.value] as FTextTypeInput? ?? FTextTypeInput()).toJson()}
             ${attributes[DBKeys.startAt] as int? ?? 0}
@@ -116,7 +117,8 @@ class VideoBody extends NodeBody {
             ''',
         ),
         state: state,
-        value: attributes[DBKeys.value] as FTextTypeInput? ?? FTextTypeInput(value: 'K18cpp_-gP8'),
+        value: attributes[DBKeys.value] as FTextTypeInput? ??
+            FTextTypeInput(value: 'K18cpp_-gP8'),
         startAt: attributes[DBKeys.startAt] as int? ?? 0,
         showControls: attributes[DBKeys.showControls] as bool? ?? false,
         showFullScreen: attributes[DBKeys.isFullWidth] as bool? ?? false,

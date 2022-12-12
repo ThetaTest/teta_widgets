@@ -72,8 +72,7 @@ class ClipRRectBody extends NodeBody {
       WClipRRect(
         ValueKey(
           '''
-          ${state.node.nid}
-          ${state.loop}
+          ${state.toKey}
           ${child ?? children}
           ${(attributes[DBKeys.borderRadius] as FBorderRadius).toJson()}, 
           ''',

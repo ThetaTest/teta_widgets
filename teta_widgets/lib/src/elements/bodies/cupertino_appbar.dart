@@ -89,8 +89,7 @@ class CupertinoAppBarBody extends NodeBody {
       WCupertinoAppBar(
         ValueKey(
           '''
-          ${state.node.nid}
-          ${state.loop}
+          ${state.toKey}
           ${child ?? children}
           ${(attributes[DBKeys.fill] as FFill).toJson()}
           ''',

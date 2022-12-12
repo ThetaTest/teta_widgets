@@ -94,8 +94,7 @@ class SupabaseStreamBuilderBody extends NodeBody {
     final str = StringBuffer()
       ..write(
         '''
-        ${state.node.nid}
-        ${state.loop}
+        ${state.toKey}
         ${child ?? children}
       ''',
       )

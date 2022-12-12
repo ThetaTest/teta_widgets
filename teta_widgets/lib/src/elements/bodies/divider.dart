@@ -99,8 +99,7 @@ class DividerBody extends NodeBody {
       WDivider(
         ValueKey(
           '''
-          ${state.node.nid}
-          ${state.loop}
+          ${state.toKey}
           ${child ?? children}
           ${(attributes[DBKeys.height] as FSize).toJson()}
           ${(attributes[DBKeys.fill] as FFill).toJson()}

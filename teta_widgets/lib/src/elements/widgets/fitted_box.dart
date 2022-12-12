@@ -27,7 +27,7 @@ class WFittedBox extends StatelessWidget {
       state: state,
       child: FittedBox(
         child: ChildConditionBuilder(
-          ValueKey('${state.node.nid} ${state.loop}'),
+          ValueKey(state.toKey),
           state: state,
           child: child,
         ),

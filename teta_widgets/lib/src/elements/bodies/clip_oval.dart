@@ -59,8 +59,7 @@ class ClipOvalBody extends NodeBody {
       WClipOval(
         ValueKey(
           '''
-            ${state.node.nid}
-            ${state.loop}
+            ${state.toKey}
             ${child ?? children}
             ''',
         ),

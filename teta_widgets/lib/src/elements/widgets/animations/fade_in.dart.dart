@@ -28,7 +28,7 @@ class WFadeInAnimation extends StatelessWidget {
       forPlay: state.forPlay,
       child: FadeInAnimation(
         child: ChildConditionBuilder(
-          ValueKey('${state.node.nid} ${state.loop}'),
+          ValueKey(state.toKey),
           state: state,
           child: child,
         ),

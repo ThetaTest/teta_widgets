@@ -97,8 +97,7 @@ class BadgeBody extends NodeBody {
       WBadge(
         ValueKey(
           '''
-          ${state.node.nid}
-          ${state.loop}
+          ${state.toKey}
           ${child ?? children}
           ${(attributes[DBKeys.value] as FTextTypeInput).value}
           ${(attributes[DBKeys.value] as FTextTypeInput).type}

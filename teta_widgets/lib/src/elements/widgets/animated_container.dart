@@ -65,7 +65,7 @@ class WAnimatedContainer extends StatelessWidget {
           shadow: shadows,
         ),
         child: ChildConditionBuilder(
-          ValueKey('${state.node.nid} ${state.loop}'),
+          ValueKey(state.toKey),
           state: state,
           child: child,
         ),

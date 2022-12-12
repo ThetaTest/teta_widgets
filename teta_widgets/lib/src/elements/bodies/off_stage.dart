@@ -50,7 +50,8 @@ final offStageIntrinsicStates = IntrinsicStates(
     const Suggestion(
       title: 'Why use Off Stage in Teta?',
       description: 'Test',
-      linkToOpen: 'https://docs.teta.so/teta-docs/widget/advanced-widgets/off-stage',
+      linkToOpen:
+          'https://docs.teta.so/teta-docs/widget/advanced-widgets/off-stage',
     )
   ],
 );
@@ -83,8 +84,7 @@ class OffStageBody extends NodeBody {
     return WOffStage(
       ValueKey(
         '''
-      ${state.node.nid}
-      ${state.loop}
+      ${state.toKey}
       ${child ?? children}
       ${attributes[DBKeys.flag] as bool}
       ''',

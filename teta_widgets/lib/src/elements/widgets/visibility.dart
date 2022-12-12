@@ -33,7 +33,7 @@ class WVisibility extends StatelessWidget {
       child: Visibility(
         visible: val == 'true',
         child: ChildConditionBuilder(
-          ValueKey('${state.node.nid} ${state.loop}'),
+          ValueKey(state.toKey),
           state: state,
           child: child,
         ),

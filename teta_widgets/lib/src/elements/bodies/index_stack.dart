@@ -49,7 +49,8 @@ final indexedStackIntrinsicStates = IntrinsicStates(
     const Suggestion(
       title: 'Why use Indexed Stack in Teta?',
       description: 'Test',
-      linkToOpen: 'https://docs.teta.so/teta-docs/widget/logic-widgets/indexed-stack',
+      linkToOpen:
+          'https://docs.teta.so/teta-docs/widget/logic-widgets/indexed-stack',
     )
   ],
 );
@@ -82,8 +83,7 @@ class IndexedStackBody extends NodeBody {
       WIndexedStack(
         ValueKey(
           '''
-          ${state.node.nid}
-          ${state.loop}
+          ${state.toKey}
           ${child ?? children}
           ${(attributes[DBKeys.value] as FTextTypeInput).toJson()}
           ''',

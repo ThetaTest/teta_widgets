@@ -33,7 +33,13 @@ final materialAppBarIntrinsicStates = IntrinsicStates(
   category: NodeCategories.unclassified,
   maxChildren: 5,
   canHave: ChildrenEnum.children,
-  addChildLabels: ['Add Title', 'Add Leading', 'Add Action', 'Add Action', 'Add Action'],
+  addChildLabels: [
+    'Add Title',
+    'Add Leading',
+    'Add Action',
+    'Add Action',
+    'Add Action'
+  ],
   gestures: [],
   permissions: [],
   packages: [],
@@ -100,8 +106,7 @@ class MaterialAppBarBody extends NodeBody {
       WMaterialAppBar(
         ValueKey(
           '''
-      ${state.node.nid}
-      ${state.loop}
+      ${state.toKey}
             ${child ?? children}
       ${(attributes[DBKeys.fill] as FFill).toJson()}
       ''',

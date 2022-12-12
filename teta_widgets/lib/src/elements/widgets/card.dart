@@ -49,7 +49,7 @@ class WCard extends StatelessWidget {
         elevation: double.tryParse(val) != null ? double.parse(val) : 1,
         shape: TetaShapeCard.get(context: context, borderRadius: borderRadius),
         child: ChildConditionBuilder(
-          ValueKey('${state.node.nid} ${state.loop}'),
+          ValueKey(state.toKey),
           state: state,
           child: child,
         ),

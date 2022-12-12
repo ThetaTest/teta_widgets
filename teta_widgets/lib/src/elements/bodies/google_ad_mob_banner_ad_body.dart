@@ -90,8 +90,7 @@ class GoogleAdMobBannerAdBody extends NodeBody {
       WGoogleAdMobBannerAd(
         ValueKey(
           '''
-            ${state.node.nid}
-            ${state.loop}
+            ${state.toKey}
             ${child ?? children}
             ${(attributes[DBKeys.adMobAdIosUnitId] as FTextTypeInput? ?? FTextTypeInput()).toJson()}
             ${(attributes[DBKeys.adMobAdAndroidUnitId] as FTextTypeInput? ?? FTextTypeInput()).toJson()}

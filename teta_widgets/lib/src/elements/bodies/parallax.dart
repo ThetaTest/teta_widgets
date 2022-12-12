@@ -73,8 +73,7 @@ class ParallaxBoxBody extends NodeBody {
       WParallax(
         ValueKey(
           '''
-            ${state.node.nid}
-            ${state.loop}
+            ${state.toKey}
             ${child ?? children}
             ${(attributes[DBKeys.height] as FSize? ?? FSize()).toJson()}, 
             ''',

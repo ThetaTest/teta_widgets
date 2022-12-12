@@ -96,8 +96,7 @@ class TooltipBody extends NodeBody {
       WTooltip(
         ValueKey(
           '''
-            ${state.node.nid}
-            ${state.loop}
+            ${state.toKey}
             ${child ?? children}
             ${(attributes[DBKeys.value] as FTextTypeInput? ?? FTextTypeInput()).toJson()}
             ''',

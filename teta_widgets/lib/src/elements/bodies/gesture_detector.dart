@@ -46,7 +46,11 @@ final gestureDetectorIntrinsicStates = IntrinsicStates(
   maxChildren: 1,
   canHave: ChildrenEnum.child,
   addChildLabels: [],
-  gestures: [ActionGesture.onTap, ActionGesture.onLongPress, ActionGesture.onDoubleTap],
+  gestures: [
+    ActionGesture.onTap,
+    ActionGesture.onLongPress,
+    ActionGesture.onDoubleTap
+  ],
   permissions: [],
   packages: [],
   suggestionsTitle: 'Why use Gesture Detector in Teta?',
@@ -54,7 +58,8 @@ final gestureDetectorIntrinsicStates = IntrinsicStates(
     const Suggestion(
       title: 'Why use Gesture Detector in Teta?',
       description: 'Test',
-      linkToOpen: 'https://docs.teta.so/teta-docs/widget/input-widgets/gesture-detector',
+      linkToOpen:
+          'https://docs.teta.so/teta-docs/widget/input-widgets/gesture-detector',
     )
   ],
 );
@@ -80,8 +85,7 @@ class GestureDetectorBody extends NodeBody {
       WGestureDetector(
         ValueKey(
           '''
-          ${state.node.nid}
-          ${state.loop}
+          ${state.toKey}
           ${child ?? children}
           ${(attributes[DBKeys.action] as FAction).toJson()}
           ''',

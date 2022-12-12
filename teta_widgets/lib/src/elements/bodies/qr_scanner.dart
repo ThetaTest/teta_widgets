@@ -57,8 +57,7 @@ class QrScannerBody extends NodeBody {
       WQRScanner(
         ValueKey(
           '''
-          ${state.node.nid}
-          ${state.loop}
+          ${state.toKey}
           ''',
         ),
         state: state,

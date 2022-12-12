@@ -46,7 +46,8 @@ final ignorePointIntrinsicStates = IntrinsicStates(
     const Suggestion(
       title: 'Why use Ignore Pointer in Teta?',
       description: 'Test',
-      linkToOpen: 'https://docs.teta.so/teta-docs/widget/logic-widgets/ignore-pointer',
+      linkToOpen:
+          'https://docs.teta.so/teta-docs/widget/logic-widgets/ignore-pointer',
     )
   ],
 );
@@ -78,8 +79,7 @@ class IgnorePointerBody extends NodeBody {
       WIgnorePointer(
         ValueKey(
           '''
-          ${state.node.nid}
-          ${state.loop}
+          ${state.toKey}
           ${child ?? children}
           ${attributes[DBKeys.flag] as bool}
           ''',

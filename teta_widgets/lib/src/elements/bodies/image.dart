@@ -108,8 +108,7 @@ class ImageBody extends NodeBody {
       WImage(
         ValueKey(
           '''
-            ${state.node.nid}
-            ${state.loop}
+            ${state.toKey}
             ${child ?? children}
             ${(attributes[DBKeys.image] as FTextTypeInput).toJson()} 
             ${(attributes[DBKeys.width] as FSize).size}

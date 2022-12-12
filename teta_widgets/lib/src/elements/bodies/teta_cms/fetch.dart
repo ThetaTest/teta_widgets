@@ -116,7 +116,8 @@ class CmsFetchBody extends NodeBody {
           title: 'Show drafts',
           key: DBKeys.flag,
           value: attributes[DBKeys.flag],
-          description: 'Show doc drafts. Valid only in editor, not in production',
+          description:
+              'Show doc drafts. Valid only in editor, not in production',
         ),
       ];
 
@@ -129,8 +130,7 @@ class CmsFetchBody extends NodeBody {
     return WCmsFetch(
       ValueKey(
         '''
-        ${state.node.nid}
-        ${state.loop}
+        ${state.toKey}
         ${child ?? children}
         ${(attributes[DBKeys.cmsCollection] as FTextTypeInput).toJson()}
         ${(attributes[DBKeys.cmsLimit] as FTextTypeInput).toJson()}

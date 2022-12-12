@@ -26,7 +26,7 @@ class WMarker extends StatelessWidget {
   @override
   Widget build(final BuildContext context) {
     return ChildConditionBuilder(
-      ValueKey('${state.node.nid} ${state.loop}'),
+      ValueKey(state.toKey),
       state: state,
       child: child,
     );

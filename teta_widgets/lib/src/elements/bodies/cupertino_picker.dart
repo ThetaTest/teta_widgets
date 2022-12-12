@@ -92,8 +92,7 @@ class CupertinoPickerBody extends NodeBody {
       WCupertinoPicker(
         ValueKey(
           '''
-          ${state.node.nid}
-          ${state.loop}
+          ${state.toKey}
           ${child ?? children}
           ${attributes[DBKeys.flag] as bool}
           ${(attributes[DBKeys.height] as FSize).toJson()}

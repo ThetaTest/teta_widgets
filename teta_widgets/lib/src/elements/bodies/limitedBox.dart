@@ -81,8 +81,7 @@ class LimitedBoxBody extends NodeBody {
     return WLimitedBox(
       ValueKey(
         '''
-          ${state.node.nid}
-          ${state.loop}
+          ${state.toKey}
           ${child ?? children}
           ${(attributes[DBKeys.maxWidth] as FSize).toJson()},
           ${(attributes[DBKeys.maxHeight] as FSize).toJson()},

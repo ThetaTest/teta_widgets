@@ -36,7 +36,14 @@ final cmsStreamIntrinsicStates = IntrinsicStates(
     NodeType.name(NType.row)
   ],
   blockedTypes: [],
-  synonymous: [NodeType.name(_globalType), 'cms', 'teta', 'articles', 'stream', 'feed'],
+  synonymous: [
+    NodeType.name(_globalType),
+    'cms',
+    'teta',
+    'articles',
+    'stream',
+    'feed'
+  ],
   advicedChildrenCanHaveAtLeastAChild: [],
   displayName: NodeType.name(_globalType),
   type: _globalType,
@@ -113,7 +120,8 @@ class CmsStreamBody extends NodeBody {
           title: 'Show drafts',
           key: DBKeys.flag,
           value: attributes[DBKeys.flag],
-          description: 'Show doc drafts. Valid only in editor, not in production',
+          description:
+              'Show doc drafts. Valid only in editor, not in production',
         ),
       ];
 
@@ -126,8 +134,7 @@ class CmsStreamBody extends NodeBody {
     return WCmsStream(
       ValueKey(
         '''
-        ${state.node.nid}
-        ${state.loop}
+        ${state.toKey}
         ${child ?? children}
         ${(attributes[DBKeys.cmsCollection] as FTextTypeInput).toJson()}
         ${(attributes[DBKeys.cmsLimit] as FTextTypeInput).toJson()}

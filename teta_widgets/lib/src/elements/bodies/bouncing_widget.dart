@@ -98,8 +98,7 @@ class BouncingWidgetBody extends NodeBody {
     return WBouncingWidget(
       ValueKey(
         '''
-        ${state.node.nid}
-        ${state.loop}
+        ${state.toKey}
         ${child ?? children}
         ${(attributes[DBKeys.action] as FAction).toJson()}
         ${(attributes[DBKeys.value] as FTextTypeInput).toJson()}

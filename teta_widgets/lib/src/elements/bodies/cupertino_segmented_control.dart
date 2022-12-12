@@ -37,7 +37,14 @@ final cupertinoSegmentedControlIntrinsicStates = IntrinsicStates(
     NodeType.name(NType.image),
   ],
   blockedTypes: [],
-  synonymous: ['cupertinoSwitch', 'checkbox', 'radio', 'ontap', 'onpressed', 'click'],
+  synonymous: [
+    'cupertinoSwitch',
+    'checkbox',
+    'radio',
+    'ontap',
+    'onpressed',
+    'click'
+  ],
   advicedChildrenCanHaveAtLeastAChild: [],
   displayName: NodeType.name(_globalType),
   type: _globalType,
@@ -55,7 +62,8 @@ final cupertinoSegmentedControlIntrinsicStates = IntrinsicStates(
     const Suggestion(
       title: 'Why use Cupertino Segmented Control in Teta?',
       description: 'Test',
-      linkToOpen: 'https://docs.teta.so/teta-docs/widget/input-widgets/cupertino-segmented-control',
+      linkToOpen:
+          'https://docs.teta.so/teta-docs/widget/input-widgets/cupertino-segmented-control',
     )
   ],
 );
@@ -142,8 +150,7 @@ class CupertinoSegmentedControlBody extends NodeBody {
       WCupertinoSegmentedControl(
         ValueKey(
           '''
-          ${state.node.nid}
-          ${state.loop}
+          ${state.toKey}
           ${child ?? children}
           ${(attributes[DBKeys.textFill] as FFill).toJson()}
           ${(attributes[DBKeys.activeFill] as FFill).toJson()}

@@ -90,8 +90,7 @@ class LocationBody extends NodeBody {
     return WContainer(
       ValueKey(
         '''
-      ${state.node.nid}
-      ${state.loop}
+      ${state.toKey}
       ${child ?? children}
       ${(attributes[DBKeys.width] as FSize).toJson()}
       ${(attributes[DBKeys.height] as FSize).toJson()}
@@ -147,9 +146,12 @@ class LocationBody extends NodeBody {
         pageId,
         context,
         //lat
-        (attributes[DBKeys.googleMapsController] as FTextTypeInput).stateName ?? '',
+        (attributes[DBKeys.googleMapsController] as FTextTypeInput).stateName ??
+            '',
         //lng
-        (attributes[DBKeys.googleMapsCubitController] as FTextTypeInput).stateName ?? '',
+        (attributes[DBKeys.googleMapsCubitController] as FTextTypeInput)
+                .stateName ??
+            '',
         loop,
         node,
       );

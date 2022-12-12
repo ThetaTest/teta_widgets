@@ -58,7 +58,8 @@ final calendarIntrinsicStates = IntrinsicStates(
     const Suggestion(
       title: 'Why use Calendar in Teta?',
       description: 'Test',
-      linkToOpen: 'https://docs.teta.so/teta-docs/widget/advanced-widgets/calendar',
+      linkToOpen:
+          'https://docs.teta.so/teta-docs/widget/advanced-widgets/calendar',
     )
   ],
 );
@@ -165,8 +166,7 @@ class CalendarBody extends NodeBody {
       WCalendar(
         ValueKey(
           '''
-          ${state.node.nid}
-          ${state.loop}
+          ${state.toKey}
           ${child ?? children}
           ${(attributes[DBKeys.action] as FAction).toJson()}, 
           ${(attributes[DBKeys.datasetInput] as FDataset).toJson()}, 

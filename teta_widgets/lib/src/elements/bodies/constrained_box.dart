@@ -106,8 +106,7 @@ class ConstrainedBoxBody extends NodeBody {
       WConstrainedBox(
         ValueKey(
           '''
-            ${state.node.nid}
-            ${state.loop}
+            ${state.toKey}
             ${child ?? children}
             ${(attributes[DBKeys.minWidth] as FSize).toJson()}, 
             ${(attributes[DBKeys.minHeight] as FSize).toJson()}, 

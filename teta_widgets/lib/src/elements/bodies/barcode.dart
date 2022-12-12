@@ -103,8 +103,7 @@ class BarcodeBody extends NodeBody {
       WBarcode(
         ValueKey(
           '''
-          ${state.node.nid}
-          ${state.loop}
+          ${state.toKey}
           ${child ?? children}
           ${(attributes[DBKeys.value] as FTextTypeInput).toJson()}
           ${(attributes[DBKeys.image] as FTextTypeInput).toJson()}

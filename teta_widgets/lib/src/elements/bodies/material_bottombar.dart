@@ -95,8 +95,7 @@ class MaterialBottomBarBody extends NodeBody {
       WMaterialBottomBar(
         ValueKey(
           '''
-          ${state.node.nid}
-          ${state.loop}
+          ${state.toKey}
           ${child ?? children}
           ${(attributes[DBKeys.fill] as FFill).toJson()}
           ''',

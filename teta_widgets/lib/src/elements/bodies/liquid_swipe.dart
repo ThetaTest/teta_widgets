@@ -60,8 +60,7 @@ class LiquidSwipeBody extends NodeBody {
       WLiquidSwipe(
         ValueKey(
           '''
-          ${state.node.nid}
-          ${state.loop}
+          ${state.toKey}
           ${child ?? children}
           ''',
         ),

@@ -30,7 +30,12 @@ final firebaseStreamBuilderIntrinsicStates = IntrinsicStates(
     NodeType.name(NType.row),
   ],
   blockedTypes: [],
-  synonymous: [NodeType.name(_globalType), 'firestore', 'firebase', 'stream builder'],
+  synonymous: [
+    NodeType.name(_globalType),
+    'firestore',
+    'firebase',
+    'stream builder'
+  ],
   advicedChildrenCanHaveAtLeastAChild: [],
   displayName: NodeType.name(_globalType),
   type: _globalType,
@@ -68,7 +73,7 @@ class FirebaseSBBody extends NodeBody {
     final List<CNode>? children,
   }) =>
       WFirebaseStreamBuilder(
-        ValueKey('${state.node.nid} ${state.loop}'),
+        ValueKey(state.toKey),
         state: state,
         child: child,
         path: attributes[DBKeys.firestorePath] as FFirestorePath,

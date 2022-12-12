@@ -87,8 +87,7 @@ class AudioPlayerBody extends NodeBody {
     return WAudioPlayer(
       ValueKey(
         '''
-          ${state.node.nid}
-          ${state.loop}
+          ${state.toKey}
           ${child ?? children}
           ${(attributes[DBKeys.value] as FTextTypeInput).toJson()}, 
         ''',
@@ -117,9 +116,14 @@ class AudioPlayerBody extends NodeBody {
           context: context,
           body: this,
           child: child,
-          audioPlayerName: ((attributes[DBKeys.value] as FTextTypeInput).stateName ?? '').camelCase,
-          songsDataSetToCode: (attributes[DBKeys.datasetInput] as FDataset).datasetName ?? '',
-          urlKey: (attributes[DBKeys.datasetInput] as FDataset).datasetAttrName ?? '',
+          audioPlayerName:
+              ((attributes[DBKeys.value] as FTextTypeInput).stateName ?? '')
+                  .camelCase,
+          songsDataSetToCode:
+              (attributes[DBKeys.datasetInput] as FDataset).datasetName ?? '',
+          urlKey:
+              (attributes[DBKeys.datasetInput] as FDataset).datasetAttrName ??
+                  '',
           currentSongDatasetName: node.name ?? node.intrinsicState.displayName,
         ),
         loop ?? 0,

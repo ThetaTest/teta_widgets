@@ -65,8 +65,7 @@ class FadeInAnimationBody extends NodeBody {
       WFadeInAnimation(
         ValueKey(
           '''
-          ${state.node.nid}
-          ${state.loop}
+          ${state.toKey}
           ${child ?? children}
         ''',
         ),

@@ -97,7 +97,8 @@ class GridViewBody extends NodeBody {
           type: ControlType.value,
           key: DBKeys.mainAxisSpacing,
           value: attributes[DBKeys.mainAxisSpacing],
-          description: 'The number of logical pixels between each child along the main axis.',
+          description:
+              'The number of logical pixels between each child along the main axis.',
           valueType: VariableType.int,
         ),
         ControlObject(
@@ -113,7 +114,8 @@ class GridViewBody extends NodeBody {
           type: ControlType.value,
           key: DBKeys.crossAxisSpacing,
           value: attributes[DBKeys.crossAxisSpacing],
-          description: 'The number of logical pixels between each child along the cross axis.',
+          description:
+              'The number of logical pixels between each child along the cross axis.',
           valueType: VariableType.int,
         ),
         ControlObject(
@@ -121,7 +123,8 @@ class GridViewBody extends NodeBody {
           type: ControlType.value,
           key: DBKeys.childAspectRatio,
           value: attributes[DBKeys.childAspectRatio],
-          description: 'The ratio of the cross-axis to the main-axis extent of each child.',
+          description:
+              'The ratio of the cross-axis to the main-axis extent of each child.',
           valueType: VariableType.double,
         ),
       ];
@@ -135,8 +138,7 @@ class GridViewBody extends NodeBody {
       WGridView(
         ValueKey(
           '''
-          ${state.node.nid}
-          ${state.loop}
+          ${state.toKey}
           ${child ?? children}
           ${attributes[DBKeys.isPrimary] as bool}
           ${attributes[DBKeys.isVertical] as bool}

@@ -5,7 +5,6 @@
 import 'package:flutter/material.dart';
 // Package imports:
 import 'package:teta_core/gen/assets.gen.dart';
-import 'package:teta_core/src/models/dataset.dart';
 import 'package:teta_core/src/models/variable.dart';
 import 'package:teta_widgets/src/core/teta_widget/index.dart';
 // Project imports:
@@ -54,7 +53,8 @@ final listViewBuilderIntrinsicStates = IntrinsicStates(
     const Suggestion(
       title: 'Why use ListView Builder in Teta?',
       description: 'Test',
-      linkToOpen: 'https://docs.teta.so/teta-docs/widget/list-widgets/listview-builder',
+      linkToOpen:
+          'https://docs.teta.so/teta-docs/widget/list-widgets/listview-builder',
     )
   ],
 );
@@ -123,7 +123,8 @@ class ListViewBuilderBody extends NodeBody {
           type: ControlType.physics,
           key: DBKeys.physic,
           value: attributes[DBKeys.physic],
-          description: 'Use the physics in order to have different scrolling behaviours',
+          description:
+              'Use the physics in order to have different scrolling behaviours',
           valueType: VariableType.string,
         ),
       ];
@@ -137,8 +138,7 @@ class ListViewBuilderBody extends NodeBody {
       WListViewBuilder(
         ValueKey(
           '''
-          ${state.node.nid}
-          ${state.loop}
+          ${state.toKey}
           ${child ?? children}
           ${(attributes[DBKeys.datasetInput] as FDataset).toJson()}
           ${attributes[DBKeys.isVertical] as bool}

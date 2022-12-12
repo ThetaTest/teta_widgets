@@ -94,7 +94,10 @@ class DotsIndicatorBody extends NodeBody {
         ),
         SizesControlObject(
           keys: const [DBKeys.width, DBKeys.height],
-          values: [attributes[DBKeys.width] as FSize, attributes[DBKeys.height] as FSize],
+          values: [
+            attributes[DBKeys.width] as FSize,
+            attributes[DBKeys.height] as FSize
+          ],
         ),
         ControlObject(
           type: ControlType.borderRadius,
@@ -131,8 +134,7 @@ class DotsIndicatorBody extends NodeBody {
       WDotsIndicator(
         ValueKey(
           '''
-          ${state.node.nid}
-          ${state.loop}
+          ${state.toKey}
           ${child ?? children}
           ${(attributes[DBKeys.height] as FSize).toJson()}
           ${(attributes[DBKeys.fill] as FFill).toJson()}

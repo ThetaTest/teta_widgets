@@ -53,7 +53,11 @@ final buttonIntrinsicStates = IntrinsicStates(
   maxChildren: 0,
   canHave: ChildrenEnum.none,
   addChildLabels: [],
-  gestures: [ActionGesture.onTap, ActionGesture.onLongPress, ActionGesture.onDoubleTap],
+  gestures: [
+    ActionGesture.onTap,
+    ActionGesture.onLongPress,
+    ActionGesture.onDoubleTap
+  ],
   permissions: [],
   packages: [],
   suggestionsTitle: 'Why use Button in Teta?',
@@ -145,8 +149,7 @@ class ButtonBody extends NodeBody {
       WButton(
         ValueKey(
           '''
-          ${state.node.nid}
-          ${state.loop}
+          ${state.toKey}
           ${child ?? children}
           ${(attributes[DBKeys.width] as FSize).toJson()}
           ${(attributes[DBKeys.height] as FSize).toJson()}

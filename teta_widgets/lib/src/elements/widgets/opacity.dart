@@ -38,7 +38,7 @@ class WOpacity extends StatelessWidget {
       child: Opacity(
         opacity: opacity,
         child: ChildConditionBuilder(
-          ValueKey('${state.node.nid} ${state.loop}'),
+          ValueKey(state.toKey),
           state: state,
           child: child,
         ),

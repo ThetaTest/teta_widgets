@@ -51,7 +51,8 @@ final placeholderIntrinsicStates = IntrinsicStates(
     const Suggestion(
       title: 'Why use Placeholder in Teta?',
       description: 'Test',
-      linkToOpen: 'https://docs.teta.so/teta-docs/widget/advanced-widgets/placeholder',
+      linkToOpen:
+          'https://docs.teta.so/teta-docs/widget/advanced-widgets/placeholder',
     )
   ],
 );
@@ -103,8 +104,7 @@ class PlaceholderBody extends NodeBody {
       WPlaceholder(
         ValueKey(
           '''
-            ${state.node.nid}
-            ${state.loop}
+            ${state.toKey}
             ${child ?? children}
             ${(attributes[DBKeys.fill] as FFill).toJson()}, 
             ${(attributes[DBKeys.value] as FTextTypeInput).toJson()}, 

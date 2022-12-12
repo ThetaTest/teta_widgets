@@ -128,8 +128,7 @@ class BottomBarItemBody extends NodeBody {
       WBottomBarItem(
         ValueKey(
           '''
-          ${state.node.nid}
-          ${state.loop}
+          ${state.toKey}
           ${child ?? children}
           ${(attributes[DBKeys.action] as FAction).toJson()}
           ${(attributes[DBKeys.width] as FSize).toJson()}

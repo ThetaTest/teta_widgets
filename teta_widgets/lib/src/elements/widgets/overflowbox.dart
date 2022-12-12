@@ -36,7 +36,7 @@ class WOverFlowBox extends StatelessWidget {
         maxWidth: maxWidth.get(context: context, isWidth: true) ?? 0,
         maxHeight: maxHeight.get(context: context, isWidth: false) ?? 0,
         child: ChildConditionBuilder(
-          ValueKey('${state.node.nid} ${state.loop}'),
+          ValueKey(state.toKey),
           state: state,
           child: child,
         ),

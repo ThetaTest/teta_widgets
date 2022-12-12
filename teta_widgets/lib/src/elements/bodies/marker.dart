@@ -90,8 +90,7 @@ class MarkerBody extends NodeBody {
       WMarker(
         ValueKey(
           '''
-      ${state.node.nid}
-      ${state.loop}
+      ${state.toKey}
       ${child ?? children}
       ${(attributes[DBKeys.latitude] as FTextTypeInput).toJson()}
       ${(attributes[DBKeys.longitude] as FTextTypeInput).toJson()}

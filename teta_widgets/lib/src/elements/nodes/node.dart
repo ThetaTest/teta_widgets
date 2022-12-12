@@ -64,7 +64,8 @@ abstract class CNode extends Equatable {
   FChildrenIds childrenIds;
 
   @override
-  String toString() => 'Component: GlobalType: $globalType, Name: $name, Index: $index';
+  String toString() =>
+      'Component: GlobalType: $globalType, Name: $name, Index: $index';
 
   /// Returns display name of any node
   static List<String> get nodes => NType.values.map(NodeType.type).toList();
@@ -78,6 +79,7 @@ abstract class CNode extends Equatable {
   /// Render a Widget from node
   Widget toWidgetFromParams({
     required final bool forPlay,
+    required final int loop,
     required final List<VariableObject> params,
     required final List<VariableObject> states,
     required final List<DatasetObject> datasets,

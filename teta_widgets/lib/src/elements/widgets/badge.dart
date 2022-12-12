@@ -50,7 +50,7 @@ class WBadge extends StatelessWidget {
         ),
         badgeColor: _getbadgeColor(model, isLight),
         child: ChildConditionBuilder(
-          ValueKey('${state.node.nid} ${state.loop}'),
+          ValueKey(state.toKey),
           state: state,
           child: child,
         ),

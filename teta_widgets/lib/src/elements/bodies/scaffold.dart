@@ -2,7 +2,6 @@
 // ignore_for_file: lines_longer_than_80_chars
 
 // Package imports:
-import 'package:collection/collection.dart';
 // Flutter imports:
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -81,15 +80,6 @@ class ScaffoldBody extends NodeBody {
     DBKeys.flag: true,
   };
 
-  /// Parameters of the page
-  List<VariableObject> params = [];
-
-  /// States of the page
-  List<VariableObject> states = [];
-
-  /// Dataset of the page
-  List<DatasetObject> dataset = [];
-
   /// AppBar node. It will be instantiate in node rendering class.
   NDynamic appBar = NDynamic(
     globalType: NType.appBar,
@@ -158,8 +148,7 @@ class ScaffoldBody extends NodeBody {
       WScaffold(
         ValueKey(
           '''
-            ${state.node.nid}
-            ${state.loop}
+            ${state.toKey}
             ${child ?? children}
             ${(attributes[DBKeys.fill] as FFill).toJson()}
             ${(attributes[DBKeys.width] as FSize).toJson()}
@@ -171,22 +160,7 @@ class ScaffoldBody extends NodeBody {
             ${attributes[DBKeys.flag] as bool}
             ''',
         ),
-        state: state.copyWith(
-          params: params.map((final e) {
-            if (state.forPlay) {
-              try {
-                final par = params.firstWhereOrNull((final element) => element.id == e.id);
-
-                e.value = par?.value ?? par?.defaultValue;
-              } catch (e) {
-                debugPrint('$e');
-              }
-            }
-            return e;
-          }).toList(),
-          states: states,
-          dataset: dataset,
-        ),
+        state: state,
         children: children ?? [],
         fill: attributes[DBKeys.fill] as FFill,
         width: attributes[DBKeys.width] as FSize,
@@ -213,7 +187,8 @@ class ScaffoldBody extends NodeBody {
     final int pageId,
     final int? loop,
   ) {
-    final prj = (BlocProvider.of<FocusProjectBloc>(context).state as ProjectLoaded).prj;
+    final prj =
+        (BlocProvider.of<FocusProjectBloc>(context).state as ProjectLoaded).prj;
     final page = prj.pages!.firstWhere((final element) => element.id == pageId);
     if (!page.isHardCoded) {
       return pageCodeTemplate(

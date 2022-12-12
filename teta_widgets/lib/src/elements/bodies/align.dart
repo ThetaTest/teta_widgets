@@ -77,8 +77,7 @@ class AlignBody extends NodeBody {
       WAlign(
         ValueKey(
           '''
-          ${state.node.nid}
-          ${state.loop}
+          ${state.toKey}
           ${child ?? children}
           ${(attributes[DBKeys.align] as FAlign).align}
         ''',

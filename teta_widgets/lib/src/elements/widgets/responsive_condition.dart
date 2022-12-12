@@ -49,7 +49,7 @@ class WResponsiveCondition extends StatelessWidget {
         if (deviceInfostate.identifier.type == DeviceType.tablet) {
           return visibleOnTablet
               ? ChildConditionBuilder(
-                  ValueKey('${state.node.nid} ${state.loop}'),
+                  ValueKey(state.toKey),
                   state: state,
                   child: child,
                 )
@@ -57,7 +57,7 @@ class WResponsiveCondition extends StatelessWidget {
         }
         return visibleOnMobile
             ? ChildConditionBuilder(
-                ValueKey('${state.node.nid} ${state.loop}'),
+                ValueKey(state.toKey),
                 state: state,
                 child: child,
               )

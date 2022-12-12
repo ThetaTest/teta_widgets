@@ -68,8 +68,7 @@ class CenterBody extends NodeBody {
       WCenter(
         ValueKey(
           '''
-            ${state.node.nid}
-            ${state.loop}
+            ${state.toKey}
             ${child ?? children}
             ''',
         ),

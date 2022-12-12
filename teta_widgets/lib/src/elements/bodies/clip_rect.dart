@@ -57,8 +57,7 @@ class ClipRectBody extends NodeBody {
       WClipRect(
         ValueKey(
           '''
-            ${state.node.nid}
-            ${state.loop}
+            ${state.toKey}
             ${child ?? children}
             ''',
         ),

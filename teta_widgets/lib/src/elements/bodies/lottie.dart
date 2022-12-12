@@ -48,7 +48,8 @@ final lottieIntrinsicStates = IntrinsicStates(
     const Suggestion(
       title: 'Why use Lottie in Teta?',
       description: 'Test',
-      linkToOpen: 'https://docs.teta.so/teta-docs/widget/advanced-widgets/lottie',
+      linkToOpen:
+          'https://docs.teta.so/teta-docs/widget/advanced-widgets/lottie',
     )
   ],
 );
@@ -104,8 +105,7 @@ class LottieBody extends NodeBody {
       WLottie(
         ValueKey(
           '''
-      ${state.node.nid}
-      ${state.loop}
+      ${state.toKey}
             ${child ?? children}
       ${(attributes[DBKeys.image] as FTextTypeInput).toJson()}
       ${(attributes[DBKeys.width] as FSize).toJson()}

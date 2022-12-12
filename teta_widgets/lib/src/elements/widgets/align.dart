@@ -26,7 +26,7 @@ class WAlign extends StatelessWidget {
       child: Align(
         alignment: align.get(context),
         child: ChildConditionBuilder(
-          ValueKey('${state.node.nid} ${state.loop}'),
+          ValueKey(state.toKey),
           state: state,
           child: child,
         ),

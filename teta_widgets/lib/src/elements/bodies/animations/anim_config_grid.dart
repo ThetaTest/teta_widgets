@@ -96,8 +96,7 @@ class AnimationConfigGridBody extends NodeBody {
       WAnimationConfigGridView(
         ValueKey(
           '''
-          ${state.node.nid}
-          ${state.loop}
+          ${state.toKey}
           ${child ?? children}
           ${(attributes[DBKeys.value] as FTextTypeInput).toJson()}
           ${(attributes[DBKeys.duration] as FTextTypeInput).toJson()}

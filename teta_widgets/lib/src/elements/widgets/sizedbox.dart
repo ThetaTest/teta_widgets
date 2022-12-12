@@ -30,7 +30,7 @@ class WSizedBox extends StatelessWidget {
         width: width.get(context: context, isWidth: true),
         height: height.get(context: context, isWidth: false),
         child: ChildConditionBuilder(
-          ValueKey('${state.node.nid} ${state.loop}'),
+          ValueKey(state.toKey),
           state: state,
           child: child,
         ),

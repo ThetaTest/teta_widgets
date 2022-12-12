@@ -29,7 +29,14 @@ final responsiveIntrinsicStates = IntrinsicStates(
     NodeType.name(NType.row),
   ],
   blockedTypes: [],
-  synonymous: ['responsive condition', 'mobile', 'desktop', 'tablet', 'only', 'device'],
+  synonymous: [
+    'responsive condition',
+    'mobile',
+    'desktop',
+    'tablet',
+    'only',
+    'device'
+  ],
   advicedChildrenCanHaveAtLeastAChild: [],
   displayName: NodeType.name(_globalType),
   type: _globalType,
@@ -83,8 +90,7 @@ class ResponsiveBody extends NodeBody {
       WResponsiveCondition(
         ValueKey(
           '''
-            ${state.node.nid}
-            ${state.loop}
+            ${state.toKey}
             ${child ?? children}
             ${attributes[DBKeys.visibleOnMobile] as bool}
             ${attributes[DBKeys.visibleOnTablet] as bool}

@@ -53,8 +53,7 @@ class GapBody extends NodeBody {
       WGap(
         ValueKey(
           '''
-            ${state.node.nid}
-            ${state.loop}
+            ${state.toKey}
             ${child ?? children}
             ${(attributes[DBKeys.mainAxisExtend] as FSize? ?? FSize()).toJson()}
             ${(attributes[DBKeys.crossAxisExtend] as FSize? ?? FSize()).toJson()}

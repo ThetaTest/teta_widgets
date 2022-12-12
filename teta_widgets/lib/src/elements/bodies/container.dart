@@ -61,7 +61,8 @@ final containerIntrinsicStates = IntrinsicStates(
     const Suggestion(
       title: 'Why use Container in Teta?',
       description: 'Test',
-      linkToOpen: 'https://docs.teta.so/teta-docs/widget/basic-widgets/container',
+      linkToOpen:
+          'https://docs.teta.so/teta-docs/widget/basic-widgets/container',
     )
   ],
 );
@@ -134,8 +135,7 @@ class ContainerBody extends NodeBody {
     return WContainer(
       ValueKey(
         '''
-        ${state.node.nid}
-        ${state.loop}
+        ${state.toKey}
         ${child ?? children}
         ${(attributes[DBKeys.width] as FSize).toJson()}
         ${(attributes[DBKeys.height] as FSize).toJson()}

@@ -33,7 +33,11 @@ final refreshIndicatorIntrinsicStates = IntrinsicStates(
     NodeType.name(NType.image),
   ],
   blockedTypes: [],
-  synonymous: ['refresh indicator', 'linearProgressIndicator', 'circularProgressIndicator'],
+  synonymous: [
+    'refresh indicator',
+    'linearProgressIndicator',
+    'circularProgressIndicator'
+  ],
   advicedChildrenCanHaveAtLeastAChild: [],
   displayName: NodeType.name(_globalType),
   type: _globalType,
@@ -86,8 +90,7 @@ class RefreshIndicatorBody extends NodeBody {
       WRefreshIndicator(
         ValueKey(
           '''
-            ${state.node.nid}
-            ${state.loop}
+            ${state.toKey}
             ${child ?? children}
             ${(attributes[DBKeys.action] as FAction).toJson()}
             ${(attributes[DBKeys.actionValue] as FTextTypeInput).toJson()}

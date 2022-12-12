@@ -57,7 +57,8 @@ final textFieldIntrinsicStates = IntrinsicStates(
     const Suggestion(
       title: 'Why use Textfield in Teta?',
       description: 'Test',
-      linkToOpen: 'https://docs.teta.so/teta-docs/widget/input-widgets/textfield',
+      linkToOpen:
+          'https://docs.teta.so/teta-docs/widget/input-widgets/textfield',
     )
   ],
 );
@@ -115,7 +116,8 @@ class TextFieldBody extends NodeBody {
           type: ControlType.value,
           key: DBKeys.labelText,
           value: attributes[DBKeys.labelText],
-          description: 'Text that suggests what sort of input the field accepts.',
+          description:
+              'Text that suggests what sort of input the field accepts.',
           valueType: VariableType.string,
         ),
         FillControlObject(
@@ -184,7 +186,8 @@ class TextFieldBody extends NodeBody {
           title: 'Obscure Text',
           key: DBKeys.obscureText,
           value: attributes[DBKeys.obscureText] as bool,
-          description: 'Whether to hide the text being edited (e.g., for passwords).',
+          description:
+              'Whether to hide the text being edited (e.g., for passwords).',
         ),
         FlagControlObject(
           title: 'Auto Correct',
@@ -203,7 +206,8 @@ class TextFieldBody extends NodeBody {
           title: 'Max Lines',
           key: DBKeys.maxLines,
           value: attributes[DBKeys.maxLines],
-          description: 'The maximum number of lines to show at one time, wrapping if necessary.',
+          description:
+              'The maximum number of lines to show at one time, wrapping if necessary.',
           valueType: VariableType.int,
         ),
         ControlObject(
@@ -211,7 +215,8 @@ class TextFieldBody extends NodeBody {
           title: 'Min Lines',
           key: DBKeys.minLines,
           value: attributes[DBKeys.minLines],
-          description: 'The minimum number of lines to occupy when the content spans fewer lines.',
+          description:
+              'The minimum number of lines to occupy when the content spans fewer lines.',
           valueType: VariableType.int,
         ),
         ControlObject(
@@ -219,7 +224,8 @@ class TextFieldBody extends NodeBody {
           title: 'Max Length',
           key: DBKeys.maxLenght,
           value: attributes[DBKeys.maxLenght],
-          description: 'The maximum number of characters to allow in the text field.',
+          description:
+              'The maximum number of characters to allow in the text field.',
           valueType: VariableType.int,
         ),
       ];
@@ -233,8 +239,7 @@ class TextFieldBody extends NodeBody {
       WTextField(
         ValueKey(
           '''
-            ${state.node.nid}
-            ${state.loop}
+            ${state.toKey}
             ${child ?? children}
             ${(attributes[DBKeys.value] as FTextTypeInput? ?? FTextTypeInput()).toJson()}
             ${(attributes[DBKeys.textStyle] as FTextStyle? ?? FTextStyle()).toJson()}
@@ -262,7 +267,8 @@ class TextFieldBody extends NodeBody {
         state: state,
         value: attributes[DBKeys.value] as FTextTypeInput? ?? FTextTypeInput(),
         textStyle: attributes[DBKeys.textStyle] as FTextStyle? ?? FTextStyle(),
-        labelText: attributes[DBKeys.labelText] as FTextTypeInput? ?? FTextTypeInput(),
+        labelText:
+            attributes[DBKeys.labelText] as FTextTypeInput? ?? FTextTypeInput(),
         fill: attributes[DBKeys.fill] as FFill,
         width: attributes[DBKeys.width] as FSize,
         margins: attributes[DBKeys.margins] as FMargins,

@@ -120,8 +120,7 @@ class CmsCountBody extends NodeBody {
     return WCmsCount(
       ValueKey(
         '''
-        ${state.node.nid}
-        ${state.loop}
+        ${state.toKey}
         ${child ?? children}
         ${(attributes[DBKeys.cmsCollection] as FTextTypeInput).toJson()}
         ${(attributes[DBKeys.cmsLimit] as FTextTypeInput).toJson()}

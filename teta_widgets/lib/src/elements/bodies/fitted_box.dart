@@ -47,7 +47,8 @@ final fittedBoxIntrinsicStates = IntrinsicStates(
     const Suggestion(
       title: 'Why use Fitted Box in Teta?',
       description: 'Test',
-      linkToOpen: 'https://docs.teta.so/teta-docs/widget/advanced-widgets/fitted-box',
+      linkToOpen:
+          'https://docs.teta.so/teta-docs/widget/advanced-widgets/fitted-box',
     )
   ],
 );
@@ -70,8 +71,7 @@ class FittedBoxBody extends NodeBody {
     return WFittedBox(
       ValueKey(
         '''
-        ${state.node.nid}
-        ${state.loop}
+        ${state.toKey}
         ${child ?? children}
         ''',
       ),

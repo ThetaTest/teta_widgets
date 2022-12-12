@@ -50,7 +50,8 @@ final iconIntrinsicStates = IntrinsicStates(
     const Suggestion(
       title: 'Why use Material Icon in Teta?',
       description: 'Test',
-      linkToOpen: 'https://docs.teta.so/teta-docs/widget/icon-widgets/material-icon',
+      linkToOpen:
+          'https://docs.teta.so/teta-docs/widget/icon-widgets/material-icon',
     )
   ],
 );
@@ -100,8 +101,7 @@ class IconBody extends NodeBody {
       WIcon(
         ValueKey(
           '''
-      ${state.node.nid}
-      ${state.loop}
+      ${state.toKey}
       ${child ?? children}
       ${(attributes[DBKeys.width] as FSize).toJson()}
       ${attributes[DBKeys.icon]}

@@ -29,7 +29,13 @@ final firebaseIsAuthenticatedIntrinsicStates = IntrinsicStates(
     NodeType.name(NType.row),
   ],
   blockedTypes: [],
-  synonymous: [NodeType.name(_globalType), 'firestore', 'firebase', 'authentication', 'logged'],
+  synonymous: [
+    NodeType.name(_globalType),
+    'firestore',
+    'firebase',
+    'authentication',
+    'logged'
+  ],
   advicedChildrenCanHaveAtLeastAChild: [],
   displayName: NodeType.name(_globalType),
   type: _globalType,
@@ -61,7 +67,7 @@ class FirebaseIsAuthenticatedBody extends NodeBody {
     final List<CNode>? children,
   }) =>
       WFirebaseIsAuthenticatedBuilder(
-        ValueKey('${state.node.nid} ${state.loop}'),
+        ValueKey(state.toKey),
         state: state,
         child: child,
       );

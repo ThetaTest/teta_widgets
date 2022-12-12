@@ -94,8 +94,7 @@ class AutoAppBarBody extends NodeBody {
       WAutoAppBar(
         ValueKey(
           '''
-          ${state.node.nid}
-          ${state.loop}
+          ${state.toKey}
           ${child ?? children}
           ${(attributes[DBKeys.textStyle] as FTextStyle).toJson()}
           ${(attributes[DBKeys.value] as FTextTypeInput).toJson()}

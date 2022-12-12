@@ -29,7 +29,14 @@ final stripeCartItemsBuilderBodyIntrinsicStates = IntrinsicStates(
   nodeDescription: null,
   advicedChildren: [],
   blockedTypes: [],
-  synonymous: ['stripe', 'scroll', 'vertical list', 'products', 'cart', 'checkout'],
+  synonymous: [
+    'stripe',
+    'scroll',
+    'vertical list',
+    'products',
+    'cart',
+    'checkout'
+  ],
   advicedChildrenCanHaveAtLeastAChild: [],
   displayName: NodeType.name(_globalType),
   type: _globalType,
@@ -79,8 +86,7 @@ class StripeCartItemsBuilderBody extends NodeBody {
       WStripeCartItemsBuilder(
         ValueKey(
           '''
-          ${state.node.nid}
-          ${state.loop}
+          ${state.toKey}
           ${child ?? children}
           ${(attributes[DBKeys.datasetInput] as FDataset).toJson()}
           ${attributes[DBKeys.isVertical] as bool}

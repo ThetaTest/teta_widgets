@@ -53,7 +53,8 @@ final fractionallySizedBoxIntrinsicStates = IntrinsicStates(
     const Suggestion(
       title: 'Why use Fractionally Sized Box in Teta?',
       description: 'Test',
-      linkToOpen: 'https://docs.teta.so/teta-docs/widget/basic-widgets/sized-box',
+      linkToOpen:
+          'https://docs.teta.so/teta-docs/widget/basic-widgets/sized-box',
     )
   ],
 );
@@ -87,8 +88,7 @@ class FractionallySizedBoxBody extends NodeBody {
       WFractionallySizedBox(
         ValueKey(
           '''
-          ${state.node.nid}
-          ${state.loop}
+          ${state.toKey}
           ${child ?? children}
           ${(attributes[DBKeys.widthFactor] as FSize).toJson()}
           ${(attributes[DBKeys.heightFactor] as FSize).toJson()}

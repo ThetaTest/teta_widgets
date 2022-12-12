@@ -83,8 +83,7 @@ class PaddingBody extends NodeBody {
       WPadding(
         ValueKey(
           '''
-          ${state.node.nid}
-          ${state.loop}
+          ${state.toKey}
           ${child ?? children}
           ${(attributes[DBKeys.padding] as FMargins).toJson()}
           ''',

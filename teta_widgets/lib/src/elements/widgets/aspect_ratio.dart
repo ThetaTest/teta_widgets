@@ -36,7 +36,7 @@ class WAspectRatio extends StatelessWidget {
       child: AspectRatio(
         aspectRatio: rawDouble,
         child: ChildConditionBuilder(
-          ValueKey('${state.node.nid} ${state.loop}'),
+          ValueKey(state.toKey),
           state: state,
           child: child,
         ),

@@ -81,8 +81,7 @@ class AudioPlayerVolumeIndicatorBody extends NodeBody {
       WAudioPlayerVolumeIndicator(
         ValueKey(
           '''
-          ${state.node.nid}
-          ${state.loop}
+          ${state.toKey}
             ${child ?? children}
           ${(attributes[DBKeys.value] as FTextTypeInput).toJson()}, 
         ''',

@@ -40,7 +40,9 @@ class WAnimatedOpacity extends StatelessWidget {
       state: state,
       child: AnimatedOpacity(
         duration: Duration(
-          milliseconds: int.tryParse(opacityString) != null ? int.parse(opacityString) : 400,
+          milliseconds: int.tryParse(opacityString) != null
+              ? int.parse(opacityString)
+              : 400,
         ),
         opacity: rawDouble < 0
             ? 0
@@ -48,7 +50,7 @@ class WAnimatedOpacity extends StatelessWidget {
                 ? 1
                 : rawDouble,
         child: ChildConditionBuilder(
-          ValueKey('${state.node.nid} ${state.loop}'),
+          ValueKey(state.toKey),
           state: state,
           child: child,
         ),

@@ -53,7 +53,8 @@ final gridViewBuilderIntrinsicStates = IntrinsicStates(
     const Suggestion(
       title: 'Why use GridView Builder in Teta?',
       description: 'Test',
-      linkToOpen: 'https://docs.teta.so/teta-docs/widget/list-widgets/gridview-builder',
+      linkToOpen:
+          'https://docs.teta.so/teta-docs/widget/list-widgets/gridview-builder',
     )
   ],
 );
@@ -124,7 +125,8 @@ class GridViewBuilderBody extends NodeBody {
           type: ControlType.value,
           key: DBKeys.mainAxisSpacing,
           value: attributes[DBKeys.mainAxisSpacing],
-          description: 'The number of logical pixels between each child along the main axis.',
+          description:
+              'The number of logical pixels between each child along the main axis.',
           valueType: VariableType.int,
         ),
         ControlObject(
@@ -140,7 +142,8 @@ class GridViewBuilderBody extends NodeBody {
           type: ControlType.value,
           key: DBKeys.crossAxisSpacing,
           value: attributes[DBKeys.crossAxisSpacing],
-          description: 'The number of logical pixels between each child along the cross axis.',
+          description:
+              'The number of logical pixels between each child along the cross axis.',
           valueType: VariableType.int,
         ),
         ControlObject(
@@ -148,7 +151,8 @@ class GridViewBuilderBody extends NodeBody {
           type: ControlType.value,
           key: DBKeys.childAspectRatio,
           value: attributes[DBKeys.childAspectRatio],
-          description: 'The ratio of the cross-axis to the main-axis extent of each child.',
+          description:
+              'The ratio of the cross-axis to the main-axis extent of each child.',
           valueType: VariableType.double,
         ),
       ];
@@ -162,8 +166,7 @@ class GridViewBuilderBody extends NodeBody {
       WGridViewBuilder(
         ValueKey(
           '''
-          ${state.node.nid}
-          ${state.loop}
+          ${state.toKey}
           ${child ?? children}
           ${(attributes[DBKeys.datasetInput] as FDataset).toJson()}
           ${attributes[DBKeys.isPrimary] as bool}

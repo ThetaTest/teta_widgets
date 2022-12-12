@@ -134,8 +134,7 @@ class AnimatedContainerBody extends NodeBody {
     return WAnimatedContainer(
       ValueKey(
         '''
-          ${state.node.nid}
-          ${state.loop}
+          ${state.toKey}
           ${child ?? children}
           ${(attributes[DBKeys.width] as FSize).size}
           ${(attributes[DBKeys.height] as FSize).size}

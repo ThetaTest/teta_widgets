@@ -65,8 +65,7 @@ class ScaleAnimationBody extends NodeBody {
       WScaleAnimation(
         ValueKey(
           '''
-          ${state.node.nid}
-          ${state.loop}
+          ${state.toKey}
           ${child ?? children}
         ''',
         ),

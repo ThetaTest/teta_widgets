@@ -28,7 +28,8 @@ const _globalType = NType.row;
 final rowIntrinsicStates = IntrinsicStates(
   nodeIcon: Assets.wIcons.row,
   nodeVideo: null,
-  nodeDescription: 'Layout a list of child widgets in the horizontal direction.',
+  nodeDescription:
+      'Layout a list of child widgets in the horizontal direction.',
   advicedChildren: [
     NodeType.name(NType.text),
     NodeType.name(NType.icon),
@@ -97,8 +98,7 @@ class RowBody extends NodeBody {
       WRow(
         ValueKey(
           '''
-            ${state.node.nid}
-            ${state.loop}
+            ${state.toKey}
             ${child ?? children}
             ${(attributes[DBKeys.mainAxisAlignment] as FMainAxisAlignment).toJson()}
             ${(attributes[DBKeys.crossAxisAlignment] as FCrossAxisAlignment).toJson()}
@@ -107,8 +107,10 @@ class RowBody extends NodeBody {
         ),
         state: state,
         children: children ?? [],
-        mainAxisAlignment: attributes[DBKeys.mainAxisAlignment] as FMainAxisAlignment,
-        crossAxisAlignment: attributes[DBKeys.crossAxisAlignment] as FCrossAxisAlignment,
+        mainAxisAlignment:
+            attributes[DBKeys.mainAxisAlignment] as FMainAxisAlignment,
+        crossAxisAlignment:
+            attributes[DBKeys.crossAxisAlignment] as FCrossAxisAlignment,
         mainAxisSize: attributes[DBKeys.mainAxisSize] as FMainAxisSize,
       );
 

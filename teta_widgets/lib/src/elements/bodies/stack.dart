@@ -55,8 +55,7 @@ class StackBody extends NodeBody {
       WStack(
         ValueKey(
           '''
-            ${state.node.nid}
-            ${state.loop}
+            ${state.toKey}
             ${child ?? children}
             ''',
         ),

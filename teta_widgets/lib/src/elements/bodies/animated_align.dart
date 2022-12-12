@@ -29,7 +29,12 @@ final animatedAlignIntrinsicStates = IntrinsicStates(
   nodeDescription: null,
   advicedChildren: [],
   blockedTypes: [],
-  synonymous: [NodeType.name(_globalType), 'animatedAlign', 'baseline', 'bottom'],
+  synonymous: [
+    NodeType.name(_globalType),
+    'animatedAlign',
+    'baseline',
+    'bottom'
+  ],
   advicedChildrenCanHaveAtLeastAChild: [],
   displayName: NodeType.name(_globalType),
   type: _globalType,
@@ -89,8 +94,7 @@ class AnimatedAlignBody extends NodeBody {
       WAnimatedAlign(
         ValueKey(
           '''
-          ${state.node.nid}
-          ${state.loop}
+          ${state.toKey}
           ${child ?? children}
           ${(attributes[DBKeys.align] as FAlign).align}
           ${(attributes[DBKeys.duration] as FTextTypeInput).toJson()}

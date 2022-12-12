@@ -64,8 +64,7 @@ class SupabaseLoggedUserBody extends NodeBody {
     return WSupabaseLoggedUser(
       ValueKey(
         '''
-        ${state.node.nid}
-        ${state.loop}
+        ${state.toKey}
         ${child ?? children}
       ''',
       ),

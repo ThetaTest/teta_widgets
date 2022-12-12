@@ -44,7 +44,8 @@ final expandedIntrinsicStates = IntrinsicStates(
     const Suggestion(
       title: 'Why use Expanded in Teta?',
       description: 'Test',
-      linkToOpen: 'https://docs.teta.so/teta-docs/widget/advanced-widgets/expanded',
+      linkToOpen:
+          'https://docs.teta.so/teta-docs/widget/advanced-widgets/expanded',
     )
   ],
 );
@@ -67,8 +68,7 @@ class ExpandedBody extends NodeBody {
       WExpanded(
         ValueKey(
           '''
-          ${state.node.nid}
-          ${state.loop}
+          ${state.toKey}
           ${child ?? children}
           ''',
         ),

@@ -23,7 +23,7 @@ class WAppBar extends StatelessWidget {
     return TetaWidget(
       state: state,
       child: ChildConditionBuilder(
-        ValueKey('${state.node.nid} ${state.loop}'),
+        ValueKey(state.toKey),
         state: state,
         child: child,
       ),

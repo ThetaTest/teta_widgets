@@ -79,8 +79,7 @@ class StripeShippingBuilderBody extends NodeBody {
       WStripeShippingBuilder(
         ValueKey(
           '''
-      ${state.node.nid}
-      ${state.loop}
+      ${state.toKey}
             ${child ?? children}
       ${(attributes[DBKeys.datasetInput] as FDataset).toJson()}
       ${attributes[DBKeys.isVertical] as bool}

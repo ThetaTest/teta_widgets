@@ -35,7 +35,14 @@ final cupertinoSwitchIntrinsicStates = IntrinsicStates(
     NodeType.name(NType.image),
   ],
   blockedTypes: [],
-  synonymous: ['cupertinoSwitch', 'checkbox', 'radio', 'ontap', 'onpressed', 'click'],
+  synonymous: [
+    'cupertinoSwitch',
+    'checkbox',
+    'radio',
+    'ontap',
+    'onpressed',
+    'click'
+  ],
   advicedChildrenCanHaveAtLeastAChild: [],
   displayName: NodeType.name(_globalType),
   type: _globalType,
@@ -70,8 +77,7 @@ class CupertinoSwitchBody extends NodeBody {
       WCupertinoSwitch(
         ValueKey(
           '''
-          ${state.node.nid}
-          ${state.loop}
+          ${state.toKey}
           ${child ?? children}
           ${(attributes[DBKeys.action] as FAction).toJson()}
           ''',

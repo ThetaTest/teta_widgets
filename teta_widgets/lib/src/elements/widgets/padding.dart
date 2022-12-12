@@ -28,7 +28,7 @@ class WPadding extends StatelessWidget {
       child: Padding(
         padding: padding.get(context),
         child: ChildConditionBuilder(
-          ValueKey('${state.node.nid} ${state.loop}'),
+          ValueKey(state.toKey),
           state: state,
           child: child,
         ),

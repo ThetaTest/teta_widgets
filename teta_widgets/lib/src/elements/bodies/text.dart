@@ -106,8 +106,7 @@ class TextBody extends NodeBody {
       WText(
         ValueKey(
           '''
-            ${state.node.nid}
-            ${state.loop}
+            ${state.toKey}
             ${child ?? children}
             ${(attributes[DBKeys.value] as FTextTypeInput? ?? FTextTypeInput()).toJson()}
             ${(attributes[DBKeys.textStyle] as FTextStyle? ?? FTextStyle()).toJson()}

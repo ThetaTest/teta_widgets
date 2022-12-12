@@ -66,8 +66,7 @@ class WrapperBody extends NodeBody {
       WWrapperContainer(
         key: ValueKey(
           '''
-          ${state.node.nid}
-          ${state.loop}
+          ${state.toKey}
           ${child ?? children}
         ''',
         ),

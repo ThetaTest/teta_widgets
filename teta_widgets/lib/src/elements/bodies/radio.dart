@@ -30,7 +30,14 @@ final radioIntrinsicStates = IntrinsicStates(
   nodeDescription: null,
   advicedChildren: [],
   blockedTypes: [],
-  synonymous: [NodeType.name(_globalType), 'radio', 'form', 'input', 'checkbox', 'button'],
+  synonymous: [
+    NodeType.name(_globalType),
+    'radio',
+    'form',
+    'input',
+    'checkbox',
+    'button'
+  ],
   advicedChildrenCanHaveAtLeastAChild: [],
   displayName: NodeType.name(_globalType),
   type: _globalType,
@@ -88,7 +95,8 @@ class RadioBody extends NodeBody {
           key: DBKeys.value,
           value: attributes[DBKeys.value],
           title: 'Group Value',
-          description: 'The currently selected value for a group of radio buttons.',
+          description:
+              'The currently selected value for a group of radio buttons.',
           valueType: VariableType.string,
         ),
       ];
@@ -102,8 +110,7 @@ class RadioBody extends NodeBody {
       WRadio(
         ValueKey(
           '''
-            ${state.node.nid}
-            ${state.loop}
+            ${state.toKey}
             ${child ?? children}
             ${(attributes[DBKeys.action] as FAction).toJson()}
             ${(attributes[DBKeys.value] as FTextTypeInput).toJson()}

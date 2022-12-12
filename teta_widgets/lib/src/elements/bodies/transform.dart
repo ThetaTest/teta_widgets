@@ -101,8 +101,7 @@ class TransformPerspectiveBody extends NodeBody {
       WTransform(
         ValueKey(
           '''
-            ${state.node.nid}
-            ${state.loop}
+            ${state.toKey}
             ${child ?? children}
             ${(attributes[DBKeys.rotateX] as FTextTypeInput).toJson()}
             ${(attributes[DBKeys.rotateY] as FTextTypeInput).toJson()}

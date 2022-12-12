@@ -152,8 +152,7 @@ class SupabaseFutureBuilderBody extends NodeBody {
     return WSupabaseFutureBuilder(
       ValueKey(
         '''
-        ${state.node.nid}
-        ${state.loop}
+        ${state.toKey}
         ${child ?? children}
         ${(attributes[DBKeys.supabaseFrom] as FTextTypeInput).toJson()}
         ${(attributes[DBKeys.supabaseSelect] as FTextTypeInput).toJson()}

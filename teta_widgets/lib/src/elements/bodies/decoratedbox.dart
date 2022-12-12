@@ -51,7 +51,8 @@ final decoratedBoxIntrinsicStates = IntrinsicStates(
     const Suggestion(
       title: 'Why use Decorated Box in Teta?',
       description: 'Test',
-      linkToOpen: 'https://docs.teta.so/teta-docs/widget/advanced-widgets/decorated-box',
+      linkToOpen:
+          'https://docs.teta.so/teta-docs/widget/advanced-widgets/decorated-box',
     )
   ],
 );
@@ -100,8 +101,7 @@ class DecoratedBoxBody extends NodeBody {
       WDecoratedBox(
         ValueKey(
           '''
-          ${state.node.nid}
-          ${state.loop}
+          ${state.toKey}
           ${child ?? children}
           ${(attributes[DBKeys.borderRadius] as FBorderRadius).toJson()}
           ${(attributes[DBKeys.shadows] as FShadow).toJson()}

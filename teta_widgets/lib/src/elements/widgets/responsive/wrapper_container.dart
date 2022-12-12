@@ -41,7 +41,7 @@ class WWrapperContainer extends StatelessWidget {
                 child: ConstrainedBox(
                   constraints: const BoxConstraints(maxWidth: 1200),
                   child: ChildConditionBuilder(
-                    ValueKey('${state.node.nid} ${state.loop} desktop'),
+                    ValueKey('${state.toKey} desktop'),
                     state: state,
                     child: child,
                   ),
@@ -52,7 +52,7 @@ class WWrapperContainer extends StatelessWidget {
               return Padding(
                 padding: const EdgeInsets.symmetric(horizontal: 100),
                 child: ChildConditionBuilder(
-                  ValueKey('${state.node.nid} ${state.loop} tablet'),
+                  ValueKey('${state.toKey} tablet'),
                   state: state,
                   child: child,
                 ),
@@ -61,7 +61,7 @@ class WWrapperContainer extends StatelessWidget {
             return Padding(
               padding: const EdgeInsets.symmetric(horizontal: 16),
               child: ChildConditionBuilder(
-                ValueKey('${state.node.nid} ${state.loop} mobile'),
+                ValueKey('${state.toKey} mobile'),
                 state: state,
                 child: child,
               ),

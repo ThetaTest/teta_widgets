@@ -101,8 +101,7 @@ class CustomHttpRequestBody extends NodeBody {
     return WCustomHttpRequest(
       ValueKey(
         '''
-        ${state.node.nid}
-        ${state.loop}
+        ${state.toKey}
         ${child ?? children}
         ${(attributes[DBKeys.customHttpRequestURL] as FTextTypeInput).toJson()}
         ${(attributes[DBKeys.customHttpRequestURL] as FTextTypeInput).getStateValue(state.states)}

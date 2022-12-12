@@ -28,7 +28,7 @@ class WIgnorePointer extends StatelessWidget {
       child: IgnorePointer(
         ignoring: flag,
         child: ChildConditionBuilder(
-          ValueKey('${state.node.nid} ${state.loop}'),
+          ValueKey(state.toKey),
           state: state,
           child: child,
         ),

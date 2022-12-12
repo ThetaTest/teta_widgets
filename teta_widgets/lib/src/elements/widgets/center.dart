@@ -24,7 +24,7 @@ class WCenter extends StatelessWidget {
       state: state,
       child: Center(
         child: ChildConditionBuilder(
-          ValueKey('${state.node.nid} ${state.loop}'),
+          ValueKey(state.toKey),
           state: state,
           child: child,
         ),

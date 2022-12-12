@@ -97,8 +97,7 @@ class ColumnBody extends NodeBody {
       WColumn(
         ValueKey(
           '''
-            ${state.node.nid}
-            ${state.loop}
+            ${state.toKey}
             ${child ?? children}
             ${(attributes[DBKeys.mainAxisAlignment] as FMainAxisAlignment).toJson()}, 
             ${(attributes[DBKeys.crossAxisAlignment] as FCrossAxisAlignment).toJson()}, 
@@ -107,8 +106,10 @@ class ColumnBody extends NodeBody {
         ),
         state: state,
         children: children ?? [],
-        mainAxisAlignment: attributes[DBKeys.mainAxisAlignment] as FMainAxisAlignment,
-        crossAxisAlignment: attributes[DBKeys.crossAxisAlignment] as FCrossAxisAlignment,
+        mainAxisAlignment:
+            attributes[DBKeys.mainAxisAlignment] as FMainAxisAlignment,
+        crossAxisAlignment:
+            attributes[DBKeys.crossAxisAlignment] as FCrossAxisAlignment,
         mainAxisSize: attributes[DBKeys.mainAxisSize] as FMainAxisSize,
       );
 

@@ -85,8 +85,7 @@ class TransformRotateBody extends NodeBody {
       WTransformRotate(
         ValueKey(
           '''
-            ${state.node.nid}
-            ${state.loop}
+            ${state.toKey}
             ${child ?? children}
             ${(attributes[DBKeys.value] as FTextTypeInput? ?? FTextTypeInput()).toJson()}
             ''',

@@ -32,7 +32,7 @@ class WFractionallySizedBox extends StatelessWidget {
         widthFactor: widthFactor?.get(context: context, isWidth: true),
         heightFactor: heightFactor?.get(context: context, isWidth: false),
         child: ChildConditionBuilder(
-          ValueKey('${state.node.nid} ${state.loop}'),
+          ValueKey(state.toKey),
           state: state,
           child: child,
         ),

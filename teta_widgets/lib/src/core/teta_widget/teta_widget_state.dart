@@ -48,4 +48,13 @@ class TetaWidgetState {
       dataset: dataset ?? this.dataset,
     );
   }
+
+  String get toKey => '''
+${node.nid}
+$forPlay
+$loop
+$params
+$states
+$dataset
+''';
 }

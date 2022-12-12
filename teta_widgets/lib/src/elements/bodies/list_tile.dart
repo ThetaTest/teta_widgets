@@ -67,7 +67,8 @@ class ListTileBody extends NodeBody {
           title: 'ThreeLine',
           key: DBKeys.flag,
           value: attributes[DBKeys.flag],
-          description: 'Whether this list tile is intended to display three lines of text.',
+          description:
+              'Whether this list tile is intended to display three lines of text.',
         ),
       ];
 
@@ -80,8 +81,7 @@ class ListTileBody extends NodeBody {
       WListTile(
         ValueKey(
           '''
-          ${state.node.nid}
-          ${state.loop}
+          ${state.toKey}
           ${child ?? children}
           ${attributes[DBKeys.flag] as bool}
           ${(attributes[DBKeys.value] as FTextTypeInput).toJson()}

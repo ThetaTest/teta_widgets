@@ -49,7 +49,8 @@ final visibilityIntrinsicStates = IntrinsicStates(
     const Suggestion(
       title: 'Why use Visibility in Teta?',
       description: 'Test',
-      linkToOpen: 'https://docs.teta.so/teta-docs/widget/logic-widgets/visibility',
+      linkToOpen:
+          'https://docs.teta.so/teta-docs/widget/logic-widgets/visibility',
     )
   ],
 );
@@ -81,8 +82,7 @@ class VisibilityBody extends NodeBody {
       WVisibility(
         ValueKey(
           '''
-            ${state.node.nid}
-            ${state.loop}
+            ${state.toKey}
             ${child ?? children}
             ${(attributes[DBKeys.value] as FTextTypeInput).toJson()}
             ''',

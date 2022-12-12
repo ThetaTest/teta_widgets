@@ -92,8 +92,7 @@ class MapBuilderBody extends NodeBody {
       WMapBuilder(
         ValueKey(
           '''
-      ${state.node.nid}
-      ${state.loop}
+      ${state.toKey}
       ${child ?? children}
       ${(attributes[DBKeys.datasetInput] as FDataset).toJson()}
       ${attributes[DBKeys.flag] as bool}
@@ -122,7 +121,8 @@ class MapBuilderBody extends NodeBody {
         context,
         node,
         pageId,
-        MapCodeTemplate.toCode(context, this, node, child, children ?? [], loop),
+        MapCodeTemplate.toCode(
+            context, this, node, child, children ?? [], loop),
         loop ?? 0,
       );
 }

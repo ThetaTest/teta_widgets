@@ -30,8 +30,10 @@ class WConstrainedBox extends StatelessWidget {
   Widget build(final BuildContext context) {
     final minW = minWidth.get(context: context, isWidth: true) ?? 0;
     final minH = minHeight.get(context: context, isWidth: false) ?? 0;
-    final maxW = maxWidth.get(context: context, isWidth: true) ?? double.infinity;
-    final maxH = maxHeight.get(context: context, isWidth: false) ?? double.infinity;
+    final maxW =
+        maxWidth.get(context: context, isWidth: true) ?? double.infinity;
+    final maxH =
+        maxHeight.get(context: context, isWidth: false) ?? double.infinity;
 
     return TetaWidget(
       state: state,
@@ -43,7 +45,7 @@ class WConstrainedBox extends StatelessWidget {
           maxHeight: maxH,
         ),
         child: ChildConditionBuilder(
-          ValueKey('${state.node.nid} ${state.loop}'),
+          ValueKey(state.toKey),
           state: state,
           child: child,
         ),

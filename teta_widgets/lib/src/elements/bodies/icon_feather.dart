@@ -51,7 +51,8 @@ final featherIconIntrinsicStates = IntrinsicStates(
     const Suggestion(
       title: 'Why use Feather Icon in Teta?',
       description: 'Test',
-      linkToOpen: 'https://docs.teta.so/teta-docs/widget/icon-widgets/feather-icon',
+      linkToOpen:
+          'https://docs.teta.so/teta-docs/widget/icon-widgets/feather-icon',
     )
   ],
 );
@@ -101,8 +102,7 @@ class FeatherIconBody extends NodeBody {
       WFeatherIcon(
         ValueKey(
           '''
-          ${state.node.nid}
-          ${state.loop}
+          ${state.toKey}
           ${(attributes[DBKeys.width] as FSize).toJson()}
           ${attributes[DBKeys.featherIcon]}
           ${(attributes[DBKeys.fill] as FFill).toJson()}

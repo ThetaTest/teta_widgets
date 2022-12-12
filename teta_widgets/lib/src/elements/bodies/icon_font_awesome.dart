@@ -101,8 +101,7 @@ class FontAwesomeBody extends NodeBody {
       WFontAwesome(
         ValueKey(
           '''
-          ${state.node.nid}
-          ${state.loop}
+          ${state.toKey}
           ${(attributes[DBKeys.width] as FSize).toJson()}
           ${attributes[DBKeys.faIcon]}
           ${(attributes[DBKeys.fill] as FFill).toJson()}

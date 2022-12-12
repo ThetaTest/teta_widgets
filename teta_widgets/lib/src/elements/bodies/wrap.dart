@@ -80,9 +80,11 @@ class WrapBody extends NodeBody {
       WWrap(
         ValueKey(
           '''
-            ${state.node.nid}
-            ${state.loop}
+            ${state.toKey}
             ${child ?? children}
+            ${state.params}
+            ${state.states}
+            ${state.dataset}
             ''',
         ),
         state: state,

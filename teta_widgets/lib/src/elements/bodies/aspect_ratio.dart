@@ -73,8 +73,7 @@ class AspectRatioBody extends NodeBody {
       WAspectRatio(
         ValueKey(
           '''
-          ${state.node.nid}
-          ${state.loop}
+          ${state.toKey}
           ${child ?? children}
           ${(attributes[DBKeys.value] as FTextTypeInput).value}
           ${(attributes[DBKeys.value] as FTextTypeInput).type}

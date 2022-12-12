@@ -65,8 +65,7 @@ class CMSLoggedUserBody extends NodeBody {
     return WCMSLoggedUser(
       ValueKey(
         '''
-        ${state.node.nid}
-        ${state.loop}
+        ${state.toKey}
         ${child ?? children}
         $state.forPlay
       ''',

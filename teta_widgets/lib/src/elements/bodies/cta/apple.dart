@@ -76,7 +76,7 @@ class LoginWithAppleBody extends NodeBody {
     final List<CNode>? children,
   }) =>
       WLoginWithApple(
-        ValueKey('${state.node.nid} ${state.loop}'),
+        ValueKey(state.toKey),
         state: state,
         child: child,
         action: attributes[DBKeys.action] as FAction,

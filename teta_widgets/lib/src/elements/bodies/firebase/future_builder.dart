@@ -75,7 +75,7 @@ class FirebaseFBBody extends NodeBody {
     final List<CNode>? children,
   }) =>
       WFirebaseFutureBuilder(
-        ValueKey('${state.node.nid} ${state.loop}'),
+        ValueKey(state.toKey),
         state: state,
         child: child,
         path: attributes[DBKeys.firestorePath] as FFirestorePath,

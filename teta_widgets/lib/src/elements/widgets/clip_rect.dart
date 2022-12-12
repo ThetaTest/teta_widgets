@@ -24,7 +24,7 @@ class WClipRect extends StatelessWidget {
       state: state,
       child: ClipRect(
         child: ChildConditionBuilder(
-          ValueKey('${state.node.nid} ${state.loop}'),
+          ValueKey(state.toKey),
           state: state,
           child: child,
         ),

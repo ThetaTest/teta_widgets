@@ -95,8 +95,7 @@ class LinearProgressIndicatorBody extends NodeBody {
       WLinearProgressIndicator(
         ValueKey(
           '''
-      ${state.node.nid}
-      ${state.loop}
+      ${state.toKey}
       ${child ?? children}
       ${(attributes[DBKeys.fill] as FFill).toJson()}
       ${(attributes[DBKeys.bgFill] as FFill).toJson()}

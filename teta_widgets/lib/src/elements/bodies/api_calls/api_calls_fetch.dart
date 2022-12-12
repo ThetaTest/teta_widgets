@@ -102,8 +102,7 @@ class ApiCallsFetchBody extends NodeBody {
     return WApiCallsFetch(
       ValueKey(
         '''
-        ${state.node.nid}
-        ${state.loop}
+        ${state.toKey}
         ${child ?? children}
         ${attributes[DBKeys.requestName] as String}
         ${(attributes[DBKeys.apiCallsResponseName] as FTextTypeInput).toJson()}

@@ -51,7 +51,8 @@ final lineIconIntrinsicStates = IntrinsicStates(
     const Suggestion(
       title: 'Why use Line Icons in Teta?',
       description: 'Test',
-      linkToOpen: 'https://docs.teta.so/teta-docs/widget/icon-widgets/line-icons',
+      linkToOpen:
+          'https://docs.teta.so/teta-docs/widget/icon-widgets/line-icons',
     )
   ],
 );
@@ -101,8 +102,7 @@ class LineIconBody extends NodeBody {
       WLineIcon(
         ValueKey(
           '''
-          ${state.node.nid}
-          ${state.loop}
+          ${state.toKey}
           ${(attributes[DBKeys.width] as FSize).toJson()}
           ${attributes[DBKeys.lineIcon]}
           ${(attributes[DBKeys.fill] as FFill).toJson()}

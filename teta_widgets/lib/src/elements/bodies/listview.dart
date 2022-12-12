@@ -99,7 +99,8 @@ class ListViewBody extends NodeBody {
           type: ControlType.physics,
           key: DBKeys.physic,
           value: attributes[DBKeys.physic],
-          description: 'Use the physics in order to have different scrolling behaviours',
+          description:
+              'Use the physics in order to have different scrolling behaviours',
           valueType: VariableType.string,
         ),
       ];
@@ -113,8 +114,7 @@ class ListViewBody extends NodeBody {
       WListView(
         ValueKey(
           '''
-          ${state.node.nid}
-          ${state.loop}
+          ${state.toKey}
           ${child ?? children}
           ${attributes[DBKeys.isPrimary] as bool}
           ${attributes[DBKeys.isVertical] as bool}

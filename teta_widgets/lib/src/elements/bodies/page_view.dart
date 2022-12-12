@@ -82,8 +82,7 @@ class PageViewBody extends NodeBody {
       WPageView(
         ValueKey(
           '''
-          ${state.node.nid}
-          ${state.loop}
+          ${state.toKey}
           ${child ?? children}
           ${attributes[DBKeys.isVertical] as bool}
           ${(attributes[DBKeys.action] as FAction).toJson()}
@@ -105,5 +104,6 @@ class PageViewBody extends NodeBody {
     final int pageId,
     final int? loop,
   ) =>
-      PageViewCodeTemplate.toCode(context, pageId, this, node, children ?? [], loop);
+      PageViewCodeTemplate.toCode(
+          context, pageId, this, node, children ?? [], loop);
 }

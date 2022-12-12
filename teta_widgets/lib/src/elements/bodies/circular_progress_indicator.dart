@@ -76,8 +76,7 @@ class CircularProgressIndicatorBody extends NodeBody {
       WCircularProgressIndicator(
         ValueKey(
           '''
-          ${state.node.nid}
-          ${state.loop}
+          ${state.toKey}
           ${child ?? children}
           ${(attributes[DBKeys.fill] as FFill).toJson()}, 
           ''',

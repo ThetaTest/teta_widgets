@@ -79,7 +79,8 @@ class PositionedBody extends NodeBody {
           title: 'Top',
           key: DBKeys.top,
           value: attributes[DBKeys.top],
-          description: "The distance that the child's top edge is inset from the top of the stack.",
+          description:
+              "The distance that the child's top edge is inset from the top of the stack.",
         ),
         FlagControlObject(
           title: 'Right',
@@ -106,8 +107,7 @@ class PositionedBody extends NodeBody {
       WPositioned(
         ValueKey(
           '''
-            ${state.node.nid}
-            ${state.loop}
+            ${state.toKey}
             ${child ?? children}
             ${(attributes[DBKeys.margins] as FMargins).toJson()}, 
             ${attributes[DBKeys.left] as bool}, 

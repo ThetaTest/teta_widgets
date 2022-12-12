@@ -54,8 +54,7 @@ class SpacerBody extends NodeBody {
       WSpacer(
         ValueKey(
           '''
-            ${state.node.nid}
-            ${state.loop}
+            ${state.toKey}
             ${child ?? children}
             ''',
         ),

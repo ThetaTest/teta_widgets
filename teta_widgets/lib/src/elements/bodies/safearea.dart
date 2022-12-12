@@ -48,7 +48,8 @@ final safeareaIntrinsicStates = IntrinsicStates(
     const Suggestion(
       title: 'Why use Safe Area in Teta?',
       description: 'Test',
-      linkToOpen: 'https://docs.teta.so/teta-docs/widget/advanced-widgets/safe-area',
+      linkToOpen:
+          'https://docs.teta.so/teta-docs/widget/advanced-widgets/safe-area',
     )
   ],
 );
@@ -89,7 +90,8 @@ class SafeAreaBody extends NodeBody {
           title: 'Bottom',
           key: DBKeys.bottom,
           value: attributes[DBKeys.bottom],
-          description: 'Whether to avoid system intrusions on the bottom side of the screen.',
+          description:
+              'Whether to avoid system intrusions on the bottom side of the screen.',
         ),
       ];
 
@@ -102,8 +104,7 @@ class SafeAreaBody extends NodeBody {
       WSafeArea(
         ValueKey(
           '''
-            ${state.node.nid}
-            ${state.loop}
+            ${state.toKey}
             ${child ?? children}
             ${attributes[DBKeys.left] as bool}
             ${attributes[DBKeys.top] as bool}

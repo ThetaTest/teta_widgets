@@ -47,7 +47,8 @@ final componentIntrinsicStates = IntrinsicStates(
     const Suggestion(
       title: 'Why use Component in Teta?',
       description: 'Test',
-      linkToOpen: 'https://docs.teta.so/teta-docs/widget/advanced-widgets/component',
+      linkToOpen:
+          'https://docs.teta.so/teta-docs/widget/advanced-widgets/component',
     )
   ],
 );
@@ -85,8 +86,7 @@ class ComponentBody extends NodeBody {
     return WComponent(
       ValueKey(
         '''
-        ${state.node.nid} 
-        ${state.loop}
+        ${state.toKey}
         ${child ?? children}
         ${attributes[DBKeys.componentName] as String} 
         ${attributes[DBKeys.paramsToSend] as Map<String, dynamic>}

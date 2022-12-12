@@ -48,7 +48,8 @@ final sizedBoxIntrinsicStates = IntrinsicStates(
     const Suggestion(
       title: 'Why use Sized Box in Teta?',
       description: 'Test',
-      linkToOpen: 'https://docs.teta.so/teta-docs/widget/basic-widgets/sized-box',
+      linkToOpen:
+          'https://docs.teta.so/teta-docs/widget/basic-widgets/sized-box',
     )
   ],
 );
@@ -82,8 +83,7 @@ class SizedBoxBody extends NodeBody {
       WSizedBox(
         ValueKey(
           '''
-          ${state.node.nid}
-          ${state.loop}
+          ${state.toKey}
           ${child ?? children}
           ${(attributes[DBKeys.width] as FSize? ?? FSize()).toJson()}
           ${(attributes[DBKeys.height] as FSize? ?? FSize()).toJson()}

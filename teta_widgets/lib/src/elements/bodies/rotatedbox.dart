@@ -49,7 +49,8 @@ final rotatedBoxIntrinsicStates = IntrinsicStates(
     const Suggestion(
       title: 'Why use Rotated Box in Teta?',
       description: 'Test',
-      linkToOpen: 'https://docs.teta.so/teta-docs/widget/advanced-widgets/rotated-box',
+      linkToOpen:
+          'https://docs.teta.so/teta-docs/widget/advanced-widgets/rotated-box',
     )
   ],
 );
@@ -83,8 +84,7 @@ class RotatedBoxBody extends NodeBody {
       WRotatedBox(
         ValueKey(
           '''
-            ${state.node.nid}
-            ${state.loop}
+            ${state.toKey}
             ${child ?? children}
             ${(attributes[DBKeys.value] as FTextTypeInput).toJson()}
             ''',
