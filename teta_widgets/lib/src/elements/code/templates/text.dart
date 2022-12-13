@@ -1,6 +1,7 @@
 // Flutter imports:
 import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
+import 'package:teta_core/teta_core.dart';
 import 'package:teta_widgets/src/elements/code/formatter_test.dart';
 // Project imports:
 import 'package:teta_widgets/src/elements/code/snippets.dart';
@@ -35,21 +36,12 @@ class TextCodeTemplate {
       ${maxLines != '0' ? 'maxLines: $maxLines' : ''}
     )
   ''';
+    Logger.printWarning(code);
     final res = FormatterTest.format(code);
     if (res) {
       return code;
     } else {
-      final code = await toCode(
-        context,
-        NodeBody.get(NType.text),
-        0,
-      );
-      final res = FormatterTest.format(code);
-      if (res) {
-        return code;
-      } else {
-        return 'const SizedBox()';
-      }
+      return 'const SizedBox()';
     }
   }
 
