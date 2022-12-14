@@ -153,7 +153,7 @@ dependencies:
   # Code
   syntax_highlighter: 0.1.1
   flutter_highlight: 0.7.0
-  dart_style: 2.2.3
+  dart_style: 2.2.1
 
   # Web
   js: 0.6.4
