@@ -1,9 +1,6 @@
 // Flutter imports:
 import 'package:flutter/material.dart';
-import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_test/flutter_test.dart';
-import 'package:teta_cms/teta_cms.dart';
-import 'package:teta_core/src/pages/editor_page/cubits/airtable.dart';
 import 'package:teta_widgets/src/elements/code/formatter_test.dart';
 
 // Project imports:
@@ -22,8 +19,42 @@ class AirtableFetchCodeTemplate {
     final List<CNode> children,
     final int? loop,
   ) async {
-    final code = await children.first.toCode(context);
-    return code;
+    var loader = 'const Center(child: CircularProgressIndicator(),)';
+
+    final recordName =
+        (node.body.attributes[DBKeys.value] as FTextTypeInput).toCode(
+      loop,
+      resultType: ResultTypeEnum.string,
+    );
+
+    var child = 'const SizedBox()';
+    if (children.length >= 2) {
+      loader = await children[1].toCode(context);
+    }
+
+    final func = '''
+    final list = snapshot.data as List<dynamic>?;
+    datasets['${node.name ?? node.intrinsicState.displayName}'] = list ?? const <dynamic>[];
+    ''';
+
+    var code = 'TetaFutureBuilder( '
+        'future: AirtableInstance.instance.getAllRecords($recordName),'
+        'builder: (context, snapshot) {'
+          'if(!snapshot.hasData) {'
+            'return $loader;'
+          '}'
+          '$func'
+          'return $child;'
+        '},'
+        ')';
+
+    final res = FormatterTest.format(code);
+
+    if (res) {
+      return code;
+    } else {
+      return 'const SizedBox()';
+    }
   }
 
   static void testCode() {
