@@ -23,12 +23,12 @@ class GoogleMapsCubitTemplate {
     final style = getMapToCodeName(customMapStyle);
 
     return '''
-class ${googleMapsCubitName}Cubit extends Cubit<${googleMapsCubitName}State> {
-  ${googleMapsCubitName}Cubit({final ${googleMapsCubitName}State? initialState})
+class ${googleMapsCubitName.replaceAll(' ', '')}Cubit extends Cubit<${googleMapsCubitName.replaceAll(' ', '')}State> {
+  ${googleMapsCubitName.replaceAll(' ', '')}Cubit({final ${googleMapsCubitName.replaceAll(' ', '')}State? initialState})
       : super(
           initialState ??
-              const ${googleMapsCubitName}InitialState(
-                ${googleMapsCubitName}UiModel(
+              const ${googleMapsCubitName.replaceAll(' ', '')}InitialState(
+                ${googleMapsCubitName.replaceAll(' ', '')}UiModel(
                   paths: <Polyline>{},
                   markers: <Marker>{},
                   cameraPosition: CameraPosition(
@@ -110,8 +110,8 @@ class ${googleMapsCubitName}Cubit extends Cubit<${googleMapsCubitName}State> {
       );
     } catch (e) {
       emit(
-        ${googleMapsCubitName}ErrorState(
-          ${googleMapsCubitName}UiModel(
+        ${googleMapsCubitName.replaceAll(' ', '')}ErrorState(
+          ${googleMapsCubitName.replaceAll(' ', '')}UiModel(
             paths: state.uiModel.paths,
             markers: state.uiModel.markers,
             cameraPosition: state.uiModel.cameraPosition,
@@ -254,7 +254,7 @@ class ${googleMapsCubitName}Cubit extends Cubit<${googleMapsCubitName}State> {
     }
 
     emit(
-      ${googleMapsCubitName}LoadedState(
+      ${googleMapsCubitName.replaceAll(' ', '')}LoadedState(
         state.uiModel.copyWith(
           paths: polyLines,
           markers: mapMarkers,
@@ -280,7 +280,7 @@ class ${googleMapsCubitName}Cubit extends Cubit<${googleMapsCubitName}State> {
 
   void onEmitReloadDataState() {
     emit(
-      ${googleMapsCubitName}ReloadDataState(
+      ${googleMapsCubitName.replaceAll(' ', '')}ReloadDataState(
         state.uiModel,
       ),
     );
@@ -292,7 +292,7 @@ class ${googleMapsCubitName}Cubit extends Cubit<${googleMapsCubitName}State> {
     final double zoom,
   ) {
     emit(
-      ${googleMapsCubitName}SetNewCameraPositionState(
+      ${googleMapsCubitName.replaceAll(' ', '')}SetNewCameraPositionState(
         state.uiModel.copyWith(
           cameraPosition: CameraPosition(
             target: LatLng(
@@ -308,7 +308,7 @@ class ${googleMapsCubitName}Cubit extends Cubit<${googleMapsCubitName}State> {
 
   void onEmitNewMapStyle(final String style) {
     emit(
-      ${googleMapsCubitName}ChangeMapStyleState(
+      ${googleMapsCubitName.replaceAll(' ', '')}ChangeMapStyleState(
         state.uiModel.copyWith(style: style),
       ),
     );
@@ -316,7 +316,7 @@ class ${googleMapsCubitName}Cubit extends Cubit<${googleMapsCubitName}State> {
 
   void onEmitNewMarkers(final Set<Marker> markers) {
     emit(
-      ${googleMapsCubitName}ReloadMarkersState(
+      ${googleMapsCubitName.replaceAll(' ', '')}ReloadMarkersState(
         state.uiModel.copyWith(
           markers: markers,
         ),
@@ -325,8 +325,8 @@ class ${googleMapsCubitName}Cubit extends Cubit<${googleMapsCubitName}State> {
   }
 }
 
-class ${googleMapsCubitName}UiModel extends Equatable {
-  const ${googleMapsCubitName}UiModel({
+class ${googleMapsCubitName.replaceAll(' ', '')}UiModel extends Equatable {
+  const ${googleMapsCubitName.replaceAll(' ', '')}UiModel({
     required this.paths,
     required this.markers,
     required this.cameraPosition,
@@ -338,7 +338,7 @@ class ${googleMapsCubitName}UiModel extends Equatable {
   final CameraPosition cameraPosition;
   final String style;
 
-  ${googleMapsCubitName}UiModel copyWith({
+  ${googleMapsCubitName.replaceAll(' ', '')}UiModel copyWith({
     final Set<Polyline>? paths,
     final Set<Marker>? markers,
     final CameraPosition? cameraPosition,
@@ -347,7 +347,7 @@ class ${googleMapsCubitName}UiModel extends Equatable {
     final bool? isError,
     final bool? isInitialState,
   }) =>
-      ${googleMapsCubitName}UiModel(
+      ${googleMapsCubitName.replaceAll(' ', '')}UiModel(
         paths: paths ?? this.paths,
         markers: markers ?? this.markers,
         cameraPosition: cameraPosition ?? this.cameraPosition,
@@ -370,52 +370,52 @@ class ${googleMapsCubitName}UiModel extends Equatable {
       ];
 }
 
-abstract class ${googleMapsCubitName}State extends Equatable {
-  const ${googleMapsCubitName}State(this.uiModel);
+abstract class ${googleMapsCubitName.replaceAll(' ', '')}State extends Equatable {
+  const ${googleMapsCubitName.replaceAll(' ', '')}State(this.uiModel);
 
-  final ${googleMapsCubitName}UiModel uiModel;
+  final ${googleMapsCubitName.replaceAll(' ', '')}UiModel uiModel;
 
   @override
   List<Object?> get props => [uiModel];
 }
 
-class ${googleMapsCubitName}InitialState extends ${googleMapsCubitName}State {
-  const ${googleMapsCubitName}InitialState(final ${googleMapsCubitName}UiModel uiModel)
+class ${googleMapsCubitName.replaceAll(' ', '')}InitialState extends ${googleMapsCubitName.replaceAll(' ', '')}State {
+  const ${googleMapsCubitName.replaceAll(' ', '')}InitialState(final ${googleMapsCubitName.replaceAll(' ', '')}UiModel uiModel)
       : super(uiModel);
 }
 
-class ${googleMapsCubitName}ReloadDataState extends ${googleMapsCubitName}State {
-  const ${googleMapsCubitName}ReloadDataState(final ${googleMapsCubitName}UiModel uiModel)
+class ${googleMapsCubitName.replaceAll(' ', '')}ReloadDataState extends ${googleMapsCubitName.replaceAll(' ', '')}State {
+  const ${googleMapsCubitName.replaceAll(' ', '')}ReloadDataState(final ${googleMapsCubitName.replaceAll(' ', '')}UiModel uiModel)
       : super(uiModel);
 }
 
-class ${googleMapsCubitName}LoadedState extends ${googleMapsCubitName}State {
-  const ${googleMapsCubitName}LoadedState(final ${googleMapsCubitName}UiModel uiModel) : super(uiModel);
+class ${googleMapsCubitName.replaceAll(' ', '')}LoadedState extends ${googleMapsCubitName.replaceAll(' ', '')}State {
+  const ${googleMapsCubitName.replaceAll(' ', '')}LoadedState(final ${googleMapsCubitName.replaceAll(' ', '')}UiModel uiModel) : super(uiModel);
 }
 
-class ${googleMapsCubitName}ErrorState extends ${googleMapsCubitName}State {
-  const ${googleMapsCubitName}ErrorState(final ${googleMapsCubitName}UiModel uiModel) : super(uiModel);
+class ${googleMapsCubitName.replaceAll(' ', '')}ErrorState extends ${googleMapsCubitName.replaceAll(' ', '')}State {
+  const ${googleMapsCubitName.replaceAll(' ', '')}ErrorState(final ${googleMapsCubitName.replaceAll(' ', '')}UiModel uiModel) : super(uiModel);
 }
 
-class ${googleMapsCubitName}SetNewCameraPositionState extends ${googleMapsCubitName}State {
-  const ${googleMapsCubitName}SetNewCameraPositionState(final ${googleMapsCubitName}UiModel uiModel)
-      : super(uiModel);
-}
-
-//Need to rebuild widget for this
-class ${googleMapsCubitName}ReloadMarkersState extends ${googleMapsCubitName}State {
-  const ${googleMapsCubitName}ReloadMarkersState(final ${googleMapsCubitName}UiModel uiModel)
+class ${googleMapsCubitName.replaceAll(' ', '')}SetNewCameraPositionState extends ${googleMapsCubitName.replaceAll(' ', '')}State {
+  const ${googleMapsCubitName.replaceAll(' ', '')}SetNewCameraPositionState(final ${googleMapsCubitName.replaceAll(' ', '')}UiModel uiModel)
       : super(uiModel);
 }
 
 //Need to rebuild widget for this
-class ${googleMapsCubitName}ReloadPolyLinesState extends ${googleMapsCubitName}State {
-  const ${googleMapsCubitName}ReloadPolyLinesState(final ${googleMapsCubitName}UiModel uiModel)
+class ${googleMapsCubitName.replaceAll(' ', '')}ReloadMarkersState extends ${googleMapsCubitName.replaceAll(' ', '')}State {
+  const ${googleMapsCubitName.replaceAll(' ', '')}ReloadMarkersState(final ${googleMapsCubitName.replaceAll(' ', '')}UiModel uiModel)
       : super(uiModel);
 }
 
-class ${googleMapsCubitName}ChangeMapStyleState extends ${googleMapsCubitName}State {
-  const ${googleMapsCubitName}ChangeMapStyleState(final ${googleMapsCubitName}UiModel uiModel)
+//Need to rebuild widget for this
+class ${googleMapsCubitName.replaceAll(' ', '')}ReloadPolyLinesState extends ${googleMapsCubitName.replaceAll(' ', '')}State {
+  const ${googleMapsCubitName.replaceAll(' ', '')}ReloadPolyLinesState(final ${googleMapsCubitName.replaceAll(' ', '')}UiModel uiModel)
+      : super(uiModel);
+}
+
+class ${googleMapsCubitName.replaceAll(' ', '')}ChangeMapStyleState extends ${googleMapsCubitName.replaceAll(' ', '')}State {
+  const ${googleMapsCubitName.replaceAll(' ', '')}ChangeMapStyleState(final ${googleMapsCubitName.replaceAll(' ', '')}UiModel uiModel)
       : super(uiModel);
 }
     ''';
