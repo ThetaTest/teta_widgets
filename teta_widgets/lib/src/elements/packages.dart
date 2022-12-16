@@ -119,6 +119,7 @@ const PackageModel pLatLang = PackageModel(
   packageName: 'latlng',
   packageVersion: '0.1.0',
   isDart: false,
+  extraCode: ' as latlng',
 );
 const PackageModel pQrFlutter = PackageModel(
   packageName: 'qr_flutter',

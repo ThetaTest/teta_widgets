@@ -28,7 +28,7 @@ class MapCodeTemplate {
     final code = '''
 map.MapLayoutBuilder(
   controller: map.MapController(
-    location: LatLng(41.52, 12.30),
+    location: latlng.LatLng(41.52, 12.30),
     zoom: 4,
   ),
   builder: (context, transformer) {
@@ -36,7 +36,7 @@ map.MapLayoutBuilder(
       children: [
         map.Map( 
           controller: map.MapController(
-            location: LatLng(41.52, 12.30),
+            location: latlng.LatLng(41.52, 12.30),
             zoom: 4,
           ),
           builder: (context, x, y, z) {

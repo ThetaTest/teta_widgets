@@ -224,7 +224,7 @@ class ${googleMapsCubitName.replaceAll(' ', '')}Cubit extends Cubit<${googleMaps
                           e.longitude,
                         ),
                       )
-                      .toList(),
+                      .toList() as List<LatLng>,
                 ),
               );
             }
