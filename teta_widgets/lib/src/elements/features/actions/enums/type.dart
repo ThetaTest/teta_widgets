@@ -29,5 +29,6 @@ enum ActionType {
   customFunctions,
   braintree,
   translator,
-  apiCalls
+  apiCalls,
+  firebaseAnalytics,
 }

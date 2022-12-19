@@ -173,7 +173,7 @@ Future<String> pageCodeTemplate(
     ${prj.config?.isQonversionReady ?? false ? "import 'package:qonversion_flutter/qonversion_flutter.dart';" : ''}
     ${prj.config?.isBraintreeReady ?? false ? "import 'package:flutter_braintree/flutter_braintree.dart';" : ''}
     ${prj.config?.isStripeEnabled ?? false ? "import 'package:flutter_stripe/flutter_stripe.dart'; \n import 'dart:convert' as convert;" : ''}
-
+    ${prj.config?.isFirebaseReady ?? false ? "import 'package:firebase_analytics/firebase_analytics.dart';" : ""}
     ${PackagesService.instance.getToCodePackages()}
 
     class Page${pageNameRC.pascalCase} extends StatefulWidget {

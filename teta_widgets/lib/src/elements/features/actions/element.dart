@@ -37,6 +37,15 @@ import 'package:teta_widgets/src/elements/actions/camera/take_photo.dart';
 import 'package:teta_widgets/src/elements/actions/camera/torch_flash.dart';
 import 'package:teta_widgets/src/elements/actions/custom_functions/custom_function.dart';
 import 'package:teta_widgets/src/elements/actions/delay.dart';
+import 'package:teta_widgets/src/elements/actions/firebase/firebase_analytics/log_app_open.dart';
+import 'package:teta_widgets/src/elements/actions/firebase/firebase_analytics/log_event.dart';
+import 'package:teta_widgets/src/elements/actions/firebase/firebase_analytics/log_join_group.dart';
+import 'package:teta_widgets/src/elements/actions/firebase/firebase_analytics/log_login.dart';
+import 'package:teta_widgets/src/elements/actions/firebase/firebase_analytics/log_share.dart';
+import 'package:teta_widgets/src/elements/actions/firebase/firebase_analytics/reset_analytics_data.dart';
+import 'package:teta_widgets/src/elements/actions/firebase/firebase_analytics/set_current_screen.dart';
+import 'package:teta_widgets/src/elements/actions/firebase/firebase_analytics/set_user_id.dart';
+import 'package:teta_widgets/src/elements/actions/firebase/firebase_analytics/set_user_property.dart';
 import 'package:teta_widgets/src/elements/actions/google_maps/reload_data.dart';
 import 'package:teta_widgets/src/elements/actions/google_maps/set_camera_position.dart';
 import 'package:teta_widgets/src/elements/actions/google_maps/update_device_live_location.dart';
@@ -115,6 +124,9 @@ import 'package:teta_widgets/src/elements/nodes/enum.dart';
 import 'package:teta_widgets/src/elements/nodes/node.dart';
 import 'package:uuid/uuid.dart';
 
+import '../../actions/firebase/firebase_analytics/log_screen_view.dart';
+import 'enums/firebase/firebase_analytics.dart';
+
 class FActionElement extends Equatable {
   FActionElement({
     this.id,
@@ -142,6 +154,7 @@ class FActionElement extends Equatable {
     this.actionWebView,
     this.actionAudioPlayer,
     this.actionTranslator,
+    this.actionFirebaseAnalytics,
     this.prodId,
     this.stateName,
     this.stateName2,
@@ -171,6 +184,16 @@ class FActionElement extends Equatable {
     this.apiCallsSelectedRequest,
     this.apiCallsResponseName,
     this.apiCallsDynamicValue,
+    this.firebaseAnalyticsLoginMethod,
+    this.firebaseAnalyticsParameters,
+    this.firebaseAnalyticsName,
+    this.firebaseAnalyticsGroupId,
+    this.firebaseAnalyticsScreenName,
+    this.firebaseAnalyticsContentType,
+    this.firebaseAnalyticsItemId,
+    this.firebaseAnalyticsMethod,
+    this.firebaseAnalyticsUserId,
+    this.firebaseAnalyticsValue,
   }) {
     id ??= const Uuid().v1();
     delay ??= FTextTypeInput(value: '0');
@@ -201,6 +224,10 @@ class FActionElement extends Equatable {
     actionRevenueCat =
         convertDropdownToValue(ActionRevenueCat.values, doc['aRC'] as String?)
             as ActionRevenueCat?;
+    actionFirebaseAnalytics = convertDropdownToValue(
+      ActionFirebaseAnalytics.values,
+      doc['aFirebaseAnalytics'] as String?,
+    ) as ActionFirebaseAnalytics?;
     actionQonversion = convertDropdownToValue(
       ActionQonversion.values,
       doc['aQonversion'] as String?,
@@ -437,14 +464,6 @@ class FActionElement extends Equatable {
     apiCallsResponseName = FTextTypeInput.fromJson(
       doc['aCResN'] as Map<String, dynamic>?,
     );
-    apiCallsDynamicValue =
-        (doc['sApiCallsDynamicValue'] as List<dynamic>? ?? <dynamic>[])
-            .map(
-              (final dynamic e) => MapElement.fromJson(
-                e as Map<String, dynamic>,
-              ),
-            )
-            .toList();
     apiCallsRequestName = doc['aCRN'] as String?;
     apiCallsSelectedRequest = doc['aCSR'] as Map<String, dynamic>?;
     apiCallsResponseName = FTextTypeInput.fromJson(
@@ -458,6 +477,45 @@ class FActionElement extends Equatable {
               ),
             )
             .toList();
+
+    //Firebase Analytics
+    firebaseAnalyticsLoginMethod = FTextTypeInput.fromJson(
+      doc['sFirebaseAnalyticsLoginMethod'] as Map<String, dynamic>?,
+    );
+    firebaseAnalyticsParameters =
+        (doc['sFirebaseAnalyticsParameters'] as List<dynamic>? ?? <dynamic>[])
+            .map(
+              (final dynamic e) => MapElement.fromJson(
+                e as Map<String, dynamic>,
+              ),
+            )
+            .toList();
+    firebaseAnalyticsName = FTextTypeInput.fromJson(
+      doc['sFirebaseAnalyticsName'] as Map<String, dynamic>?,
+    );
+
+    firebaseAnalyticsGroupId = FTextTypeInput.fromJson(
+      doc['sFirebaseAnalyticsGroupId'] as Map<String, dynamic>?,
+    );
+    firebaseAnalyticsScreenName = FTextTypeInput.fromJson(
+      doc['sFirebaseAnalyticsScreenName'] as Map<String, dynamic>?,
+    );
+
+    firebaseAnalyticsContentType = FTextTypeInput.fromJson(
+      doc['sFirebaseAnalyticsContentType'] as Map<String, dynamic>?,
+    );
+    firebaseAnalyticsItemId = FTextTypeInput.fromJson(
+      doc['sFirebaseAnalyticsItemId'] as Map<String, dynamic>?,
+    );
+    firebaseAnalyticsMethod = FTextTypeInput.fromJson(
+      doc['sFirebaseAnalyticsMethod'] as Map<String, dynamic>?,
+    );
+    firebaseAnalyticsUserId = FTextTypeInput.fromJson(
+      doc['sFirebaseAnalyticsUserId'] as Map<String, dynamic>?,
+    );
+    firebaseAnalyticsValue = FTextTypeInput.fromJson(
+      doc['sFirebaseAnalyticsValue'] as Map<String, dynamic>?,
+    );
   }
 
   String? id;
@@ -466,6 +524,7 @@ class FActionElement extends Equatable {
   ActionNavigation? actionNavigation;
   ActionState? actionState;
   ActionRevenueCat? actionRevenueCat;
+  ActionFirebaseAnalytics? actionFirebaseAnalytics;
   ActionQonversion? actionQonversion;
   ActionMixpanel? actionMixpanel;
   ActionBraintree? actionBraintree;
@@ -551,6 +610,19 @@ class FActionElement extends Equatable {
   FTextTypeInput? apiCallsResponseName;
   List<MapElement>? apiCallsDynamicValue;
 
+  //Firebase Analytics
+  FTextTypeInput? firebaseAnalyticsLoginMethod;
+  List<MapElement>? firebaseAnalyticsParameters;
+  FTextTypeInput? firebaseAnalyticsName;
+
+  FTextTypeInput? firebaseAnalyticsGroupId;
+  FTextTypeInput? firebaseAnalyticsScreenName;
+  FTextTypeInput? firebaseAnalyticsContentType;
+  FTextTypeInput? firebaseAnalyticsItemId;
+  FTextTypeInput? firebaseAnalyticsMethod;
+  FTextTypeInput? firebaseAnalyticsUserId;
+  FTextTypeInput? firebaseAnalyticsValue;
+
   @override
   List<Object?> get props => [
         id,
@@ -563,6 +635,7 @@ class FActionElement extends Equatable {
         stateName,
         actionBraintree,
         actionTranslator,
+        actionFirebaseAnalytics,
         nameOfPage,
         paramsToSend,
         value,
@@ -584,6 +657,7 @@ class FActionElement extends Equatable {
         apiCallsSelectedRequest,
         apiCallsResponseName,
         apiCallsDynamicValue,
+        firebaseAnalyticsParameters,
       ];
 
   /// Get avaiable action types for drop down list
@@ -606,6 +680,7 @@ class FActionElement extends Equatable {
           if (config.isSupabaseReady) 'Supabase functions',
           if (config.isSupabaseReady) 'Supabase storage',
           if (config.isBraintreeReady) 'Braintree',
+          if (config.isFirebaseReady) 'Firebase Analytics',
           if (config.isRevenueCatEnabled) 'RevenueCat',
           if (config.isQonversionReady) 'Qonversion',
           if (config.isMixpanelReady) 'Mixpanel',
@@ -696,6 +771,15 @@ class FActionElement extends Equatable {
     if (config != null) {
       if (config.isBraintreeReady) {
         return enumsToListString(ActionBraintree.values);
+      }
+    }
+    return [];
+  }
+
+  static List<String> getFirebaseAnalytics(final ProjectConfig? config) {
+    if (config != null) {
+      if (config.isFirebaseReady) {
+        return enumsToListString(ActionFirebaseAnalytics.values);
       }
     }
     return [];
@@ -824,6 +908,7 @@ class FActionElement extends Equatable {
       return 'Api Calls';
     }
     if (type == ActionType.airtable) return 'Airtable Database';
+    if (type == ActionType.firebaseAnalytics) return 'Firebase Analytics';
 
     if (type != null) {
       return EnumToString.convertToString(type, camelCase: true);
@@ -868,6 +953,7 @@ class FActionElement extends Equatable {
       return ActionType.apiCalls;
     }
     if (value == 'Airtable Database') return ActionType.airtable;
+    if (value == 'Firebase Analytics') return ActionType.firebaseAnalytics;
     if (value != null) {
       return EnumToString.fromString<dynamic>(list, value, camelCase: true);
     }
@@ -892,7 +978,7 @@ class FActionElement extends Equatable {
         'g': convertValueToDropdown(actionGesture),
         'sA': convertValueToDropdown(actionSupabaseAuth),
         'sD': convertValueToDropdown(actionSupabaseDB),
-        'sA': convertValueToDropdown(actionAirtableDB),
+        'aD': convertValueToDropdown(actionAirtableDB),
         'supaFuncs': convertValueToDropdown(actionSupabaseFunctions),
         'supaStor': convertValueToDropdown(actionSupabaseStorage),
         'aC': convertValueToDropdown(actionCamera),
@@ -902,6 +988,7 @@ class FActionElement extends Equatable {
         'aQonversion': convertValueToDropdown(actionQonversion),
         'aMixpanel': convertValueToDropdown(actionMixpanel),
         'aBrain': convertValueToDropdown(actionBraintree),
+        'aFirebaseAnalytics': convertValueToDropdown(actionFirebaseAnalytics),
         'aTrans': convertValueToDropdown(actionTranslator),
         'sPK': convertValueToDropdown(actionStripe),
         'actionGoogleMaps': convertValueToDropdown(actionGoogleMaps),
@@ -996,6 +1083,38 @@ class FActionElement extends Equatable {
 
         'sApiCallsDynamicValue': apiCallsDynamicValue != null
             ? apiCallsDynamicValue!.map((final e) => e.toJson()).toList()
+            : null,
+        'sFirebaseAnalyticsLoginMethod': firebaseAnalyticsLoginMethod != null
+            ? firebaseAnalyticsLoginMethod!.toJson()
+            : null,
+        'sFirebaseAnalyticsParameters': firebaseAnalyticsParameters != null
+            ? firebaseAnalyticsParameters!.map((final e) => e.toJson()).toList()
+            : null,
+        'sFirebaseAnalyticsName': firebaseAnalyticsName != null
+            ? firebaseAnalyticsName!.toJson()
+            : null,
+
+        'sFirebaseAnalyticsGroupId': firebaseAnalyticsGroupId != null
+            ? firebaseAnalyticsGroupId!.toJson()
+            : null,
+        'sFirebaseAnalyticsScreenName': firebaseAnalyticsScreenName != null
+            ? firebaseAnalyticsScreenName!.toJson()
+            : null,
+
+        'sFirebaseAnalyticsContentType': firebaseAnalyticsContentType != null
+            ? firebaseAnalyticsContentType!.toJson()
+            : null,
+        'sFirebaseAnalyticsItemId': firebaseAnalyticsItemId != null
+            ? firebaseAnalyticsItemId!.toJson()
+            : null,
+        'sFirebaseAnalyticsMethod': firebaseAnalyticsMethod != null
+            ? firebaseAnalyticsMethod!.toJson()
+            : null,
+        'sFirebaseAnalyticsUserId': firebaseAnalyticsUserId != null
+            ? firebaseAnalyticsUserId!.toJson()
+            : null,
+        'sFirebaseAnalyticsValue': firebaseAnalyticsValue != null
+            ? firebaseAnalyticsValue!.toJson()
             : null,
       }..removeWhere((final String key, final dynamic value) => value == null);
 
@@ -1260,6 +1379,134 @@ class FActionElement extends Equatable {
                 context,
                 state,
                 stateName,
+              ),
+              context: context,
+              state: state,
+            );
+            break;
+          default:
+            break;
+        }
+        break;
+      case ActionType.firebaseAnalytics:
+        switch (actionFirebaseAnalytics) {
+          case ActionFirebaseAnalytics.logEvent:
+            await actionS(
+              () => FActionFirebaseAnalyticsLogEvent.action(
+                context,
+                state.copyWith(loop: state.loop ?? 0),
+                stateName,
+                firebaseAnalyticsParameters,
+                firebaseAnalyticsName,
+              ),
+              context: context,
+              state: state,
+            );
+            break;
+          case ActionFirebaseAnalytics.logLogin:
+            await actionS(
+              () => FActionFirebaseAnalyticsLogLogin.action(
+                context,
+                state.copyWith(loop: state.loop ?? 0),
+                stateName,
+                firebaseAnalyticsLoginMethod,
+              ),
+              context: context,
+              state: state,
+            );
+            break;
+          case ActionFirebaseAnalytics.logScreenView:
+            await actionS(
+              () => FActionFirebaseAnalyticsLogScreenView.action(
+                context,
+                state.copyWith(loop: state.loop ?? 0),
+                stateName,
+                firebaseAnalyticsScreenName,
+              ),
+              context: context,
+              state: state,
+            );
+            break;
+          case ActionFirebaseAnalytics.logShare:
+            await actionS(
+              () => FActionFirebaseAnalyticsLogShare.action(
+                context,
+                state.copyWith(loop: state.loop ?? 0),
+                stateName,
+                firebaseAnalyticsContentType,
+                firebaseAnalyticsItemId,
+                firebaseAnalyticsMethod,
+              ),
+              context: context,
+              state: state,
+            );
+            break;
+          case ActionFirebaseAnalytics.logJoinGroup:
+            await actionS(
+              () => FActionFirebaseAnalyticsLogJoinGroup.action(
+                context,
+                state.copyWith(loop: state.loop ?? 0),
+                stateName,
+                firebaseAnalyticsGroupId,
+              ),
+              context: context,
+              state: state,
+            );
+            break;
+          case ActionFirebaseAnalytics.logAppOpen:
+            await actionS(
+              () => FActionFirebaseAnalyticsLogAppOpen.action(
+                context,
+                state.copyWith(loop: state.loop ?? 0),
+                stateName,
+              ),
+              context: context,
+              state: state,
+            );
+            break;
+          case ActionFirebaseAnalytics.resetAnalyticsData:
+            await actionS(
+              () => FActionFirebaseAnalyticsResetAnalyticsData.action(
+                context,
+                state.copyWith(loop: state.loop ?? 0),
+                stateName,
+              ),
+              context: context,
+              state: state,
+            );
+            break;
+          case ActionFirebaseAnalytics.setUserProperty:
+            await actionS(
+              () => FActionFirebaseAnalyticsSetUserProperty.action(
+                context,
+                state.copyWith(loop: state.loop ?? 0),
+                stateName,
+                firebaseAnalyticsName,
+                firebaseAnalyticsValue,
+              ),
+              context: context,
+              state: state,
+            );
+            break;
+          case ActionFirebaseAnalytics.setCurrentScreen:
+            await actionS(
+              () => FActionFirebaseAnalyticsSetCurrentScreen.action(
+                context,
+                state.copyWith(loop: state.loop ?? 0),
+                stateName,
+                firebaseAnalyticsScreenName,
+              ),
+              context: context,
+              state: state,
+            );
+            break;
+          case ActionFirebaseAnalytics.setUserId:
+            await actionS(
+              () => FActionFirebaseAnalyticsSetUserId.action(
+                context,
+                state.copyWith(loop: state.loop ?? 0),
+                stateName,
+                firebaseAnalyticsUserId,
               ),
               context: context,
               state: state,
@@ -2480,6 +2727,124 @@ class FActionElement extends Equatable {
                 context,
                 stateName,
                 pageId,
+              ),
+              context,
+            );
+          default:
+            break;
+        }
+        break;
+      case ActionType.firebaseAnalytics:
+        switch (actionFirebaseAnalytics) {
+          case ActionFirebaseAnalytics.logLogin:
+            return codeS(
+              FActionFirebaseAnalyticsLogLogin.toCode(
+                context,
+                stateName,
+                pageId,
+                loop,
+                firebaseAnalyticsLoginMethod,
+              ),
+              context,
+            );
+          case ActionFirebaseAnalytics.logEvent:
+            return codeS(
+              FActionFirebaseAnalyticsLogEvent.toCode(
+                context,
+                stateName,
+                pageId,
+                loop,
+                firebaseAnalyticsParameters,
+                firebaseAnalyticsName,
+              ),
+              context,
+            );
+          case ActionFirebaseAnalytics.logScreenView:
+            return codeS(
+              FActionFirebaseAnalyticsLogScreenView.toCode(
+                context,
+                stateName,
+                pageId,
+                loop,
+                firebaseAnalyticsScreenName,
+              ),
+              context,
+            );
+          case ActionFirebaseAnalytics.logShare:
+            return codeS(
+              FActionFirebaseAnalyticsLogShare.toCode(
+                context,
+                stateName,
+                pageId,
+                loop,
+                firebaseAnalyticsContentType,
+                firebaseAnalyticsItemId,
+                firebaseAnalyticsMethod,
+              ),
+              context,
+            );
+          case ActionFirebaseAnalytics.logJoinGroup:
+            return codeS(
+              FActionFirebaseAnalyticsLogJoinGroup.toCode(
+                context,
+                stateName,
+                pageId,
+                loop,
+                firebaseAnalyticsGroupId,
+              ),
+              context,
+            );
+          case ActionFirebaseAnalytics.logAppOpen:
+            return codeS(
+              FActionFirebaseAnalyticsLogAppOpen.toCode(
+                context,
+                stateName,
+                pageId,
+                loop,
+              ),
+              context,
+            );
+          case ActionFirebaseAnalytics.resetAnalyticsData:
+            return codeS(
+              FActionFirebaseAnalyticsResetAnalyticsData.toCode(
+                context,
+                stateName,
+                pageId,
+                loop,
+              ),
+              context,
+            );
+          case ActionFirebaseAnalytics.setUserProperty:
+            return codeS(
+              FActionFirebaseAnalyticsSetUserProperty.toCode(
+                context,
+                stateName,
+                pageId,
+                loop,
+                firebaseAnalyticsName,
+                firebaseAnalyticsValue,
+              ),
+              context,
+            );
+          case ActionFirebaseAnalytics.setCurrentScreen:
+            return codeS(
+              FActionFirebaseAnalyticsSetCurrentScreen.toCode(
+                context,
+                stateName,
+                pageId,
+                loop,
+                firebaseAnalyticsScreenName,
+              ),
+              context,
+            );
+          case ActionFirebaseAnalytics.setUserId:
+            return codeS(
+              FActionFirebaseAnalyticsSetUserId.toCode(
+                context,
+                stateName,
+                pageId,
+                loop,
+                firebaseAnalyticsUserId,
               ),
               context,
             );
