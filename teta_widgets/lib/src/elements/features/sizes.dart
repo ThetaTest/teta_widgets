@@ -46,9 +46,6 @@ class FSize {
     required final BuildContext context,
     required final bool isWidth,
   }) {
-    Logger.printWarning(
-      'Get size',
-    );
     var size = sizeDesktop ?? this.size!;
     var unit = unitDesktop ?? this.unit!;
     final device = BlocProvider.of<DeviceModeCubit>(context).state;
@@ -59,10 +56,6 @@ class FSize {
       size = sizeTablet ?? this.size ?? '0';
       unit = unitTablet ?? this.unit!;
     }
-
-    Logger.printWarning(
-      'Calculating % size',
-    );
 
     double? value = 0;
     if (unit == SizeUnit.pixel &&
@@ -84,17 +77,10 @@ class FSize {
       }
     }
 
-    Logger.printWarning(
-      'Calculating % size, $value',
-    );
-
     if (unit == SizeUnit.percent ||
         unit == SizeUnit.width ||
         unit == SizeUnit.height) {
       final screen = BlocProvider.of<DeviceModeCubit>(context).state.screenSize;
-      Logger.printWarning(
-        'Calculating % size, ${screen.width} : ${screen.height} * ($value / 100), result: ${(isWidth ? screen.width : screen.height) * (value / 100)} ',
-      );
       return isWidth ? value.toInt().w : value.toInt().h;
     }
     return value;

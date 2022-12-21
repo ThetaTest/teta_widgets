@@ -1349,7 +1349,10 @@ class FActionElement extends Equatable {
           case ActionTranslator.translate:
             await actionS(
               () => FActionTranslatorTranslate.action(
-                  context, state.states, stateName),
+                context,
+                state.states,
+                stateName,
+              ),
               context: context,
               state: state,
             );
@@ -1463,7 +1466,10 @@ class FActionElement extends Equatable {
           case ActionState.increment:
             await actionS(
               () => FActionStateIncrement.action(
-                  context, state.states, stateName),
+                context,
+                state.states,
+                stateName,
+              ),
               context: context,
               state: state,
             );
@@ -1471,7 +1477,10 @@ class FActionElement extends Equatable {
           case ActionState.decrement:
             await actionS(
               () => FActionStateDecrement.action(
-                  context, state.states, stateName),
+                context,
+                state.states,
+                stateName,
+              ),
               context: context,
               state: state,
             );
@@ -2808,6 +2817,14 @@ class FActionElement extends Equatable {
                 context,
                 nameOfPage,
                 paramsToSend,
+              ),
+              context,
+            );
+          case ActionNavigation.launchURL:
+            return codeS(
+              FActionNavigationLaunchURL.toCode(
+                valueTextTypeInput ?? FTextTypeInput(),
+                loop,
               ),
               context,
             );

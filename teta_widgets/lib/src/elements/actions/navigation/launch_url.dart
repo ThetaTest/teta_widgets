@@ -43,7 +43,9 @@ class FActionNavigationLaunchURL {
     final code = value.toCode(
       loop,
       resultType: ResultTypeEnum.string,
+      defaultValue: '',
     );
+    print(code);
     return '''
     if (await canLaunchUrlString($code)) {
       await launchUrlString(
