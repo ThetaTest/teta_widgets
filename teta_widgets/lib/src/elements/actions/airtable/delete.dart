@@ -41,19 +41,26 @@ class FAAirtableDelete {
       final BuildContext context,
       final FTextTypeInput? airtableRecordName,
       final List<MapElement> airtableData,) {
-    final record = AirtableRecord(
-      fields: airtableData
-          .map(
-            (final e) => AirtableRecordField(fieldName: e.key, value: e.value),
-      )
-          .toList(),
-    );
+
+    List<String> stringRecordField = [];
+
+    airtableData.forEach((element) {
+      stringRecordField.add('AirtableRecordField(fieldName: ${element.key}, value: ${element.value.toCode(0, resultType: ResultTypeEnum.string)})');
+    });
+
+    print(stringRecordField);
+
+    final stringRecord = '''
+        AirtableRecord(
+        fields: $stringRecordField)
+    ''';
+
 
     return '''
-        context<AirtableCubit>.read().delete(recordName: ${airtableRecordName?.toCode(
+    AirtableInstance.instance.delete(recordName: ${airtableRecordName?.toCode(
       0,
       resultType: ResultTypeEnum.string,
-    ) ?? ''}, record: $record)
+    ) ?? ''}, record: $stringRecord);
     ''';
   }
 }

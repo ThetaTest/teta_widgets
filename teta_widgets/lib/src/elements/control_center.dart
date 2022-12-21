@@ -577,7 +577,7 @@ NodeBody getBody(final NType type) {
       // TODO: Handle this case.
       break;
     case NType.airtableFetch:
-      // TODO: Handle this case.
+      return AirtableFetchBody();
       break;
     case NType.apiCallsFetch:
       return ApiCallsFetchBody();
