@@ -46,6 +46,8 @@ import 'package:teta_widgets/src/elements/actions/firebase/firebase_analytics/re
 import 'package:teta_widgets/src/elements/actions/firebase/firebase_analytics/set_current_screen.dart';
 import 'package:teta_widgets/src/elements/actions/firebase/firebase_analytics/set_user_id.dart';
 import 'package:teta_widgets/src/elements/actions/firebase/firebase_analytics/set_user_property.dart';
+import 'package:teta_widgets/src/elements/actions/firebase/firebase_message/subscribe_to_topic.dart';
+import 'package:teta_widgets/src/elements/actions/firebase/firebase_message/unsubscribe_from_topic.dart';
 import 'package:teta_widgets/src/elements/actions/google_maps/reload_data.dart';
 import 'package:teta_widgets/src/elements/actions/google_maps/set_camera_position.dart';
 import 'package:teta_widgets/src/elements/actions/google_maps/update_device_live_location.dart';
@@ -108,6 +110,7 @@ import 'package:teta_widgets/src/elements/features/actions/enums/audio_player_ac
 import 'package:teta_widgets/src/elements/features/actions/enums/braintree.dart';
 import 'package:teta_widgets/src/elements/features/actions/enums/camera.dart';
 import 'package:teta_widgets/src/elements/features/actions/enums/custom_http_request.dart';
+import 'package:teta_widgets/src/elements/features/actions/enums/firebase/firebase_message.dart';
 import 'package:teta_widgets/src/elements/features/actions/enums/index.dart';
 import 'package:teta_widgets/src/elements/features/actions/enums/mixpanel.dart';
 import 'package:teta_widgets/src/elements/features/actions/enums/qonversion.dart';
@@ -155,6 +158,7 @@ class FActionElement extends Equatable {
     this.actionAudioPlayer,
     this.actionTranslator,
     this.actionFirebaseAnalytics,
+    this.actionFirebaseMessages,
     this.prodId,
     this.stateName,
     this.stateName2,
@@ -194,6 +198,7 @@ class FActionElement extends Equatable {
     this.firebaseAnalyticsMethod,
     this.firebaseAnalyticsUserId,
     this.firebaseAnalyticsValue,
+    this.firebaseMessagesTopic,
   }) {
     id ??= const Uuid().v1();
     delay ??= FTextTypeInput(value: '0');
@@ -228,6 +233,9 @@ class FActionElement extends Equatable {
       ActionFirebaseAnalytics.values,
       doc['aFirebaseAnalytics'] as String?,
     ) as ActionFirebaseAnalytics?;
+    actionFirebaseMessages = convertDropdownToValue(
+            ActionFirebaseMessages.values, doc['aFirebaseMessages'] as String?)
+        as ActionFirebaseMessages;
     actionQonversion = convertDropdownToValue(
       ActionQonversion.values,
       doc['aQonversion'] as String?,
@@ -516,6 +524,9 @@ class FActionElement extends Equatable {
     firebaseAnalyticsValue = FTextTypeInput.fromJson(
       doc['sFirebaseAnalyticsValue'] as Map<String, dynamic>?,
     );
+    firebaseMessagesTopic = FTextTypeInput.fromJson(
+      doc['sFirebaseMessagesTopic'] as Map<String, dynamic>?,
+    );
   }
 
   String? id;
@@ -525,6 +536,7 @@ class FActionElement extends Equatable {
   ActionState? actionState;
   ActionRevenueCat? actionRevenueCat;
   ActionFirebaseAnalytics? actionFirebaseAnalytics;
+  ActionFirebaseMessages? actionFirebaseMessages;
   ActionQonversion? actionQonversion;
   ActionMixpanel? actionMixpanel;
   ActionBraintree? actionBraintree;
@@ -622,6 +634,8 @@ class FActionElement extends Equatable {
   FTextTypeInput? firebaseAnalyticsMethod;
   FTextTypeInput? firebaseAnalyticsUserId;
   FTextTypeInput? firebaseAnalyticsValue;
+  //Firebase Messages
+  FTextTypeInput? firebaseMessagesTopic;
 
   @override
   List<Object?> get props => [
@@ -636,6 +650,7 @@ class FActionElement extends Equatable {
         actionBraintree,
         actionTranslator,
         actionFirebaseAnalytics,
+        actionFirebaseMessages,
         nameOfPage,
         paramsToSend,
         value,
@@ -681,6 +696,8 @@ class FActionElement extends Equatable {
           if (config.isSupabaseReady) 'Supabase storage',
           if (config.isBraintreeReady) 'Braintree',
           if (config.isFirebaseReady) 'Firebase Analytics',
+          if (config.isFirebaseReady && config.isFirebasePushNotificationReady)
+            'Firebase Messages',
           if (config.isRevenueCatEnabled) 'RevenueCat',
           if (config.isQonversionReady) 'Qonversion',
           if (config.isMixpanelReady) 'Mixpanel',
@@ -780,6 +797,15 @@ class FActionElement extends Equatable {
     if (config != null) {
       if (config.isFirebaseReady) {
         return enumsToListString(ActionFirebaseAnalytics.values);
+      }
+    }
+    return [];
+  }
+
+  static List<String> getFirebaseMessages(final ProjectConfig? config) {
+    if (config != null) {
+      if (config.isFirebaseReady && config.isFirebasePushNotificationReady) {
+        return enumsToListString(ActionFirebaseMessages.values);
       }
     }
     return [];
@@ -909,6 +935,7 @@ class FActionElement extends Equatable {
     }
     if (type == ActionType.airtable) return 'Airtable Database';
     if (type == ActionType.firebaseAnalytics) return 'Firebase Analytics';
+    if (type == ActionType.firebaseMessages) return 'Firebase Messages';
 
     if (type != null) {
       return EnumToString.convertToString(type, camelCase: true);
@@ -954,6 +981,7 @@ class FActionElement extends Equatable {
     }
     if (value == 'Airtable Database') return ActionType.airtable;
     if (value == 'Firebase Analytics') return ActionType.firebaseAnalytics;
+    if (value == 'Firebase Messages') return ActionType.firebaseMessages;
     if (value != null) {
       return EnumToString.fromString<dynamic>(list, value, camelCase: true);
     }
@@ -989,6 +1017,7 @@ class FActionElement extends Equatable {
         'aMixpanel': convertValueToDropdown(actionMixpanel),
         'aBrain': convertValueToDropdown(actionBraintree),
         'aFirebaseAnalytics': convertValueToDropdown(actionFirebaseAnalytics),
+        'aFirebaseMessages': convertValueToDropdown(actionFirebaseMessages),
         'aTrans': convertValueToDropdown(actionTranslator),
         'sPK': convertValueToDropdown(actionStripe),
         'actionGoogleMaps': convertValueToDropdown(actionGoogleMaps),
@@ -1115,6 +1144,9 @@ class FActionElement extends Equatable {
             : null,
         'sFirebaseAnalyticsValue': firebaseAnalyticsValue != null
             ? firebaseAnalyticsValue!.toJson()
+            : null,
+        'sFirebaseMessagesTopic': firebaseMessagesTopic != null
+            ? firebaseMessagesTopic!.toJson()
             : null,
       }..removeWhere((final String key, final dynamic value) => value == null);
 
@@ -1379,6 +1411,36 @@ class FActionElement extends Equatable {
                 context,
                 state,
                 stateName,
+              ),
+              context: context,
+              state: state,
+            );
+            break;
+          default:
+            break;
+        }
+        break;
+      case ActionType.firebaseMessages:
+        switch (actionFirebaseMessages) {
+          case ActionFirebaseMessages.subscribeToTopic:
+            await actionS(
+              () => FActionFirebaseMessagesSubscribeTopic.action(
+                context,
+                state.copyWith(loop: state.loop ?? 0),
+                stateName,
+                firebaseMessagesTopic,
+              ),
+              context: context,
+              state: state,
+            );
+            break;
+          case ActionFirebaseMessages.unsubscribeToTopic:
+            await actionS(
+              () => FActionFirebaseMessagesUnsubscribeTopic.action(
+                context,
+                state.copyWith(loop: state.loop ?? 0),
+                stateName,
+                firebaseMessagesTopic,
               ),
               context: context,
               state: state,
@@ -2730,6 +2792,35 @@ class FActionElement extends Equatable {
               ),
               context,
             );
+          default:
+            break;
+        }
+        break;
+      case ActionType.firebaseMessages:
+        switch (actionFirebaseMessages) {
+          case ActionFirebaseMessages.subscribeToTopic:
+            return codeS(
+              FActionFirebaseMessagesSubscribeTopic.toCode(
+                context,
+                stateName,
+                pageId,
+                loop,
+                firebaseMessagesTopic,
+              ),
+              context,
+            );
+          case ActionFirebaseMessages.unsubscribeToTopic:
+            return codeS(
+              FActionFirebaseMessagesUnsubscribeTopic.toCode(
+                context,
+                stateName,
+                pageId,
+                loop,
+                firebaseMessagesTopic,
+              ),
+              context,
+            );
+
           default:
             break;
         }

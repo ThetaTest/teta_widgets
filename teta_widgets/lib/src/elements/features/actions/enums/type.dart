@@ -31,4 +31,5 @@ enum ActionType {
   translator,
   apiCalls,
   firebaseAnalytics,
+  firebaseMessages,
 }

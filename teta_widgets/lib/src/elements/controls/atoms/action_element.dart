@@ -29,6 +29,8 @@ import 'package:teta_widgets/src/elements/controls/atoms/firebase/firebase_analy
 import 'package:teta_widgets/src/elements/controls/atoms/firebase/firebase_analytics/set_current_screen.dart';
 import 'package:teta_widgets/src/elements/controls/atoms/firebase/firebase_analytics/set_user_id.dart';
 import 'package:teta_widgets/src/elements/controls/atoms/firebase/firebase_analytics/set_user_property.dart';
+import 'package:teta_widgets/src/elements/controls/atoms/firebase/firebase_messages/subscribe_to_topic.dart';
+import 'package:teta_widgets/src/elements/controls/atoms/firebase/firebase_messages/unsubscribe_from_topic.dart';
 // Project imports:
 import 'package:teta_widgets/src/elements/controls/atoms/flag.dart';
 import 'package:teta_widgets/src/elements/controls/atoms/https_requests_custom_backend/delete.dart';
@@ -57,6 +59,7 @@ import 'package:teta_widgets/src/elements/features/actions/enums/braintree.dart'
 import 'package:teta_widgets/src/elements/features/actions/enums/camera.dart';
 import 'package:teta_widgets/src/elements/features/actions/enums/custom_http_request.dart';
 import 'package:teta_widgets/src/elements/features/actions/enums/firebase/firebase_analytics.dart';
+import 'package:teta_widgets/src/elements/features/actions/enums/firebase/firebase_message.dart';
 import 'package:teta_widgets/src/elements/features/actions/enums/mixpanel.dart';
 import 'package:teta_widgets/src/elements/features/actions/enums/navigation.dart';
 import 'package:teta_widgets/src/elements/features/actions/enums/state.dart';
@@ -1766,6 +1769,26 @@ class ActionElementControlState extends State<ActionElementControl> {
                     }
                   },
                 ),
+              if (widget.element.actionType == ActionType.firebaseMessages)
+                CDropdown(
+                  value: FActionElement.convertValueToDropdown(
+                    widget.element.actionFirebaseMessages,
+                  ),
+                  items: FActionElement.getFirebaseMessages(widget.prj.config)
+                      .toSet()
+                      .toList(),
+                  onChange: (final newValue) {
+                    if (newValue != null) {
+                      final old = widget.element;
+                      widget.element.actionFirebaseMessages =
+                          FActionElement.convertDropdownToValue(
+                        ActionFirebaseMessages.values,
+                        newValue,
+                      ) as ActionFirebaseMessages?;
+                      widget.callBack(widget.element, old);
+                    }
+                  },
+                ),
               if ((widget.element.actionType == ActionType.state &&
                       widget.element.actionState == ActionState.changeWith &&
                       !widget.node.intrinsicState.gestures
@@ -2374,6 +2397,34 @@ class ActionElementControlState extends State<ActionElementControl> {
                   widget.element.actionFirebaseAnalytics ==
                       ActionFirebaseAnalytics.setUserId)
                 FirebaseAnalyticsLogSetUserIdControl(
+                  prj: widget.prj,
+                  page: widget.page,
+                  node: widget.node,
+                  action: widget.element,
+                  callback: () {
+                    final old = widget.element;
+                    widget.callBack(widget.element, old);
+                  },
+                ),
+
+              ///Firebase Messages
+              if (widget.element.actionType == ActionType.firebaseMessages &&
+                  widget.element.actionFirebaseMessages ==
+                      ActionFirebaseMessages.subscribeToTopic)
+                FirebaseMessagesSubscribeToTopicControl(
+                  prj: widget.prj,
+                  page: widget.page,
+                  node: widget.node,
+                  action: widget.element,
+                  callback: () {
+                    final old = widget.element;
+                    widget.callBack(widget.element, old);
+                  },
+                ),
+              if (widget.element.actionType == ActionType.firebaseMessages &&
+                  widget.element.actionFirebaseMessages ==
+                      ActionFirebaseMessages.unsubscribeToTopic)
+                FirebaseMessagesUnsubscribeFromTopicControl(
                   prj: widget.prj,
                   page: widget.page,
                   node: widget.node,

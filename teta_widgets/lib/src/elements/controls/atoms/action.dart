@@ -21,6 +21,7 @@ import 'package:teta_widgets/src/elements/features/actions/enums/braintree.dart'
 import 'package:teta_widgets/src/elements/features/actions/enums/camera.dart';
 import 'package:teta_widgets/src/elements/features/actions/enums/custom_http_request.dart';
 import 'package:teta_widgets/src/elements/features/actions/enums/firebase/firebase_analytics.dart';
+import 'package:teta_widgets/src/elements/features/actions/enums/firebase/firebase_message.dart';
 import 'package:teta_widgets/src/elements/features/actions/enums/index.dart';
 import 'package:teta_widgets/src/elements/features/actions/enums/mixpanel.dart';
 import 'package:teta_widgets/src/elements/features/actions/enums/qonversion.dart';
@@ -161,6 +162,10 @@ class ActionControlState extends State<ActionControl> {
                                     (action is ActionApiCalls) ? action : null,
                                 actionFirebaseAnalytics:
                                     (action is ActionFirebaseAnalytics)
+                                        ? action
+                                        : null,
+                                actionFirebaseMessages:
+                                    (action is ActionFirebaseMessages)
                                         ? action
                                         : null,
                                 actionTranslator: (action is ActionTranslator)
@@ -420,6 +425,12 @@ class __NewActionAlertState extends State<_NewActionAlert> {
         actionType: ActionType.firebaseAnalytics,
         options: FActionElement.getFirebaseAnalytics(prj.config),
         type: ActionFirebaseAnalytics.values,
+      ),
+      _SelectionClass(
+        title: 'Firebase Messages',
+        actionType: ActionType.firebaseMessages,
+        options: FActionElement.getFirebaseMessages(prj.config),
+        type: ActionFirebaseMessages.values,
       ),
       _SelectionClass(
         title: 'WebView',

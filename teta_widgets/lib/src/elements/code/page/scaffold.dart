@@ -161,7 +161,6 @@ Future<String> pageCodeTemplate(
     '',
     loop: loop,
   );
-
   return '''
     import 'dart:async';
     import 'package:myapp/src/teta_files/imports.dart';
@@ -174,6 +173,8 @@ Future<String> pageCodeTemplate(
     ${prj.config?.isBraintreeReady ?? false ? "import 'package:flutter_braintree/flutter_braintree.dart';" : ''}
     ${prj.config?.isStripeEnabled ?? false ? "import 'package:flutter_stripe/flutter_stripe.dart'; \n import 'dart:convert' as convert;" : ''}
     ${prj.config?.isFirebaseReady ?? false ? "import 'package:firebase_analytics/firebase_analytics.dart';" : ""}
+    ${prj.config?.isFirebasePushNotificationReady ?? false ? "import 'package:firebase_messaging/firebase_messaging.dart';" : ""}
+    ${prj.config?.isFirebasePushNotificationReady ?? false ? "import 'package:flutter_local_notifications/flutter_local_notifications.dart';" : ""}
     ${PackagesService.instance.getToCodePackages()}
 
     class Page${pageNameRC.pascalCase} extends StatefulWidget {
