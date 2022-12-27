@@ -137,6 +137,10 @@ class DBKeys {
   static const String hintTextColor = 'hintTC';
   static const String cursorColor = 'cursorC';
 
+  static const String airtableFilter = 'airFlt';
+  static const String supabaseFilter = 'supaFlt';
+  static const String cmsFilter = 'cmsFlt';
+
   // Gap
   static const String mainAxisExtend = 'mAxExt';
   static const String crossAxisExtend = 'cAxExt';
@@ -189,6 +193,8 @@ class DBKeys {
   static const String supabaseSearchValue = 'spSeV';
   static const String supabaseEqName = 'spEqN';
   static const String supabaseEqValue = 'spEqV';
+
+
 
   // Use for custom http request
   static const String customHttpRequestURL = 'customHttpRequestURL';

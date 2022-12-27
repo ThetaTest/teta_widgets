@@ -52,6 +52,7 @@ final supabaseStreamBuilderIntrinsicStates = IntrinsicStates(
 
 /// Body
 class SupabaseStreamBuilderBody extends NodeBody {
+
   @override
   // ignore: overridden_fields
   Map<String, dynamic> attributes = <String, dynamic>{

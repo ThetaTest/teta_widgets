@@ -2,7 +2,10 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:teta_core/teta_core.dart';
+import 'package:teta_widgets/src/elements/code/filter.dart';
 import 'package:teta_widgets/src/elements/code/formatter_test.dart';
+import 'package:teta_widgets/src/elements/controls/filter_control.dart';
+
 // Project imports:
 import 'package:teta_widgets/src/elements/controls/key_constants.dart';
 import 'package:teta_widgets/src/elements/features/text_type_input.dart';
@@ -55,6 +58,12 @@ class SupabaseFutureBuilderCodeTemplate {
       defaultValue: '1',
     );
 
+    var filters = <QueryFilter>[];
+
+    if (body.attributes.containsKey(DBKeys.supabaseFilter)) {
+      filters = body.attributes[DBKeys.supabaseFilter] as List<QueryFilter>;
+    }
+
     var child = 'const SizedBox()';
     if (children.isNotEmpty) {
       child = await children.first.toCode(context);
@@ -76,6 +85,7 @@ class SupabaseFutureBuilderCodeTemplate {
     future: Supabase.instance.client
     .from($from)
     .select($select)
+    ${filters.isNotEmpty ? filters.map((final e) => '.${e.filter.convertToSupabaseFilter()}(${e.columnName}, ${e.value})') : ''}
     .order($order)
     .range(($numberPage * $rangeFrom) - 1, $numberPage * $rangeTo)
     .execute(),
@@ -88,6 +98,7 @@ class SupabaseFutureBuilderCodeTemplate {
     }
   )
   ''';
+
     final res = FormatterTest.format(code);
     if (res) {
       return code;

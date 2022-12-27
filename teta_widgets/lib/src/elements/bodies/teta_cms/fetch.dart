@@ -3,11 +3,14 @@
 
 // Flutter imports:
 import 'package:flutter/material.dart';
+
 // Package imports:
 import 'package:teta_core/gen/assets.gen.dart';
 import 'package:teta_core/src/models/variable.dart';
 import 'package:teta_widgets/src/core/teta_widget/index.dart';
+import 'package:teta_widgets/src/elements/code/filter.dart';
 import 'package:teta_widgets/src/elements/code/templates/cms_fetch.dart';
+
 // Project imports:
 import 'package:teta_widgets/src/elements/controls/control_model.dart';
 import 'package:teta_widgets/src/elements/controls/key_constants.dart';
@@ -68,6 +71,7 @@ class CmsFetchBody extends NodeBody {
     DBKeys.cmsLikeKey: FTextTypeInput(),
     DBKeys.cmsLikeValue: FTextTypeInput(),
     DBKeys.flag: true,
+    DBKeys.cmsFilter: <QueryFilter>[],
   };
 
   @override
@@ -112,6 +116,13 @@ class CmsFetchBody extends NodeBody {
           description: 'Like op: the value to search in db',
           valueType: VariableType.string,
         ),
+        ControlObject(
+          title: 'Filters',
+          type: ControlType.queryFilter,
+          key: DBKeys.cmsFilter,
+          value: attributes[DBKeys.cmsFilter],
+          valueType: VariableType.filterController,
+        ),
         FlagControlObject(
           title: 'Show drafts',
           key: DBKeys.flag,
@@ -142,6 +153,7 @@ class CmsFetchBody extends NodeBody {
         ${(attributes[DBKeys.cmsLikeKey] as FTextTypeInput).getStateValue(state.states)}
         ${(attributes[DBKeys.cmsLimit] as FTextTypeInput).getStateValue(state.states)}
         ${(attributes[DBKeys.cmsPage] as FTextTypeInput).getStateValue(state.states)}
+        ${attributes[DBKeys.cmsFilter] as List<QueryFilter>}
       ''',
       ),
       state: state,

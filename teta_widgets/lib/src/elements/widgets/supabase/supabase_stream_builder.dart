@@ -56,7 +56,8 @@ class _WSupabaseStreamBuilderState extends State<WSupabaseStreamBuilder> {
   }
 
   Future calc() async {
-    final from = widget.from.get(
+
+    final tableName = widget.from.get(
       widget.state.params,
       widget.state.states,
       widget.state.dataset,
@@ -64,6 +65,7 @@ class _WSupabaseStreamBuilderState extends State<WSupabaseStreamBuilder> {
       widget.state.loop,
       context,
     );
+
     final order = widget.order.get(
       widget.state.params,
       widget.state.states,
@@ -83,7 +85,7 @@ class _WSupabaseStreamBuilderState extends State<WSupabaseStreamBuilder> {
     final valueFromRange = int.tryParse(fromRange) != null ? int.parse(fromRange) : 0;
 
     client = BlocProvider.of<SupabaseCubit>(context).state;
-    final query = client!.from(from).stream(['id']);
+    final query = client!.from(tableName).stream(['id']);
 
     // ignore: literal_only_boolean_expressions
     if (order.isNotEmpty) {

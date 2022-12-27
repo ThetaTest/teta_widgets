@@ -4,12 +4,14 @@
 // Flutter imports:
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
+
 // Package imports:
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:teta_core/teta_core.dart';
 import 'package:teta_repositories/src/node_repository.dart';
 import 'package:teta_repositories/src/project_repository.dart';
 import 'package:teta_repositories/src/project_styles_repository.dart';
+
 // Project imports:
 import 'package:teta_widgets/src/elements/controls/atoms/action.dart';
 import 'package:teta_widgets/src/elements/controls/atoms/aligns.dart';
@@ -24,7 +26,6 @@ import 'package:teta_widgets/src/elements/controls/atoms/cms_collections.dart';
 import 'package:teta_widgets/src/elements/controls/atoms/code_field.dart';
 import 'package:teta_widgets/src/elements/controls/atoms/cross_axis_alignment.dart';
 import 'package:teta_widgets/src/elements/controls/atoms/dataset.dart';
-import 'package:teta_widgets/src/elements/controls/atoms/db_map.dart';
 import 'package:teta_widgets/src/elements/controls/atoms/fill.dart';
 import 'package:teta_widgets/src/elements/controls/atoms/firebase/path.dart';
 import 'package:teta_widgets/src/elements/controls/atoms/flag.dart';
@@ -49,6 +50,7 @@ import 'package:teta_widgets/src/elements/controls/atoms/text.dart';
 import 'package:teta_widgets/src/elements/controls/atoms/webview_controller.dart';
 import 'package:teta_widgets/src/elements/controls/control_model.dart';
 import 'package:teta_widgets/src/elements/controls/current_song_controll.dart';
+import 'package:teta_widgets/src/elements/controls/filter_control.dart';
 import 'package:teta_widgets/src/elements/controls/google_maps_cubit_control.dart';
 import 'package:teta_widgets/src/elements/controls/http_params.dart';
 import 'package:teta_widgets/src/elements/controls/key_constants.dart';
@@ -178,6 +180,7 @@ enum ControlType {
   httpParamsControl,
   httpMethodControl,
   apiCallsRequestControl,
+  queryFilter,
 }
 
 /// Set of funcs to generate the focused widget' controls.
@@ -297,75 +300,92 @@ class ControlBuilder {
     required final BuildContext context,
     required final ControlObject control,
   }) {
-    if (control.type == ControlType.barcode) {
-      return BarcodeControl(
-        node: node,
-        key: ValueKey(
-          '${node.nid} ${(control.value as FTextTypeInput).value}',
-        ),
-        value: control.value.runtimeType == FTextTypeInput
-            ? control.value as FTextTypeInput
-            : FTextTypeInput(),
-        callBack: (final value, final old) {
-          ControlBuilder.toDB(
-            prj,
-            page,
-            node,
-            context,
-            control.key,
-            value.toJson(),
-            old.toJson(),
-          );
-          BlocProvider.of<RefreshCubit>(context).change();
-        },
-      );
-    }
-    if (control.type == ControlType.cmsCustomQuery) {
-      return CodeFieldControl(
-        key: ValueKey(
-          '${node.nid} ${(control.value as FTextTypeInput).value}',
-        ),
-        value: control.value.runtimeType == FTextTypeInput
-            ? control.value as FTextTypeInput
-            : FTextTypeInput(),
-        callBack: (final value, final old) {
-          ControlBuilder.toDB(
-            prj,
-            page,
-            node,
-            context,
-            control.key,
-            value.toJson(),
-            old.toJson(),
-          );
-          BlocProvider.of<RefreshCubit>(context).change();
-        },
-      );
-    }
-    if (control.type == ControlType.cmsCollections) {
-      return descriptionControlWidget(
-        description: control.description,
-        control: CMSCollectionControl(
-          key: ValueKey(
-            '${node.nid} ${(node.body.attributes[control.key] as FTextTypeInput).value}',
-          ),
+    switch (control.type) {
+      case ControlType.barcode:
+        return BarcodeControl(
           node: node,
-          collectionId:
-              (node.body.attributes[control.key] as FTextTypeInput).value ?? '',
+          key: ValueKey(
+            '${node.nid} ${(control.value as FTextTypeInput).value}',
+          ),
+          value: control.value.runtimeType == FTextTypeInput
+              ? control.value as FTextTypeInput
+              : FTextTypeInput(),
           callBack: (final value, final old) {
-            node.body.attributes[control.key] = FTextTypeInput(value: value);
             ControlBuilder.toDB(
               prj,
               page,
               node,
               context,
               control.key,
-              FTextTypeInput(value: value).toJson(),
-              FTextTypeInput(value: old).toJson(),
+              value.toJson(),
+              old.toJson(),
+            );
+            BlocProvider.of<RefreshCubit>(context).change();
+          },
+        );
+      case ControlType.cmsCustomQuery:
+        return CodeFieldControl(
+          key: ValueKey(
+            '${node.nid} ${(control.value as FTextTypeInput).value}',
+          ),
+          value: control.value.runtimeType == FTextTypeInput
+              ? control.value as FTextTypeInput
+              : FTextTypeInput(),
+          callBack: (final value, final old) {
+            ControlBuilder.toDB(
+              prj,
+              page,
+              node,
+              context,
+              control.key,
+              value.toJson(),
+              old.toJson(),
+            );
+            BlocProvider.of<RefreshCubit>(context).change();
+          },
+        );
+      case ControlType.cmsCollections:
+        return descriptionControlWidget(
+          description: control.description,
+          control: CMSCollectionControl(
+            key: ValueKey(
+              '${node.nid} ${(node.body.attributes[control.key] as FTextTypeInput).value}',
+            ),
+            node: node,
+            collectionId:
+                (node.body.attributes[control.key] as FTextTypeInput).value ??
+                    '',
+            callBack: (final value, final old) {
+              node.body.attributes[control.key] = FTextTypeInput(value: value);
+              ControlBuilder.toDB(
+                prj,
+                page,
+                node,
+                context,
+                control.key,
+                FTextTypeInput(value: value).toJson(),
+                FTextTypeInput(value: old).toJson(),
+              );
+            },
+          ),
+        );
+      case ControlType.queryFilter:
+        return FilterFieldControl(
+          callback: (final filters, final old) {
+            node.body.attributes[control.key] = filters;
+
+            ControlBuilder.toDB(
+              prj,
+              page,
+              node,
+              context,
+              control.key,
+              filters,
+              old,
             );
           },
-        ),
-      );
+        );
+      default:
     }
     if (control.type == ControlType.audioPlayerCurrentDataset) {
       return descriptionControlWidget(

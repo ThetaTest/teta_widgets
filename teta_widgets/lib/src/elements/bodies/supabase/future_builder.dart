@@ -3,13 +3,17 @@
 
 // Flutter imports:
 import 'package:flutter/material.dart';
+
 // Package imports:
 import 'package:teta_core/gen/assets.gen.dart';
 import 'package:teta_core/src/models/variable.dart';
 import 'package:teta_widgets/src/core/teta_widget/index.dart';
+import 'package:teta_widgets/src/elements/code/filter.dart';
+
 // Project imports:
 import 'package:teta_widgets/src/elements/code/templates/future_builder.dart';
 import 'package:teta_widgets/src/elements/controls/control_model.dart';
+import 'package:teta_widgets/src/elements/controls/filter_control.dart';
 import 'package:teta_widgets/src/elements/controls/key_constants.dart';
 import 'package:teta_widgets/src/elements/controls/type.dart';
 import 'package:teta_widgets/src/elements/features/text_type_input.dart';
@@ -67,6 +71,7 @@ class SupabaseFutureBuilderBody extends NodeBody {
     DBKeys.supabaseSearchValue: FTextTypeInput(),
     DBKeys.supabaseEqName: FTextTypeInput(),
     DBKeys.supabaseEqValue: FTextTypeInput(),
+    DBKeys.supabaseFilter: <QueryFilter>[],
   };
 
   @override
@@ -141,6 +146,13 @@ class SupabaseFutureBuilderBody extends NodeBody {
           value: attributes[DBKeys.supabaseEqValue],
           valueType: VariableType.string,
         ),
+        ControlObject(
+          title: 'Supabase filter',
+          type: ControlType.queryFilter,
+          key: DBKeys.supabaseFilter,
+          value: attributes[DBKeys.supabaseFilter],
+          valueType: VariableType.filterController,
+        ),
       ];
 
   @override
@@ -164,6 +176,7 @@ class SupabaseFutureBuilderBody extends NodeBody {
         ${(attributes[DBKeys.supabaseSearchValue] as FTextTypeInput).toJson()}
         ${(attributes[DBKeys.supabaseEqName] as FTextTypeInput).toJson()}
         ${(attributes[DBKeys.supabaseEqValue] as FTextTypeInput).toJson()}
+        ${attributes[DBKeys.supabaseFilter] as List<QueryFilter>}
       ''',
       ),
       state: state,
@@ -178,6 +191,7 @@ class SupabaseFutureBuilderBody extends NodeBody {
       searchValue: attributes[DBKeys.supabaseSearchValue] as FTextTypeInput,
       eqName: attributes[DBKeys.supabaseEqName] as FTextTypeInput,
       eqValue: attributes[DBKeys.supabaseEqValue] as FTextTypeInput,
+      filters: attributes[DBKeys.supabaseFilter] as List<QueryFilter>,
     );
   }
 

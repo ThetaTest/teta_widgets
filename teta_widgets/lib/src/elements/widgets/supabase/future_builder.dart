@@ -4,20 +4,24 @@
 
 // Flutter imports:
 import 'package:flutter/material.dart';
+
 // Package imports:
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:supabase/supabase.dart';
 import 'package:teta_core/teta_core.dart';
 import 'package:teta_widgets/src/core/teta_widget/index.dart';
+import 'package:teta_widgets/src/elements/code/filter.dart';
+
 // Project imports:
 import 'package:teta_widgets/src/elements/index.dart';
+import 'package:teta_widgets/src/elements/controls/filter_control.dart';
+
 
 // ignore_for_file: public_member_api_docs
 
 class WSupabaseFutureBuilder extends StatefulWidget {
   /// Construct
-  const WSupabaseFutureBuilder(
-    final Key? key, {
+  const WSupabaseFutureBuilder(final Key? key, {
     required this.state,
     required this.from,
     required this.select,
@@ -30,6 +34,7 @@ class WSupabaseFutureBuilder extends StatefulWidget {
     required this.eqName,
     required this.eqValue,
     required this.children,
+    required this.filters,
   }) : super(key: key);
 
   final TetaWidgetState state;
@@ -56,6 +61,8 @@ class WSupabaseFutureBuilder extends StatefulWidget {
   final FTextTypeInput searchValue;
   final FTextTypeInput eqName;
   final FTextTypeInput eqValue;
+
+  final List<QueryFilter> filters;
 
   /// The opzional child of this widget
   final List<CNode> children;
@@ -112,7 +119,8 @@ class _WSupabaseFutureBuilderState extends State<WSupabaseFutureBuilder> {
       widget.state.loop,
       context,
     );
-    final valueFromRange = int.tryParse(fromRange) != null ? int.parse(fromRange) : 0;
+    final valueFromRange =
+    int.tryParse(fromRange) != null ? int.parse(fromRange) : 0;
     final toRange = widget.toRange.get(
       widget.state.params,
       widget.state.states,
@@ -121,7 +129,8 @@ class _WSupabaseFutureBuilderState extends State<WSupabaseFutureBuilder> {
       widget.state.loop,
       context,
     );
-    final valueToRange = int.tryParse(toRange) != null ? int.parse(toRange) : 15;
+    final valueToRange =
+    int.tryParse(toRange) != null ? int.parse(toRange) : 15;
     final numberPage = widget.numberPage.get(
       widget.state.params,
       widget.state.states,
@@ -130,7 +139,8 @@ class _WSupabaseFutureBuilderState extends State<WSupabaseFutureBuilder> {
       widget.state.loop,
       context,
     );
-    final valueToPage = int.tryParse(numberPage) != null ? int.parse(numberPage) : 1;
+    final valueToPage =
+    int.tryParse(numberPage) != null ? int.parse(numberPage) : 1;
 
     final searchName = widget.searchName.get(
       widget.state.params,
@@ -166,8 +176,22 @@ class _WSupabaseFutureBuilderState extends State<WSupabaseFutureBuilder> {
       context,
     );
 
-    client = BlocProvider.of<SupabaseCubit>(context).state;
+    client = BlocProvider
+        .of<SupabaseCubit>(context)
+        .state;
     final query = client!.from(from).select(select);
+
+    final filters = widget.filters;
+
+    if (filters.isNotEmpty) {
+      for (final element in filters) {
+        query.filter(
+          element.columnName,
+          element.filter.convertToSupabaseFilter(),
+          element.value,
+        );
+      }
+    }
 
     // ignore: literal_only_boolean_expressions
     if (order.isNotEmpty) {
@@ -227,7 +251,8 @@ class _WSupabaseFutureBuilderState extends State<WSupabaseFutureBuilder> {
           }
           final list = response?.data as List<dynamic>?;
           _map = _map.copyWith(
-            name: widget.state.node.name ?? widget.state.node.intrinsicState.displayName,
+            name: widget.state.node.name ??
+                widget.state.node.intrinsicState.displayName,
             map: (list ?? const <dynamic>[])
                 .map((final dynamic e) => e as Map<String, dynamic>)
                 .toList(),
@@ -238,7 +263,9 @@ class _WSupabaseFutureBuilderState extends State<WSupabaseFutureBuilder> {
           if (widget.children.isNotEmpty) {
             return widget.children.first.toWidget(
               state: widget.state.copyWith(
-                dataset: widget.state.dataset.isEmpty ? datasets : widget.state.dataset,
+                dataset: widget.state.dataset.isEmpty
+                    ? datasets
+                    : widget.state.dataset,
               ),
             );
           } else {
