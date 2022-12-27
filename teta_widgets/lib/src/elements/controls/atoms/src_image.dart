@@ -80,232 +80,220 @@ class SrcImageControlState extends State<SrcImageControl> {
 
   @override
   Widget build(final BuildContext context) {
-    return BlocBuilder<FocusProjectBloc, FocusProjectState>(
-      builder: (final context, final prjState) => prjState is ProjectLoaded
-          ? BlocListener<FocusBloc, List<CNode>>(
-              listener: (final context, final state) {
-                if (state.isNotEmpty) {
-                  if (state.first.nid != nodeId) {
-                    setState(() {
-                      isUpdated = true;
-                      controller.text = widget.image.value ?? '';
-                    });
-                    nodeId = state.first.nid;
-                  }
-                }
-              },
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                    children: [
-                      TParagraph(
-                        widget.title,
-                      ),
-                      CDropdownForType(
-                        value: widget.image.type == FTextTypeEnum.asset
-                            ? 'asset'
-                            : widget.image.type == FTextTypeEnum.dataset
-                                ? 'dataset'
-                                : widget.image.type == FTextTypeEnum.state
-                                    ? 'state'
-                                    : widget.image.type == FTextTypeEnum.param
-                                        ? 'param'
-                                        : 'text',
-                        items: const [
-                          'text',
-                          'param',
-                          'state',
-                          'dataset',
-                          'asset'
-                        ],
-                        onChange: (final value) {
-                          var typeOfInput = FTextTypeEnum.text;
-                          if (value == 'text') {
-                            typeOfInput = FTextTypeEnum.text;
-                          }
-                          if (value == 'param') {
-                            typeOfInput = FTextTypeEnum.param;
-                          }
-                          if (value == 'state') {
-                            typeOfInput = FTextTypeEnum.state;
-                          }
-                          if (value == 'dataset') {
-                            typeOfInput = FTextTypeEnum.dataset;
-                          }
-                          if (value == 'asset') {
-                            typeOfInput = FTextTypeEnum.asset;
-                          }
-                          final old = widget.image;
-                          final newValue = widget.image..type = typeOfInput;
-                          widget.callBack(newValue, old);
-                        },
-                      ),
-                    ],
-                  ),
-                  if (widget.image.type == FTextTypeEnum.text)
-                    CTextField(
-                      text: widget.image.value,
-                      controller: controller,
-                      callBack: (final value) {
-                        value.replaceAll(r'\', r'\\');
-                        final old = widget.image;
-                        widget.image.value = value;
-                        widget.callBack(widget.image, old);
-                      },
-                      onSubmitted: (final value) {
-                        value.replaceAll(r'\', r'\\');
-                        final old = widget.image;
-                        widget.image.value = value;
-                        widget.callBack(widget.image, old);
-                      },
-                    ),
-                  if (widget.image.type == FTextTypeEnum.param)
-                    CDropdown(
-                      value: widget.page.params
-                              .map((final e) => e.name)
-                              .toSet()
-                              .toList()
-                              .contains(widget.image.paramName)
-                          ? widget.image.paramName
-                          : null,
-                      items: widget.page.params
-                          .map((final e) => e.name)
-                          .toSet()
-                          .toList(),
-                      onChange: (final newValue) {
-                        final old = widget.image;
-                        widget.image.paramName = newValue;
-                        widget.callBack(widget.image, old);
-                      },
-                    ),
-                  if (widget.image.type == FTextTypeEnum.state)
-                    CDropdown(
-                      value: widget.page.states
-                              .map((final e) => e.name)
-                              .toSet()
-                              .toList()
-                              .contains(widget.image.stateName)
-                          ? widget.image.stateName
-                          : null,
-                      items: widget.page.states
-                          .map((final e) => e.name)
-                          .toSet()
-                          .toList(),
-                      onChange: (final newValue) {
-                        final old = widget.image;
-                        widget.image.stateName = newValue;
-                        widget.callBack(widget.image, old);
-                      },
-                    ),
-                  if (widget.image.type == FTextTypeEnum.dataset)
-                    CDropdown(
-                      value: widget.page.datasets
-                              .map((final e) => e.getName)
-                              .where((final element) => element != 'null')
-                              .toSet()
-                              .contains(widget.image.datasetName)
-                          ? widget.image.datasetName
-                          : null,
-                      items: widget.page.datasets
-                          .map((final e) => e.getName)
-                          .where((final element) => element != 'null')
-                          .toSet()
-                          .toList(),
-                      onChange: (final newValue) {
-                        setState(() {
-                          databaseName = newValue!;
-                        });
-                        final old = widget.image;
-                        widget.image.datasetName = newValue;
-                        widget.callBack(widget.image, old);
-                      },
-                    ),
-                  if (widget.image.type == FTextTypeEnum.dataset &&
-                      widget.image.datasetName != null)
-                    Padding(
-                      padding: EI.smT,
-                      child: CDropdown(
-                        value: widget.page.datasets.indexWhere(
-                                  (final element) =>
-                                      element.getName ==
-                                      widget.image.datasetName,
-                                ) !=
-                                -1
-                            ? widget.image.datasetAttr
-                            : null,
-                        items: list,
-                        onChange: (final newValue) {
-                          setState(() {
-                            databaseAttribute = newValue!;
-                          });
-                          final old = widget.image;
-                          widget.image.datasetAttr = newValue;
-                          widget.callBack(widget.image, old);
-                        },
-                      ),
-                    ),
-                  if (widget.image.type == FTextTypeEnum.asset)
-                    BlocBuilder<SupabaseCubit, SupabaseClient?>(
-                      builder: (final context, final client) {
-                        if (client == null) return const SizedBox();
-                        final _future = getList(client, prjState.prj);
-                        return FutureBuilder<List<AssetFile>>(
-                          future: _future,
-                          builder: (final context, final snapshot) {
-                            if (!snapshot.hasData) {
-                              return const Center(
-                                child: CircularProgressIndicator(),
-                              );
-                            }
-                            final list = snapshot.data ?? <AssetFile>[];
-                            return Column(
-                              crossAxisAlignment: CrossAxisAlignment.stretch,
-                              children: [
-                                Row(
-                                  children: [
-                                    Expanded(
-                                      child: CDropdownImageAssets(
-                                        value: widget.image.file,
-                                        items: list,
-                                        onChange: (final value) {
-                                          final old = widget.image;
-                                          widget.image.file = value;
-                                          widget.callBack(widget.image, old);
-                                        },
-                                      ),
-                                    ),
-                                  ],
-                                ),
-                                if (list.isEmpty)
-                                  Padding(
-                                    padding: const EdgeInsets.only(bottom: 8),
-                                    child: GestureDetector(
-                                      onTap: () {
-                                        BlocProvider.of<PanelsCubit>(context)
-                                            .changePanel(
-                                          PanelsEnum.assets,
-                                        );
-                                      },
-                                      child: const MouseRegion(
-                                        cursor: SystemMouseCursors.click,
-                                        child: TDetailLabel(
-                                          'Your bucket is empty. Upload your first file >',
-                                        ),
-                                      ),
-                                    ),
-                                  ),
-                              ],
-                            );
-                          },
-                        );
-                      },
-                    ),
-                ],
+    return BlocListener<FocusBloc, List<CNode>>(
+      listener: (final context, final state) {
+        if (state.isNotEmpty) {
+          if (state.first.nid != nodeId) {
+            setState(() {
+              isUpdated = true;
+              controller.text = widget.image.value ?? '';
+            });
+            nodeId = state.first.nid;
+          }
+        }
+      },
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          Row(
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            children: [
+              TParagraph(
+                widget.title,
               ),
-            )
-          : const SizedBox(),
+              CDropdownForType(
+                value: widget.image.type == FTextTypeEnum.asset
+                    ? 'asset'
+                    : widget.image.type == FTextTypeEnum.dataset
+                        ? 'dataset'
+                        : widget.image.type == FTextTypeEnum.state
+                            ? 'state'
+                            : widget.image.type == FTextTypeEnum.param
+                                ? 'param'
+                                : 'text',
+                items: const ['text', 'param', 'state', 'dataset', 'asset'],
+                onChange: (final value) {
+                  var typeOfInput = FTextTypeEnum.text;
+                  if (value == 'text') {
+                    typeOfInput = FTextTypeEnum.text;
+                  }
+                  if (value == 'param') {
+                    typeOfInput = FTextTypeEnum.param;
+                  }
+                  if (value == 'state') {
+                    typeOfInput = FTextTypeEnum.state;
+                  }
+                  if (value == 'dataset') {
+                    typeOfInput = FTextTypeEnum.dataset;
+                  }
+                  if (value == 'asset') {
+                    typeOfInput = FTextTypeEnum.asset;
+                  }
+                  final old = widget.image;
+                  final newValue = widget.image..type = typeOfInput;
+                  widget.callBack(newValue, old);
+                },
+              ),
+            ],
+          ),
+          if (widget.image.type == FTextTypeEnum.text)
+            CTextField(
+              text: widget.image.value,
+              controller: controller,
+              callBack: (final value) {
+                value.replaceAll(r'\', r'\\');
+                final old = widget.image;
+                widget.image.value = value;
+                widget.callBack(widget.image, old);
+              },
+              onSubmitted: (final value) {
+                value.replaceAll(r'\', r'\\');
+                final old = widget.image;
+                widget.image.value = value;
+                widget.callBack(widget.image, old);
+              },
+            ),
+          if (widget.image.type == FTextTypeEnum.param)
+            CDropdown(
+              value: widget.page.params
+                      .map((final e) => e.name)
+                      .toSet()
+                      .toList()
+                      .contains(widget.image.paramName)
+                  ? widget.image.paramName
+                  : null,
+              items:
+                  widget.page.params.map((final e) => e.name).toSet().toList(),
+              onChange: (final newValue) {
+                final old = widget.image;
+                widget.image.paramName = newValue;
+                widget.callBack(widget.image, old);
+              },
+            ),
+          if (widget.image.type == FTextTypeEnum.state)
+            CDropdown(
+              value: widget.page.states
+                      .map((final e) => e.name)
+                      .toSet()
+                      .toList()
+                      .contains(widget.image.stateName)
+                  ? widget.image.stateName
+                  : null,
+              items:
+                  widget.page.states.map((final e) => e.name).toSet().toList(),
+              onChange: (final newValue) {
+                final old = widget.image;
+                widget.image.stateName = newValue;
+                widget.callBack(widget.image, old);
+              },
+            ),
+          if (widget.image.type == FTextTypeEnum.dataset)
+            CDropdown(
+              value: widget.page.datasets
+                      .map((final e) => e.getName)
+                      .where((final element) => element != 'null')
+                      .toSet()
+                      .contains(widget.image.datasetName)
+                  ? widget.image.datasetName
+                  : null,
+              items: widget.page.datasets
+                  .map((final e) => e.getName)
+                  .where((final element) => element != 'null')
+                  .toSet()
+                  .toList(),
+              onChange: (final newValue) {
+                setState(() {
+                  databaseName = newValue!;
+                });
+                final old = widget.image;
+                widget.image.datasetName = newValue;
+                widget.callBack(widget.image, old);
+              },
+            ),
+          if (widget.image.type == FTextTypeEnum.dataset &&
+              widget.image.datasetName != null)
+            Padding(
+              padding: EI.smT,
+              child: CDropdown(
+                value: widget.page.datasets.indexWhere(
+                          (final element) =>
+                              element.getName == widget.image.datasetName,
+                        ) !=
+                        -1
+                    ? widget.image.datasetAttr
+                    : null,
+                items: list,
+                onChange: (final newValue) {
+                  setState(() {
+                    databaseAttribute = newValue!;
+                  });
+                  final old = widget.image;
+                  widget.image.datasetAttr = newValue;
+                  widget.callBack(widget.image, old);
+                },
+              ),
+            ),
+          if (widget.image.type == FTextTypeEnum.asset)
+            BlocBuilder<SupabaseCubit, SupabaseClient?>(
+              builder: (final context, final client) {
+                if (client == null) return const SizedBox();
+                final _future = getList(
+                  client,
+                  BlocProvider.of<FocusProjectCubit>(context).state!,
+                );
+                return FutureBuilder<List<AssetFile>>(
+                  future: _future,
+                  builder: (final context, final snapshot) {
+                    if (!snapshot.hasData) {
+                      return const Center(
+                        child: CircularProgressIndicator(),
+                      );
+                    }
+                    final list = snapshot.data ?? <AssetFile>[];
+                    return Column(
+                      crossAxisAlignment: CrossAxisAlignment.stretch,
+                      children: [
+                        Row(
+                          children: [
+                            Expanded(
+                              child: CDropdownImageAssets(
+                                value: widget.image.file,
+                                items: list,
+                                onChange: (final value) {
+                                  final old = widget.image;
+                                  widget.image.file = value;
+                                  widget.callBack(widget.image, old);
+                                },
+                              ),
+                            ),
+                          ],
+                        ),
+                        if (list.isEmpty)
+                          Padding(
+                            padding: const EdgeInsets.only(bottom: 8),
+                            child: GestureDetector(
+                              onTap: () {
+                                BlocProvider.of<PanelsCubit>(context)
+                                    .changePanel(
+                                  PanelsEnum.assets,
+                                );
+                              },
+                              child: const MouseRegion(
+                                cursor: SystemMouseCursors.click,
+                                child: TDetailLabel(
+                                  'Your bucket is empty. Upload your first file >',
+                                ),
+                              ),
+                            ),
+                          ),
+                      ],
+                    );
+                  },
+                );
+              },
+            ),
+        ],
+      ),
     );
   }
 

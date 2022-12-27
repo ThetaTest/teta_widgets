@@ -6,11 +6,9 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_feather_icons/flutter_feather_icons.dart';
 import 'package:gap/gap.dart';
-
 // Package imports:
 import 'package:teta_core/src/design_system/buttons/element_button.dart';
 import 'package:teta_core/teta_core.dart';
-
 // Project imports:
 import 'package:teta_widgets/src/elements/controls/atoms/action_element.dart';
 import 'package:teta_widgets/src/elements/features/actions/enums/action_google_maps.dart';
@@ -304,8 +302,7 @@ class __NewActionAlertState extends State<_NewActionAlert> {
   @override
   void initState() {
     super.initState();
-    final prj =
-        (BlocProvider.of<FocusProjectBloc>(context).state as ProjectLoaded).prj;
+    final prj = BlocProvider.of<FocusProjectCubit>(context).state!;
     final page = BlocProvider.of<PageCubit>(context).state;
     elements.addAll([
       _SelectionClass(
@@ -387,7 +384,7 @@ class __NewActionAlertState extends State<_NewActionAlert> {
         type: ActionSupabaseStorage.values,
       ),
       _SelectionClass(
-        title: "Airtable Database",
+        title: 'Airtable Database',
         actionType: ActionType.airtable,
         options: FActionElement.getAirtableDB(prj.config),
         type: ActionAirtableDB.values,

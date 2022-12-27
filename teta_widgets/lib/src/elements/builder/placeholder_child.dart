@@ -35,9 +35,7 @@ class PlaceholderChildBuilder extends StatelessWidget {
           padding: const EdgeInsets.all(16),
           child: BounceLarge(
             onTap: () {
-              final prj = (BlocProvider.of<FocusProjectBloc>(context).state
-                      as ProjectLoaded)
-                  .prj;
+              final prj = BlocProvider.of<FocusProjectCubit>(context).state!;
               final focusPageBloc = BlocProvider.of<PageCubit>(context);
               final refreshCubit = BlocProvider.of<RefreshCubit>(context);
               final focusBloc = BlocProvider.of<FocusBloc>(context);

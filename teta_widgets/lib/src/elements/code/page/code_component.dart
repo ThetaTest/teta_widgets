@@ -16,8 +16,7 @@ Future<String> codeComponentTemplate(
   final List<CNode> children,
   final int pageId,
 ) async {
-  final prj =
-      (BlocProvider.of<FocusProjectBloc>(context).state as ProjectLoaded).prj;
+  final prj = BlocProvider.of<FocusProjectCubit>(context).state!;
 
   final page = prj.pages!.firstWhere((final element) => element.id == pageId);
   final list1 = page.code!.split('void');

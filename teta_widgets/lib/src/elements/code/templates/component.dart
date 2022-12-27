@@ -21,18 +21,17 @@ Future<String> componentCodeTemplate(
   final List<CNode> children,
   final int pageId,
 ) async {
-  final projectLoaded =
-      BlocProvider.of<FocusProjectBloc>(context).state as ProjectLoaded;
+  final prj = BlocProvider.of<FocusProjectCubit>(context).state!;
 
   //this fix an error of badstate
   if (body.attributes[DBKeys.componentName] == null ||
-      (projectLoaded.prj.pages ?? <PageObject>[]).indexWhere(
+      (prj.pages ?? <PageObject>[]).indexWhere(
             (final element) =>
                 element.name == body.attributes[DBKeys.componentName],
           ) ==
           -1) return '';
 
-  final compWidget = projectLoaded.prj.pages!.firstWhere(
+  final compWidget = prj.pages!.firstWhere(
     (final element) => element.name == body.attributes[DBKeys.componentName],
   );
 

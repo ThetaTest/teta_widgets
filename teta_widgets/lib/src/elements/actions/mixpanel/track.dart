@@ -54,8 +54,7 @@ class FAMixpanelTrack {
     final FTextTypeInput? eventName,
     final List<MapElement>? props,
   ) {
-    final prj =
-        (BlocProvider.of<FocusProjectBloc>(context).state as ProjectLoaded).prj;
+    final prj = BlocProvider.of<FocusProjectCubit>(context).state!;
     if (prj.config?.isMixpanelReady ?? false) {
       //props
       final mapBody = <String, dynamic>{};

@@ -39,10 +39,11 @@ class FActionBraintreeBuy {
     final String? stateName, {
     final int loop = 0,
   }) {
-    final prj = (BlocProvider.of<FocusProjectBloc>(context).state as ProjectLoaded).prj;
+    final prj = BlocProvider.of<FocusProjectCubit>(context).state!;
     final isSandbox = prj.config?.braintreeIsSandbox ?? true;
-    final token =
-        !isSandbox ? prj.config?.braintreeClientToken : prj.config?.braintreeClientTokenSandbox;
+    final token = !isSandbox
+        ? prj.config?.braintreeClientToken
+        : prj.config?.braintreeClientTokenSandbox;
     final companyName = prj.config?.companyName ?? '';
     final currencyCode = prj.config?.braintreeCurrencyCode ?? '';
     final countryCode = prj.config?.countryCode ?? '';

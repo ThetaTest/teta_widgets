@@ -27,8 +27,7 @@ Future<String> pageCodeTemplate(
   final String onInitCode,
   final int? loop,
 ) async {
-  final prj =
-      (BlocProvider.of<FocusProjectBloc>(context).state as ProjectLoaded).prj;
+  final prj = BlocProvider.of<FocusProjectCubit>(context).state!;
   final page = prj.pages!.firstWhere((final element) => element.id == pageId);
   final temp = removeDiacritics(
     page.name

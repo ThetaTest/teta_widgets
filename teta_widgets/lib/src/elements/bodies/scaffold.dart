@@ -187,8 +187,7 @@ class ScaffoldBody extends NodeBody {
     final int pageId,
     final int? loop,
   ) {
-    final prj =
-        (BlocProvider.of<FocusProjectBloc>(context).state as ProjectLoaded).prj;
+    final prj = BlocProvider.of<FocusProjectCubit>(context).state!;
     final page = prj.pages!.firstWhere((final element) => element.id == pageId);
     if (!page.isHardCoded) {
       return pageCodeTemplate(

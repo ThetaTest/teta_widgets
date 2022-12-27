@@ -138,7 +138,8 @@ class _WGoogleMapsState extends State<WGoogleMaps> {
                 }
               } else if (state is GoogleMapsChangeMapStyleState) {
                 if (googleMapsController.isCompleted) {
-                  await (await googleMapsController.future).setMapStyle(state.uiModel.style);
+                  await (await googleMapsController.future)
+                      .setMapStyle(state.uiModel.style);
                 }
               } else if (state is GoogleMapsReloadDataState) {
                 if (kDebugMode) {
@@ -148,7 +149,8 @@ class _WGoogleMapsState extends State<WGoogleMaps> {
                 try {
                   markersDataset = widget.state.dataset
                       .firstWhere(
-                        (final element) => element.getName == widget.markersDatasetName,
+                        (final element) =>
+                            element.getName == widget.markersDatasetName,
                       )
                       .getMap;
                 } catch (e) {
@@ -191,8 +193,8 @@ class _WGoogleMapsState extends State<WGoogleMaps> {
 
   Future<void> initData() async {
     try {
-      googleMapsKey = (BlocProvider.of<FocusProjectBloc>(context).state as ProjectLoaded)
-              .prj
+      googleMapsKey = BlocProvider.of<FocusProjectCubit>(context)
+              .state!
               .config
               ?.googleMapsKey ??
           '';

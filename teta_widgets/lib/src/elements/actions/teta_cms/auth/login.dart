@@ -22,7 +22,7 @@ class FATetaCMSLogin {
     final Map<String, dynamic>? paramsToSend,
     final TetaProvider provider,
   ) async {
-    final prj = (BlocProvider.of<FocusProjectBloc>(context).state as ProjectLoaded).prj;
+    final prj = BlocProvider.of<FocusProjectCubit>(context).state!;
 
     // final page = BlocProvider.of<PageCubit>(context).state;
     // final status = takeStateFrom(page, 'status');
@@ -65,7 +65,7 @@ class FATetaCMSLogin {
     final String? nameOfPage,
     final Map<String, dynamic>? paramsToSend,
   ) {
-    final prj = (BlocProvider.of<FocusProjectBloc>(context).state as ProjectLoaded).prj;
+    final prj = BlocProvider.of<FocusProjectCubit>(context).state!;
     final isRevenueCatEnabled = prj.config?.isRevenueCatEnabled ?? false;
     final providerStr = provider == TetaProvider.google
         ? 'TetaProvider.google'

@@ -13,9 +13,8 @@ List<DatasetObject> addDataset(
   final DatasetObject map,
 ) {
   final list = <DatasetObject>[...dataset, map];
-  final prjState = BlocProvider.of<FocusProjectBloc>(context).state;
+  final prj = BlocProvider.of<FocusProjectCubit>(context).state!;
   final pageFocused = BlocProvider.of<PageCubit>(context).state;
-  final prj = (prjState as ProjectLoaded).prj;
 
   try {
     var flag = true;
@@ -28,20 +27,19 @@ List<DatasetObject> addDataset(
     }
     if (flag) pageFocused.datasets = [...pageFocused.datasets, map];
 
-    if (prjState is ProjectLoaded) {
-      for (final page in prjState.prj.pages!) {
-        if (page.id == pageFocused.id) {
-          var flag = true;
-          for (final e in pageFocused.datasets) {
-            if (e.getName == map.getName) {
-              flag = false;
-              break;
-            }
+    for (final page in prj.pages!) {
+      if (page.id == pageFocused.id) {
+        var flag = true;
+        for (final e in pageFocused.datasets) {
+          if (e.getName == map.getName) {
+            flag = false;
+            break;
           }
-          if (flag) page.datasets = [...page.datasets, map];
         }
+        if (flag) page.datasets = [...page.datasets, map];
       }
     }
+
     Box<List<dynamic>> box;
     if (Hive.isBoxOpen('datasets${prj.id}')) {
       final list2 = <DatasetObject>[];
@@ -51,13 +49,13 @@ List<DatasetObject> addDataset(
       for (final dynamic key in boxMap.keys) {
         final map2 = box.get(key)!;
         final map3 = map2
-            .map((dynamic e) => (e as Map).cast<String, dynamic>())
+            .map((final dynamic e) => (e as Map).cast<String, dynamic>())
             .toList();
-        var _map = DatasetObject(name: key.toString(), map: map3);
+        final _map = DatasetObject(name: key.toString(), map: map3);
 
         list2.add(_map);
       }
-      for (var element in list2) {
+      for (final element in list2) {
         var flag = true;
         for (final e in pageFocused.datasets) {
           if (e.getName == element.getName) {
@@ -69,20 +67,18 @@ List<DatasetObject> addDataset(
         if (flag) pageFocused.datasets = [...pageFocused.datasets, element];
       }
 
-      if (prjState is ProjectLoaded) {
-        for (final page in prjState.prj.pages!) {
-          for (var element in list2) {
-            var flag = true;
-            for (final e in page.datasets) {
-              if (e.getName == element.getName) {
-                page.datasets[page.datasets.indexOf(e)] = element;
+      for (final page in prj.pages!) {
+        for (final element in list2) {
+          var flag = true;
+          for (final e in page.datasets) {
+            if (e.getName == element.getName) {
+              page.datasets[page.datasets.indexOf(e)] = element;
 
-                flag = false;
-                break;
-              }
+              flag = false;
+              break;
             }
-            if (flag) page.datasets = [...page.datasets, element];
           }
+          if (flag) page.datasets = [...page.datasets, element];
         }
       }
     }

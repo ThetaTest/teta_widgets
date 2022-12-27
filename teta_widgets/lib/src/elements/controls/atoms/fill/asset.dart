@@ -31,73 +31,63 @@ class AssetFillControl extends StatefulWidget {
 class AssetFillControlState extends State<AssetFillControl> {
   @override
   Widget build(final BuildContext context) {
-    return BlocBuilder<FocusProjectBloc, FocusProjectState>(
-      builder: (final context, final prjState) => prjState is ProjectLoaded
-          ? BlocBuilder<FocusBloc, List<CNode>>(
-              builder: (final context, final state) {
-                //updateState(state);
-
-                return BlocBuilder<SupabaseCubit, SupabaseClient?>(
-                  builder: (final context, final client) {
-                    if (client == null) return const SizedBox();
-                    final _future = getList(client, prjState.prj);
-                    return FutureBuilder<List<AssetFile>>(
-                      future: _future,
-                      builder: (final context, final snapshot) {
-                        if (!snapshot.hasData) {
-                          return const Center(
-                            child: CircularProgressIndicator(),
+    return BlocBuilder<SupabaseCubit, SupabaseClient?>(
+      builder: (final context, final client) {
+        if (client == null) return const SizedBox();
+        final _future =
+            getList(client, BlocProvider.of<FocusProjectCubit>(context).state!);
+        return FutureBuilder<List<AssetFile>>(
+          future: _future,
+          builder: (final context, final snapshot) {
+            if (!snapshot.hasData) {
+              return const Center(
+                child: CircularProgressIndicator(),
+              );
+            }
+            final list = snapshot.data ?? <AssetFile>[];
+            return Column(
+              crossAxisAlignment: CrossAxisAlignment.stretch,
+              children: [
+                if (list.isEmpty)
+                  Padding(
+                    padding: const EdgeInsets.only(bottom: 72),
+                    child: TParagraph(
+                      'Your bucket is empty. Upload your first file.',
+                      color: Colors.white.withOpacity(0.5),
+                    ),
+                  ),
+                Row(
+                  children: [
+                    Expanded(
+                      child: CDropdownImageAssets(
+                        value: widget.fill.file,
+                        items: list,
+                        onChange: (final value) {
+                          PaletteModel? model;
+                          BlocProvider.of<ColorStylesCubit>(context)
+                              .state
+                              .forEach((final element) {
+                            if (element.name == value.name) {
+                              model = element;
+                            }
+                          });
+                          final old = FFill().fromJson(widget.fill.toJson());
+                          widget.fill.paletteStyle = model!.id;
+                          widget.callBack(
+                            widget.fill,
+                            false,
+                            old,
                           );
-                        }
-                        final list = snapshot.data ?? <AssetFile>[];
-                        return Column(
-                          crossAxisAlignment: CrossAxisAlignment.stretch,
-                          children: [
-                            if (list.isEmpty)
-                              Padding(
-                                padding: const EdgeInsets.only(bottom: 72),
-                                child: TParagraph(
-                                  'Your bucket is empty. Upload your first file.',
-                                  color: Colors.white.withOpacity(0.5),
-                                ),
-                              ),
-                            Row(
-                              children: [
-                                Expanded(
-                                  child: CDropdownImageAssets(
-                                    value: widget.fill.file,
-                                    items: list,
-                                    onChange: (final value) {
-                                      PaletteModel? model;
-                                      BlocProvider.of<ColorStylesCubit>(context)
-                                          .state
-                                          .forEach((final element) {
-                                        if (element.name == value.name) {
-                                          model = element;
-                                        }
-                                      });
-                                      final old = FFill()
-                                          .fromJson(widget.fill.toJson());
-                                      widget.fill.paletteStyle = model!.id;
-                                      widget.callBack(
-                                        widget.fill,
-                                        false,
-                                        old,
-                                      );
-                                    },
-                                  ),
-                                ),
-                              ],
-                            ),
-                          ],
-                        );
-                      },
-                    );
-                  },
-                );
-              },
-            )
-          : const SizedBox(),
+                        },
+                      ),
+                    ),
+                  ],
+                ),
+              ],
+            );
+          },
+        );
+      },
     );
   }
 

@@ -26,10 +26,11 @@ class FActionNavigationOpenSnackBar {
   ) async {
     try {
       if (nameOfPage != null) {
-        final prj = BlocProvider.of<FocusProjectBloc>(context).state as ProjectLoaded;
+        final prj = BlocProvider.of<FocusProjectCubit>(context).state!;
         final currentPage = BlocProvider.of<PageCubit>(context).state;
         PageObject? page;
-        page = prj.prj.pages!.firstWhereOrNull((final element) => element.name == nameOfPage);
+        page = prj.pages!
+            .firstWhereOrNull((final element) => element.name == nameOfPage);
         if (page != null) {
           final list = await TetaDB.instance.client.selectList(
             'nodes',
@@ -83,12 +84,13 @@ class FActionNavigationOpenSnackBar {
     final Map<String, dynamic>? paramsToSend,
   ) {
     try {
-      final prj = BlocProvider.of<FocusProjectBloc>(context).state as ProjectLoaded;
+      final prj = BlocProvider.of<FocusProjectCubit>(context).state!;
       if (nameOfPage == null ||
-          (prj.prj.pages ?? <PageObject>[])
+          (prj.pages ?? <PageObject>[])
                   .indexWhere((final element) => element.name == nameOfPage) ==
               -1) return '';
-      final page = prj.prj.pages!.firstWhere((final element) => element.name == nameOfPage);
+      final page =
+          prj.pages!.firstWhere((final element) => element.name == nameOfPage);
       final temp = removeDiacritics(
         page.name
             .replaceFirst('0', 'A0')
@@ -111,8 +113,9 @@ class FActionNavigationOpenSnackBar {
       for (final param in page.params) {
         final name = ReCase(param.name);
         stringParamsToSend.write('${name.camelCase}: ');
-        final valueToSend =
-            (paramsToSend ?? <String, dynamic>{})[param.id]['label'] as String? ?? 'null';
+        final valueToSend = (paramsToSend ?? <String, dynamic>{})[param.id]
+                ['label'] as String? ??
+            'null';
         final rc = ReCase(valueToSend);
         stringParamsToSend.write('${rc.camelCase}, ');
       }

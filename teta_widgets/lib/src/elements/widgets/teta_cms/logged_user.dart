@@ -38,8 +38,8 @@ class _WCMSLoggedUserState extends State<WCMSLoggedUser> {
 
   Future<TetaUser> load() async {
     final user = await TetaCMS.instance.auth.user.get;
-    if (((BlocProvider.of<FocusProjectBloc>(context).state as ProjectLoaded)
-                .prj
+    if ((BlocProvider.of<FocusProjectCubit>(context)
+                .state!
                 .config
                 ?.isRevenueCatEnabled ??
             false) &&
@@ -90,7 +90,9 @@ class _WCMSLoggedUserState extends State<WCMSLoggedUser> {
           if (widget.children.isNotEmpty) {
             return widget.children.first.toWidget(
               state: widget.state.copyWith(
-                dataset: widget.state.dataset.isEmpty ? datasets : widget.state.dataset,
+                dataset: widget.state.dataset.isEmpty
+                    ? datasets
+                    : widget.state.dataset,
               ),
             );
           } else {

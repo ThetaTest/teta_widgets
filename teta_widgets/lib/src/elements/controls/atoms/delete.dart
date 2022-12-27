@@ -38,8 +38,7 @@ class DeleteControlState extends State<DeleteControl> {
       flatList: BlocProvider.of<PageCubit>(context).state.flatList ?? [],
       element: widget.node,
     );
-    final prjState =
-        BlocProvider.of<FocusProjectBloc>(context).state as ProjectLoaded;
+    final prj = BlocProvider.of<FocusProjectCubit>(context).state!;
     final pageState = BlocProvider.of<PageCubit>(context).state;
     if (widget.node.intrinsicState.canHave ==
         parentOfNode!.intrinsicState.canHave) {
@@ -64,23 +63,11 @@ class DeleteControlState extends State<DeleteControl> {
                   nodes:
                       BlocProvider.of<PageCubit>(context).state.flatList ?? [],
                   node: widget.node as NDynamic,
-                  prj: prjState.prj,
+                  prj: prj,
                   page: pageState,
                 ),
               ),
             ),
-            if (false)
-              Padding(
-                padding: const EdgeInsets.only(top: 8),
-                child: CDangerousButton(
-                  label: widget.node.intrinsicState.canHave == ChildrenEnum.none
-                      ? 'Delete'
-                      : widget.node.intrinsicState.canHave == ChildrenEnum.child
-                          ? 'Delete with child'
-                          : 'Delete with children',
-                  callback: delete,
-                ),
-              ),
           ],
         ),
       );

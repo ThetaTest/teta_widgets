@@ -31,7 +31,8 @@ void goTo(final CNode node, final BuildContext context, final Widget child) {
       T.Transition(
         child: child,
         transitionEffect:
-            (node.body.attributes[DBKeys.pageTransition] as FPageTransition).transitionEffect!,
+            (node.body.attributes[DBKeys.pageTransition] as FPageTransition)
+                .transitionEffect!,
       ),
     );
   } else {
@@ -52,10 +53,11 @@ class FActionNavigationOpenPage {
     final Map<String, dynamic>? paramsToSend,
   ) async {
     try {
-      final prj = BlocProvider.of<FocusProjectBloc>(context).state as ProjectLoaded;
+      final prj = BlocProvider.of<FocusProjectCubit>(context).state!;
       final currentPage = BlocProvider.of<PageCubit>(context).state;
       PageObject? page;
-      page = prj.prj.pages!.firstWhereOrNull((final element) => element.name == nameOfPage);
+      page = prj.pages!
+          .firstWhereOrNull((final element) => element.name == nameOfPage);
       if (page != null) {
         final list = await TetaDB.instance.client.selectList(
           'nodes',
@@ -81,14 +83,14 @@ class FActionNavigationOpenPage {
         page = page.copyWith(flatList: nodes, scaffold: scaffold);
 
         BlocProvider.of<PageCubit>(context)
-            .onFocus(prj: prj.prj, page: page, context: context);
+            .onFocus(prj: prj, page: page, context: context);
 
         await Navigator.push<void>(
           context,
           MaterialPageRoute(
             builder: (final context) => BlocProvider(
               create: (final context) =>
-                  PageCubit()..onFocus(prj: prj.prj, page: page!, context: context),
+                  PageCubit()..onFocus(prj: prj, page: page!, context: context),
               child: page!.scaffold!.toWidget(
                 state: state.copyWith(
                   forPlay: true,
@@ -120,12 +122,13 @@ class FActionNavigationOpenPage {
     final String? nameOfPage,
     final Map<String, dynamic>? paramsToSend,
   ) {
-    final prj = BlocProvider.of<FocusProjectBloc>(context).state as ProjectLoaded;
+    final prj = BlocProvider.of<FocusProjectCubit>(context).state!;
     if (nameOfPage == null ||
-        (prj.prj.pages ?? <PageObject>[])
+        (prj.pages ?? <PageObject>[])
                 .indexWhere((final element) => element.name == nameOfPage) ==
             -1) return '';
-    final page = prj.prj.pages!.firstWhere((final element) => element.name == nameOfPage);
+    final page =
+        prj.pages!.firstWhere((final element) => element.name == nameOfPage);
     final temp = removeDiacritics(
       page.name
           .replaceFirst('0', 'A0')
@@ -149,8 +152,9 @@ class FActionNavigationOpenPage {
       // ignore: literal_only_boolean_expressions
       if ("${paramsToSend?[param.id]?['dataset']}" == 'States' ||
           "${paramsToSend?[param.id]?['dataset']}" == 'Params') {
-        final valueToSend =
-            (paramsToSend ?? <String, dynamic>{})[param.id]?['label'] as String? ?? 'null';
+        final valueToSend = (paramsToSend ?? <String, dynamic>{})[param.id]
+                ?['label'] as String? ??
+            'null';
         if (valueToSend != 'null') {
           final name = ReCase(param.name);
           stringParamsToSend.write('${name.camelCase}: ');

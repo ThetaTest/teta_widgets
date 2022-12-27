@@ -68,7 +68,7 @@ class PaddingsState extends State<TextControl> {
     keyController = TextEditingController();
     nodeId = widget.node.nid;
     try {
-      text = widget.value.getValue(context) ?? '';
+      text = widget.value.getValue(context);
       controller.text = text!;
       typeOfInput = widget.value.type!;
       if (widget.value.datasetName != null) {
@@ -92,7 +92,7 @@ class PaddingsState extends State<TextControl> {
         index != -1 ? widget.page.datasets[index] : DatasetObject.empty();
     return BlocListener<DeviceModeCubit, DeviceInfo>(
       listener: (final context, final device) {
-        controller.text = widget.value.getValue(context) ?? '';
+        controller.text = widget.value.getValue(context);
       },
       child: BlocBuilder<DeviceModeCubit, DeviceInfo>(
         builder: (final context, final device) =>
@@ -102,7 +102,7 @@ class PaddingsState extends State<TextControl> {
               if (state.first.nid != nodeId) {
                 if (mounted) {
                   nodeId = state.first.nid;
-                  controller.text = widget.value.getValue(context) ?? '';
+                  controller.text = widget.value.getValue(context);
                 }
               }
             }
@@ -439,9 +439,8 @@ class PaddingsState extends State<TextControl> {
                 if (widget.value.type == FTextTypeEnum.languages)
                   CDropdown(
                     value: widget.value.keyTranslator,
-                    items: ((BlocProvider.of<FocusProjectBloc>(context).state
-                                    as ProjectLoaded)
-                                .prj
+                    items: (BlocProvider.of<FocusProjectCubit>(context)
+                                .state!
                                 .config
                                 ?.appLanguage
                                 ?.terms ??

@@ -40,12 +40,12 @@ class _WComponentState extends State<WComponent> {
   PageObject? component;
   String? componentName = '';
   WebViewXController? webViewController;
-  ProjectLoaded? prjState;
+  late ProjectObject prj;
   bool isLoaded = false;
 
   @override
   void initState() {
-    prjState = BlocProvider.of<FocusProjectBloc>(context).state as ProjectLoaded;
+    prj = BlocProvider.of<FocusProjectCubit>(context).state!;
     if (componentName != widget.componentName) {
       calc();
     }
@@ -53,16 +53,19 @@ class _WComponentState extends State<WComponent> {
   }
 
   Future<void> calc() async {
-    prjState = BlocProvider.of<FocusProjectBloc>(context).state as ProjectLoaded;
+    prj = BlocProvider.of<FocusProjectCubit>(context).state!;
     PageObject? _component;
-    _component = prjState!.prj.pages!.firstWhereOrNull(
+    _component = prj.pages!.firstWhereOrNull(
       (final element) => element.name == widget.componentName,
     );
 
     if (_component != null) {
       _component = _component.copyWith(
         states: [
-          ..._component.states.map((final e) => e.toJson()).map(VariableObject.fromJson).toList()
+          ..._component.states
+              .map((final e) => e.toJson())
+              .map(VariableObject.fromJson)
+              .toList()
         ],
       );
       final nodes = await fetch(_component, context);
@@ -124,7 +127,7 @@ class _WComponentState extends State<WComponent> {
         ? BlocProvider<PageCubit>(
             create: (final context) => PageCubit()
               ..onFocus(
-                prj: prjState!.prj,
+                prj: prj,
                 page: component!,
                 context: context,
                 forPlay: widget.state.forPlay,
@@ -175,7 +178,8 @@ class _WComponentState extends State<WComponent> {
           ? '${element.get}'
           : element.firstValueForInitialization();
       if (listVariableObjectParams.length > 1) {
-        if (listVariableObjectParams.indexOf(element) == listVariableObjectParams.length - 1) {
+        if (listVariableObjectParams.indexOf(element) ==
+            listVariableObjectParams.length - 1) {
           parametersString += '${rc.camelCase}=$value';
         } else {
           parametersString += '${rc.camelCase}=$value&';
@@ -196,48 +200,64 @@ class _WComponentState extends State<WComponent> {
           final list = <DatasetObject>[
             DatasetObject(
               name: 'Parameters',
-              map: widget.state.params.map((final e) => <String, dynamic>{e.name: e.get}).toList(),
+              map: widget.state.params
+                  .map((final e) => <String, dynamic>{e.name: e.get})
+                  .toList(),
             ),
             DatasetObject(
               name: 'States',
-              map: widget.state.states.map((final e) => <String, dynamic>{e.name: e.get}).toList(),
+              map: widget.state.states
+                  .map((final e) => <String, dynamic>{e.name: e.get})
+                  .toList(),
             ),
             ...widget.state.dataset,
           ];
           Map<String, dynamic>? selectedDataset;
           for (final element in list) {
             if (element.getName == widget.paramsToSend?[e.id]['dataset']) {
-              selectedDataset = <String, dynamic>{'name': element.getName, 'map': element.getMap};
+              selectedDataset = <String, dynamic>{
+                'name': element.getName,
+                'map': element.getMap
+              };
             }
           }
           VariableObject? variable;
-          if (selectedDataset?['name'] == 'Parameters' || selectedDataset?['name'] == 'States') {
+          if (selectedDataset?['name'] == 'Parameters' ||
+              selectedDataset?['name'] == 'States') {
             final map = selectedDataset!['map'] as List<Map<String, dynamic>>;
             for (final element in map) {
               if (element.keys.toList()[widget.state.loop ?? 0] ==
                   widget.paramsToSend?[e.id]?['label']) {
-                if (element[element.keys.toList()[widget.state.loop ?? 0]] is String ||
-                    element[element.keys.toList()[widget.state.loop ?? 0]] is int ||
-                    element[element.keys.toList()[widget.state.loop ?? 0]] is double) {
+                if (element[element.keys.toList()[widget.state.loop ?? 0]]
+                        is String ||
+                    element[element.keys.toList()[widget.state.loop ?? 0]]
+                        is int ||
+                    element[element.keys.toList()[widget.state.loop ?? 0]]
+                        is double) {
                   variable = VariableObject(
                     name: element.keys.toList()[widget.state.loop ?? 0],
-                    value: element[element.keys.toList()[widget.state.loop ?? 0]],
+                    value:
+                        element[element.keys.toList()[widget.state.loop ?? 0]],
                   );
                 }
-                if (element[element.keys.toList()[widget.state.loop ?? 0]] is CameraController) {
+                if (element[element.keys.toList()[widget.state.loop ?? 0]]
+                    is CameraController) {
                   variable = VariableObject(
                     name: element.keys.toList()[widget.state.loop ?? 0],
                     type: VariableType.cameraController,
                     controller:
-                        element[element.keys.toList()[widget.state.loop ?? 0]] as CameraController,
+                        element[element.keys.toList()[widget.state.loop ?? 0]]
+                            as CameraController,
                   );
                 }
-                if (element[element.keys.toList()[widget.state.loop ?? 0]] is XFile) {
+                if (element[element.keys.toList()[widget.state.loop ?? 0]]
+                    is XFile) {
                   debugPrint('is XFile');
                   variable = VariableObject(
                     name: element.keys.toList()[widget.state.loop ?? 0],
                     type: VariableType.file,
-                    file: element[element.keys.toList()[widget.state.loop ?? 0]] as XFile,
+                    file: element[element.keys.toList()[widget.state.loop ?? 0]]
+                        as XFile,
                   );
                 }
               }
@@ -265,7 +285,8 @@ class _WComponentState extends State<WComponent> {
 
   //! this in the editor need to be in a sizedBox
   Widget hardCoded(final PageObject page) {
-    final _paramsString = initializeParamsForUri(getVariableObjectsFromParams(page));
+    final _paramsString =
+        initializeParamsForUri(getVariableObjectsFromParams(page));
     return WebViewX(
       width: double.maxFinite,
       height: double.maxFinite,

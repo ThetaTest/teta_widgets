@@ -55,9 +55,11 @@ class _WMapState extends State<WMap> {
   Future<void> init() async {
     final page = BlocProvider.of<PageCubit>(context).state;
     if (widget.controller.type == FTextTypeEnum.param) {
-      variable = page.params.firstWhereOrNull((final e) => e.name == widget.controller.paramName);
+      variable = page.params
+          .firstWhereOrNull((final e) => e.name == widget.controller.paramName);
     } else {
-      variable = page.states.firstWhereOrNull((final e) => e.name == widget.controller.stateName);
+      variable = page.states
+          .firstWhereOrNull((final e) => e.name == widget.controller.stateName);
     }
     variable?.mapController ??= MapController(
       location: LatLng(41.52, 12.30),
@@ -136,8 +138,8 @@ class _WMapState extends State<WMap> {
     return NodeSelectionBuilder(
       node: widget.state.node,
       forPlay: widget.state.forPlay,
-      child: !(BlocProvider.of<FocusProjectBloc>(context).state as ProjectLoaded)
-              .prj
+      child: !BlocProvider.of<FocusProjectCubit>(context)
+              .state!
               .config!
               .mapEnabled
           ? const DecoratedBox(
@@ -154,7 +156,9 @@ class _WMapState extends State<WMap> {
                 final markers = <LatLng>[];
                 for (final child in widget.children) {
                   if ((child as NDynamic).intrinsicState.type == NType.marker) {
-                    final lat = (child.body.attributes[DBKeys.latitude] as FTextTypeInput).get(
+                    final lat = (child.body.attributes[DBKeys.latitude]
+                            as FTextTypeInput)
+                        .get(
                       widget.state.params,
                       widget.state.states,
                       widget.state.dataset,
@@ -162,7 +166,9 @@ class _WMapState extends State<WMap> {
                       widget.state.loop,
                       context,
                     );
-                    final lng = (child.body.attributes[DBKeys.longitude] as FTextTypeInput).get(
+                    final lng = (child.body.attributes[DBKeys.longitude]
+                            as FTextTypeInput)
+                        .get(
                       widget.state.params,
                       widget.state.states,
                       widget.state.dataset,
@@ -191,7 +197,8 @@ class _WMapState extends State<WMap> {
                     )
                     .toList();
                 for (var i = 0; i < markersChildren.length; i++) {
-                  if ((widget.children[i] as NDynamic).intrinsicState.type == NType.marker) {
+                  if ((widget.children[i] as NDynamic).intrinsicState.type ==
+                      NType.marker) {
                     markersWidgets.add(
                       widget.children[i].toWidget(state: widget.state),
                     );
@@ -218,11 +225,12 @@ class _WMapState extends State<WMap> {
                         if (variable != null && variable?.mapController != null)
                           Map(
                             controller: variable!.mapController!,
-                            builder: (final context, final x, final y, final z) {
+                            builder:
+                                (final context, final x, final y, final z) {
                               final url =
-                                  'https://api.mapbox.com/styles/v1/mapbox/streets-v11/tiles/$z/$x/$y?access_token=${(BlocProvider.of<FocusProjectBloc>(context).state as ProjectLoaded).prj.config?.mapboxKey}';
+                                  'https://api.mapbox.com/styles/v1/mapbox/streets-v11/tiles/$z/$x/$y?access_token=${BlocProvider.of<FocusProjectCubit>(context).state!.config?.mapboxKey}';
                               final darkUrl =
-                                  'https://api.mapbox.com/styles/v1/mapbox/dark-v10/tiles/$z/$x/$y?access_token=${(BlocProvider.of<FocusProjectBloc>(context).state as ProjectLoaded).prj.config?.mapboxKey}';
+                                  'https://api.mapbox.com/styles/v1/mapbox/dark-v10/tiles/$z/$x/$y?access_token=${BlocProvider.of<FocusProjectCubit>(context).state!.config?.mapboxKey}';
                               return CNetworkImage(
                                 nid: widget.state.node.nid,
                                 src: widget.flag ? darkUrl : url,
@@ -305,7 +313,9 @@ double _eclipticObliquity(final double julianDay) {
           (46.836769 / 3600 -
               T *
                   (0.0001831 / 3600 +
-                      T * (0.00200340 / 3600 - T * (0.576e-6 / 3600 - T * 4.34e-8 / 3600))));
+                      T *
+                          (0.00200340 / 3600 -
+                              T * (0.576e-6 / 3600 - T * 4.34e-8 / 3600))));
   return epsilon;
 }
 

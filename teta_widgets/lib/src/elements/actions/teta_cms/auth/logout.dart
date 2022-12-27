@@ -15,10 +15,7 @@ class FATetaCMSLogout {
   static Future action(
     final BuildContext context,
   ) async {
-    final prjId =
-        (BlocProvider.of<FocusProjectBloc>(context).state as ProjectLoaded)
-            .prj
-            .id;
+    final prjId = BlocProvider.of<FocusProjectCubit>(context).state!.id;
     TrackService.instance.track(
       eventName: 'Teta Auth: logout in Teta',
       prjId: prjId,

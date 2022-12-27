@@ -53,10 +53,7 @@ class _WAirtableFetchState extends State<WAirtableFetch> {
       widget.state.loop,
       context,
     );
-    final config =
-        (BlocProvider.of<FocusProjectBloc>(context).state as ProjectLoaded)
-            .prj
-            .config;
+    final config = BlocProvider.of<FocusProjectCubit>(context).state!.config;
     var dbElements = <AirtableRecord>[];
     if (config != null && config.isAirtableReady) {
       final airtable = context.read<AirtableCubit>();
