@@ -8,6 +8,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:teta_core/src/rendering/find.dart';
 import 'package:teta_core/teta_core.dart';
+import 'package:teta_widgets/src/elements/builder/drag_and_drop.dart';
 // Project imports:
 import 'package:teta_widgets/src/elements/nodes/node.dart';
 
@@ -49,21 +50,23 @@ class NodeSelectionState extends State<NodeSelection> {
   @override
   Widget build(final BuildContext context) {
     if (widget.forPlay) return body();
-    return MouseRegion(
-      onEnter: (final e) {
-        BlocProvider.of<HoverBloc>(context).add(OnHover(node: widget.node));
-      },
-      onExit: (final e) {
-        if (parent != null) {
-          BlocProvider.of<HoverBloc>(context).add(OnHover(node: parent!));
-        }
-      },
-      child: GestureDetector(
-        onTap: () {
-          BlocProvider.of<FocusBloc>(context).add(OnFocus(node: widget.node));
-          BlocProvider.of<JumpToCubit>(context).jumpTo(context, widget.node);
+    return DragAndDropBuilder(
+      child: MouseRegion(
+        onEnter: (final e) {
+          BlocProvider.of<HoverBloc>(context).add(OnHover(node: widget.node));
         },
-        child: body(),
+        onExit: (final e) {
+          if (parent != null) {
+            BlocProvider.of<HoverBloc>(context).add(OnHover(node: parent!));
+          }
+        },
+        child: GestureDetector(
+          onTap: () {
+            BlocProvider.of<FocusBloc>(context).add(OnFocus(node: widget.node));
+            BlocProvider.of<JumpToCubit>(context).jumpTo(context, widget.node);
+          },
+          child: body(),
+        ),
       ),
     );
     /*return BlocBuilder<AuthorsBloc, List<AuthorObject>>(
@@ -161,35 +164,61 @@ class NodeSelectionState extends State<NodeSelection> {
 
   Widget body() {
     return BlocBuilder<FocusBloc, List<CNode>>(
-      buildWhen: (final previous, final current) => current != previous,
       builder: (final context, final onFocusNodes) {
         return BlocBuilder<HoverBloc, CNode>(
-          buildWhen: (final previous, final current) => current != previous,
           builder: (final context, final onHover) {
-            return DecoratedBox(
-              decoration: BoxDecoration(
-                border: Border.all(
-                  color: onFocusNodes.firstWhereOrNull(
-                            (final element) =>
-                                element.nid == widget.node.nid ||
-                                onHover.nid == widget.node.nid,
-                          ) !=
-                          null
-                      ? primaryColor
-                      : Colors.transparent,
-                  style:
-                      (widget.forPlay) ? BorderStyle.none : BorderStyle.solid,
-                  width: onFocusNodes.firstWhereOrNull(
-                            (final element) => element.nid == widget.node.nid,
-                          ) !=
-                          null
-                      ? 1
-                      : onHover.nid == widget.node.nid
-                          ? 2
-                          : 0,
+            return Stack(
+              clipBehavior: Clip.none,
+              children: [
+                DecoratedBox(
+                  position: DecorationPosition.foreground,
+                  decoration: BoxDecoration(
+                    border: Border.all(
+                      color: onFocusNodes.firstWhereOrNull(
+                                    (final element) =>
+                                        element.nid == widget.node.nid,
+                                  ) !=
+                                  null ||
+                              onHover.nid == widget.node.nid
+                          ? primaryColor
+                          : Colors.transparent,
+                      style: (widget.forPlay)
+                          ? BorderStyle.none
+                          : BorderStyle.solid,
+                      width: onFocusNodes.firstWhereOrNull(
+                                (final element) =>
+                                    element.nid == widget.node.nid,
+                              ) !=
+                              null
+                          ? 1
+                          : onHover.nid == widget.node.nid
+                              ? 2
+                              : 0,
+                    ),
+                  ),
+                  child: widget.child,
                 ),
-              ),
-              child: widget.child,
+                if (onFocusNodes.firstWhereOrNull(
+                          (final element) => element.nid == widget.node.nid,
+                        ) !=
+                        null ||
+                    onHover.nid == widget.node.nid)
+                  Transform.translate(
+                    offset: const Offset(0, -20),
+                    child: ColoredBox(
+                      color: primaryColor,
+                      child: Padding(
+                        padding: const EdgeInsets.symmetric(
+                          vertical: 2,
+                          horizontal: 4,
+                        ),
+                        child: TDetailLabel(
+                          widget.node.intrinsicState.displayName,
+                        ),
+                      ),
+                    ),
+                  ),
+              ],
             );
             /*Positioned(
                   bottom: 0,

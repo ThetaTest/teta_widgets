@@ -4,14 +4,16 @@
 // Flutter imports:
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 // Package imports:
 import 'package:teta_core/teta_core.dart';
 import 'package:teta_widgets/src/core/teta_widget/index.dart';
+import 'package:teta_widgets/src/elements/builder/reorder_children.dart';
 import 'package:teta_widgets/src/elements/features/physic.dart';
 // Project imports:
 import 'package:teta_widgets/src/elements/index.dart';
 
-class WListView extends StatelessWidget {
+class WListView extends StatefulWidget {
   /// Returns a ListView in Teta
   const WListView(
     final Key? key, {
@@ -39,30 +41,41 @@ class WListView extends StatelessWidget {
   final bool shrinkWrap;
 
   @override
+  State<WListView> createState() => _WListViewState();
+}
+
+class _WListViewState extends State<WListView> {
+  List<CNode> children = [];
+
+  @override
+  void initState() {
+    children = widget.children;
+    super.initState();
+  }
+
+  @override
   Widget build(final BuildContext context) {
     return TetaWidget(
-      state: state,
+      state: widget.state,
       child: NotificationListener<ScrollEndNotification>(
         onNotification: (final scrollEnd) {
           final metrics = scrollEnd.metrics;
           if (metrics.atEdge) {
             final isTop = metrics.pixels == 0;
             if (isTop) {
-              Logger.printMessage('At the top');
               GestureBuilder.get(
                 context: context,
-                state: state,
+                state: widget.state,
                 gesture: ActionGesture.scrollToTop,
-                action: action,
+                action: widget.action,
                 actionValue: null,
               );
             } else {
-              Logger.printMessage('At the bottom');
               GestureBuilder.get(
                 context: context,
-                state: state,
+                state: widget.state,
                 gesture: ActionGesture.scrollToBottom,
-                action: action,
+                action: widget.action,
                 actionValue: null,
               );
             }
@@ -71,21 +84,59 @@ class WListView extends StatelessWidget {
         },
         child: ScrollConfiguration(
           behavior: _MyCustomScrollBehavior(),
-          child: ListView.builder(
-            reverse: isReverse,
-            physics: physic.physics,
-            addAutomaticKeepAlives: false,
-            addRepaintBoundaries: false,
-            scrollDirection: isVertical ? Axis.vertical : Axis.horizontal,
-            itemCount: children.isEmpty ? 1 : children.length,
-            itemBuilder: (final context, final index) {
-              return children.isNotEmpty
-                  ? children[index].toWidget(state: state)
-                  : PlaceholderChildBuilder(
-                      name: state.node.intrinsicState.displayName,
-                      node: state.node,
-                      forPlay: state.forPlay,
-                    );
+          child: BlocBuilder<FocusBloc, List<CNode>>(
+            builder: (final context, final nodes) {
+              if (nodes.length == 1) {
+                final index = widget.children.indexWhere(
+                  (final element) => element.nid == nodes.first.nid,
+                );
+                if (index != -1) {
+                  return ReorderableListView.builder(
+                    onReorder: (final oldIndex, final newIndex) {
+                      ReorderChildren.reorder(
+                        widget.state.node,
+                        children,
+                        oldIndex,
+                        newIndex,
+                      );
+                      setState(() {});
+                    },
+                    reverse: widget.isReverse,
+                    physics: widget.physic.physics,
+                    scrollDirection:
+                        widget.isVertical ? Axis.vertical : Axis.horizontal,
+                    itemCount: children.isEmpty ? 1 : children.length,
+                    itemBuilder: (final context, final index) {
+                      return children.isNotEmpty
+                          ? children[index].toWidget(state: widget.state)
+                          : PlaceholderChildBuilder(
+                              name:
+                                  widget.state.node.intrinsicState.displayName,
+                              node: widget.state.node,
+                              forPlay: widget.state.forPlay,
+                            );
+                    },
+                  );
+                }
+              }
+              return ListView.builder(
+                reverse: widget.isReverse,
+                physics: widget.physic.physics,
+                addAutomaticKeepAlives: false,
+                addRepaintBoundaries: false,
+                scrollDirection:
+                    widget.isVertical ? Axis.vertical : Axis.horizontal,
+                itemCount: children.isEmpty ? 1 : children.length,
+                itemBuilder: (final context, final index) {
+                  return children.isNotEmpty
+                      ? children[index].toWidget(state: widget.state)
+                      : PlaceholderChildBuilder(
+                          name: widget.state.node.intrinsicState.displayName,
+                          node: widget.state.node,
+                          forPlay: widget.state.forPlay,
+                        );
+                },
+              );
             },
           ),
         ),

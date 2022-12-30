@@ -3,11 +3,15 @@
 
 // Flutter imports:
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:reorderables/reorderables.dart';
+import 'package:teta_core/teta_core.dart';
 import 'package:teta_widgets/src/core/teta_widget/index.dart';
+import 'package:teta_widgets/src/elements/builder/reorder_children.dart';
 // Project imports:
 import 'package:teta_widgets/src/elements/index.dart';
 
-class WRow extends StatelessWidget {
+class WRow extends StatefulWidget {
   /// Constructor
   const WRow(
     final Key? key, {
@@ -30,26 +34,76 @@ class WRow extends StatelessWidget {
   final FMainAxisSize _mainAxisSize;
 
   @override
+  State<WRow> createState() => _WRowState();
+}
+
+class _WRowState extends State<WRow> {
+  List<CNode> children = [];
+
+  @override
+  void initState() {
+    children = widget._children;
+    super.initState();
+  }
+
+  @override
   Widget build(final BuildContext context) {
     return TetaWidget(
-      state: _state,
-      child: Row(
-        mainAxisAlignment: _mainAxisAlignment.get,
-        crossAxisAlignment: _crossAxisAlignment.get,
-        mainAxisSize: _mainAxisSize.get,
-        children: _children.isNotEmpty
-            ? _children
-                .map(
-                  (final e) => e.toWidget(state: _state),
-                )
-                .toList()
-            : [
-                PlaceholderChildBuilder(
-                  name: _state.node.intrinsicState.displayName,
-                  node: _state.node,
-                  forPlay: _state.forPlay,
-                ),
-              ],
+      state: widget._state,
+      child: BlocBuilder<FocusBloc, List<CNode>>(
+        builder: (final context, final nodes) {
+          if (nodes.length == 1) {
+            final index = widget._children
+                .indexWhere((final element) => element.nid == nodes.first.nid);
+            if (index != -1) {
+              return ReorderableRow(
+                onReorder: (final oldIndex, final newIndex) {
+                  ReorderChildren.reorder(
+                    widget._state.node,
+                    children,
+                    oldIndex,
+                    newIndex,
+                  );
+                  setState(() {});
+                },
+                mainAxisAlignment: widget._mainAxisAlignment.get,
+                crossAxisAlignment: widget._crossAxisAlignment.get,
+                mainAxisSize: widget._mainAxisSize.get,
+                children: children.isNotEmpty
+                    ? children
+                        .map(
+                          (final e) => e.toWidget(state: widget._state),
+                        )
+                        .toList()
+                    : [
+                        PlaceholderChildBuilder(
+                          name: widget._state.node.intrinsicState.displayName,
+                          node: widget._state.node,
+                          forPlay: widget._state.forPlay,
+                        ),
+                      ],
+              );
+            }
+          }
+          return Row(
+            mainAxisAlignment: widget._mainAxisAlignment.get,
+            crossAxisAlignment: widget._crossAxisAlignment.get,
+            mainAxisSize: widget._mainAxisSize.get,
+            children: widget._children.isNotEmpty
+                ? widget._children
+                    .map(
+                      (final e) => e.toWidget(state: widget._state),
+                    )
+                    .toList()
+                : [
+                    PlaceholderChildBuilder(
+                      name: widget._state.node.intrinsicState.displayName,
+                      node: widget._state.node,
+                      forPlay: widget._state.forPlay,
+                    ),
+                  ],
+          );
+        },
       ),
     );
   }
