@@ -64,8 +64,7 @@ class _WCupertinoSegmentedControlState
       );
     }
     return NodeSelectionBuilder(
-      node: widget.state.node,
-      forPlay: widget.state.forPlay,
+      state: widget.state,
       child: IgnorePointer(
         ignoring: !widget.state.forPlay,
         child: CupertinoSegmentedControl<int>(

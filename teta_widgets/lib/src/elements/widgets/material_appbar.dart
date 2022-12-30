@@ -24,12 +24,12 @@ class WMaterialAppBar extends StatelessWidget {
   @override
   Widget build(final BuildContext context) {
     return NodeSelectionBuilder(
-      node: state.node,
-      forPlay: state.forPlay,
+      state: state,
       child: AppBar(
         elevation: 0,
         backgroundColor: HexColor(fill.getHexColor(context)),
-        leading: children.length >= 2 ? children[1].toWidget(state: state) : null,
+        leading:
+            children.length >= 2 ? children[1].toWidget(state: state) : null,
         title: children.isNotEmpty ? children[0].toWidget(state: state) : null,
         actions: [
           if (children.length >= 3) children[2].toWidget(state: state),

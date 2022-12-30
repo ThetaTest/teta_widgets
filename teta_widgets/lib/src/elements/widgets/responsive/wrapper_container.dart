@@ -28,9 +28,7 @@ class WWrapperContainer extends StatelessWidget {
   Widget build(final BuildContext context) {
     Logger.printWarning('${MediaQuery.of(context).size.width}');
     return NodeSelection(
-      node: state.node,
-      forPlay: state.forPlay,
-      nid: state.node.nid,
+      state: state,
       child: GestureBuilderBase.get(
         context: context,
         state: state,

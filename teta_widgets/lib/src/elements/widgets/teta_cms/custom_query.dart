@@ -71,8 +71,7 @@ class _WCmsCustomQueryState extends State<WCmsCustomQuery> {
   @override
   Widget build(final BuildContext context) {
     return NodeSelectionBuilder(
-      node: widget.state.node,
-      forPlay: widget.state.forPlay,
+      state: widget.state,
       child: RepaintBoundary(
         child: FutureBuilder(
           future: _future,
@@ -90,13 +89,16 @@ class _WCmsCustomQueryState extends State<WCmsCustomQuery> {
               // TODO: Returns a error widget
             }
 
-            final list = (snapshot.data as TetaResponse?)?.data as List<dynamic>?;
+            final list =
+                (snapshot.data as TetaResponse?)?.data as List<dynamic>?;
             Logger.printWarning('list: $list');
             _map = _map.copyWith(
-              name: widget.state.node.name ?? widget.state.node.intrinsicState.displayName,
+              name: widget.state.node.name ??
+                  widget.state.node.intrinsicState.displayName,
               map: (list ?? const <dynamic>[])
                   .map(
-                    (final dynamic e) => e as Map<String, dynamic>? ?? <String, dynamic>{},
+                    (final dynamic e) =>
+                        e as Map<String, dynamic>? ?? <String, dynamic>{},
                   )
                   .toList(),
             );
@@ -106,7 +108,9 @@ class _WCmsCustomQueryState extends State<WCmsCustomQuery> {
             if (widget.children.isNotEmpty) {
               return widget.children.first.toWidget(
                 state: widget.state.copyWith(
-                  dataset: widget.state.dataset.isEmpty ? datasets : widget.state.dataset,
+                  dataset: widget.state.dataset.isEmpty
+                      ? datasets
+                      : widget.state.dataset,
                 ),
               );
             } else {

@@ -31,8 +31,7 @@ class _WRadioState extends State<WRadio> {
   @override
   Widget build(final BuildContext context) {
     return NodeSelectionBuilder(
-      node: widget.state.node,
-      forPlay: widget.state.forPlay,
+      state: widget.state,
       child: Radio<String>(
         groupValue: widget.groupValue.get(
           widget.state.params,

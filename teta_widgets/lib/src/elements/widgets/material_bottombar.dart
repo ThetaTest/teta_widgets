@@ -24,8 +24,7 @@ class WMaterialBottomBar extends StatelessWidget {
   @override
   Widget build(final BuildContext context) {
     return NodeSelectionBuilder(
-      node: state.node,
-      forPlay: state.forPlay,
+      state: state,
       child: BottomNavigationBar(
         items: const [],
         backgroundColor: HexColor(fill.getHexColor(context)),

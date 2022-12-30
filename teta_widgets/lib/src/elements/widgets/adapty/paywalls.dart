@@ -41,14 +41,17 @@ class _WAdaptyProductsListState extends State<WAdaptyProductsList> {
   void initState() {
     getProducts();
     _map = DatasetObject(
-      name: widget.state.node.name ?? widget.state.node.intrinsicState.displayName,
+      name: widget.state.node.name ??
+          widget.state.node.intrinsicState.displayName,
       map: [<String, dynamic>{}],
     );
     super.initState();
   }
 
   Future<void> getProducts() async {
-    if (UniversalPlatform.isIOS || UniversalPlatform.isAndroid || UniversalPlatform.isMacOS) {
+    if (UniversalPlatform.isIOS ||
+        UniversalPlatform.isAndroid ||
+        UniversalPlatform.isMacOS) {
       try {
         AdaptyPaywall? myPaywall;
         final getPaywallsResult = await Adapty.getPaywalls();
@@ -87,22 +90,23 @@ class _WAdaptyProductsListState extends State<WAdaptyProductsList> {
       );
     }
     _map = _map.copyWith(
-      name: widget.state.node.name ?? widget.state.node.intrinsicState.displayName,
+      name: widget.state.node.name ??
+          widget.state.node.intrinsicState.displayName,
       //! Commented out because .toJson() method is not available in AdaptyProduct
       // map: products.map((final e) => e.toJson()).toList(),
     );
     final datasets = addDataset(context, widget.state.dataset, _map);
 
     return NodeSelectionBuilder(
-      node: widget.state.node,
-      forPlay: widget.state.forPlay,
+      state: widget.state,
       child: ListView.builder(
         shrinkWrap: true,
         itemCount: widget.child == null ? 1 : products.length,
         itemBuilder: (final context, final index) => ChildConditionBuilder(
           ValueKey('${widget.state.node.nid} ${widget.state.loop}'),
           state: widget.state.copyWith(
-            dataset: widget.state.dataset.isEmpty ? datasets : widget.state.dataset,
+            dataset:
+                widget.state.dataset.isEmpty ? datasets : widget.state.dataset,
           ),
           child: widget.child,
         ),

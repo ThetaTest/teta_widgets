@@ -31,8 +31,7 @@ class _WCupertinoSwitchState extends State<WCupertinoSwitch> {
   @override
   Widget build(final BuildContext context) {
     return NodeSelectionBuilder(
-      node: widget.state.node,
-      forPlay: widget.state.forPlay,
+      state: widget.state,
       child: CupertinoSwitch(
         onChanged: (final value) {
           GestureBuilder.get(

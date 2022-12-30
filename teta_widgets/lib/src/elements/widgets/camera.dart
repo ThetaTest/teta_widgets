@@ -41,8 +41,7 @@ class _WCameraState extends State<WCamera> {
           .firstWhereOrNull((final e) => e.name == widget.controller.stateName);
     }
     return NodeSelectionBuilder(
-      node: widget.state.node,
-      forPlay: widget.state.forPlay,
+      state: widget.state,
       child: variable?.controller != null
           ? SizedBox(
               width: double.infinity,

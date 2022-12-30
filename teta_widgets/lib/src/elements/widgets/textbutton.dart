@@ -24,8 +24,7 @@ class WTextButton extends StatelessWidget {
   @override
   Widget build(final BuildContext context) {
     return NodeSelectionBuilder(
-      node: state.node,
-      forPlay: state.forPlay,
+      state: state,
       child: TextButton(
         onPressed: () => GestureBuilder.get(
           context: context,

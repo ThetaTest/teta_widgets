@@ -45,8 +45,7 @@ class WBouncingWidget extends StatelessWidget {
       context,
     );
     return NodeSelectionBuilder(
-      node: state.node,
-      forPlay: state.forPlay,
+      state: state,
       child: BouncingWidget(
         duration: Duration(milliseconds: int.tryParse(val) ?? 200),
         scaleFactor: double.tryParse(scale) ?? 1,

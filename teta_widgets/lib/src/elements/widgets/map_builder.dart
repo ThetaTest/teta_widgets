@@ -170,8 +170,7 @@ class _WMapBuilderState extends State<WMapBuilder> {
         index != -1 ? widget.state.dataset[index] : DatasetObject.empty();
 
     return NodeSelectionBuilder(
-      node: widget.state.node,
-      forPlay: widget.state.forPlay,
+      state: widget.state,
       child: !BlocProvider.of<FocusProjectCubit>(context)
               .state!
               .config!

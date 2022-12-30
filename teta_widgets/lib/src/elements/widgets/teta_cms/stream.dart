@@ -111,7 +111,8 @@ class _WCmsStreamState extends State<WCmsStream> {
         _stream = TetaCMS.instance.realtime.streamCollection(
           collectionId,
           filters: [
-            if (keyName.isNotEmpty && keyValue.isNotEmpty) Filter(keyName, keyValue),
+            if (keyName.isNotEmpty && keyValue.isNotEmpty)
+              Filter(keyName, keyValue),
           ],
           limit: int.tryParse(limit) ?? 20,
           page: int.tryParse(page) ?? 0,
@@ -124,13 +125,13 @@ class _WCmsStreamState extends State<WCmsStream> {
   @override
   Widget build(final BuildContext context) {
     return NodeSelectionBuilder(
-      node: widget.state.node,
-      forPlay: widget.state.forPlay,
+      state: widget.state,
       child: RepaintBoundary(
         child: StreamBuilder(
           stream: _stream.stream,
           builder: (final context, final snapshot) {
-            if (!snapshot.hasData || ((snapshot.data as List<dynamic>?)?.isEmpty ?? false)) {
+            if (!snapshot.hasData ||
+                ((snapshot.data as List<dynamic>?)?.isEmpty ?? false)) {
               if (widget.children.isNotEmpty) {
                 return widget.children.last.toWidget(state: widget.state);
               } else {
@@ -139,7 +140,8 @@ class _WCmsStreamState extends State<WCmsStream> {
             } else {
               final list = snapshot.data as List<dynamic>?;
               _map = _map.copyWith(
-                name: widget.state.node.name ?? widget.state.node.intrinsicState.displayName,
+                name: widget.state.node.name ??
+                    widget.state.node.intrinsicState.displayName,
                 map: (list ?? const <dynamic>[])
                     .map((final dynamic e) => e as Map<String, dynamic>)
                     .toList(),
@@ -150,7 +152,9 @@ class _WCmsStreamState extends State<WCmsStream> {
               if (widget.children.isNotEmpty) {
                 return widget.children.first.toWidget(
                   state: widget.state.copyWith(
-                    dataset: widget.state.dataset.isEmpty ? datasets : widget.state.dataset,
+                    dataset: widget.state.dataset.isEmpty
+                        ? datasets
+                        : widget.state.dataset,
                   ),
                 );
               } else {

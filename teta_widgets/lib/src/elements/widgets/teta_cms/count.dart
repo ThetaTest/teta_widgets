@@ -103,7 +103,8 @@ class _WCmsCountState extends State<WCmsCount> {
         _future = TetaCMS.instance.client.getCollectionCount(
           collectionId,
           filters: [
-            if (keyName.isNotEmpty && keyValue.isNotEmpty) Filter(keyName, keyValue),
+            if (keyName.isNotEmpty && keyValue.isNotEmpty)
+              Filter(keyName, keyValue),
           ],
           limit: int.tryParse(limit) ?? 20,
           page: int.tryParse(page) ?? 0,
@@ -115,8 +116,7 @@ class _WCmsCountState extends State<WCmsCount> {
   @override
   Widget build(final BuildContext context) {
     return NodeSelectionBuilder(
-      node: widget.state.node,
-      forPlay: widget.state.forPlay,
+      state: widget.state,
       child: RepaintBoundary(
         child: FutureBuilder<int>(
           future: _future,
@@ -134,7 +134,8 @@ class _WCmsCountState extends State<WCmsCount> {
 
               final count = snapshot.data ?? 0;
               _map = _map.copyWith(
-                name: widget.state.node.name ?? widget.state.node.intrinsicState.displayName,
+                name: widget.state.node.name ??
+                    widget.state.node.intrinsicState.displayName,
                 map: [
                   <String, int>{
                     'count': count,
@@ -147,7 +148,9 @@ class _WCmsCountState extends State<WCmsCount> {
               if (widget.children.isNotEmpty) {
                 return widget.children.first.toWidget(
                   state: widget.state.copyWith(
-                    dataset: widget.state.dataset.isEmpty ? datasets : widget.state.dataset,
+                    dataset: widget.state.dataset.isEmpty
+                        ? datasets
+                        : widget.state.dataset,
                   ),
                 );
               } else {

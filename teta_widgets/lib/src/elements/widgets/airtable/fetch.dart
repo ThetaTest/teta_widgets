@@ -98,8 +98,7 @@ class _WAirtableFetchState extends State<WAirtableFetch> {
     }
 
     return NodeSelectionBuilder(
-      node: widget.state.node,
-      forPlay: widget.state.forPlay,
+      state: widget.state,
       child: widget.children.isEmpty
           ? const THeadline3('This node requires at least one child')
           : RepaintBoundary(

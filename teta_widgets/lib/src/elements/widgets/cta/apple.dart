@@ -32,8 +32,7 @@ class WLoginWithApple extends StatelessWidget {
   @override
   Widget build(final BuildContext context) {
     return NodeSelectionBuilder(
-      node: state.node,
-      forPlay: state.forPlay,
+      state: state,
       child: SizedBox(
         width: width.get(context: context, isWidth: true),
         height: height.get(context: context, isWidth: false),

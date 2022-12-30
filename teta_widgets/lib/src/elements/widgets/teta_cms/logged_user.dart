@@ -58,8 +58,7 @@ class _WCMSLoggedUserState extends State<WCMSLoggedUser> {
   @override
   Widget build(final BuildContext context) {
     return NodeSelectionBuilder(
-      node: widget.state.node,
-      forPlay: widget.state.forPlay,
+      state: widget.state,
       child: FutureBuilder(
         future: _future,
         builder: (final context, final snapshot) {

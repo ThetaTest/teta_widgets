@@ -42,8 +42,7 @@ class _WCheckBoxState extends State<WCheckBox> {
   @override
   Widget build(final BuildContext context) {
     return NodeSelectionBuilder(
-      node: widget.state.node,
-      forPlay: widget.state.forPlay,
+      state: widget.state,
       child: Checkbox(
         onChanged: (final value) {
           if (widget.state.forPlay) {
@@ -58,7 +57,8 @@ class _WCheckBoxState extends State<WCheckBox> {
         },
         value: val == 'true',
         mouseCursor: const FCursor().get(),
-        fillColor: MaterialStateProperty.resolveWith((final states) => Colors.black),
+        fillColor:
+            MaterialStateProperty.resolveWith((final states) => Colors.black),
       ),
     );
   }

@@ -90,8 +90,7 @@ class _WTCardState extends State<WTCardBuilder> {
     );
     final delay = int.tryParse(delayStr) ?? 500;
     return NodeSelectionBuilder(
-      node: widget.state.node,
-      forPlay: widget.state.forPlay,
+      state: widget.state,
       child: IgnorePointer(
         ignoring: !widget.state.forPlay,
         child: TCard(

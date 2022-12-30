@@ -138,9 +138,7 @@ class _WComponentState extends State<WComponent> {
                 return (page.scaffold == null)
                     ? const SizedBox()
                     : NodeSelection(
-                        node: widget.state.node,
-                        forPlay: widget.state.forPlay,
-                        nid: widget.state.node.nid,
+                        state: widget.state,
                         child: GestureBuilderBase.get(
                           context: context,
                           state: widget.state,

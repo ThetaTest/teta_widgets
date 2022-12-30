@@ -33,8 +33,7 @@ class _WCupertinoPickerState extends State<WCupertinoPicker> {
   @override
   Widget build(final BuildContext context) {
     return NodeSelectionBuilder(
-      node: widget.state.node,
-      forPlay: widget.state.forPlay,
+      state: widget.state,
       child: CupertinoPicker(
         itemExtent: widget.height.get(context: context, isWidth: false) ?? 44,
         onSelectedItemChanged: (final index) {

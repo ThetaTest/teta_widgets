@@ -99,7 +99,8 @@ class _WCmsFetchState extends State<WCmsFetch> {
     final dbElements = await TetaCMS.instance.client.getCollection(
       collectionId,
       filters: [
-        if (keyName.isNotEmpty && keyValue.isNotEmpty) Filter(keyName, keyValue),
+        if (keyName.isNotEmpty && keyValue.isNotEmpty)
+          Filter(keyName, keyValue),
       ],
       limit: int.tryParse(limit) ?? 20,
       page: int.tryParse(page) ?? 0,
@@ -140,8 +141,7 @@ class _WCmsFetchState extends State<WCmsFetch> {
     }
 
     return NodeSelectionBuilder(
-      node: widget.state.node,
-      forPlay: widget.state.forPlay,
+      state: widget.state,
       child: widget.children.isEmpty
           ? const THeadline3('CMS Fetch requires at least one child')
           : RepaintBoundary(
@@ -154,8 +154,11 @@ class _WCmsFetchState extends State<WCmsFetch> {
 
   List<DatasetObject> _addFetchDataToDataset(final List<dynamic>? list) {
     _map = _map.copyWith(
-      name: widget.state.node.name ?? widget.state.node.intrinsicState.displayName,
-      map: (list ?? const <dynamic>[]).map((final dynamic e) => e as Map<String, dynamic>).toList(),
+      name: widget.state.node.name ??
+          widget.state.node.intrinsicState.displayName,
+      map: (list ?? const <dynamic>[])
+          .map((final dynamic e) => e as Map<String, dynamic>)
+          .toList(),
     );
 
     final datasets = addDataset(context, widget.state.dataset, _map);

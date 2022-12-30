@@ -2,13 +2,12 @@
 
 // Flutter imports:
 import 'dart:convert';
+
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
-
 // Package imports:
 import 'package:teta_core/teta_core.dart';
 import 'package:teta_widgets/src/core/teta_widget/index.dart';
-
 // Project imports:
 import 'package:teta_widgets/src/elements/index.dart';
 
@@ -55,11 +54,11 @@ class _WCustomHttpRequestState extends State<WCustomHttpRequest> {
       var newURL = url;
       for (var i = 0; i < widget.addParams!.length; i++) {
         if (i == 0) {
-          newURL = url +
-              '?${widget.addParams![i].key.toString()}=${widget.addParams![i].value.value.toString()}';
+          newURL =
+              '$url?${widget.addParams![i].key.toString()}=${widget.addParams![i].value.value.toString()}';
         } else {
-          newURL = newURL +
-              "&${widget.addParams![i].key.toString()}=${widget.addParams![i].value.value.toString()}";
+          newURL =
+              "$newURL&${widget.addParams![i].key.toString()}=${widget.addParams![i].value.value.toString()}";
         }
       }
       // print("new URL : " + newURL);
@@ -81,7 +80,7 @@ class _WCustomHttpRequestState extends State<WCustomHttpRequest> {
 
       final json = response.body;
 
-      dynamic resp = jsonDecode(json);
+      final dynamic resp = jsonDecode(json);
       if (resp is List) {
         final data = resp;
         if (mounted) {
@@ -130,8 +129,7 @@ class _WCustomHttpRequestState extends State<WCustomHttpRequest> {
       }
     }
     return NodeSelectionBuilder(
-      node: widget.state.node,
-      forPlay: widget.state.forPlay,
+      state: widget.state,
       child: widget.children.isEmpty
           ? const THeadline3('Custom Http Request requires at least one child')
           : RepaintBoundary(
@@ -144,8 +142,11 @@ class _WCustomHttpRequestState extends State<WCustomHttpRequest> {
 
   List<DatasetObject> _addFetchDataToDataset(final List<dynamic>? list) {
     _map = _map.copyWith(
-      name: widget.state.node.name ?? widget.state.node.intrinsicState.displayName,
-      map: (list ?? const <dynamic>[]).map((final dynamic e) => e as Map<String, dynamic>).toList(),
+      name: widget.state.node.name ??
+          widget.state.node.intrinsicState.displayName,
+      map: (list ?? const <dynamic>[])
+          .map((final dynamic e) => e as Map<String, dynamic>)
+          .toList(),
     );
 
     final datasets = addDataset(context, widget.state.dataset, _map);

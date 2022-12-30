@@ -37,8 +37,7 @@ class WFirebaseFutureBuilderState extends State<WFirebaseFutureBuilder> {
   @override
   Widget build(final BuildContext context) {
     return NodeSelectionBuilder(
-      node: widget.state.node,
-      forPlay: widget.state.forPlay,
+      state: widget.state,
       child: const Center(
         child: THeadline3(
           'Firebase is not initialized yet',

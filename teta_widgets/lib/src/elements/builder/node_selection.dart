@@ -8,6 +8,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:teta_core/src/rendering/find.dart';
 import 'package:teta_core/teta_core.dart';
+import 'package:teta_widgets/src/core/teta_widget/index.dart';
 import 'package:teta_widgets/src/elements/builder/drag_and_drop.dart';
 // Project imports:
 import 'package:teta_widgets/src/elements/nodes/node.dart';
@@ -16,17 +17,13 @@ import 'package:teta_widgets/src/elements/nodes/node.dart';
 class NodeSelection extends StatefulWidget {
   /// Make a widget selectable
   const NodeSelection({
-    required this.node,
+    required this.state,
     required this.child,
-    required this.forPlay,
-    required this.nid,
     final Key? key,
   }) : super(key: key);
 
-  final CNode node;
+  final TetaWidgetState state;
   final Widget child;
-  final bool forPlay;
-  final int nid;
 
   @override
   NodeSelectionState createState() => NodeSelectionState();
@@ -42,18 +39,20 @@ class NodeSelectionState extends State<NodeSelection> {
   void initState() {
     parent = FindNodeRendering.findParentByChildrenIds(
       flatList: BlocProvider.of<PageCubit>(context).state.flatList ?? [],
-      element: widget.node,
+      element: widget.state.node,
     );
     super.initState();
   }
 
   @override
   Widget build(final BuildContext context) {
-    if (widget.forPlay) return body();
+    if (widget.state.forPlay) return body();
     return DragAndDropBuilder(
+      state: widget.state,
       child: MouseRegion(
         onEnter: (final e) {
-          BlocProvider.of<HoverBloc>(context).add(OnHover(node: widget.node));
+          BlocProvider.of<HoverBloc>(context)
+              .add(OnHover(node: widget.state.node));
         },
         onExit: (final e) {
           if (parent != null) {
@@ -62,8 +61,10 @@ class NodeSelectionState extends State<NodeSelection> {
         },
         child: GestureDetector(
           onTap: () {
-            BlocProvider.of<FocusBloc>(context).add(OnFocus(node: widget.node));
-            BlocProvider.of<JumpToCubit>(context).jumpTo(context, widget.node);
+            BlocProvider.of<FocusBloc>(context)
+                .add(OnFocus(node: widget.state.node));
+            BlocProvider.of<JumpToCubit>(context)
+                .jumpTo(context, widget.state.node);
           },
           child: body(),
         ),
@@ -176,22 +177,22 @@ class NodeSelectionState extends State<NodeSelection> {
                     border: Border.all(
                       color: onFocusNodes.firstWhereOrNull(
                                     (final element) =>
-                                        element.nid == widget.node.nid,
+                                        element.nid == widget.state.node.nid,
                                   ) !=
                                   null ||
-                              onHover.nid == widget.node.nid
+                              onHover.nid == widget.state.node.nid
                           ? primaryColor
                           : Colors.transparent,
-                      style: (widget.forPlay)
+                      style: (widget.state.forPlay)
                           ? BorderStyle.none
                           : BorderStyle.solid,
                       width: onFocusNodes.firstWhereOrNull(
                                 (final element) =>
-                                    element.nid == widget.node.nid,
+                                    element.nid == widget.state.node.nid,
                               ) !=
                               null
                           ? 1
-                          : onHover.nid == widget.node.nid
+                          : onHover.nid == widget.state.node.nid
                               ? 2
                               : 0,
                     ),
@@ -199,10 +200,11 @@ class NodeSelectionState extends State<NodeSelection> {
                   child: widget.child,
                 ),
                 if (onFocusNodes.firstWhereOrNull(
-                          (final element) => element.nid == widget.node.nid,
+                          (final element) =>
+                              element.nid == widget.state.node.nid,
                         ) !=
                         null ||
-                    onHover.nid == widget.node.nid)
+                    onHover.nid == widget.state.node.nid)
                   Transform.translate(
                     offset: const Offset(0, -20),
                     child: ColoredBox(
@@ -213,7 +215,7 @@ class NodeSelectionState extends State<NodeSelection> {
                           horizontal: 4,
                         ),
                         child: TDetailLabel(
-                          widget.node.intrinsicState.displayName,
+                          widget.state.node.intrinsicState.displayName,
                         ),
                       ),
                     ),

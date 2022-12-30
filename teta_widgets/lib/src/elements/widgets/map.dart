@@ -136,8 +136,7 @@ class _WMapState extends State<WMap> {
       );
     }
     return NodeSelectionBuilder(
-      node: widget.state.node,
-      forPlay: widget.state.forPlay,
+      state: widget.state,
       child: !BlocProvider.of<FocusProjectCubit>(context)
               .state!
               .config!

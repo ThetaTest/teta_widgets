@@ -43,8 +43,7 @@ class WBottomBarItem extends StatelessWidget {
       if (element.name == fill.paletteStyle) model = element;
     });
     return NodeSelectionBuilder(
-      node: state.node,
-      forPlay: state.forPlay,
+      state: state,
       child: GestureDetector(
         onTap: () => GestureBuilder.get(
           context: context,

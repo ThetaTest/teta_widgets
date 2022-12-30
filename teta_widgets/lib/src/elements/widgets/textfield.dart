@@ -105,8 +105,7 @@ class _WTextFieldState extends State<WTextField> {
     final hintOpacity =
         tempHintOpacity >= 0 && tempHintOpacity <= 1 ? tempHintOpacity : 1.0;
     return NodeSelectionBuilder(
-      node: widget.state.node,
-      forPlay: widget.state.forPlay,
+      state: widget.state,
       child: Center(
         child: TContainer(
           margin: widget.margins.get(context),

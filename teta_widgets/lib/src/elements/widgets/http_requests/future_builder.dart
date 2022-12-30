@@ -32,7 +32,8 @@ class WHTTPRequestFutureBuilder extends StatefulWidget {
   final List<CNode> children;
 
   @override
-  _WHTTPRequestFutureBuilderState createState() => _WHTTPRequestFutureBuilderState();
+  _WHTTPRequestFutureBuilderState createState() =>
+      _WHTTPRequestFutureBuilderState();
 }
 
 class _WHTTPRequestFutureBuilderState extends State<WHTTPRequestFutureBuilder> {
@@ -73,8 +74,7 @@ class _WHTTPRequestFutureBuilderState extends State<WHTTPRequestFutureBuilder> {
   @override
   Widget build(final BuildContext context) {
     return NodeSelectionBuilder(
-      node: widget.state.node,
-      forPlay: widget.state.forPlay,
+      state: widget.state,
       child: FutureBuilder(
         future: _future,
         builder: (final context, final snapshot) {
@@ -97,7 +97,9 @@ class _WHTTPRequestFutureBuilderState extends State<WHTTPRequestFutureBuilder> {
           if (widget.children.isNotEmpty) {
             return widget.children.first.toWidget(
               state: widget.state.copyWith(
-                dataset: widget.state.dataset.isEmpty ? datasets : widget.state.dataset,
+                dataset: widget.state.dataset.isEmpty
+                    ? datasets
+                    : widget.state.dataset,
               ),
             );
           } else {
@@ -165,7 +167,10 @@ class _WHTTPRequestFutureBuilderState extends State<WHTTPRequestFutureBuilder> {
   ) {
     map.forEach((final dynamic key, final dynamic value) {
       try {
-        if (value is String || value is int || value is double || value is bool) {
+        if (value is String ||
+            value is int ||
+            value is double ||
+            value is bool) {
           parent.children.add(
             TreeObject(
               id: idIndex,

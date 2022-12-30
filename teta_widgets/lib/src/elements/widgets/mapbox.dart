@@ -64,8 +64,7 @@ class _WMapBoxState extends State<WMapBox> {
   @override
   Widget build(final BuildContext context) {
     return NodeSelectionBuilder(
-      node: widget.state.node,
-      forPlay: widget.state.forPlay,
+      state: widget.state,
       child: Stack(
         children: const [
           /*MapboxMap(

@@ -2,13 +2,12 @@
 
 // Flutter imports:
 import 'dart:convert';
+
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
-
 // Package imports:
 import 'package:teta_core/teta_core.dart';
 import 'package:teta_widgets/src/core/teta_widget/index.dart';
-
 // Project imports:
 import 'package:teta_widgets/src/elements/index.dart';
 
@@ -78,7 +77,7 @@ class _WApiCallsFetchState extends State<WApiCallsFetch> {
       }
       if (key == 'headers') {
         mapHeaders = value as Map<String, dynamic>;
-        var mapHeaders2 = <String, dynamic>{};
+        final mapHeaders2 = <String, dynamic>{};
         mapHeaders.forEach(
           (final key, final dynamic value) {
             var changeKey = key;
@@ -111,7 +110,7 @@ class _WApiCallsFetchState extends State<WApiCallsFetch> {
       }
       if (key == 'body') {
         mapBody = value as Map<String, dynamic>;
-        var mapBody2 = <String, dynamic>{};
+        final mapBody2 = <String, dynamic>{};
         mapBody.forEach(
           (final key, final dynamic value) {
             var changeKey = key;
@@ -144,7 +143,7 @@ class _WApiCallsFetchState extends State<WApiCallsFetch> {
       }
       if (key == 'params') {
         mapParameters = value as Map<String, dynamic>;
-        var mapParameters2 = <String, dynamic>{};
+        final mapParameters2 = <String, dynamic>{};
 
         mapParameters.forEach(
           (final key, final dynamic value) {
@@ -180,7 +179,7 @@ class _WApiCallsFetchState extends State<WApiCallsFetch> {
     try {
       var newURL = url;
       var firstLoop = true;
-      mapParameters.forEach((key, dynamic value) {
+      mapParameters.forEach((final key, final dynamic value) {
         if (firstLoop) {
           newURL = '$newURL?$key=${value.toString()}';
           firstLoop = false;
@@ -191,14 +190,14 @@ class _WApiCallsFetchState extends State<WApiCallsFetch> {
 
       final uri = Uri.parse(newURL);
 
-      var headersNew = {
+      final headersNew = {
         'Access-Control-Allow-Origin': '*',
         'Access-Control-Allow-Credentials': 'true',
         'Access-Control-Allow-Headers':
             'Origin,Content-Type,X-Amz-Date,Authorization,X-Api-Key,X-Amz-Security-Token,locale',
         'Access-Control-Allow-Methods': 'POST, OPTIONS'
       };
-      mapHeaders.forEach((key, dynamic value) {
+      mapHeaders.forEach((final key, final dynamic value) {
         headersNew[key] = value.toString();
       });
 
@@ -206,7 +205,7 @@ class _WApiCallsFetchState extends State<WApiCallsFetch> {
 
       final json = response.body;
 
-      dynamic resp = jsonDecode(json);
+      final dynamic resp = jsonDecode(json);
       if (resp is List) {
         final data = resp;
         if (mounted) {
@@ -226,7 +225,7 @@ class _WApiCallsFetchState extends State<WApiCallsFetch> {
         }
       }
     } catch (e) {
-      print("error:" + e.toString());
+      print('error:$e');
     }
   }
 
@@ -237,7 +236,7 @@ class _WApiCallsFetchState extends State<WApiCallsFetch> {
   }
 
   @override
-  Widget build(BuildContext context) {
+  Widget build(final BuildContext context) {
     final datasets = _addFetchDataToDataset(list);
 
     if (list.isEmpty) {
@@ -257,8 +256,7 @@ class _WApiCallsFetchState extends State<WApiCallsFetch> {
       }
     }
     return NodeSelectionBuilder(
-      node: widget.state.node,
-      forPlay: widget.state.forPlay,
+      state: widget.state,
       child: widget.children.isEmpty
           ? const THeadline3('Api Calls Fetch requires at least one child')
           : RepaintBoundary(

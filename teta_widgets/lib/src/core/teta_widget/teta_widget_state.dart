@@ -9,6 +9,7 @@ class TetaWidgetState {
     required this.params,
     required this.states,
     required this.dataset,
+    this.isVertical = true,
   });
 
   /// The original CNode
@@ -30,6 +31,8 @@ class TetaWidgetState {
 
   /// The dataset list created by other widgets inside the same page
   final List<DatasetObject> dataset;
+
+  final bool isVertical;
 
   TetaWidgetState copyWith({
     final CNode? node,

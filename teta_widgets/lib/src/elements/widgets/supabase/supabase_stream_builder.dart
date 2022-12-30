@@ -80,7 +80,8 @@ class _WSupabaseStreamBuilderState extends State<WSupabaseStreamBuilder> {
       widget.state.loop,
       context,
     );
-    final valueFromRange = int.tryParse(fromRange) != null ? int.parse(fromRange) : 0;
+    final valueFromRange =
+        int.tryParse(fromRange) != null ? int.parse(fromRange) : 0;
 
     client = BlocProvider.of<SupabaseCubit>(context).state;
     final query = client!.from(from).stream(['id']);
@@ -109,8 +110,7 @@ class _WSupabaseStreamBuilderState extends State<WSupabaseStreamBuilder> {
     }
 
     return NodeSelectionBuilder(
-      node: widget.state.node,
-      forPlay: widget.state.forPlay,
+      state: widget.state,
       child: StreamBuilder(
         stream: _stream,
         builder: (final context, final snapshot) {
@@ -132,7 +132,8 @@ class _WSupabaseStreamBuilderState extends State<WSupabaseStreamBuilder> {
             // TODO: Returns a error widget
           }
           _map = _map.copyWith(
-            name: widget.state.node.name ?? widget.state.node.intrinsicState.displayName,
+            name: widget.state.node.name ??
+                widget.state.node.intrinsicState.displayName,
             map: response?.map((final Map<String, dynamic> e) => e).toList(),
           );
           final datasets = addDataset(context, widget.state.dataset, _map);
@@ -141,7 +142,9 @@ class _WSupabaseStreamBuilderState extends State<WSupabaseStreamBuilder> {
           if (widget.children.isNotEmpty) {
             return widget.children.first.toWidget(
               state: widget.state.copyWith(
-                dataset: widget.state.dataset.isEmpty ? datasets : widget.state.dataset,
+                dataset: widget.state.dataset.isEmpty
+                    ? datasets
+                    : widget.state.dataset,
               ),
             );
           } else {

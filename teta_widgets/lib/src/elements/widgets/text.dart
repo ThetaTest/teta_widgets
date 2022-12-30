@@ -55,8 +55,7 @@ class _WTextState extends State<WText> {
   @override
   Widget build(final BuildContext context) {
     return NodeSelectionBuilder(
-      node: widget.state.node,
-      forPlay: widget.state.forPlay,
+      state: widget.state,
       child: BlocBuilder<ColorStylesCubit, List<PaletteModel>>(
         buildWhen: (final previous, final current) => current != previous,
         builder: (final context, final state) {

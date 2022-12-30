@@ -1,7 +1,5 @@
 // Flutter imports:
-import 'package:auth_buttons/auth_buttons.dart';
 import 'package:flutter/material.dart';
-import 'package:gap/gap.dart';
 // Package imports:
 import 'package:teta_core/teta_core.dart';
 // Project imports:
@@ -51,11 +49,12 @@ class WLoginSection extends StatelessWidget {
 
   @override
   Widget build(final BuildContext context) {
+    return const SizedBox();
+    /*
     final w = width.get(context: context, isWidth: true);
     final h = height.get(context: context, isWidth: true);
     return NodeSelectionBuilder(
-      node: node,
-      forPlay: forPlay,
+      state: state,
       child: Column(
         mainAxisAlignment: MainAxisAlignment.center,
         crossAxisAlignment: CrossAxisAlignment.start,
@@ -100,6 +99,6 @@ class WLoginSection extends StatelessWidget {
             ),
         ],
       ),
-    );
+    );*/
   }
 }

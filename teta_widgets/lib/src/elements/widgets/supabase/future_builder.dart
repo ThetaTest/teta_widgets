@@ -112,7 +112,8 @@ class _WSupabaseFutureBuilderState extends State<WSupabaseFutureBuilder> {
       widget.state.loop,
       context,
     );
-    final valueFromRange = int.tryParse(fromRange) != null ? int.parse(fromRange) : 0;
+    final valueFromRange =
+        int.tryParse(fromRange) != null ? int.parse(fromRange) : 0;
     final toRange = widget.toRange.get(
       widget.state.params,
       widget.state.states,
@@ -121,7 +122,8 @@ class _WSupabaseFutureBuilderState extends State<WSupabaseFutureBuilder> {
       widget.state.loop,
       context,
     );
-    final valueToRange = int.tryParse(toRange) != null ? int.parse(toRange) : 15;
+    final valueToRange =
+        int.tryParse(toRange) != null ? int.parse(toRange) : 15;
     final numberPage = widget.numberPage.get(
       widget.state.params,
       widget.state.states,
@@ -130,7 +132,8 @@ class _WSupabaseFutureBuilderState extends State<WSupabaseFutureBuilder> {
       widget.state.loop,
       context,
     );
-    final valueToPage = int.tryParse(numberPage) != null ? int.parse(numberPage) : 1;
+    final valueToPage =
+        int.tryParse(numberPage) != null ? int.parse(numberPage) : 1;
 
     final searchName = widget.searchName.get(
       widget.state.params,
@@ -203,8 +206,7 @@ class _WSupabaseFutureBuilderState extends State<WSupabaseFutureBuilder> {
     }
 
     return NodeSelectionBuilder(
-      node: widget.state.node,
-      forPlay: widget.state.forPlay,
+      state: widget.state,
       child: FutureBuilder(
         future: _future,
         builder: (final context, final snapshot) {
@@ -227,7 +229,8 @@ class _WSupabaseFutureBuilderState extends State<WSupabaseFutureBuilder> {
           }
           final list = response?.data as List<dynamic>?;
           _map = _map.copyWith(
-            name: widget.state.node.name ?? widget.state.node.intrinsicState.displayName,
+            name: widget.state.node.name ??
+                widget.state.node.intrinsicState.displayName,
             map: (list ?? const <dynamic>[])
                 .map((final dynamic e) => e as Map<String, dynamic>)
                 .toList(),
@@ -238,7 +241,9 @@ class _WSupabaseFutureBuilderState extends State<WSupabaseFutureBuilder> {
           if (widget.children.isNotEmpty) {
             return widget.children.first.toWidget(
               state: widget.state.copyWith(
-                dataset: widget.state.dataset.isEmpty ? datasets : widget.state.dataset,
+                dataset: widget.state.dataset.isEmpty
+                    ? datasets
+                    : widget.state.dataset,
               ),
             );
           } else {

@@ -30,10 +30,12 @@ class WFirebaseIsAuthenticatedBuilder extends StatefulWidget {
   final CNode? child;
 
   @override
-  WFirebaseIsAuthenticatedBuilderState createState() => WFirebaseIsAuthenticatedBuilderState();
+  WFirebaseIsAuthenticatedBuilderState createState() =>
+      WFirebaseIsAuthenticatedBuilderState();
 }
 
-class WFirebaseIsAuthenticatedBuilderState extends State<WFirebaseIsAuthenticatedBuilder> {
+class WFirebaseIsAuthenticatedBuilderState
+    extends State<WFirebaseIsAuthenticatedBuilder> {
   DatasetObject _map = DatasetObject(
     name: key,
     map: [
@@ -44,8 +46,7 @@ class WFirebaseIsAuthenticatedBuilderState extends State<WFirebaseIsAuthenticate
   @override
   Widget build(final BuildContext context) {
     return NodeSelectionBuilder(
-      node: widget.state.node,
-      forPlay: widget.state.forPlay,
+      state: widget.state,
       child: BlocBuilder<FirebaseCubit, bool>(
         builder: (final context, final state) => state
             ? FutureBuilder(
@@ -58,7 +59,8 @@ class WFirebaseIsAuthenticatedBuilderState extends State<WFirebaseIsAuthenticate
                       ],
                     );
 
-                    final list = addDataset(context, widget.state.dataset, _map);
+                    final list =
+                        addDataset(context, widget.state.dataset, _map);
                     ChildConditionBuilder(
                       ValueKey('${widget.state.node.nid} ${widget.state.loop}'),
                       state: widget.state.copyWith(

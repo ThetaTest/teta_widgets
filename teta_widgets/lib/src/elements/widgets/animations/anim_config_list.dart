@@ -28,8 +28,7 @@ class WAnimationConfigurationListView extends StatelessWidget {
   @override
   Widget build(final BuildContext context) {
     return NodeSelectionBuilder(
-      node: state.node,
-      forPlay: state.forPlay,
+      state: state,
       child: AnimationConfiguration.staggeredList(
         position: int.tryParse(
               index.get(
