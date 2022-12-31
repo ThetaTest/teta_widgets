@@ -36,7 +36,7 @@ final concentricPageViewIntrinsicStates = IntrinsicStates(
   advicedChildrenCanHaveAtLeastAChild: [],
   displayName: NodeType.name(_globalType),
   type: _globalType,
-  category: NodeCategories.list,
+  category: NodeCategories.layout,
   maxChildren: null,
   canHave: ChildrenEnum.children,
   addChildLabels: [],
@@ -48,7 +48,8 @@ final concentricPageViewIntrinsicStates = IntrinsicStates(
     const Suggestion(
       title: 'Why use Concentric PageView in Teta?',
       description: 'Test',
-      linkToOpen: 'https://docs.teta.so/teta-docs/widget/list-widgets/concentric-pageview',
+      linkToOpen:
+          'https://docs.teta.so/teta-docs/widget/list-widgets/concentric-pageview',
     )
   ],
 );

@@ -74,7 +74,11 @@ abstract class CNode extends Equatable {
   static List<String> get names => NType.values.map(NodeType.name).toList();
 
   /// Render a Widget from node
-  Widget toWidget({required final TetaWidgetState state}) => const SizedBox();
+  Widget toWidget({
+    required final TetaWidgetState state,
+    final bool isVertical = true,
+  }) =>
+      const SizedBox();
 
   /// Render a Widget from node
   Widget toWidgetFromParams({

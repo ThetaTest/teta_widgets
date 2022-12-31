@@ -38,7 +38,7 @@ final listIntrinsicStates = IntrinsicStates(
   advicedChildrenCanHaveAtLeastAChild: [],
   displayName: NodeType.name(_globalType),
   type: _globalType,
-  category: NodeCategories.basic,
+  category: NodeCategories.layout,
   maxChildren: null,
   canHave: ChildrenEnum.children,
   addChildLabels: [],

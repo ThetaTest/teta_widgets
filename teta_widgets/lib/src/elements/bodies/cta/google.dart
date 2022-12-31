@@ -38,7 +38,7 @@ final loginGoogleIntrinsicStates = IntrinsicStates(
   advicedChildrenCanHaveAtLeastAChild: [],
   displayName: 'Login with Google',
   type: _globalType,
-  category: NodeCategories.input,
+  category: NodeCategories.form,
   maxChildren: 0,
   canHave: ChildrenEnum.none,
   addChildLabels: [],

@@ -3,15 +3,15 @@
 
 // Package imports:
 import 'package:collection/collection.dart';
+import 'package:flutter/gestures.dart';
 // Flutter imports:
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:teta_core/src/rendering/find.dart';
 import 'package:teta_core/teta_core.dart';
 import 'package:teta_widgets/src/core/teta_widget/index.dart';
-import 'package:teta_widgets/src/elements/builder/drag_and_drop.dart';
+import 'package:teta_widgets/src/elements/index.dart';
 // Project imports:
-import 'package:teta_widgets/src/elements/nodes/node.dart';
 
 /// Node Selection
 class NodeSelection extends StatefulWidget {
@@ -46,7 +46,12 @@ class NodeSelectionState extends State<NodeSelection> {
 
   @override
   Widget build(final BuildContext context) {
-    if (widget.state.forPlay) return body();
+    if (widget.state.forPlay) {
+      return _Body(
+        state: widget.state,
+        child: widget.child,
+      );
+    }
     return DragAndDropBuilder(
       state: widget.state,
       child: MouseRegion(
@@ -59,111 +64,49 @@ class NodeSelectionState extends State<NodeSelection> {
             BlocProvider.of<HoverBloc>(context).add(OnHover(node: parent!));
           }
         },
-        child: GestureDetector(
-          onTap: () {
-            BlocProvider.of<FocusBloc>(context)
-                .add(OnFocus(node: widget.state.node));
-            BlocProvider.of<JumpToCubit>(context)
-                .jumpTo(context, widget.state.node);
+        child: Listener(
+          onPointerDown: (final event) {
+            if (event.kind == PointerDeviceKind.mouse &&
+                event.buttons == kSecondaryMouseButton) {
+              if (widget.state.node.intrinsicState.type != NType.scaffold &&
+                  widget.state.node.intrinsicState.type != NType.appBar &&
+                  widget.state.node.intrinsicState.type != NType.bottomBar &&
+                  widget.state.node.intrinsicState.type != NType.drawer) {
+                RightContextMenu.instance.open(
+                  event,
+                  context,
+                  widget.state.node,
+                );
+              }
+            }
           },
-          child: body(),
+          child: GestureDetector(
+            onTap: () {
+              BlocProvider.of<FocusBloc>(context)
+                  .add(OnFocus(node: widget.state.node));
+              BlocProvider.of<JumpToCubit>(context)
+                  .jumpTo(context, widget.state.node);
+            },
+            child: _Body(
+              state: widget.state,
+              child: widget.child,
+            ),
+          ),
         ),
       ),
     );
-    /*return BlocBuilder<AuthorsBloc, List<AuthorObject>>(
-      builder: (context, authorsState) {
-        var authorColor = Colors.transparent;
-        var isSelectFromOtherAuthors = false;
-        var isHoveredFromOtherAuthors = false;
-        final index = authorsState.indexWhere((element) =>
-            element.focusNode == widget.node.nid ||
-            element.hoverNode == widget.node.nid);
-        if (index != -1) {
-          final item = authorsState[index];
-          final userState = BlocProvider.of<AuthenticationBloc>(context).state
-              as Authenticated;
-          if (item.id != userState.user.id &&
-              item.focusNode != BlocProvider.of<FocusBloc>(context).state.nid) {
-            if (item.focusNode == widget.node.nid) {
-              isSelectFromOtherAuthors = item.isOnline ?? false;
-              authorColor = item.color!;
-            } else {
-              isHoveredFromOtherAuthors = item.isOnline ?? false;
-              authorColor = item.color!;
-            }
-          } else {
-            authorColor = Colors.transparent;
-            isSelectFromOtherAuthors = false;
-          }
-        }
-        return BlocBuilder<AuthenticationBloc, AuthenticationState>(
-          builder: (context, authState) {
-            if (authState is Authenticated) {
-              return BlocBuilder<FocusProjectBloc, FocusProjectState>(
-                builder: (context, prjState) {
-                  if (prjState is ProjectLoaded) {
-                    return InkWell(
-                      onTap: () {
-                        if (!widget.forPlay) {
-                          BlocProvider.of<FocusBloc>(context)
-                              .add(OnFocus(node: widget.node));
-                          if (BlocProvider.of<PanelsBloc>(context).state ==
-                              PanelsEnum.tutorials) {
-                            BlocProvider.of<PanelsBloc>(context)
-                                .add(ChangeIndex(type: PanelsEnum.none));
-                          }
-                          if (BlocProvider.of<AuthorsBloc>(context)
-                                  .state
-                                  .where((element) =>
-                                      element.isOnline! &&
-                                      element.page ==
-                                          BlocProvider.of<PageCubit>(
-                                                  context)
-                                              .state
-                                              .id)
-                                  .length >
-                              1) {
-                            ProjectRepository.setFocusNode(
-                              prjId: prjState.prj.id,
-                              userId: authState.user.id,
-                              nodeId: widget.node.nid,
-                            );
-                          }
-                        }
-                      },
-                      child: MouseRegion(
-                        onEnter: (e) {
-                          BlocProvider.of<HoverBloc>(context)
-                              .add(OnHover(node: widget.node));
-                        },
-                        onExit: (e) {
-                          if (parent != null) {
-                            BlocProvider.of<HoverBloc>(context)
-                                .add(OnHover(node: parent!));
-                          }
-                        },
-                        child: body(
-                          authState,
-                          prjState,
-                          authorColor,
-                          isSelectFromOtherAuthors,
-                          isHoveredFromOtherAuthors,
-                        ),
-                      ),
-                    );
-                  }
-                  return const SizedBox();
-                },
-              );
-            }
-            return const SizedBox();
-          },
-        );
-      },
-    );*/
   }
+}
 
-  Widget body() {
+class _Body extends StatelessWidget {
+  const _Body({final Key? key, required this.state, required this.child})
+      : super(key: key);
+
+  final TetaWidgetState state;
+  final Widget child;
+
+  @override
+  Widget build(final BuildContext context) {
     return BlocBuilder<FocusBloc, List<CNode>>(
       builder: (final context, final onFocusNodes) {
         return BlocBuilder<HoverBloc, CNode>(
@@ -177,34 +120,33 @@ class NodeSelectionState extends State<NodeSelection> {
                     border: Border.all(
                       color: onFocusNodes.firstWhereOrNull(
                                     (final element) =>
-                                        element.nid == widget.state.node.nid,
+                                        element.nid == state.node.nid,
                                   ) !=
                                   null ||
-                              onHover.nid == widget.state.node.nid
+                              onHover.nid == state.node.nid
                           ? primaryColor
                           : Colors.transparent,
-                      style: (widget.state.forPlay)
+                      style: (state.forPlay)
                           ? BorderStyle.none
                           : BorderStyle.solid,
                       width: onFocusNodes.firstWhereOrNull(
                                 (final element) =>
-                                    element.nid == widget.state.node.nid,
+                                    element.nid == state.node.nid,
                               ) !=
                               null
                           ? 1
-                          : onHover.nid == widget.state.node.nid
+                          : onHover.nid == state.node.nid
                               ? 2
                               : 0,
                     ),
                   ),
-                  child: widget.child,
+                  child: child,
                 ),
                 if (onFocusNodes.firstWhereOrNull(
-                          (final element) =>
-                              element.nid == widget.state.node.nid,
+                          (final element) => element.nid == state.node.nid,
                         ) !=
                         null ||
-                    onHover.nid == widget.state.node.nid)
+                    onHover.nid == state.node.nid)
                   Transform.translate(
                     offset: const Offset(0, -20),
                     child: ColoredBox(
@@ -215,26 +157,13 @@ class NodeSelectionState extends State<NodeSelection> {
                           horizontal: 4,
                         ),
                         child: TDetailLabel(
-                          widget.state.node.intrinsicState.displayName,
+                          state.node.intrinsicState.displayName,
                         ),
                       ),
                     ),
                   ),
               ],
             );
-            /*Positioned(
-                  bottom: 0,
-                  left: 0,
-                  right: 0,
-                  child: (widget.node.canHaveChildren(widget.node.type))
-                      ? InsideDragTargetWidget(
-                          node: widget.node,
-                          width: double.maxFinite,
-                          height: 10,
-                          index: widget.index,
-                        )
-                      : const SizedBox(),
-                ),*/
           },
         );
       },

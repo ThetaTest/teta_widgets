@@ -41,6 +41,7 @@ class TetaWidgetState {
     final List<VariableObject>? params,
     final List<VariableObject>? states,
     final List<DatasetObject>? dataset,
+    final bool? isVertical,
   }) {
     return TetaWidgetState(
       node: node ?? this.node,
@@ -49,6 +50,7 @@ class TetaWidgetState {
       params: params ?? this.params,
       states: states ?? this.states,
       dataset: dataset ?? this.dataset,
+      isVertical: isVertical ?? this.isVertical,
     );
   }
 

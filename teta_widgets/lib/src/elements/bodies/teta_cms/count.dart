@@ -45,7 +45,7 @@ final cmsCountIntrinsicStates = IntrinsicStates(
   advicedChildrenCanHaveAtLeastAChild: [],
   displayName: NodeType.name(_globalType),
   type: _globalType,
-  category: NodeCategories.basic,
+  category: NodeCategories.dynamicCollection,
   maxChildren: 2,
   canHave: ChildrenEnum.children,
   addChildLabels: ['Add new if successful', 'Add new if empty or failed'],

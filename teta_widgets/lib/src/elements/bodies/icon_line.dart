@@ -39,7 +39,7 @@ final lineIconIntrinsicStates = IntrinsicStates(
   advicedChildrenCanHaveAtLeastAChild: [],
   displayName: 'Line Icon',
   type: _globalType,
-  category: NodeCategories.icon,
+  category: NodeCategories.advanced,
   maxChildren: 0,
   canHave: ChildrenEnum.none,
   addChildLabels: [],

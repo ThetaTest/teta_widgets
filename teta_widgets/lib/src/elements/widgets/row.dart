@@ -72,7 +72,10 @@ class _WRowState extends State<WRow> {
                 children: children.isNotEmpty
                     ? children
                         .map(
-                          (final e) => e.toWidget(state: widget._state),
+                          (final e) => e.toWidget(
+                            state: widget._state,
+                            isVertical: false,
+                          ),
                         )
                         .toList()
                     : [
@@ -92,7 +95,10 @@ class _WRowState extends State<WRow> {
             children: widget._children.isNotEmpty
                 ? widget._children
                     .map(
-                      (final e) => e.toWidget(state: widget._state),
+                      (final e) => e.toWidget(
+                        state: widget._state,
+                        isVertical: false,
+                      ),
                     )
                     .toList()
                 : [

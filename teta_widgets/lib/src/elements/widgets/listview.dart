@@ -108,7 +108,10 @@ class _WListViewState extends State<WListView> {
                     itemCount: children.isEmpty ? 1 : children.length,
                     itemBuilder: (final context, final index) {
                       return children.isNotEmpty
-                          ? children[index].toWidget(state: widget.state)
+                          ? children[index].toWidget(
+                              state: widget.state,
+                              isVertical: widget.isVertical,
+                            )
                           : PlaceholderChildBuilder(
                               name:
                                   widget.state.node.intrinsicState.displayName,
@@ -129,7 +132,10 @@ class _WListViewState extends State<WListView> {
                 itemCount: children.isEmpty ? 1 : children.length,
                 itemBuilder: (final context, final index) {
                   return children.isNotEmpty
-                      ? children[index].toWidget(state: widget.state)
+                      ? children[index].toWidget(
+                          state: widget.state,
+                          isVertical: widget.isVertical,
+                        )
                       : PlaceholderChildBuilder(
                           name: widget.state.node.intrinsicState.displayName,
                           node: widget.state.node,

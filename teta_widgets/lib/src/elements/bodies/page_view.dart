@@ -35,7 +35,7 @@ final pageViewIntrinsicStates = IntrinsicStates(
   advicedChildrenCanHaveAtLeastAChild: [],
   displayName: NodeType.name(_globalType),
   type: _globalType,
-  category: NodeCategories.list,
+  category: NodeCategories.layout,
   maxChildren: null,
   canHave: ChildrenEnum.children,
   addChildLabels: [],
@@ -105,5 +105,11 @@ class PageViewBody extends NodeBody {
     final int? loop,
   ) =>
       PageViewCodeTemplate.toCode(
-          context, pageId, this, node, children ?? [], loop);
+        context,
+        pageId,
+        this,
+        node,
+        children ?? [],
+        loop,
+      );
 }

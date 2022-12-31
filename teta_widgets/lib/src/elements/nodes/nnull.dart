@@ -45,11 +45,16 @@ class NNull extends CNode {
   Map<String, dynamic> toJson() => <String, dynamic>{};
 
   @override
-  Widget toWidget({required final TetaWidgetState state}) => const SizedBox();
+  Widget toWidget({
+    required final TetaWidgetState state,
+    final bool isVertical = true,
+  }) =>
+      const SizedBox();
 
   @override
   String toString() => 'NNull { nid: $nid }';
 
   @override
-  Future<String> toCode(final BuildContext context) => Future.value('const SizedBox(),');
+  Future<String> toCode(final BuildContext context) =>
+      Future.value('const SizedBox(),');
 }

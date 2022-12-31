@@ -147,6 +147,7 @@ class WListViewBuilderState extends State<WListViewBuilder> {
                       state: widget.state.copyWith(
                         loop: index,
                       ),
+                      isVertical: widget.isVertical,
                     )
                   : PlaceholderChildBuilder(
                       name: widget.state.node.intrinsicState.displayName,

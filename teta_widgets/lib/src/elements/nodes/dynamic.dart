@@ -221,9 +221,15 @@ class NDynamic extends CNode {
       '$globalType { nid: $nid, children: $children, child: $child }';
 
   @override
-  Widget toWidget({required final TetaWidgetState state}) {
+  Widget toWidget({
+    required final TetaWidgetState state,
+    final bool isVertical = true,
+  }) {
     return body.toWidget(
-      state: state.copyWith(node: this),
+      state: state.copyWith(
+        node: this,
+        isVertical: isVertical,
+      ),
       child: child,
       children: children,
     );

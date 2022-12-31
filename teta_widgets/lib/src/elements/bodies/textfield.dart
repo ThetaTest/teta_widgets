@@ -45,7 +45,7 @@ final textFieldIntrinsicStates = IntrinsicStates(
   advicedChildrenCanHaveAtLeastAChild: [],
   displayName: NodeType.name(_globalType),
   type: _globalType,
-  category: NodeCategories.input,
+  category: NodeCategories.form,
   maxChildren: 0,
   canHave: ChildrenEnum.none,
   addChildLabels: [],

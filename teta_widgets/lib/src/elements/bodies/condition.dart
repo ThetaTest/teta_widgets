@@ -41,7 +41,7 @@ final conditionIntrinsicStates = IntrinsicStates(
   advicedChildrenCanHaveAtLeastAChild: [],
   displayName: NodeType.name(_globalType),
   type: _globalType,
-  category: NodeCategories.logic,
+  category: NodeCategories.visibility,
   maxChildren: 2,
   canHave: ChildrenEnum.children,
   addChildLabels: ['Add Widget If True', 'Add Widget If False'],

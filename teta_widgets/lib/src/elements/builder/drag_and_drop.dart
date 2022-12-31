@@ -1,6 +1,10 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:teta_core/src/rendering/find.dart';
 import 'package:teta_core/teta_core.dart';
+import 'package:teta_repositories/teta_repositories.dart';
 import 'package:teta_widgets/src/core/teta_widget/index.dart';
+import 'package:teta_widgets/src/elements/index.dart';
 
 class DragAndDropBuilder extends StatefulWidget {
   const DragAndDropBuilder({
@@ -17,35 +21,65 @@ class DragAndDropBuilder extends StatefulWidget {
 }
 
 class _DragAndDropBuilderState extends State<DragAndDropBuilder> {
+  bool canReceiveDrag = false;
   bool isDragging = false;
   bool? onLeft;
+  CNode? parent;
   final key = GlobalKey();
 
   @override
+  void initState() {
+    parent = FindNodeRendering.findParentByChildrenIds(
+      flatList: BlocProvider.of<PageCubit>(context).state.flatList ?? <CNode>[],
+      element: widget.state.node,
+    );
+    canReceiveDrag = parent?.globalType == NType.row ||
+        parent?.globalType == NType.column ||
+        parent?.globalType == NType.listView;
+
+    super.initState();
+  }
+
+  @override
   Widget build(final BuildContext context) {
+    if (!canReceiveDrag) return widget.child;
     return DragTarget<DragTargetObject>(
       key: key,
-      onAccept: (final data) {
-        Logger.printDefault('On accept');
+      onAccept: (final data) async {
         setState(() {
           isDragging = true;
         });
+        final currentIndex =
+            parent?.childrenIds.ids.indexOf(widget.state.node.nid);
+        if (currentIndex == null) return;
+        if (parent == null) return;
+        final id = await NodeRepository.addNodeWithCustomIndex(
+          node: data.node!,
+          parent: parent!,
+          index: onLeft ?? false ? currentIndex : currentIndex + 1,
+          pageId: BlocProvider.of<PageCubit>(context).state.id,
+        );
       },
       onMove: (final details) {
-        final leftFlag = details.offset.dx > key.globalPaintBounds!.left &&
-            details.offset.dx <= key.globalPaintBounds!.center.dx;
-        Logger.printSuccess('Is on left: $leftFlag');
+        late bool leftFlag;
+        if (widget.state.isVertical) {
+          leftFlag = details.offset.dy > key.globalPaintBounds!.top &&
+              details.offset.dy <= key.globalPaintBounds!.center.dy;
+        } else {
+          leftFlag = details.offset.dx > key.globalPaintBounds!.left &&
+              details.offset.dx <= key.globalPaintBounds!.center.dx;
+        }
         setState(() {
           isDragging = true;
           if (key.globalPaintBounds != null) {
-            onLeft = leftFlag;
+            onLeft = !leftFlag;
           }
         });
       },
       onLeave: (final details) {
         setState(() {
           isDragging = false;
-          onLeft = false;
+          onLeft = null;
         });
       },
       builder: (final context, final candidateData, final rejectedData) {
@@ -56,28 +90,59 @@ class _DragAndDropBuilderState extends State<DragAndDropBuilder> {
           children: [
             widget.child,
             Positioned.fill(
-              child: Row(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                crossAxisAlignment: CrossAxisAlignment.stretch,
-                children: [
-                  if (onLeft ?? false)
-                    TContainer(
-                      width: 5,
-                      height: key.globalPaintBounds!.height,
-                      decoration: const BoxDecoration(color: primaryColor),
+              child: widget.state.isVertical
+                  ? Column(
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      crossAxisAlignment: CrossAxisAlignment.stretch,
+                      children: [
+                        if (onLeft ?? false)
+                          TContainer(
+                            margin: EI.smH,
+                            width: key.globalPaintBounds!.width,
+                            height: 5,
+                            decoration:
+                                const BoxDecoration(color: primaryColor),
+                          )
+                        else
+                          const Spacer(),
+                        if (!(onLeft ?? true))
+                          TContainer(
+                            margin: EI.smH,
+                            width: key.globalPaintBounds!.width,
+                            height: 5,
+                            decoration:
+                                const BoxDecoration(color: primaryColor),
+                          )
+                        else
+                          const Spacer(),
+                      ],
                     )
-                  else
-                    const Spacer(),
-                  if (!(onLeft ?? true))
-                    TContainer(
-                      width: 5,
-                      height: key.globalPaintBounds!.height,
-                      decoration: const BoxDecoration(color: primaryColor),
-                    )
-                  else
-                    const Spacer(),
-                ],
-              ),
+                  : Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      crossAxisAlignment: CrossAxisAlignment.stretch,
+                      children: [
+                        if (onLeft ?? false)
+                          TContainer(
+                            margin: EI.smV,
+                            width: 5,
+                            height: key.globalPaintBounds!.height,
+                            decoration:
+                                const BoxDecoration(color: primaryColor),
+                          )
+                        else
+                          const Spacer(),
+                        if (!(onLeft ?? true))
+                          TContainer(
+                            margin: EI.smV,
+                            width: 5,
+                            height: key.globalPaintBounds!.height,
+                            decoration:
+                                const BoxDecoration(color: primaryColor),
+                          )
+                        else
+                          const Spacer(),
+                      ],
+                    ),
             ),
           ],
         );

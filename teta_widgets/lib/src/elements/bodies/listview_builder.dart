@@ -38,7 +38,7 @@ final listViewBuilderIntrinsicStates = IntrinsicStates(
   advicedChildrenCanHaveAtLeastAChild: [],
   displayName: NodeType.name(_globalType),
   type: _globalType,
-  category: NodeCategories.list,
+  category: NodeCategories.layout,
   maxChildren: 1,
   canHave: ChildrenEnum.child,
   addChildLabels: [],

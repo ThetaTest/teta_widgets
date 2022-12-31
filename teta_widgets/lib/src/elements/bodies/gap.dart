@@ -28,7 +28,7 @@ final gapIntrinsicStates = IntrinsicStates(
   displayName: NodeType.name(_globalType),
   type: _globalType,
   maxChildren: 0,
-  category: NodeCategories.space,
+  category: NodeCategories.unclassified,
   canHave: ChildrenEnum.none,
   addChildLabels: [],
   gestures: [],

@@ -38,6 +38,7 @@ class NTemplate extends CNode {
   @override
   Widget toWidget({
     required final TetaWidgetState state,
+    final bool isVertical = true,
     final CNode? child,
     final List<CNode>? children,
   }) =>
@@ -47,5 +48,6 @@ class NTemplate extends CNode {
   String toString() => 'NNull { nid: $nid }';
 
   @override
-  Future<String> toCode(final BuildContext context) => Future.value('Container(),');
+  Future<String> toCode(final BuildContext context) =>
+      Future.value('Container(),');
 }

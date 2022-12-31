@@ -44,7 +44,7 @@ final tcardIntrinsicStates = IntrinsicStates(
   advicedChildrenCanHaveAtLeastAChild: [],
   displayName: NodeType.name(_globalType),
   type: _globalType,
-  category: NodeCategories.list,
+  category: NodeCategories.layout,
   maxChildren: null,
   canHave: ChildrenEnum.children,
   addChildLabels: [],

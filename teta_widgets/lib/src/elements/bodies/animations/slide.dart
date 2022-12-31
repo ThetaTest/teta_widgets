@@ -29,7 +29,7 @@ final slideAnimationIntrinsicStates = IntrinsicStates(
   advicedChildrenCanHaveAtLeastAChild: [],
   displayName: NodeType.name(_globalType),
   type: _globalType,
-  category: NodeCategories.animated,
+  category: NodeCategories.animations,
   maxChildren: 1,
   canHave: ChildrenEnum.child,
   addChildLabels: [],

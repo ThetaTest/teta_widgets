@@ -36,7 +36,7 @@ final lottieIntrinsicStates = IntrinsicStates(
   advicedChildrenCanHaveAtLeastAChild: [],
   displayName: NodeType.name(_globalType),
   type: _globalType,
-  category: NodeCategories.basic,
+  category: NodeCategories.animations,
   maxChildren: 0,
   canHave: ChildrenEnum.none,
   addChildLabels: [],

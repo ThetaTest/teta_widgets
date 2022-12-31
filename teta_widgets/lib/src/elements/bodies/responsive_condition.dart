@@ -40,7 +40,7 @@ final responsiveIntrinsicStates = IntrinsicStates(
   advicedChildrenCanHaveAtLeastAChild: [],
   displayName: NodeType.name(_globalType),
   type: _globalType,
-  category: NodeCategories.responsive,
+  category: NodeCategories.visibility,
   maxChildren: 1,
   canHave: ChildrenEnum.child,
   addChildLabels: [],

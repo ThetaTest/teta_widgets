@@ -38,7 +38,7 @@ final loginFacebookIntrinsicStates = IntrinsicStates(
   advicedChildrenCanHaveAtLeastAChild: [],
   displayName: 'Login with Facebook',
   type: _globalType,
-  category: NodeCategories.input,
+  category: NodeCategories.form,
   maxChildren: 0,
   canHave: ChildrenEnum.none,
   addChildLabels: [],

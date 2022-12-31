@@ -39,7 +39,7 @@ final featherIconIntrinsicStates = IntrinsicStates(
   advicedChildrenCanHaveAtLeastAChild: [],
   displayName: 'Feather Icon',
   type: _globalType,
-  category: NodeCategories.icon,
+  category: NodeCategories.basic,
   maxChildren: 0,
   canHave: ChildrenEnum.none,
   addChildLabels: [],

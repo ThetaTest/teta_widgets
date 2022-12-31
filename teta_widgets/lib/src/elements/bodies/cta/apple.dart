@@ -38,7 +38,7 @@ final loginAppleIntrinsicStates = IntrinsicStates(
   advicedChildrenCanHaveAtLeastAChild: [],
   displayName: 'Login with Apple',
   type: _globalType,
-  category: NodeCategories.input,
+  category: NodeCategories.form,
   maxChildren: 0,
   canHave: ChildrenEnum.none,
   addChildLabels: [],
