@@ -58,14 +58,33 @@ class _PlaceholderChildBuilderState extends State<PlaceholderChildBuilder> {
         });
       },
       builder: (final context, final candidateData, final rejectedData) {
-        return TContainer(
-          width: double.infinity,
-          height: 24,
-          decoration: BoxDecoration(
-            color:
-                isDragging ? primaryColor.withOpacity(0.3) : Colors.transparent,
-            border: Border.all(
-              color: Palette.txtGrey.withOpacity(0.3),
+        return MouseRegion(
+          cursor: SystemMouseCursors.click,
+          child: GestureDetector(
+            onTap: () {
+              BlocProvider.of<FocusBloc>(context).add(
+                OnFocus(
+                  node: widget.node,
+                ),
+              );
+            },
+            child: TContainer(
+              width: double.infinity,
+              padding: EI.smA,
+              decoration: BoxDecoration(
+                color: isDragging
+                    ? primaryColor.withOpacity(0.3)
+                    : Colors.transparent,
+                border: Border.all(
+                  color: Colors.grey,
+                ),
+              ),
+              child: Center(
+                child: THeadline3(
+                  'Add in ${widget.name}',
+                  color: Colors.grey,
+                ),
+              ),
             ),
           ),
         );

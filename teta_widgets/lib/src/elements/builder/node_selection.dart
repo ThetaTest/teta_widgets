@@ -150,9 +150,11 @@ class _BodyState extends State<_Body> {
                         null ||
                     onHover.nid == widget.state.node.nid)
                   Transform.translate(
-                    offset: const Offset(
+                    offset: Offset(
                       0,
-                      -20,
+                      (key.globalPaintBounds?.top ?? 0) < 100
+                          ? (key.globalPaintBounds?.height ?? 0)
+                          : -20,
                     ),
                     child: ColoredBox(
                       color: primaryColor,

@@ -74,8 +74,8 @@ class ScaffoldBody extends NodeBody {
       paletteStyle: 'Background / Primary',
     ),
     DBKeys.action: FAction(),
-    DBKeys.showAppBar: false,
-    DBKeys.showBottomBar: false,
+    DBKeys.showAppBar: true,
+    DBKeys.showBottomBar: true,
     DBKeys.showDrawer: false,
     DBKeys.flag: true,
   };
