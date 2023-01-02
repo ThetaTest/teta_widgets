@@ -1,9 +1,7 @@
 // Flutter imports:
 // ignore_for_file: public_member_api_docs
 
-// Package imports:
 import 'package:collection/collection.dart';
-import 'package:flutter/gestures.dart';
 // Flutter imports:
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -66,19 +64,11 @@ class NodeSelectionState extends State<NodeSelection> {
         },
         child: Listener(
           onPointerDown: (final event) {
-            if (event.kind == PointerDeviceKind.mouse &&
-                event.buttons == kSecondaryMouseButton) {
-              if (widget.state.node.intrinsicState.type != NType.scaffold &&
-                  widget.state.node.intrinsicState.type != NType.appBar &&
-                  widget.state.node.intrinsicState.type != NType.bottomBar &&
-                  widget.state.node.intrinsicState.type != NType.drawer) {
-                RightContextMenu.instance.open(
-                  event,
-                  context,
-                  widget.state.node,
-                );
-              }
-            }
+            RightContextMenu.instance.open(
+              event,
+              context,
+              widget.state.node,
+            );
           },
           child: GestureDetector(
             onTap: () {
@@ -98,12 +88,22 @@ class NodeSelectionState extends State<NodeSelection> {
   }
 }
 
-class _Body extends StatelessWidget {
-  const _Body({final Key? key, required this.state, required this.child})
-      : super(key: key);
+class _Body extends StatefulWidget {
+  const _Body({
+    final Key? key,
+    required this.state,
+    required this.child,
+  }) : super(key: key);
 
   final TetaWidgetState state;
   final Widget child;
+
+  @override
+  State<_Body> createState() => _BodyState();
+}
+
+class _BodyState extends State<_Body> {
+  final key = GlobalKey();
 
   @override
   Widget build(final BuildContext context) {
@@ -115,40 +115,45 @@ class _Body extends StatelessWidget {
               clipBehavior: Clip.none,
               children: [
                 DecoratedBox(
+                  key: key,
                   position: DecorationPosition.foreground,
                   decoration: BoxDecoration(
                     border: Border.all(
                       color: onFocusNodes.firstWhereOrNull(
                                     (final element) =>
-                                        element.nid == state.node.nid,
+                                        element.nid == widget.state.node.nid,
                                   ) !=
                                   null ||
-                              onHover.nid == state.node.nid
+                              onHover.nid == widget.state.node.nid
                           ? primaryColor
                           : Colors.transparent,
-                      style: (state.forPlay)
+                      style: (widget.state.forPlay)
                           ? BorderStyle.none
                           : BorderStyle.solid,
                       width: onFocusNodes.firstWhereOrNull(
                                 (final element) =>
-                                    element.nid == state.node.nid,
+                                    element.nid == widget.state.node.nid,
                               ) !=
                               null
                           ? 1
-                          : onHover.nid == state.node.nid
+                          : onHover.nid == widget.state.node.nid
                               ? 2
                               : 0,
                     ),
                   ),
-                  child: child,
+                  child: widget.child,
                 ),
                 if (onFocusNodes.firstWhereOrNull(
-                          (final element) => element.nid == state.node.nid,
+                          (final element) =>
+                              element.nid == widget.state.node.nid,
                         ) !=
                         null ||
-                    onHover.nid == state.node.nid)
+                    onHover.nid == widget.state.node.nid)
                   Transform.translate(
-                    offset: const Offset(0, -20),
+                    offset: const Offset(
+                      0,
+                      -20,
+                    ),
                     child: ColoredBox(
                       color: primaryColor,
                       child: Padding(
@@ -157,7 +162,7 @@ class _Body extends StatelessWidget {
                           horizontal: 4,
                         ),
                         child: TDetailLabel(
-                          state.node.intrinsicState.displayName,
+                          widget.state.node.intrinsicState.displayName,
                         ),
                       ),
                     ),

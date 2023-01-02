@@ -36,12 +36,6 @@ class WBottomBarItem extends StatelessWidget {
 
   @override
   Widget build(final BuildContext context) {
-    final isLight = BlocProvider.of<PaletteDarkLightCubit>(context).state;
-    PaletteModel? model;
-    BlocProvider.of<ColorStylesCubit>(context).state.forEach((final element) {
-      if (element.id == fill.paletteStyle) model = element;
-      if (element.name == fill.paletteStyle) model = element;
-    });
     return NodeSelectionBuilder(
       state: state,
       child: GestureDetector(
@@ -68,10 +62,21 @@ class WBottomBarItem extends StatelessWidget {
         ),
         child: Column(
           children: [
-            Icon(
-              MdiIcons.fromString(icon),
-              color: _getBottomBarItemColor(model, isLight),
-              size: width!.get(context: context, isWidth: true),
+            BlocBuilder<ColorStylesCubit, List<PaletteModel>>(
+              builder: (final context, final state) {
+                final isLight =
+                    BlocProvider.of<PaletteDarkLightCubit>(context).state;
+                PaletteModel? model;
+                for (final element in state) {
+                  if (element.id == fill.paletteStyle) model = element;
+                  if (element.name == fill.paletteStyle) model = element;
+                }
+                return Icon(
+                  MdiIcons.fromString(icon),
+                  color: _getBottomBarItemColor(model, isLight),
+                  size: width!.get(context: context, isWidth: true),
+                );
+              },
             ),
             TextBuilder(
               textStyle: textStyle,
