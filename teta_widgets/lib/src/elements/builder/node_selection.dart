@@ -32,6 +32,7 @@ class NodeSelectionState extends State<NodeSelection> {
   Color authorColor = Colors.transparent;
   String authorNid = '';
   CNode? parent;
+  late Widget child;
 
   @override
   void initState() {
@@ -39,16 +40,29 @@ class NodeSelectionState extends State<NodeSelection> {
       flatList: BlocProvider.of<PageCubit>(context).state.flatList ?? [],
       element: widget.state.node,
     );
+    child = _Body(
+      state: widget.state,
+      child: widget.child,
+    );
     super.initState();
+  }
+
+  @override
+  void didUpdateWidget(covariant final NodeSelection oldWidget) {
+    super.didUpdateWidget(oldWidget);
+
+    if (widget.state != oldWidget.state) {
+      child = _Body(
+        state: widget.state,
+        child: widget.child,
+      );
+    }
   }
 
   @override
   Widget build(final BuildContext context) {
     if (widget.state.forPlay) {
-      return _Body(
-        state: widget.state,
-        child: widget.child,
-      );
+      return child;
     }
     return DragAndDropBuilder(
       state: widget.state,
@@ -63,24 +77,23 @@ class NodeSelectionState extends State<NodeSelection> {
           }
         },
         child: Listener(
-          onPointerDown: (final event) {
-            RightContextMenu.instance.open(
-              event,
-              context,
-              widget.state.node,
-            );
-          },
+          onPointerDown: (final event) => RightContextMenu.instance.open(
+            event,
+            context,
+            widget.state.node,
+          ),
           child: GestureDetector(
             onTap: () {
-              BlocProvider.of<FocusBloc>(context)
-                  .add(OnFocus(node: widget.state.node));
+              if (!BlocProvider.of<FocusBloc>(context)
+                  .state
+                  .contains(widget.state.node)) {
+                BlocProvider.of<FocusBloc>(context)
+                    .add(OnFocus(node: widget.state.node));
+              }
               BlocProvider.of<JumpToCubit>(context)
                   .jumpTo(context, widget.state.node);
             },
-            child: _Body(
-              state: widget.state,
-              child: widget.child,
-            ),
+            child: child,
           ),
         ),
       ),
@@ -104,6 +117,21 @@ class _Body extends StatefulWidget {
 
 class _BodyState extends State<_Body> {
   final key = GlobalKey();
+  late Widget child;
+
+  @override
+  void initState() {
+    child = widget.child;
+    super.initState();
+  }
+
+  @override
+  void didUpdateWidget(covariant final _Body oldWidget) {
+    super.didUpdateWidget(oldWidget);
+    if (widget.child != oldWidget.child) {
+      child = widget.child;
+    }
+  }
 
   @override
   Widget build(final BuildContext context) {
@@ -141,7 +169,7 @@ class _BodyState extends State<_Body> {
                               : 0,
                     ),
                   ),
-                  child: widget.child,
+                  child: child,
                 ),
                 if (onFocusNodes.firstWhereOrNull(
                           (final element) =>

@@ -53,7 +53,7 @@ class _DragAndDropBuilderState extends State<DragAndDropBuilder> {
             parent?.childrenIds.ids.indexOf(widget.state.node.nid);
         if (currentIndex == null) return;
         if (parent == null) return;
-        final id = await NodeRepository.addNodeWithCustomIndex(
+        await NodeRepository.addNodeWithCustomIndex(
           node: data.node!,
           parent: parent!,
           index: onLeft ?? false ? currentIndex : currentIndex + 1,
@@ -64,15 +64,15 @@ class _DragAndDropBuilderState extends State<DragAndDropBuilder> {
         late bool leftFlag;
         if (widget.state.isVertical) {
           leftFlag = details.offset.dy > key.globalPaintBounds!.top &&
-              details.offset.dy <= key.globalPaintBounds!.center.dy;
+              details.offset.dy <= (key.globalPaintBounds!.height / 2);
         } else {
           leftFlag = details.offset.dx > key.globalPaintBounds!.left &&
-              details.offset.dx <= key.globalPaintBounds!.center.dx;
+              details.offset.dx <= (key.globalPaintBounds!.width / 2);
         }
         setState(() {
           isDragging = true;
           if (key.globalPaintBounds != null) {
-            onLeft = !leftFlag;
+            onLeft = leftFlag;
           }
         });
       },
