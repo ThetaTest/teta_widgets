@@ -61,13 +61,8 @@ class AppBarBody extends NodeBody {
           description: 'Automatic AppBar is the default AppBar',
           networkImage: '',
           onTap: () {
-            NodeRepository.change(
-              nodeId: page.scaffold!.nid,
+            NodeRepository.changeNode(
               node: page.scaffold! as NDynamic,
-              pageId: page.id,
-              key: DBKeys.showAppBar,
-              value: true,
-              old: page.scaffold!.body.attributes[DBKeys.showAppBar] as bool,
             );
             page.scaffold!.body.attributes[DBKeys.showAppBar] = true;
           },

@@ -9,7 +9,6 @@ import 'package:teta_core/teta_core.dart';
 import 'package:teta_repositories/src/node_repository.dart';
 import 'package:teta_widgets/src/core/teta_widget/index.dart';
 import 'package:teta_widgets/src/elements/builder/gesture_detector_base.dart';
-import 'package:teta_widgets/src/elements/controls/key_constants.dart';
 // Project imports:
 import 'package:teta_widgets/src/elements/index.dart';
 
@@ -215,15 +214,8 @@ class _WTextState extends State<WText> {
     widget.state.node.body.attributes[DBKeys.value] = FTextTypeInput(
       value: text,
     );
-    NodeRepository.change(
-      nodeId: widget.state.node.nid,
+    NodeRepository.changeNode(
       node: widget.state.node as NDynamic,
-      pageId: BlocProvider.of<PageCubit>(context).state.id,
-      key: DBKeys.value,
-      value: FTextTypeInput(
-        value: text,
-      ).toJson(),
-      old: null,
     );
     BlocProvider.of<RefreshCubit>(context).change();
   }

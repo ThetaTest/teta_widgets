@@ -199,13 +199,8 @@ class ControlBuilder {
         Logger.printError('Error tracking generic project update, error: $e');
       }
       unawaited(
-        NodeRepository.change(
-          nodeId: node.nid,
+        NodeRepository.changeNode(
           node: node as NDynamic,
-          pageId: page.id,
-          key: key,
-          value: value,
-          old: old,
         ),
       );
       BlocProvider.of<RefreshCubit>(context).change();

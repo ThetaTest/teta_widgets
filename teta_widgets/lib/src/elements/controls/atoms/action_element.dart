@@ -40,7 +40,6 @@ import 'package:teta_widgets/src/elements/controls/atoms/teta_cms/delete.dart';
 import 'package:teta_widgets/src/elements/controls/atoms/teta_cms/insert.dart';
 import 'package:teta_widgets/src/elements/controls/atoms/teta_cms/update.dart';
 import 'package:teta_widgets/src/elements/controls/atoms/text.dart';
-import 'package:teta_widgets/src/elements/controls/type.dart';
 import 'package:teta_widgets/src/elements/features/actions/enums/action_google_maps.dart';
 import 'package:teta_widgets/src/elements/features/actions/enums/airtable.dart';
 import 'package:teta_widgets/src/elements/features/actions/enums/apicalls.dart';
@@ -2025,15 +2024,8 @@ class ActionElementControlState extends State<ActionElementControl> {
                                   }
 
                                   if (flag) {
-                                    NodeRepository.change(
-                                      nodeId: widget.page.scaffold!.nid,
+                                    NodeRepository.changeNode(
                                       node: widget.page.scaffold! as NDynamic,
-                                      pageId: widget.page.id,
-                                      key: 'states',
-                                      value: widget.page.states
-                                          .map((final e) => e.toJson())
-                                          .toList(),
-                                      old: null,
                                     );
                                   }
                                   BlocProvider.of<FocusBloc>(context)
