@@ -3,6 +3,7 @@
 
 // Flutter imports:
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_feather_icons/flutter_feather_icons.dart';
 import 'package:teta_core/teta_core.dart';
 // Project imports:
@@ -12,16 +13,12 @@ import 'package:teta_widgets/src/elements/features/text_type_input.dart';
 
 class FirestorePathControl extends StatefulWidget {
   const FirestorePathControl({
-    required this.prj,
-    required this.page,
     required this.path,
     required this.isForAddData,
     required this.callBack,
     final Key? key,
   }) : super(key: key);
 
-  final ProjectObject prj;
-  final PageObject page;
   final FFirestorePath path;
   final bool isForAddData;
   final Function(FFirestorePath, FFirestorePath) callBack;
@@ -55,7 +52,7 @@ class FirestorePathControlState extends State<FirestorePathControl> {
             children: widget.path.values!
                 .map(
                   (final e) => FirestoreParameterControl(
-                    page: widget.page,
+                    page: BlocProvider.of<PageCubit>(context).state,
                     title: widget.path.values!.indexOf(e).isEven
                         ? 'Collection'
                         : 'Doc',

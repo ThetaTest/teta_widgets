@@ -220,16 +220,12 @@ class ControlBuilder {
 
   /// Returns a control widget based of [control] value.
   static Widget builder({
-    required final ProjectObject prj,
-    required final PageObject page,
     required final CNode node,
     required final BuildContext context,
     required final ControlModel control,
   }) {
     if (control is ControlObject) {
       return ControlBuilder.genericControlBuilder(
-        prj: prj,
-        page: page,
         node: node,
         context: context,
         control: control,
@@ -237,8 +233,6 @@ class ControlBuilder {
     }
     if (control is FlagControlObject) {
       return ControlBuilder.flagControlBuilder(
-        prj: prj,
-        page: page,
         node: node,
         context: context,
         control: control,
@@ -246,8 +240,6 @@ class ControlBuilder {
     }
     if (control is FillControlObject) {
       return ControlBuilder.fillControlBuilder(
-        prj: prj,
-        page: page,
         node: node,
         isImageEnabled: control.isImageEnabled,
         isNoneEnabled: control.isNoneEnabled,
@@ -258,8 +250,6 @@ class ControlBuilder {
     }
     if (control is SizeControlObject) {
       return ControlBuilder.sizeControlBuilder(
-        prj: prj,
-        page: page,
         node: node,
         context: context,
         control: control,
@@ -267,8 +257,6 @@ class ControlBuilder {
     }
     if (control is SizesControlObject) {
       return ControlBuilder.sizesControlBuilder(
-        prj: prj,
-        page: page,
         node: node,
         context: context,
         control: control,
@@ -276,8 +264,6 @@ class ControlBuilder {
     }
     if (control is BoxFitControlObject) {
       return ControlBuilder.boxFitControlBuilder(
-        prj: prj,
-        page: page,
         node: node,
         context: context,
         control: control,
@@ -288,8 +274,6 @@ class ControlBuilder {
 
   /// Returns a control widget based on control.type.
   static Widget genericControlBuilder({
-    required final ProjectObject prj,
-    required final PageObject page,
     required final CNode node,
     required final BuildContext context,
     required final ControlObject control,
@@ -364,7 +348,7 @@ class ControlBuilder {
         control: CurrentSongControl(
           key: ValueKey('${node.nid}'),
           node: node,
-          page: page,
+          page: BlocProvider.of<PageCubit>(context).state,
           title: control.title ?? 'Current audio player data set',
           value: control.value as FTextTypeInput,
           callBack: (final value, final old) => ControlBuilder.toDB(
@@ -383,7 +367,7 @@ class ControlBuilder {
         control: AudioControllerControl(
           key: ValueKey('${node.nid}'),
           node: node,
-          page: page,
+          page: BlocProvider.of<PageCubit>(context).state,
           title: control.title ?? 'Audio Controller',
           value: control.value as FTextTypeInput,
           callBack: (final value, final old) => ControlBuilder.toDB(
@@ -402,7 +386,7 @@ class ControlBuilder {
         control: MapControllerControl(
           key: ValueKey('${node.nid}'),
           node: node,
-          page: page,
+          page: BlocProvider.of<PageCubit>(context).state,
           title: control.title ?? 'Map Controller',
           value: control.value as FTextTypeInput,
           callBack: (final value, final old) => ControlBuilder.toDB(
@@ -422,7 +406,7 @@ class ControlBuilder {
         control: GoogleMapsControl(
           key: ValueKey('${node.nid}'),
           node: node,
-          page: page,
+          page: BlocProvider.of<PageCubit>(context).state,
           title: control.title ?? 'Google Maps Controller',
           value: control.value as FTextTypeInput,
           callBack: (final value, final old) => ControlBuilder.toDB(
@@ -442,7 +426,7 @@ class ControlBuilder {
         control: GoogleMapsCubitControl(
           key: ValueKey('${node.nid}'),
           node: node,
-          page: page,
+          page: BlocProvider.of<PageCubit>(context).state,
           title: control.title ?? 'Google Maps Cubit',
           value: control.value as FTextTypeInput,
           callBack: (final value, final old) => ControlBuilder.toDB(
@@ -462,7 +446,7 @@ class ControlBuilder {
         control: CameraControllerControl(
           key: ValueKey('${node.nid}'),
           node: node,
-          page: page,
+          page: BlocProvider.of<PageCubit>(context).state,
           title: control.title ?? 'Camera Controller',
           value: control.value as FTextTypeInput,
           callBack: (final value, final old) => ControlBuilder.toDB(
@@ -481,7 +465,7 @@ class ControlBuilder {
         control: WebViewControllerControl(
           key: ValueKey('${node.nid}'),
           node: node,
-          page: page,
+          page: BlocProvider.of<PageCubit>(context).state,
           title: control.title ?? 'WebView Controller',
           value: control.value as FTextTypeInput,
           callBack: (final value, final old) => ControlBuilder.toDB(
@@ -499,8 +483,8 @@ class ControlBuilder {
         description: control.description,
         control: ActionControl(
           key: ValueKey('${node.nid}'),
-          prj: prj,
-          page: page,
+          prj: BlocProvider.of<FocusProjectCubit>(context).state!,
+          page: BlocProvider.of<PageCubit>(context).state,
           node: node,
           action: control.value as FAction,
           callBack: (final value, final old) {
@@ -593,8 +577,8 @@ class ControlBuilder {
     if (control.type == ControlType.component) {
       return ComponentControl(
         key: ValueKey('${node.nid}'),
-        prj: prj,
-        page: page,
+        prj: BlocProvider.of<FocusProjectCubit>(context).state!,
+        page: BlocProvider.of<PageCubit>(context).state,
         node: node,
         callBack: (final value, final old) => ControlBuilder.toDB(
           node,
@@ -637,7 +621,7 @@ class ControlBuilder {
           key: ValueKey('${node.nid}'),
           title: 'Image',
           node: node,
-          page: page,
+          page: BlocProvider.of<PageCubit>(context).state,
           image: control.value as FTextTypeInput,
           callBack: (final value, final old) => ControlBuilder.toDB(
             node,
@@ -831,7 +815,7 @@ class ControlBuilder {
           key: ValueKey('${node.nid}'),
           valueType: control.valueType,
           node: node,
-          page: page,
+          page: BlocProvider.of<PageCubit>(context).state,
           title: control.title ?? 'Value',
           value: control.value as FTextTypeInput,
           callBack: (final value, final old) {
@@ -853,7 +837,7 @@ class ControlBuilder {
         control: DatasetControl(
           key: ValueKey('${node.nid}'),
           node: node,
-          page: page,
+          page: BlocProvider.of<PageCubit>(context).state,
           title: control.title ?? 'From',
           value: control.value as FDataset,
           isAttrRequired: control.flag,
@@ -872,8 +856,8 @@ class ControlBuilder {
         title: control.title,
         key: ValueKey('${node.nid}'),
         node: node,
-        page: page,
-        prj: prj,
+        prj: BlocProvider.of<FocusProjectCubit>(context).state!,
+        page: BlocProvider.of<PageCubit>(context).state,
         textStyle: control.value as FTextStyle,
         keyValue: control.key,
       );
@@ -882,7 +866,7 @@ class ControlBuilder {
       return HttpParamsControl(
         key: ValueKey('${node.nid}'),
         node: node,
-        page: page,
+        page: BlocProvider.of<PageCubit>(context).state,
         title: control.title,
         list: control.value as List<MapElement>,
         callBack: (final value, final old) => {
@@ -940,9 +924,11 @@ class ControlBuilder {
         control: PageParamsControl(
           key: ValueKey('${node.nid}'),
           node: node,
-          page: page,
+          page: BlocProvider.of<PageCubit>(context).state,
           callBack: (final list) async {
-            await ProjectRepository.updatePage(page);
+            await ProjectRepository.updatePage(
+              BlocProvider.of<PageCubit>(context).state,
+            );
             BlocProvider.of<RefreshCubit>(context).change();
           },
         ),
@@ -954,9 +940,11 @@ class ControlBuilder {
         control: StatesControl(
           key: ValueKey('${node.nid}'),
           node: node,
-          page: page,
+          page: BlocProvider.of<PageCubit>(context).state,
           callBack: (final list) async {
-            await ProjectRepository.updatePage(page);
+            await ProjectRepository.updatePage(
+              BlocProvider.of<PageCubit>(context).state,
+            );
             BlocProvider.of<RefreshCubit>(context).change();
           },
         ),
@@ -968,8 +956,6 @@ class ControlBuilder {
 
   /// Returns a BoxFitControl widget.
   static BoxFitControl boxFitControlBuilder({
-    required final ProjectObject prj,
-    required final PageObject page,
     required final CNode node,
     required final BuildContext context,
     required final BoxFitControlObject control,
@@ -989,8 +975,6 @@ class ControlBuilder {
 
   /// Returns a FlagControl widget.
   static Widget flagControlBuilder({
-    required final ProjectObject prj,
-    required final PageObject page,
     required final CNode node,
     required final BuildContext context,
     required final FlagControlObject control,
@@ -1019,8 +1003,6 @@ class ControlBuilder {
 
   /// Returns a FillControl.
   static FillControl fillControlBuilder({
-    required final ProjectObject prj,
-    required final PageObject page,
     required final CNode node,
     required final bool isImageEnabled,
     required final bool isNoneEnabled,
@@ -1060,16 +1042,12 @@ class ControlBuilder {
 
   /// Returns a FirestorePathControl.
   static FirestorePathControl firebasePathControlBuilder({
-    required final ProjectObject prj,
-    required final PageObject page,
     required final CNode node,
     required final BuildContext context,
     required final FirestorePathControlObject control,
   }) {
     return FirestorePathControl(
       key: ValueKey('${node.nid}'),
-      prj: prj,
-      page: page,
       path: control.value,
       isForAddData: true,
       callBack: (final value, final old) => ControlBuilder.toDB(
@@ -1086,8 +1064,6 @@ class ControlBuilder {
   ///
   /// This is used for width or height, not both.
   static SizeControl sizeControlBuilder({
-    required final ProjectObject prj,
-    required final PageObject page,
     required final CNode node,
     required final BuildContext context,
     required final SizeControlObject control,
@@ -1114,16 +1090,12 @@ class ControlBuilder {
   ///
   /// This is used for width and height together.
   static Widget sizesControlBuilder({
-    required final ProjectObject prj,
-    required final PageObject page,
     required final CNode node,
     required final BuildContext context,
     required final SizesControlObject control,
   }) {
     return SizesPrefabControl(
       key: ValueKey('${node.nid}'),
-      prj: prj,
-      page: page,
       node: node,
       values: control.values,
     );

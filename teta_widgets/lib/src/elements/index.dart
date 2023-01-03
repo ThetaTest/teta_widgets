@@ -8,6 +8,7 @@ export './builder/node_selection_builder.dart';
 export './builder/placeholder_child.dart';
 export './builder/stream_connection.dart';
 export './builder/text.dart';
+export './controls/control_model.dart';
 export './controls/key_constants.dart';
 export './controls/type.dart';
 export './features/index.dart';
