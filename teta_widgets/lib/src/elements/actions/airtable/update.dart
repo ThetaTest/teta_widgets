@@ -49,7 +49,6 @@ class FAAirtableUpdate {
       stringRecordField.add('AirtableRecordField(fieldName: ${element.key}, value: ${element.value.toCode(0, resultType: ResultTypeEnum.string)})');
     });
 
-    print(stringRecordField);
 
     final stringRecord = '''
         AirtableRecord(
