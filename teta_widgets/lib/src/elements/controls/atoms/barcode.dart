@@ -13,13 +13,11 @@ import 'package:teta_widgets/src/elements/index.dart';
 
 class BarcodeControl extends StatefulWidget {
   const BarcodeControl({
-    required this.node,
     required this.value,
     required this.callBack,
     final Key? key,
   }) : super(key: key);
 
-  final CNode node;
   final FTextTypeInput value;
   final Function(FTextTypeInput, FTextTypeInput) callBack;
 
@@ -33,7 +31,7 @@ class BarcodeControlState extends State<BarcodeControl> {
 
   @override
   void initState() {
-    nodeId = widget.node.nid;
+    nodeId = BlocProvider.of<FocusBloc>(context).state.first.nid;
     super.initState();
   }
 

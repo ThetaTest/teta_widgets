@@ -46,7 +46,6 @@ import 'package:teta_widgets/src/elements/controls/atoms/src_image.dart';
 import 'package:teta_widgets/src/elements/controls/atoms/states.dart';
 import 'package:teta_widgets/src/elements/controls/atoms/text.dart';
 import 'package:teta_widgets/src/elements/controls/atoms/webview_controller.dart';
-import 'package:teta_widgets/src/elements/controls/control_model.dart';
 import 'package:teta_widgets/src/elements/controls/current_song_controll.dart';
 import 'package:teta_widgets/src/elements/controls/google_maps_cubit_control.dart';
 import 'package:teta_widgets/src/elements/controls/http_params.dart';
@@ -220,27 +219,23 @@ class ControlBuilder {
 
   /// Returns a control widget based of [control] value.
   static Widget builder({
-    required final CNode node,
     required final BuildContext context,
     required final ControlModel control,
   }) {
     if (control is ControlObject) {
       return ControlBuilder.genericControlBuilder(
-        node: node,
         context: context,
         control: control,
       );
     }
     if (control is FlagControlObject) {
       return ControlBuilder.flagControlBuilder(
-        node: node,
         context: context,
         control: control,
       );
     }
     if (control is FillControlObject) {
       return ControlBuilder.fillControlBuilder(
-        node: node,
         isImageEnabled: control.isImageEnabled,
         isNoneEnabled: control.isNoneEnabled,
         isOnlySolid: control.isOnlySolid,
@@ -250,21 +245,18 @@ class ControlBuilder {
     }
     if (control is SizeControlObject) {
       return ControlBuilder.sizeControlBuilder(
-        node: node,
         context: context,
         control: control,
       );
     }
     if (control is SizesControlObject) {
       return ControlBuilder.sizesControlBuilder(
-        node: node,
         context: context,
         control: control,
       );
     }
     if (control is BoxFitControlObject) {
       return ControlBuilder.boxFitControlBuilder(
-        node: node,
         context: context,
         control: control,
       );
@@ -274,13 +266,12 @@ class ControlBuilder {
 
   /// Returns a control widget based on control.type.
   static Widget genericControlBuilder({
-    required final CNode node,
     required final BuildContext context,
     required final ControlObject control,
   }) {
+    final node = BlocProvider.of<FocusBloc>(context).state.first;
     if (control.type == ControlType.barcode) {
       return BarcodeControl(
-        node: node,
         key: ValueKey(
           '${node.nid} ${(control.value as FTextTypeInput).value}',
         ),
@@ -289,7 +280,7 @@ class ControlBuilder {
             : FTextTypeInput(),
         callBack: (final value, final old) {
           ControlBuilder.toDB(
-            node,
+            BlocProvider.of<FocusBloc>(context).state.first,
             context,
             control.key,
             value.toJson(),
@@ -956,15 +947,14 @@ class ControlBuilder {
 
   /// Returns a BoxFitControl widget.
   static BoxFitControl boxFitControlBuilder({
-    required final CNode node,
     required final BuildContext context,
     required final BoxFitControlObject control,
   }) {
     return BoxFitControl(
-      key: ValueKey('${node.nid}'),
+      key: ValueKey('${BlocProvider.of<FocusBloc>(context).state.first.nid}'),
       boxFit: control.value,
       callBack: (final value, final old) => ControlBuilder.toDB(
-        node,
+        BlocProvider.of<FocusBloc>(context).state.first,
         context,
         control.key,
         value,
@@ -975,22 +965,25 @@ class ControlBuilder {
 
   /// Returns a FlagControl widget.
   static Widget flagControlBuilder({
-    required final CNode node,
     required final BuildContext context,
     required final FlagControlObject control,
   }) {
     return descriptionControlWidget(
       description: control.description,
       control: FlagControl(
-        key: ValueKey('${node.nid}'),
+        key: ValueKey('${BlocProvider.of<FocusBloc>(context).state.first.nid}'),
         title: control.title,
-        node: node as NDynamic,
+        node: BlocProvider.of<FocusBloc>(context).state.first as NDynamic,
         keyValue: control.key,
         value: control.value as bool,
         callBack: (final value, final old) {
-          node.body.attributes[control.key] = value;
+          BlocProvider.of<FocusBloc>(context)
+              .state
+              .first
+              .body
+              .attributes[control.key] = value;
           ControlBuilder.toDB(
-            node,
+            BlocProvider.of<FocusBloc>(context).state.first,
             context,
             control.key,
             value,
@@ -1003,7 +996,6 @@ class ControlBuilder {
 
   /// Returns a FillControl.
   static FillControl fillControlBuilder({
-    required final CNode node,
     required final bool isImageEnabled,
     required final bool isNoneEnabled,
     required final bool isOnlySolid,
@@ -1012,18 +1004,22 @@ class ControlBuilder {
   }) {
     return FillControl(
       title: control.title.isNotEmpty ? control.title : 'Fill',
-      key: ValueKey('${node.nid}'),
-      node: node,
+      key: ValueKey('${BlocProvider.of<FocusBloc>(context).state.first.nid}'),
+      node: BlocProvider.of<FocusBloc>(context).state.first,
       isImageEnabled: isImageEnabled,
       isNoneEnabled: isNoneEnabled,
       type:
           isOnlySolid ? FillTypeControlType.onlySolid : FillTypeControlType.all,
       fill: control.value,
       callBack: (final value, final styled, final old) {
-        node.body.attributes[control.key] = value;
+        BlocProvider.of<FocusBloc>(context)
+            .state
+            .first
+            .body
+            .attributes[control.key] = value;
         if (!styled) {
           ControlBuilder.toDB(
-            node,
+            BlocProvider.of<FocusBloc>(context).state.first,
             context,
             control.key,
             value.toJson(),
@@ -1042,16 +1038,15 @@ class ControlBuilder {
 
   /// Returns a FirestorePathControl.
   static FirestorePathControl firebasePathControlBuilder({
-    required final CNode node,
     required final BuildContext context,
     required final FirestorePathControlObject control,
   }) {
     return FirestorePathControl(
-      key: ValueKey('${node.nid}'),
+      key: ValueKey('${BlocProvider.of<FocusBloc>(context).state.first.nid}'),
       path: control.value,
       isForAddData: true,
       callBack: (final value, final old) => ControlBuilder.toDB(
-        node,
+        BlocProvider.of<FocusBloc>(context).state.first,
         context,
         control.key,
         value.toJson(),
@@ -1064,20 +1059,19 @@ class ControlBuilder {
   ///
   /// This is used for width or height, not both.
   static SizeControl sizeControlBuilder({
-    required final CNode node,
     required final BuildContext context,
     required final SizeControlObject control,
   }) {
     return SizeControl(
-      key: ValueKey('${node.nid}'),
-      node: node,
+      key: ValueKey('${BlocProvider.of<FocusBloc>(context).state.first.nid}'),
+      node: BlocProvider.of<FocusBloc>(context).state.first,
       isWidth: control.isWidth,
       title: control.title,
       size: control.value,
       isFromSizesPrefab: false,
       keyAttr: control.key,
       callBack: (final value, final old) => ControlBuilder.toDB(
-        node,
+        BlocProvider.of<FocusBloc>(context).state.first,
         context,
         control.key,
         value,
@@ -1090,13 +1084,12 @@ class ControlBuilder {
   ///
   /// This is used for width and height together.
   static Widget sizesControlBuilder({
-    required final CNode node,
     required final BuildContext context,
     required final SizesControlObject control,
   }) {
     return SizesPrefabControl(
-      key: ValueKey('${node.nid}'),
-      node: node,
+      key: ValueKey('${BlocProvider.of<FocusBloc>(context).state.first.nid}'),
+      node: BlocProvider.of<FocusBloc>(context).state.first,
       values: control.values,
     );
   }
