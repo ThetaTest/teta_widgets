@@ -24,7 +24,6 @@ import 'package:teta_widgets/src/elements/controls/atoms/cms_collections.dart';
 import 'package:teta_widgets/src/elements/controls/atoms/code_field.dart';
 import 'package:teta_widgets/src/elements/controls/atoms/cross_axis_alignment.dart';
 import 'package:teta_widgets/src/elements/controls/atoms/dataset.dart';
-import 'package:teta_widgets/src/elements/controls/atoms/db_map.dart';
 import 'package:teta_widgets/src/elements/controls/atoms/fill.dart';
 import 'package:teta_widgets/src/elements/controls/atoms/firebase/path.dart';
 import 'package:teta_widgets/src/elements/controls/atoms/flag.dart';
@@ -51,13 +50,11 @@ import 'package:teta_widgets/src/elements/controls/control_model.dart';
 import 'package:teta_widgets/src/elements/controls/current_song_controll.dart';
 import 'package:teta_widgets/src/elements/controls/google_maps_cubit_control.dart';
 import 'package:teta_widgets/src/elements/controls/http_params.dart';
-import 'package:teta_widgets/src/elements/controls/key_constants.dart';
 import 'package:teta_widgets/src/elements/controls/prefabs/sizes_prefab_control.dart';
 import 'package:teta_widgets/src/elements/controls/prefabs/text_prefab_control.dart';
 import 'package:teta_widgets/src/elements/features/google_maps_map_style.dart';
 import 'package:teta_widgets/src/elements/features/physic.dart';
 import 'package:teta_widgets/src/elements/index.dart';
-import 'package:teta_widgets/src/elements/nodes/dynamic.dart';
 import 'package:very_good_analysis/very_good_analysis.dart';
 
 enum ControlType {
@@ -184,14 +181,14 @@ enum ControlType {
 class ControlBuilder {
   /// It makes a call to NodeRepository.change.
   static Future<void> toDB(
-    final ProjectObject prj,
-    final PageObject page,
     final CNode node,
     final BuildContext context,
     final String key,
     final dynamic value,
     final dynamic old,
   ) async {
+    final prj = BlocProvider.of<FocusProjectCubit>(context).state!;
+    final page = BlocProvider.of<PageCubit>(context).state;
     try {
       try {
         final userId = (BlocProvider.of<AuthenticationBloc>(context).state
@@ -308,8 +305,6 @@ class ControlBuilder {
             : FTextTypeInput(),
         callBack: (final value, final old) {
           ControlBuilder.toDB(
-            prj,
-            page,
             node,
             context,
             control.key,
@@ -330,8 +325,6 @@ class ControlBuilder {
             : FTextTypeInput(),
         callBack: (final value, final old) {
           ControlBuilder.toDB(
-            prj,
-            page,
             node,
             context,
             control.key,
@@ -355,8 +348,6 @@ class ControlBuilder {
           callBack: (final value, final old) {
             node.body.attributes[control.key] = FTextTypeInput(value: value);
             ControlBuilder.toDB(
-              prj,
-              page,
               node,
               context,
               control.key,
@@ -377,8 +368,6 @@ class ControlBuilder {
           title: control.title ?? 'Current audio player data set',
           value: control.value as FTextTypeInput,
           callBack: (final value, final old) => ControlBuilder.toDB(
-            prj,
-            page,
             node,
             context,
             control.key,
@@ -398,8 +387,6 @@ class ControlBuilder {
           title: control.title ?? 'Audio Controller',
           value: control.value as FTextTypeInput,
           callBack: (final value, final old) => ControlBuilder.toDB(
-            prj,
-            page,
             node,
             context,
             control.key,
@@ -419,8 +406,6 @@ class ControlBuilder {
           title: control.title ?? 'Map Controller',
           value: control.value as FTextTypeInput,
           callBack: (final value, final old) => ControlBuilder.toDB(
-            prj,
-            page,
             node,
             context,
             control.key,
@@ -441,8 +426,6 @@ class ControlBuilder {
           title: control.title ?? 'Google Maps Controller',
           value: control.value as FTextTypeInput,
           callBack: (final value, final old) => ControlBuilder.toDB(
-            prj,
-            page,
             node,
             context,
             control.key,
@@ -463,8 +446,6 @@ class ControlBuilder {
           title: control.title ?? 'Google Maps Cubit',
           value: control.value as FTextTypeInput,
           callBack: (final value, final old) => ControlBuilder.toDB(
-            prj,
-            page,
             node,
             context,
             control.key,
@@ -485,8 +466,6 @@ class ControlBuilder {
           title: control.title ?? 'Camera Controller',
           value: control.value as FTextTypeInput,
           callBack: (final value, final old) => ControlBuilder.toDB(
-            prj,
-            page,
             node,
             context,
             control.key,
@@ -506,8 +485,6 @@ class ControlBuilder {
           title: control.title ?? 'WebView Controller',
           value: control.value as FTextTypeInput,
           callBack: (final value, final old) => ControlBuilder.toDB(
-            prj,
-            page,
             node,
             context,
             control.key,
@@ -529,8 +506,6 @@ class ControlBuilder {
           callBack: (final value, final old) {
             node.body.attributes[DBKeys.action] = value;
             ControlBuilder.toDB(
-              prj,
-              page,
               node,
               context,
               control.key,
@@ -551,8 +526,6 @@ class ControlBuilder {
           callBack: (final value, final old) {
             node.body.attributes[control.key] = value;
             ControlBuilder.toDB(
-              prj,
-              page,
               node,
               context,
               control.key,
@@ -573,8 +546,6 @@ class ControlBuilder {
           callBack: (final value, final old) {
             node.body.attributes[control.key] = value;
             ControlBuilder.toDB(
-              prj,
-              page,
               node,
               context,
               control.key,
@@ -593,8 +564,6 @@ class ControlBuilder {
           node: node,
           borderRadius: control.value as FBorderRadius,
           callBack: (final value, final old) => ControlBuilder.toDB(
-            prj,
-            page,
             node,
             context,
             control.key,
@@ -612,8 +581,6 @@ class ControlBuilder {
           node: node,
           borders: control.value as FBorder,
           callBack: (final value, final old) => ControlBuilder.toDB(
-            prj,
-            page,
             node,
             context,
             control.key,
@@ -630,8 +597,6 @@ class ControlBuilder {
         page: page,
         node: node,
         callBack: (final value, final old) => ControlBuilder.toDB(
-          prj,
-          page,
           node,
           context,
           control.key,
@@ -639,8 +604,6 @@ class ControlBuilder {
           old,
         ),
         callBackParameters: (final value) => ControlBuilder.toDB(
-          prj,
-          page,
           node,
           context,
           DBKeys.paramsToSend,
@@ -658,8 +621,6 @@ class ControlBuilder {
           node: node,
           crossAxisAlignment: control.value as FCrossAxisAlignment,
           callBack: (final value, final old) => ControlBuilder.toDB(
-            prj,
-            page,
             node,
             context,
             control.key,
@@ -679,8 +640,6 @@ class ControlBuilder {
           page: page,
           image: control.value as FTextTypeInput,
           callBack: (final value, final old) => ControlBuilder.toDB(
-            prj,
-            page,
             node,
             context,
             control.key,
@@ -701,8 +660,6 @@ class ControlBuilder {
           callBack: (final value, final old) {
             node.body.attributes[control.key] = value;
             ControlBuilder.toDB(
-              prj,
-              page,
               node,
               context,
               control.key,
@@ -723,8 +680,6 @@ class ControlBuilder {
           callBack: (final value, final old) {
             node.body.attributes[control.key] = value;
             ControlBuilder.toDB(
-              prj,
-              page,
               node,
               context,
               control.key,
@@ -745,8 +700,6 @@ class ControlBuilder {
           callBack: (final value, final old) {
             node.body.attributes[control.key] = value;
             ControlBuilder.toDB(
-              prj,
-              page,
               node,
               context,
               control.key,
@@ -767,8 +720,6 @@ class ControlBuilder {
           callBack: (final value, final old) {
             node.body.attributes[control.key] = value;
             ControlBuilder.toDB(
-              prj,
-              page,
               node,
               context,
               control.key,
@@ -787,8 +738,6 @@ class ControlBuilder {
           node: node,
           mainAxisAlignment: control.value as FMainAxisAlignment,
           callBack: (final value, final old) => ControlBuilder.toDB(
-            prj,
-            page,
             node,
             context,
             control.key,
@@ -806,8 +755,6 @@ class ControlBuilder {
           node: node,
           mapStyle: control.value as FGoogleMapsMapStyle,
           callBack: (final value, final old) => ControlBuilder.toDB(
-            prj,
-            page,
             node,
             context,
             control.key,
@@ -825,8 +772,6 @@ class ControlBuilder {
           node: node,
           size: control.value as FMainAxisSize,
           callBack: (final value, final old) => ControlBuilder.toDB(
-            prj,
-            page,
             node,
             context,
             control.key,
@@ -847,8 +792,6 @@ class ControlBuilder {
           callBack: (final value, final old) {
             node.body.attributes[control.key] = FMargins.fromJson(value);
             ControlBuilder.toDB(
-              prj,
-              page,
               node,
               context,
               control.key,
@@ -870,8 +813,6 @@ class ControlBuilder {
           callBack: (final value, final old) {
             node.body.attributes[control.key] = FMargins.fromJson(value);
             ControlBuilder.toDB(
-              prj,
-              page,
               node,
               context,
               control.key,
@@ -896,8 +837,6 @@ class ControlBuilder {
           callBack: (final value, final old) {
             node.body.attributes[control.key] = value;
             ControlBuilder.toDB(
-              prj,
-              page,
               node,
               context,
               control.key,
@@ -919,8 +858,6 @@ class ControlBuilder {
           value: control.value as FDataset,
           isAttrRequired: control.flag,
           callBack: (final value, final old) => ControlBuilder.toDB(
-            prj,
-            page,
             node,
             context,
             control.key,
@@ -951,8 +888,6 @@ class ControlBuilder {
         callBack: (final value, final old) => {
           node.body.attributes[control.key] = value,
           ControlBuilder.toDB(
-            prj,
-            page,
             node,
             context,
             control.key,
@@ -971,8 +906,6 @@ class ControlBuilder {
         callBack: (final value, final old) => {
           node.body.attributes[control.key] = value,
           ControlBuilder.toDB(
-            prj,
-            page,
             node,
             context,
             control.key,
@@ -992,8 +925,6 @@ class ControlBuilder {
           node.body.attributes[DBKeys.apiCallsSelectedRequest] =
               apiCallsSelectedRequest,
           ControlBuilder.toDB(
-            prj,
-            page,
             node,
             context,
             control.key,
@@ -1047,8 +978,6 @@ class ControlBuilder {
       key: ValueKey('${node.nid}'),
       boxFit: control.value,
       callBack: (final value, final old) => ControlBuilder.toDB(
-        prj,
-        page,
         node,
         context,
         control.key,
@@ -1077,8 +1006,6 @@ class ControlBuilder {
         callBack: (final value, final old) {
           node.body.attributes[control.key] = value;
           ControlBuilder.toDB(
-            prj,
-            page,
             node,
             context,
             control.key,
@@ -1114,8 +1041,6 @@ class ControlBuilder {
         node.body.attributes[control.key] = value;
         if (!styled) {
           ControlBuilder.toDB(
-            prj,
-            page,
             node,
             context,
             control.key,
@@ -1148,8 +1073,6 @@ class ControlBuilder {
       path: control.value,
       isForAddData: true,
       callBack: (final value, final old) => ControlBuilder.toDB(
-        prj,
-        page,
         node,
         context,
         control.key,
@@ -1178,8 +1101,6 @@ class ControlBuilder {
       isFromSizesPrefab: false,
       keyAttr: control.key,
       callBack: (final value, final old) => ControlBuilder.toDB(
-        prj,
-        page,
         node,
         context,
         control.key,

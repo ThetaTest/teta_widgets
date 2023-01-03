@@ -60,8 +60,6 @@ class TextPrefabControl extends StatelessWidget {
             final old = textStyle;
             textStyle.textStyleModel = textStyleModel;
             ControlBuilder.toDB(
-              prj,
-              page,
               node,
               context,
               keyValue,
@@ -92,8 +90,6 @@ class TextPrefabControl extends StatelessWidget {
                   textStyle: textStyle,
                   callBack: (final value, final old) {
                     ControlBuilder.toDB(
-                      prj,
-                      page,
                       node,
                       context,
                       keyValue,
@@ -109,8 +105,6 @@ class TextPrefabControl extends StatelessWidget {
                   node: node,
                   textStyle: textStyle,
                   callBack: (final value, final old) => ControlBuilder.toDB(
-                    prj,
-                    page,
                     node,
                     context,
                     keyValue,
@@ -125,8 +119,6 @@ class TextPrefabControl extends StatelessWidget {
                   node: node,
                   textStyle: textStyle,
                   callBack: (final value, final old) => ControlBuilder.toDB(
-                    prj,
-                    page,
                     node,
                     context,
                     keyValue,
@@ -145,8 +137,6 @@ class TextPrefabControl extends StatelessWidget {
                         textStyle: textStyle,
                         callBack: (final value, final old) =>
                             ControlBuilder.toDB(
-                          prj,
-                          page,
                           node,
                           context,
                           keyValue,
@@ -171,8 +161,6 @@ class TextPrefabControl extends StatelessWidget {
                   node: node,
                   textStyle: textStyle,
                   callBack: (final value, final old) => ControlBuilder.toDB(
-                    prj,
-                    page,
                     node,
                     context,
                     keyValue,
@@ -187,8 +175,6 @@ class TextPrefabControl extends StatelessWidget {
                   node: node,
                   textStyle: textStyle,
                   callBack: (final value, final old) => ControlBuilder.toDB(
-                    prj,
-                    page,
                     node,
                     context,
                     keyValue,
@@ -208,8 +194,6 @@ class TextPrefabControl extends StatelessWidget {
               final old = FTextStyle.fromJson(textStyle.toJson());
               textStyle.textDirection = dir;
               ControlBuilder.toDB(
-                prj,
-                page,
                 node,
                 context,
                 keyValue,
@@ -231,8 +215,6 @@ class TextPrefabControl extends StatelessWidget {
               final old = FTextStyle.fromJson(textStyle.toJson());
               textStyle.fill = color;
               ControlBuilder.toDB(
-                prj,
-                page,
                 node,
                 context,
                 keyValue,

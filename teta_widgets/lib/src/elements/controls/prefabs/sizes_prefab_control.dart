@@ -45,8 +45,6 @@ class SizesPrefabControl extends StatelessWidget {
           isFromSizesPrefab: true,
           callBack: (final value, final old) {
             ControlBuilder.toDB(
-              prj,
-              page,
               node,
               context,
               DBKeys.width,
@@ -63,8 +61,6 @@ class SizesPrefabControl extends StatelessWidget {
           keyAttr: DBKeys.height,
           isFromSizesPrefab: true,
           callBack: (final value, final old) => ControlBuilder.toDB(
-            prj,
-            page,
             node,
             context,
             DBKeys.height,
