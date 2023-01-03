@@ -116,7 +116,6 @@ class _WAirtableFetchState extends State<WAirtableFetch> {
   }
 
   List<DatasetObject> _addFetchDataToDataset(final List<dynamic>? list) {
-    print('list in fetch airtable widget: $list');
 
     _map = _map.copyWith(
       name: widget.state.node.name ??
@@ -125,10 +124,8 @@ class _WAirtableFetchState extends State<WAirtableFetch> {
           .map((final dynamic e) => e as Map<String, dynamic>)
           .toList(),
     );
-    print('map in fetch airtable widget: $_map');
 
     final datasets = addDataset(context, widget.state.dataset, _map);
-    print('dataset in fetch airtable widget: $datasets');
 
     return widget.state.dataset.isEmpty ? datasets : widget.state.dataset;
   }

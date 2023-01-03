@@ -228,7 +228,6 @@ class FActionElement extends Equatable {
     actionSupabaseAuth =
         convertDropdownToValue(ActionSupabaseAuth.values, doc['sA'] as String?)
             as ActionSupabaseAuth?;
-    print("docsA: ${doc['sA']}");
     actionSupabaseDB =
         convertDropdownToValue(ActionSupabaseDB.values, doc['sD'] as String?)
             as ActionSupabaseDB?;
