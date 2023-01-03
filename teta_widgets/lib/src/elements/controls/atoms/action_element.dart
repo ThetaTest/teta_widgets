@@ -21,6 +21,16 @@ import 'package:teta_widgets/src/elements/controls/atoms/airtable/delete.dart';
 import 'package:teta_widgets/src/elements/controls/atoms/airtable/insert.dart';
 import 'package:teta_widgets/src/elements/controls/atoms/airtable/update.dart';
 import 'package:teta_widgets/src/elements/controls/atoms/apicalls/apicalls.dart';
+import 'package:teta_widgets/src/elements/controls/atoms/firebase/firebase_analytics/log_app_open.dart';
+import 'package:teta_widgets/src/elements/controls/atoms/firebase/firebase_analytics/log_join_group.dart';
+import 'package:teta_widgets/src/elements/controls/atoms/firebase/firebase_analytics/log_screen_view.dart';
+import 'package:teta_widgets/src/elements/controls/atoms/firebase/firebase_analytics/log_share.dart';
+import 'package:teta_widgets/src/elements/controls/atoms/firebase/firebase_analytics/reset_analytics_data.dart';
+import 'package:teta_widgets/src/elements/controls/atoms/firebase/firebase_analytics/set_current_screen.dart';
+import 'package:teta_widgets/src/elements/controls/atoms/firebase/firebase_analytics/set_user_id.dart';
+import 'package:teta_widgets/src/elements/controls/atoms/firebase/firebase_analytics/set_user_property.dart';
+import 'package:teta_widgets/src/elements/controls/atoms/firebase/firebase_messages/subscribe_to_topic.dart';
+import 'package:teta_widgets/src/elements/controls/atoms/firebase/firebase_messages/unsubscribe_from_topic.dart';
 // Project imports:
 import 'package:teta_widgets/src/elements/controls/atoms/flag.dart';
 import 'package:teta_widgets/src/elements/controls/atoms/https_requests_custom_backend/delete.dart';
@@ -48,6 +58,8 @@ import 'package:teta_widgets/src/elements/features/actions/enums/audio_player_ac
 import 'package:teta_widgets/src/elements/features/actions/enums/braintree.dart';
 import 'package:teta_widgets/src/elements/features/actions/enums/camera.dart';
 import 'package:teta_widgets/src/elements/features/actions/enums/custom_http_request.dart';
+import 'package:teta_widgets/src/elements/features/actions/enums/firebase/firebase_analytics.dart';
+import 'package:teta_widgets/src/elements/features/actions/enums/firebase/firebase_message.dart';
 import 'package:teta_widgets/src/elements/features/actions/enums/mixpanel.dart';
 import 'package:teta_widgets/src/elements/features/actions/enums/navigation.dart';
 import 'package:teta_widgets/src/elements/features/actions/enums/state.dart';
@@ -60,6 +72,9 @@ import 'package:teta_widgets/src/elements/features/actions/enums/type.dart';
 import 'package:teta_widgets/src/elements/features/actions/enums/webview.dart';
 import 'package:teta_widgets/src/elements/index.dart';
 import 'package:uuid/uuid.dart';
+
+import 'firebase/firebase_analytics/log_event.dart';
+import 'firebase/firebase_analytics/log_login.dart';
 
 /// Widget to control a single action
 class ActionElementControl extends StatefulWidget {
@@ -1733,6 +1748,46 @@ class ActionElementControlState extends State<ActionElementControl> {
                     }
                   },
                 ),
+              if (widget.element.actionType == ActionType.firebaseAnalytics)
+                CDropdown(
+                  value: FActionElement.convertValueToDropdown(
+                    widget.element.actionFirebaseAnalytics,
+                  ),
+                  items: FActionElement.getFirebaseAnalytics(widget.prj.config)
+                      .toSet()
+                      .toList(),
+                  onChange: (final newValue) {
+                    if (newValue != null) {
+                      final old = widget.element;
+                      widget.element.actionFirebaseAnalytics =
+                          FActionElement.convertDropdownToValue(
+                        ActionFirebaseAnalytics.values,
+                        newValue,
+                      ) as ActionFirebaseAnalytics?;
+                      widget.callBack(widget.element, old);
+                    }
+                  },
+                ),
+              if (widget.element.actionType == ActionType.firebaseMessages)
+                CDropdown(
+                  value: FActionElement.convertValueToDropdown(
+                    widget.element.actionFirebaseMessages,
+                  ),
+                  items: FActionElement.getFirebaseMessages(widget.prj.config)
+                      .toSet()
+                      .toList(),
+                  onChange: (final newValue) {
+                    if (newValue != null) {
+                      final old = widget.element;
+                      widget.element.actionFirebaseMessages =
+                          FActionElement.convertDropdownToValue(
+                        ActionFirebaseMessages.values,
+                        newValue,
+                      ) as ActionFirebaseMessages?;
+                      widget.callBack(widget.element, old);
+                    }
+                  },
+                ),
               if ((widget.element.actionType == ActionType.state &&
                       widget.element.actionState == ActionState.changeWith &&
                       !widget.node.intrinsicState.gestures
@@ -2208,6 +2263,167 @@ class ActionElementControlState extends State<ActionElementControl> {
               if (widget.element.actionType == ActionType.apiCalls &&
                   widget.element.actionApiCalls == ActionApiCalls.apiCalls)
                 ApiCallsControl(
+                  prj: widget.prj,
+                  page: widget.page,
+                  node: widget.node,
+                  action: widget.element,
+                  callback: () {
+                    final old = widget.element;
+                    widget.callBack(widget.element, old);
+                  },
+                ),
+              if (widget.element.actionType == ActionType.firebaseAnalytics &&
+                  widget.element.actionFirebaseAnalytics ==
+                      ActionFirebaseAnalytics.logLogin)
+                FirebaseAnalyticsLogLoginControl(
+                  prj: widget.prj,
+                  page: widget.page,
+                  node: widget.node,
+                  action: widget.element,
+                  callback: () {
+                    final old = widget.element;
+                    widget.callBack(widget.element, old);
+                  },
+                ),
+              if (widget.element.actionType == ActionType.firebaseAnalytics &&
+                  widget.element.actionFirebaseAnalytics ==
+                      ActionFirebaseAnalytics.logEvent)
+                FirebaseAnalyticsLogEventControl(
+                  prj: widget.prj,
+                  page: widget.page,
+                  node: widget.node,
+                  action: widget.element,
+                  callback: () {
+                    final old = widget.element;
+                    widget.callBack(widget.element, old);
+                  },
+                ),
+
+              /////
+              ///
+              if (widget.element.actionType == ActionType.firebaseAnalytics &&
+                  widget.element.actionFirebaseAnalytics ==
+                      ActionFirebaseAnalytics.logScreenView)
+                FirebaseAnalyticsLogScreenViewControl(
+                  prj: widget.prj,
+                  page: widget.page,
+                  node: widget.node,
+                  action: widget.element,
+                  callback: () {
+                    final old = widget.element;
+                    widget.callBack(widget.element, old);
+                  },
+                ),
+              if (widget.element.actionType == ActionType.firebaseAnalytics &&
+                  widget.element.actionFirebaseAnalytics ==
+                      ActionFirebaseAnalytics.logShare)
+                FirebaseAnalyticsLogShareControl(
+                  prj: widget.prj,
+                  page: widget.page,
+                  node: widget.node,
+                  action: widget.element,
+                  callback: () {
+                    final old = widget.element;
+                    widget.callBack(widget.element, old);
+                  },
+                ),
+              if (widget.element.actionType == ActionType.firebaseAnalytics &&
+                  widget.element.actionFirebaseAnalytics ==
+                      ActionFirebaseAnalytics.logJoinGroup)
+                FirebaseAnalyticsLogJoinGroupControl(
+                  prj: widget.prj,
+                  page: widget.page,
+                  node: widget.node,
+                  action: widget.element,
+                  callback: () {
+                    final old = widget.element;
+                    widget.callBack(widget.element, old);
+                  },
+                ),
+              if (widget.element.actionType == ActionType.firebaseAnalytics &&
+                  widget.element.actionFirebaseAnalytics ==
+                      ActionFirebaseAnalytics.logAppOpen)
+                FirebaseAnalyticsLogAppOpenControl(
+                  prj: widget.prj,
+                  page: widget.page,
+                  node: widget.node,
+                  action: widget.element,
+                  callback: () {
+                    final old = widget.element;
+                    widget.callBack(widget.element, old);
+                  },
+                ),
+              if (widget.element.actionType == ActionType.firebaseAnalytics &&
+                  widget.element.actionFirebaseAnalytics ==
+                      ActionFirebaseAnalytics.resetAnalyticsData)
+                FirebaseAnalyticsLogResetAnalyticsDataControl(
+                  prj: widget.prj,
+                  page: widget.page,
+                  node: widget.node,
+                  action: widget.element,
+                  callback: () {
+                    final old = widget.element;
+                    widget.callBack(widget.element, old);
+                  },
+                ),
+              if (widget.element.actionType == ActionType.firebaseAnalytics &&
+                  widget.element.actionFirebaseAnalytics ==
+                      ActionFirebaseAnalytics.setUserProperty)
+                FirebaseAnalyticsLogSetUserPropertyControl(
+                  prj: widget.prj,
+                  page: widget.page,
+                  node: widget.node,
+                  action: widget.element,
+                  callback: () {
+                    final old = widget.element;
+                    widget.callBack(widget.element, old);
+                  },
+                ),
+              if (widget.element.actionType == ActionType.firebaseAnalytics &&
+                  widget.element.actionFirebaseAnalytics ==
+                      ActionFirebaseAnalytics.setCurrentScreen)
+                FirebaseAnalyticsLogSetCurrentScreenControl(
+                  prj: widget.prj,
+                  page: widget.page,
+                  node: widget.node,
+                  action: widget.element,
+                  callback: () {
+                    final old = widget.element;
+                    widget.callBack(widget.element, old);
+                  },
+                ),
+              if (widget.element.actionType == ActionType.firebaseAnalytics &&
+                  widget.element.actionFirebaseAnalytics ==
+                      ActionFirebaseAnalytics.setUserId)
+                FirebaseAnalyticsLogSetUserIdControl(
+                  prj: widget.prj,
+                  page: widget.page,
+                  node: widget.node,
+                  action: widget.element,
+                  callback: () {
+                    final old = widget.element;
+                    widget.callBack(widget.element, old);
+                  },
+                ),
+
+              ///Firebase Messages
+              if (widget.element.actionType == ActionType.firebaseMessages &&
+                  widget.element.actionFirebaseMessages ==
+                      ActionFirebaseMessages.subscribeToTopic)
+                FirebaseMessagesSubscribeToTopicControl(
+                  prj: widget.prj,
+                  page: widget.page,
+                  node: widget.node,
+                  action: widget.element,
+                  callback: () {
+                    final old = widget.element;
+                    widget.callBack(widget.element, old);
+                  },
+                ),
+              if (widget.element.actionType == ActionType.firebaseMessages &&
+                  widget.element.actionFirebaseMessages ==
+                      ActionFirebaseMessages.unsubscribeToTopic)
+                FirebaseMessagesUnsubscribeFromTopicControl(
                   prj: widget.prj,
                   page: widget.page,
                   node: widget.node,
