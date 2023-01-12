@@ -63,6 +63,11 @@ class FSize {
             size.toLowerCase() == 'inf' ||
             size.toLowerCase() == '100%')) {
       value = double.maxFinite;
+    } else if (unit == SizeUnit.percent &&
+        (size.toLowerCase() == 'max' ||
+            size.toLowerCase() == 'inf' ||
+            size.toLowerCase() == '100%')) {
+      value = double.maxFinite;
     } else {
       if (size.toLowerCase() == 'null' || size.toLowerCase() == 'auto') {
         return null;
@@ -176,6 +181,11 @@ class FSize {
               size.toLowerCase() == 'inf' ||
               size.toLowerCase() == '100%')) {
         value = 'double.maxFinite';
+      } else if (unit == SizeUnit.percent &&
+          (size.toLowerCase() == 'max' ||
+              size.toLowerCase() == 'inf' ||
+              size.toLowerCase() == '100%')) {
+        value = 'double.maxFinite';
       } else {
         if (size.toLowerCase() == 'null' || size.toLowerCase() == 'auto') {
           value = null;
@@ -190,10 +200,12 @@ class FSize {
         }
       }
       if (value != null && unit == SizeUnit.percent) {
-        var finalString = '';
-        finalString +=
-            '${(size ?? '16').replaceAll('%', '')}${isWidth ? '.w' : '.h'}';
-        return finalString;
+        if (value != 'double.maxFinite') {
+          var finalString = '';
+          finalString +=
+              '${(size ?? '16').replaceAll('%', '')}${isWidth ? '.w' : '.h'}';
+          return finalString;
+        }
       }
       return value ?? 'null';
     }
