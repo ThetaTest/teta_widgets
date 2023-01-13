@@ -22,7 +22,8 @@ class FATetaCMSLogin {
     final Map<String, dynamic>? paramsToSend,
     final TetaProvider provider,
   ) async {
-    final prj = (BlocProvider.of<FocusProjectBloc>(context).state as ProjectLoaded).prj;
+    final prj =
+        (BlocProvider.of<FocusProjectBloc>(context).state as ProjectLoaded).prj;
 
     // final page = BlocProvider.of<PageCubit>(context).state;
     // final status = takeStateFrom(page, 'status');
@@ -36,14 +37,6 @@ class FATetaCMSLogin {
       ),
     );
     */
-
-    TrackService.instance.track(
-      eventName: 'Teta Auth: login in Teta',
-      eventProperties: <String, String>{
-        'provider': EnumToString.convertToString(provider),
-      },
-      prjId: prj.id,
-    );
 
     await TetaCMS.instance.auth.signIn(
       provider: provider,
@@ -65,7 +58,8 @@ class FATetaCMSLogin {
     final String? nameOfPage,
     final Map<String, dynamic>? paramsToSend,
   ) {
-    final prj = (BlocProvider.of<FocusProjectBloc>(context).state as ProjectLoaded).prj;
+    final prj =
+        (BlocProvider.of<FocusProjectBloc>(context).state as ProjectLoaded).prj;
     final isRevenueCatEnabled = prj.config?.isRevenueCatEnabled ?? false;
     final providerStr = provider == TetaProvider.google
         ? 'TetaProvider.google'

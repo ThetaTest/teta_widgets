@@ -19,10 +19,7 @@ class FATetaCMSLogout {
         (BlocProvider.of<FocusProjectBloc>(context).state as ProjectLoaded)
             .prj
             .id;
-    TrackService.instance.track(
-      eventName: 'Teta Auth: logout in Teta',
-      prjId: prjId,
-    );
+
     await TetaCMS.instance.auth.signOut();
   }
 
