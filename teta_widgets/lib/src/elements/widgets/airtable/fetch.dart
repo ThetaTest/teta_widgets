@@ -7,7 +7,7 @@ import 'package:dart_airtable/dart_airtable.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 // Package imports:
-import 'package:teta_core/src/pages/editor_page/cubits/airtable.dart';
+import 'package:teta_core/src/cubits/airtable.dart';
 import 'package:teta_core/teta_core.dart';
 import 'package:teta_widgets/src/core/teta_widget/index.dart';
 // Project imports:

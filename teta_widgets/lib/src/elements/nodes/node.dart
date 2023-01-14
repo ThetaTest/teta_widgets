@@ -156,7 +156,6 @@ abstract class CNode extends Equatable {
   /// Instantiate new node by display name
   static CNode toNodeFromName(
     final String displayName,
-    final BuildContext context,
   ) {
     final enumType = NodeType.fromStringCamelCase(displayName);
     return NDynamic(

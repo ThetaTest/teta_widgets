@@ -132,12 +132,6 @@ class ComponentControlState extends State<ComponentControl> {
                               callBackParameters: (final map) {
                                 widget.node.body
                                     .attributes[DBKeys.paramsToSend] = map;
-                                Logger.printMessage(
-                                  'paramsToSend: ${widget.node.body.attributes[DBKeys.paramsToSend]}',
-                                );
-                                Logger.printMessage(
-                                  'paramsToSend variable.id: ${widget.node.body.attributes[DBKeys.paramsToSend][variable.id]}',
-                                );
                                 widget.callBackParameters(map);
                               },
                             ),
@@ -206,7 +200,7 @@ class ElementState extends State<Element> {
   @override
   void initState() {
     super.initState();
-    Logger.printMessage('${widget.page.datasets}');
+    Logger.printMessage('Datasets: ${widget.page.datasets}');
     Logger.printMessage('Params: ${widget.page.params}');
     final params = Map<String, dynamic>.fromEntries(
       widget.page.params

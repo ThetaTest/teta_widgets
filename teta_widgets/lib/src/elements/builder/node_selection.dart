@@ -28,41 +28,28 @@ class NodeSelection extends StatefulWidget {
 }
 
 class NodeSelectionState extends State<NodeSelection> {
-  bool isSelectFromOtherAuthors = false;
-  Color authorColor = Colors.transparent;
-  String authorNid = '';
-  CNode? parent;
-  late Widget child;
+  List<CNode?> parents = [];
 
   @override
   void initState() {
-    parent = FindNodeRendering.findParentByChildrenIds(
-      flatList: BlocProvider.of<PageCubit>(context).state.flatList ?? [],
-      element: widget.state.node,
-    );
-    child = _Body(
-      state: widget.state,
-      child: widget.child,
-    );
-    super.initState();
-  }
-
-  @override
-  void didUpdateWidget(covariant final NodeSelection oldWidget) {
-    super.didUpdateWidget(oldWidget);
-
-    if (widget.state != oldWidget.state) {
-      child = _Body(
-        state: widget.state,
-        child: widget.child,
+    do {
+      parents.add(
+        FindNodeRendering.findParentByChildrenIds(
+          flatList: BlocProvider.of<PageCubit>(context).state.flatList ?? [],
+          element: widget.state.node,
+        ),
       );
-    }
+    } while (parents.isEmpty);
+    super.initState();
   }
 
   @override
   Widget build(final BuildContext context) {
     if (widget.state.forPlay) {
-      return child;
+      return _Body(
+        state: widget.state,
+        child: widget.child,
+      );
     }
     return DragAndDropBuilder(
       state: widget.state,
@@ -72,8 +59,9 @@ class NodeSelectionState extends State<NodeSelection> {
               .add(OnHover(node: widget.state.node));
         },
         onExit: (final e) {
-          if (parent != null) {
-            BlocProvider.of<HoverBloc>(context).add(OnHover(node: parent!));
+          if (parents.firstOrNull != null) {
+            BlocProvider.of<HoverBloc>(context)
+                .add(OnHover(node: parents.firstOrNull!));
           }
         },
         child: Listener(
@@ -93,7 +81,10 @@ class NodeSelectionState extends State<NodeSelection> {
               BlocProvider.of<JumpToCubit>(context)
                   .jumpTo(context, widget.state.node);
             },
-            child: child,
+            child: _Body(
+              state: widget.state,
+              child: widget.child,
+            ),
           ),
         ),
       ),
