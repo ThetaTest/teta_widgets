@@ -20,7 +20,6 @@ const globalName = 'Null';
 class NNull extends CNode {
   /// construct
   NNull({
-    required this.context,
     this.nid = 0,
   }) : super(childrenIds: FChildrenIds());
 
@@ -32,14 +31,11 @@ class NNull extends CNode {
   @override
   int nid;
 
-  BuildContext? context;
-
   /// fromJson
   static NNull fromJson(
     final Map<String, dynamic> doc,
-    final BuildContext context,
   ) =>
-      NNull(context: context);
+      NNull();
 
   @override
   Map<String, dynamic> toJson() => <String, dynamic>{};
