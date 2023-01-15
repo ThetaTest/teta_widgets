@@ -45,7 +45,8 @@ class _WAudioPlayerState extends State<WAudioPlayer> {
       final page = BlocProvider.of<PageCubit>(context).state;
 
       _map = DatasetObject(
-        name: widget.state.node.name ?? widget.state.node.intrinsicState.displayName,
+        name: widget.state.node.name ??
+            widget.state.node.intrinsicState.displayName,
         map: [<String, dynamic>{}],
       );
 
@@ -68,11 +69,13 @@ class _WAudioPlayerState extends State<WAudioPlayer> {
 
       final audioPlayerDataset = widget.state.dataset
           .firstWhere(
-            (final element) => element.getName == widget.selectedDataset.datasetName,
+            (final element) =>
+                element.getName == widget.selectedDataset.datasetName,
           )
           .getMap;
       for (final element in audioPlayerDataset) {
-        final url = element['${widget.selectedDataset.datasetAttrName}'] as String?;
+        final url =
+            element['${widget.selectedDataset.datasetAttrName}'] as String?;
         if (url != null) {
           audioList.add(
             AudioSource.uri(Uri.parse(url)),
@@ -126,7 +129,8 @@ class _WAudioPlayerState extends State<WAudioPlayer> {
             if (!snapshot.hasData) {
               // has data is negative
               _map = _map.copyWith(
-                name: widget.state.node.name ?? widget.state.node.intrinsicState.displayName,
+                name: widget.state.node.name ??
+                    widget.state.node.intrinsicState.displayName,
                 map: [
                   <String, dynamic>{
                     'is playing': ap!.playing.toString(),
@@ -135,7 +139,8 @@ class _WAudioPlayerState extends State<WAudioPlayer> {
               );
             } else {
               _map = _map.copyWith(
-                name: widget.state.node.name ?? widget.state.node.intrinsicState.displayName,
+                name: widget.state.node.name ??
+                    widget.state.node.intrinsicState.displayName,
                 map: [
                   <String, dynamic>{
                     ...getCurrentSongAttribute(),
@@ -143,13 +148,14 @@ class _WAudioPlayerState extends State<WAudioPlayer> {
                 ],
               );
             }
-            BlocProvider.of<RefreshCubit>(context).change();
             final datasets = addDataset(context, widget.state.dataset, _map);
 
             return ChildConditionBuilder(
               ValueKey('${widget.state.node.nid} ${widget.state.loop}'),
               state: widget.state.copyWith(
-                dataset: widget.state.dataset.isEmpty ? datasets : widget.state.dataset,
+                dataset: widget.state.dataset.isEmpty
+                    ? datasets
+                    : widget.state.dataset,
               ),
               child: widget.child,
             );
@@ -170,6 +176,7 @@ class _WAudioPlayerState extends State<WAudioPlayer> {
     final audioPlayerDataset = widget.state.dataset.firstWhere(
       (final element) => element.getName == widget.selectedDataset.datasetName,
     );
-    return audioPlayerDataset.getMap[variable?.audioController?.currentIndex ?? 0];
+    return audioPlayerDataset
+        .getMap[variable?.audioController?.currentIndex ?? 0];
   }
 }

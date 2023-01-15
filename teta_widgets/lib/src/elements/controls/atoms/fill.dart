@@ -53,7 +53,7 @@ class FillControlState extends State<FillControl> {
   Widget build(final BuildContext context) {
     return Padding(
       padding: const EdgeInsets.only(left: 4),
-      child: BlocBuilder<ColorStylesCubit, List<PaletteModel>>(
+      child: BlocBuilder<ColorStylesCubit, List<ColorStyleModel>>(
         builder: (final context, final state) {
           list = BlocProvider.of<ColorStylesCubit>(context).state.isNotEmpty
               ? widget.isImageEnabled
@@ -172,9 +172,9 @@ class FillControlState extends State<FillControl> {
   }
 
   Widget control(final BuildContext context) {
-    return BlocBuilder<ColorStylesCubit, List<PaletteModel>>(
+    return BlocBuilder<ColorStylesCubit, List<ColorStyleModel>>(
       builder: (final context, final state) {
-        PaletteModel? model;
+        ColorStyleModel? model;
         if (widget.fill.paletteStyle != null) {
           BlocProvider.of<ColorStylesCubit>(context)
               .state

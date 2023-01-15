@@ -173,7 +173,7 @@ class _WShopifyRegistrationState extends State<WShopifyRegistration> {
   }
 
   Widget body(BuildContext context) {
-    return BlocBuilder<PaletteBloc, List<PaletteModel>>(
+    return BlocBuilder<PaletteBloc, List<ColorStyleModel>>(
       builder: (context, state) {
         if (state != []) {
           FFill? accentFill;
@@ -627,7 +627,7 @@ class _WShopifyRegistrationState extends State<WShopifyRegistration> {
 
   Widget textField(
       BuildContext context, bool isObscure, Function(String) callBack) {
-    return BlocBuilder<PaletteBloc, List<PaletteModel>>(
+    return BlocBuilder<PaletteBloc, List<ColorStyleModel>>(
       builder: (context, state) {
         final szs = widget.sizes.get(context);
         final radius = widget.borderRadius.get(context);
@@ -717,7 +717,7 @@ class _WShopifyRegistrationState extends State<WShopifyRegistration> {
 
   Widget childCondition(
       List<double> radius, bool isObscure, Function(String) callBack) {
-    return BlocBuilder<PaletteBloc, List<PaletteModel>>(
+    return BlocBuilder<PaletteBloc, List<ColorStyleModel>>(
       builder: (context, state) {
         FFill? finalFill;
         if (state.isNotEmpty)

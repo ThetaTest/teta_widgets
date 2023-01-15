@@ -43,7 +43,7 @@ class TextBuilder extends StatelessWidget {
 
   @override
   Widget build(final BuildContext context) {
-    return BlocBuilder<ColorStylesCubit, List<PaletteModel>>(
+    return BlocBuilder<ColorStylesCubit, List<ColorStyleModel>>(
       buildWhen: (final previous, final current) => current != previous,
       builder: (final context, final state) {
         FFill? finalFill;

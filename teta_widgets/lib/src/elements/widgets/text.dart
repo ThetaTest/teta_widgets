@@ -55,7 +55,7 @@ class _WTextState extends State<WText> {
   Widget build(final BuildContext context) {
     return NodeSelectionBuilder(
       state: widget.state,
-      child: BlocBuilder<ColorStylesCubit, List<PaletteModel>>(
+      child: BlocBuilder<ColorStylesCubit, List<ColorStyleModel>>(
         buildWhen: (final previous, final current) => current != previous,
         builder: (final context, final state) {
           FFill? finalFill;
@@ -214,10 +214,9 @@ class _WTextState extends State<WText> {
     widget.state.node.body.attributes[DBKeys.value] = FTextTypeInput(
       value: text,
     );
-    NodeRepository.changeNode(
-      node: widget.state.node as NDynamic,
-    );
-    BlocProvider.of<RefreshCubit>(context).change();
+    sl.get<NodeRepository>().changeNode(
+          node: widget.state.node as NDynamic,
+        );
   }
 }
 

@@ -34,10 +34,11 @@ class NodeSelectionState extends State<NodeSelection> {
   void initState() {
     do {
       parents.add(
-        FindNodeRendering.findParentByChildrenIds(
-          flatList: BlocProvider.of<PageCubit>(context).state.flatList ?? [],
-          element: widget.state.node,
-        ),
+        sl.get<FindNodeRendering>().findParentByChildrenIds(
+              flatList:
+                  BlocProvider.of<PageCubit>(context).state.flatList ?? [],
+              element: widget.state.node,
+            ),
       );
     } while (parents.isEmpty);
     super.initState();

@@ -7,7 +7,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:hovering/hovering.dart';
-import 'package:teta_core/src/cubits/panels/cubit.dart';
 import 'package:teta_core/src/design_system/textfield/minitextfield.dart';
 import 'package:teta_core/teta_core.dart';
 // Project imports:
@@ -207,11 +206,11 @@ class TextStylesControlState extends State<TextStylesControl> {
                           return ListView(
                             shrinkWrap: true,
                             children: state.map((final entry) {
-                              if (entry.name!.contains(searchedText)) {
+                              if (entry.name.contains(searchedText)) {
                                 return GestureDetector(
                                   onTap: () {
                                     updateTextStyleModel(
-                                      entry.name!,
+                                      entry.name,
                                       flag: false,
                                     );
                                   },
@@ -222,12 +221,11 @@ class TextStylesControlState extends State<TextStylesControl> {
                                         vertical: 8,
                                       ),
                                       child: Text(
-                                        entry.name!,
+                                        entry.name,
                                         style: GoogleFonts.getFont(
-                                          entry.fontFamily!,
-                                          fontSize:
-                                              entry.fontSize!.get(context),
-                                          fontWeight: entry.fontWeight!.get,
+                                          entry.fontFamily,
+                                          fontSize: entry.fontSize.get(context),
+                                          fontWeight: entry.fontWeight.get,
                                           color: Colors.white,
                                         ),
                                       ),

@@ -62,11 +62,11 @@ class WBottomBarItem extends StatelessWidget {
         ),
         child: Column(
           children: [
-            BlocBuilder<ColorStylesCubit, List<PaletteModel>>(
+            BlocBuilder<ColorStylesCubit, List<ColorStyleModel>>(
               builder: (final context, final state) {
                 final isLight =
                     BlocProvider.of<PaletteDarkLightCubit>(context).state;
-                PaletteModel? model;
+                ColorStyleModel? model;
                 for (final element in state) {
                   if (element.id == fill.paletteStyle) model = element;
                   if (element.name == fill.paletteStyle) model = element;
@@ -94,7 +94,7 @@ class WBottomBarItem extends StatelessWidget {
 
   // ignore: avoid_positional_boolean_parameters
   HexColor _getBottomBarItemColor(
-    final PaletteModel? model,
+    final ColorStyleModel? model,
     final bool isLight,
   ) {
     if (model != null) {

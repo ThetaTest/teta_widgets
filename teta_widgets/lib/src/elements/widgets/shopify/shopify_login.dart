@@ -163,7 +163,7 @@ class _WShopifyLoginState extends State<WShopifyLogin> {
   }
 
   Widget body(BuildContext context) {
-    return BlocBuilder<PaletteBloc, List<PaletteModel>>(
+    return BlocBuilder<PaletteBloc, List<ColorStyleModel>>(
       builder: (context, state) {
         if (state.isNotEmpty) {
           FFill? accentFill;
@@ -406,7 +406,7 @@ class _WShopifyLoginState extends State<WShopifyLogin> {
 
   Widget textField(
       BuildContext context, bool isObscure, Function(String) callBack) {
-    return BlocBuilder<PaletteBloc, List<PaletteModel>>(
+    return BlocBuilder<PaletteBloc, List<ColorStyleModel>>(
       builder: (context, state) {
         if (state.isNotEmpty) {
           final szs = widget.sizes.get(context);
@@ -500,7 +500,7 @@ class _WShopifyLoginState extends State<WShopifyLogin> {
 
   Widget childCondition(
       List<double> radius, bool isObscure, Function(String) callBack) {
-    return BlocBuilder<PaletteBloc, List<PaletteModel>>(
+    return BlocBuilder<PaletteBloc, List<ColorStyleModel>>(
       builder: (context, state) {
         FFill? finalFill;
         if (state.isNotEmpty)

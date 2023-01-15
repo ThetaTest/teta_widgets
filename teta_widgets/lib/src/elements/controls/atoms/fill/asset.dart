@@ -63,7 +63,7 @@ class AssetFillControlState extends State<AssetFillControl> {
                         value: widget.fill.file,
                         items: list,
                         onChange: (final value) {
-                          PaletteModel? model;
+                          ColorStyleModel? model;
                           BlocProvider.of<ColorStylesCubit>(context)
                               .state
                               .forEach((final element) {

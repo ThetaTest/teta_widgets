@@ -1,3 +1,4 @@
+import 'package:teta_core/get_it.dart';
 import 'package:teta_repositories/teta_repositories.dart';
 import 'package:teta_widgets/src/elements/index.dart';
 
@@ -12,8 +13,8 @@ class ReorderChildren {
     children.insert(newIndex, child);
     final id = node.childrenIds.ids.removeAt(oldIndex);
     node.childrenIds.ids.insert(newIndex, id);
-    NodeRepository.changeNode(
-      node: node,
-    );
+    sl.get<NodeRepository>().changeNode(
+          node: node,
+        );
   }
 }

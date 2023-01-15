@@ -92,7 +92,6 @@ class GoogleMapsMapStyleControlsState
                         .fromJson(widget.mapStyle.toJson());
                     final mAA = widget.mapStyle..set(newValue);
                     widget.callBack(mAA, old);
-                    BlocProvider.of<RefreshCubit>(context).change();
                   }
                 },
               ),

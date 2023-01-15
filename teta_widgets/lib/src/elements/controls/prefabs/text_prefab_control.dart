@@ -50,12 +50,13 @@ class TextPrefabControl extends StatelessWidget {
           node: node,
           textStyle: textStyle,
           callBack: (final textStyleModel, final flag, final old) {
+            if (textStyleModel == null) return;
             if (flag) {
-              ProjectRepository.addTextStyle(
-                prjId: prj.id,
-                text: node,
-                name: textStyleModel,
-              );
+              sl.get<ProjectStylesRepository>().assignTextStyle(
+                    styleName: textStyleModel,
+                    node: node,
+                    keyValue: keyValue,
+                  );
             }
             final old = textStyle;
             textStyle.textStyleModel = textStyleModel;
@@ -221,16 +222,20 @@ class TextPrefabControl extends StatelessWidget {
                 textStyle.toJson(),
                 old,
               );
-            } else {
-              if (textStyle.fill!.paletteStyle is int) {
-                ProjectStylesRepository.updateColorStyle(
-                  PaletteModel(
-                    id: textStyle.fill!.paletteStyle! as int,
-                    fill: color,
-                  ),
-                );
-              }
             }
+            //! TODO:
+            /*else {
+              if (textStyle.fill!.paletteStyle is int) {
+                sl.get<ProjectStylesRepository>().updateColorStyle(
+                      ColorStyleModel(
+                        id: textStyle.fill!.paletteStyle! as int,
+                        channelId: Constants.instance.currentChannelID!,
+                        fill: color,
+                        light: textStyle
+                      ),
+                    );
+              }
+            }*/
           },
         ),
       ],

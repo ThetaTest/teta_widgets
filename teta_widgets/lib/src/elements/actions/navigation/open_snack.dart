@@ -9,7 +9,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:recase/recase.dart';
-import 'package:teta_core/src/rendering/nodes_original.dart';
+import 'package:teta_core/src/rendering/nodes.dart';
 import 'package:teta_core/teta_core.dart';
 import 'package:teta_db/teta_db.dart';
 import 'package:teta_widgets/src/core/teta_widget/index.dart';
@@ -52,7 +52,7 @@ class FActionNavigationOpenSnackBar {
               ),
             );
           }
-          final scaffold = NodeRendering.renderTree(nodes);
+          final scaffold = sl.get<NodeRendering>().renderTree(nodes);
           page = page.copyWith(flatList: nodes, scaffold: scaffold);
           final snackBar = SnackBar(
             content: page.scaffold!.toWidget(

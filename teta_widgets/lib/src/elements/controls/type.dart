@@ -194,16 +194,15 @@ class ControlBuilder {
                 as Authenticated)
             .user
             .id;
-        ProjectRepository.track(prj.id, userId);
+        sl.get<ProjectRepository>().track(prj.id, userId);
       } catch (e) {
         Logger.printError('Error tracking generic project update, error: $e');
       }
       unawaited(
-        NodeRepository.changeNode(
-          node: node as NDynamic,
-        ),
+        sl.get<NodeRepository>().changeNode(
+              node: node as NDynamic,
+            ),
       );
-      BlocProvider.of<RefreshCubit>(context).change();
     } catch (e) {
       if (kDebugMode) {
         // ignore: avoid_print
@@ -281,7 +280,6 @@ class ControlBuilder {
             value.toJson(),
             old.toJson(),
           );
-          BlocProvider.of<RefreshCubit>(context).change();
         },
       );
     }
@@ -301,7 +299,6 @@ class ControlBuilder {
             value.toJson(),
             old.toJson(),
           );
-          BlocProvider.of<RefreshCubit>(context).change();
         },
       );
     }
@@ -912,10 +909,9 @@ class ControlBuilder {
           node: node,
           page: BlocProvider.of<PageCubit>(context).state,
           callBack: (final list) async {
-            await ProjectRepository.updatePage(
-              BlocProvider.of<PageCubit>(context).state,
-            );
-            BlocProvider.of<RefreshCubit>(context).change();
+            await sl.get<ProjectRepository>().updatePage(
+                  BlocProvider.of<PageCubit>(context).state,
+                );
           },
         ),
       );
@@ -928,10 +924,9 @@ class ControlBuilder {
           node: node,
           page: BlocProvider.of<PageCubit>(context).state,
           callBack: (final list) async {
-            await ProjectRepository.updatePage(
-              BlocProvider.of<PageCubit>(context).state,
-            );
-            BlocProvider.of<RefreshCubit>(context).change();
+            await sl.get<ProjectRepository>().updatePage(
+                  BlocProvider.of<PageCubit>(context).state,
+                );
           },
         ),
       );
@@ -1020,13 +1015,15 @@ class ControlBuilder {
             value.toJson(),
             old.toJson(),
           );
-        } else {
+        }
+        //! TODO:
+        /* else {
           if (value.paletteStyle is int) {
             ProjectStylesRepository.updateColorStyle(
-              PaletteModel(id: value.paletteStyle! as int, fill: value),
+              ColorStyleModel(id: value.paletteStyle! as int, fill: value),
             );
           }
-        }
+        }*/
       },
     );
   }

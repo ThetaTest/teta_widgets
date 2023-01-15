@@ -2024,14 +2024,13 @@ class ActionElementControlState extends State<ActionElementControl> {
                                   }
 
                                   if (flag) {
-                                    NodeRepository.changeNode(
-                                      node: widget.page.scaffold! as NDynamic,
-                                    );
+                                    sl.get<NodeRepository>().changeNode(
+                                          node:
+                                              widget.page.scaffold! as NDynamic,
+                                        );
                                   }
                                   BlocProvider.of<FocusBloc>(context)
                                       .add(OnFocus(node: widget.node));
-                                  BlocProvider.of<RefreshCubit>(context)
-                                      .change();
                                 },
                                 child: Container(
                                   padding: const EdgeInsets.all(8),

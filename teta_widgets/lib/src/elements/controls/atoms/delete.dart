@@ -34,10 +34,10 @@ class DeleteControlState extends State<DeleteControl> {
   @override
   Widget build(final BuildContext context) {
     height = MediaQuery.of(context).size.height;
-    final parentOfNode = FindNodeRendering.findParentByChildrenIds(
-      flatList: BlocProvider.of<PageCubit>(context).state.flatList ?? [],
-      element: widget.node,
-    );
+    final parentOfNode = sl.get<FindNodeRendering>().findParentByChildrenIds(
+          flatList: BlocProvider.of<PageCubit>(context).state.flatList ?? [],
+          element: widget.node,
+        );
     final prj = BlocProvider.of<FocusProjectCubit>(context).state!;
     final pageState = BlocProvider.of<PageCubit>(context).state;
     if (widget.node.intrinsicState.canHave ==
@@ -58,14 +58,17 @@ class DeleteControlState extends State<DeleteControl> {
               padding: const EdgeInsets.only(top: 8),
               child: CDangerousButton(
                 label: 'Delete node',
-                callback: () async => NodeRepository().removeNodeBetweenNodes(
-                  context: context,
-                  nodes:
-                      BlocProvider.of<PageCubit>(context).state.flatList ?? [],
-                  node: widget.node as NDynamic,
-                  prj: prj,
-                  page: pageState,
-                ),
+                callback: () async =>
+                    sl.get<NodeRepository>().removeNodeBetweenNodes(
+                          context: context,
+                          nodes: BlocProvider.of<PageCubit>(context)
+                                  .state
+                                  .flatList ??
+                              [],
+                          node: widget.node as NDynamic,
+                          prj: prj,
+                          page: pageState,
+                        ),
               ),
             ),
           ],

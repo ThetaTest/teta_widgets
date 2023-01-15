@@ -23,7 +23,7 @@ class Test extends StatelessWidget {
       Logger.printError('Error formating: $e');
     }
     if (result = false) {
-      ProjectRepository.sendToCodeError(code);
+      sl.get<ProjectRepository>().sendToCodeError(code);
     }
     return result;
   }

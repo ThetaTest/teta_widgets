@@ -40,7 +40,7 @@ class _WConcentricPageViewState extends State<WConcentricPageView> {
   @override
   Widget build(final BuildContext context) {
     final isLight = BlocProvider.of<PaletteDarkLightCubit>(context).state;
-    PaletteModel? model;
+    ColorStyleModel? model;
     BlocProvider.of<ColorStylesCubit>(context).state.forEach((final element) {
       if (element.id == widget.fill.paletteStyle) model = element;
       if (element.name == widget.fill.paletteStyle) model = element;
@@ -48,7 +48,10 @@ class _WConcentricPageViewState extends State<WConcentricPageView> {
     return TetaWidget(
       state: widget.state,
       child: ConcentricPageView(
-        colors: [_getConcentricPageColor(model, isLight), _getConcentricPageColor(model, isLight)],
+        colors: [
+          _getConcentricPageColor(model, isLight),
+          _getConcentricPageColor(model, isLight)
+        ],
         itemCount: widget.children.length,
         itemBuilder: (final int index) {
           return widget.children[index].toWidget(state: widget.state);
@@ -59,7 +62,7 @@ class _WConcentricPageViewState extends State<WConcentricPageView> {
 
   // ignore: avoid_positional_boolean_parameters
   HexColor _getConcentricPageColor(
-    final PaletteModel? model,
+    final ColorStyleModel? model,
     final bool isLight,
   ) {
     if (model != null) {

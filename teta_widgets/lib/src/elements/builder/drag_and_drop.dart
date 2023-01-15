@@ -29,10 +29,11 @@ class _DragAndDropBuilderState extends State<DragAndDropBuilder> {
 
   @override
   void initState() {
-    parent = FindNodeRendering.findParentByChildrenIds(
-      flatList: BlocProvider.of<PageCubit>(context).state.flatList ?? <CNode>[],
-      element: widget.state.node,
-    );
+    parent = sl.get<FindNodeRendering>().findParentByChildrenIds(
+          flatList:
+              BlocProvider.of<PageCubit>(context).state.flatList ?? <CNode>[],
+          element: widget.state.node,
+        );
     canReceiveDrag = parent?.globalType == NType.row ||
         parent?.globalType == NType.column ||
         parent?.globalType == NType.listView;
@@ -53,12 +54,12 @@ class _DragAndDropBuilderState extends State<DragAndDropBuilder> {
             parent?.childrenIds.ids.indexOf(widget.state.node.nid);
         if (currentIndex == null) return;
         if (parent == null) return;
-        await NodeRepository.addNodeWithCustomIndex(
-          node: data.node!,
-          parent: parent!,
-          index: onLeft ?? false ? currentIndex : currentIndex + 1,
-          pageId: BlocProvider.of<PageCubit>(context).state.id,
-        );
+        await sl.get<NodeRepository>().addNodeWithCustomIndex(
+              node: data.node!,
+              parent: parent!,
+              index: onLeft ?? false ? currentIndex : currentIndex + 1,
+              pageId: BlocProvider.of<PageCubit>(context).state.id,
+            );
       },
       onMove: (final details) {
         late bool leftFlag;

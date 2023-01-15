@@ -23,7 +23,7 @@ class StyleFillControl extends StatefulWidget {
 
   final bool onlySolid;
   final CNode node;
-  final PaletteModel model;
+  final ColorStyleModel model;
   final FFill fill;
   final Function(FFill, bool, FFill) callBack;
 
@@ -37,7 +37,7 @@ class StyleFillControlState extends State<StyleFillControl> {
     return BlocBuilder<FocusBloc, List<CNode>>(
       builder: (final context, final state) {
         //updateState(state);
-        return BlocBuilder<ColorStylesCubit, List<PaletteModel>>(
+        return BlocBuilder<ColorStylesCubit, List<ColorStyleModel>>(
           builder: (final context, final paletteStyles) {
             //updateState(state);
             return Row(
@@ -56,7 +56,7 @@ class StyleFillControlState extends State<StyleFillControl> {
                         .map((final e) => e.name!)
                         .toList(),
                     onChange: (final value) {
-                      PaletteModel? model;
+                      ColorStyleModel? model;
                       BlocProvider.of<ColorStylesCubit>(context)
                           .state
                           .forEach((final element) {

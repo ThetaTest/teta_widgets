@@ -25,7 +25,7 @@ class WFontAwesome extends StatelessWidget {
   @override
   Widget build(final BuildContext context) {
     final isLight = BlocProvider.of<PaletteDarkLightCubit>(context).state;
-    PaletteModel? model;
+    ColorStyleModel? model;
     BlocProvider.of<ColorStylesCubit>(context).state.forEach((final element) {
       if (element.id == fill.paletteStyle) model = element;
       if (element.name == fill.paletteStyle) model = element;
@@ -41,7 +41,7 @@ class WFontAwesome extends StatelessWidget {
   }
 
   // ignore: avoid_positional_boolean_parameters
-  Color _getIconColor(final PaletteModel? model, final bool isLight) {
+  Color _getIconColor(final ColorStyleModel? model, final bool isLight) {
     final tempOpacity = fill.levels?.first.opacity ?? 1;
     if (model != null) {
       return isLight

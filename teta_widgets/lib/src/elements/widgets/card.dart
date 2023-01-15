@@ -37,7 +37,7 @@ class WCard extends StatelessWidget {
       context,
     );
     final isLight = BlocProvider.of<PaletteDarkLightCubit>(context).state;
-    PaletteModel? model;
+    ColorStyleModel? model;
     BlocProvider.of<ColorStylesCubit>(context).state.forEach((final element) {
       if (element.id == color.paletteStyle) model = element;
       if (element.name == color.paletteStyle) model = element;
@@ -58,7 +58,7 @@ class WCard extends StatelessWidget {
   }
 
   // ignore: avoid_positional_boolean_parameters
-  HexColor _getCardColor(final PaletteModel? model, final bool isLight) {
+  HexColor _getCardColor(final ColorStyleModel? model, final bool isLight) {
     if (model != null) {
       return isLight
           ? HexColor(model.light!.levels!.first.color)

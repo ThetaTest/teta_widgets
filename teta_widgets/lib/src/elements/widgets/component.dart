@@ -8,7 +8,7 @@ import 'package:collection/collection.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:recase/recase.dart';
-import 'package:teta_core/src/rendering/nodes_original.dart';
+import 'package:teta_core/src/rendering/nodes.dart';
 import 'package:teta_core/teta_core.dart';
 import 'package:teta_repositories/src/node_repository.dart';
 import 'package:teta_widgets/src/core/teta_widget/index.dart';
@@ -74,7 +74,7 @@ class _WComponentState extends State<WComponent> {
       Logger.printMessage('enter here');
       if (component?.scaffold == null) {
         final nodes = await fetch(_component, context);
-        final scaffold = NodeRendering.renderTree(nodes);
+        final scaffold = sl.get<NodeRendering>().renderTree(nodes);
         _component = _component.copyWith(flatList: nodes, scaffold: scaffold);
       }
       if (mounted) {
@@ -109,7 +109,7 @@ class _WComponentState extends State<WComponent> {
     final PageObject page,
     final BuildContext context,
   ) async {
-    final list = await NodeRepository.fetchNodesByPage(page.id);
+    final list = await sl.get<NodeRepository>().fetchNodesByPage(page.id);
     final nodes = <CNode>[];
     for (final e in list) {
       nodes.add(
@@ -125,7 +125,7 @@ class _WComponentState extends State<WComponent> {
   Widget body(final BuildContext context) {
     return component != null
         ? BlocProvider<PageCubit>(
-            create: (final context) => PageCubit()
+            create: (final context) => PageCubit(sl.get())
               ..onFocus(
                 prj: prj,
                 page: component!,
