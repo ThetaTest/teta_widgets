@@ -19,6 +19,7 @@ export './firestore_path.dart';
 export './font_size.dart';
 export './font_style.dart';
 export './font_style.dart';
+export './font_weight.dart';
 export './keyboard_type.dart';
 export './main_axis_alignment.dart';
 export './main_axis_size.dart';
