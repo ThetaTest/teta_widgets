@@ -18,6 +18,15 @@ class CalendarCodeTemplate {
     final int loop,
   ) async {
     final dataset = node.body.attributes[DBKeys.datasetInput] as FDataset;
+    final selectedItem =
+        node.body.attributes[DBKeys.selectedItemName] as FTextTypeInput;
+    final selectedItemNameNew = selectedItem
+        .toCode(
+          loop,
+          resultType: ResultTypeEnum.string,
+        )
+        .replaceAll("'", '')
+        .replaceAll(' ', '');
     var firstDecoration = CS
         .boxDecoration(context, node.body, DBKeys.bgFill)
         .replaceFirst('decoration:', '');
@@ -36,12 +45,22 @@ class CalendarCodeTemplate {
       isRequired: false,
       loop: loop,
       additionalCode: '''
-      index = (datasets['Cms stream'] as List<dynamic>).indexOf(datasets['Cms stream'].firstWhere(
+   var list = datasets['${dataset.datasetName}']
+        .where((element) =>
+            element['${dataset.datasetAttrName}'].toString().substring(0, 10) ==
+            date.toString().substring(0, 10))
+        .toList();
+    if (Hive.isBoxOpen('datasets')) {
+      final box = Hive.box('datasets');
+      await box.put('$selectedItemNameNew', list ?? const <dynamic>[]);
+    }
+      index = (datasets['${dataset.datasetName}'] as List<dynamic>).indexOf(datasets['${dataset.datasetName}'].firstWhere(
         (element) =>
           element['${dataset.datasetAttrName}'].toString().substring(0, 10) ==
           date.toString().substring(0, 10)
         )
-      );''',
+      );
+      ''',
     )}
       ${CS.action(
       pageId,
@@ -55,7 +74,7 @@ class CalendarCodeTemplate {
     )}
       dayBuilder: (context, date) {
         final dataset = datasets['${dataset.datasetName}'];
-         final element =
+        final element =
                             (dataset as List<dynamic>).firstWhereOrNull(
                           (e) {
                             final d = DateTime.tryParse(e['${dataset.datasetAttrName}']);

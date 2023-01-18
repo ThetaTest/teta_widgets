@@ -7,6 +7,7 @@ import 'package:paged_vertical_calendar/paged_vertical_calendar.dart';
 import 'package:teta_core/teta_core.dart';
 // Project imports:
 import 'package:teta_widgets/src/core/teta_widget/index.dart';
+import 'package:teta_widgets/src/elements/builder/save_dataset.dart';
 import 'package:teta_widgets/src/elements/index.dart';
 
 // ignore_for_file: public_member_api_docs
@@ -37,6 +38,7 @@ class WCalendar extends StatefulWidget {
     required this.borderRadius,
     required this.shadows,
     required this.children,
+    required this.selectedItemName,
   }) : super(key: key);
 
   final TetaWidgetState state;
@@ -51,6 +53,7 @@ class WCalendar extends StatefulWidget {
   final FFill fill2;
   final FBorderRadius borderRadius;
   final FShadow shadows;
+  final FTextTypeInput selectedItemName;
 
   @override
   State<WCalendar> createState() => _WCalendarState();
@@ -66,11 +69,20 @@ class _WCalendarState extends State<WCalendar> {
   void initState() {
     dataset = null;
     _setDataset();
+
     super.initState();
   }
 
   @override
   Widget build(final BuildContext context) {
+    final selectedItemNameNew = widget.selectedItemName.get(
+      widget.state.params,
+      widget.state.states,
+      widget.state.dataset,
+      widget.state.forPlay,
+      widget.state.loop,
+      context,
+    );
     return PagedVerticalCalendar(
       minDate: DateTime.now(),
       addAutomaticKeepAlives: true,
@@ -147,9 +159,24 @@ class _WCalendarState extends State<WCalendar> {
           ),
         );
       },
-      onDayPressed: (final date) {
+      onDayPressed: (final date) async {
         final data = widget.state.dataset.firstWhere(
-          (final element) => element.getName == 'Cms stream',
+          (final element) => element.getName == widget.value.datasetName,
+        );
+        var selectedItemList = data.getMap
+            .where(
+              (final element) =>
+                  element[widget.value.datasetAttrName]
+                      .toString()
+                      .substring(0, 10) ==
+                  date.toString().substring(0, 10),
+            )
+            .toList();
+        await saveSelectedItemDatasets(
+          selectedItemNameNew,
+          context,
+          selectedItemList,
+          widget.state.dataset,
         );
         final loop = data.getMap.indexOf(
           data.getMap.firstWhere(
@@ -195,5 +222,29 @@ class _WCalendarState extends State<WCalendar> {
         }
       }
     } catch (_) {}
+  }
+}
+
+///when you click day, save event as dataset.
+Future<void> saveSelectedItemDatasets(
+    String selectedItemNameNew,
+    BuildContext context,
+    List<Map<String, dynamic>> selectedItemList,
+    List<DatasetObject> dataset) async {
+  DatasetObject _newMap = DatasetObject(
+    name: 'Selected Items Name',
+    map: [<String, dynamic>{}],
+  );
+  if (selectedItemNameNew.isNotEmpty) {
+    _newMap = _newMap.copyWith(
+      name: selectedItemNameNew,
+      map: selectedItemList,
+    );
+    await saveDatasets(context, dataset, _newMap);
+  } else {
+    _newMap = _newMap.copyWith(
+      map: selectedItemList,
+    );
+    await saveDatasets(context, dataset, _newMap);
   }
 }

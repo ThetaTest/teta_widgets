@@ -126,6 +126,7 @@ class DBKeys {
   static const String showCursor = 'shCrs';
   static const String autoCorrect = 'autoC';
   static const String obscureText = 'obT';
+  static const String selectedItemName = 'sIN';
 
   //
   static const String showBorders = 'bEnb';
@@ -617,6 +618,8 @@ class DynamicAttributes {
           return value is String
               ? FKeyboardType.fromJson(value)
               : FKeyboardType();
+        case DBKeys.selectedItemName:
+          return FTextTypeInput.fromJson(value as Map<String, dynamic>);
         default:
           return value;
       }
@@ -958,6 +961,8 @@ class DynamicAttributes {
         return (value != null)
             ? (value as Map<String, dynamic>)
             : <String, dynamic>{};
+      case DBKeys.selectedItemName:
+        return value != null ? value.toJson() : FTextTypeInput().toJson();
 
       default:
         return <String, dynamic>{};

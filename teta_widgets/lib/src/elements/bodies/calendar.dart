@@ -28,6 +28,8 @@ import 'package:teta_widgets/src/elements/nodes/suggestion.dart';
 import 'package:teta_widgets/src/elements/packages.dart';
 import 'package:teta_widgets/src/elements/widgets/calendar.dart';
 
+import '../index.dart';
+
 const _globalType = NType.calendar;
 
 /// Instrict State of Calendar
@@ -88,6 +90,7 @@ class CalendarBody extends NodeBody {
     DBKeys.shadows: FShadow(),
     DBKeys.fill: FFill(type: FFillType.none),
     DBKeys.bgFill: FFill(),
+    DBKeys.selectedItemName: FTextTypeInput(),
   };
 
   @override
@@ -98,6 +101,13 @@ class CalendarBody extends NodeBody {
           key: DBKeys.datasetInput,
           value: attributes[DBKeys.datasetInput],
           flag: true,
+          valueType: VariableType.string,
+        ),
+        ControlObject(
+          title: 'Clicked Event List',
+          type: ControlType.value,
+          key: DBKeys.selectedItemName,
+          value: attributes[DBKeys.selectedItemName],
           valueType: VariableType.string,
         ),
         ControlObject(
@@ -168,6 +178,8 @@ class CalendarBody extends NodeBody {
           '''
           ${state.toKey}
           ${child ?? children}
+          ${(attributes[DBKeys.selectedItemName] as FTextTypeInput).toJson()}
+          ${(attributes[DBKeys.selectedItemName] as FTextTypeInput).getStateValue(state.states)}
           ${(attributes[DBKeys.action] as FAction).toJson()}, 
           ${(attributes[DBKeys.datasetInput] as FDataset).toJson()}, 
           ${(attributes[DBKeys.textStyle] as FTextStyle).toJson()},
@@ -182,6 +194,7 @@ class CalendarBody extends NodeBody {
         ),
         state: state,
         children: children ?? <CNode>[],
+        selectedItemName: attributes[DBKeys.selectedItemName] as FTextTypeInput,
         value: attributes[DBKeys.datasetInput] as FDataset,
         action: attributes[DBKeys.action] as FAction,
         textStyle: attributes[DBKeys.textStyle] as FTextStyle,
@@ -203,5 +216,10 @@ class CalendarBody extends NodeBody {
     final int pageId,
     final int? loop,
   ) =>
-      CalendarCodeTemplate.toCode(pageId, context, node, loop ?? 0);
+      CalendarCodeTemplate.toCode(
+        pageId,
+        context,
+        node,
+        loop ?? 0,
+      );
 }
