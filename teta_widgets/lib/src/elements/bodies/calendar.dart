@@ -90,7 +90,11 @@ class CalendarBody extends NodeBody {
     DBKeys.shadows: FShadow(),
     DBKeys.fill: FFill(type: FFillType.none),
     DBKeys.bgFill: FFill(),
+    DBKeys.bgTwoFill: FFill(),
     DBKeys.selectedItemName: FTextTypeInput(),
+    DBKeys.borderRadiusTwo: FBorderRadius(),
+    DBKeys.width: FSize(size: '0', unit: SizeUnit.pixel),
+    DBKeys.height: FSize(size: '0', unit: SizeUnit.pixel),
   };
 
   @override
@@ -165,6 +169,29 @@ class CalendarBody extends NodeBody {
           value: attributes[DBKeys.shadows],
           valueType: VariableType.string,
         ),
+        FillControlObject(
+          title: 'Highlight Event Count',
+          key: DBKeys.bgTwoFill,
+          value: attributes[DBKeys.bgTwoFill] as FFill,
+          isImageEnabled: false,
+          isNoneEnabled: true,
+          isOnlySolid: false,
+          isStyled: false,
+        ),
+        ControlObject(
+          title: 'Highlight Event Count Border Radius',
+          type: ControlType.borderRadius,
+          key: DBKeys.borderRadiusTwo,
+          value: attributes[DBKeys.borderRadiusTwo],
+          valueType: VariableType.double,
+        ),
+        SizesControlObject(
+          keys: const [DBKeys.width, DBKeys.height],
+          values: <FSize>[
+            attributes[DBKeys.width] as FSize,
+            attributes[DBKeys.height] as FSize,
+          ],
+        ),
       ];
 
   @override
@@ -180,8 +207,8 @@ class CalendarBody extends NodeBody {
           ${child ?? children}
           ${(attributes[DBKeys.selectedItemName] as FTextTypeInput).toJson()}
           ${(attributes[DBKeys.selectedItemName] as FTextTypeInput).getStateValue(state.states)}
-          ${(attributes[DBKeys.action] as FAction).toJson()}, 
-          ${(attributes[DBKeys.datasetInput] as FDataset).toJson()}, 
+          ${(attributes[DBKeys.action] as FAction).toJson()},
+          ${(attributes[DBKeys.datasetInput] as FDataset).toJson()},
           ${(attributes[DBKeys.textStyle] as FTextStyle).toJson()},
           ${(attributes[DBKeys.textStyle2] as FTextStyle).toJson()},
           ${(attributes[DBKeys.margins] as FMargins).toJson()},
@@ -190,6 +217,10 @@ class CalendarBody extends NodeBody {
           ${(attributes[DBKeys.shadows] as FShadow).toJson()},
           ${(attributes[DBKeys.fill] as FFill).toJson()},
           ${(attributes[DBKeys.bgFill] as FFill).toJson()},
+          ${(attributes[DBKeys.bgTwoFill] as FFill).toJson()},
+          ${(attributes[DBKeys.borderRadiusTwo] as FBorderRadius).toJson()},
+          ${(attributes[DBKeys.width] as FSize).toJson()}
+          ${(attributes[DBKeys.height] as FSize).toJson()}
           ''',
         ),
         state: state,
@@ -205,6 +236,11 @@ class CalendarBody extends NodeBody {
         shadows: attributes[DBKeys.shadows] as FShadow,
         fill: attributes[DBKeys.fill] as FFill,
         fill2: attributes[DBKeys.bgFill] as FFill,
+        fillEventCount: attributes[DBKeys.bgTwoFill] as FFill,
+        borderRaiudEventCount:
+            attributes[DBKeys.borderRadiusTwo] as FBorderRadius,
+        widthEventCount: attributes[DBKeys.width] as FSize,
+        heightEventCount: attributes[DBKeys.height] as FSize,
       );
 
   @override

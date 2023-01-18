@@ -39,6 +39,10 @@ class WCalendar extends StatefulWidget {
     required this.shadows,
     required this.children,
     required this.selectedItemName,
+    required this.fillEventCount,
+    required this.borderRaiudEventCount,
+    required this.widthEventCount,
+    required this.heightEventCount,
   }) : super(key: key);
 
   final TetaWidgetState state;
@@ -51,10 +55,13 @@ class WCalendar extends StatefulWidget {
   final FMargins padding;
   final FFill fill;
   final FFill fill2;
+  final FFill fillEventCount;
   final FBorderRadius borderRadius;
   final FShadow shadows;
   final FTextTypeInput selectedItemName;
-
+  final FBorderRadius borderRaiudEventCount;
+  final FSize widthEventCount;
+  final FSize heightEventCount;
   @override
   State<WCalendar> createState() => _WCalendarState();
 }
@@ -88,6 +95,7 @@ class _WCalendarState extends State<WCalendar> {
       addAutomaticKeepAlives: true,
       dayBuilder: (final context, final date) {
         var eventExists = false;
+        var eventCounter = 0;
         final dayFlag = list.firstWhereOrNull(
           (final e) =>
               e.date.year == date.year &&
@@ -99,21 +107,33 @@ class _WCalendarState extends State<WCalendar> {
             (final e) => e.getName == widget.value.datasetName,
           );
           if (dataset != null && widget.value.datasetAttrName != null) {
-            final element = dataset!.getMap.firstWhereOrNull((final element) {
+            final element = dataset!.getMap.where((final element) {
               final a = DateTime.tryParse(
                 element[widget.value.datasetAttrName] as String? ?? '',
               );
               return a?.year == date.year &&
                   a?.month == date.month &&
                   a?.day == date.day;
-            });
-            eventExists = element != null;
+            }).toList();
+            eventExists = element.isNotEmpty;
+            eventCounter = element.length;
           }
           if (dataset != null) {
             list.add(DateCalendarObject(date: date, hasEvents: eventExists));
           }
         } else if (dayFlag.hasEvents) {
           eventExists = true;
+          if (dataset != null) {
+            final element = dataset!.getMap.where((final element) {
+              final a = DateTime.tryParse(
+                element[widget.value.datasetAttrName] as String? ?? '',
+              );
+              return a?.year == date.year &&
+                  a?.month == date.month &&
+                  a?.day == date.day;
+            }).toList();
+            eventCounter = element.length;
+          }
         }
         return Container(
           margin: widget.margins.get(context),
@@ -139,6 +159,26 @@ class _WCalendarState extends State<WCalendar> {
                 forPlay: widget.state.forPlay,
                 loop: widget.state.loop,
               ),
+              if (eventExists)
+                Wrap(
+                  children: List.generate(1, (index) {
+                    return Padding(
+                      padding: const EdgeInsets.all(1.0),
+                      child: Container(
+                        width: widget.widthEventCount
+                            .get(context: context, isWidth: true),
+                        height: widget.heightEventCount
+                            .get(context: context, isWidth: false),
+                        decoration: TetaBoxDecoration.get(
+                          context: context,
+                          fill: widget.fillEventCount.get(context),
+                          borderRadius: widget.borderRaiudEventCount,
+                          shadow: widget.shadows,
+                        ),
+                      ),
+                    );
+                  }).toList(),
+                )
             ],
           ),
         );

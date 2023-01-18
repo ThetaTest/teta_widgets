@@ -83,6 +83,15 @@ class CalendarCodeTemplate {
                                 d?.day == date.day;
                           },
                         );
+      final eventCount =
+                            (dataset as List<dynamic>).where(
+                          (e) {
+                            final d = DateTime.tryParse(e['${dataset.datasetAttrName}']);
+                            return d?.year == date.year &&
+                                d?.month == date.month &&
+                                d?.day == date.day;
+                          },
+                        ).length;
         return Container(
           ${CS.margin(context, node.body, isMargin: true)}
           ${CS.margin(context, node.body, isMargin: false)}
@@ -95,6 +104,19 @@ class CalendarCodeTemplate {
                 '\${date.day}',
                 ${CS.textStyle(context, node.body, DBKeys.textStyle2)}
               ),
+              if (element != null)
+                Wrap(
+                  children: List.generate(1, (index) {
+                    return Padding(
+                      padding: const EdgeInsets.all(1.0),
+                      child: Container(
+                        ${CS.size(context, node.body, isWidth: true)}
+                        ${CS.size(context, node.body, isWidth: false)}
+                        ${CS.boxDecoration(context, node.body, DBKeys.bgTwoFill)}
+                      ),
+                    );
+                  }).toList(),
+                )
             ],
           ),
         );

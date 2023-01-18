@@ -44,6 +44,7 @@ class DBKeys {
   static const String maxHeight = 'mahgh';
   static const String textAlign = 'txtAlg';
   static const String borderRadius = 'bR';
+  static const String borderRadiusTwo = 'bRT';
   static const String crossAxisAlignment = 'cAA';
   static const String mainAxisAlignment = 'mAA';
   static const String mainAxisSize = 'mAS';
@@ -52,6 +53,7 @@ class DBKeys {
   static const String textFill = 'txtF';
   static const String activeFill = 'actF';
   static const String bgFill = 'bgFl';
+  static const String bgTwoFill = 'bgTwoFL';
   static const String startAt = 'stAt';
   static const String shadows = 'shd';
   static const String borders = 'brd';
@@ -262,7 +264,11 @@ class DynamicAttributes {
           return FPhysic.fromJson(value as String);
         case DBKeys.bgFill:
           return FFill().fromJson(value as Map<String, dynamic>);
+        case DBKeys.bgTwoFill:
+          return FFill().fromJson(value as Map<String, dynamic>);
         case DBKeys.borderRadius:
+          return FBorderRadius.fromJson(value as dynamic);
+        case DBKeys.borderRadiusTwo:
           return FBorderRadius.fromJson(value as dynamic);
         case DBKeys.borders:
           return FBorder.fromJson(value as Map<String, dynamic>);
@@ -645,7 +651,11 @@ class DynamicAttributes {
         return value != null ? value.toJson() : FPhysic().toJson();
       case DBKeys.bgFill:
         return value != null ? value.toJson() : FFill().toJson();
+      case DBKeys.bgTwoFill:
+        return value != null ? value.toJson() : FFill().toJson();
       case DBKeys.borderRadius:
+        return value != null ? value.toJson() : FBorderRadius().toJson();
+      case DBKeys.borderRadiusTwo:
         return value != null ? value.toJson() : FBorderRadius().toJson();
       case DBKeys.borders:
         return value != null ? value.toJson() : FBorder().toJson();
