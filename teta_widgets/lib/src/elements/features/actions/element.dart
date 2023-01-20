@@ -235,7 +235,7 @@ class FActionElement extends Equatable {
     ) as ActionFirebaseAnalytics?;
     actionFirebaseMessages = convertDropdownToValue(
             ActionFirebaseMessages.values, doc['aFirebaseMessages'] as String?)
-        as ActionFirebaseMessages;
+        as ActionFirebaseMessages?;
     actionQonversion = convertDropdownToValue(
       ActionQonversion.values,
       doc['aQonversion'] as String?,
