@@ -10,6 +10,7 @@ import 'package:teta_core/teta_core.dart';
 import 'package:teta_repositories/src/node_repository.dart';
 import 'package:teta_repositories/src/project_repository.dart';
 import 'package:teta_repositories/src/project_styles_repository.dart';
+import 'package:teta_repositories/teta_repositories.dart';
 // Project imports:
 import 'package:teta_widgets/src/elements/controls/atoms/action.dart';
 import 'package:teta_widgets/src/elements/controls/atoms/aligns.dart';
@@ -187,28 +188,10 @@ class ControlBuilder {
     final dynamic old,
   ) async {
     final prj = BlocProvider.of<FocusProjectCubit>(context).state!;
-    final page = BlocProvider.of<PageCubit>(context).state;
-    try {
-      try {
-        final userId = (BlocProvider.of<AuthenticationBloc>(context).state
-                as Authenticated)
-            .user
-            .id;
-        sl.get<ProjectRepository>().track(prj.id, userId);
-      } catch (e) {
-        Logger.printError('Error tracking generic project update, error: $e');
-      }
-      unawaited(
-        sl.get<NodeRepository>().changeNode(
-              node: node as NDynamic,
-            ),
-      );
-    } catch (e) {
-      if (kDebugMode) {
-        // ignore: avoid_print
-        print(e);
-      }
-    }
+    sl.get<ProjectRepository>().track(prj.id);
+    sl.get<NodeRepository>().changeNode(
+          node: node as NDynamic,
+        );
   }
 
   /// Returns a control widget based of [control] value.
@@ -309,7 +292,6 @@ class ControlBuilder {
           key: ValueKey(
             '${node.nid} ${(node.body.attributes[control.key] as FTextTypeInput).value}',
           ),
-          node: node,
           collectionId:
               (node.body.attributes[control.key] as FTextTypeInput).value ?? '',
           callBack: (final value, final old) {
@@ -330,8 +312,6 @@ class ControlBuilder {
         description: control.description,
         control: CurrentSongControl(
           key: ValueKey('${node.nid}'),
-          node: node,
-          page: BlocProvider.of<PageCubit>(context).state,
           title: control.title ?? 'Current audio player data set',
           value: control.value as FTextTypeInput,
           callBack: (final value, final old) => ControlBuilder.toDB(
@@ -349,8 +329,6 @@ class ControlBuilder {
         description: control.description,
         control: AudioControllerControl(
           key: ValueKey('${node.nid}'),
-          node: node,
-          page: BlocProvider.of<PageCubit>(context).state,
           title: control.title ?? 'Audio Controller',
           value: control.value as FTextTypeInput,
           callBack: (final value, final old) => ControlBuilder.toDB(
@@ -368,8 +346,6 @@ class ControlBuilder {
         description: control.description,
         control: MapControllerControl(
           key: ValueKey('${node.nid}'),
-          node: node,
-          page: BlocProvider.of<PageCubit>(context).state,
           title: control.title ?? 'Map Controller',
           value: control.value as FTextTypeInput,
           callBack: (final value, final old) => ControlBuilder.toDB(
@@ -388,8 +364,6 @@ class ControlBuilder {
         description: control.description,
         control: GoogleMapsControl(
           key: ValueKey('${node.nid}'),
-          node: node,
-          page: BlocProvider.of<PageCubit>(context).state,
           title: control.title ?? 'Google Maps Controller',
           value: control.value as FTextTypeInput,
           callBack: (final value, final old) => ControlBuilder.toDB(
@@ -408,8 +382,6 @@ class ControlBuilder {
         description: control.description,
         control: GoogleMapsCubitControl(
           key: ValueKey('${node.nid}'),
-          node: node,
-          page: BlocProvider.of<PageCubit>(context).state,
           title: control.title ?? 'Google Maps Cubit',
           value: control.value as FTextTypeInput,
           callBack: (final value, final old) => ControlBuilder.toDB(
@@ -428,8 +400,6 @@ class ControlBuilder {
         description: control.description,
         control: CameraControllerControl(
           key: ValueKey('${node.nid}'),
-          node: node,
-          page: BlocProvider.of<PageCubit>(context).state,
           title: control.title ?? 'Camera Controller',
           value: control.value as FTextTypeInput,
           callBack: (final value, final old) => ControlBuilder.toDB(
@@ -447,8 +417,6 @@ class ControlBuilder {
         description: control.description,
         control: WebViewControllerControl(
           key: ValueKey('${node.nid}'),
-          node: node,
-          page: BlocProvider.of<PageCubit>(context).state,
           title: control.title ?? 'WebView Controller',
           value: control.value as FTextTypeInput,
           callBack: (final value, final old) => ControlBuilder.toDB(
@@ -466,9 +434,6 @@ class ControlBuilder {
         description: control.description,
         control: ActionControl(
           key: ValueKey('${node.nid}'),
-          prj: BlocProvider.of<FocusProjectCubit>(context).state!,
-          page: BlocProvider.of<PageCubit>(context).state,
-          node: node,
           action: control.value as FAction,
           callBack: (final value, final old) {
             node.body.attributes[DBKeys.action] = value;
@@ -488,7 +453,6 @@ class ControlBuilder {
         description: control.description,
         control: AlignsControl(
           key: ValueKey('${node.nid}'),
-          node: node,
           align: control.value as FAlign,
           callBack: (final value, final old) {
             node.body.attributes[control.key] = value;
@@ -508,7 +472,6 @@ class ControlBuilder {
         description: control.description,
         control: PhysicsControl(
           key: ValueKey('${node.nid}'),
-          node: node,
           physic: control.value as FPhysic,
           callBack: (final value, final old) {
             node.body.attributes[control.key] = value;
@@ -528,7 +491,6 @@ class ControlBuilder {
         description: control.description,
         control: BorderRadiusControl(
           key: ValueKey('${node.nid}'),
-          node: node,
           borderRadius: control.value as FBorderRadius,
           callBack: (final value, final old) => ControlBuilder.toDB(
             node,
@@ -545,7 +507,6 @@ class ControlBuilder {
         description: control.description,
         control: BordersControl(
           key: ValueKey('${node.nid}'),
-          node: node,
           borders: control.value as FBorder,
           callBack: (final value, final old) => ControlBuilder.toDB(
             node,
@@ -560,9 +521,6 @@ class ControlBuilder {
     if (control.type == ControlType.component) {
       return ComponentControl(
         key: ValueKey('${node.nid}'),
-        prj: BlocProvider.of<FocusProjectCubit>(context).state!,
-        page: BlocProvider.of<PageCubit>(context).state,
-        node: node,
         callBack: (final value, final old) => ControlBuilder.toDB(
           node,
           context,
@@ -585,7 +543,6 @@ class ControlBuilder {
         description: control.description,
         control: CrossAxisAlignmentControls(
           key: ValueKey('${node.nid}'),
-          node: node,
           crossAxisAlignment: control.value as FCrossAxisAlignment,
           callBack: (final value, final old) => ControlBuilder.toDB(
             node,
@@ -603,8 +560,6 @@ class ControlBuilder {
         control: SrcImageControl(
           key: ValueKey('${node.nid}'),
           title: 'Image',
-          node: node,
-          page: BlocProvider.of<PageCubit>(context).state,
           image: control.value as FTextTypeInput,
           callBack: (final value, final old) => ControlBuilder.toDB(
             node,
@@ -622,7 +577,6 @@ class ControlBuilder {
         description: control.description,
         control: IconControl(
           key: ValueKey('${node.nid}'),
-          node: node,
           icon: control.value as String,
           callBack: (final value, final old) {
             node.body.attributes[control.key] = value;
@@ -642,7 +596,6 @@ class ControlBuilder {
         description: control.description,
         control: IconFontAwesomeControl(
           key: ValueKey('${node.nid}'),
-          node: node,
           icon: control.value as String,
           callBack: (final value, final old) {
             node.body.attributes[control.key] = value;
@@ -662,7 +615,6 @@ class ControlBuilder {
         description: control.description,
         control: IconFeatherControl(
           key: ValueKey('${node.nid}'),
-          node: node,
           icon: control.value as String,
           callBack: (final value, final old) {
             node.body.attributes[control.key] = value;
@@ -682,7 +634,6 @@ class ControlBuilder {
         description: control.description,
         control: IconLineControl(
           key: ValueKey('${node.nid}'),
-          node: node,
           icon: control.value as String,
           callBack: (final value, final old) {
             node.body.attributes[control.key] = value;
@@ -702,7 +653,6 @@ class ControlBuilder {
         description: control.description,
         control: MainAxisAlignmentControls(
           key: ValueKey('${node.nid}'),
-          node: node,
           mainAxisAlignment: control.value as FMainAxisAlignment,
           callBack: (final value, final old) => ControlBuilder.toDB(
             node,
@@ -719,7 +669,6 @@ class ControlBuilder {
         description: control.description,
         control: GoogleMapsMapStyleControls(
           key: ValueKey('${node.nid}'),
-          node: node,
           mapStyle: control.value as FGoogleMapsMapStyle,
           callBack: (final value, final old) => ControlBuilder.toDB(
             node,
@@ -736,7 +685,6 @@ class ControlBuilder {
         description: control.description,
         control: MainAxisSizeControl(
           key: ValueKey('${node.nid}'),
-          node: node,
           size: control.value as FMainAxisSize,
           callBack: (final value, final old) => ControlBuilder.toDB(
             node,
@@ -753,7 +701,6 @@ class ControlBuilder {
         description: control.description,
         control: Margins(
           key: ValueKey('${node.nid}'),
-          node: node,
           title: 'Margins',
           value: control.value as FMargins,
           callBack: (final value, final old) {
@@ -774,7 +721,6 @@ class ControlBuilder {
         description: control.description,
         control: Margins(
           key: ValueKey('${node.nid}'),
-          node: node,
           title: 'Padding',
           value: control.value as FMargins,
           callBack: (final value, final old) {
@@ -797,8 +743,6 @@ class ControlBuilder {
         control: TextControl(
           key: ValueKey('${node.nid}'),
           valueType: control.valueType,
-          node: node,
-          page: BlocProvider.of<PageCubit>(context).state,
           title: control.title ?? 'Value',
           value: control.value as FTextTypeInput,
           callBack: (final value, final old) {
@@ -819,8 +763,6 @@ class ControlBuilder {
         description: control.description,
         control: DatasetControl(
           key: ValueKey('${node.nid}'),
-          node: node,
-          page: BlocProvider.of<PageCubit>(context).state,
           title: control.title ?? 'From',
           value: control.value as FDataset,
           isAttrRequired: control.flag,
@@ -838,9 +780,6 @@ class ControlBuilder {
       return TextPrefabControl(
         title: control.title,
         key: ValueKey('${node.nid}'),
-        node: node,
-        prj: BlocProvider.of<FocusProjectCubit>(context).state!,
-        page: BlocProvider.of<PageCubit>(context).state,
         textStyle: control.value as FTextStyle,
         keyValue: control.key,
       );
@@ -848,8 +787,6 @@ class ControlBuilder {
     if (control.type == ControlType.httpParamsControl) {
       return HttpParamsControl(
         key: ValueKey('${node.nid}'),
-        node: node,
-        page: BlocProvider.of<PageCubit>(context).state,
         title: control.title,
         list: control.value as List<MapElement>,
         callBack: (final value, final old) => {
@@ -867,7 +804,6 @@ class ControlBuilder {
     if (control.type == ControlType.httpMethodControl) {
       return HttpMethodControl(
         key: ValueKey('${node.nid}'),
-        node: node,
         title: control.title,
         httpMethod: control.value as String,
         callBack: (final value, final old) => {
@@ -885,7 +821,6 @@ class ControlBuilder {
     if (control.type == ControlType.apiCallsRequestControl) {
       return ApiCallsRequestControl(
         key: ValueKey('${node.nid}'),
-        node: node,
         requestName: control.value as String,
         callBack: (final value, final old, final apiCallsSelectedRequest) => {
           node.body.attributes[control.key] = value,
@@ -906,11 +841,10 @@ class ControlBuilder {
         description: control.description,
         control: PageParamsControl(
           key: ValueKey('${node.nid}'),
-          node: node,
-          page: BlocProvider.of<PageCubit>(context).state,
           callBack: (final list) async {
-            await sl.get<ProjectRepository>().updatePage(
-                  BlocProvider.of<PageCubit>(context).state,
+            await sl.get<PageRepository>().updatePage(
+                  (BlocProvider.of<PageCubit>(context).state as PageLoaded)
+                      .page,
                 );
           },
         ),
@@ -921,11 +855,10 @@ class ControlBuilder {
         description: control.description,
         control: StatesControl(
           key: ValueKey('${node.nid}'),
-          node: node,
-          page: BlocProvider.of<PageCubit>(context).state,
           callBack: (final list) async {
-            await sl.get<ProjectRepository>().updatePage(
-                  BlocProvider.of<PageCubit>(context).state,
+            await sl.get<PageRepository>().updatePage(
+                  (BlocProvider.of<PageCubit>(context).state as PageLoaded)
+                      .page,
                 );
           },
         ),
@@ -963,7 +896,6 @@ class ControlBuilder {
       control: FlagControl(
         key: ValueKey('${BlocProvider.of<FocusBloc>(context).state.first.nid}'),
         title: control.title,
-        node: BlocProvider.of<FocusBloc>(context).state.first as NDynamic,
         keyValue: control.key,
         value: control.value as bool,
         callBack: (final value, final old) {
@@ -995,7 +927,6 @@ class ControlBuilder {
     return FillControl(
       title: control.title.isNotEmpty ? control.title : 'Fill',
       key: ValueKey('${BlocProvider.of<FocusBloc>(context).state.first.nid}'),
-      node: BlocProvider.of<FocusBloc>(context).state.first,
       isImageEnabled: isImageEnabled,
       isNoneEnabled: isNoneEnabled,
       type:
@@ -1056,7 +987,6 @@ class ControlBuilder {
   }) {
     return SizeControl(
       key: ValueKey('${BlocProvider.of<FocusBloc>(context).state.first.nid}'),
-      node: BlocProvider.of<FocusBloc>(context).state.first,
       isWidth: control.isWidth,
       title: control.title,
       size: control.value,
@@ -1081,7 +1011,6 @@ class ControlBuilder {
   }) {
     return SizesPrefabControl(
       key: ValueKey('${BlocProvider.of<FocusBloc>(context).state.first.nid}'),
-      node: BlocProvider.of<FocusBloc>(context).state.first,
       values: control.values,
     );
   }

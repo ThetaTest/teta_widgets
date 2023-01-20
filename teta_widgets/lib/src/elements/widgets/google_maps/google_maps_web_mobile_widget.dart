@@ -80,7 +80,6 @@ class _WGoogleMapsState extends State<WGoogleMaps> {
   @override
   void initState() {
     super.initState();
-    print('GoogleMapsInitData');
     initData();
   }
 
@@ -193,12 +192,10 @@ class _WGoogleMapsState extends State<WGoogleMaps> {
 
   Future<void> initData() async {
     try {
-      googleMapsKey = BlocProvider.of<FocusProjectCubit>(context)
-              .state!
-              .config
-              ?.googleMapsKey ??
-          '';
-      final page = BlocProvider.of<PageCubit>(context).state;
+      googleMapsKey = (context.read<ConfigCubit>().state as ConfigStateLoaded)
+          .config
+          .googleMapsKey;
+      final page = BlocProvider.of<PageCubit>(context).state as PageLoaded;
       final VariableObject? variable;
 
       variable = page.states.firstWhereOrNull(

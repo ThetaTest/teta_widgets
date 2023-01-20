@@ -16,13 +16,11 @@ import 'package:universal_platform/universal_platform.dart';
 
 class IconFeatherControl extends StatefulWidget {
   const IconFeatherControl({
-    required this.node,
     required this.icon,
     required this.callBack,
     final Key? key,
   }) : super(key: key);
 
-  final CNode node;
   final String icon;
   final Function(String, String) callBack;
 

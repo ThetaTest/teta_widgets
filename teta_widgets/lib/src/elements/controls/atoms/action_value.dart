@@ -11,16 +11,12 @@ import 'package:teta_widgets/src/elements/nodes/node.dart';
 
 class ActionvalueControl extends StatefulWidget {
   const ActionvalueControl({
-    required this.node,
-    required this.page,
     required this.title,
     required this.actionValue,
     required this.callBack,
     final Key? key,
   }) : super(key: key);
 
-  final CNode node;
-  final PageObject page;
   final String title;
   final FTextTypeInput actionValue;
   final Function(FTextTypeInput, FTextTypeInput) callBack;

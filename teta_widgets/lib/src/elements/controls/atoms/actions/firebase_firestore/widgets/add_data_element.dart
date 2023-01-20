@@ -3,11 +3,13 @@
 
 // Flutter imports:
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 // Package imports:
 import 'package:teta_core/src/design_system/dropdowns/dropdown.dart';
 import 'package:teta_core/src/design_system/dropdowns/dropdown_for_type.dart';
 import 'package:teta_core/src/design_system/textfield/textfield.dart';
 import 'package:teta_core/src/models/page.dart';
+import 'package:teta_core/teta_core.dart';
 // Project imports:
 import 'package:teta_widgets/src/elements/features/text_type_input.dart';
 
@@ -104,58 +106,88 @@ class AddDataElementState extends State<AddDataElement> {
               },
             ),
           if (value.type == FTextTypeEnum.param)
-            CDropdown(
-              value: widget.page.params
-                      .map((final e) => e.name)
-                      .contains(value.paramName)
-                  ? value.paramName
-                  : null,
-              items:
-                  widget.page.params.map((final e) => e.get as String).toList(),
-              onChange: (final newValue) {
-                final old = value;
-                value.paramName = newValue;
-                widget.callback(value.toJson(), old.toJson());
+            BlocBuilder<PageCubit, PageState>(
+              builder: (final context, final state) {
+                if (state is! PageLoaded) return const SizedBox();
+                return CDropdown(
+                  value: state.params
+                          .map((final e) => e.name)
+                          .contains(value.paramName)
+                      ? value.paramName
+                      : null,
+                  items:
+                      state.params.map((final e) => e.get as String).toList(),
+                  onChange: (final newValue) {
+                    final old = value;
+                    value.paramName = newValue;
+                    widget.callback(value.toJson(), old.toJson());
+                  },
+                );
               },
             ),
           if (value.type == FTextTypeEnum.state)
-            CDropdown(
-              value: widget.page.states
-                      .map((final e) => e.name)
-                      .contains(value.stateName)
-                  ? value.stateName
-                  : null,
-              items: widget.page.states.map((final e) => e.name).toList(),
-              onChange: (final newValue) {
-                final old = value;
-                value.stateName = newValue;
-                widget.callback(value.toJson(), old.toJson());
+            BlocBuilder<PageCubit, PageState>(
+              builder: (final context, final state) {
+                if (state is! PageLoaded) return const SizedBox();
+                return CDropdown(
+                  value: state.states
+                          .map((final e) => e.name)
+                          .contains(value.stateName)
+                      ? value.stateName
+                      : null,
+                  items: state.states.map((final e) => e.name).toList(),
+                  onChange: (final newValue) {
+                    final old = value;
+                    value.stateName = newValue;
+                    widget.callback(value.toJson(), old.toJson());
+                  },
+                );
               },
             ),
           if (value.type == FTextTypeEnum.dataset)
-            CDropdown(
-              value: widget.page.datasets
+            BlocBuilder<PageCubit, PageState>(
+              builder: (final context, final state) {
+                if (state is! PageLoaded) return const SizedBox();
+                return CDropdown(
+                  value: state.datasets
+                          .map((final e) => e.getName)
+                          .where((final element) => element != 'null')
+                          .contains(value.datasetName)
+                      ? value.datasetName
+                      : null,
+                  items: state.datasets
                       .map((final e) => e.getName)
                       .where((final element) => element != 'null')
-                      .contains(value.datasetName)
-                  ? value.datasetName
-                  : null,
-              items: widget.page.datasets
-                  .map((final e) => e.getName)
-                  .where((final element) => element != 'null')
-                  .toList(),
-              onChange: (final newValue) {
-                setState(() {
-                  databaseName = newValue!;
-                });
-                final old = value;
-                value.datasetName = newValue;
-                widget.callback(value.toJson(), old.toJson());
+                      .toList(),
+                  onChange: (final newValue) {
+                    setState(() {
+                      databaseName = newValue!;
+                    });
+                    final old = value;
+                    value.datasetName = newValue;
+                    widget.callback(value.toJson(), old.toJson());
+                  },
+                );
               },
             ),
           if (value.type == FTextTypeEnum.dataset && value.datasetName != null)
-            CDropdown(
-              value: widget.page.datasets
+            BlocBuilder<PageCubit, PageState>(
+              builder: (final context, final state) {
+                if (state is! PageLoaded) return const SizedBox();
+                return CDropdown(
+                  value: state.datasets
+                          .firstWhere(
+                            (final element) =>
+                                element.getName == value.datasetName,
+                          )
+                          .getMap
+                          .first
+                          .keys
+                          .toSet()
+                          .contains(value.datasetAttr)
+                      ? value.datasetAttr
+                      : null,
+                  items: state.datasets
                       .firstWhere(
                         (final element) => element.getName == value.datasetName,
                       )
@@ -163,25 +195,16 @@ class AddDataElementState extends State<AddDataElement> {
                       .first
                       .keys
                       .toSet()
-                      .contains(value.datasetAttr)
-                  ? value.datasetAttr
-                  : null,
-              items: widget.page.datasets
-                  .firstWhere(
-                    (final element) => element.getName == value.datasetName,
-                  )
-                  .getMap
-                  .first
-                  .keys
-                  .toSet()
-                  .toList(),
-              onChange: (final newValue) {
-                setState(() {
-                  databaseAttribute = newValue!;
-                });
-                final old = value;
-                value.datasetAttr = newValue;
-                widget.callback(value.toJson(), old.toJson());
+                      .toList(),
+                  onChange: (final newValue) {
+                    setState(() {
+                      databaseAttribute = newValue!;
+                    });
+                    final old = value;
+                    value.datasetAttr = newValue;
+                    widget.callback(value.toJson(), old.toJson());
+                  },
+                );
               },
             ),
         ],

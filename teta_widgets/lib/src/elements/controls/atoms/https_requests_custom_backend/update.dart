@@ -13,17 +13,11 @@ import 'package:teta_widgets/src/elements/index.dart';
 
 class CustomHttpRequestUpdateControl extends StatelessWidget {
   const CustomHttpRequestUpdateControl({
-    required this.prj,
-    required this.page,
-    required this.node,
     required this.action,
     required this.callback,
     final Key? key,
   }) : super(key: key);
 
-  final ProjectObject prj;
-  final PageObject page;
-  final CNode node;
   final FActionElement action;
   final Function() callback;
 
@@ -41,9 +35,7 @@ class CustomHttpRequestUpdateControl extends StatelessWidget {
           ),
           child: TextControl(
             valueType: VariableType.string,
-            node: node,
             value: action.customHttpRequestURL ?? FTextTypeInput(),
-            page: page,
             title: 'URL',
             callBack: (final value, final old) {
               action.customHttpRequestURL = value;
@@ -60,10 +52,8 @@ class CustomHttpRequestUpdateControl extends StatelessWidget {
           ),
           child: TextControl(
             valueType: VariableType.string,
-            node: node,
             value:
                 action.customHttpRequestExpectedStatusCode ?? FTextTypeInput(),
-            page: page,
             title: 'Status Code',
             callBack: (final value, final old) {
               action.customHttpRequestExpectedStatusCode = value;
@@ -72,8 +62,6 @@ class CustomHttpRequestUpdateControl extends StatelessWidget {
           ),
         ),
         HttpParamsControl(
-          node: node,
-          page: page,
           title: 'Add Params',
           list: action.customHttpRequestList ?? <MapElement>[],
           callBack: (final value, final old) {
@@ -91,8 +79,6 @@ class CustomHttpRequestUpdateControl extends StatelessWidget {
           ),
         ),
         HttpParamsControl(
-          node: node,
-          page: page,
           title: 'Add Body Paramaters',
           list: action.customHttpRequestBody ?? <MapElement>[],
           callBack: (final value, final old) {
@@ -110,8 +96,6 @@ class CustomHttpRequestUpdateControl extends StatelessWidget {
           ),
         ),
         HttpParamsControl(
-          node: node,
-          page: page,
           title: 'Add Headers',
           list: action.customHttpRequestHeader ?? <MapElement>[],
           callBack: (final value, final old) {

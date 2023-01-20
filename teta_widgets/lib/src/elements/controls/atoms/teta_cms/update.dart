@@ -15,17 +15,11 @@ import 'package:teta_widgets/src/elements/nodes/node.dart';
 
 class TetaCmsUpdateControl extends StatelessWidget {
   const TetaCmsUpdateControl({
-    required this.prj,
-    required this.page,
-    required this.node,
     required this.action,
     required this.callback,
     final Key? key,
   }) : super(key: key);
 
-  final ProjectObject prj;
-  final PageObject page;
-  final CNode node;
   final FActionElement action;
   final Function() callback;
 
@@ -51,7 +45,6 @@ class TetaCmsUpdateControl extends StatelessWidget {
           ),
         ),
         CMSCollectionControl(
-          node: node,
           collectionId: action.cmsCollectionId,
           callBack: (final value, final old) {
             action.cmsCollectionId = value;
@@ -59,9 +52,7 @@ class TetaCmsUpdateControl extends StatelessWidget {
           },
         ),
         DBMapControl(
-          node: node,
           list: action.dbData ?? [],
-          page: page,
           callBack: (final value, final old) {
             action.dbData = value;
             callback();
@@ -81,9 +72,7 @@ class TetaCmsUpdateControl extends StatelessWidget {
           ),
           child: TextControl(
             valueType: VariableType.string,
-            node: node,
             value: action.dbFrom ?? FTextTypeInput(),
-            page: page,
             title: 'Document Id',
             callBack: (final value, final old) {
               action.dbFrom = value;

@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:gap/gap.dart';
 import 'package:teta_core/teta_core.dart';
 import 'package:teta_widgets/src/elements/controls/atoms/text.dart';
@@ -8,17 +9,11 @@ import 'package:teta_widgets/src/elements/nodes/dynamic.dart';
 
 class RevenueCatBuyActionWidget extends StatelessWidget {
   const RevenueCatBuyActionWidget({
-    required this.prj,
-    required this.page,
-    required this.node,
     required this.element,
     required this.callback,
     final Key? key,
   }) : super(key: key);
 
-  final ProjectObject prj;
-  final NDynamic node;
-  final PageObject page;
   final FActionElement element;
   final Function(FActionElement, FActionElement) callback;
 
@@ -48,9 +43,7 @@ class RevenueCatBuyActionWidget extends StatelessWidget {
             width: double.maxFinite,
             child: TextControl(
               valueType: VariableType.string,
-              node: node,
               value: element.revenueCatProductIdentifier ?? FTextTypeInput(),
-              page: page,
               title: 'Prod Identifier',
               callBack: (final value, final old) {
                 final old = element;
@@ -70,29 +63,40 @@ class RevenueCatBuyActionWidget extends StatelessWidget {
                 color: Palette.txtPrimary.withOpacity(0.6),
               ),
               const Gap(Grid.small),
-              CDropdown(
-                value: page.states
-                            .map((final e) => e.name)
-                            .where((final element) => element != 'null')
-                            .toList()
-                            .indexWhere(
-                              (final e) => e == element.stateName,
-                            ) !=
-                        -1
-                    ? element.stateName
-                    : null,
-                items: page.states
-                    .map((final e) => e.name)
-                    .where((final element) => element != 'null')
-                    .toList(),
-                onChange: (final newValue) {
-                  if (newValue != null) {
-                    try {
-                      final old = element;
-                      element.stateName = newValue;
-                      callback(element, old);
-                    } catch (_) {}
+              BlocBuilder<PageCubit, PageState>(
+                buildWhen: (final previous, final current) {
+                  if (previous is! PageLoaded || current is! PageLoaded) {
+                    return true;
                   }
+                  return previous.states != current.states;
+                },
+                builder: (final context, final state) {
+                  if (state is! PageLoaded) return const SizedBox();
+                  return CDropdown(
+                    value: state.states
+                                .map((final e) => e.name)
+                                .where((final element) => element != 'null')
+                                .toList()
+                                .indexWhere(
+                                  (final e) => e == element.stateName,
+                                ) !=
+                            -1
+                        ? element.stateName
+                        : null,
+                    items: state.states
+                        .map((final e) => e.name)
+                        .where((final element) => element != 'null')
+                        .toList(),
+                    onChange: (final newValue) {
+                      if (newValue != null) {
+                        try {
+                          final old = element;
+                          element.stateName = newValue;
+                          callback(element, old);
+                        } catch (_) {}
+                      }
+                    },
+                  );
                 },
               ),
             ],

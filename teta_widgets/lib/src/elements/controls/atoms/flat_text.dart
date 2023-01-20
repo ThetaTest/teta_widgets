@@ -12,13 +12,11 @@ import 'package:teta_widgets/src/elements/nodes/node.dart';
 
 class FlatTextControl extends StatefulWidget {
   const FlatTextControl({
-    required this.node,
     required this.value,
     required this.callBack,
     final Key? key,
   }) : super(key: key);
 
-  final CNode node;
   final String value;
   final Function(String, String) callBack;
 
@@ -27,17 +25,13 @@ class FlatTextControl extends StatefulWidget {
 }
 
 class FlatTextControlState extends State<FlatTextControl> {
-  int? nodeId;
   bool? isUpdated;
-  String? name;
   TextEditingController? controller;
 
   @override
   void initState() {
-    nodeId = widget.node.nid;
-    name = widget.value;
     controller = TextEditingController();
-    controller!.text = name!;
+    controller!.text = widget.value;
     super.initState();
   }
 
@@ -46,13 +40,7 @@ class FlatTextControlState extends State<FlatTextControl> {
     return BlocListener<FocusBloc, List<CNode>>(
       listener: (final context, final state) {
         if (state.isNotEmpty) {
-          if (state.first.nid != nodeId) {
-            setState(() {
-              isUpdated = true;
-              controller!.text = widget.value;
-            });
-            nodeId = state.first.nid;
-          }
+          controller!.text = widget.value;
         }
       },
       child: Column(
@@ -67,7 +55,6 @@ class FlatTextControlState extends State<FlatTextControl> {
             hpadding: 4,
             callBack: (final text) {
               final old = widget.value;
-              name = text;
               widget.callBack(text, old);
             },
           ),

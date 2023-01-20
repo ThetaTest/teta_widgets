@@ -14,17 +14,11 @@ import 'package:teta_widgets/src/elements/nodes/node.dart';
 
 class MixPanelSetUserId extends StatelessWidget {
   const MixPanelSetUserId({
-    required this.prj,
-    required this.page,
-    required this.node,
     required this.action,
     required this.callback,
     final Key? key,
   }) : super(key: key);
 
-  final ProjectObject prj;
-  final PageObject page;
-  final CNode node;
   final FActionElement action;
   final Function() callback;
 

@@ -11,13 +11,11 @@ import 'package:teta_widgets/src/elements/index.dart';
 
 class TextDirectionControl extends StatefulWidget {
   const TextDirectionControl({
-    required this.node,
     required this.textDirection,
     required this.callBack,
     final Key? key,
   }) : super(key: key);
 
-  final CNode node;
   final FTextDirection textDirection;
   final Function(FTextDirection, FTextDirection) callBack;
 
@@ -26,14 +24,11 @@ class TextDirectionControl extends StatefulWidget {
 }
 
 class TextDirectionControlState extends State<TextDirectionControl> {
-  int? nodeId;
-  bool? isUpdated;
   String? dropdown;
 
   @override
   void initState() {
     super.initState();
-    nodeId = widget.node.nid;
     dropdown = widget.textDirection.getStringForDropDown;
   }
 
@@ -42,13 +37,9 @@ class TextDirectionControlState extends State<TextDirectionControl> {
     return BlocListener<FocusBloc, List<CNode>>(
       listener: (final context, final state) {
         if (state.isNotEmpty) {
-          if (state.first.nid != nodeId) {
-            setState(() {
-              isUpdated = true;
-              dropdown = widget.textDirection.getStringForDropDown;
-            });
-            nodeId = state.first.nid;
-          }
+          setState(() {
+            dropdown = widget.textDirection.getStringForDropDown;
+          });
         }
       },
       child: BlocBuilder<FocusBloc, List<CNode>>(

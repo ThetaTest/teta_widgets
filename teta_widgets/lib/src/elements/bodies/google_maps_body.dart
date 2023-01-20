@@ -419,11 +419,10 @@ class GoogleMapsBody extends NodeBody {
             (attributes[DBKeys.mapCustomInitialZoomLevel] as FTextTypeInput)
                 .toCode(loop, resultType: ResultTypeEnum.double),
         trackMyLocation: attributes[DBKeys.mapConfigTrackMyLocation] as bool,
-        googleMapsKey: BlocProvider.of<FocusProjectCubit>(context)
-                .state!
+        googleMapsKey:
+            (BlocProvider.of<ConfigCubit>(context).state as ConfigStateLoaded)
                 .config
-                ?.googleMapsKey ??
-            '',
+                .googleMapsKey,
         googleMapsCubitName:
             (attributes[DBKeys.googleMapsCubitController] as FTextTypeInput)
                     .stateName ??

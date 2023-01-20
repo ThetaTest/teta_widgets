@@ -52,8 +52,10 @@ class FAMixpanelSetUserId {
     final BuildContext context,
     final FTextTypeInput? userIdValue,
   ) {
-    final prj = BlocProvider.of<FocusProjectCubit>(context).state!;
-    if (prj.config?.isMixpanelReady ?? false) {
+    final config =
+        (BlocProvider.of<ConfigCubit>(context).state as ConfigStateLoaded)
+            .config;
+    if (config.mixpanel is MixpanelConfigModelInitialized) {
       final userId = userIdValue?.toCode(
             0,
             resultType: ResultTypeEnum.string,

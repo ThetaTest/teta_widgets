@@ -10,14 +10,12 @@ import 'package:teta_widgets/src/elements/index.dart';
 
 class HttpMethodControl extends StatefulWidget {
   const HttpMethodControl({
-    required this.node,
     required this.httpMethod,
     required this.callBack,
     final Key? key,
     this.title,
   }) : super(key: key);
 
-  final CNode node;
   final String? title;
   final String httpMethod;
   final Function(String, String) callBack;
@@ -27,14 +25,11 @@ class HttpMethodControl extends StatefulWidget {
 }
 
 class _HttpMethodControlState extends State<HttpMethodControl> {
-  int? nodeId;
-  bool? isUpdated;
   String? dropdown;
 
   @override
   void initState() {
     super.initState();
-    nodeId = widget.node.nid;
     dropdown = widget.httpMethod;
   }
 
@@ -43,13 +38,7 @@ class _HttpMethodControlState extends State<HttpMethodControl> {
     return BlocListener<FocusBloc, List<CNode>>(
       listener: (final context, final state) {
         if (state.isNotEmpty) {
-          if (state.first.nid != nodeId) {
-            setState(() {
-              isUpdated = true;
-              dropdown = widget.httpMethod;
-            });
-            nodeId = state.first.nid;
-          }
+          dropdown = widget.httpMethod;
         }
       },
       child: BlocBuilder<FocusBloc, List<CNode>>(

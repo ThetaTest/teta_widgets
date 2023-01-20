@@ -53,7 +53,7 @@ class ScaffoldMobile extends StatelessWidget {
 
   @override
   Widget build(final BuildContext context) {
-    final isPage = BlocProvider.of<PageCubit>(context).state.isPage;
+    final isPage = (context.watch<PageCubit>().state as PageLoaded).page.isPage;
     if (!isPage ||
         children.indexWhere(
               (final element) => element.globalType == NType.appBar,
@@ -153,21 +153,25 @@ class ScaffoldMobile extends StatelessWidget {
         );
       }
     }
-    final isPage = BlocProvider.of<PageCubit>(context).state.isPage;
+    final isPage = (context.watch<PageCubit>().state as PageLoaded).page.isPage;
     if (!isPage) return childWids(context);
     return Stack(
       children: [
         childWids(context),
         if (showAppBar)
           Positioned(
-            child: (appBar != null) ? appBar.toWidget(state: state) : const SizedBox(),
+            child: (appBar != null)
+                ? appBar.toWidget(state: state)
+                : const SizedBox(),
           ),
         if (showBottomBar)
           Positioned(
             bottom: 0,
             left: 0,
             right: 0,
-            child: (bottomBar != null) ? bottomBar.toWidget(state: state) : const SizedBox(),
+            child: (bottomBar != null)
+                ? bottomBar.toWidget(state: state)
+                : const SizedBox(),
           ),
         if (showDrawer && !state.forPlay)
           Positioned(

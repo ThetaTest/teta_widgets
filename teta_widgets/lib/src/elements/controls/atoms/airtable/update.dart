@@ -8,17 +8,11 @@ import 'package:teta_widgets/src/elements/nodes/node.dart';
 
 class AirtableUpdateControl extends StatelessWidget {
   const AirtableUpdateControl({
-    required this.prj,
-    required this.node,
-    required this.page,
     required this.action,
     required this.callback,
     final Key? key,
   }) : super(key: key);
 
-  final ProjectObject prj;
-  final CNode node;
-  final PageObject page;
   final FActionElement action;
   final Function() callback;
 
@@ -45,9 +39,7 @@ class AirtableUpdateControl extends StatelessWidget {
         ),
         TextControl(
           valueType: VariableType.string,
-          node: node,
           value: action.airtableRecordName ?? FTextTypeInput(),
-          page: page,
           title: 'Record name',
           callBack: (final value, final old) {
             action.airtableRecordName = value;
@@ -55,9 +47,7 @@ class AirtableUpdateControl extends StatelessWidget {
           },
         ),
         DBMapControl(
-          node: node,
           list: action.dbData ?? <MapElement>[],
-          page: page,
           callBack: (final value, final old) {
             action.dbData = value;
             callback.call();

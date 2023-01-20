@@ -46,8 +46,8 @@ class WIcon extends StatelessWidget {
     final tempOpacity = fill.levels?.first.opacity ?? 1;
     if (model != null) {
       return isLight
-          ? HexColor(model.light!.levels!.first.color)
-          : HexColor(model.fill!.levels!.first.color);
+          ? HexColor(model.light.levels!.first.color)
+          : HexColor(model.fill.levels!.first.color);
     } else {
       return HexColor(fill.levels!.first.color).withOpacity(tempOpacity);
     }

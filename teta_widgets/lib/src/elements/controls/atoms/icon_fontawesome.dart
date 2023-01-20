@@ -16,13 +16,11 @@ import 'package:universal_platform/universal_platform.dart';
 
 class IconFontAwesomeControl extends StatefulWidget {
   const IconFontAwesomeControl({
-    required this.node,
     required this.icon,
     required this.callBack,
     final Key? key,
   }) : super(key: key);
 
-  final CNode node;
   final String icon;
   final Function(String, String) callBack;
 

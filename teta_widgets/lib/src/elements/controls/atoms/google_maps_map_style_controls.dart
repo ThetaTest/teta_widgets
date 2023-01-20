@@ -12,13 +12,11 @@ import 'package:teta_widgets/src/elements/nodes/node.dart';
 
 class GoogleMapsMapStyleControls extends StatefulWidget {
   const GoogleMapsMapStyleControls({
-    required this.node,
     required this.mapStyle,
     required this.callBack,
     final Key? key,
   }) : super(key: key);
 
-  final CNode node;
   final FGoogleMapsMapStyle mapStyle;
   final Function(FGoogleMapsMapStyle, FGoogleMapsMapStyle) callBack;
 
@@ -29,14 +27,11 @@ class GoogleMapsMapStyleControls extends StatefulWidget {
 
 class GoogleMapsMapStyleControlsState
     extends State<GoogleMapsMapStyleControls> {
-  int? nodeId;
-  bool? isUpdated;
   String? dropdown;
 
   @override
   void initState() {
     super.initState();
-    nodeId = widget.node.nid;
     dropdown = widget.mapStyle.getString;
   }
 
@@ -45,13 +40,7 @@ class GoogleMapsMapStyleControlsState
     return BlocListener<FocusBloc, List<CNode>>(
       listener: (final context, final state) {
         if (state.isNotEmpty) {
-          if (state.first.nid != nodeId) {
-            setState(() {
-              isUpdated = true;
-              dropdown = widget.mapStyle.getString;
-            });
-            nodeId = state.first.nid;
-          }
+          dropdown = widget.mapStyle.getString;
         }
       },
       child: BlocBuilder<FocusBloc, List<CNode>>(
@@ -75,13 +64,17 @@ class GoogleMapsMapStyleControlsState
                 value: dropdown,
                 items: [
                   buildMapStyleMenuItem(
-                      'Standard', 'assets/images/standard.png'),
+                    'Standard',
+                    'assets/images/standard.png',
+                  ),
                   buildMapStyleMenuItem('Silver', 'assets/images/silver.png'),
                   buildMapStyleMenuItem('Retro', 'assets/images/retro.png'),
                   buildMapStyleMenuItem('Dark', 'assets/images/dark.png'),
                   buildMapStyleMenuItem('Night', 'assets/images/night.png'),
                   buildMapStyleMenuItem(
-                      'Aubergine', 'assets/images/aubergine.png'),
+                    'Aubergine',
+                    'assets/images/aubergine.png',
+                  ),
                 ],
                 onChange: (final newValue) {
                   if (newValue != null) {

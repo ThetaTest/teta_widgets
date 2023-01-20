@@ -12,18 +12,14 @@ import 'package:teta_widgets/src/elements/nodes/node.dart';
 
 class DatasetControl extends StatefulWidget {
   const DatasetControl({
-    required this.node,
     required this.value,
-    required this.page,
     required this.title,
     required this.callBack,
     final Key? key,
     this.isAttrRequired,
   }) : super(key: key);
 
-  final CNode node;
   final FDataset value;
-  final PageObject page;
   final String title;
   final bool? isAttrRequired;
   final Function(FDataset, FDataset) callBack;

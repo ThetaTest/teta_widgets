@@ -31,7 +31,7 @@ class WCamera extends StatefulWidget {
 class _WCameraState extends State<WCamera> {
   @override
   Widget build(final BuildContext context) {
-    final page = BlocProvider.of<PageCubit>(context).state;
+    final page = BlocProvider.of<PageCubit>(context).state as PageLoaded;
     VariableObject? variable;
     if (widget.controller.type == FTextTypeEnum.param) {
       variable = page.params

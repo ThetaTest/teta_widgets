@@ -12,13 +12,11 @@ import 'package:teta_widgets/src/elements/nodes/node.dart';
 
 class CrossAxisAlignmentControls extends StatefulWidget {
   const CrossAxisAlignmentControls({
-    required this.node,
     required this.crossAxisAlignment,
     required this.callBack,
     final Key? key,
   }) : super(key: key);
 
-  final CNode node;
   final FCrossAxisAlignment crossAxisAlignment;
   final Function(FCrossAxisAlignment, FCrossAxisAlignment) callBack;
 
@@ -29,14 +27,11 @@ class CrossAxisAlignmentControls extends StatefulWidget {
 
 class CrossAxisAlignmentControlsState
     extends State<CrossAxisAlignmentControls> {
-  int? nodeId;
-  bool? isUpdated;
   String? dropdown;
 
   @override
   void initState() {
     super.initState();
-    nodeId = widget.node.nid;
     dropdown = widget.crossAxisAlignment.getString(context);
   }
 
@@ -45,13 +40,9 @@ class CrossAxisAlignmentControlsState
     return BlocListener<FocusBloc, List<CNode>>(
       listener: (final context, final state) {
         if (state.isNotEmpty) {
-          if (state.first.nid != nodeId) {
-            setState(() {
-              isUpdated = true;
-              dropdown = widget.crossAxisAlignment.getString(context);
-            });
-            nodeId = state.first.nid;
-          }
+          setState(() {
+            dropdown = widget.crossAxisAlignment.getString(context);
+          });
         }
       },
       child: BlocBuilder<FocusBloc, List<CNode>>(

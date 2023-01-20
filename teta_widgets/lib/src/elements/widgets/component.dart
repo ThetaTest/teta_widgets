@@ -53,16 +53,16 @@ class _WComponentState extends State<WComponent> {
   }
 
   Future<void> calc() async {
-    prj = BlocProvider.of<FocusProjectCubit>(context).state!;
+    final pages = context.read<PagesCubit>().state;
     PageObject? _component;
-    _component = prj.pages!.firstWhereOrNull(
+    _component = pages.firstWhereOrNull(
       (final element) => element.name == widget.componentName,
     );
 
     if (_component != null) {
       _component = _component.copyWith(
         states: [
-          ..._component.states
+          ..._component.defaultStates
               .map((final e) => e.toJson())
               .map(VariableObject.fromJson)
               .toList()
@@ -110,8 +110,9 @@ class _WComponentState extends State<WComponent> {
     final BuildContext context,
   ) async {
     final list = await sl.get<NodeRepository>().fetchNodesByPage(page.id);
+    if (list.error != null) return [];
     final nodes = <CNode>[];
-    for (final e in list) {
+    for (final e in list.data!) {
       nodes.add(
         CNode.fromJson(
           e as Map<String, dynamic>,
@@ -127,15 +128,12 @@ class _WComponentState extends State<WComponent> {
         ? BlocProvider<PageCubit>(
             create: (final context) => PageCubit(sl.get())
               ..onFocus(
-                prj: prj,
                 page: component!,
-                context: context,
                 forPlay: widget.state.forPlay,
-                isComponent: true,
               ),
-            child: BlocBuilder<PageCubit, PageObject>(
-              builder: (final context, final page) {
-                return (page.scaffold == null)
+            child: BlocBuilder<PageCubit, PageState>(
+              builder: (final context, final state) {
+                return (state is! PageLoaded)
                     ? const SizedBox()
                     : NodeSelection(
                         state: widget.state,
@@ -144,13 +142,13 @@ class _WComponentState extends State<WComponent> {
                           state: widget.state,
                           child: IgnorePointer(
                             ignoring: !widget.state.forPlay,
-                            child: page.scaffold!.toWidget(
+                            child: state.page.scaffold.toWidget(
                               state: widget.state.copyWith(
                                 params: (widget.paramsToSend != null)
                                     ? getVariableObjectsFromParams(page)
-                                    : page.params,
-                                states: page.states,
-                                dataset: page.datasets,
+                                    : state.params,
+                                states: state.states,
+                                dataset: state.datasets,
                               ),
                             ),
                           ),

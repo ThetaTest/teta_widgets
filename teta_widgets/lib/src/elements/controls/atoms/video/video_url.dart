@@ -15,13 +15,11 @@ import 'package:youtube_player_iframe/youtube_player_iframe.dart';
 
 class VideoUrlControl extends StatefulWidget {
   const VideoUrlControl({
-    required this.node,
     required this.value,
     required this.callBack,
     final Key? key,
   }) : super(key: key);
 
-  final CNode node;
   final FTextTypeInput value;
   final Function(FTextTypeInput, FTextTypeInput) callBack;
 

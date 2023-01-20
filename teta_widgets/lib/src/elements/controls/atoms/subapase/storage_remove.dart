@@ -16,17 +16,11 @@ import 'package:teta_widgets/src/elements/nodes/node.dart';
 
 class SupabaseStorageRemoveControl extends StatelessWidget {
   const SupabaseStorageRemoveControl({
-    required this.prj,
-    required this.page,
-    required this.node,
     required this.action,
     required this.callback,
     final Key? key,
   }) : super(key: key);
 
-  final ProjectObject prj;
-  final PageObject page;
-  final CNode node;
   final FActionElement action;
   final Function() callback;
 
@@ -38,9 +32,7 @@ class SupabaseStorageRemoveControl extends StatelessWidget {
       children: [
         TextControl(
           valueType: VariableType.string,
-          node: node,
           value: action.dbFrom ?? FTextTypeInput(),
-          page: page,
           title: 'Bucket ID',
           callBack: (final value, final old) {
             action.dbFrom = value;
@@ -49,9 +41,7 @@ class SupabaseStorageRemoveControl extends StatelessWidget {
         ),
         TextControl(
           valueType: VariableType.string,
-          node: node,
           value: action.valueTextTypeInput ?? FTextTypeInput(),
-          page: page,
           title: 'File path',
           callBack: (final value, final old) {
             action.valueTextTypeInput = value;
@@ -60,8 +50,6 @@ class SupabaseStorageRemoveControl extends StatelessWidget {
         ),
         const Gap(Grid.small),
         HttpParamsControl(
-          node: node,
-          page: page,
           title: 'Add Body Paramaters',
           list: action.customHttpRequestBody ?? <MapElement>[],
           callBack: (final value, final old) {
@@ -79,8 +67,6 @@ class SupabaseStorageRemoveControl extends StatelessWidget {
           ),
         ),
         HttpParamsControl(
-          node: node,
-          page: page,
           title: 'Add Headers',
           list: action.customHttpRequestHeader ?? <MapElement>[],
           callBack: (final value, final old) {

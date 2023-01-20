@@ -10,13 +10,11 @@ import 'package:teta_widgets/src/elements/nodes/node.dart';
 
 class VideoStartAtControl extends StatefulWidget {
   const VideoStartAtControl({
-    required this.node,
     required this.startAt,
     required this.callBack,
     final Key? key,
   }) : super(key: key);
 
-  final CNode node;
   final int startAt;
   final Function(int, int) callBack;
 

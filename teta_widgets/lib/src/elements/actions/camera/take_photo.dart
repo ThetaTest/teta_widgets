@@ -18,14 +18,15 @@ class FACameraTakePhoto {
     final TetaWidgetState state,
     final String? stateName,
   ) async {
-    final page = BlocProvider.of<PageCubit>(context).state;
+    final page = BlocProvider.of<PageCubit>(context).state as PageLoaded;
     final stateFound = page.states.firstWhereOrNull(
       (final e) => e.type == VariableType.cameraController,
     );
     final controller = stateFound?.controller;
     if (controller != null) {
       final file = await controller.takePicture();
-      final index = state.states.indexWhere((final element) => element.name == stateName);
+      final index =
+          state.states.indexWhere((final element) => element.name == stateName);
       state.states[index].file = file;
     }
   }
@@ -37,8 +38,8 @@ class FACameraTakePhoto {
   ) {
     final page = getPageOnToCode(pageId, context);
     if (page == null) return '';
-    final state =
-        page.states.firstWhereOrNull((final e) => e.type == VariableType.cameraController);
+    final state = page.states
+        .firstWhereOrNull((final e) => e.type == VariableType.cameraController);
     if (state == null || stateName == null) return '';
     final rc = ReCase(state.name);
     final fileStateName = ReCase(stateName);

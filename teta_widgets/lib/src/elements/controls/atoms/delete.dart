@@ -15,12 +15,10 @@ import 'package:teta_widgets/src/elements/nodes/node.dart';
 
 class DeleteControl extends StatefulWidget {
   const DeleteControl({
-    required this.node,
     required this.callBack,
     final Key? key,
   }) : super(key: key);
 
-  final CNode node;
   final Function(bool) callBack;
 
   @override

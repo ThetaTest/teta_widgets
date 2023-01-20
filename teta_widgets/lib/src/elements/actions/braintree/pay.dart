@@ -39,20 +39,22 @@ class FActionBraintreeBuy {
     final String? stateName, {
     final int loop = 0,
   }) {
-    final prj = BlocProvider.of<FocusProjectCubit>(context).state!;
-    final isSandbox = prj.config?.braintreeIsSandbox ?? true;
+    final config =
+        (BlocProvider.of<ConfigCubit>(context).state as ConfigStateLoaded)
+            .config;
+    final isSandbox = config.braintree.isSandbox;
     final token = !isSandbox
-        ? prj.config?.braintreeClientToken
-        : prj.config?.braintreeClientTokenSandbox;
-    final companyName = prj.config?.companyName ?? '';
-    final currencyCode = prj.config?.braintreeCurrencyCode ?? '';
-    final countryCode = prj.config?.countryCode ?? '';
+        ? config.braintree.productionInfo.clientToken
+        : config.braintree.sandboxInfo.clientToken;
+    final companyName = config.braintree.companyName;
+    final currencyCode = config.braintree.currencyCode;
+    final countryCode = config.braintree.countryCode;
     final amount = valueToChangeWith!.toCode(
       loop,
       resultType: ResultTypeEnum.double,
       defaultValue: '1.00',
     );
-    final appleMerchantId = prj.config?.appleMerchantId;
+    final appleMerchantId = config.braintree.applePay.merchantId;
     String? paypal;
     String? googlePay;
     String? applePay;
@@ -61,7 +63,6 @@ class FActionBraintreeBuy {
     if (amount.isEmpty) return '';
 
     final page = getPageOnToCode(pageId, context);
-    if (page == null) return '';
     final variable = takeStateFrom(page, stateName);
     if (variable == null) return '';
 
@@ -73,7 +74,7 @@ class FActionBraintreeBuy {
         displayName: '$companyName',
       ),''';
 
-    if (prj.config?.googlePayFlag ?? false) {
+    if (config.braintree.googlePay.isEnabled) {
       googlePay = '''
         BraintreeGooglePaymentRequest(
           totalPrice: $amount,
@@ -81,7 +82,7 @@ class FActionBraintreeBuy {
           billingAddressRequired: false,
         ),''';
     }
-    if (prj.config?.isApplePayReady ?? false) {
+    if (config.braintree.applePay.isEnabled) {
       applePay = '''
         BraintreeApplePayRequest(
           displayName: '$companyName',

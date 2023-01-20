@@ -16,13 +16,11 @@ import 'package:teta_widgets/src/elements/nodes/node.dart';
 
 class BorderRadiusControl extends StatefulWidget {
   const BorderRadiusControl({
-    required this.node,
     required this.borderRadius,
     required this.callBack,
     final Key? key,
   }) : super(key: key);
 
-  final CNode node;
   final FBorderRadius borderRadius;
   final Function(Map<String, dynamic>, Map<String, dynamic>) callBack;
 
@@ -31,15 +29,12 @@ class BorderRadiusControl extends StatefulWidget {
 }
 
 class BorderRadiusControlState extends State<BorderRadiusControl> {
-  int? nodeId;
-  bool? isUpdated;
   List<double>? radius;
   List<TextEditingController> controllers = [];
   bool isLinked = true;
 
   @override
   void initState() {
-    nodeId = widget.node.nid;
     radius = widget.borderRadius.radius;
     for (var i = 0; i < 4; i++) {
       controllers.add(TextEditingController());
@@ -54,40 +49,31 @@ class BorderRadiusControlState extends State<BorderRadiusControl> {
   Widget build(final BuildContext context) {
     return BlocListener<DeviceModeCubit, DeviceInfo>(
       listener: (final context, final device) {
-        setState(() {
-          isUpdated = true;
-          if (device.identifier.type == DeviceType.phone) {
-            radius = widget.borderRadius.radius;
-          } else if (device.identifier.type == DeviceType.tablet) {
-            radius = widget.borderRadius.radiusTablet;
-          } else {
-            radius = widget.borderRadius.radiusDesktop;
-          }
-          for (var i = 0; i < 4; i++) {
-            controllers[i].text = '${radius![i]}';
-          }
-        });
+        if (device.identifier.type == DeviceType.phone) {
+          radius = widget.borderRadius.radius;
+        } else if (device.identifier.type == DeviceType.tablet) {
+          radius = widget.borderRadius.radiusTablet;
+        } else {
+          radius = widget.borderRadius.radiusDesktop;
+        }
+        for (var i = 0; i < 4; i++) {
+          controllers[i].text = '${radius![i]}';
+        }
       },
       child: BlocBuilder<DeviceModeCubit, DeviceInfo>(
         builder: (final context, final device) =>
             BlocListener<FocusBloc, List<CNode>>(
           listener: (final context, final state) {
             if (state.isNotEmpty) {
-              if (state.first.nid != nodeId) {
-                setState(() {
-                  isUpdated = true;
-                  if (device.identifier.type == DeviceType.phone) {
-                    radius = widget.borderRadius.radius;
-                  } else if (device.identifier.type == DeviceType.tablet) {
-                    radius = widget.borderRadius.radiusTablet;
-                  } else {
-                    radius = widget.borderRadius.radiusDesktop;
-                  }
-                  for (var i = 0; i < 4; i++) {
-                    controllers[i].text = '${radius![i]}';
-                  }
-                });
-                nodeId = state.first.nid;
+              if (device.identifier.type == DeviceType.phone) {
+                radius = widget.borderRadius.radius;
+              } else if (device.identifier.type == DeviceType.tablet) {
+                radius = widget.borderRadius.radiusTablet;
+              } else {
+                radius = widget.borderRadius.radiusDesktop;
+              }
+              for (var i = 0; i < 4; i++) {
+                controllers[i].text = '${radius![i]}';
               }
             }
           },
@@ -110,8 +96,7 @@ class BorderRadiusControlState extends State<BorderRadiusControl> {
                                 onTap: () {
                                   showDialog<void>(
                                     context: context,
-                                    builder: (final ctx) =>
-                                        DevicesDialog(ctx: context),
+                                    builder: (final ctx) => DevicesDialog(),
                                   );
                                 },
                                 child: Image.asset(

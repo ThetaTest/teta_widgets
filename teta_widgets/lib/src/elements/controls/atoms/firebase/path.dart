@@ -52,7 +52,7 @@ class FirestorePathControlState extends State<FirestorePathControl> {
             children: widget.path.values!
                 .map(
                   (final e) => FirestoreParameterControl(
-                    page: BlocProvider.of<PageCubit>(context).state,
+                    page: (context.read<PageCubit>().state as PageLoaded).page,
                     title: widget.path.values!.indexOf(e).isEven
                         ? 'Collection'
                         : 'Doc',

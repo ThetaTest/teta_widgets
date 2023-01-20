@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:gap/gap.dart';
 import 'package:teta_core/teta_core.dart';
 import 'package:teta_widgets/src/elements/controls/atoms/text.dart';
@@ -8,17 +9,11 @@ import 'package:teta_widgets/src/elements/nodes/dynamic.dart';
 
 class QonversionActionWidget extends StatelessWidget {
   const QonversionActionWidget({
-    required this.prj,
-    required this.page,
-    required this.node,
     required this.element,
     required this.callback,
     final Key? key,
   }) : super(key: key);
 
-  final ProjectObject prj;
-  final NDynamic node;
-  final PageObject page;
   final FActionElement element;
   final Function(FActionElement, FActionElement) callback;
 
@@ -26,20 +21,34 @@ class QonversionActionWidget extends StatelessWidget {
   Widget build(final BuildContext context) {
     return Column(
       children: [
-        CDropdown(
-          value: FActionElement.convertValueToDropdown(
-            element.actionQonversion,
-          ),
-          items: FActionElement.getQonversion(prj.config).toSet().toList(),
-          onChange: (final newValue) {
-            if (newValue != null) {
-              final old = element;
-              element.actionQonversion = FActionElement.convertDropdownToValue(
-                ActionQonversion.values,
-                newValue,
-              ) as ActionQonversion?;
-              callback(element, old);
+        BlocBuilder<ConfigCubit, ConfigState>(
+          buildWhen: (final previous, final current) {
+            if (previous is! ConfigStateLoaded ||
+                current is! ConfigStateLoaded) {
+              return false;
             }
+            return previous.config.qonversion != current.config.qonversion;
+          },
+          builder: (final context, final state) {
+            if (state is! ConfigStateLoaded) return const SizedBox();
+            return CDropdown(
+              value: FActionElement.convertValueToDropdown(
+                element.actionQonversion,
+              ),
+              items:
+                  FActionElement.getQonversion(state.config).toSet().toList(),
+              onChange: (final newValue) {
+                if (newValue != null) {
+                  final old = element;
+                  element.actionQonversion =
+                      FActionElement.convertDropdownToValue(
+                    ActionQonversion.values,
+                    newValue,
+                  ) as ActionQonversion?;
+                  callback(element, old);
+                }
+              },
+            );
           },
         ),
         const Gap(Grid.medium),
@@ -48,9 +57,7 @@ class QonversionActionWidget extends StatelessWidget {
             width: double.maxFinite,
             child: TextControl(
               valueType: VariableType.string,
-              node: node,
               value: element.qonversionProductIdentifier ?? FTextTypeInput(),
-              page: page,
               title: 'Qonversion ID',
               callBack: (final value, final old) {
                 final old = element;
@@ -70,29 +77,40 @@ class QonversionActionWidget extends StatelessWidget {
                 color: Palette.txtPrimary.withOpacity(0.6),
               ),
               const Gap(Grid.small),
-              CDropdown(
-                value: page.states
-                            .map((final e) => e.name)
-                            .where((final element) => element != 'null')
-                            .toList()
-                            .indexWhere(
-                              (final e) => e == element.stateName,
-                            ) !=
-                        -1
-                    ? element.stateName
-                    : null,
-                items: page.states
-                    .map((final e) => e.name)
-                    .where((final element) => element != 'null')
-                    .toList(),
-                onChange: (final newValue) {
-                  if (newValue != null) {
-                    try {
-                      final old = element;
-                      element.stateName = newValue;
-                      callback(element, old);
-                    } catch (_) {}
+              BlocBuilder<PageCubit, PageState>(
+                buildWhen: (final previous, final current) {
+                  if (previous is! PageLoaded || current is! PageLoaded) {
+                    return true;
                   }
+                  return previous.states != current.states;
+                },
+                builder: (final context, final state) {
+                  if (state is! PageLoaded) return const SizedBox();
+                  return CDropdown(
+                    value: state.states
+                                .map((final e) => e.name)
+                                .where((final element) => element != 'null')
+                                .toList()
+                                .indexWhere(
+                                  (final e) => e == element.stateName,
+                                ) !=
+                            -1
+                        ? element.stateName
+                        : null,
+                    items: state.states
+                        .map((final e) => e.name)
+                        .where((final element) => element != 'null')
+                        .toList(),
+                    onChange: (final newValue) {
+                      if (newValue != null) {
+                        try {
+                          final old = element;
+                          element.stateName = newValue;
+                          callback(element, old);
+                        } catch (_) {}
+                      }
+                    },
+                  );
                 },
               ),
             ],

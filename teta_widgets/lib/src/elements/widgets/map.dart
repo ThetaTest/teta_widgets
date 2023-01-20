@@ -53,7 +53,7 @@ class _WMapState extends State<WMap> {
   }
 
   Future<void> init() async {
-    final page = BlocProvider.of<PageCubit>(context).state;
+    final page = BlocProvider.of<PageCubit>(context).state as PageLoaded;
     if (widget.controller.type == FTextTypeEnum.param) {
       variable = page.params
           .firstWhereOrNull((final e) => e.name == widget.controller.paramName);
@@ -137,9 +137,8 @@ class _WMapState extends State<WMap> {
     }
     return NodeSelectionBuilder(
       state: widget.state,
-      child: !BlocProvider.of<FocusProjectCubit>(context)
-              .state!
-              .config!
+      child: (BlocProvider.of<ConfigCubit>(context).state as ConfigStateLoaded)
+              .config
               .mapEnabled
           ? const DecoratedBox(
               decoration: BoxDecoration(color: Colors.black),
@@ -226,10 +225,13 @@ class _WMapState extends State<WMap> {
                             controller: variable!.mapController!,
                             builder:
                                 (final context, final x, final y, final z) {
+                              final config = (context.read<ConfigCubit>().state
+                                      as ConfigStateLoaded)
+                                  .config;
                               final url =
-                                  'https://api.mapbox.com/styles/v1/mapbox/streets-v11/tiles/$z/$x/$y?access_token=${BlocProvider.of<FocusProjectCubit>(context).state!.config?.mapboxKey}';
+                                  'https://api.mapbox.com/styles/v1/mapbox/streets-v11/tiles/$z/$x/$y?access_token=${config.mapboxKey}';
                               final darkUrl =
-                                  'https://api.mapbox.com/styles/v1/mapbox/dark-v10/tiles/$z/$x/$y?access_token=${BlocProvider.of<FocusProjectCubit>(context).state!.config?.mapboxKey}';
+                                  'https://api.mapbox.com/styles/v1/mapbox/dark-v10/tiles/$z/$x/$y?access_token=${config.mapboxKey}';
                               return CNetworkImage(
                                 nid: widget.state.node.nid,
                                 src: widget.flag ? darkUrl : url,

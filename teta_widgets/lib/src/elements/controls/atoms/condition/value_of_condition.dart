@@ -14,16 +14,11 @@ import 'package:teta_widgets/src/elements/nodes/node.dart';
 class ValueOfConditionControl extends StatefulWidget {
   /// Constructor
   const ValueOfConditionControl({
-    required this.node,
-    required this.page,
     required this.title,
     required this.valueOfCond,
     required this.callBack,
     final Key? key,
   }) : super(key: key);
-
-  final CNode node;
-  final PageObject page;
   final String title;
   final FTextTypeInput valueOfCond;
   final Function(FTextTypeInput, FTextTypeInput) callBack;
@@ -33,39 +28,23 @@ class ValueOfConditionControl extends StatefulWidget {
 }
 
 class ValueOfConditionControlState extends State<ValueOfConditionControl> {
-  int? nodeId;
-  bool? isUpdated;
-  String? text;
   TextEditingController controller = TextEditingController();
   String databaseName = '';
   String databaseAttribute = '';
-  FTextTypeEnum typeOfInput = FTextTypeEnum.text;
 
   @override
   void initState() {
-    try {
-      nodeId = widget.node.nid;
-      text = widget.valueOfCond.value ?? '';
-      controller.text = text!;
-      typeOfInput = widget.valueOfCond.type!;
-      databaseName = widget.valueOfCond.datasetName!;
-      databaseAttribute = widget.valueOfCond.datasetAttr!;
-    } catch (_) {}
     super.initState();
+    controller.text = widget.valueOfCond.value ?? '';
+    databaseName = widget.valueOfCond.datasetName!;
+    databaseAttribute = widget.valueOfCond.datasetAttr!;
   }
 
   @override
   Widget build(final BuildContext context) {
-    //controller.text = widget.node.valueOfCond!.value ?? '';
     return BlocListener<FocusBloc, List<CNode>>(
       listener: (final context, final state) {
-        if (state.first.nid != nodeId) {
-          setState(() {
-            isUpdated = true;
-            controller.text = widget.valueOfCond.value ?? '';
-          });
-          nodeId = state.first.nid;
-        }
+        controller.text = widget.valueOfCond.value ?? '';
       },
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
@@ -130,147 +109,179 @@ class ValueOfConditionControlState extends State<ValueOfConditionControl> {
                 widget.callBack(widget.valueOfCond, old);
               },
             ),
-          if (widget.valueOfCond.type == FTextTypeEnum.param)
-            Container(
-              width: double.maxFinite,
-              padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 8),
-              decoration: BoxDecoration(
-                color: Colors.white,
-                borderRadius: BorderRadius.circular(8),
-              ),
-              child: DropdownButton<String>(
-                value: widget.valueOfCond.paramName,
-                icon: const Icon(Icons.arrow_drop_down),
-                underline: const SizedBox(),
-                onChanged: (final String? newValue) {
-                  final old = widget.valueOfCond;
-                  widget.valueOfCond.paramName = newValue;
-                  widget.callBack(widget.valueOfCond, old);
-                },
-                isDense: true,
-                isExpanded: true,
-                items: widget.page.params
-                    .map((final e) => e.name)
-                    .map<DropdownMenuItem<String>>((final value) {
-                  return DropdownMenuItem<String>(
-                    value: value,
-                    child: TParagraph(
-                      value,
-                    ),
-                  );
-                }).toList(),
-              ),
-            ),
-          if (widget.valueOfCond.type == FTextTypeEnum.state)
-            Container(
-              width: double.maxFinite,
-              padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 8),
-              decoration: BoxDecoration(
-                color: Colors.white,
-                borderRadius: BorderRadius.circular(8),
-              ),
-              child: DropdownButton<String>(
-                value: widget.valueOfCond.stateName,
-                icon: const Icon(Icons.arrow_drop_down),
-                underline: const SizedBox(),
-                onChanged: (final String? newValue) {
-                  final old = widget.valueOfCond;
-                  widget.valueOfCond.stateName = newValue;
-                  widget.callBack(widget.valueOfCond, old);
-                },
-                isDense: true,
-                isExpanded: true,
-                items: widget.page.states
-                    .map((final e) => e.name)
-                    .map<DropdownMenuItem<String>>((final value) {
-                  return DropdownMenuItem<String>(
-                    value: value,
-                    child: TParagraph(
-                      value,
-                    ),
-                  );
-                }).toList(),
-              ),
-            ),
-          if (widget.valueOfCond.type == FTextTypeEnum.dataset)
-            Container(
-              width: double.maxFinite,
-              padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 8),
-              decoration: BoxDecoration(
-                color: Colors.white,
-                borderRadius: BorderRadius.circular(8),
-              ),
-              child: DropdownButton<String>(
-                value: widget.valueOfCond.datasetName,
-                icon: const Icon(Icons.arrow_drop_down),
-                underline: const SizedBox(),
-                onChanged: (final String? newValue) {
-                  setState(() {
-                    databaseName = newValue!;
-                  });
-                  final old = widget.valueOfCond;
-                  widget.valueOfCond.datasetName = newValue;
-                  widget.callBack(widget.valueOfCond, old);
-                },
-                isDense: true,
-                isExpanded: true,
-                items: widget.page.datasets
-                    .map((final e) => e.getName)
-                    .where((final element) => element != 'null')
-                    .map<DropdownMenuItem<String>>((final String value) {
-                  return DropdownMenuItem<String>(
-                    value: value,
-                    child: TParagraph(
-                      value,
-                    ),
-                  );
-                }).toList(),
-              ),
-            ),
-          if (widget.valueOfCond.type == FTextTypeEnum.dataset &&
-              widget.valueOfCond.datasetName != null)
-            Container(
-              margin: const EdgeInsets.only(top: 8),
-              width: double.maxFinite,
-              padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 8),
-              decoration: BoxDecoration(
-                color: Colors.white,
-                borderRadius: BorderRadius.circular(8),
-              ),
-              child: DropdownButton<String>(
-                value: widget.valueOfCond.datasetAttr,
-                icon: const Icon(Icons.arrow_drop_down),
-                underline: const SizedBox(),
-                onChanged: (final String? newValue) {
-                  setState(() {
-                    databaseAttribute = newValue!;
-                  });
-                  final old = widget.valueOfCond;
-                  widget.valueOfCond.datasetAttr = newValue;
-                  widget.callBack(widget.valueOfCond, old);
-                },
-                isDense: true,
-                isExpanded: true,
-                items: widget.page.datasets
-                    .firstWhere(
-                      (final element) =>
-                          element.getName == widget.valueOfCond.datasetName,
-                    )
-                    .getMap
-                    .first
-                    .keys
-                    .map((final key) => key)
-                    .toSet()
-                    .map<DropdownMenuItem<String>>((final String value) {
-                  return DropdownMenuItem<String>(
-                    value: value,
-                    child: TParagraph(
-                      value,
-                    ),
-                  );
-                }).toList(),
-              ),
-            ),
+          BlocBuilder<PageCubit, PageState>(
+            builder: (final context, final state) {
+              if (state is! PageLoaded) return const SizedBox();
+              if (widget.valueOfCond.type != FTextTypeEnum.param) {
+                return const SizedBox();
+              }
+              return Container(
+                width: double.maxFinite,
+                padding:
+                    const EdgeInsets.symmetric(horizontal: 10, vertical: 8),
+                decoration: BoxDecoration(
+                  color: Colors.white,
+                  borderRadius: BorderRadius.circular(8),
+                ),
+                child: DropdownButton<String>(
+                  value: widget.valueOfCond.paramName,
+                  icon: const Icon(Icons.arrow_drop_down),
+                  underline: const SizedBox(),
+                  onChanged: (final String? newValue) {
+                    final old = widget.valueOfCond;
+                    widget.valueOfCond.paramName = newValue;
+                    widget.callBack(widget.valueOfCond, old);
+                  },
+                  isDense: true,
+                  isExpanded: true,
+                  items: state.params
+                      .map((final e) => e.name)
+                      .map<DropdownMenuItem<String>>((final value) {
+                    return DropdownMenuItem<String>(
+                      value: value,
+                      child: TParagraph(
+                        value,
+                      ),
+                    );
+                  }).toList(),
+                ),
+              );
+            },
+          ),
+          BlocBuilder<PageCubit, PageState>(
+            builder: (final context, final state) {
+              if (state is! PageLoaded) return const SizedBox();
+              if (widget.valueOfCond.type != FTextTypeEnum.state) {
+                return const SizedBox();
+              }
+              return Container(
+                width: double.maxFinite,
+                padding:
+                    const EdgeInsets.symmetric(horizontal: 10, vertical: 8),
+                decoration: BoxDecoration(
+                  color: Colors.white,
+                  borderRadius: BorderRadius.circular(8),
+                ),
+                child: DropdownButton<String>(
+                  value: widget.valueOfCond.stateName,
+                  icon: const Icon(Icons.arrow_drop_down),
+                  underline: const SizedBox(),
+                  onChanged: (final String? newValue) {
+                    final old = widget.valueOfCond;
+                    widget.valueOfCond.stateName = newValue;
+                    widget.callBack(widget.valueOfCond, old);
+                  },
+                  isDense: true,
+                  isExpanded: true,
+                  items: state.states
+                      .map((final e) => e.name)
+                      .map<DropdownMenuItem<String>>((final value) {
+                    return DropdownMenuItem<String>(
+                      value: value,
+                      child: TParagraph(
+                        value,
+                      ),
+                    );
+                  }).toList(),
+                ),
+              );
+            },
+          ),
+          BlocBuilder<PageCubit, PageState>(
+            builder: (final context, final state) {
+              if (state is! PageLoaded) return const SizedBox();
+              if (widget.valueOfCond.type != FTextTypeEnum.dataset) {
+                return const SizedBox();
+              }
+              return Container(
+                width: double.maxFinite,
+                padding:
+                    const EdgeInsets.symmetric(horizontal: 10, vertical: 8),
+                decoration: BoxDecoration(
+                  color: Colors.white,
+                  borderRadius: BorderRadius.circular(8),
+                ),
+                child: DropdownButton<String>(
+                  value: widget.valueOfCond.datasetName,
+                  icon: const Icon(Icons.arrow_drop_down),
+                  underline: const SizedBox(),
+                  onChanged: (final String? newValue) {
+                    setState(() {
+                      databaseName = newValue!;
+                    });
+                    final old = widget.valueOfCond;
+                    widget.valueOfCond.datasetName = newValue;
+                    widget.callBack(widget.valueOfCond, old);
+                  },
+                  isDense: true,
+                  isExpanded: true,
+                  items: state.datasets
+                      .map((final e) => e.getName)
+                      .where((final element) => element != 'null')
+                      .map<DropdownMenuItem<String>>((final String value) {
+                    return DropdownMenuItem<String>(
+                      value: value,
+                      child: TParagraph(
+                        value,
+                      ),
+                    );
+                  }).toList(),
+                ),
+              );
+            },
+          ),
+          BlocBuilder<PageCubit, PageState>(
+            builder: (final context, final state) {
+              if (state is! PageLoaded) return const SizedBox();
+              if (widget.valueOfCond.type == FTextTypeEnum.dataset &&
+                  widget.valueOfCond.datasetName != null) {
+                return Container(
+                  margin: const EdgeInsets.only(top: 8),
+                  width: double.maxFinite,
+                  padding:
+                      const EdgeInsets.symmetric(horizontal: 10, vertical: 8),
+                  decoration: BoxDecoration(
+                    color: Colors.white,
+                    borderRadius: BorderRadius.circular(8),
+                  ),
+                  child: DropdownButton<String>(
+                    value: widget.valueOfCond.datasetAttr,
+                    icon: const Icon(Icons.arrow_drop_down),
+                    underline: const SizedBox(),
+                    onChanged: (final String? newValue) {
+                      setState(() {
+                        databaseAttribute = newValue!;
+                      });
+                      final old = widget.valueOfCond;
+                      widget.valueOfCond.datasetAttr = newValue;
+                      widget.callBack(widget.valueOfCond, old);
+                    },
+                    isDense: true,
+                    isExpanded: true,
+                    items: state.datasets
+                        .firstWhere(
+                          (final element) =>
+                              element.getName == widget.valueOfCond.datasetName,
+                        )
+                        .getMap
+                        .first
+                        .keys
+                        .map((final key) => key)
+                        .toSet()
+                        .map<DropdownMenuItem<String>>((final String value) {
+                      return DropdownMenuItem<String>(
+                        value: value,
+                        child: TParagraph(
+                          value,
+                        ),
+                      );
+                    }).toList(),
+                  ),
+                );
+              }
+              return const SizedBox();
+            },
+          ),
         ],
       ),
     );

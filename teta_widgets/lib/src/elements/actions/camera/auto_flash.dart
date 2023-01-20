@@ -18,9 +18,9 @@ class FACameraAutoFlash {
     final BuildContext context,
     final TetaWidgetState state,
   ) async {
-    final page = BlocProvider.of<PageCubit>(context).state;
-    final state =
-        page.states.firstWhereOrNull((final e) => e.type == VariableType.cameraController);
+    final page = BlocProvider.of<PageCubit>(context).state as PageLoaded;
+    final state = page.states
+        .firstWhereOrNull((final e) => e.type == VariableType.cameraController);
     final controller = state?.controller;
     if (controller != null) {
       await controller.setFlashMode(FlashMode.off);
@@ -32,9 +32,8 @@ class FACameraAutoFlash {
     final int pageId,
   ) {
     final page = getPageOnToCode(pageId, context);
-    if (page == null) return '';
-    final state =
-        page.states.firstWhereOrNull((final e) => e.type == VariableType.cameraController);
+    final state = page.states
+        .firstWhereOrNull((final e) => e.type == VariableType.cameraController);
     if (state == null) return '';
     final rc = ReCase(state.name);
     return '''

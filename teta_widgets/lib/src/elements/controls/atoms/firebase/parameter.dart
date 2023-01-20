@@ -18,10 +18,8 @@ class FirestoreParameterControl extends StatefulWidget {
     required this.value,
     required this.callBack,
     final Key? key,
-    this.node,
   }) : super(key: key);
 
-  final CNode? node;
   final PageObject page;
   final String title;
   final FTextTypeInput value;
@@ -32,24 +30,15 @@ class FirestoreParameterControl extends StatefulWidget {
 }
 
 class ParameterState extends State<FirestoreParameterControl> {
-  int? nodeId;
-  bool? isUpdated;
-  String? text;
   TextEditingController controller = TextEditingController();
   String databaseName = '';
   String databaseAttribute = '';
-  FTextTypeEnum typeOfInput = FTextTypeEnum.text;
 
   @override
   void initState() {
-    try {
-      nodeId = widget.node?.nid;
-      text = widget.value.value ?? '';
-      controller.text = text!;
-      typeOfInput = widget.value.type!;
-      databaseName = widget.value.datasetName!;
-      databaseAttribute = widget.value.datasetAttr!;
-    } catch (_) {}
+    controller.text = widget.value.value ?? '';
+    databaseName = widget.value.datasetName!;
+    databaseAttribute = widget.value.datasetAttr!;
     super.initState();
   }
 
@@ -59,13 +48,7 @@ class ParameterState extends State<FirestoreParameterControl> {
     return BlocListener<FocusBloc, List<CNode>>(
       listener: (final context, final state) {
         if (state.isNotEmpty) {
-          if (state.first.nid != nodeId) {
-            setState(() {
-              isUpdated = true;
-              controller.text = widget.value.value ?? '';
-            });
-            nodeId = state.first.nid;
-          }
+          controller.text = widget.value.value ?? '';
         }
       },
       child: Container(
@@ -125,64 +108,117 @@ class ParameterState extends State<FirestoreParameterControl> {
                 },
               ),
             if (widget.value.type == FTextTypeEnum.param)
-              CDropdown(
-                value: widget.page.params
-                        .map((final e) => e.name)
-                        .contains(widget.value.paramName)
-                    ? widget.value.paramName
-                    : null,
-                items: widget.page.params
-                    .map((final e) => e.get as String)
-                    .toList(),
-                onChange: (final newValue) {
-                  final old = widget.value;
-                  widget.value.paramName = newValue;
-                  widget.callBack(widget.value, old);
+              BlocBuilder<PageCubit, PageState>(
+                buildWhen: (final previous, final current) {
+                  if (previous is! PageLoaded || current is! PageLoaded) {
+                    return true;
+                  }
+                  return previous.params != current.params;
+                },
+                builder: (final context, final state) {
+                  if (state is! PageLoaded) return const SizedBox();
+                  return CDropdown(
+                    value: state.params
+                            .map((final e) => e.name)
+                            .contains(widget.value.paramName)
+                        ? widget.value.paramName
+                        : null,
+                    items:
+                        state.params.map((final e) => e.get as String).toList(),
+                    onChange: (final newValue) {
+                      final old = widget.value;
+                      widget.value.paramName = newValue;
+                      widget.callBack(widget.value, old);
+                    },
+                  );
                 },
               ),
             if (widget.value.type == FTextTypeEnum.state)
-              CDropdown(
-                value: widget.page.states
-                        .map((final e) => e.name)
-                        .contains(widget.value.stateName)
-                    ? widget.value.stateName
-                    : null,
-                items: widget.page.states
-                    .map((final e) => e.get as String)
-                    .toList(),
-                onChange: (final newValue) {
-                  final old = widget.value;
-                  widget.value.stateName = newValue;
-                  widget.callBack(widget.value, old);
+              BlocBuilder<PageCubit, PageState>(
+                buildWhen: (final previous, final current) {
+                  if (previous is! PageLoaded || current is! PageLoaded) {
+                    return true;
+                  }
+                  return previous.states != current.states;
+                },
+                builder: (final context, final state) {
+                  if (state is! PageLoaded) return const SizedBox();
+                  return CDropdown(
+                    value: state.states
+                            .map((final e) => e.name)
+                            .contains(widget.value.stateName)
+                        ? widget.value.stateName
+                        : null,
+                    items:
+                        state.states.map((final e) => e.get as String).toList(),
+                    onChange: (final newValue) {
+                      final old = widget.value;
+                      widget.value.stateName = newValue;
+                      widget.callBack(widget.value, old);
+                    },
+                  );
                 },
               ),
             if (widget.value.type == FTextTypeEnum.dataset)
-              CDropdown(
-                value: widget.page.datasets
+              BlocBuilder<PageCubit, PageState>(
+                buildWhen: (final previous, final current) {
+                  if (previous is! PageLoaded || current is! PageLoaded) {
+                    return true;
+                  }
+                  return previous.datasets != current.datasets;
+                },
+                builder: (final context, final state) {
+                  if (state is! PageLoaded) return const SizedBox();
+                  return CDropdown(
+                    value: state.datasets
+                            .map((final e) => e.getName)
+                            .where((final element) => element != 'null')
+                            .contains(widget.value.datasetName)
+                        ? widget.value.datasetName
+                        : null,
+                    items: state.datasets
                         .map((final e) => e.getName)
                         .where((final element) => element != 'null')
-                        .contains(widget.value.datasetName)
-                    ? widget.value.datasetName
-                    : null,
-                items: widget.page.datasets
-                    .map((final e) => e.getName)
-                    .where((final element) => element != 'null')
-                    .toList(),
-                onChange: (final newValue) {
-                  setState(() {
-                    databaseName = newValue!;
-                  });
-                  final old = widget.value;
-                  widget.value.datasetName = newValue;
-                  widget.callBack(widget.value, old);
+                        .toList(),
+                    onChange: (final newValue) {
+                      setState(() {
+                        databaseName = newValue!;
+                      });
+                      final old = widget.value;
+                      widget.value.datasetName = newValue;
+                      widget.callBack(widget.value, old);
+                    },
+                  );
                 },
               ),
             if (widget.value.type == FTextTypeEnum.dataset &&
                 widget.value.datasetName != null)
               Padding(
                 padding: EI.smT,
-                child: CDropdown(
-                  value: widget.page.datasets
+                child: BlocBuilder<PageCubit, PageState>(
+                  buildWhen: (final previous, final current) {
+                    if (previous is! PageLoaded || current is! PageLoaded) {
+                      return true;
+                    }
+                    return previous.datasets != current.datasets;
+                  },
+                  builder: (final context, final state) {
+                    if (state is! PageLoaded) return const SizedBox();
+                    return CDropdown(
+                      value: state.datasets
+                              .firstWhere(
+                                (final element) =>
+                                    element.getName == widget.value.datasetName,
+                              )
+                              .getMap
+                              .first
+                              .keys
+                              .map((final key) => key)
+                              .toSet()
+                              .contains(widget.value.datasetAttr)
+                          ? widget.value.datasetAttr
+                          : null,
+                      items: state.datasets
                           .firstWhere(
                             (final element) =>
                                 element.getName == widget.value.datasetName,
@@ -192,27 +228,16 @@ class ParameterState extends State<FirestoreParameterControl> {
                           .keys
                           .map((final key) => key)
                           .toSet()
-                          .contains(widget.value.datasetAttr)
-                      ? widget.value.datasetAttr
-                      : null,
-                  items: widget.page.datasets
-                      .firstWhere(
-                        (final element) =>
-                            element.getName == widget.value.datasetName,
-                      )
-                      .getMap
-                      .first
-                      .keys
-                      .map((final key) => key)
-                      .toSet()
-                      .toList(),
-                  onChange: (final newValue) {
-                    setState(() {
-                      databaseAttribute = newValue!;
-                    });
-                    final old = widget.value;
-                    widget.value.datasetAttr = newValue;
-                    widget.callBack(widget.value, old);
+                          .toList(),
+                      onChange: (final newValue) {
+                        setState(() {
+                          databaseAttribute = newValue!;
+                        });
+                        final old = widget.value;
+                        widget.value.datasetAttr = newValue;
+                        widget.callBack(widget.value, old);
+                      },
+                    );
                   },
                 ),
               ),

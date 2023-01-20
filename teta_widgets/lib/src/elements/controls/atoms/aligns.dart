@@ -14,13 +14,11 @@ import 'package:teta_widgets/src/elements/nodes/node.dart';
 
 class AlignsControl extends StatefulWidget {
   const AlignsControl({
-    required this.node,
     required this.align,
     required this.callBack,
     final Key? key,
   }) : super(key: key);
 
-  final CNode node;
   final FAlign align;
   final Function(FAlign, FAlign) callBack;
 
@@ -52,7 +50,7 @@ class AlignsControlState extends State<AlignsControl> {
                   onTap: () {
                     showDialog<void>(
                       context: context,
-                      builder: (final ctx) => DevicesDialog(ctx: context),
+                      builder: (final ctx) => DevicesDialog(),
                     );
                   },
                   child: Image.asset(

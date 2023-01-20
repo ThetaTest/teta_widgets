@@ -19,14 +19,12 @@ import 'package:teta_widgets/src/elements/nodes/node.dart';
 
 class Margins extends StatefulWidget {
   const Margins({
-    required this.node,
     required this.title,
     required this.value,
     required this.callBack,
     final Key? key,
   }) : super(key: key);
 
-  final CNode node;
   final String title;
   final FMargins value;
   final Function(Map<String, dynamic>, Map<String, dynamic>) callBack;
@@ -36,8 +34,6 @@ class Margins extends StatefulWidget {
 }
 
 class MarginsState extends State<Margins> {
-  int? nodeId;
-  bool? isUpdated;
   List<String>? margins;
   List<TextEditingController> controllers = [];
   bool isLinked = true;
@@ -45,7 +41,6 @@ class MarginsState extends State<Margins> {
 
   @override
   void initState() {
-    nodeId = widget.node.nid;
     margins = widget.value.getList(context);
     for (var i = 0; i < 4; i++) {
       controllers.add(TextEditingController());
@@ -102,23 +97,20 @@ class MarginsState extends State<Margins> {
             BlocBuilder<FocusBloc, List<CNode>>(
           builder: (final context, final state) {
             if (state.isNotEmpty) {
-              if (state.first.nid != nodeId) {
-                if (mounted) {
-                  nodeId = state.first.nid;
-                  margins = widget.value.getList(context);
-                  for (var i = 0; i < 4; i++) {
-                    controllers[i].text = margins![i];
-                  }
-                  var flag = false;
-                  var lastValue = '';
-                  for (final element in margins ?? const <String>[]) {
-                    if (lastValue == '') lastValue = element;
-                    if (element != lastValue) {
-                      flag = true;
-                    }
-                  }
-                  isLinked = !flag;
+              if (mounted) {
+                margins = widget.value.getList(context);
+                for (var i = 0; i < 4; i++) {
+                  controllers[i].text = margins![i];
                 }
+                var flag = false;
+                var lastValue = '';
+                for (final element in margins ?? const <String>[]) {
+                  if (lastValue == '') lastValue = element;
+                  if (element != lastValue) {
+                    flag = true;
+                  }
+                }
+                isLinked = !flag;
               }
             }
             return Column(
@@ -138,8 +130,7 @@ class MarginsState extends State<Margins> {
                               onTap: () {
                                 showDialog<void>(
                                   context: context,
-                                  builder: (final ctx) =>
-                                      DevicesDialog(ctx: context),
+                                  builder: (final ctx) => DevicesDialog(),
                                 );
                               },
                               child: Image.asset(

@@ -17,7 +17,7 @@ class FACameraTorchFlash {
     final BuildContext context,
     final String? stateName,
   ) async {
-    final page = BlocProvider.of<PageCubit>(context).state;
+    final page = BlocProvider.of<PageCubit>(context).state as PageLoaded;
     final state = page.states.firstWhereOrNull(
       (final e) => e.type == VariableType.cameraController,
     );

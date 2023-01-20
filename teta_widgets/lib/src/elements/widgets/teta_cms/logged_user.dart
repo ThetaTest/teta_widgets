@@ -38,11 +38,10 @@ class _WCMSLoggedUserState extends State<WCMSLoggedUser> {
 
   Future<TetaUser> load() async {
     final user = await TetaCMS.instance.auth.user.get;
-    if ((BlocProvider.of<FocusProjectCubit>(context)
-                .state!
-                .config
-                ?.isRevenueCatEnabled ??
-            false) &&
+    if ((context.read<ConfigCubit>().state as ConfigStateLoaded)
+            .config
+            .revenuecat
+            .isEnabled &&
         UniversalPlatform.isAndroid) {
       await Purchases.logIn(user.uid!);
     }

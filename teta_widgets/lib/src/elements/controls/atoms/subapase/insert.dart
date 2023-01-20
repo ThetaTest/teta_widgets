@@ -15,17 +15,11 @@ import 'package:teta_widgets/src/elements/nodes/node.dart';
 
 class SupabaseInsertControl extends StatelessWidget {
   const SupabaseInsertControl({
-    required this.prj,
-    required this.page,
-    required this.node,
     required this.action,
     required this.callback,
     final Key? key,
   }) : super(key: key);
 
-  final ProjectObject prj;
-  final PageObject page;
-  final CNode node;
   final FActionElement action;
   final Function() callback;
 
@@ -52,9 +46,7 @@ class SupabaseInsertControl extends StatelessWidget {
         ),
         TextControl(
           valueType: VariableType.string,
-          node: node,
           value: action.dbFrom ?? FTextTypeInput(),
-          page: page,
           title: 'From Table',
           callBack: (final value, final old) {
             action.dbFrom = value;
@@ -62,9 +54,7 @@ class SupabaseInsertControl extends StatelessWidget {
           },
         ),
         DBMapControl(
-          node: node,
           list: action.dbData ?? <MapElement>[],
-          page: page,
           callBack: (final value, final old) {
             action.dbData = value;
             callback();

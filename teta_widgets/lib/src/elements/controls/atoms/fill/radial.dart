@@ -18,7 +18,6 @@ class RadialFillControl extends StatefulWidget {
   const RadialFillControl({
     required this.title,
     required this.fill,
-    required this.node,
     required this.isStyled,
     required this.callBack,
     final Key? key,
@@ -27,7 +26,6 @@ class RadialFillControl extends StatefulWidget {
   final FFill fill;
   final String title;
   final bool isStyled;
-  final CNode node;
   final Function(FFill, bool, FFill) callBack;
 
   @override
@@ -111,7 +109,6 @@ class ColorControlState extends State<RadialFillControl> {
                       element: e,
                       fill: widget.fill,
                       index: widget.fill.levels!.indexOf(e),
-                      node: widget.node,
                       callBackIndex: (final index, final controller) {
                         setState(() {
                           selectedElementIndex = index;
@@ -180,7 +177,6 @@ class ColorControlState extends State<RadialFillControl> {
       context: context,
       builder: (final context) {
         return ColorPickerDialog(
-          context: context,
           color: tempColor!,
           fill: widget.fill,
           callback: (final color) {
@@ -338,7 +334,6 @@ class FillElement extends StatefulWidget {
     required this.element,
     required this.fill,
     required this.index,
-    required this.node,
     required this.callBackIndex,
     required this.callBack,
     final Key? key,
@@ -347,7 +342,6 @@ class FillElement extends StatefulWidget {
   final FFill fill;
   final FFillElement element;
   final int index;
-  final CNode node;
   final Function(int, TextEditingController) callBackIndex;
   final Function(FFill, FFill) callBack;
 
@@ -359,13 +353,10 @@ class FillElementState extends State<FillElement> {
   TextEditingController editingController = TextEditingController();
   TextEditingController stopController = TextEditingController();
   TextEditingController opacityController = TextEditingController();
-  int? nodeId;
-  bool? isUpdated;
 
   @override
   void initState() {
     super.initState();
-    nodeId = widget.node.nid;
     editingController.text = widget.element.color;
     stopController.text = '${widget.element.stop}';
     opacityController.text = '${widget.element.opacity}';
@@ -376,14 +367,8 @@ class FillElementState extends State<FillElement> {
     return BlocListener<FocusBloc, List<CNode>>(
       listener: (final context, final state) {
         if (state.isNotEmpty) {
-          if (state.first.nid != nodeId) {
-            setState(() {
-              isUpdated = true;
-              editingController.text = widget.element.color;
-              stopController.text = '${widget.element.stop}';
-            });
-            nodeId = state.first.nid;
-          }
+          editingController.text = widget.element.color;
+          stopController.text = '${widget.element.stop}';
         }
       },
       child: Padding(

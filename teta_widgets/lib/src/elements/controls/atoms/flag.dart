@@ -11,7 +11,6 @@ class FlagControl extends StatefulWidget {
   const FlagControl({
     required this.title,
     required this.value,
-    required this.node,
     required this.keyValue,
     required this.callBack,
     final Key? key,
@@ -19,7 +18,6 @@ class FlagControl extends StatefulWidget {
 
   final String title;
   final bool value;
-  final NDynamic node;
   final String? keyValue;
   final Function(bool, bool) callBack;
 

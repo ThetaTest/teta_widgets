@@ -66,9 +66,6 @@ class ActionElementControl extends StatefulWidget {
   const ActionElementControl({
     required this.name,
     required this.element,
-    required this.prj,
-    required this.page,
-    required this.node,
     required this.callBack,
     required this.callBackToDelete,
     final Key? key,
@@ -79,15 +76,6 @@ class ActionElementControl extends StatefulWidget {
 
   /// Action itself
   final FActionElement element;
-
-  /// Current project
-  final ProjectObject prj;
-
-  /// Current page
-  final PageObject page;
-
-  /// Current node
-  final CNode node;
 
   /// Function to change the action's properties
   final Function(FActionElement, FActionElement) callBack;

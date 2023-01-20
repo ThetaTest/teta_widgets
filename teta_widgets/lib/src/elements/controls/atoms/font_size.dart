@@ -18,13 +18,11 @@ import 'package:teta_widgets/src/elements/index.dart';
 
 class FontSizeControl extends StatefulWidget {
   const FontSizeControl({
-    required this.node,
     required this.textStyle,
     required this.callBack,
     final Key? key,
   }) : super(key: key);
 
-  final CNode node;
   final FTextStyle textStyle;
   final Function(Map<String, dynamic>, Map<String, dynamic>) callBack;
 
@@ -33,14 +31,11 @@ class FontSizeControl extends StatefulWidget {
 }
 
 class FontSizeState extends State<FontSizeControl> {
-  int? nodeId;
-  bool? isUpdated;
   TextEditingController controller = TextEditingController();
   Timer? searchOnStoppedTyping;
 
   @override
   void initState() {
-    nodeId = widget.node.nid;
     controller.text = '${widget.textStyle.fontSize?.get(context)}';
     super.initState();
   }
@@ -76,14 +71,7 @@ class FontSizeState extends State<FontSizeControl> {
             BlocListener<FocusBloc, List<CNode>>(
           listener: (final context, final state) {
             if (state.isNotEmpty) {
-              if (state.first.nid != nodeId) {
-                setState(() {
-                  isUpdated = true;
-                  controller.text =
-                      '${widget.textStyle.fontSize!.get(context)}';
-                });
-                nodeId = state.first.nid;
-              }
+              controller.text = '${widget.textStyle.fontSize!.get(context)}';
             }
           },
           child: Column(
@@ -99,7 +87,7 @@ class FontSizeState extends State<FontSizeControl> {
                         onTap: () {
                           showDialog<void>(
                             context: context,
-                            builder: (final ctx) => DevicesDialog(ctx: context),
+                            builder: (final ctx) => DevicesDialog(),
                           );
                         },
                         child: Image.asset(

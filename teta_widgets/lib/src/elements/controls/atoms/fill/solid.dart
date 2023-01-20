@@ -16,7 +16,6 @@ class SolidFillControl extends StatefulWidget {
   const SolidFillControl({
     required this.title,
     required this.fill,
-    required this.node,
     required this.isStyled,
     required this.callBack,
     this.color,
@@ -28,7 +27,6 @@ class SolidFillControl extends StatefulWidget {
   final String title;
   final String? color;
   final double? opacity;
-  final CNode node;
   final bool isStyled;
   final Function(FFill, bool, FFill) callBack;
 
@@ -37,9 +35,6 @@ class SolidFillControl extends StatefulWidget {
 }
 
 class SolidFillControlState extends State<SolidFillControl> {
-  int? nodeId;
-  bool? isUpdated;
-  String? value;
   bool isVisible = true;
   TextEditingController controller = TextEditingController();
   TextEditingController opacityController = TextEditingController();
@@ -48,19 +43,16 @@ class SolidFillControlState extends State<SolidFillControl> {
 
   @override
   void initState() {
-    try {
-      nodeId = widget.node.nid;
-      if (widget.color != null) {
-        controller.text = widget.color ?? '';
-        opacityController.text = '${widget.opacity}';
-        tempColor = widget.color;
-      } else {
-        controller.text = widget.fill!.get(context).levels!.first.color;
-        opacityController.text =
-            '${widget.fill!.get(context).levels!.first.opacity}';
-        tempColor = widget.fill!.get(context).levels!.first.color;
-      }
-    } catch (_) {}
+    if (widget.color != null) {
+      controller.text = widget.color ?? '';
+      opacityController.text = '${widget.opacity}';
+      tempColor = widget.color;
+    } else {
+      controller.text = widget.fill!.get(context).levels!.first.color;
+      opacityController.text =
+          '${widget.fill!.get(context).levels!.first.opacity}';
+      tempColor = widget.fill!.get(context).levels!.first.color;
+    }
     super.initState();
   }
 
@@ -79,22 +71,15 @@ class SolidFillControlState extends State<SolidFillControl> {
         BlocListener<FocusBloc, List<CNode>>(
           listener: (final context, final state) {
             if (state.isNotEmpty) {
-              if (state.first.nid != nodeId) {
-                setState(() {
-                  isUpdated = true;
-                  if (widget.color != null) {
-                    controller.text = widget.color ?? '';
-                    controller.text = '${widget.opacity}';
-                    tempColor = widget.color;
-                  } else {
-                    controller.text =
-                        widget.fill!.get(context).levels!.first.color;
-                    opacityController.text =
-                        '${widget.fill!.get(context).levels!.first.opacity}';
-                    tempColor = widget.fill!.get(context).levels!.first.color;
-                  }
-                });
-                nodeId = state.first.nid;
+              if (widget.color != null) {
+                controller.text = widget.color ?? '';
+                controller.text = '${widget.opacity}';
+                tempColor = widget.color;
+              } else {
+                controller.text = widget.fill!.get(context).levels!.first.color;
+                opacityController.text =
+                    '${widget.fill!.get(context).levels!.first.opacity}';
+                tempColor = widget.fill!.get(context).levels!.first.color;
               }
             }
           },
@@ -247,7 +232,6 @@ class SolidFillControlState extends State<SolidFillControl> {
     final old = FFill().fromJson(widget.fill!.toJson());
     setState(() {
       tempColor = color.value.toRadixString(16).substring(2, 8);
-      isUpdated = true;
     });
     widget.fill!.levels!.first.color =
         color.value.toRadixString(16).substring(2, 8);
@@ -263,7 +247,6 @@ class SolidFillControlState extends State<SolidFillControl> {
         return BlocProvider.value(
           value: bloc,
           child: ColorPickerDialog(
-            context: context,
             color: tempColor!,
             fill: widget.fill!,
             callback: updateColor,

@@ -37,12 +37,14 @@ class _WWebViewXPageState extends State<WWebViewXPage> {
 
   @override
   void initState() {
-    final page = BlocProvider.of<PageCubit>(context).state;
+    final page = BlocProvider.of<PageCubit>(context).state as PageLoaded;
 
     if (widget.controller.type == FTextTypeEnum.param) {
-      variable = page.params.firstWhereOrNull((final e) => e.name == widget.controller.paramName);
+      variable = page.params
+          .firstWhereOrNull((final e) => e.name == widget.controller.paramName);
     } else {
-      variable = page.states.firstWhereOrNull((final e) => e.name == widget.controller.stateName);
+      variable = page.states
+          .firstWhereOrNull((final e) => e.name == widget.controller.stateName);
     }
 
     super.initState();

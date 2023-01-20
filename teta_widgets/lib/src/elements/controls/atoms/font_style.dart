@@ -14,13 +14,11 @@ import 'package:teta_widgets/src/elements/nodes/node.dart';
 
 class FontStyleControls extends StatefulWidget {
   const FontStyleControls({
-    required this.node,
     required this.callBack,
     required this.textStyle,
     final Key? key,
   }) : super(key: key);
 
-  final CNode node;
   final FTextStyle textStyle;
   final Function(Map<String, dynamic>, Map<String, dynamic>) callBack;
 

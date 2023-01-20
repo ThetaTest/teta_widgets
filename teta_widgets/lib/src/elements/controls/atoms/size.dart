@@ -16,7 +16,6 @@ import 'package:teta_widgets/src/elements/nodes/node.dart';
 class SizeControl extends StatefulWidget {
   const SizeControl({
     required this.keyAttr,
-    required this.node,
     required this.size,
     required this.isWidth,
     required this.title,
@@ -26,7 +25,6 @@ class SizeControl extends StatefulWidget {
   }) : super(key: key);
 
   final String keyAttr;
-  final CNode node;
   final FSize size;
   final bool isWidth;
   final String title;
@@ -38,14 +36,11 @@ class SizeControl extends StatefulWidget {
 }
 
 class SizeControlsState extends State<SizeControl> {
-  int? nodeId;
-  bool? isUpdated;
   TextEditingController controller = TextEditingController();
   bool flag = false;
 
   @override
   void initState() {
-    nodeId = widget.node.nid;
     controller.text =
         '${widget.size.get(context: context, isWidth: widget.isWidth)}';
     flag = widget.size.get(context: context, isWidth: widget.isWidth) != null;
@@ -86,40 +81,36 @@ class SizeControlsState extends State<SizeControl> {
             BlocBuilder<FocusBloc, List<CNode>>(
           builder: (final context, final state) {
             if (state.isNotEmpty) {
-              if (state.first.nid != nodeId) {
-                if (mounted) {
-                  nodeId = state.first.nid;
-                  flag = widget.size
-                          .get(context: context, isWidth: widget.isWidth) !=
-                      null;
-                  var size = widget.size.size;
-                  if (device.identifier.type == DeviceType.phone) {
-                    size = widget.size.size;
-                  } else if (device.identifier.type == DeviceType.tablet) {
-                    size = widget.size.sizeTablet;
-                  } else {
-                    size = widget.size.sizeDesktop;
-                  }
-                  final unit = widget.size.getUnit(context);
-                  for (var i = 0; i < 2; i++) {
-                    controller.text = (size == 'max' ||
-                            size == 'inf' &&
-                                size == '100%' &&
-                                unit == SizeUnit.pixel)
-                        ? 'max'
-                        : (size == 'max' ||
-                                size == 'inf' &&
-                                    size == '100%' &&
-                                    unit == SizeUnit.percent)
-                            ? '100%'
-                            : (size == 'auto')
-                                ? 'auto'
-                                : '$size';
-                  }
+              if (mounted) {
+                flag = widget.size
+                        .get(context: context, isWidth: widget.isWidth) !=
+                    null;
+                var size = widget.size.size;
+                if (device.identifier.type == DeviceType.phone) {
+                  size = widget.size.size;
+                } else if (device.identifier.type == DeviceType.tablet) {
+                  size = widget.size.sizeTablet;
+                } else {
+                  size = widget.size.sizeDesktop;
+                }
+                final unit = widget.size.getUnit(context);
+                for (var i = 0; i < 2; i++) {
+                  controller.text = (size == 'max' ||
+                          size == 'inf' &&
+                              size == '100%' &&
+                              unit == SizeUnit.pixel)
+                      ? 'max'
+                      : (size == 'max' ||
+                              size == 'inf' &&
+                                  size == '100%' &&
+                                  unit == SizeUnit.percent)
+                          ? '100%'
+                          : (size == 'auto')
+                              ? 'auto'
+                              : '$size';
                 }
               }
             }
-
             return Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
@@ -136,8 +127,7 @@ class SizeControlsState extends State<SizeControl> {
                             onTap: () {
                               showDialog<void>(
                                 context: context,
-                                builder: (final ctx) =>
-                                    DevicesDialog(ctx: context),
+                                builder: (final ctx) => DevicesDialog(),
                               );
                             },
                             child: Image.asset(

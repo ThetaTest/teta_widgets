@@ -16,17 +16,10 @@ import 'package:teta_widgets/src/elements/nodes/node.dart';
 
 class MixPanelTrack extends StatelessWidget {
   const MixPanelTrack({
-    required this.prj,
-    required this.page,
-    required this.node,
     required this.action,
     required this.callback,
     final Key? key,
   }) : super(key: key);
-
-  final ProjectObject prj;
-  final PageObject page;
-  final CNode node;
   final FActionElement action;
   final Function() callback;
 

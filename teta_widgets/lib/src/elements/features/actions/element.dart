@@ -587,7 +587,8 @@ class FActionElement extends Equatable {
       ];
 
   /// Get avaiable action types for drop down list
-  List<String> getTypes(final ProjectConfig? config, final PageObject page) {
+  List<String> getTypes(
+      final ProjectConfigModel? config, final PageObject page) {
     if (config != null) {
       try {
         return [
@@ -601,33 +602,40 @@ class FActionElement extends Equatable {
           'Languages',
           'Google Maps',
           if (kDebugMode) 'Custom Functions',
-          if (config.isSupabaseReady) 'Supabase auth',
-          if (config.isSupabaseReady) 'Supabase database',
-          if (config.isSupabaseReady) 'Supabase functions',
-          if (config.isSupabaseReady) 'Supabase storage',
-          if (config.isBraintreeReady) 'Braintree',
-          if (config.isRevenueCatEnabled) 'RevenueCat',
-          if (config.isQonversionReady) 'Qonversion',
-          if (config.isMixpanelReady) 'Mixpanel',
-          if (config.isStripeEnabled) 'Stripe',
-          if (config.isAirtableReady) 'Airtable Database',
-          if ((page.flatList ?? <CNode>[]).indexWhere(
+          if (config.supabase is SupabaseConfigModelInitialized)
+            'Supabase auth',
+          if (config.supabase is SupabaseConfigModelInitialized)
+            'Supabase database',
+          if (config.supabase is SupabaseConfigModelInitialized)
+            'Supabase functions',
+          if (config.supabase is SupabaseConfigModelInitialized)
+            'Supabase storage',
+          if (config.braintree is BraintreeConfigModelInitialized) 'Braintree',
+          if (config.revenuecat is RevenueCatConfigModelInitialized)
+            'RevenueCat',
+          if (config.qonversion is QonversionConfigModelInitialized)
+            'Qonversion',
+          if (config.mixpanel is MixpanelConfigModelInitialized) 'Mixpanel',
+          if (config.stripe is StripeConfigModelInitialized) 'Stripe',
+          if (config.airtable is AirtableConfigModelInitialized)
+            'Airtable Database',
+          if ((page.flatList).indexWhere(
                 (final element) => element.intrinsicState.type == NType.camera,
               ) !=
               -1)
             'Camera',
-          if ((page.flatList ?? <CNode>[]).indexWhere(
+          if ((page.flatList).indexWhere(
                 (final element) =>
                     element.intrinsicState.type == NType.audioPlayer,
               ) !=
               -1)
             'Audio player',
-          if ((page.flatList ?? <CNode>[]).indexWhere(
+          if ((page.flatList).indexWhere(
                 (final element) => element.intrinsicState.type == NType.webview,
               ) !=
               -1)
             'Webview',
-          if ((page.flatList ?? <CNode>[]).indexWhere(
+          if ((page.flatList).indexWhere(
                 (final element) =>
                     element.intrinsicState.type == NType.map ||
                     element.intrinsicState.type == NType.mapBuilder,
@@ -665,38 +673,34 @@ class FActionElement extends Equatable {
     return enumsToListString(ActionState.values);
   }
 
-  static List<String> getRevenueCat(final ProjectConfig? config) {
-    if (config != null) {
-      if (config.isRevenueCatEnabled) {
-        return enumsToListString(ActionRevenueCat.values);
-      }
+  static List<String> getRevenueCat(final ProjectConfigModel config) {
+    if (config.revenuecat is RevenueCatConfigModelInitialized) {
+      return enumsToListString(ActionRevenueCat.values);
     }
+
     return [];
   }
 
-  static List<String> getQonversion(final ProjectConfig? config) {
+  static List<String> getQonversion(final ProjectConfigModel? config) {
     if (config != null) {
-      if (config.isQonversionReady) {
+      if (config.qonversion is QonversionConfigModelInitialized) {
         return enumsToListString(ActionQonversion.values);
       }
     }
     return [];
   }
 
-  static List<String> getMixpanel(final ProjectConfig? config) {
-    if (config != null) {
-      if (config.isMixpanelReady) {
-        return enumsToListString(ActionMixpanel.values);
-      }
+  static List<String> getMixpanel(final ProjectConfigModel config) {
+    if (config.mixpanel is MixpanelConfigModelInitialized) {
+      return enumsToListString(ActionMixpanel.values);
     }
+
     return [];
   }
 
-  static List<String> getBraintree(final ProjectConfig? config) {
-    if (config != null) {
-      if (config.isBraintreeReady) {
-        return enumsToListString(ActionBraintree.values);
-      }
+  static List<String> getBraintree(final ProjectConfigModel config) {
+    if (config.braintree is BraintreeConfigModelInitialized) {
+      return enumsToListString(ActionBraintree.values);
     }
     return [];
   }
@@ -705,11 +709,11 @@ class FActionElement extends Equatable {
     return enumsToListString(ActionTranslator.values);
   }
 
-  static List<String> getStripe(final ProjectConfig? config) {
+  static List<String> getStripe(final ProjectConfigModel config) {
     return enumsToListString(ActionStripe.values);
   }
 
-  static List<String> getGoogleMaps(final ProjectConfig? config) {
+  static List<String> getGoogleMaps(final ProjectConfigModel config) {
     return enumsToListString(ActionGoogleMaps.values);
   }
 
@@ -717,48 +721,42 @@ class FActionElement extends Equatable {
     return enumsToListString(ActionTheme.values);
   }
 
-  static List<String> getSupabaseAuth(final ProjectConfig? config) {
-    if (config != null) {
-      if (config.isSupabaseReady) {
-        return enumsToListString(ActionSupabaseAuth.values);
-      }
+  static List<String> getSupabaseAuth(final ProjectConfigModel config) {
+    if (config.supabase is SupabaseConfigModelInitialized) {
+      return enumsToListString(ActionSupabaseAuth.values);
     }
     return [];
   }
 
-  static List<String> getSupabaseDB(final ProjectConfig? config) {
-    if (config != null) {
-      if (config.isSupabaseReady) {
-        return enumsToListString(ActionSupabaseDB.values);
-      }
+  static List<String> getSupabaseDB(final ProjectConfigModel config) {
+    if (config.supabase is SupabaseConfigModelInitialized) {
+      return enumsToListString(ActionSupabaseDB.values);
     }
+
     return [];
   }
 
-  static List<String> getAirtableDB(final ProjectConfig? config) {
-    if (config != null) {
-      if (config.isAirtableReady) {
-        return enumsToListString(ActionAirtableDB.values);
-      }
+  static List<String> getAirtableDB(final ProjectConfigModel config) {
+    if (config.airtable is AirtableConfigModelInitialized) {
+      return enumsToListString(ActionAirtableDB.values);
     }
+
     return [];
   }
 
-  static List<String> getSupabaseStorage(final ProjectConfig? config) {
-    if (config != null) {
-      if (config.isSupabaseReady) {
-        return enumsToListString(ActionSupabaseStorage.values);
-      }
+  static List<String> getSupabaseStorage(final ProjectConfigModel config) {
+    if (config.supabase is SupabaseConfigModelInitialized) {
+      return enumsToListString(ActionSupabaseStorage.values);
     }
+
     return [];
   }
 
-  static List<String> getSupabaseFunctions(final ProjectConfig? config) {
-    if (config != null) {
-      if (config.isSupabaseReady) {
-        return enumsToListString(ActionSupabaseFunctions.values);
-      }
+  static List<String> getSupabaseFunctions(final ProjectConfigModel config) {
+    if (config.supabase is SupabaseConfigModelInitialized) {
+      return enumsToListString(ActionSupabaseFunctions.values);
     }
+
     return [];
   }
 
@@ -892,7 +890,7 @@ class FActionElement extends Equatable {
         'g': convertValueToDropdown(actionGesture),
         'sA': convertValueToDropdown(actionSupabaseAuth),
         'sD': convertValueToDropdown(actionSupabaseDB),
-        'sA': convertValueToDropdown(actionAirtableDB),
+        'airtableA': convertValueToDropdown(actionAirtableDB),
         'supaFuncs': convertValueToDropdown(actionSupabaseFunctions),
         'supaStor': convertValueToDropdown(actionSupabaseStorage),
         'aC': convertValueToDropdown(actionCamera),

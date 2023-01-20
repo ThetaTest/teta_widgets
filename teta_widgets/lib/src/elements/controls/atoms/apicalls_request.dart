@@ -16,13 +16,11 @@ import 'package:teta_widgets/src/elements/index.dart';
 
 class ApiCallsRequestControl extends StatefulWidget {
   const ApiCallsRequestControl({
-    required this.node,
     required this.requestName,
     required this.callBack,
     final Key? key,
   }) : super(key: key);
 
-  final CNode node;
   final String? requestName;
   final Function(String, String?, Map<String, dynamic>) callBack;
 

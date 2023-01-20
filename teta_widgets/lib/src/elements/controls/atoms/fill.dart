@@ -22,7 +22,6 @@ enum FillTypeControlType {
 
 class FillControl extends StatefulWidget {
   const FillControl({
-    required this.node,
     required this.callBack,
     required this.fill,
     required this.isImageEnabled,
@@ -33,7 +32,6 @@ class FillControl extends StatefulWidget {
     final Key? key,
   }) : super(key: key);
 
-  final CNode node;
   final String? title;
   final String? color;
   final FFill fill;

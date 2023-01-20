@@ -17,7 +17,6 @@ class ImageFillControl extends StatefulWidget {
   const ImageFillControl({
     required this.title,
     required this.fill,
-    required this.node,
     required this.isStyled,
     required this.callBack,
     final Key? key,
@@ -25,7 +24,6 @@ class ImageFillControl extends StatefulWidget {
 
   final FFill fill;
   final String title;
-  final CNode node;
   final bool isStyled;
   final Function(FFill, bool, FFill) callBack;
 
@@ -34,15 +32,12 @@ class ImageFillControl extends StatefulWidget {
 }
 
 class ImageFillControlState extends State<ImageFillControl> {
-  int? nodeId;
-  bool? isUpdated;
   String? value;
   bool isVisible = true;
   TextEditingController controller = TextEditingController();
 
   @override
   void initState() {
-    nodeId = widget.node.nid;
     controller.text = widget.fill.levels!.first.color;
     super.initState();
   }
@@ -52,13 +47,7 @@ class ImageFillControlState extends State<ImageFillControl> {
     return BlocListener<FocusBloc, List<CNode>>(
       listener: (final context, final state) {
         if (state.isNotEmpty) {
-          if (state.first.nid != nodeId) {
-            setState(() {
-              isUpdated = true;
-              controller.text = widget.fill.levels!.first.color;
-            });
-            nodeId = state.first.nid;
-          }
+          controller.text = widget.fill.levels!.first.color;
         }
       },
       child: BlocBuilder<FocusBloc, List<CNode>>(

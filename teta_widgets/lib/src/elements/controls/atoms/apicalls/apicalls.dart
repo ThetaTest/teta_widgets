@@ -14,17 +14,11 @@ import 'package:teta_widgets/src/elements/index.dart';
 
 class ApiCallsControl extends StatelessWidget {
   const ApiCallsControl({
-    required this.prj,
-    required this.page,
-    required this.node,
     required this.action,
     required this.callback,
     final Key? key,
   }) : super(key: key);
 
-  final ProjectObject prj;
-  final PageObject page;
-  final CNode node;
   final FActionElement action;
   final Function() callback;
 
@@ -35,7 +29,6 @@ class ApiCallsControl extends StatelessWidget {
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
         ApiCallsRequestControl(
-          node: node,
           //TODO request name must be unique! kasapiniz
           requestName: action.apiCallsRequestName ?? '',
           callBack: (final value, final old, final apiCallsSelectedRequest) {
@@ -53,10 +46,8 @@ class ApiCallsControl extends StatelessWidget {
           ),
           child: TextControl(
             valueType: VariableType.string,
-            node: node,
             value:
                 action.customHttpRequestExpectedStatusCode ?? FTextTypeInput(),
-            page: page,
             title: 'Status Code',
             callBack: (final value, final old) {
               action.customHttpRequestExpectedStatusCode = value;
@@ -73,9 +64,7 @@ class ApiCallsControl extends StatelessWidget {
           ),
           child: TextControl(
             valueType: VariableType.string,
-            node: node,
             value: action.apiCallsResponseName ?? FTextTypeInput(),
-            page: page,
             title: 'Response Name',
             callBack: (final value, final old) {
               action.apiCallsResponseName = value;
@@ -85,8 +74,6 @@ class ApiCallsControl extends StatelessWidget {
         ),
         const Gap(Grid.small),
         HttpParamsControl(
-          node: node,
-          page: page,
           title: 'Add Dynamic Value',
           list: action.apiCallsDynamicValue ?? <MapElement>[],
           callBack: (final value, final old) {

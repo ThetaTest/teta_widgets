@@ -18,7 +18,7 @@ class FACameraStopRecording {
     final TetaWidgetState state,
     final String? stateName,
   ) async {
-    final page = BlocProvider.of<PageCubit>(context).state;
+    final page = BlocProvider.of<PageCubit>(context).state as PageLoaded;
     final stateFound = page.states.firstWhereOrNull(
       (final e) => e.type == VariableType.cameraController,
     );
@@ -41,8 +41,8 @@ class FACameraStopRecording {
   ) {
     final page = getPageOnToCode(pageId, context);
     if (page == null) return '';
-    final state =
-        page.states.firstWhereOrNull((final e) => e.type == VariableType.cameraController);
+    final state = page.states
+        .firstWhereOrNull((final e) => e.type == VariableType.cameraController);
     if (state == null || stateName == null) return '';
     final rc = ReCase(state.name);
     final fileStateName = ReCase(stateName);

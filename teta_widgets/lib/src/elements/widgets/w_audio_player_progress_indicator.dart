@@ -27,10 +27,12 @@ class WAudioPlayerProgressIndicator extends StatefulWidget {
   final FTextTypeInput controller;
 
   @override
-  State<WAudioPlayerProgressIndicator> createState() => _WAudioPlayerProgressIndicatorState();
+  State<WAudioPlayerProgressIndicator> createState() =>
+      _WAudioPlayerProgressIndicatorState();
 }
 
-class _WAudioPlayerProgressIndicatorState extends State<WAudioPlayerProgressIndicator> {
+class _WAudioPlayerProgressIndicatorState
+    extends State<WAudioPlayerProgressIndicator> {
   bool isInitialized = false;
   AudioPlayer? audioController;
 
@@ -41,12 +43,14 @@ class _WAudioPlayerProgressIndicatorState extends State<WAudioPlayerProgressIndi
   }
 
   Future<void> init() async {
-    final page = BlocProvider.of<PageCubit>(context).state;
+    final page = BlocProvider.of<PageCubit>(context).state as PageLoaded;
     VariableObject? variable;
     if (widget.controller.type == FTextTypeEnum.param) {
-      variable = page.params.firstWhereOrNull((final e) => e.name == widget.controller.paramName);
+      variable = page.params
+          .firstWhereOrNull((final e) => e.name == widget.controller.paramName);
     } else {
-      variable = page.states.firstWhereOrNull((final e) => e.name == widget.controller.stateName);
+      variable = page.states
+          .firstWhereOrNull((final e) => e.name == widget.controller.stateName);
     }
     if (variable?.audioController != null) {
       setState(() {
@@ -79,7 +83,8 @@ class _WAudioPlayerProgressIndicatorState extends State<WAudioPlayerProgressIndi
           context: context,
           state: widget.state,
           child: StreamBuilder<Map<String, Duration>>(
-            stream: Rx.combineLatest3<Duration, Duration, Duration?, Map<String, Duration>>(
+            stream: Rx.combineLatest3<Duration, Duration, Duration?,
+                Map<String, Duration>>(
               audioController!.positionStream,
               audioController!.bufferedPositionStream,
               audioController!.durationStream,

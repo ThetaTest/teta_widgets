@@ -13,16 +13,12 @@ import 'package:teta_widgets/src/elements/nodes/node.dart';
 
 class MapElementControl extends StatefulWidget {
   const MapElementControl({
-    required this.node,
     required this.value,
-    required this.page,
     required this.callBack,
     final Key? key,
   }) : super(key: key);
 
-  final CNode node;
   final MapElement value;
-  final PageObject page;
   final Function(MapElement, MapElement) callBack;
 
   @override
@@ -30,14 +26,11 @@ class MapElementControl extends StatefulWidget {
 }
 
 class MapElementControlState extends State<MapElementControl> {
-  int? nodeId;
-  bool? isUpdated;
   late TextEditingController controller;
 
   @override
   void initState() {
     controller = TextEditingController();
-    nodeId = widget.node.nid;
     controller.text = widget.value.key;
     super.initState();
   }
@@ -47,13 +40,9 @@ class MapElementControlState extends State<MapElementControl> {
     return BlocListener<FocusBloc, List<CNode>>(
       listener: (final context, final state) {
         if (state.isNotEmpty) {
-          if (state.first.nid != nodeId) {
-            setState(() {
-              isUpdated = true;
-              controller.text = widget.value.key;
-            });
-            nodeId = state.first.nid;
-          }
+          setState(() {
+            controller.text = widget.value.key;
+          });
         }
       },
       child: Column(
@@ -77,9 +66,7 @@ class MapElementControlState extends State<MapElementControl> {
           ),
           TextControl(
             valueType: VariableType.dynamic,
-            node: widget.node,
             value: widget.value.value,
-            page: widget.page,
             title: 'Value',
             callBack: (final value, final old) {
               final newValue = widget.value.copyWith(value: value);

@@ -26,18 +26,12 @@ import 'package:teta_widgets/src/elements/nodes/node.dart';
 
 class TextPrefabControl extends StatelessWidget {
   const TextPrefabControl({
-    required this.prj,
-    required this.page,
-    required this.node,
     required this.textStyle,
     required this.keyValue,
     final Key? key,
     this.title,
   }) : super(key: key);
 
-  final ProjectObject prj;
-  final PageObject page;
-  final CNode node;
   final FTextStyle textStyle;
   final String? title;
   final String keyValue;

@@ -14,7 +14,6 @@ import 'package:teta_widgets/src/elements/nodes/node.dart';
 class StyleFillControl extends StatefulWidget {
   const StyleFillControl({
     required this.onlySolid,
-    required this.node,
     required this.model,
     required this.fill,
     required this.callBack,
@@ -22,7 +21,6 @@ class StyleFillControl extends StatefulWidget {
   }) : super(key: key);
 
   final bool onlySolid;
-  final CNode node;
   final ColorStyleModel model;
   final FFill fill;
   final Function(FFill, bool, FFill) callBack;
@@ -49,11 +47,11 @@ class StyleFillControlState extends State<StyleFillControl> {
                         .where(
                           (final element) =>
                               (widget.onlySolid &&
-                                  (element.fill!.type == FFillType.solid ||
-                                      element.fill!.type == FFillType.none)) ||
+                                  (element.fill.type == FFillType.solid ||
+                                      element.fill.type == FFillType.none)) ||
                               !widget.onlySolid,
                         )
-                        .map((final e) => e.name!)
+                        .map((final e) => e.name)
                         .toList(),
                     onChange: (final value) {
                       ColorStyleModel? model;

@@ -12,13 +12,11 @@ import 'package:teta_widgets/src/elements/nodes/node.dart';
 
 class NameControl extends StatefulWidget {
   const NameControl({
-    required this.node,
     required this.title,
     required this.callBack,
     final Key? key,
   }) : super(key: key);
 
-  final CNode node;
   final String? title;
   final Function(String, String) callBack;
 

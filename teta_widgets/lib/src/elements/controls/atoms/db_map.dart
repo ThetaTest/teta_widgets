@@ -14,16 +14,12 @@ import 'package:teta_widgets/src/elements/nodes/node.dart';
 
 class DBMapControl extends StatefulWidget {
   const DBMapControl({
-    required this.node,
     required this.list,
-    required this.page,
     required this.callBack,
     final Key? key,
   }) : super(key: key);
 
-  final CNode node;
   final List<MapElement> list;
-  final PageObject page;
   final Function(List<MapElement>, List<MapElement>) callBack;
 
   @override
@@ -31,14 +27,11 @@ class DBMapControl extends StatefulWidget {
 }
 
 class DBMapControlState extends State<DBMapControl> {
-  int? nodeId;
-  bool? isUpdated;
   late TextEditingController controller;
 
   @override
   void initState() {
     controller = TextEditingController();
-    nodeId = widget.node.nid;
     super.initState();
   }
 
@@ -46,14 +39,7 @@ class DBMapControlState extends State<DBMapControl> {
   Widget build(final BuildContext context) {
     return BlocListener<FocusBloc, List<CNode>>(
       listener: (final context, final state) {
-        if (state.isNotEmpty) {
-          if (state.first.nid != nodeId) {
-            setState(() {
-              isUpdated = true;
-            });
-            nodeId = state.first.nid;
-          }
-        }
+        if (state.isNotEmpty) {}
       },
       child: Padding(
         padding: const EdgeInsets.only(top: 8),
@@ -130,9 +116,7 @@ class DBMapControlState extends State<DBMapControl> {
                           borderRadius: BorderRadius.circular(8),
                         ),
                         child: MapElementControl(
-                          node: widget.node,
                           value: e,
-                          page: widget.page,
                           callBack: (final value, final old) {
                             final old = widget.list;
                             final index = widget.list.indexOf(e);

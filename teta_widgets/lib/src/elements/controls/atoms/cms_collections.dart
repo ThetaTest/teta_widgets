@@ -14,13 +14,11 @@ import 'package:teta_widgets/src/elements/index.dart';
 
 class CMSCollectionControl extends StatefulWidget {
   const CMSCollectionControl({
-    required this.node,
     required this.collectionId,
     required this.callBack,
     final Key? key,
   }) : super(key: key);
 
-  final CNode node;
   final String? collectionId;
   final Function(String, String?) callBack;
 

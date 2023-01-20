@@ -11,13 +11,11 @@ import 'package:teta_widgets/src/elements/index.dart';
 
 class MainAxisSizeControl extends StatefulWidget {
   const MainAxisSizeControl({
-    required this.node,
     required this.size,
     required this.callBack,
     final Key? key,
   }) : super(key: key);
 
-  final CNode node;
   final FMainAxisSize size;
   final Function(FMainAxisSize, FMainAxisSize) callBack;
 
@@ -26,14 +24,11 @@ class MainAxisSizeControl extends StatefulWidget {
 }
 
 class MainAxisSizeControlState extends State<MainAxisSizeControl> {
-  int? nodeId;
-  bool? isUpdated;
   String? dropdown;
 
   @override
   void initState() {
     super.initState();
-    nodeId = widget.node.nid;
     dropdown = widget.size.getString;
   }
 
@@ -42,13 +37,9 @@ class MainAxisSizeControlState extends State<MainAxisSizeControl> {
     return BlocListener<FocusBloc, List<CNode>>(
       listener: (final context, final state) {
         if (state.isNotEmpty) {
-          if (state.first.nid != nodeId) {
-            setState(() {
-              isUpdated = true;
-              dropdown = widget.size.getString;
-            });
-            nodeId = state.first.nid;
-          }
+          setState(() {
+            dropdown = widget.size.getString;
+          });
         }
       },
       child: BlocBuilder<FocusBloc, List<CNode>>(

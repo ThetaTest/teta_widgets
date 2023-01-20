@@ -66,7 +66,7 @@ class FATetaCMSLogin {
     final Map<String, dynamic>? paramsToSend,
   ) {
     final prj = BlocProvider.of<FocusProjectCubit>(context).state!;
-    final isRevenueCatEnabled = prj.config?.isRevenueCatEnabled ?? false;
+    final isRevenueCatEnabled = config?.isRevenueCatEnabled ?? false;
     final providerStr = provider == TetaProvider.google
         ? 'TetaProvider.google'
         : provider == TetaProvider.twitter

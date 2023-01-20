@@ -12,22 +12,18 @@ import 'package:teta_widgets/src/elements/nodes/node.dart';
 
 class AudioControllerControl extends StatefulWidget {
   const AudioControllerControl({
-    required this.node,
     required this.value,
-    required this.page,
     required this.title,
     required this.callBack,
     final Key? key,
   }) : super(key: key);
 
-  final CNode node;
   final FTextTypeInput value;
-  final PageObject page;
   final String title;
   final Function(FTextTypeInput, FTextTypeInput) callBack;
 
   @override
-  AudioControllerControlState createState() => AudioControllerControlState();
+  AudioControllerControlState create tate() => AudioControllerControlState();
 }
 
 class AudioControllerControlState extends State<AudioControllerControl> {
