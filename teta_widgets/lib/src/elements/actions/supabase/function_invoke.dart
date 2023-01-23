@@ -23,7 +23,7 @@ class FASupabaseFunctionsInvoke {
     final List<DatasetObject> dataset,
     final int? loop,
   ) async {
-    final page = BlocProvider.of<PageCubit>(context).state;
+    final page = BlocProvider.of<PageCubit>(context).state as PageLoaded;
 
     // Take status from states
     final status = takeStateFrom(page, 'status');
@@ -99,7 +99,7 @@ class FASupabaseFunctionsInvoke {
     final List<MapElement>? body,
     final List<MapElement>? headers,
   ) {
-    final page = BlocProvider.of<PageCubit>(context).state;
+    final page = BlocProvider.of<PageCubit>(context).state as PageLoaded;
     final status = takeStateFrom(page, 'status');
     final client = BlocProvider.of<SupabaseCubit>(context).state;
     if (client != null) {

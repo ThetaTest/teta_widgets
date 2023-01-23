@@ -24,7 +24,7 @@ class FASupabaseSignUp {
     final String? nameOfPage,
     final Map<String, dynamic>? paramsToSend,
   ) async {
-    final page = BlocProvider.of<PageCubit>(context).state;
+    final page = BlocProvider.of<PageCubit>(context).state as PageLoaded;
 
     // Take email from states
     final email = takeStateFrom(page, 'email');
@@ -39,7 +39,8 @@ class FASupabaseSignUp {
       changeState(status, context, 'Loading');
       final client = BlocProvider.of<SupabaseCubit>(context).state;
       if (client != null) {
-        final response = await client.auth.signUp('${email.get}', '${password.get}');
+        final response =
+            await client.auth.signUp('${email.get}', '${password.get}');
         if (response.error != null) {
           changeState(status, context, '${response.error?.message}');
         } else {
@@ -62,7 +63,7 @@ class FASupabaseSignUp {
     final String? nameOfPage,
     final Map<String, dynamic>? paramsToSend,
   ) {
-    final page = BlocProvider.of<PageCubit>(context).state;
+    final page = BlocProvider.of<PageCubit>(context).state as PageLoaded;
     final status = takeStateFrom(page, 'status');
     final email = takeStateFrom(page, 'email');
     final password = takeStateFrom(page, 'password');

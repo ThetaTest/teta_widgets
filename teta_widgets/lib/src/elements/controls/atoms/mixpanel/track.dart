@@ -31,9 +31,7 @@ class MixPanelTrack extends StatelessWidget {
       children: [
         TextControl(
           valueType: VariableType.string,
-          node: node,
           value: action.valueTextTypeInput ?? FTextTypeInput(),
-          page: page,
           title: 'Event name',
           callBack: (final value, final old) {
             action.valueTextTypeInput = value;
@@ -42,8 +40,6 @@ class MixPanelTrack extends StatelessWidget {
         ),
         const Gap(Grid.small),
         HttpParamsControl(
-          node: node,
-          page: page,
           title: 'Event Properties',
           list: action.customHttpRequestBody ?? <MapElement>[],
           callBack: (final value, final old) {

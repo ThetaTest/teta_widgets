@@ -30,9 +30,7 @@ class MixPanelSetUserId extends StatelessWidget {
       children: [
         TextControl(
           valueType: VariableType.string,
-          node: node,
           value: action.valueTextTypeInput ?? FTextTypeInput(),
-          page: page,
           title: 'User ID',
           callBack: (final value, final old) {
             action.valueTextTypeInput = value;

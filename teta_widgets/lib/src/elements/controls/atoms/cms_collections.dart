@@ -27,15 +27,12 @@ class CMSCollectionControl extends StatefulWidget {
 }
 
 class CMSCollectionControlState extends State<CMSCollectionControl> {
-  int? nodeId;
-  bool? isUpdated;
   String? dropdown;
   late Future<List<CollectionObject>> _future;
 
   @override
   void initState() {
     super.initState();
-    nodeId = widget.node.nid;
     _future = TetaCMS.instance.client.getCollections();
   }
 

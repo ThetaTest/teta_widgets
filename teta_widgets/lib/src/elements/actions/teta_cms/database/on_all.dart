@@ -23,7 +23,7 @@ class FATetaCMSOnAll {
     final List<DatasetObject> dataset,
     final int? loop,
   ) async {
-    final page = BlocProvider.of<PageCubit>(context).state;
+    final page = BlocProvider.of<PageCubit>(context).state as PageLoaded;
     final state = takeStateFrom(page, stateName ?? '');
     if (collection != null) {
       final collectionId = collection.get(
@@ -53,7 +53,7 @@ class FATetaCMSOnAll {
     final FTextTypeInput? supabaseFrom,
     final List<MapElement>? supabaseData,
   ) {
-    final page = BlocProvider.of<PageCubit>(context).state;
+    final page = BlocProvider.of<PageCubit>(context).state as PageLoaded;
     final status = takeStateFrom(page, 'status');
     final client = BlocProvider.of<SupabaseCubit>(context).state;
     if (client != null) {

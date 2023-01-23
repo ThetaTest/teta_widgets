@@ -27,9 +27,12 @@ class FActionNavigationOpenSnackBar {
     try {
       if (nameOfPage != null) {
         final prj = BlocProvider.of<FocusProjectCubit>(context).state!;
-        final currentPage = BlocProvider.of<PageCubit>(context).state;
+        final pages = BlocProvider.of<PagesCubit>(context).state;
+
+        final currentPage =
+            BlocProvider.of<PageCubit>(context).state as PageLoaded;
         PageObject? page;
-        page = prj.pages!
+        page = pages
             .firstWhereOrNull((final element) => element.name == nameOfPage);
         if (page != null) {
           final list = await TetaDB.instance.client.selectList(
@@ -55,13 +58,13 @@ class FActionNavigationOpenSnackBar {
           final scaffold = sl.get<NodeRendering>().renderTree(nodes);
           page = page.copyWith(flatList: nodes, scaffold: scaffold);
           final snackBar = SnackBar(
-            content: page.scaffold!.toWidget(
+            content: page.scaffold.toWidget(
               state: state.copyWith(
                 forPlay: true,
-                states: page.states,
-                dataset: page.datasets,
+                states: page.defaultStates,
+                dataset: [],
                 params: passParamsToNewPage(
-                  page.params,
+                  page.defaultParams,
                   currentPage.params,
                   paramsToSend,
                   state.dataset,
@@ -85,12 +88,13 @@ class FActionNavigationOpenSnackBar {
   ) {
     try {
       final prj = BlocProvider.of<FocusProjectCubit>(context).state!;
+      final pages = BlocProvider.of<PagesCubit>(context).state;
+
       if (nameOfPage == null ||
-          (prj.pages ?? <PageObject>[])
-                  .indexWhere((final element) => element.name == nameOfPage) ==
-              -1) return '';
+          pages.indexWhere((final element) => element.name == nameOfPage) == -1)
+        return '';
       final page =
-          prj.pages!.firstWhere((final element) => element.name == nameOfPage);
+          pages.firstWhere((final element) => element.name == nameOfPage);
       final temp = removeDiacritics(
         page.name
             .replaceFirst('0', 'A0')
@@ -110,7 +114,7 @@ class FActionNavigationOpenSnackBar {
       final pageNameRC = ReCase(temp);
 
       final stringParamsToSend = StringBuffer()..write('');
-      for (final param in page.params) {
+      for (final param in page.defaultParams) {
         final name = ReCase(param.name);
         stringParamsToSend.write('${name.camelCase}: ');
         final valueToSend = (paramsToSend ?? <String, dynamic>{})[param.id]

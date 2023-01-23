@@ -38,37 +38,40 @@ class PaddingsState extends State<VideoUrlControl> {
 
   @override
   void initState() {
+    final pageState = BlocProvider.of<PageCubit>(context).state as PageLoaded;
     text = 'https://www.youtube.com/watch?v=${widget.value.get(
-      BlocProvider.of<PageCubit>(context).state.params,
-      BlocProvider.of<PageCubit>(context).state.states,
-      BlocProvider.of<PageCubit>(context).state.datasets,
+      pageState.params,
+      pageState.states,
+      pageState.datasets,
       false,
       null,
       context,
     )}';
-    tempNode = widget.node;
     controller.text = text!;
     urlState = widget.value.get(
-      BlocProvider.of<PageCubit>(context).state.params,
-      BlocProvider.of<PageCubit>(context).state.states,
-      BlocProvider.of<PageCubit>(context).state.datasets,
+      pageState.params,
+      pageState.states,
+      pageState.datasets,
       false,
       null,
       context,
     );
-    controllerVideo = YoutubePlayerController(
-      initialVideoId: urlState!,
-      params: YoutubePlayerParams(
-        startAt: Duration(
-          seconds: widget.node.body.attributes[DBKeys.startAt] as int,
+    final nodes = BlocProvider.of<FocusBloc>(context).state;
+    if (nodes.isNotEmpty) {
+      controllerVideo = YoutubePlayerController(
+        initialVideoId: urlState!,
+        params: YoutubePlayerParams(
+          startAt: Duration(
+            seconds: nodes.first.body.attributes[DBKeys.startAt] as int,
+          ),
+          showControls:
+              nodes.first.body.attributes[DBKeys.showControls] as bool,
+          showFullscreenButton:
+              nodes.first.body.attributes[DBKeys.isFullWidth] as bool,
+          mute: true,
         ),
-        showControls: widget.node.body.attributes[DBKeys.showControls] as bool,
-        showFullscreenButton:
-            widget.node.body.attributes[DBKeys.isFullWidth] as bool,
-        mute: true,
-      ),
-    );
-
+      );
+    }
     super.initState();
   }
 

@@ -21,20 +21,27 @@ class RevenueCatBuyActionWidget extends StatelessWidget {
   Widget build(final BuildContext context) {
     return Column(
       children: [
-        CDropdown(
-          value: FActionElement.convertValueToDropdown(
-            element.actionRevenueCat,
-          ),
-          items: FActionElement.getRevenueCat(prj.config).toSet().toList(),
-          onChange: (final newValue) {
-            if (newValue != null) {
-              final old = element;
-              element.actionRevenueCat = FActionElement.convertDropdownToValue(
-                ActionRevenueCat.values,
-                newValue,
-              ) as ActionRevenueCat?;
-              callback(element, old);
-            }
+        BlocBuilder<ConfigCubit, ConfigState>(
+          builder: (final context, final state) {
+            if (state is! ConfigStateLoaded) return const SizedBox();
+            return CDropdown(
+              value: FActionElement.convertValueToDropdown(
+                element.actionRevenueCat,
+              ),
+              items:
+                  FActionElement.getRevenueCat(state.config).toSet().toList(),
+              onChange: (final newValue) {
+                if (newValue != null) {
+                  final old = element;
+                  element.actionRevenueCat =
+                      FActionElement.convertDropdownToValue(
+                    ActionRevenueCat.values,
+                    newValue,
+                  ) as ActionRevenueCat?;
+                  callback(element, old);
+                }
+              },
+            );
           },
         ),
         const Gap(Grid.medium),
@@ -101,41 +108,6 @@ class RevenueCatBuyActionWidget extends StatelessWidget {
               ),
             ],
           ),
-        /*
-        const Gap(Grid.medium),
-        const THeadline3(
-          'Choose a variable to save the status of the operation',
-        ),
-        TDetailLabel(
-          "The selected variable is set to 'Loading' during the operation, to 'Successful' if the payment is successful and to 'Failed' if it is not successful. The variable must be of String type.",
-          color: Palette.txtPrimary.withOpacity(0.6),
-        ),
-        const Gap(Grid.small),
-        CDropdown(
-          value: widget.page.states
-                      .map((final e) => e.name)
-                      .where((final element) => element != 'null')
-                      .toList()
-                      .indexWhere(
-                        (final e) => e == widget.element.stateName,
-                      ) !=
-                  -1
-              ? widget.element.stateName
-              : null,
-          items: widget.page.states
-              .map((final e) => e.name)
-              .where((final element) => element != 'null')
-              .toList(),
-          onChange: (final newValue) {
-            if (newValue != null) {
-              try {
-                final old = widget.element;
-                widget.element.stateName = newValue;
-                widget.callBack(widget.element, old);
-              } catch (e) {}
-            }
-          },
-        ),*/
       ],
     );
   }

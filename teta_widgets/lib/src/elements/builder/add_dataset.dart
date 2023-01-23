@@ -14,7 +14,7 @@ List<DatasetObject> addDataset(
 ) {
   final list = <DatasetObject>[...dataset, map];
   final prj = BlocProvider.of<FocusProjectCubit>(context).state!;
-  final pageFocused = BlocProvider.of<PageCubit>(context).state;
+  final pageFocused = BlocProvider.of<PageCubit>(context).state as PageLoaded;
 
   try {
     var flag = true;

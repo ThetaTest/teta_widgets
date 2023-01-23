@@ -15,16 +15,12 @@ import 'package:teta_widgets/src/elements/nodes/node.dart';
 
 class SrcImageControl extends StatefulWidget {
   const SrcImageControl({
-    required this.node,
-    required this.page,
     required this.title,
     required this.image,
     required this.callBack,
     final Key? key,
   }) : super(key: key);
 
-  final CNode node;
-  final PageObject page;
   final String title;
   final FTextTypeInput image;
   final Function(FTextTypeInput, FTextTypeInput) callBack;
@@ -34,8 +30,6 @@ class SrcImageControl extends StatefulWidget {
 }
 
 class SrcImageControlState extends State<SrcImageControl> {
-  int? nodeId;
-  bool? isUpdated;
   String? text;
   TextEditingController controller = TextEditingController();
   String databaseName = '';
@@ -46,7 +40,6 @@ class SrcImageControlState extends State<SrcImageControl> {
   @override
   void initState() {
     try {
-      nodeId = widget.node.nid;
       text = widget.image.value ?? '';
       controller.text = widget.image.value!;
       typeOfInput = widget.image.type!;
@@ -54,11 +47,12 @@ class SrcImageControlState extends State<SrcImageControl> {
       databaseAttribute = widget.image.datasetAttr!;
     } catch (_) {}
     try {
-      list = (widget.page.datasets.indexWhere(
+      final pageState = context.watch<PageCubit>().state as PageLoaded;
+      list = (pageState.datasets.indexWhere(
                 (final element) => element.getName == widget.image.datasetName,
               ) !=
               -1)
-          ? widget.page.datasets
+          ? pageState.datasets
               .firstWhere(
                 (final element) => element.getName == widget.image.datasetName,
                 orElse: () {
@@ -79,16 +73,11 @@ class SrcImageControlState extends State<SrcImageControl> {
 
   @override
   Widget build(final BuildContext context) {
+    final pageState = context.watch<PageCubit>().state as PageLoaded;
     return BlocListener<FocusBloc, List<CNode>>(
       listener: (final context, final state) {
         if (state.isNotEmpty) {
-          if (state.first.nid != nodeId) {
-            setState(() {
-              isUpdated = true;
-              controller.text = widget.image.value ?? '';
-            });
-            nodeId = state.first.nid;
-          }
+          controller.text = widget.image.value ?? '';
         }
       },
       child: Column(
@@ -154,15 +143,14 @@ class SrcImageControlState extends State<SrcImageControl> {
             ),
           if (widget.image.type == FTextTypeEnum.param)
             CDropdown(
-              value: widget.page.params
+              value: pageState.params
                       .map((final e) => e.name)
                       .toSet()
                       .toList()
                       .contains(widget.image.paramName)
                   ? widget.image.paramName
                   : null,
-              items:
-                  widget.page.params.map((final e) => e.name).toSet().toList(),
+              items: pageState.params.map((final e) => e.name).toSet().toList(),
               onChange: (final newValue) {
                 final old = widget.image;
                 widget.image.paramName = newValue;
@@ -171,15 +159,14 @@ class SrcImageControlState extends State<SrcImageControl> {
             ),
           if (widget.image.type == FTextTypeEnum.state)
             CDropdown(
-              value: widget.page.states
+              value: pageState.states
                       .map((final e) => e.name)
                       .toSet()
                       .toList()
                       .contains(widget.image.stateName)
                   ? widget.image.stateName
                   : null,
-              items:
-                  widget.page.states.map((final e) => e.name).toSet().toList(),
+              items: pageState.states.map((final e) => e.name).toSet().toList(),
               onChange: (final newValue) {
                 final old = widget.image;
                 widget.image.stateName = newValue;
@@ -188,14 +175,14 @@ class SrcImageControlState extends State<SrcImageControl> {
             ),
           if (widget.image.type == FTextTypeEnum.dataset)
             CDropdown(
-              value: widget.page.datasets
+              value: pageState.datasets
                       .map((final e) => e.getName)
                       .where((final element) => element != 'null')
                       .toSet()
                       .contains(widget.image.datasetName)
                   ? widget.image.datasetName
                   : null,
-              items: widget.page.datasets
+              items: pageState.datasets
                   .map((final e) => e.getName)
                   .where((final element) => element != 'null')
                   .toSet()
@@ -214,7 +201,7 @@ class SrcImageControlState extends State<SrcImageControl> {
             Padding(
               padding: EI.smT,
               child: CDropdown(
-                value: widget.page.datasets.indexWhere(
+                value: pageState.datasets.indexWhere(
                           (final element) =>
                               element.getName == widget.image.datasetName,
                         ) !=

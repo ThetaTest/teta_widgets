@@ -13,7 +13,6 @@ import 'package:teta_widgets/src/elements/controls/atoms/fill/radial.dart';
 import 'package:teta_widgets/src/elements/controls/atoms/fill/solid.dart';
 import 'package:teta_widgets/src/elements/controls/atoms/fill/style.dart';
 import 'package:teta_widgets/src/elements/features/features.dart';
-import 'package:teta_widgets/src/elements/nodes/node.dart';
 
 enum FillTypeControlType {
   onlySolid,
@@ -185,7 +184,6 @@ class FillControlState extends State<FillControl> {
             ? StyleFillControl(
                 onlySolid: widget.type == FillTypeControlType.onlySolid,
                 model: model!,
-                node: widget.node,
                 callBack: widget.callBack,
                 fill: widget.fill,
               )
@@ -195,7 +193,6 @@ class FillControlState extends State<FillControl> {
                     title: widget.title ?? 'Fill',
                     fill: widget.fill,
                     color: widget.color,
-                    node: widget.node,
                     isStyled: false,
                     callBack: widget.callBack,
                   )
@@ -203,7 +200,6 @@ class FillControlState extends State<FillControl> {
                     ? LinearFillControl(
                         title: widget.title ?? 'Fill',
                         fill: widget.fill,
-                        node: widget.node,
                         isStyled: false,
                         callBack: widget.callBack,
                       )
@@ -211,7 +207,6 @@ class FillControlState extends State<FillControl> {
                         ? RadialFillControl(
                             title: widget.title ?? 'Fill',
                             fill: widget.fill,
-                            node: widget.node,
                             isStyled: false,
                             callBack: widget.callBack,
                           )
@@ -219,7 +214,6 @@ class FillControlState extends State<FillControl> {
                             ? ImageFillControl(
                                 title: widget.title ?? 'Fill',
                                 fill: widget.fill,
-                                node: widget.node,
                                 isStyled: false,
                                 callBack: widget.callBack,
                               )

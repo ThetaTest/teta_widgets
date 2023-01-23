@@ -4,8 +4,8 @@
 // Flutter imports:
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:teta_core/teta_core.dart';
-import 'package:teta_widgets/src/elements/nodes/dynamic.dart';
 
 class FlagControl extends StatefulWidget {
   const FlagControl({
@@ -39,7 +39,10 @@ class FlagControlState extends State<FlagControl> {
       switchOn = value;
     });
     if (widget.keyValue != null) {
-      widget.node.body.attributes[widget.keyValue!] = value;
+      final nodes = BlocProvider.of<FocusBloc>(context).state;
+      if (nodes.isNotEmpty) {
+        nodes.first.body.attributes[widget.keyValue!] = value;
+      }
     }
     widget.callBack(value, widget.value);
   }

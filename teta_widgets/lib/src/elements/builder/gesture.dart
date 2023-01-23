@@ -32,6 +32,7 @@ class GestureBuilder {
         );
       }
       if (action != null) {
+        final page = (context.read<PageCubit>().state as PageLoaded).page;
         action.actions!
             .where((final element) => element.actionGesture == gesture)
             .forEach(
@@ -40,7 +41,7 @@ class GestureBuilder {
               context,
               state,
               finalValue,
-              BlocProvider.of<PageCubit>(context).state.scaffold!,
+              page.scaffold,
             );
             Logger.printMessage('Action performed');
           },

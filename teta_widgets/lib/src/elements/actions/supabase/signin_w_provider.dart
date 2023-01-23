@@ -29,7 +29,7 @@ class FASupabaseSignInWithProvider {
     final Map<String, dynamic>? paramsToSend,
     final Provider provider,
   ) async {
-    final page = BlocProvider.of<PageCubit>(context).state;
+    final page = BlocProvider.of<PageCubit>(context).state as PageLoaded;
 
     // Take status from states
     final status = takeStateFrom(page, 'status');
@@ -37,14 +37,15 @@ class FASupabaseSignInWithProvider {
     changeState(status, context, 'Loading');
     final client = BlocProvider.of<SupabaseCubit>(context).state;
     if (client != null) {
-      final response =
-          await UserSocialLoginService.instance.executeLogin(client.supabaseUrl, provider);
+      final response = await UserSocialLoginService.instance
+          .executeLogin(client.supabaseUrl, provider);
 
       if (!UniversalPlatform.isWeb) {
         uriLinkStream.listen(
           (final Uri? uri) {
             if (uri != null) {
-              final uriParameters = SupabaseAuth.instance.parseUriParameters(Uri.base);
+              final uriParameters =
+                  SupabaseAuth.instance.parseUriParameters(Uri.base);
               if (uriParameters.containsKey('access_token') &&
                   uriParameters.containsKey('refresh_token') &&
                   uriParameters.containsKey('expires_in')) {

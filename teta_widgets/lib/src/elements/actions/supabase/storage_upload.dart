@@ -26,7 +26,7 @@ class FASupabaseStorageUpload {
     final List<DatasetObject> dataset,
     final int? loop,
   ) async {
-    final page = BlocProvider.of<PageCubit>(context).state;
+    final page = BlocProvider.of<PageCubit>(context).state as PageLoaded;
 
     // Take status from states
     final status = takeStateFrom(page, 'status');
@@ -107,7 +107,7 @@ class FASupabaseStorageUpload {
     final String stateName2,
     final int? loop,
   ) {
-    final page = BlocProvider.of<PageCubit>(context).state;
+    final page = BlocProvider.of<PageCubit>(context).state as PageLoaded;
     final status = takeStateFrom(page, 'status');
     final client = BlocProvider.of<SupabaseCubit>(context).state;
     final from = supabaseFrom?.toCode(

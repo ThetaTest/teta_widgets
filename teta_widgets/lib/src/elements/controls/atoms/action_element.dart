@@ -154,7 +154,6 @@ class ActionElementControlState extends State<ActionElementControl> {
 
   @override
   Widget build(final BuildContext context) {
-    print('actionElement: ${widget.element.actionType}');
     //TODO:
     return Container(
       margin: const EdgeInsets.only(bottom: 8),

@@ -10,7 +10,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:teta_cms/teta_cms.dart';
 import 'package:teta_core/teta_core.dart';
-import 'package:teta_widgets/src/elements/controls/key_constants.dart';
 // Project imports:
 import 'package:teta_widgets/src/elements/index.dart';
 
@@ -29,8 +28,6 @@ class ApiCallsRequestControl extends StatefulWidget {
 }
 
 class ApiCallsRequestControlState extends State<ApiCallsRequestControl> {
-  int? nodeId;
-  bool? isUpdated;
   String? dropdown;
   List<String> items = <String>[];
   CollectionObject? collection;
@@ -38,11 +35,11 @@ class ApiCallsRequestControlState extends State<ApiCallsRequestControl> {
   List<dynamic> _requestList = <dynamic>[];
   List<String> requestNames = [];
   String? collectionID;
+
   @override
   void initState() {
     getRequest();
     super.initState();
-    nodeId = widget.node.nid;
   }
 
   Future<void> getRequest() async {
@@ -79,79 +76,68 @@ class ApiCallsRequestControlState extends State<ApiCallsRequestControl> {
 
   @override
   Widget build(final BuildContext context) {
-    return BlocListener<FocusBloc, List<CNode>>(
-      listener: (final context, final state) {
-        if (state.isNotEmpty) {
-          if (state.first.nid != nodeId) {
-            setState(() {
-              isUpdated = true;
-            });
-            nodeId = state.first.nid;
-          }
-        }
-      },
-      child: BlocBuilder<FocusBloc, List<CNode>>(
-        builder: (final context, final state) {
-          return Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              Padding(
-                padding: const EdgeInsets.only(
-                  bottom: 8,
-                ),
-                child: Row(
-                  children: const [
-                    TParagraph(
-                      'Request',
-                    ),
-                  ],
-                ),
+    return BlocBuilder<FocusBloc, List<CNode>>(
+      builder: (final context, final state) {
+        if (state.length != 1) return const SizedBox();
+        return Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            Padding(
+              padding: const EdgeInsets.only(
+                bottom: 8,
               ),
-              if (_requestList != <dynamic>[])
-                CDropdown(
-                  value: requestNames.firstWhereOrNull(
-                    (final element) =>
-                        element ==
-                        (widget.requestName ??
-                            (widget.node.body.attributes[DBKeys.requestName]
-                                    as FTextTypeInput?)
-                                ?.value),
+              child: Row(
+                children: const [
+                  TParagraph(
+                    'Request',
                   ),
-                  items: requestNames,
-                  onChange: (final newValue) {
-                    if (newValue != null) {
-                      setState(() {
-                        dropdown = newValue;
-                      });
-                      var requestData = <String, dynamic>{};
-                      for (final e in _requestList) {
-                        if ((e as Map<String, dynamic>)['_name'].toString() ==
-                            dropdown) {
-                          requestData = e;
-                        }
-                      }
-                      final old = widget.requestName;
-                      final nw = requestNames.firstWhereOrNull(
-                        (final element) => element == dropdown,
-                      );
-                      if (widget.node.body.attributes[DBKeys.requestName] !=
-                              null &&
-                          widget.node.body.attributes[DBKeys.requestName]
-                              is FTextTypeInput) {
-                        (widget.node.body.attributes[DBKeys.requestName]
-                                as FTextTypeInput)
-                            .value = nw;
-                      }
-                      if (nw != null) {
-                        widget.callBack(nw, old, requestData);
+                ],
+              ),
+            ),
+            if (_requestList != <dynamic>[])
+              CDropdown(
+                value: requestNames.firstWhereOrNull(
+                  (final element) =>
+                      element ==
+                      (widget.requestName ??
+                          (state.first.body.attributes[DBKeys.requestName]
+                                  as FTextTypeInput?)
+                              ?.value),
+                ),
+                items: requestNames,
+                onChange: (final newValue) {
+                  if (newValue != null) {
+                    setState(() {
+                      dropdown = newValue;
+                    });
+                    var requestData = <String, dynamic>{};
+                    for (final e in _requestList) {
+                      if ((e as Map<String, dynamic>)['_name'].toString() ==
+                          dropdown) {
+                        requestData = e;
                       }
                     }
-                  },
-                ),
-            ],
-          );
-        },
-      ),
+                    final old = widget.requestName;
+                    final nw = requestNames.firstWhereOrNull(
+                      (final element) => element == dropdown,
+                    );
+                    if (state.first.body.attributes[DBKeys.requestName] !=
+                            null &&
+                        state.first.body.attributes[DBKeys.requestName]
+                            is FTextTypeInput) {
+                      (state.first.body.attributes[DBKeys.requestName]
+                              as FTextTypeInput)
+                          .value = nw;
+                    }
+                    if (nw != null) {
+                      widget.callBack(nw, old, requestData);
+                    }
+                  }
+                },
+              ),
+          ],
+        );
+      },
     );
   }
 }

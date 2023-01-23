@@ -29,8 +29,6 @@ class ComponentControl extends StatefulWidget {
 }
 
 class ComponentControlState extends State<ComponentControl> {
-  int? nodeId;
-  String? name;
   String? dropdown;
   PageObject? pageObject;
   Map<String, dynamic> map = <String, dynamic>{};
@@ -38,8 +36,6 @@ class ComponentControlState extends State<ComponentControl> {
   @override
   void initState() {
     super.initState();
-    nodeId = widget.node.nid;
-    name = widget.node.body.attributes[DBKeys.componentName] as String? ?? '';
     final components =
         widget.prj.pages!.where((final element) => !element.isPage).toList();
     try {
@@ -64,8 +60,6 @@ class ComponentControlState extends State<ComponentControl> {
 
   @override
   Widget build(final BuildContext context) {
-    final components = (widget.prj.pages ?? <PageObject>[])
-        .where((final element) => !element.isPage);
     return DecoratedBox(
       decoration: BoxDecoration(
         color: Colors.black,
@@ -194,8 +188,6 @@ class ElementState extends State<Element> {
   @override
   void initState() {
     super.initState();
-    Logger.printMessage('Datasets: ${widget.page.datasets}');
-    Logger.printMessage('Params: ${widget.page.params}');
     final params = Map<String, dynamic>.fromEntries(
       widget.page.params
           .where((final element) => widget.variable.type == element.type)

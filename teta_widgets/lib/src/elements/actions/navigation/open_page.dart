@@ -54,10 +54,13 @@ class FActionNavigationOpenPage {
   ) async {
     try {
       final prj = BlocProvider.of<FocusProjectCubit>(context).state!;
-      final currentPage = BlocProvider.of<PageCubit>(context).state;
+      final pages = BlocProvider.of<PagesCubit>(context).state;
+
+      final currentPage =
+          BlocProvider.of<PageCubit>(context).state as PageLoaded;
       PageObject? page;
-      page = prj.pages!
-          .firstWhereOrNull((final element) => element.name == nameOfPage);
+      page =
+          pages.firstWhereOrNull((final element) => element.name == nameOfPage);
       if (page != null) {
         final list = await TetaDB.instance.client.selectList(
           'nodes',
@@ -82,22 +85,21 @@ class FActionNavigationOpenPage {
         final scaffold = sl.get<NodeRendering>().renderTree(nodes);
         page = page.copyWith(flatList: nodes, scaffold: scaffold);
 
-        BlocProvider.of<PageCubit>(context)
-            .onFocus(prj: prj, page: page, context: context);
+        BlocProvider.of<PageCubit>(context).onFocus(page: page, forPlay: true);
 
         await Navigator.push<void>(
           context,
           MaterialPageRoute(
             builder: (final context) => BlocProvider(
-              create: (final context) => PageCubit(sl.get())
-                ..onFocus(prj: prj, page: page!, context: context),
-              child: page!.scaffold!.toWidget(
+              create: (final context) =>
+                  PageCubit(sl.get())..onFocus(page: page!, forPlay: true),
+              child: page!.scaffold.toWidget(
                 state: state.copyWith(
                   forPlay: true,
-                  states: page.states,
-                  dataset: page.datasets,
+                  states: page.defaultStates,
+                  dataset: [],
                   params: passParamsToNewPage(
-                    page.params,
+                    page.defaultParams,
                     currentPage.params,
                     paramsToSend,
                     state.dataset,
@@ -123,12 +125,13 @@ class FActionNavigationOpenPage {
     final Map<String, dynamic>? paramsToSend,
   ) {
     final prj = BlocProvider.of<FocusProjectCubit>(context).state!;
+    final pages = BlocProvider.of<PagesCubit>(context).state;
+
     if (nameOfPage == null ||
-        (prj.pages ?? <PageObject>[])
-                .indexWhere((final element) => element.name == nameOfPage) ==
-            -1) return '';
+        pages.indexWhere((final element) => element.name == nameOfPage) == -1)
+      return '';
     final page =
-        prj.pages!.firstWhere((final element) => element.name == nameOfPage);
+        pages.firstWhere((final element) => element.name == nameOfPage);
     final temp = removeDiacritics(
       page.name
           .replaceFirst('0', 'A0')
@@ -148,7 +151,7 @@ class FActionNavigationOpenPage {
     final pageNameRC = ReCase(temp);
 
     final stringParamsToSend = StringBuffer()..write('');
-    for (final param in page.params) {
+    for (final param in page.defaultParams) {
       // ignore: literal_only_boolean_expressions
       if ("${paramsToSend?[param.id]?['dataset']}" == 'States' ||
           "${paramsToSend?[param.id]?['dataset']}" == 'Params') {

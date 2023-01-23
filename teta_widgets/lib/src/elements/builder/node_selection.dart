@@ -32,11 +32,11 @@ class NodeSelectionState extends State<NodeSelection> {
 
   @override
   void initState() {
+    final page = (context.read<PageCubit>().state as PageLoaded).page;
     do {
       parents.add(
         sl.get<FindNodeRendering>().findParentByChildrenIds(
-              flatList:
-                  BlocProvider.of<PageCubit>(context).state.flatList ?? [],
+              flatList: page.flatList,
               element: widget.state.node,
             ),
       );

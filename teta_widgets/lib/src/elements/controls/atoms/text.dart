@@ -22,9 +22,7 @@ import 'package:teta_widgets/src/elements/nodes/node.dart';
 class TextControl extends StatefulWidget {
   const TextControl({
     required this.valueType,
-    required this.node,
     required this.value,
-    required this.page,
     required this.title,
     required this.callBack,
     this.withConvertTo = false,
@@ -34,9 +32,7 @@ class TextControl extends StatefulWidget {
   }) : super(key: key);
 
   final VariableType? valueType;
-  final CNode node;
   final FTextTypeInput value;
-  final PageObject page;
   final String title;
   final bool isSubControl;
   final bool withConvertTo;

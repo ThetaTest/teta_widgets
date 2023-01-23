@@ -65,8 +65,9 @@ class FATetaCMSLogin {
     final String? nameOfPage,
     final Map<String, dynamic>? paramsToSend,
   ) {
-    final prj = BlocProvider.of<FocusProjectCubit>(context).state!;
-    final isRevenueCatEnabled = config?.isRevenueCatEnabled ?? false;
+    final config =
+        (BlocProvider.of<ConfigCubit>(context).state as ConfigStateLoaded)
+            .config;
     final providerStr = provider == TetaProvider.google
         ? 'TetaProvider.google'
         : provider == TetaProvider.twitter
@@ -79,8 +80,8 @@ class FATetaCMSLogin {
         provider: $providerStr,
         onSuccess: (final isFirstTime) async {
           final user = await TetaCMS.instance.auth.user.get;
-          ${isRevenueCatEnabled ? r"LogInResult result = await Purchases.logIn('${user.uid}');" : ''}
-          ${prj.config?.isQonversionReady ?? false ? r"Qonversion.setProperty(QUserProperty.customUserId, '${user.uid}');" : ''}
+          ${config.revenuecat.isEnabled ? r"LogInResult result = await Purchases.logIn('${user.uid}');" : ''}
+          ${config.qonversion.isEnabled ? r"Qonversion.setProperty(QUserProperty.customUserId, '${user.uid}');" : ''}
           ${FActionNavigationOpenPage.toCode(context, nameOfPage, paramsToSend)}
         }
       );

@@ -23,7 +23,7 @@ class FASupabaseUpdate {
     final List<DatasetObject> dataset,
     final int? loop,
   ) async {
-    final page = BlocProvider.of<PageCubit>(context).state;
+    final page = BlocProvider.of<PageCubit>(context).state as PageLoaded;
 
     // Take status from states
     final status = takeStateFrom(page, 'status');
@@ -105,7 +105,7 @@ class FASupabaseUpdate {
     final List<MapElement>? supabaseData,
     final MapElement? supabaseEq,
   ) {
-    final page = BlocProvider.of<PageCubit>(context).state;
+    final page = BlocProvider.of<PageCubit>(context).state as PageLoaded;
     final status = takeStateFrom(page, 'status');
     final client = BlocProvider.of<SupabaseCubit>(context).state;
     if (client != null) {

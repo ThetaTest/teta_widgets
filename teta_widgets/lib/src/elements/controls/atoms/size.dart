@@ -127,7 +127,7 @@ class SizeControlsState extends State<SizeControl> {
                             onTap: () {
                               showDialog<void>(
                                 context: context,
-                                builder: (final ctx) => DevicesDialog(),
+                                builder: (final ctx) => const DevicesDialog(),
                               );
                             },
                             child: Image.asset(
@@ -154,7 +154,12 @@ class SizeControlsState extends State<SizeControl> {
                               final old = FSize.fromJson(widget.size.toJson());
                               value.replaceAll('%', '');
                               szs.updateSize(value, context);
-                              widget.node.body.attributes[widget.keyAttr] = szs;
+                              final nodes =
+                                  BlocProvider.of<FocusBloc>(context).state;
+                              if (nodes.length == 1) {
+                                nodes.first.body.attributes[widget.keyAttr] =
+                                    szs;
+                              }
                               widget.callBack(szs.toJson(), old.toJson());
                             },
                             value: flag,
@@ -189,9 +194,13 @@ class SizeControlsState extends State<SizeControl> {
                                   widget.size
                                       .updateUnit(SizeUnit.pixel, context);
                                   final szs = widget.size;
-                                  widget.node.body.attributes[widget.keyAttr] =
-                                      szs;
-                                  widget.callBack(szs.toJson(), old.toJson());
+                                  final nodes =
+                                      BlocProvider.of<FocusBloc>(context).state;
+                                  if (nodes.length == 1) {
+                                    nodes.first.body
+                                        .attributes[widget.keyAttr] = szs;
+                                    widget.callBack(szs.toJson(), old.toJson());
+                                  }
                                 },
                                 child: unitIcon(
                                   unit: SizeUnit.pixel,
@@ -205,9 +214,13 @@ class SizeControlsState extends State<SizeControl> {
                                   widget.size
                                       .updateUnit(SizeUnit.percent, context);
                                   final szs = widget.size;
-                                  widget.node.body.attributes[widget.keyAttr] =
-                                      szs;
-                                  widget.callBack(szs.toJson(), old.toJson());
+                                  final nodes =
+                                      BlocProvider.of<FocusBloc>(context).state;
+                                  if (nodes.length == 1) {
+                                    nodes.first.body
+                                        .attributes[widget.keyAttr] = szs;
+                                    widget.callBack(szs.toJson(), old.toJson());
+                                  }
                                 },
                                 child: unitIcon(
                                   unit: SizeUnit.percent,
@@ -261,12 +274,17 @@ class SizeControlsState extends State<SizeControl> {
                                           FSize.fromJson(widget.size.toJson());
                                       value.replaceAll('%', '');
                                       szs.updateSize(value, context);
-                                      widget.node.body
-                                          .attributes[widget.keyAttr] = szs;
-                                      widget.callBack(
-                                        szs.toJson(),
-                                        old.toJson(),
-                                      );
+                                      final nodes =
+                                          BlocProvider.of<FocusBloc>(context)
+                                              .state;
+                                      if (nodes.length == 1) {
+                                        nodes.first.body
+                                            .attributes[widget.keyAttr] = szs;
+                                        widget.callBack(
+                                          szs.toJson(),
+                                          old.toJson(),
+                                        );
+                                      }
                                     },
                                   ),
                                 ),
@@ -291,17 +309,23 @@ class SizeControlsState extends State<SizeControl> {
                                                 : '100%',
                                             context,
                                           );
-                                          widget.node.body
-                                                  .attributes[widget.keyAttr] =
-                                              widget.size;
-                                          widget.callBack(
-                                            widget.size.toJson(),
-                                            old.toJson(),
-                                          );
-                                          controller.text =
-                                              widget.size.unit == SizeUnit.pixel
-                                                  ? 'max'
-                                                  : '100%';
+                                          final nodes =
+                                              BlocProvider.of<FocusBloc>(
+                                            context,
+                                          ).state;
+                                          if (nodes.length == 1) {
+                                            nodes.first.body.attributes[
+                                                widget.keyAttr] = widget.size;
+                                            widget.callBack(
+                                              widget.size.toJson(),
+                                              old.toJson(),
+                                            );
+                                            controller.text =
+                                                widget.size.unit ==
+                                                        SizeUnit.pixel
+                                                    ? 'max'
+                                                    : '100%';
+                                          }
                                         },
                                         child: maxIcon(
                                           unit: widget.size.unit,

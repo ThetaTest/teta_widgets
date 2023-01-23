@@ -14,13 +14,11 @@ import 'package:teta_widgets/src/elements/nodes/node.dart';
 
 class TextAlignControls extends StatefulWidget {
   const TextAlignControls({
-    required this.node,
     required this.textStyle,
     required this.callBack,
     final Key? key,
   }) : super(key: key);
 
-  final CNode node;
   final FTextStyle textStyle;
   final Function(Map<String, dynamic>, Map<String, dynamic>) callBack;
 

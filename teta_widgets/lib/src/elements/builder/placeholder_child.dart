@@ -39,12 +39,12 @@ class _PlaceholderChildBuilderState extends State<PlaceholderChildBuilder> {
         setState(() {
           isDragging = true;
         });
-
+        final page = (context.read<PageCubit>().state as PageLoaded).page;
         await sl.get<NodeRepository>().addNodeWithCustomIndex(
               node: data.node!,
               parent: widget.node,
               index: 0,
-              pageId: BlocProvider.of<PageCubit>(context).state.id,
+              pageId: page.id,
             );
       },
       onMove: (final details) {

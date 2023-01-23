@@ -14,7 +14,7 @@ Future<List<DatasetObject>> saveDatasets(
   final DatasetObject map,
 ) async {
   final list = <DatasetObject>[...dataset, map];
-  final pageFocused = BlocProvider.of<PageCubit>(context).state;
+  final pageFocused = BlocProvider.of<PageCubit>(context).state as PageLoaded;
   final prj = BlocProvider.of<FocusProjectCubit>(context).state!;
   try {
     Box<List<dynamic>> box;

@@ -13,12 +13,10 @@ import 'package:teta_widgets/src/elements/nodes/node.dart';
 
 class SizesPrefabControl extends StatelessWidget {
   const SizesPrefabControl({
-    required this.node,
     required this.values,
     final Key? key,
   }) : super(key: key);
 
-  final CNode node;
   final List<FSize> values;
 
   @override
@@ -33,7 +31,6 @@ class SizesPrefabControl extends StatelessWidget {
           ),
         ),
         SizeControl(
-          node: node,
           size: values.first,
           isWidth: true,
           title: 'Width',
@@ -50,7 +47,6 @@ class SizesPrefabControl extends StatelessWidget {
           },
         ),
         SizeControl(
-          node: node,
           size: values.last,
           isWidth: false,
           title: 'Height',

@@ -11,13 +11,11 @@ import 'package:teta_widgets/src/elements/nodes/node.dart';
 
 class PhysicsControl extends StatefulWidget {
   const PhysicsControl({
-    required this.node,
     required this.physic,
     required this.callBack,
     final Key? key,
   }) : super(key: key);
 
-  final CNode node;
   final FPhysic physic;
   final Function(FPhysic, FPhysic) callBack;
 
