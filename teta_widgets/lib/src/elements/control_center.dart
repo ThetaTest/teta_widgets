@@ -140,6 +140,8 @@ import 'package:teta_widgets/src/elements/intrinsic_states/class.dart';
 import 'package:teta_widgets/src/elements/nodes/enum.dart';
 import 'package:teta_widgets/src/elements/nodes/node_body.dart';
 
+import 'bodies/elevated_button.dart';
+
 /// The list of the all instrict states
 final stateTypes = <IntrinsicStates>[
   airtableFetchIntrinsicStates,
@@ -279,6 +281,7 @@ final stateTypes = <IntrinsicStates>[
   limitedBoxIntrinsicStates,
   customHttpRequestIntrinsicStates,
   apiCallsFetchIntrinsicStates,
+  elevatedButtonIntrinsicStates,
 ];
 
 /// Method to return any body
@@ -560,7 +563,7 @@ NodeBody getBody(final NType type) {
       break;
     case NType.gap:
       return GapBody();
-      break;
+      
     case NType.mapBox:
       // TODO: Handle this case.
       break;
@@ -581,6 +584,8 @@ NodeBody getBody(final NType type) {
       break;
     case NType.apiCallsFetch:
       return ApiCallsFetchBody();
+    case NType.elevatedButton:
+      return ElevatedButtonBody();
   }
   return NodeBody();
 }

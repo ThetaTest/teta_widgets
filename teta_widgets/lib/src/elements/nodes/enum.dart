@@ -119,6 +119,7 @@ enum NType {
   qrCode,
   qrScanner,
   barcode,
+  elevatedButton,
 
   // Transform
   transformRotate,
