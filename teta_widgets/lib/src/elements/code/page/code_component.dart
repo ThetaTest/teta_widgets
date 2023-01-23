@@ -17,8 +17,9 @@ Future<String> codeComponentTemplate(
   final int pageId,
 ) async {
   final prj = BlocProvider.of<FocusProjectCubit>(context).state!;
+  final pages = BlocProvider.of<PagesCubit>(context).state;
 
-  final page = prj.pages!.firstWhere((final element) => element.id == pageId);
+  final page = pages.firstWhere((final element) => element.id == pageId);
   final list1 = page.code!.split('void');
   final imports = list1[0]; //returns my imports
   final list2 = page.code!.split('class');

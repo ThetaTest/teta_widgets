@@ -28,7 +28,11 @@ Future<String> pageCodeTemplate(
   final int? loop,
 ) async {
   final prj = BlocProvider.of<FocusProjectCubit>(context).state!;
-  final page = prj.pages!.firstWhere((final element) => element.id == pageId);
+  final pages = BlocProvider.of<PagesCubit>(context).state;
+  final config =
+      (BlocProvider.of<ConfigCubit>(context).state as ConfigStateLoaded).config;
+
+  final page = pages.firstWhere((final element) => element.id == pageId);
   final temp = removeDiacritics(
     page.name
         .replaceFirst('0', 'A0')
@@ -107,7 +111,7 @@ Future<String> pageCodeTemplate(
   //----start parameters----
   final paramsString = StringBuffer()..write('');
   final parametersString = StringBuffer()..write('');
-  for (final element in page.params) {
+  for (final element in page.defaultParams) {
     final rc = ReCase(element.name);
     final value = element.typeDeclaration(rc.camelCase) == 'String'
         ? "'''${element.get}'''"
@@ -124,7 +128,7 @@ Future<String> pageCodeTemplate(
   //----start states----
   final statesString = StringBuffer()..write('');
 
-  for (final element in page.states) {
+  for (final element in page.defaultStates) {
     final rc = ReCase(element.name);
     final value = element.typeDeclaration(rc.camelCase) == 'String'
         ? "'${element.get}'"
@@ -138,13 +142,14 @@ Future<String> pageCodeTemplate(
   //----end states----
 
   //packages
-  if (page.isPage && page.flatList != null) {
-    for (final item in page.flatList!) {
+  if (page.isPage) {
+    for (final item in page.flatList) {
       PackagesService.instance.insertPackages(item.intrinsicState.packages);
     }
   }
 
-  final isSupabaseIntegrated = prj.config?.supabaseEnabled ?? false;
+  final isSupabaseIntegrated =
+      config.supabase is SupabaseConfigModelInitialized;
 
   final isARState = isSupabaseIntegrated
       ? page.isAuthenticatedRequired
@@ -167,11 +172,10 @@ Future<String> pageCodeTemplate(
     import 'package:myapp/constants.dart' as constantz;
     import 'package:hive_flutter/hive_flutter.dart';
     ${page.isAuthenticatedRequired ? "import 'package:myapp/auth/auth_required_state.dart';" : "import 'package:myapp/auth/auth_state.dart';"}
-    ${prj.config?.isAdaptyReady ?? false ? "import 'package:adapty_flutter/adapty_flutter.dart';" : ''}
-    ${prj.config?.isRevenueCatEnabled ?? false ? "import 'package:purchases_flutter/purchases_flutter.dart';" : ''}
-    ${prj.config?.isQonversionReady ?? false ? "import 'package:qonversion_flutter/qonversion_flutter.dart';" : ''}
-    ${prj.config?.isBraintreeReady ?? false ? "import 'package:flutter_braintree/flutter_braintree.dart';" : ''}
-    ${prj.config?.isStripeEnabled ?? false ? "import 'package:flutter_stripe/flutter_stripe.dart'; \n import 'dart:convert' as convert;" : ''}
+    ${config.revenuecat is RevenueCatConfigModelInitialized ? "import 'package:purchases_flutter/purchases_flutter.dart';" : ''}
+    ${config.qonversion is QonversionConfigModelInitialized ? "import 'package:qonversion_flutter/qonversion_flutter.dart';" : ''}
+    ${config.braintree is BraintreeConfigModelInitialized ? "import 'package:flutter_braintree/flutter_braintree.dart';" : ''}
+    ${config.stripe is StripeConfigModelInitialized ? "import 'package:flutter_stripe/flutter_stripe.dart'; \n import 'dart:convert' as convert;" : ''}
 
     ${PackagesService.instance.getToCodePackages()}
 

@@ -99,8 +99,8 @@ class WBottomBarItem extends StatelessWidget {
   ) {
     if (model != null) {
       return isLight
-          ? HexColor(model.light!.levels!.first.color)
-          : HexColor(model.fill!.levels!.first.color);
+          ? HexColor(model.light.levels!.first.color)
+          : HexColor(model.fill.levels!.first.color);
     } else {
       return HexColor(fill.levels!.first.color);
     }

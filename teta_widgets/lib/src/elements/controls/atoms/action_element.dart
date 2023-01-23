@@ -3,8 +3,8 @@
 
 // ignore_for_file: public_member_api_docs, lines_longer_than_80_chars, avoid_dynamic_calls
 
-// Package imports:
 import 'package:collection/collection.dart';
+// Package imports:
 import 'package:expandable/expandable.dart';
 // Flutter imports:
 import 'package:flutter/foundation.dart';
@@ -95,7 +95,6 @@ class ActionElementControlState extends State<ActionElementControl> {
   TextEditingController controller = TextEditingController();
   TextEditingController delayController = TextEditingController();
   TextEditingController loopController = TextEditingController();
-  int? nodeId;
 
   String? stateTest;
   bool isEmit = false;
@@ -109,7 +108,8 @@ class ActionElementControlState extends State<ActionElementControl> {
   @override
   void initState() {
     try {
-      pageObject = widget.prj.pages!.firstWhereOrNull(
+      final pages = context.read<PagesCubit>().state;
+      pageObject = pages.firstWhereOrNull(
         (final element) => element.name == widget.element.nameOfPage,
       );
       if (pageObject != null) {
@@ -120,7 +120,6 @@ class ActionElementControlState extends State<ActionElementControl> {
       }
     } catch (_) {}
 
-    nodeId = widget.node.nid;
     controller.text = widget.element.value ?? '';
     delayController.text = widget.element.delay?.value ?? '0';
     loopController.text = widget.element.everyMilliseconds?.value ?? '0';
@@ -137,8 +136,9 @@ class ActionElementControlState extends State<ActionElementControl> {
       Logger.printError(e.toString());
     }
     //initialization for openDatePicker for states
+    final page = context.read<PageCubit>().state as PageLoaded;
     try {
-      final states = widget.page.states;
+      final states = page.states;
       if (states.isNotEmpty) {
         final currentState = states.firstWhere(
           (final element) => element.name == widget.element.stateName,
@@ -154,7 +154,9 @@ class ActionElementControlState extends State<ActionElementControl> {
 
   @override
   Widget build(final BuildContext context) {
-    //TODO:
+    final pageState = context.watch<PageCubit>().state as PageLoaded;
+    final config =
+        (context.watch<ConfigCubit>().state as ConfigStateLoaded).config;
     return Container(
       margin: const EdgeInsets.only(bottom: 8),
       decoration: BoxDecoration(
@@ -206,7 +208,7 @@ class ActionElementControlState extends State<ActionElementControl> {
               ),
               CDropdown(
                 value: FActionElement()
-                        .getTypes(widget.prj.config, widget.page)
+                        .getTypes(config, pageState.page)
                         .toSet()
                         .toList()
                         .contains(
@@ -219,7 +221,7 @@ class ActionElementControlState extends State<ActionElementControl> {
                       )
                     : null,
                 items: FActionElement()
-                    .getTypes(widget.prj.config, widget.page)
+                    .getTypes(config, pageState.page)
                     .toSet()
                     .toList(),
                 onChange: (final newValue) {
@@ -234,30 +236,6 @@ class ActionElementControlState extends State<ActionElementControl> {
                   }
                 },
               ),
-              // Gesture Dropdown
-              /*const Padding(
-                padding: EdgeInsets.only(top: 2, bottom: 4),
-                child: THeadline3(
-                  'Gesture',
-                ),
-              ),
-              CDropdown(
-                value: FActionElement.convertValueToDropdown(
-                  widget.element.actionGesture,
-                ),
-                items: FActionElement.getGestures(widget.node as NDynamic),
-                onChange: (final newValue) {
-                  if (newValue != null) {
-                    final old = widget.element;
-                    widget.element.actionGesture =
-                        FActionElement.convertDropdownToValue(
-                      widget.node.intrinsicState.gestures,
-                      newValue,
-                    ) as ActionGesture?;
-                    widget.callBack(widget.element, old);
-                  }
-                },
-              ),*/
               // Delay
               const Divider(
                 color: Colors.white24,
@@ -275,15 +253,8 @@ class ActionElementControlState extends State<ActionElementControl> {
                   child: BlocListener<FocusBloc, List<CNode>>(
                     listener: (final context, final state) {
                       if (state.isNotEmpty) {
-                        if (state.first.nid != nodeId) {
-                          if (mounted) {
-                            setState(() {
-                              delayController.text =
-                                  widget.element.delay?.value ?? '0';
-                            });
-                          }
-                          nodeId = state.first.nid;
-                        }
+                        delayController.text =
+                            widget.element.delay?.value ?? '0';
                       }
                     },
                     child: CMiniTextField(
@@ -306,7 +277,6 @@ class ActionElementControlState extends State<ActionElementControl> {
               ),
               FlagControl(
                 title: 'Is loop',
-                node: widget.node as NDynamic,
                 keyValue: null,
                 value: widget.element.withLoop ?? false,
                 callBack: (final flag, final old) {
@@ -334,16 +304,9 @@ class ActionElementControlState extends State<ActionElementControl> {
                         child: BlocListener<FocusBloc, List<CNode>>(
                           listener: (final context, final state) {
                             if (state.isNotEmpty) {
-                              if (state.first.nid != nodeId) {
-                                if (mounted) {
-                                  setState(() {
-                                    loopController.text = widget
-                                            .element.everyMilliseconds?.value ??
-                                        '0';
-                                  });
-                                }
-                                nodeId = state.first.nid;
-                              }
+                              loopController.text =
+                                  widget.element.everyMilliseconds?.value ??
+                                      '0';
                             }
                           },
                           child: CMiniTextField(
@@ -368,7 +331,6 @@ class ActionElementControlState extends State<ActionElementControl> {
               ),
               FlagControl(
                 title: 'By condition',
-                node: widget.node as NDynamic,
                 keyValue: null,
                 value: widget.element.withCondition ?? false,
                 callBack: (final flag, final old) {
@@ -380,9 +342,7 @@ class ActionElementControlState extends State<ActionElementControl> {
               if (widget.element.withCondition == true)
                 TextControl(
                   valueType: VariableType.string,
-                  node: widget.node,
                   value: widget.element.condition ?? FTextTypeInput(),
-                  page: widget.page,
                   title: 'Condition',
                   callBack: (final value, final old) {
                     final old = widget.element;
@@ -396,9 +356,7 @@ class ActionElementControlState extends State<ActionElementControl> {
                       '''If "Condition" and "Value" have the same values, the condition is true. Else, it's false.''',
                   control: TextControl(
                     valueType: VariableType.string,
-                    node: widget.node,
                     value: widget.element.valueOfCondition ?? FTextTypeInput(),
-                    page: widget.page,
                     title: 'Value',
                     callBack: (final value, final old) {
                       final old = widget.element;
@@ -434,7 +392,7 @@ class ActionElementControlState extends State<ActionElementControl> {
                       },
                     ),
                     CDropdown(
-                      value: widget.page.states
+                      value: pageState.page.defaultStates
                                   .map((final e) => e.name)
                                   .where((final element) => element != 'null')
                                   .toList()
@@ -444,7 +402,7 @@ class ActionElementControlState extends State<ActionElementControl> {
                               -1
                           ? widget.element.stateName
                           : null,
-                      items: widget.page.states
+                      items: pageState.page.defaultStates
                           .where(
                             (final element) =>
                                 element.type == VariableType.cameraController,
@@ -501,7 +459,7 @@ class ActionElementControlState extends State<ActionElementControl> {
                       },
                     ),
                     CDropdown(
-                      value: widget.page.states
+                      value: pageState.page.defaultStates
                                   .where(
                                     (final element) =>
                                         element.type ==
@@ -516,7 +474,7 @@ class ActionElementControlState extends State<ActionElementControl> {
                               -1
                           ? widget.element.stateName
                           : null,
-                      items: widget.page.states
+                      items: pageState.page.defaultStates
                           .where(
                             (final element) =>
                                 element.type == VariableType.audioController,
@@ -568,7 +526,7 @@ class ActionElementControlState extends State<ActionElementControl> {
                     const TParagraph('Which controller?'),
                     const Gap(Grid.small),
                     CDropdown(
-                      value: widget.page.states
+                      value: pageState.page.defaultStates
                                   .where(
                                     (final element) =>
                                         element.type ==
@@ -583,7 +541,7 @@ class ActionElementControlState extends State<ActionElementControl> {
                               -1
                           ? widget.element.stateName
                           : null,
-                      items: widget.page.states
+                      items: pageState.page.defaultStates
                           .where(
                             (final element) =>
                                 element.type == VariableType.webViewController,
@@ -671,7 +629,6 @@ class ActionElementControlState extends State<ActionElementControl> {
                           ActionState.websiteValidator ||
                       widget.element.actionState == ActionState.phoneValidator))
                 AValidatorControl(
-                  page: widget.page,
                   action: widget.element,
                   callback: (final value, final old) {
                     widget.callBack(value, old);
@@ -685,7 +642,7 @@ class ActionElementControlState extends State<ActionElementControl> {
                       widget.element.actionTranslator ==
                           ActionTranslator.translate))
                 CDropdown(
-                  value: widget.page.states
+                  value: pageState.page.defaultStates
                               .map((final e) => e.name)
                               .where((final element) => element != 'null')
                               .toList()
@@ -695,7 +652,7 @@ class ActionElementControlState extends State<ActionElementControl> {
                           -1
                       ? widget.element.stateName
                       : null,
-                  items: widget.page.states
+                  items: pageState.page.defaultStates
                       .map((final e) => e.name)
                       .where((final element) => element != 'null')
                       .toList(),
@@ -717,7 +674,7 @@ class ActionElementControlState extends State<ActionElementControl> {
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
                     CDropdown(
-                      value: widget.page.states
+                      value: pageState.page.defaultStates
                                   .map((final e) => e.name)
                                   .where((final element) => element != 'null')
                                   .toList()
@@ -727,7 +684,7 @@ class ActionElementControlState extends State<ActionElementControl> {
                               -1
                           ? widget.element.stateName
                           : null,
-                      items: widget.page.states
+                      items: pageState.page.defaultStates
                           .where(
                             (final element) =>
                                 element.type == VariableType.int ||
@@ -765,7 +722,7 @@ class ActionElementControlState extends State<ActionElementControl> {
                       ),
                     ),
                     CDropdown(
-                      value: widget.page.params
+                      value: pageState.page.defaultParams
                                   .map((final e) => e.name)
                                   .where((final element) => element != 'null')
                                   .toList()
@@ -775,7 +732,7 @@ class ActionElementControlState extends State<ActionElementControl> {
                               -1
                           ? widget.element.value
                           : null,
-                      items: widget.page.params
+                      items: pageState.page.defaultParams
                           .map((final e) => e.name)
                           .where((final element) => element != 'null')
                           .toList(),
@@ -847,7 +804,7 @@ class ActionElementControlState extends State<ActionElementControl> {
                     ),
                     Builder(
                       builder: (final context) {
-                        final states = widget.page.states;
+                        final states = pageState.page.defaultStates;
                         final statesNameList = <String>[];
                         for (final item in states) {
                           statesNameList.add(item.name);
@@ -880,9 +837,8 @@ class ActionElementControlState extends State<ActionElementControl> {
                       value: FActionElement.convertValueToDropdown(
                         widget.element.actionBraintree,
                       ),
-                      items: FActionElement.getBraintree(widget.prj.config)
-                          .toSet()
-                          .toList(),
+                      items:
+                          FActionElement.getBraintree(config).toSet().toList(),
                       onChange: (final newValue) {
                         if (newValue != null) {
                           final old = widget.element;
@@ -902,10 +858,8 @@ class ActionElementControlState extends State<ActionElementControl> {
                         description: 'e.g. 4.20',
                         control: TextControl(
                           valueType: VariableType.double,
-                          node: widget.node,
                           value: widget.element.valueTextTypeInput ??
                               FTextTypeInput(),
-                          page: widget.page,
                           title: 'Amount',
                           callBack: (final value, final old) {
                             final old = widget.element;
@@ -926,7 +880,7 @@ class ActionElementControlState extends State<ActionElementControl> {
                     ),
                     const Gap(Grid.small),
                     CDropdown(
-                      value: widget.page.states
+                      value: pageState.page.defaultStates
                                   .map((final e) => e.name)
                                   .where((final element) => element != 'null')
                                   .toList()
@@ -936,7 +890,7 @@ class ActionElementControlState extends State<ActionElementControl> {
                               -1
                           ? widget.element.stateName
                           : null,
-                      items: widget.page.states
+                      items: pageState.page.defaultStates
                           .map((final e) => e.name)
                           .where((final element) => element != 'null')
                           .toList(),
@@ -954,17 +908,11 @@ class ActionElementControlState extends State<ActionElementControl> {
                 ),
               if (widget.element.actionType == ActionType.revenueCat)
                 RevenueCatBuyActionWidget(
-                  prj: widget.prj,
-                  page: widget.page,
-                  node: widget.node as NDynamic,
                   element: widget.element,
                   callback: widget.callBack,
                 ),
               if (widget.element.actionType == ActionType.qonversion)
                 QonversionActionWidget(
-                  prj: widget.prj,
-                  page: widget.page,
-                  node: widget.node as NDynamic,
                   element: widget.element,
                   callback: widget.callBack,
                 ),
@@ -981,9 +929,8 @@ class ActionElementControlState extends State<ActionElementControl> {
                       value: FActionElement.convertValueToDropdown(
                         widget.element.actionGoogleMaps,
                       ),
-                      items: FActionElement.getGoogleMaps(widget.prj.config)
-                          .toSet()
-                          .toList(),
+                      items:
+                          FActionElement.getGoogleMaps(config).toSet().toList(),
                       onChange: (final newValue) {
                         if (newValue != null) {
                           final old = widget.element;
@@ -1004,7 +951,7 @@ class ActionElementControlState extends State<ActionElementControl> {
                     descriptionControlWidget(
                       description: 'Google Maps Cubit',
                       control: CDropdown(
-                        value: widget.page.states
+                        value: pageState.page.defaultStates
                                     .where(
                                       (final element) =>
                                           element.type ==
@@ -1020,7 +967,7 @@ class ActionElementControlState extends State<ActionElementControl> {
                                 -1
                             ? widget.element.stateName
                             : null,
-                        items: widget.page.states
+                        items: pageState.page.defaultStates
                             .where(
                               (final element) =>
                                   element.type == VariableType.googleMapsCubit,
@@ -1045,7 +992,7 @@ class ActionElementControlState extends State<ActionElementControl> {
                     descriptionControlWidget(
                       description: 'Google Maps Controller',
                       control: CDropdown(
-                        value: widget.page.states
+                        value: pageState.page.defaultStates
                                     .where(
                                       (final element) =>
                                           element.type ==
@@ -1061,7 +1008,7 @@ class ActionElementControlState extends State<ActionElementControl> {
                                 -1
                             ? widget.element.stateName2
                             : null,
-                        items: widget.page.states
+                        items: pageState.page.defaultStates
                             .where(
                               (final element) =>
                                   element.type ==
@@ -1090,7 +1037,7 @@ class ActionElementControlState extends State<ActionElementControl> {
                         description:
                             'Each time a new location is streamed it will be stored here.',
                         control: CDropdown(
-                          value: widget.page.states
+                          value: pageState.page.defaultStates
                                       .where(
                                         (final element) =>
                                             element.type == VariableType.double,
@@ -1107,7 +1054,7 @@ class ActionElementControlState extends State<ActionElementControl> {
                                   -1
                               ? widget.element.stateName3
                               : null,
-                          items: widget.page.states
+                          items: pageState.page.defaultStates
                               .where(
                                 (final element) =>
                                     element.type == VariableType.double,
@@ -1133,7 +1080,7 @@ class ActionElementControlState extends State<ActionElementControl> {
                         description:
                             'Each time a new location is streamed it will be stored here.',
                         control: CDropdown(
-                          value: widget.page.states
+                          value: pageState.page.defaultStates
                                       .where(
                                         (final element) =>
                                             element.type == VariableType.double,
@@ -1150,7 +1097,7 @@ class ActionElementControlState extends State<ActionElementControl> {
                                   -1
                               ? widget.element.stateName4
                               : null,
-                          items: widget.page.states
+                          items: pageState.page.defaultStates
                               .where(
                                 (final element) =>
                                     element.type == VariableType.double,
@@ -1178,10 +1125,8 @@ class ActionElementControlState extends State<ActionElementControl> {
                             description: 'Camera Latitude',
                             control: TextControl(
                               valueType: VariableType.double,
-                              node: widget.node,
                               value: widget.element.googleMapsLat ??
                                   FTextTypeInput(),
-                              page: widget.page,
                               title: 'Camera Latitude',
                               callBack: (final value, final old) {
                                 final old = widget.element;
@@ -1201,10 +1146,8 @@ class ActionElementControlState extends State<ActionElementControl> {
                             description: 'Camera Longitude',
                             control: TextControl(
                               valueType: VariableType.double,
-                              node: widget.node,
                               value: widget.element.googleMapsLng ??
                                   FTextTypeInput(),
-                              page: widget.page,
                               title: 'Camera Longitude',
                               callBack: (final value, final old) {
                                 final old = widget.element;
@@ -1224,10 +1167,8 @@ class ActionElementControlState extends State<ActionElementControl> {
                             description: 'Camera Zoom',
                             control: TextControl(
                               valueType: VariableType.string,
-                              node: widget.node,
                               value: widget.element.googleMapsZoom ??
                                   FTextTypeInput(),
-                              page: widget.page,
                               title: 'Camera Zoom',
                               callBack: (final value, final old) {
                                 final old = widget.element;
@@ -1249,9 +1190,7 @@ class ActionElementControlState extends State<ActionElementControl> {
                       value: FActionElement.convertValueToDropdown(
                         widget.element.actionStripe,
                       ),
-                      items: FActionElement.getStripe(widget.prj.config)
-                          .toSet()
-                          .toList(),
+                      items: FActionElement.getStripe(config).toSet().toList(),
                       onChange: (final newValue) {
                         if (newValue != null) {
                           final old = widget.element;
@@ -1274,10 +1213,8 @@ class ActionElementControlState extends State<ActionElementControl> {
                             description: 'Billing email',
                             control: TextControl(
                               valueType: VariableType.string,
-                              node: widget.node,
                               value: widget.element.stripeBillingInfoEmail ??
                                   FTextTypeInput(),
-                              page: widget.page,
                               title: 'Billing email',
                               callBack: (final value, final old) {
                                 final old = widget.element;
@@ -1297,10 +1234,8 @@ class ActionElementControlState extends State<ActionElementControl> {
                             description: 'Billing phone',
                             control: TextControl(
                               valueType: VariableType.string,
-                              node: widget.node,
                               value: widget.element.stripeBillingInfoPhone ??
                                   FTextTypeInput(),
-                              page: widget.page,
                               title: 'Billing phone',
                               callBack: (final value, final old) {
                                 final old = widget.element;
@@ -1320,10 +1255,8 @@ class ActionElementControlState extends State<ActionElementControl> {
                             description: 'Billing city',
                             control: TextControl(
                               valueType: VariableType.string,
-                              node: widget.node,
                               value: widget.element.stripeBillingInfoCity ??
                                   FTextTypeInput(),
-                              page: widget.page,
                               title: 'Billing city',
                               callBack: (final value, final old) {
                                 final old = widget.element;
@@ -1343,10 +1276,8 @@ class ActionElementControlState extends State<ActionElementControl> {
                             description: 'Billing state',
                             control: TextControl(
                               valueType: VariableType.string,
-                              node: widget.node,
                               value: widget.element.stripeBillingInfoState ??
                                   FTextTypeInput(),
-                              page: widget.page,
                               title: 'Billing state',
                               callBack: (final value, final old) {
                                 final old = widget.element;
@@ -1366,10 +1297,8 @@ class ActionElementControlState extends State<ActionElementControl> {
                             description: 'Billing line',
                             control: TextControl(
                               valueType: VariableType.string,
-                              node: widget.node,
                               value: widget.element.stripeBillingInfoLine ??
                                   FTextTypeInput(),
-                              page: widget.page,
                               title: 'Billing line',
                               callBack: (final value, final old) {
                                 final old = widget.element;
@@ -1389,11 +1318,9 @@ class ActionElementControlState extends State<ActionElementControl> {
                             description: 'Billing Postal Code',
                             control: TextControl(
                               valueType: VariableType.string,
-                              node: widget.node,
                               value:
                                   widget.element.stripeBillingInfoPostalCode ??
                                       FTextTypeInput(),
-                              page: widget.page,
                               title: 'Billing postal code',
                               callBack: (final value, final old) {
                                 final old = widget.element;
@@ -1414,10 +1341,8 @@ class ActionElementControlState extends State<ActionElementControl> {
                             description: 'Billing country',
                             control: TextControl(
                               valueType: VariableType.string,
-                              node: widget.node,
                               value: widget.element.stripeBillingInfoCountry ??
                                   FTextTypeInput(),
-                              page: widget.page,
                               title: 'Billing country',
                               callBack: (final value, final old) {
                                 final old = widget.element;
@@ -1437,10 +1362,8 @@ class ActionElementControlState extends State<ActionElementControl> {
                             description: 'Shipping id',
                             control: TextControl(
                               valueType: VariableType.string,
-                              node: widget.node,
                               value: widget.element.stripeShippingId ??
                                   FTextTypeInput(),
-                              page: widget.page,
                               title: 'Shipping id',
                               callBack: (final value, final old) {
                                 final old = widget.element;
@@ -1463,10 +1386,8 @@ class ActionElementControlState extends State<ActionElementControl> {
                             description: 'Payment Intent Id',
                             control: TextControl(
                               valueType: VariableType.string,
-                              node: widget.node,
                               value: widget.element.stripePaymentIntentId ??
                                   FTextTypeInput(),
-                              page: widget.page,
                               title: 'Payment Intent Id',
                               callBack: (final value, final old) {
                                 final old = widget.element;
@@ -1504,7 +1425,7 @@ class ActionElementControlState extends State<ActionElementControl> {
                   value: FActionElement.convertValueToDropdown(
                     widget.element.actionAirtableDB,
                   ),
-                  items: FActionElement.getAirtableDB(widget.prj.config),
+                  items: FActionElement.getAirtableDB(config),
                   onChange: (final newValue) {
                     if (newValue != null) {
                       final old = widget.element;
@@ -1522,7 +1443,7 @@ class ActionElementControlState extends State<ActionElementControl> {
                   value: FActionElement.convertValueToDropdown(
                     widget.element.actionSupabaseAuth,
                   ),
-                  items: FActionElement.getSupabaseAuth(widget.prj.config),
+                  items: FActionElement.getSupabaseAuth(config),
                   onChange: (final newValue) {
                     if (newValue != null) {
                       final old = widget.element;
@@ -1540,9 +1461,7 @@ class ActionElementControlState extends State<ActionElementControl> {
                   value: FActionElement.convertValueToDropdown(
                     widget.element.actionSupabaseDB,
                   ),
-                  items: FActionElement.getSupabaseDB(widget.prj.config)
-                      .toSet()
-                      .toList(),
+                  items: FActionElement.getSupabaseDB(config).toSet().toList(),
                   onChange: (final newValue) {
                     if (newValue != null) {
                       final old = widget.element;
@@ -1562,10 +1481,9 @@ class ActionElementControlState extends State<ActionElementControl> {
                       value: FActionElement.convertValueToDropdown(
                         widget.element.actionSupabaseFunctions,
                       ),
-                      items:
-                          FActionElement.getSupabaseFunctions(widget.prj.config)
-                              .toSet()
-                              .toList(),
+                      items: FActionElement.getSupabaseFunctions(config)
+                          .toSet()
+                          .toList(),
                       onChange: (final newValue) {
                         if (newValue != null) {
                           final old = widget.element;
@@ -1579,9 +1497,6 @@ class ActionElementControlState extends State<ActionElementControl> {
                       },
                     ),
                     SupabaseInvokeControl(
-                      prj: widget.prj,
-                      page: widget.page,
-                      node: widget.node,
                       action: widget.element,
                       callback: () {
                         final old = widget.element;
@@ -1597,10 +1512,9 @@ class ActionElementControlState extends State<ActionElementControl> {
                       value: FActionElement.convertValueToDropdown(
                         widget.element.actionSupabaseStorage,
                       ),
-                      items:
-                          FActionElement.getSupabaseStorage(widget.prj.config)
-                              .toSet()
-                              .toList(),
+                      items: FActionElement.getSupabaseStorage(config)
+                          .toSet()
+                          .toList(),
                       onChange: (final newValue) {
                         if (newValue != null) {
                           final old = widget.element;
@@ -1616,9 +1530,6 @@ class ActionElementControlState extends State<ActionElementControl> {
                     if (widget.element.actionSupabaseStorage ==
                         ActionSupabaseStorage.upload)
                       SupabaseStorageUploadControl(
-                        prj: widget.prj,
-                        page: widget.page,
-                        node: widget.node,
                         action: widget.element,
                         callback: () {
                           final old = widget.element;
@@ -1627,9 +1538,6 @@ class ActionElementControlState extends State<ActionElementControl> {
                       )
                     else
                       SupabaseStorageRemoveControl(
-                        prj: widget.prj,
-                        page: widget.page,
-                        node: widget.node,
                         action: widget.element,
                         callback: () {
                           final old = widget.element;
@@ -1645,9 +1553,8 @@ class ActionElementControlState extends State<ActionElementControl> {
                       value: FActionElement.convertValueToDropdown(
                         widget.element.actionMixpanel,
                       ),
-                      items: FActionElement.getMixpanel(widget.prj.config)
-                          .toSet()
-                          .toList(),
+                      items:
+                          FActionElement.getMixpanel(config).toSet().toList(),
                       onChange: (final newValue) {
                         if (newValue != null) {
                           final old = widget.element;
@@ -1662,9 +1569,6 @@ class ActionElementControlState extends State<ActionElementControl> {
                     ),
                     if (widget.element.actionMixpanel == ActionMixpanel.track)
                       MixPanelTrack(
-                        prj: widget.prj,
-                        page: widget.page,
-                        node: widget.node,
                         action: widget.element,
                         callback: () {
                           final old = widget.element;
@@ -1673,9 +1577,6 @@ class ActionElementControlState extends State<ActionElementControl> {
                       )
                     else
                       MixPanelSetUserId(
-                        prj: widget.prj,
-                        page: widget.page,
-                        node: widget.node,
                         action: widget.element,
                         callback: () {
                           final old = widget.element;
@@ -1720,45 +1621,51 @@ class ActionElementControlState extends State<ActionElementControl> {
                     }
                   },
                 ),
-              if ((widget.element.actionType == ActionType.state &&
-                      widget.element.actionState == ActionState.changeWith &&
-                      !widget.node.intrinsicState.gestures
-                          .contains(ActionGesture.onChange) &&
-                      (widget.node.intrinsicState.type != NType.calendar &&
-                          widget.node.intrinsicState.type !=
-                              NType.cupertinoSegmentedControl &&
-                          widget.node.intrinsicState.type !=
-                              NType.cupertinoSwitch)) ||
-                  (widget.element.actionType == ActionType.navigation &&
-                      widget.element.actionNavigation ==
-                          ActionNavigation.launchURL) ||
-                  (widget.element.actionType == ActionType.navigation &&
-                      widget.element.actionNavigation ==
-                          ActionNavigation.share) ||
-                  (widget.element.actionType == ActionType.webview &&
-                      widget.element.actionWebView == ActionWebView.navigateTo))
-                Padding(
-                  padding: const EdgeInsets.only(top: 8),
-                  child: SizedBox(
-                    width: double.maxFinite,
-                    child: descriptionControlWidget(
-                      description: '''''',
-                      control: TextControl(
-                        valueType: VariableType.string,
-                        node: widget.node,
-                        value: widget.element.valueTextTypeInput ??
-                            FTextTypeInput(),
-                        page: widget.page,
-                        title: 'Value',
-                        callBack: (final value, final old) {
-                          final old = widget.element;
-                          widget.element.valueTextTypeInput = value;
-                          widget.callBack(widget.element, old);
-                        },
+              BlocBuilder<FocusBloc, List<CNode>>(
+                builder: (final context, final state) {
+                  if ((widget.element.actionType == ActionType.state &&
+                          widget.element.actionState ==
+                              ActionState.changeWith &&
+                          !state.first.intrinsicState.gestures
+                              .contains(ActionGesture.onChange) &&
+                          (state.first.intrinsicState.type != NType.calendar &&
+                              state.first.intrinsicState.type !=
+                                  NType.cupertinoSegmentedControl &&
+                              state.first.intrinsicState.type !=
+                                  NType.cupertinoSwitch)) ||
+                      (widget.element.actionType == ActionType.navigation &&
+                          widget.element.actionNavigation ==
+                              ActionNavigation.launchURL) ||
+                      (widget.element.actionType == ActionType.navigation &&
+                          widget.element.actionNavigation ==
+                              ActionNavigation.share) ||
+                      (widget.element.actionType == ActionType.webview &&
+                          widget.element.actionWebView ==
+                              ActionWebView.navigateTo)) {
+                    return Padding(
+                      padding: const EdgeInsets.only(top: 8),
+                      child: SizedBox(
+                        width: double.maxFinite,
+                        child: descriptionControlWidget(
+                          description: '''''',
+                          control: TextControl(
+                            valueType: VariableType.string,
+                            value: widget.element.valueTextTypeInput ??
+                                FTextTypeInput(),
+                            title: 'Value',
+                            callBack: (final value, final old) {
+                              final old = widget.element;
+                              widget.element.valueTextTypeInput = value;
+                              widget.callBack(widget.element, old);
+                            },
+                          ),
+                        ),
                       ),
-                    ),
-                  ),
-                ),
+                    );
+                  }
+                  return const SizedBox();
+                },
+              ),
 
               if ((widget.element.actionType == ActionType.navigation &&
                       (widget.element.actionNavigation ==
@@ -1786,8 +1693,25 @@ class ActionElementControlState extends State<ActionElementControl> {
                         ],
                       ),
                     ),
-                    CDropdown(
-                      value: widget.prj.pages!
+                    BlocBuilder<PagesCubit, List<PageObject>>(
+                      builder: (final context, final state) {
+                        return CDropdown(
+                          value: state
+                                  .where((final element) {
+                                    if (widget.element.actionNavigation ==
+                                            ActionNavigation.openBottomSheet ||
+                                        widget.element.actionNavigation ==
+                                            ActionNavigation.openSnackBar) {
+                                      return !element.isPage;
+                                    } else {
+                                      return element.isPage;
+                                    }
+                                  })
+                                  .toList()
+                                  .contains(pageObject)
+                              ? dropdownLinkPage
+                              : null,
+                          items: state
                               .where((final element) {
                                 if (widget.element.actionNavigation ==
                                         ActionNavigation.openBottomSheet ||
@@ -1798,43 +1722,30 @@ class ActionElementControlState extends State<ActionElementControl> {
                                   return element.isPage;
                                 }
                               })
-                              .toList()
-                              .contains(pageObject)
-                          ? dropdownLinkPage
-                          : null,
-                      items: widget.prj.pages!
-                          .where((final element) {
-                            if (widget.element.actionNavigation ==
-                                    ActionNavigation.openBottomSheet ||
-                                widget.element.actionNavigation ==
-                                    ActionNavigation.openSnackBar) {
-                              return !element.isPage;
-                            } else {
-                              return element.isPage;
+                              .map((final e) => e.name)
+                              .toSet()
+                              .toList(),
+                          onChange: (final newValue) {
+                            if (newValue != null) {
+                              final old = widget.element;
+                              pageObject = state.firstWhere(
+                                (final element) => element.name == newValue,
+                              );
+                              widget.element.nameOfPage = newValue;
+                              if (mounted) {
+                                setState(() {
+                                  dropdownLinkPage = newValue;
+                                });
+                              }
+                              widget.callBack(widget.element, old);
                             }
-                          })
-                          .map((final e) => e.name)
-                          .toSet()
-                          .toList(),
-                      onChange: (final newValue) {
-                        if (newValue != null) {
-                          final old = widget.element;
-                          pageObject = widget.prj.pages!.firstWhere(
-                            (final element) => element.name == newValue,
-                          );
-                          widget.element.nameOfPage = newValue;
-                          if (mounted) {
-                            setState(() {
-                              dropdownLinkPage = newValue;
-                            });
-                          }
-                          widget.callBack(widget.element, old);
-                        }
+                          },
+                        );
                       },
                     ),
                     if (pageObject != null &&
-                        pageObject?.params != <VariableObject>[])
-                      pageObject?.params.isNotEmpty ?? false
+                        pageObject?.defaultParams != <VariableObject>[])
+                      pageObject?.defaultParams.isNotEmpty ?? false
                           ? Padding(
                               padding: const EdgeInsets.only(top: 16),
                               child: Stack(
@@ -1856,11 +1767,11 @@ class ActionElementControlState extends State<ActionElementControl> {
                                     child: Column(
                                       crossAxisAlignment:
                                           CrossAxisAlignment.start,
-                                      children: pageObject!.params
+                                      children: pageObject!.defaultParams
                                           .map(
                                             (final e) => _Element(
+                                              pageState: pageState,
                                               variable: e,
-                                              page: widget.page,
                                               map: map,
                                               element: widget.element,
                                               callBack: widget.callBack,
@@ -1911,22 +1822,22 @@ class ActionElementControlState extends State<ActionElementControl> {
                                 ActionSupabaseAuth.signUp ||
                             widget.element.actionSupabaseAuth ==
                                 ActionSupabaseAuth.signInWithCredential) &&
-                        (widget.page.states.indexWhere(
+                        (pageState.page.defaultStates.indexWhere(
                                   (final element) =>
                                       element.name.toLowerCase() == 'email',
                                 ) ==
                                 -1 ||
-                            widget.page.states.indexWhere(
+                            pageState.page.defaultStates.indexWhere(
                                   (final element) =>
                                       element.name.toLowerCase() == 'password',
                                 ) ==
                                 -1 ||
-                            widget.page.states.indexWhere(
+                            pageState.page.defaultStates.indexWhere(
                                   (final element) =>
                                       element.name.toLowerCase() == 'status',
                                 ) ==
                                 -1 ||
-                            widget.page.states.indexWhere(
+                            pageState.page.defaultStates.indexWhere(
                                   (final element) =>
                                       element.name.toLowerCase() == 'status',
                                 ) ==
@@ -1961,13 +1872,13 @@ class ActionElementControlState extends State<ActionElementControl> {
                               TextButton(
                                 onPressed: () {
                                   var flag = false;
-                                  if (widget.page.states.indexWhere(
+                                  if (pageState.page.defaultStates.indexWhere(
                                         (final element) =>
                                             element.name.toLowerCase() ==
                                             'email',
                                       ) ==
                                       -1) {
-                                    widget.page.states.add(
+                                    pageState.page.defaultStates.add(
                                       VariableObject(
                                         id: const Uuid().v1(),
                                         type: VariableType.string,
@@ -1977,13 +1888,13 @@ class ActionElementControlState extends State<ActionElementControl> {
                                     );
                                     flag = true;
                                   }
-                                  if (widget.page.states.indexWhere(
+                                  if (pageState.page.defaultStates.indexWhere(
                                         (final element) =>
                                             element.name.toLowerCase() ==
                                             'password',
                                       ) ==
                                       -1) {
-                                    widget.page.states.add(
+                                    pageState.page.defaultStates.add(
                                       VariableObject(
                                         id: const Uuid().v1(),
                                         type: VariableType.string,
@@ -1993,13 +1904,13 @@ class ActionElementControlState extends State<ActionElementControl> {
                                     );
                                     flag = true;
                                   }
-                                  if (widget.page.states.indexWhere(
+                                  if (pageState.page.defaultStates.indexWhere(
                                         (final element) =>
                                             element.name.toLowerCase() ==
                                             'status',
                                       ) ==
                                       -1) {
-                                    widget.page.states.add(
+                                    pageState.page.defaultStates.add(
                                       VariableObject(
                                         id: const Uuid().v1(),
                                         type: VariableType.string,
@@ -2012,12 +1923,10 @@ class ActionElementControlState extends State<ActionElementControl> {
 
                                   if (flag) {
                                     sl.get<NodeRepository>().changeNode(
-                                          node:
-                                              widget.page.scaffold! as NDynamic,
+                                          node: pageState.page.scaffold
+                                              as NDynamic,
                                         );
                                   }
-                                  BlocProvider.of<FocusBloc>(context)
-                                      .add(OnFocus(node: widget.node));
                                 },
                                 child: Container(
                                   padding: const EdgeInsets.all(8),
@@ -2040,9 +1949,6 @@ class ActionElementControlState extends State<ActionElementControl> {
               if (widget.element.actionType == ActionType.supabaseDatabase &&
                   widget.element.actionSupabaseDB == ActionSupabaseDB.insert)
                 SupabaseInsertControl(
-                  prj: widget.prj,
-                  page: widget.page,
-                  node: widget.node,
                   action: widget.element,
                   callback: () {
                     final old = widget.element;
@@ -2052,9 +1958,6 @@ class ActionElementControlState extends State<ActionElementControl> {
               if (widget.element.actionType == ActionType.tetaDatabase &&
                   widget.element.actionTetaDB == ActionTetaCmsDB.insert)
                 TetaCmsInsertControl(
-                  prj: widget.prj,
-                  page: widget.page,
-                  node: widget.node,
                   action: widget.element,
                   callback: () {
                     final old = widget.element;
@@ -2064,9 +1967,6 @@ class ActionElementControlState extends State<ActionElementControl> {
               if (widget.element.actionType == ActionType.airtable &&
                   widget.element.actionAirtableDB == ActionAirtableDB.insert)
                 AirtableInsertControl(
-                  prj: widget.prj,
-                  page: widget.page,
-                  node: widget.node,
                   action: widget.element,
                   callback: () {
                     final old = widget.element;
@@ -2076,9 +1976,6 @@ class ActionElementControlState extends State<ActionElementControl> {
               if (widget.element.actionType == ActionType.airtable &&
                   widget.element.actionAirtableDB == ActionAirtableDB.delete)
                 AirtableDeleteControl(
-                  prj: widget.prj,
-                  page: widget.page,
-                  node: widget.node,
                   action: widget.element,
                   callback: () {
                     final old = widget.element;
@@ -2088,9 +1985,6 @@ class ActionElementControlState extends State<ActionElementControl> {
               if (widget.element.actionType == ActionType.airtable &&
                   widget.element.actionAirtableDB == ActionAirtableDB.update)
                 AirtableUpdateControl(
-                  prj: widget.prj,
-                  page: widget.page,
-                  node: widget.node,
                   action: widget.element,
                   callback: () {
                     final old = widget.element;
@@ -2100,9 +1994,6 @@ class ActionElementControlState extends State<ActionElementControl> {
               if (widget.element.actionType == ActionType.supabaseDatabase &&
                   widget.element.actionSupabaseDB == ActionSupabaseDB.update)
                 SupabaseUpdateControl(
-                  prj: widget.prj,
-                  page: widget.page,
-                  node: widget.node,
                   action: widget.element,
                   callback: () {
                     final old = widget.element;
@@ -2112,9 +2003,6 @@ class ActionElementControlState extends State<ActionElementControl> {
               if (widget.element.actionType == ActionType.tetaDatabase &&
                   widget.element.actionTetaDB == ActionTetaCmsDB.update)
                 TetaCmsUpdateControl(
-                  prj: widget.prj,
-                  page: widget.page,
-                  node: widget.node,
                   action: widget.element,
                   callback: () {
                     final old = widget.element;
@@ -2124,9 +2012,6 @@ class ActionElementControlState extends State<ActionElementControl> {
               if (widget.element.actionType == ActionType.supabaseDatabase &&
                   widget.element.actionSupabaseDB == ActionSupabaseDB.delete)
                 SupabaseDeleteControl(
-                  prj: widget.prj,
-                  page: widget.page,
-                  node: widget.node,
                   action: widget.element,
                   callback: () {
                     final old = widget.element;
@@ -2136,9 +2021,6 @@ class ActionElementControlState extends State<ActionElementControl> {
               if (widget.element.actionType == ActionType.tetaDatabase &&
                   widget.element.actionTetaDB == ActionTetaCmsDB.delete)
                 TetaCmsDeleteControl(
-                  prj: widget.prj,
-                  page: widget.page,
-                  node: widget.node,
                   action: widget.element,
                   callback: () {
                     final old = widget.element;
@@ -2149,9 +2031,6 @@ class ActionElementControlState extends State<ActionElementControl> {
                   widget.element.actionCustomHttpRequest ==
                       ActionCustomHttpRequest.post)
                 CustomHttpRequestPostControl(
-                  prj: widget.prj,
-                  page: widget.page,
-                  node: widget.node,
                   action: widget.element,
                   callback: () {
                     final old = widget.element;
@@ -2162,9 +2041,6 @@ class ActionElementControlState extends State<ActionElementControl> {
                   widget.element.actionCustomHttpRequest ==
                       ActionCustomHttpRequest.update)
                 CustomHttpRequestUpdateControl(
-                  prj: widget.prj,
-                  page: widget.page,
-                  node: widget.node,
                   action: widget.element,
                   callback: () {
                     final old = widget.element;
@@ -2175,9 +2051,6 @@ class ActionElementControlState extends State<ActionElementControl> {
                   widget.element.actionCustomHttpRequest ==
                       ActionCustomHttpRequest.delete)
                 CustomHttpRequestDeleteControl(
-                  prj: widget.prj,
-                  page: widget.page,
-                  node: widget.node,
                   action: widget.element,
                   callback: () {
                     final old = widget.element;
@@ -2187,9 +2060,6 @@ class ActionElementControlState extends State<ActionElementControl> {
               if (widget.element.actionType == ActionType.apiCalls &&
                   widget.element.actionApiCalls == ActionApiCalls.apiCalls)
                 ApiCallsControl(
-                  prj: widget.prj,
-                  page: widget.page,
-                  node: widget.node,
                   action: widget.element,
                   callback: () {
                     final old = widget.element;
@@ -2207,7 +2077,7 @@ class ActionElementControlState extends State<ActionElementControl> {
 class _Element extends StatefulWidget {
   const _Element({
     required this.variable,
-    required this.page,
+    required this.pageState,
     required this.map,
     required this.element,
     required this.callBack,
@@ -2215,7 +2085,7 @@ class _Element extends StatefulWidget {
   }) : super(key: key);
 
   final VariableObject variable;
-  final PageObject page;
+  final PageLoaded pageState;
   final Map<String, dynamic> map;
   final FActionElement element;
   final Function(FActionElement, FActionElement) callBack;
@@ -2233,15 +2103,13 @@ class __ElementState extends State<_Element> {
   @override
   void initState() {
     super.initState();
-    Logger.printMessage('${widget.page.datasets}');
-    Logger.printMessage('Params: ${widget.page.params}');
     final params = Map<String, dynamic>.fromEntries(
-      widget.page.params
+      widget.pageState.page.defaultParams
           .where((final element) => widget.variable.type == element.type)
           .map((final e) => MapEntry<String, dynamic>(e.name, e.get)),
     );
     final states = Map<String, dynamic>.fromEntries(
-      widget.page.states
+      widget.pageState.page.defaultStates
           .where((final element) => widget.variable.type == element.type)
           .map((final e) => MapEntry<String, dynamic>(e.name, e.get)),
     );
@@ -2258,7 +2126,8 @@ class __ElementState extends State<_Element> {
           states,
         ],
       ),
-      if (widget.variable.type == VariableType.string) ...widget.page.datasets
+      if (widget.variable.type == VariableType.string)
+        ...widget.pageState.datasets
     ];
     try {
       dropdown = widget.map[widget.variable.id]?['label'] as String;
@@ -2274,7 +2143,6 @@ class __ElementState extends State<_Element> {
 
   @override
   Widget build(final BuildContext context) {
-    Logger.printMessage('Params: ${widget.page.params}');
     if (dropdownDataset != null) {
       try {
         listSecondDropwdown.addAll(

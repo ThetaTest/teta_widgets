@@ -31,21 +31,26 @@ class ComponentControl extends StatefulWidget {
 class ComponentControlState extends State<ComponentControl> {
   String? dropdown;
   PageObject? pageObject;
+  List<PageObject> components = [];
   Map<String, dynamic> map = <String, dynamic>{};
 
   @override
   void initState() {
     super.initState();
-    final components =
-        widget.prj.pages!.where((final element) => !element.isPage).toList();
+    final pages = context.read<PagesCubit>().state;
+    final focusBloc = context.read<FocusBloc>().state;
+    final name =
+        focusBloc.first.body.attributes[DBKeys.componentName] as String? ?? '';
+    components = pages.where((final element) => !element.isPage).toList();
     try {
       if (components.indexWhere((final element) => element.name == name) !=
           -1) {
         pageObject =
             components.firstWhere((final element) => element.name == name);
         dropdown = pageObject?.name;
-        if (widget.node.body.attributes[DBKeys.paramsToSend] != null) {
-          map = widget.node.body.attributes[DBKeys.paramsToSend]
+
+        if (focusBloc.first.body.attributes[DBKeys.paramsToSend] != null) {
+          map = focusBloc.first.body.attributes[DBKeys.paramsToSend]
                   as Map<String, dynamic>? ??
               <String, dynamic>{};
         }
@@ -78,22 +83,24 @@ class ComponentControlState extends State<ComponentControl> {
             value: dropdown,
             items: components.map((final e) => e.name).toList(),
             onChange: (final String? newValue) {
+              final focusBloc = context.read<FocusBloc>().state;
+
               if (newValue != null) {
-                final old = widget.node.body.attributes[DBKeys.componentName]
-                    as String?;
+                final old = focusBloc
+                    .first.body.attributes[DBKeys.componentName] as String?;
                 pageObject = components
                     .firstWhere((final element) => element.name == newValue);
-                widget.node.body.attributes[DBKeys.componentName] =
+                focusBloc.first.body.attributes[DBKeys.componentName] =
                     pageObject!.name;
                 setState(() {
                   dropdown = newValue;
-                  name = '${pageObject!.id}';
                 });
                 widget.callBack(pageObject!.name, old ?? '');
               }
             },
           ),
-          if (pageObject != null && pageObject?.params != <VariableObject>[])
+          if (pageObject != null &&
+              pageObject?.defaultParams != <VariableObject>[])
             Padding(
               padding: const EdgeInsets.only(top: 16),
               child: Stack(
@@ -109,22 +116,29 @@ class ComponentControlState extends State<ComponentControl> {
                       ),
                       borderRadius: BorderRadius.circular(8),
                     ),
-                    child: Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: pageObject!.params
-                          .map(
-                            (final variable) => Element(
-                              variable: variable,
-                              page: widget.page,
-                              map: map,
-                              callBackParameters: (final map) {
-                                widget.node.body
-                                    .attributes[DBKeys.paramsToSend] = map;
-                                widget.callBackParameters(map);
-                              },
-                            ),
-                          )
-                          .toList(),
+                    child: BlocBuilder<PageCubit, PageState>(
+                      builder: (final context, final state) {
+                        if (state is! PageLoaded) return const SizedBox();
+                        return Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: pageObject!.defaultParams
+                              .map(
+                                (final variable) => Element(
+                                  variable: variable,
+                                  page: state.page,
+                                  map: map,
+                                  callBackParameters: (final map) {
+                                    final node =
+                                        context.read<FocusBloc>().state;
+                                    node.first.body
+                                        .attributes[DBKeys.paramsToSend] = map;
+                                    widget.callBackParameters(map);
+                                  },
+                                ),
+                              )
+                              .toList(),
+                        );
+                      },
                     ),
                   ),
                   Container(
@@ -188,13 +202,14 @@ class ElementState extends State<Element> {
   @override
   void initState() {
     super.initState();
+    final state = context.read<PageCubit>().state as PageLoaded;
     final params = Map<String, dynamic>.fromEntries(
-      widget.page.params
+      state.page.defaultParams
           .where((final element) => widget.variable.type == element.type)
           .map((final e) => MapEntry<String, dynamic>(e.name, e.get)),
     );
     final states = Map<String, dynamic>.fromEntries(
-      widget.page.states
+      state.page.defaultStates
           .where((final element) => widget.variable.type == element.type)
           .map((final e) => MapEntry<String, dynamic>(e.name, e.get)),
     );
@@ -211,7 +226,7 @@ class ElementState extends State<Element> {
           states,
         ],
       ),
-      if (widget.variable.type == VariableType.string) ...widget.page.datasets
+      if (widget.variable.type == VariableType.string) ...state.datasets
     ];
     try {
       dropdown = widget.map[widget.variable.id]['label'] as String;
@@ -261,9 +276,8 @@ class ElementState extends State<Element> {
                 onChange: (final String? newValue) {
                   setState(() {
                     dropdownDataset = newValue;
-                    listSecondDropwdown = [];
-                    listSecondDropwdown.addAll(
-                      listDataset
+                    listSecondDropwdown = [
+                      ...listDataset
                           .where(
                             (final element) =>
                                 element.getName == dropdownDataset,
@@ -271,7 +285,7 @@ class ElementState extends State<Element> {
                           .map(
                             (final e) => e.getMap.first,
                           ),
-                    );
+                    ];
                   });
                 },
               ),

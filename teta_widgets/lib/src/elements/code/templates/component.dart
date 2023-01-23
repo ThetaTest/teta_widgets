@@ -10,7 +10,6 @@ import 'package:recase/recase.dart';
 import 'package:teta_core/teta_core.dart';
 import 'package:teta_widgets/src/elements/code/formatter_test.dart';
 // Project imports:
-import 'package:teta_widgets/src/elements/controls/key_constants.dart';
 import 'package:teta_widgets/src/elements/index.dart';
 import 'package:teta_widgets/src/elements/nodes/node_body.dart';
 
@@ -21,17 +20,17 @@ Future<String> componentCodeTemplate(
   final List<CNode> children,
   final int pageId,
 ) async {
-  final prj = BlocProvider.of<FocusProjectCubit>(context).state!;
+  final pages = BlocProvider.of<PagesCubit>(context).state;
 
   //this fix an error of badstate
   if (body.attributes[DBKeys.componentName] == null ||
-      (prj.pages ?? <PageObject>[]).indexWhere(
+      pages.indexWhere(
             (final element) =>
                 element.name == body.attributes[DBKeys.componentName],
           ) ==
           -1) return '';
 
-  final compWidget = prj.pages!.firstWhere(
+  final compWidget = pages.firstWhere(
     (final element) => element.name == body.attributes[DBKeys.componentName],
   );
 
@@ -56,7 +55,7 @@ Future<String> componentCodeTemplate(
     final pageNameRC = ReCase(temp);
     //params
     final stringParamsToSend = StringBuffer()..write('');
-    for (final param in compWidget.params) {
+    for (final param in compWidget.defaultParams) {
       final name = ReCase(param.name);
       stringParamsToSend.write('${name.camelCase}: ');
       final rc = ReCase(param.value.toString());
@@ -87,9 +86,8 @@ Future<String> componentCodeTemplate(
     );
     final pageNameRC = ReCase(temp);
     //params
-    final parametersString = StringBuffer()..write('');
     final stringParamsToSend = StringBuffer()..write('');
-    for (final param in compWidget.params) {
+    for (final param in compWidget.defaultParams) {
       if ("${paramsToSend?[param.id]?['dataset']}" == 'States' ||
           "${paramsToSend?[param.id]?['dataset']}" == 'Params') {
         final valueToSend = (paramsToSend ?? <String, dynamic>{})[param.id]
@@ -128,7 +126,7 @@ Future<String> componentCodeTemplate(
 
 String prepareParamsForUi(final PageObject page, final NodeBody body) {
   final stringParamsToSend = StringBuffer()..write('');
-  for (final param in page.params) {
+  for (final param in page.defaultParams) {
     final valueToSend = (body.attributes[DBKeys.paramsToSend] ??
             <String, dynamic>{})[param.id]?['label'] as String? ??
         'null';

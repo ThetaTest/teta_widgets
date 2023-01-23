@@ -25,19 +25,8 @@ List<DatasetObject> addDataset(
         break;
       }
     }
-    if (flag) pageFocused.datasets = [...pageFocused.datasets, map];
-
-    for (final page in prj.pages!) {
-      if (page.id == pageFocused.id) {
-        var flag = true;
-        for (final e in pageFocused.datasets) {
-          if (e.getName == map.getName) {
-            flag = false;
-            break;
-          }
-        }
-        if (flag) page.datasets = [...page.datasets, map];
-      }
+    if (flag) {
+      context.read<PageCubit>().updateDatasets([...pageFocused.datasets, map]);
     }
 
     Box<List<dynamic>> box;
@@ -64,10 +53,16 @@ List<DatasetObject> addDataset(
             break;
           }
         }
-        if (flag) pageFocused.datasets = [...pageFocused.datasets, element];
+        if (flag) {
+          context
+              .read<PageCubit>()
+              .updateDatasets([...pageFocused.datasets, map]);
+        }
       }
 
-      for (final page in prj.pages!) {
+      /*
+      final pages = context.read<PagesCubit>().state;
+      for (final page in pages) {
         for (final element in list2) {
           var flag = true;
           for (final e in page.datasets) {
@@ -80,7 +75,7 @@ List<DatasetObject> addDataset(
           }
           if (flag) page.datasets = [...page.datasets, element];
         }
-      }
+      }*/
     }
 
     return list;

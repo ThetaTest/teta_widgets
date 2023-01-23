@@ -1,6 +1,5 @@
 import 'package:dart_style/dart_style.dart';
 import 'package:teta_core/teta_core.dart';
-import 'package:teta_repositories/src/project_repository.dart';
 
 class FormatterTest {
   static bool format(final String code) {
@@ -23,7 +22,7 @@ class Test extends StatelessWidget {
       Logger.printError('Error formating: $e');
     }
     if (result = false) {
-      sl.get<ProjectRepository>().sendToCodeError(code);
+      //sl.get<ProjectRepository>().sendToCodeError(code);
     }
     return result;
   }

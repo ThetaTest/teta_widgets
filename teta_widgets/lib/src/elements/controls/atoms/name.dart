@@ -32,9 +32,13 @@ class NameState extends State<NameControl> {
 
   @override
   void initState() {
-    controller.text = widget.title == 'Description'
-        ? widget.node.description ?? ''
-        : widget.node.name ?? widget.node.intrinsicState.displayName;
+    final nodes = context.read<FocusBloc>().state;
+    if (nodes.length == 1) {
+      final node = nodes.first;
+      controller.text = widget.title == 'Description'
+          ? nodes.first.description ?? ''
+          : nodes.first.name ?? nodes.first.intrinsicState.displayName;
+    }
     super.initState();
   }
 
@@ -59,16 +63,19 @@ class NameState extends State<NameControl> {
                 });
               },
               onSubmitted: (final text) {
-                widget.title == 'Description'
-                    ? widget.node.description = text
-                    : widget.node.name = text;
-                widget.callBack(
-                  text,
+                final nodes = context.read<FocusBloc>().state;
+                if (nodes.length == 1) {
+                  final node = nodes.first;
                   widget.title == 'Description'
-                      ? widget.node.description ?? ''
-                      : widget.node.name ??
-                          widget.node.intrinsicState.displayName,
-                );
+                      ? node.description = text
+                      : node.name = text;
+                  widget.callBack(
+                    text,
+                    widget.title == 'Description'
+                        ? node.description ?? ''
+                        : node.name ?? node.intrinsicState.displayName,
+                  );
+                }
                 setState(() {
                   isLoading = false;
                 });
@@ -80,16 +87,19 @@ class NameState extends State<NameControl> {
                 child: CButton(
                   label: 'Submit',
                   callback: () {
-                    widget.title == 'Description'
-                        ? widget.node.description = controller.text
-                        : widget.node.name = controller.text;
-                    widget.callBack(
-                      controller.text,
+                    final nodes = context.read<FocusBloc>().state;
+                    if (nodes.length == 1) {
+                      final node = nodes.first;
                       widget.title == 'Description'
-                          ? widget.node.description ?? ''
-                          : widget.node.name ??
-                              widget.node.intrinsicState.displayName,
-                    );
+                          ? node.description = controller.text
+                          : node.name = controller.text;
+                      widget.callBack(
+                        controller.text,
+                        widget.title == 'Description'
+                            ? node.description ?? ''
+                            : node.name ?? node.intrinsicState.displayName,
+                      );
+                    }
 
                     setState(() {
                       isLoading = false;

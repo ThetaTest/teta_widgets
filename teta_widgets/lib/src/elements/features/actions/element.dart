@@ -588,7 +588,9 @@ class FActionElement extends Equatable {
 
   /// Get avaiable action types for drop down list
   List<String> getTypes(
-      final ProjectConfigModel? config, final PageObject page) {
+    final ProjectConfigModel? config,
+    final PageObject page,
+  ) {
     if (config != null) {
       try {
         return [

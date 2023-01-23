@@ -61,8 +61,8 @@ class WCard extends StatelessWidget {
   HexColor _getCardColor(final ColorStyleModel? model, final bool isLight) {
     if (model != null) {
       return isLight
-          ? HexColor(model.light!.levels!.first.color)
-          : HexColor(model.fill!.levels!.first.color);
+          ? HexColor(model.light.levels!.first.color)
+          : HexColor(model.fill.levels!.first.color);
     } else {
       return HexColor(color.levels!.first.color);
     }

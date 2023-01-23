@@ -47,10 +47,15 @@ Future<List<DatasetObject>> saveDatasets(
           break;
         }
       }
-      if (flag) pageFocused.datasets = [...pageFocused.datasets, element];
+      if (flag) {
+        context
+            .read<PageCubit>()
+            .updateDatasets([...pageFocused.datasets, map]);
+      }
     }
 
-    for (final page in prj.pages!) {
+    /*final pages = BlocProvider.of<PagesCubit>(context).state;
+    for (final page in pages) {
       for (final element in list2) {
         var flag = true;
         for (final e in page.datasets) {
@@ -65,9 +70,9 @@ Future<List<DatasetObject>> saveDatasets(
       }
     }
 
-    final list3 = <DatasetObject>[...dataset, ...list2];
+    final list3 = <DatasetObject>[...dataset, ...list2];*/
 
-    return list3;
+    return [...pageFocused.datasets, map];
   } catch (e) {
     if (kDebugMode) {
       // ignore: avoid_print

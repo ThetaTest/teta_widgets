@@ -8,7 +8,6 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:teta_core/teta_core.dart';
 // Project imports:
 import 'package:teta_widgets/src/elements/features/dataset.dart';
-import 'package:teta_widgets/src/elements/nodes/node.dart';
 
 class DatasetControl extends StatefulWidget {
   const DatasetControl({
@@ -29,15 +28,12 @@ class DatasetControl extends StatefulWidget {
 }
 
 class DatasetControlState extends State<DatasetControl> {
-  int? nodeId;
-  bool? isUpdated;
   String databaseName = '';
   String? databaseAttribute;
 
   @override
   void initState() {
     try {
-      nodeId = widget.node.nid;
       databaseName = widget.value.datasetName!;
       databaseAttribute = widget.value.datasetAttrName;
     } catch (_) {}
@@ -46,69 +42,92 @@ class DatasetControlState extends State<DatasetControl> {
 
   @override
   Widget build(final BuildContext context) {
-    return BlocListener<FocusBloc, List<CNode>>(
-      listener: (final context, final state) {
-        if (state.isNotEmpty) {
-          if (state.first.nid != nodeId) {
-            setState(() {
-              isUpdated = true;
-            });
-            nodeId = state.first.nid;
-          }
-        }
-      },
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
-          Row(
-            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-            children: [
-              TParagraph(
-                widget.title,
-              ),
-            ],
-          ),
-          CDropdown(
-            value: widget.page.datasets
-                    .map((final e) => e.getName)
-                    .where((final element) => element != 'null')
-                    .contains(widget.value.datasetName)
-                ? widget.value.datasetName
-                : null,
-            items: widget.page.datasets
-                .map((final e) => e.getName)
-                .where((final element) => element != 'null')
-                .toList(),
-            onChange: (final newValue) {
-              setState(() {
-                databaseName = newValue!;
-              });
-              final old = widget.value;
-              widget.value.datasetName = newValue;
-              widget.callBack(widget.value, old);
-            },
-          ),
-          _buildAttrSelection(context),
-        ],
-      ),
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: [
+        Row(
+          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+          children: [
+            TParagraph(
+              widget.title,
+            ),
+          ],
+        ),
+        BlocBuilder<PageCubit, PageState>(
+          builder: (final context, final state) {
+            if (state is! PageLoaded) return const SizedBox();
+            return CDropdown(
+              value: state.datasets
+                      .map((final e) => e.getName)
+                      .where((final element) => element != 'null')
+                      .contains(widget.value.datasetName)
+                  ? widget.value.datasetName
+                  : null,
+              items: state.datasets
+                  .map((final e) => e.getName)
+                  .where((final element) => element != 'null')
+                  .toList(),
+              onChange: (final newValue) {
+                setState(() {
+                  databaseName = newValue!;
+                });
+                final old = widget.value;
+                widget.value.datasetName = newValue;
+                widget.callBack(widget.value, old);
+              },
+            );
+          },
+        ),
+        _buildAttrSelection(
+          value: widget.value,
+          isAttrRequired: widget.isAttrRequired ?? false,
+          datasetName: databaseName,
+          callBack: widget.callBack,
+        ),
+      ],
     );
   }
+}
 
-  Widget _buildAttrSelection(final BuildContext context) {
-    var isAttrRequired = widget.isAttrRequired;
+class _buildAttrSelection extends StatefulWidget {
+  const _buildAttrSelection({
+    final Key? key,
+    required this.value,
+    required this.isAttrRequired,
+    required this.datasetName,
+    required this.callBack,
+  }) : super(key: key);
 
-    if (databaseName != '') {
+  final FDataset value;
+  final bool isAttrRequired;
+  final String datasetName;
+  final Function(FDataset, FDataset) callBack;
+
+  @override
+  __buildAttrSelectionState createState() => __buildAttrSelectionState();
+}
+
+class __buildAttrSelectionState extends State<_buildAttrSelection> {
+  bool isAttrRequired = false;
+  String databaseAttribute = '';
+
+  @override
+  void initState() {
+    super.initState();
+    isAttrRequired = widget.isAttrRequired;
+    if (widget.datasetName != '') {
       bool hasSubList;
-      widget.page.datasets
+      final datasets = (context.read<PageCubit>().state as PageLoaded).datasets;
+      datasets
               .where(
-                (final element) => element.getName == databaseName,
+                (final element) => element.getName == widget.datasetName,
               )
               .first
               .getMap
               .isNotEmpty
-          ? hasSubList = widget.page.datasets
+          ? hasSubList = datasets
               .where(
-                (final element) => element.getName == databaseName,
+                (final element) => element.getName == widget.datasetName,
               )
               .first
               .hasSubList()
@@ -117,63 +136,69 @@ class DatasetControlState extends State<DatasetControl> {
         isAttrRequired = true;
       }
     }
+  }
 
-    try {
-      if ((isAttrRequired ?? false) && databaseName != '') {
-        return CDropdown(
-          value: (widget.page.datasets
-                          .where(
-                            (final element) => element.getName == databaseName,
-                          )
-                          .first
-                          .getMap
-                          .isNotEmpty
-                      ? widget.page.datasets
-                          .where(
-                            (final element) => element.getName == databaseName,
-                          )
-                          .first
-                          .getMap
-                          .first
-                      : <String, dynamic>{})
-                  .keys
-                  .toSet()
-                  .contains(widget.value.datasetAttrName)
-              ? widget.value.datasetAttrName
-              : null,
-          items: ((widget.page.datasets
-                      .where(
-                        (final element) => element.getName == databaseName,
-                      )
-                      .first
-                      .getMap
-                      .isNotEmpty)
-                  ? widget.page.datasets
-                      .where(
-                        (final element) => element.getName == databaseName,
-                      )
-                      .first
-                      .getMap
-                      .first
-                  : <String, dynamic>{})
-              .keys
-              .toSet()
-              .toList(),
-          onChange: (final newValue) {
-            setState(() {
-              databaseAttribute = newValue;
-            });
-            final old = widget.value;
-            widget.value.datasetAttrName = newValue;
-            widget.callBack(widget.value, old);
-          },
-        );
-      } else {
-        return Container();
-      }
-    } catch (e, st) {
-      print('DatasetAttrSelectError: $e');
-      print('DatasetAttrSelectError: $st');
+  @override
+  Widget build(final BuildContext context) {
+    if (isAttrRequired && widget.datasetName != '') {
+      return BlocBuilder<PageCubit, PageState>(
+        builder: (final context, final state) {
+          if (state is! PageLoaded) return const SizedBox();
+          return CDropdown(
+            value: (state.datasets
+                            .where(
+                              (final element) =>
+                                  element.getName == widget.datasetName,
+                            )
+                            .first
+                            .getMap
+                            .isNotEmpty
+                        ? state.datasets
+                            .where(
+                              (final element) =>
+                                  element.getName == widget.datasetName,
+                            )
+                            .first
+                            .getMap
+                            .first
+                        : <String, dynamic>{})
+                    .keys
+                    .toSet()
+                    .contains(widget.value.datasetAttrName)
+                ? widget.value.datasetAttrName
+                : null,
+            items: ((state.datasets
+                        .where(
+                          (final element) =>
+                              element.getName == widget.datasetName,
+                        )
+                        .first
+                        .getMap
+                        .isNotEmpty)
+                    ? state.datasets
+                        .where(
+                          (final element) =>
+                              element.getName == widget.datasetName,
+                        )
+                        .first
+                        .getMap
+                        .first
+                    : <String, dynamic>{})
+                .keys
+                .toSet()
+                .toList(),
+            onChange: (final newValue) {
+              setState(() {
+                databaseAttribute = newValue!;
+              });
+              final old = widget.value;
+              widget.value.datasetAttrName = newValue;
+              widget.callBack(widget.value, old);
+            },
+          );
+        },
+      );
+    } else {
       return Container();
     }
   }

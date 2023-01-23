@@ -44,7 +44,7 @@ import 'package:teta_widgets/src/elements/controls/atoms/page_params.dart';
 import 'package:teta_widgets/src/elements/controls/atoms/physics.dart';
 import 'package:teta_widgets/src/elements/controls/atoms/size.dart';
 import 'package:teta_widgets/src/elements/controls/atoms/src_image.dart';
-import 'package:teta_widgets/src/elements/controls/atoms/states.dart';
+import 'package:teta_widgets/src/elements/controls/atoms/page_states.dart';
 import 'package:teta_widgets/src/elements/controls/atoms/text.dart';
 import 'package:teta_widgets/src/elements/controls/atoms/webview_controller.dart';
 import 'package:teta_widgets/src/elements/controls/current_song_controll.dart';

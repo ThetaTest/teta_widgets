@@ -68,7 +68,7 @@ class _WComponentState extends State<WComponent> {
               .toList()
         ],
       );
-      final nodes = await fetch(_component, context);
+      await fetch(_component, context);
     }
     if (_component != null && !_component.isHardCoded) {
       Logger.printMessage('enter here');
@@ -145,7 +145,7 @@ class _WComponentState extends State<WComponent> {
                             child: state.page.scaffold.toWidget(
                               state: widget.state.copyWith(
                                 params: (widget.paramsToSend != null)
-                                    ? getVariableObjectsFromParams(page)
+                                    ? getVariableObjectsFromParams(state.page)
                                     : state.params,
                                 states: state.states,
                                 dataset: state.datasets,
@@ -188,7 +188,7 @@ class _WComponentState extends State<WComponent> {
   }
 
   List<VariableObject> getVariableObjectsFromParams(final PageObject page) {
-    return page.params.map((final e) {
+    return page.defaultParams.map((final e) {
       if (widget.paramsToSend?[e.id] != null) {
         if (widget.paramsToSend?[e.id]['dataset'] == 'Text') {
           e.value = widget.paramsToSend?[e.id]['label'];

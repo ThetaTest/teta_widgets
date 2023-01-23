@@ -23,13 +23,10 @@ class AudioControllerControl extends StatefulWidget {
   final Function(FTextTypeInput, FTextTypeInput) callBack;
 
   @override
-  AudioControllerControlState create tate() => AudioControllerControlState();
+  AudioControllerControlState createState() => AudioControllerControlState();
 }
 
 class AudioControllerControlState extends State<AudioControllerControl> {
-  int? nodeId;
-  bool? isUpdated;
-  String? text;
   TextEditingController controller = TextEditingController();
   String databaseName = '';
   String databaseAttribute = '';
@@ -37,10 +34,8 @@ class AudioControllerControlState extends State<AudioControllerControl> {
 
   @override
   void initState() {
-    nodeId = widget.node.nid;
     try {
-      text = widget.value.value ?? '';
-      controller.text = text!;
+      controller.text = widget.value.value ?? '';
       typeOfInput = widget.value.type!;
       databaseName = widget.value.datasetName!;
       databaseAttribute = widget.value.datasetAttr!;
@@ -54,12 +49,7 @@ class AudioControllerControlState extends State<AudioControllerControl> {
       buildWhen: (final previous, final current) => current != previous,
       builder: (final context, final state) {
         if (state.isNotEmpty) {
-          if (state.first.nid != nodeId) {
-            if (mounted) {
-              nodeId = state.first.nid;
-              controller.text = controller.text = widget.value.value ?? '';
-            }
-          }
+          controller.text = controller.text = widget.value.value ?? '';
         }
         return Column(
           crossAxisAlignment: CrossAxisAlignment.start,
@@ -91,43 +81,53 @@ class AudioControllerControlState extends State<AudioControllerControl> {
               ],
             ),
             if (widget.value.type == FTextTypeEnum.param)
-              CDropdown(
-                value: widget.page.params
+              BlocBuilder<PageCubit, PageState>(
+                builder: (final context, final state) {
+                  if (state is! PageLoaded) return const SizedBox();
+                  return CDropdown(
+                    value: state.page.defaultParams
+                            .map((final e) => e.name)
+                            .contains(widget.value.paramName)
+                        ? widget.value.paramName
+                        : null,
+                    items: state.page.defaultParams
+                        .where(
+                          (final element) =>
+                              element.type == VariableType.audioController,
+                        )
                         .map((final e) => e.name)
-                        .contains(widget.value.paramName)
-                    ? widget.value.paramName
-                    : null,
-                items: widget.page.params
-                    .where(
-                      (final element) =>
-                          element.type == VariableType.audioController,
-                    )
-                    .map((final e) => e.name)
-                    .toList(),
-                onChange: (final newValue) {
-                  final old = widget.value;
-                  widget.value.paramName = newValue;
-                  widget.callBack(widget.value, old);
+                        .toList(),
+                    onChange: (final newValue) {
+                      final old = widget.value;
+                      widget.value.paramName = newValue;
+                      widget.callBack(widget.value, old);
+                    },
+                  );
                 },
               ),
             if (widget.value.type == FTextTypeEnum.state)
-              CDropdown(
-                value: widget.page.states
+              BlocBuilder<PageCubit, PageState>(
+                builder: (final context, final state) {
+                  if (state is! PageLoaded) return const SizedBox();
+                  return CDropdown(
+                    value: state.page.defaultStates
+                            .map((final e) => e.name)
+                            .contains(widget.value.stateName)
+                        ? widget.value.stateName
+                        : null,
+                    items: state.page.defaultStates
+                        .where(
+                          (final element) =>
+                              element.type == VariableType.audioController,
+                        )
                         .map((final e) => e.name)
-                        .contains(widget.value.stateName)
-                    ? widget.value.stateName
-                    : null,
-                items: widget.page.states
-                    .where(
-                      (final element) =>
-                          element.type == VariableType.audioController,
-                    )
-                    .map((final e) => e.name)
-                    .toList(),
-                onChange: (final newValue) {
-                  final old = widget.value;
-                  widget.value.stateName = newValue;
-                  widget.callBack(widget.value, old);
+                        .toList(),
+                    onChange: (final newValue) {
+                      final old = widget.value;
+                      widget.value.stateName = newValue;
+                      widget.callBack(widget.value, old);
+                    },
+                  );
                 },
               ),
           ],

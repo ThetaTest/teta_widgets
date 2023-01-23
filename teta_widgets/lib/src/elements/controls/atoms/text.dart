@@ -44,9 +44,6 @@ class TextControl extends StatefulWidget {
 }
 
 class PaddingsState extends State<TextControl> {
-  int? nodeId;
-  bool? isUpdated;
-  String? text;
   late TextEditingController controller;
   late TextEditingController keyController;
   String databaseName = '';
@@ -58,18 +55,23 @@ class PaddingsState extends State<TextControl> {
   FTextTypeEnum typeOfInput = FTextTypeEnum.text;
   bool isChanged = false;
 
+  DatasetObject dataset = DatasetObject.empty();
+
   @override
   void initState() {
     controller = TextEditingController();
     keyController = TextEditingController();
-    nodeId = widget.node.nid;
     try {
-      text = widget.value.getValue(context);
-      controller.text = text!;
+      controller.text = widget.value.getValue(context);
       typeOfInput = widget.value.type!;
       if (widget.value.datasetName != null) {
         databaseName = widget.value.datasetName!;
       }
+      final datasets = (context.read<PageCubit>().state as PageLoaded).datasets;
+      final index = datasets.indexWhere(
+        (final element) => element.getName == widget.value.datasetName,
+      );
+      dataset = index != -1 ? datasets[index] : DatasetObject.empty();
       databaseAttribute = widget.value.datasetAttr!;
       datasetSubListData = widget.value.datasetSubListData!;
       datasetSubMapData = widget.value.datasetSubMapData!;
@@ -81,11 +83,6 @@ class PaddingsState extends State<TextControl> {
 
   @override
   Widget build(final BuildContext context) {
-    final index = widget.page.datasets.indexWhere(
-      (final element) => element.getName == widget.value.datasetName,
-    );
-    final dataset =
-        index != -1 ? widget.page.datasets[index] : DatasetObject.empty();
     return BlocListener<DeviceModeCubit, DeviceInfo>(
       listener: (final context, final device) {
         controller.text = widget.value.getValue(context);
@@ -94,14 +91,6 @@ class PaddingsState extends State<TextControl> {
         builder: (final context, final device) =>
             BlocBuilder<FocusBloc, List<CNode>>(
           builder: (final context, final state) {
-            if (state.isNotEmpty) {
-              if (state.first.nid != nodeId) {
-                if (mounted) {
-                  nodeId = state.first.nid;
-                  controller.text = widget.value.getValue(context);
-                }
-              }
-            }
             return Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
@@ -116,8 +105,7 @@ class PaddingsState extends State<TextControl> {
                             onTap: () {
                               showDialog<void>(
                                 context: context,
-                                builder: (final ctx) =>
-                                    DevicesDialog(ctx: context),
+                                builder: (final ctx) => const DevicesDialog(),
                               );
                             },
                             child: Image.asset(
@@ -348,128 +336,143 @@ class PaddingsState extends State<TextControl> {
                     ],
                   ),
                 if (widget.value.type == FTextTypeEnum.param)
-                  Column(
-                    children: [
-                      CDropdown(
-                        value: widget.page.params
+                  BlocBuilder<PageCubit, PageState>(
+                    builder: (final context, final state) {
+                      if (state is! PageLoaded) return const SizedBox();
+                      return Column(
+                        children: [
+                          CDropdown(
+                            value: state.page.defaultParams
+                                    .map((final e) => e.name)
+                                    .contains(widget.value.paramName)
+                                ? widget.value.paramName
+                                : null,
+                            items: state.page.defaultParams
+                                .where(
+                                  (final element) =>
+                                      widget.valueType != VariableType.dynamic
+                                          ? element.type == widget.valueType
+                                          : true,
+                                )
                                 .map((final e) => e.name)
-                                .contains(widget.value.paramName)
-                            ? widget.value.paramName
-                            : null,
-                        items: widget.page.params
-                            .where(
-                              (final element) =>
-                                  widget.valueType != VariableType.dynamic
-                                      ? element.type == widget.valueType
-                                      : true,
-                            )
-                            .map((final e) => e.name)
-                            .toList(),
-                        onChange: (final newValue) {
-                          final old = widget.value;
-                          widget.value.paramName = newValue;
-                          widget.callBack(widget.value, old);
-                        },
-                      ),
-                      if ((widget.page.params
-                                  .firstWhereOrNull(
-                                    (final element) =>
-                                        element.name == widget.value.paramName,
-                                  )
-                                  ?.type ??
-                              VariableType.int) ==
-                          VariableType.json)
-                        CTextField(
-                          controller: keyController,
-                          title: 'Map Key',
-                          callBack: (final key) {
-                            final old = widget.value;
-                            widget.value.mapKey = key;
-                            widget.callBack(widget.value, old);
-                          },
-                        ),
-                    ],
+                                .toList(),
+                            onChange: (final newValue) {
+                              final old = widget.value;
+                              widget.value.paramName = newValue;
+                              widget.callBack(widget.value, old);
+                            },
+                          ),
+                          if ((state.page.defaultParams
+                                      .firstWhereOrNull(
+                                        (final element) =>
+                                            element.name ==
+                                            widget.value.paramName,
+                                      )
+                                      ?.type ??
+                                  VariableType.int) ==
+                              VariableType.json)
+                            CTextField(
+                              controller: keyController,
+                              title: 'Map Key',
+                              callBack: (final key) {
+                                final old = widget.value;
+                                widget.value.mapKey = key;
+                                widget.callBack(widget.value, old);
+                              },
+                            ),
+                        ],
+                      );
+                    },
                   ),
                 if (widget.value.type == FTextTypeEnum.state)
-                  Column(
-                    children: [
-                      CDropdown(
-                        value: widget.page.states
+                  BlocBuilder<PageCubit, PageState>(
+                    builder: (final context, final state) {
+                      if (state is! PageLoaded) return const SizedBox();
+                      return Column(
+                        children: [
+                          CDropdown(
+                            value: state.page.defaultStates
+                                    .map((final e) => e.name)
+                                    .contains(widget.value.stateName)
+                                ? widget.value.stateName
+                                : null,
+                            items: state.page.defaultStates
+                                .where(
+                                  (final element) =>
+                                      widget.valueType != VariableType.dynamic
+                                          ? element.type == widget.valueType
+                                          : true,
+                                )
                                 .map((final e) => e.name)
-                                .contains(widget.value.stateName)
-                            ? widget.value.stateName
-                            : null,
-                        items: widget.page.states
-                            .where(
-                              (final element) =>
-                                  widget.valueType != VariableType.dynamic
-                                      ? element.type == widget.valueType
-                                      : true,
-                            )
-                            .map((final e) => e.name)
-                            .toList(),
-                        onChange: (final newValue) {
-                          final old = widget.value;
-                          widget.value.stateName = newValue;
-                          widget.callBack(widget.value, old);
-                        },
-                      ),
-                      if (widget.page.states
-                              .firstWhereOrNull(
-                                (final element) =>
-                                    element.name == widget.value.stateName,
-                              )
-                              ?.type ==
-                          VariableType.json)
-                        CMiniTextField(
-                          text: widget.value.mapKey,
-                          title: 'Map Key',
-                          callBack: (final key) {
-                            final old = widget.value;
-                            widget.value.mapKey = key;
-                            widget.callBack(widget.value, old);
-                          },
-                        ),
-                    ],
+                                .toList(),
+                            onChange: (final newValue) {
+                              final old = widget.value;
+                              widget.value.stateName = newValue;
+                              widget.callBack(widget.value, old);
+                            },
+                          ),
+                          if (state.page.defaultStates
+                                  .firstWhereOrNull(
+                                    (final element) =>
+                                        element.name == widget.value.stateName,
+                                  )
+                                  ?.type ==
+                              VariableType.json)
+                            CMiniTextField(
+                              text: widget.value.mapKey,
+                              title: 'Map Key',
+                              callBack: (final key) {
+                                final old = widget.value;
+                                widget.value.mapKey = key;
+                                widget.callBack(widget.value, old);
+                              },
+                            ),
+                        ],
+                      );
+                    },
                   ),
                 if (widget.value.type == FTextTypeEnum.languages)
-                  CDropdown(
-                    value: widget.value.keyTranslator,
-                    items: (BlocProvider.of<FocusProjectCubit>(context)
-                                .state!
-                                .config
-                                ?.appLanguage
-                                ?.terms ??
-                            <String, dynamic>{})
-                        .entries
-                        .map((final e) => e.key)
-                        .toList(),
-                    onChange: (final value) {
-                      final old = widget.value;
-                      widget.value.keyTranslator = value;
-                      widget.callBack(widget.value, old);
-                      setState(() {});
+                  BlocBuilder<ConfigCubit, ConfigState>(
+                    builder: (final context, final state) {
+                      if (state is! ConfigStateLoaded) return const SizedBox();
+                      return CDropdown(
+                        value: widget.value.keyTranslator,
+                        items: state.config.appLanguage.terms.entries
+                            .map((final e) => e.key)
+                            .toList(),
+                        onChange: (final value) {
+                          final old = widget.value;
+                          widget.value.keyTranslator = value;
+                          widget.callBack(widget.value, old);
+                          setState(() {});
+                        },
+                      );
                     },
                   ),
                 if (widget.value.type == FTextTypeEnum.dataset)
-                  CDropdown(
-                    value: widget.page.datasets
+                  BlocBuilder<PageCubit, PageState>(
+                    builder: (final context, final state) {
+                      if (state is! PageLoaded) return const SizedBox();
+                      return CDropdown(
+                        value: state.datasets
+                                .map((final e) => e.getName)
+                                .where((final element) => element != 'null')
+                                .contains(widget.value.datasetName)
+                            ? widget.value.datasetName
+                            : null,
+                        items: state.datasets
                             .map((final e) => e.getName)
                             .where((final element) => element != 'null')
-                            .contains(widget.value.datasetName)
-                        ? widget.value.datasetName
-                        : null,
-                    items: widget.page.datasets
-                        .map((final e) => e.getName)
-                        .where((final element) => element != 'null')
-                        .toList(),
-                    onChange: (final newValue) {
-                      setState(() {
-                        databaseName = newValue!;
-                      });
-                      final old = widget.value;
-                      widget.value.datasetName = newValue;
-                      widget.callBack(widget.value, old);
+                            .toList(),
+                        onChange: (final newValue) {
+                          setState(() {
+                            databaseName = newValue!;
+                          });
+                          final old = widget.value;
+                          widget.value.datasetName = newValue;
+                          widget.callBack(widget.value, old);
+                        },
+                      );
                     },
                   ),
                 if (widget.valueType == VariableType.string ||
@@ -691,9 +694,7 @@ class PaddingsState extends State<TextControl> {
                             in widget.value.combination ?? <FTextTypeInput>[])
                           TextControl(
                             valueType: VariableType.dynamic,
-                            node: widget.node,
                             value: element,
-                            page: widget.page,
                             title: '',
                             isSubControl: true,
                             withConvertTo: true,

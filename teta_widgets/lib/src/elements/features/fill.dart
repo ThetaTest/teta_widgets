@@ -99,7 +99,7 @@ class FFill {
         if (element.name == paletteStyle) model = element;
       });
       if (model != null) {
-        return isLight ? model!.light! : model!.fill!;
+        return isLight ? model!.light : model!.fill;
       } else {
         return FFill().ready(FFillType.solid);
       }
@@ -129,8 +129,8 @@ class FFill {
       });
       fill = (model != null)
           ? BlocProvider.of<PaletteDarkLightCubit>(context).state
-              ? model!.light!
-              : model!.fill!
+              ? model!.light
+              : model!.fill
           : FFill().ready(FFillType.solid);
     }
     return fill.levels!.first.color.toUpperCase();

@@ -25,11 +25,10 @@ class CmsLoggedUserCodeTemplate {
       loader = await children[1].toCode(context);
     }
 
-    final revenueCatFlag = BlocProvider.of<FocusProjectCubit>(context)
-            .state!
+    final revenueCatFlag =
+        (BlocProvider.of<ConfigCubit>(context).state as ConfigStateLoaded)
             .config
-            ?.isRevenueCatEnabled ??
-        false;
+            .revenuecat is RevenueCatConfigModelInitialized;
     final code = '''
   TetaFutureBuilder<TetaUser>(
     future: Future.sync(() async {

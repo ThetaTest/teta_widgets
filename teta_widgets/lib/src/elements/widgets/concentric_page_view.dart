@@ -67,8 +67,8 @@ class _WConcentricPageViewState extends State<WConcentricPageView> {
   ) {
     if (model != null) {
       return isLight
-          ? HexColor(model.light!.levels!.first.color)
-          : HexColor(model.fill!.levels!.first.color);
+          ? HexColor(model.light.levels!.first.color)
+          : HexColor(model.fill.levels!.first.color);
     } else {
       return HexColor(widget.fill.levels!.first.color);
     }

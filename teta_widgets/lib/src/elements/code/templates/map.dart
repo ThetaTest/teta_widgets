@@ -20,7 +20,9 @@ class MapCodeTemplate {
   ) async {
     final flag = body.attributes[DBKeys.flag] as bool;
     final mapBoxKey =
-        BlocProvider.of<FocusProjectCubit>(context).state!.config?.mapboxKey;
+        (BlocProvider.of<ConfigCubit>(context).state as ConfigStateLoaded)
+            .config
+            .mapboxKey;
 
     final code = '''
 map.MapLayoutBuilder(
