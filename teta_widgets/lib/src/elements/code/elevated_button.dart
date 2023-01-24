@@ -25,26 +25,27 @@ class ElevatedButtonCodeTemplate {
       isRequired: true,
       loop: loop,
     )}
-     ${CS.action(
-      pageId,
-      context,
-      node,
-      ActionGesture.onTap,
-      'onHover: () ',
-      null,
-      isRequired: true,
-      loop: loop,
-    )}
-      ${CS.action(
+    ${CS.action(
       pageId,
       context,
       node,
       ActionGesture.onLongPress,
       'onLongPress: () async',
       null,
-      isRequired: false,
+      isRequired: true,
       loop: loop,
     )}
+     ${CS.action(
+      pageId,
+      context,
+      node,
+      ActionGesture.onHover,
+      'onHover: (value) ',
+      null,
+      isRequired: true,
+      loop: loop,
+    )}
+      
       $childString
     )
   ''';
