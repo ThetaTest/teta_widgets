@@ -79,8 +79,9 @@ class FTextStyle {
                 type: FFillType.solid,
                 levels: [FFillElement(color: '000000', stop: 0)],
               ),
-        fontSize:
-            doc[DBKeys.fontSize] != null ? FFontSize().fromJson(doc[DBKeys.fontSize]) : FFontSize(),
+        fontSize: doc[DBKeys.fontSize] != null
+            ? FFontSize().fromJson(doc[DBKeys.fontSize])
+            : FFontSize(),
         fontFamily: doc[DBKeys.fontFamily] as String? ?? 'Poppins',
         fontWeight: doc[DBKeys.fontWeight] != null
             ? FFontWeight().fromJson(doc[DBKeys.fontWeight] as String)
@@ -123,15 +124,22 @@ class FTextStyle {
                 type: FFillType.solid,
                 levels: [FFillElement(color: '000000', stop: 0)],
               ).toJson(),
-        DBKeys.fontSize: (fontSize != null) ? fontSize!.toJson() : FFontSize().toJson(),
+        DBKeys.fontSize:
+            (fontSize != null) ? fontSize!.toJson() : FFontSize().toJson(),
         DBKeys.fontFamily: fontFamily ?? 'Poppins',
-        DBKeys.fontWeight: (fontWeight != null) ? fontWeight!.toJson() : FFontWeight().toJson(),
-        DBKeys.textDecoration:
-            (textDecoration != null) ? textDecoration!.toJson() : FTextDecoration().toJson(),
-        DBKeys.textAlign: (textAlign != null) ? textAlign!.toJson() : FTextAlign().toJson(),
-        DBKeys.fontStyle: (fontStyle != null) ? fontStyle!.toJson() : FFontStyle().toJson(),
-        DBKeys.textDirection:
-            (textDirection != null) ? textDirection!.toJson() : FTextDirection().toJson(),
+        DBKeys.fontWeight: (fontWeight != null)
+            ? fontWeight!.toJson()
+            : FFontWeight().toJson(),
+        DBKeys.textDecoration: (textDecoration != null)
+            ? textDecoration!.toJson()
+            : FTextDecoration().toJson(),
+        DBKeys.textAlign:
+            (textAlign != null) ? textAlign!.toJson() : FTextAlign().toJson(),
+        DBKeys.fontStyle:
+            (fontStyle != null) ? fontStyle!.toJson() : FFontStyle().toJson(),
+        DBKeys.textDirection: (textDirection != null)
+            ? textDirection!.toJson()
+            : FTextDirection().toJson(),
         DBKeys.textStyleModel: textStyleModel,
       };
 
@@ -176,6 +184,47 @@ class FTextStyle {
     ),
     textAlign: $align,
     textDirection: $direction,
+    ''';
+  }
+
+  /// Returns style (TextStyle) only
+  /// ```dart
+  /// TextStyle(
+  ///   color: Colors.black,
+  ///   fontWeight: FontWeight.normal,
+  ///   fontSize: 16,
+  ///   fontFamily: '',
+  ///   fontStyle: FontStyle.normal,
+  ///   decoration: TextDecoration.none,
+  /// ),
+
+  String toCodeTextStyleOnly(final BuildContext context) {
+    TextStyleModel? model;
+    if (textStyleModel != null) {
+      BlocProvider.of<TextStylesCubit>(context).state.forEach((final element) {
+        if (element.name == textStyleModel) model = element;
+      });
+    }
+
+    final rc = ReCase((model?.fontFamily ?? fontFamily) ?? 'Poppins');
+
+    final align = textAlign?.toCode();
+    final size = (model?.fontSize ?? fontSize)?.toCode();
+    final weight = (model?.fontWeight ?? fontWeight)?.toCode();
+    final style = fontStyle?.toCode();
+    final decoration = textDecoration?.toCode();
+    final direction = textDirection?.toCode();
+
+    return '''
+    style: GoogleFonts.${rc.camelCase}(
+      textStyle: TextStyle(
+        ${FFill.toCode(fill!, context)}
+        fontWeight: $weight,
+        fontSize: $size,
+        fontStyle: $style,
+        decoration: $decoration,
+      ),
+    ),
     ''';
   }
 }

@@ -25,6 +25,7 @@ import 'package:teta_widgets/src/elements/controls/atoms/code_field.dart';
 import 'package:teta_widgets/src/elements/controls/atoms/cross_axis_alignment.dart';
 import 'package:teta_widgets/src/elements/controls/atoms/dataset.dart';
 import 'package:teta_widgets/src/elements/controls/atoms/db_map.dart';
+import 'package:teta_widgets/src/elements/controls/atoms/dropdownControl.dart';
 import 'package:teta_widgets/src/elements/controls/atoms/fill.dart';
 import 'package:teta_widgets/src/elements/controls/atoms/firebase/path.dart';
 import 'package:teta_widgets/src/elements/controls/atoms/flag.dart';
@@ -163,6 +164,9 @@ enum ControlType {
 
   /// Made to select dataset only
   datasetType,
+
+  ///dropdown List select
+  dropdownControl,
   barcode,
   params,
   states,
@@ -968,6 +972,27 @@ class ControlBuilder {
         node: node,
         title: control.title,
         httpMethod: control.value as String,
+        callBack: (final value, final old) => {
+          node.body.attributes[control.key] = value,
+          ControlBuilder.toDB(
+            prj,
+            page,
+            node,
+            context,
+            control.key,
+            value,
+            old,
+          ),
+        },
+      );
+    }
+    if (control.type == ControlType.dropdownControl) {
+      return DropdownControl(
+        key: ValueKey('${node.nid}'),
+        node: node,
+        title: control.title,
+        item: control.value as String,
+        list: control.list ?? ['EmptyList'],
         callBack: (final value, final old) => {
           node.body.attributes[control.key] = value,
           ControlBuilder.toDB(
