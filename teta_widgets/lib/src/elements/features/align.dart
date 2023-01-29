@@ -32,9 +32,9 @@ class FAlign {
 
   Alignment get(final BuildContext context) {
     final device = BlocProvider.of<DeviceModeCubit>(context).state;
-    if (device.identifier.type == DeviceType.phone) {
+    if (device.info.identifier.type == DeviceType.phone) {
       return align!;
-    } else if (device.identifier.type == DeviceType.tablet) {
+    } else if (device.info.identifier.type == DeviceType.tablet) {
       return alignTablet ?? align!;
     } else {
       return alignDesktop ?? align!;
@@ -43,10 +43,10 @@ class FAlign {
 
   String getStringForDropDown(final BuildContext context) {
     final device = BlocProvider.of<DeviceModeCubit>(context).state;
-    Logger.printMessage('getStringForDropDown: ${device.identifier.type}');
-    if (device.identifier.type == DeviceType.phone) {
+    Logger.printMessage('getStringForDropDown: ${device.info.identifier.type}');
+    if (device.info.identifier.type == DeviceType.phone) {
       return convertValueToDropDown(align!);
-    } else if (device.identifier.type == DeviceType.tablet) {
+    } else if (device.info.identifier.type == DeviceType.tablet) {
       return convertValueToDropDown(alignTablet ?? align!);
     } else {
       return convertValueToDropDown(alignDesktop ?? align!);

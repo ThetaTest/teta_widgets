@@ -47,11 +47,11 @@ class BorderRadiusControlState extends State<BorderRadiusControl> {
 
   @override
   Widget build(final BuildContext context) {
-    return BlocListener<DeviceModeCubit, DeviceInfo>(
+    return BlocListener<DeviceModeCubit, DeviceState>(
       listener: (final context, final device) {
-        if (device.identifier.type == DeviceType.phone) {
+        if (device.info.identifier.type == DeviceType.phone) {
           radius = widget.borderRadius.radius;
-        } else if (device.identifier.type == DeviceType.tablet) {
+        } else if (device.info.identifier.type == DeviceType.tablet) {
           radius = widget.borderRadius.radiusTablet;
         } else {
           radius = widget.borderRadius.radiusDesktop;
@@ -60,14 +60,14 @@ class BorderRadiusControlState extends State<BorderRadiusControl> {
           controllers[i].text = '${radius![i]}';
         }
       },
-      child: BlocBuilder<DeviceModeCubit, DeviceInfo>(
+      child: BlocBuilder<DeviceModeCubit, DeviceState>(
         builder: (final context, final device) =>
             BlocListener<FocusBloc, List<CNode>>(
           listener: (final context, final state) {
             if (state.isNotEmpty) {
-              if (device.identifier.type == DeviceType.phone) {
+              if (device.info.identifier.type == DeviceType.phone) {
                 radius = widget.borderRadius.radius;
-              } else if (device.identifier.type == DeviceType.tablet) {
+              } else if (device.info.identifier.type == DeviceType.tablet) {
                 radius = widget.borderRadius.radiusTablet;
               } else {
                 radius = widget.borderRadius.radiusDesktop;
@@ -96,13 +96,15 @@ class BorderRadiusControlState extends State<BorderRadiusControl> {
                                 onTap: () {
                                   showDialog<void>(
                                     context: context,
-                                    builder: (final ctx) => DevicesDialog(),
+                                    builder: (final ctx) =>
+                                        const DevicesDialog(),
                                   );
                                 },
                                 child: Image.asset(
-                                  device.identifier.type == DeviceType.phone
+                                  device.info.identifier.type ==
+                                          DeviceType.phone
                                       ? Assets.icons.devices.smartphone.path
-                                      : device.identifier.type ==
+                                      : device.info.identifier.type ==
                                               DeviceType.tablet
                                           ? Assets.icons.devices.tablet.path
                                           : Assets.icons.devices.monitor.path,

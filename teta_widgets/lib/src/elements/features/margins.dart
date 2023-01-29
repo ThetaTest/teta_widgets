@@ -27,9 +27,9 @@ class FMargins {
   EdgeInsets get(final BuildContext context) {
     var temp = marginsDesktop!;
     final device = BlocProvider.of<DeviceModeCubit>(context).state;
-    if (device.identifier.type == DeviceType.phone) {
+    if (device.info.identifier.type == DeviceType.phone) {
       temp = margins!;
-    } else if (device.identifier.type == DeviceType.tablet) {
+    } else if (device.info.identifier.type == DeviceType.tablet) {
       temp = marginsTablet!;
     }
     final left = MathExpression.parse(context: context, expression: temp[0]);
@@ -46,9 +46,9 @@ class FMargins {
 
   List<String> getList(final BuildContext context) {
     final device = BlocProvider.of<DeviceModeCubit>(context).state;
-    if (device.identifier.type == DeviceType.phone) {
+    if (device.info.identifier.type == DeviceType.phone) {
       return margins!;
-    } else if (device.identifier.type == DeviceType.tablet) {
+    } else if (device.info.identifier.type == DeviceType.tablet) {
       return marginsTablet!;
     } else {
       return marginsDesktop!;
@@ -58,7 +58,7 @@ class FMargins {
   static FMargins fromJson(final dynamic json) {
     if (json is List<dynamic>) {
       return FMargins(
-        margins: (json).map((final dynamic e) => '$e').toList(),
+        margins: json.map((final dynamic e) => '$e').toList(),
       );
     }
     try {
@@ -92,9 +92,9 @@ class FMargins {
     required final BuildContext context,
   }) {
     final device = BlocProvider.of<DeviceModeCubit>(context).state;
-    if (device.identifier.type == DeviceType.phone) {
+    if (device.info.identifier.type == DeviceType.phone) {
       margins = value;
-    } else if (device.identifier.type == DeviceType.tablet) {
+    } else if (device.info.identifier.type == DeviceType.tablet) {
       marginsTablet = value;
     } else {
       marginsDesktop = value;

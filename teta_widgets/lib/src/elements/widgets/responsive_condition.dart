@@ -30,7 +30,7 @@ class WResponsiveCondition extends StatelessWidget {
 
   @override
   Widget build(final BuildContext context) {
-    return BlocBuilder<DeviceModeCubit, DeviceInfo>(
+    return BlocBuilder<DeviceModeCubit, DeviceState>(
       builder: (final context, final deviceInfostate) {
         // if (deviceInfostate.identifier.type == DeviceType.desktop) {
         //   return visibleOnDesktop
@@ -46,7 +46,7 @@ class WResponsiveCondition extends StatelessWidget {
         //         )
         //       : const SizedBox();
         // }
-        if (deviceInfostate.identifier.type == DeviceType.tablet) {
+        if (deviceInfostate.info.identifier.type == DeviceType.tablet) {
           return visibleOnTablet
               ? ChildConditionBuilder(
                   ValueKey(state.toKey),

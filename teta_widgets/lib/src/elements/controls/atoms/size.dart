@@ -49,14 +49,14 @@ class SizeControlsState extends State<SizeControl> {
 
   @override
   Widget build(final BuildContext context) {
-    return BlocListener<DeviceModeCubit, DeviceInfo>(
+    return BlocListener<DeviceModeCubit, DeviceState>(
       listener: (final context, final device) {
         flag =
             widget.size.get(context: context, isWidth: widget.isWidth) != null;
         String? size;
-        if (device.identifier.type == DeviceType.phone) {
+        if (device.info.identifier.type == DeviceType.phone) {
           size = widget.size.size;
-        } else if (device.identifier.type == DeviceType.tablet) {
+        } else if (device.info.identifier.type == DeviceType.tablet) {
           size = widget.size.sizeTablet;
         } else {
           size = widget.size.sizeDesktop;
@@ -76,7 +76,7 @@ class SizeControlsState extends State<SizeControl> {
                       : '$size';
         }
       },
-      child: BlocBuilder<DeviceModeCubit, DeviceInfo>(
+      child: BlocBuilder<DeviceModeCubit, DeviceState>(
         builder: (final context, final device) =>
             BlocBuilder<FocusBloc, List<CNode>>(
           builder: (final context, final state) {
@@ -86,9 +86,9 @@ class SizeControlsState extends State<SizeControl> {
                         .get(context: context, isWidth: widget.isWidth) !=
                     null;
                 var size = widget.size.size;
-                if (device.identifier.type == DeviceType.phone) {
+                if (device.info.identifier.type == DeviceType.phone) {
                   size = widget.size.size;
-                } else if (device.identifier.type == DeviceType.tablet) {
+                } else if (device.info.identifier.type == DeviceType.tablet) {
                   size = widget.size.sizeTablet;
                 } else {
                   size = widget.size.sizeDesktop;
@@ -131,9 +131,10 @@ class SizeControlsState extends State<SizeControl> {
                               );
                             },
                             child: Image.asset(
-                              device.identifier.type == DeviceType.phone
+                              device.info.identifier.type == DeviceType.phone
                                   ? Assets.icons.devices.smartphone.path
-                                  : device.identifier.type == DeviceType.tablet
+                                  : device.info.identifier.type ==
+                                          DeviceType.tablet
                                       ? Assets.icons.devices.tablet.path
                                       : Assets.icons.devices.monitor.path,
                               width: 20,
@@ -261,10 +262,10 @@ class SizeControlsState extends State<SizeControl> {
                                   padding: const EdgeInsets.only(right: 4),
                                   child: CMiniTextField(
                                     controller: controller,
-                                    text: (device.identifier.type ==
+                                    text: (device.info.identifier.type ==
                                             DeviceType.phone)
                                         ? widget.size.size
-                                        : (device.identifier.type ==
+                                        : (device.info.identifier.type ==
                                                 DeviceType.tablet)
                                             ? widget.size.sizeTablet
                                             : widget.size.sizeDesktop,

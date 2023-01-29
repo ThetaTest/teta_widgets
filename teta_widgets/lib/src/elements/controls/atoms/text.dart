@@ -83,11 +83,11 @@ class PaddingsState extends State<TextControl> {
 
   @override
   Widget build(final BuildContext context) {
-    return BlocListener<DeviceModeCubit, DeviceInfo>(
+    return BlocListener<DeviceModeCubit, DeviceState>(
       listener: (final context, final device) {
         controller.text = widget.value.getValue(context);
       },
-      child: BlocBuilder<DeviceModeCubit, DeviceInfo>(
+      child: BlocBuilder<DeviceModeCubit, DeviceState>(
         builder: (final context, final device) =>
             BlocBuilder<FocusBloc, List<CNode>>(
           builder: (final context, final state) {
@@ -109,9 +109,10 @@ class PaddingsState extends State<TextControl> {
                               );
                             },
                             child: Image.asset(
-                              device.identifier.type == DeviceType.phone
+                              device.info.identifier.type == DeviceType.phone
                                   ? Assets.icons.devices.smartphone.path
-                                  : device.identifier.type == DeviceType.tablet
+                                  : device.info.identifier.type ==
+                                          DeviceType.tablet
                                       ? Assets.icons.devices.tablet.path
                                       : Assets.icons.devices.monitor.path,
                               width: 20,

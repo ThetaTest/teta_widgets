@@ -76,7 +76,7 @@ class MarginsState extends State<Margins> {
 
   @override
   Widget build(final BuildContext context) {
-    return BlocListener<DeviceModeCubit, DeviceInfo>(
+    return BlocListener<DeviceModeCubit, DeviceState>(
       listener: (final context, final state) {
         margins = widget.value.getList(context);
         for (var i = 0; i < 4; i++) {
@@ -92,7 +92,7 @@ class MarginsState extends State<Margins> {
         }
         isLinked = !flag;
       },
-      child: BlocBuilder<DeviceModeCubit, DeviceInfo>(
+      child: BlocBuilder<DeviceModeCubit, DeviceState>(
         builder: (final context, final device) =>
             BlocBuilder<FocusBloc, List<CNode>>(
           builder: (final context, final state) {
@@ -130,13 +130,13 @@ class MarginsState extends State<Margins> {
                               onTap: () {
                                 showDialog<void>(
                                   context: context,
-                                  builder: (final ctx) => DevicesDialog(),
+                                  builder: (final ctx) => const DevicesDialog(),
                                 );
                               },
                               child: Image.asset(
-                                device.identifier.type == DeviceType.phone
+                                device.info.identifier.type == DeviceType.phone
                                     ? Assets.icons.devices.smartphone.path
-                                    : device.identifier.type ==
+                                    : device.info.identifier.type ==
                                             DeviceType.tablet
                                         ? Assets.icons.devices.tablet.path
                                         : Assets.icons.devices.monitor.path,

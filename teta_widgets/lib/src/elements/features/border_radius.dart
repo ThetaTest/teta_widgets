@@ -88,9 +88,9 @@ class FBorderRadius {
     required final List<double> value,
   }) {
     final device = BlocProvider.of<DeviceModeCubit>(context).state;
-    if (device.identifier.type == DeviceType.phone) {
+    if (device.info.identifier.type == DeviceType.phone) {
       radius = value;
-    } else if (device.identifier.type == DeviceType.tablet) {
+    } else if (device.info.identifier.type == DeviceType.tablet) {
       radiusTablet = value;
     } else {
       radiusDesktop = value;

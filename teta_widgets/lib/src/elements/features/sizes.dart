@@ -49,10 +49,10 @@ class FSize {
     var size = sizeDesktop ?? this.size!;
     var unit = unitDesktop ?? this.unit!;
     final device = BlocProvider.of<DeviceModeCubit>(context).state;
-    if (device.identifier.type == frame.DeviceType.phone) {
+    if (device.info.identifier.type == frame.DeviceType.phone) {
       size = this.size ?? '0';
       unit = this.unit!;
-    } else if (device.identifier.type == frame.DeviceType.tablet) {
+    } else if (device.info.identifier.type == frame.DeviceType.tablet) {
       size = sizeTablet ?? this.size ?? '0';
       unit = unitTablet ?? this.unit!;
     }
@@ -80,7 +80,8 @@ class FSize {
     if (unit == SizeUnit.percent ||
         unit == SizeUnit.width ||
         unit == SizeUnit.height) {
-      final screen = BlocProvider.of<DeviceModeCubit>(context).state.screenSize;
+      final screen =
+          BlocProvider.of<DeviceModeCubit>(context).state.info.screenSize;
       return isWidth ? value.toInt().w : value.toInt().h;
     }
     return value;
@@ -88,9 +89,9 @@ class FSize {
 
   SizeUnit getUnit(final BuildContext context) {
     final device = BlocProvider.of<DeviceModeCubit>(context).state;
-    if (device.identifier.type == frame.DeviceType.phone) {
+    if (device.info.identifier.type == frame.DeviceType.phone) {
       return unit = unit!;
-    } else if (device.identifier.type == frame.DeviceType.tablet) {
+    } else if (device.info.identifier.type == frame.DeviceType.tablet) {
       return unit = unitTablet ?? unit!;
     }
     return unitDesktop ?? unit!;
@@ -101,9 +102,9 @@ class FSize {
     final BuildContext context,
   ) {
     final device = BlocProvider.of<DeviceModeCubit>(context).state;
-    if (device.identifier.type == frame.DeviceType.phone) {
+    if (device.info.identifier.type == frame.DeviceType.phone) {
       size = newValue;
-    } else if (device.identifier.type == frame.DeviceType.tablet) {
+    } else if (device.info.identifier.type == frame.DeviceType.tablet) {
       sizeTablet = newValue;
     } else {
       sizeDesktop = newValue;
@@ -115,9 +116,9 @@ class FSize {
     final BuildContext context,
   ) {
     final device = BlocProvider.of<DeviceModeCubit>(context).state;
-    if (device.identifier.type == frame.DeviceType.phone) {
+    if (device.info.identifier.type == frame.DeviceType.phone) {
       unit = newUnit;
-    } else if (device.identifier.type == frame.DeviceType.tablet) {
+    } else if (device.info.identifier.type == frame.DeviceType.tablet) {
       unitTablet = newUnit;
     } else {
       unitDesktop = newUnit;

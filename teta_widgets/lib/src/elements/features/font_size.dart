@@ -31,9 +31,9 @@ class FFontSize {
   double get(final BuildContext context) {
     final device = BlocProvider.of<DeviceModeCubit>(context).state;
     late double size;
-    if (device.identifier.type == frame.DeviceType.phone) {
+    if (device.info.identifier.type == frame.DeviceType.phone) {
       size = this.size;
-    } else if (device.identifier.type == frame.DeviceType.tablet) {
+    } else if (device.info.identifier.type == frame.DeviceType.tablet) {
       size = sizeTablet ?? this.size;
     } else {
       size = sizeDesktop ?? this.size;
@@ -52,9 +52,9 @@ class FFontSize {
 
   void update(final double value, final BuildContext context) {
     final device = BlocProvider.of<DeviceModeCubit>(context).state;
-    if (device.identifier.type == frame.DeviceType.phone) {
+    if (device.info.identifier.type == frame.DeviceType.phone) {
       size = value;
-    } else if (device.identifier.type == frame.DeviceType.tablet) {
+    } else if (device.info.identifier.type == frame.DeviceType.tablet) {
       sizeTablet = value;
     } else {
       sizeDesktop = value;
