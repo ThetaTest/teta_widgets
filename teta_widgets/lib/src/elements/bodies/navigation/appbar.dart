@@ -62,9 +62,9 @@ class AppBarBody extends NodeBody {
           networkImage: '',
           onTap: () {
             sl.get<NodeRepository>().changeNode(
-                  node: page.scaffold! as NDynamic,
+                  node: page.scaffold as NDynamic,
                 );
-            page.scaffold!.body.attributes[DBKeys.showAppBar] = true;
+            page.scaffold.body.attributes[DBKeys.showAppBar] = true;
           },
         )
       ];
