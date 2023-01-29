@@ -41,7 +41,7 @@ dependencies:
   mixpanel_analytics: 2.1.1
 
   # Bloc
-  flutter_bloc: 7.3.3
+  flutter_bloc: 8.1.1
   equatable: 2.0.3
 
   # Typography & Icons
