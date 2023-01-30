@@ -13,7 +13,6 @@ import 'package:teta_core/teta_core.dart';
 import 'package:teta_widgets/src/elements/controls/atoms/fill/widgets/gradient_swiper_control.dart';
 // Project imports:
 import 'package:teta_widgets/src/elements/features/features.dart';
-import 'package:teta_widgets/src/elements/nodes/node.dart';
 
 class LinearFillControl extends StatefulWidget {
   /// Constructor
@@ -47,7 +46,7 @@ class ColorControlState extends State<LinearFillControl> {
 
   @override
   Widget build(final BuildContext context) {
-    return BlocBuilder<FocusBloc, List<CNode>>(
+    return BlocBuilder<FocusBloc, List<int>>(
       builder: (final context, final state) {
         return Column(
           crossAxisAlignment: CrossAxisAlignment.start,
@@ -503,7 +502,7 @@ class FillElementState extends State<FillElement> {
 
   @override
   Widget build(final BuildContext context) {
-    return BlocListener<FocusBloc, List<CNode>>(
+    return BlocListener<FocusBloc, List<int>>(
       listener: (final context, final state) {
         if (state.isNotEmpty) {
           editingController.text = widget.element.color;

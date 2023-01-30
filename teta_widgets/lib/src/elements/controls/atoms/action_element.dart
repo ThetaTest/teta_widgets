@@ -250,7 +250,7 @@ class ActionElementControlState extends State<ActionElementControl> {
                 padding: const EdgeInsets.only(bottom: 8),
                 child: SizedBox(
                   width: double.maxFinite,
-                  child: BlocListener<FocusBloc, List<CNode>>(
+                  child: BlocListener<FocusBloc, List<int>>(
                     listener: (final context, final state) {
                       if (state.isNotEmpty) {
                         delayController.text =
@@ -301,7 +301,7 @@ class ActionElementControlState extends State<ActionElementControl> {
                       padding: const EdgeInsets.only(bottom: 8),
                       child: SizedBox(
                         width: double.maxFinite,
-                        child: BlocListener<FocusBloc, List<CNode>>(
+                        child: BlocListener<FocusBloc, List<int>>(
                           listener: (final context, final state) {
                             if (state.isNotEmpty) {
                               loopController.text =
@@ -1621,17 +1621,22 @@ class ActionElementControlState extends State<ActionElementControl> {
                     }
                   },
                 ),
-              BlocBuilder<FocusBloc, List<CNode>>(
+              BlocBuilder<FocusBloc, List<int>>(
                 builder: (final context, final state) {
+                  final nodeId = state.first;
+                  final node = (context.read<PageCubit>().state as PageLoaded)
+                      .page
+                      .flatList
+                      .firstWhere((final element) => element.nid == nodeId);
                   if ((widget.element.actionType == ActionType.state &&
                           widget.element.actionState ==
                               ActionState.changeWith &&
-                          !state.first.intrinsicState.gestures
+                          !node.intrinsicState.gestures
                               .contains(ActionGesture.onChange) &&
-                          (state.first.intrinsicState.type != NType.calendar &&
-                              state.first.intrinsicState.type !=
+                          (node.intrinsicState.type != NType.calendar &&
+                              node.intrinsicState.type !=
                                   NType.cupertinoSegmentedControl &&
-                              state.first.intrinsicState.type !=
+                              node.intrinsicState.type !=
                                   NType.cupertinoSwitch)) ||
                       (widget.element.actionType == ActionType.navigation &&
                           widget.element.actionNavigation ==

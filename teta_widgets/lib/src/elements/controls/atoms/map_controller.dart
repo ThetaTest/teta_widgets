@@ -8,7 +8,6 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:teta_core/teta_core.dart';
 // Project imports:
 import 'package:teta_widgets/src/elements/features/text_type_input.dart';
-import 'package:teta_widgets/src/elements/nodes/node.dart';
 
 class MapControllerControl extends StatefulWidget {
   const MapControllerControl({
@@ -49,13 +48,13 @@ class MapControllerControlState extends State<MapControllerControl> {
 
   @override
   Widget build(final BuildContext context) {
-    return BlocBuilder<FocusBloc, List<CNode>>(
+    return BlocBuilder<FocusBloc, List<int>>(
       buildWhen: (final previous, final current) => current != previous,
       builder: (final context, final state) {
         if (state.isNotEmpty) {
-          if (state.first.nid != nodeId) {
+          if (state.first != nodeId) {
             if (mounted) {
-              nodeId = state.first.nid;
+              nodeId = state.first;
               controller.text = controller.text = widget.value.value ?? '';
             }
           }

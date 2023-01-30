@@ -17,7 +17,6 @@ import 'package:teta_core/src/design_system/textfield/textfield.dart';
 import 'package:teta_core/teta_core.dart';
 // Project imports:
 import 'package:teta_widgets/src/elements/features/text_type_input.dart';
-import 'package:teta_widgets/src/elements/nodes/node.dart';
 
 class TextControl extends StatefulWidget {
   const TextControl({
@@ -89,7 +88,7 @@ class PaddingsState extends State<TextControl> {
       },
       child: BlocBuilder<DeviceModeCubit, DeviceState>(
         builder: (final context, final device) =>
-            BlocBuilder<FocusBloc, List<CNode>>(
+            BlocBuilder<FocusBloc, List<int>>(
           builder: (final context, final state) {
             return Column(
               crossAxisAlignment: CrossAxisAlignment.start,

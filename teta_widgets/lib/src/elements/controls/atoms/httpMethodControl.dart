@@ -35,13 +35,13 @@ class _HttpMethodControlState extends State<HttpMethodControl> {
 
   @override
   Widget build(final BuildContext context) {
-    return BlocListener<FocusBloc, List<CNode>>(
+    return BlocListener<FocusBloc, List<int>>(
       listener: (final context, final state) {
         if (state.isNotEmpty) {
           dropdown = widget.httpMethod;
         }
       },
-      child: BlocBuilder<FocusBloc, List<CNode>>(
+      child: BlocBuilder<FocusBloc, List<int>>(
         builder: (final context, final state) {
           return Column(
             crossAxisAlignment: CrossAxisAlignment.start,

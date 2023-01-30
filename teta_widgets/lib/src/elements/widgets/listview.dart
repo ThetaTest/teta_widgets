@@ -84,11 +84,11 @@ class _WListViewState extends State<WListView> {
         },
         child: ScrollConfiguration(
           behavior: _MyCustomScrollBehavior(),
-          child: BlocBuilder<FocusBloc, List<CNode>>(
+          child: BlocBuilder<FocusBloc, List<int>>(
             builder: (final context, final nodes) {
               if (nodes.length == 1) {
                 final index = widget.children.indexWhere(
-                  (final element) => element.nid == nodes.first.nid,
+                  (final element) => element.nid == nodes.first,
                 );
                 if (index != -1) {
                   return ReorderableListView.builder(

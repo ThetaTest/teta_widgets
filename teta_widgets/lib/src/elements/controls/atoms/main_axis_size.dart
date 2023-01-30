@@ -34,7 +34,7 @@ class MainAxisSizeControlState extends State<MainAxisSizeControl> {
 
   @override
   Widget build(final BuildContext context) {
-    return BlocListener<FocusBloc, List<CNode>>(
+    return BlocListener<FocusBloc, List<int>>(
       listener: (final context, final state) {
         if (state.isNotEmpty) {
           setState(() {
@@ -42,7 +42,7 @@ class MainAxisSizeControlState extends State<MainAxisSizeControl> {
           });
         }
       },
-      child: BlocBuilder<FocusBloc, List<CNode>>(
+      child: BlocBuilder<FocusBloc, List<int>>(
         builder: (final context, final state) {
           return Column(
             crossAxisAlignment: CrossAxisAlignment.start,

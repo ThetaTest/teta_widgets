@@ -8,7 +8,6 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:teta_core/src/design_system/textfield/textfield.dart';
 import 'package:teta_core/teta_core.dart';
 // Project imports:
-import 'package:teta_widgets/src/elements/nodes/node.dart';
 
 class FlatTextControl extends StatefulWidget {
   const FlatTextControl({
@@ -37,7 +36,7 @@ class FlatTextControlState extends State<FlatTextControl> {
 
   @override
   Widget build(final BuildContext context) {
-    return BlocListener<FocusBloc, List<CNode>>(
+    return BlocListener<FocusBloc, List<int>>(
       listener: (final context, final state) {
         if (state.isNotEmpty) {
           controller!.text = widget.value;

@@ -8,7 +8,6 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:teta_core/teta_core.dart';
 // Project imports:
 import 'package:teta_widgets/src/elements/features/features.dart';
-import 'package:teta_widgets/src/elements/nodes/node.dart';
 
 //ignore: must_be_immutable
 class StyleFillControl extends StatefulWidget {
@@ -32,7 +31,7 @@ class StyleFillControl extends StatefulWidget {
 class StyleFillControlState extends State<StyleFillControl> {
   @override
   Widget build(final BuildContext context) {
-    return BlocBuilder<FocusBloc, List<CNode>>(
+    return BlocBuilder<FocusBloc, List<int>>(
       builder: (final context, final state) {
         //updateState(state);
         return BlocBuilder<ColorStylesCubit, List<ColorStyleModel>>(

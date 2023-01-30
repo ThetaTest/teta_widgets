@@ -68,7 +68,7 @@ class SolidFillControlState extends State<SolidFillControl> {
     }*/
     return Column(
       children: [
-        BlocListener<FocusBloc, List<CNode>>(
+        BlocListener<FocusBloc, List<int>>(
           listener: (final context, final state) {
             if (state.isNotEmpty) {
               if (widget.color != null) {
@@ -83,7 +83,7 @@ class SolidFillControlState extends State<SolidFillControl> {
               }
             }
           },
-          child: BlocBuilder<FocusBloc, List<CNode>>(
+          child: BlocBuilder<FocusBloc, List<int>>(
             builder: (final context, final state) {
               return TContainer(
                 padding: const EdgeInsets.symmetric(horizontal: 8),

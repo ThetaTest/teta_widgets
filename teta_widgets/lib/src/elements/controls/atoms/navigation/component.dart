@@ -38,9 +38,12 @@ class ComponentControlState extends State<ComponentControl> {
   void initState() {
     super.initState();
     final pages = context.read<PagesCubit>().state;
-    final focusBloc = context.read<FocusBloc>().state;
-    final name =
-        focusBloc.first.body.attributes[DBKeys.componentName] as String? ?? '';
+    final nodeId = BlocProvider.of<FocusBloc>(context).state.first;
+    final node = (context.read<PageCubit>().state as PageLoaded)
+        .page
+        .flatList
+        .firstWhere((final element) => element.nid == nodeId);
+    final name = node.body.attributes[DBKeys.componentName] as String? ?? '';
     components = pages.where((final element) => !element.isPage).toList();
     try {
       if (components.indexWhere((final element) => element.name == name) !=
@@ -49,8 +52,8 @@ class ComponentControlState extends State<ComponentControl> {
             components.firstWhere((final element) => element.name == name);
         dropdown = pageObject?.name;
 
-        if (focusBloc.first.body.attributes[DBKeys.paramsToSend] != null) {
-          map = focusBloc.first.body.attributes[DBKeys.paramsToSend]
+        if (node.body.attributes[DBKeys.paramsToSend] != null) {
+          map = node.body.attributes[DBKeys.paramsToSend]
                   as Map<String, dynamic>? ??
               <String, dynamic>{};
         }
@@ -83,15 +86,18 @@ class ComponentControlState extends State<ComponentControl> {
             value: dropdown,
             items: components.map((final e) => e.name).toList(),
             onChange: (final String? newValue) {
-              final focusBloc = context.read<FocusBloc>().state;
+              final nodeId = BlocProvider.of<FocusBloc>(context).state.first;
+              final node = (context.read<PageCubit>().state as PageLoaded)
+                  .page
+                  .flatList
+                  .firstWhere((final element) => element.nid == nodeId);
 
               if (newValue != null) {
-                final old = focusBloc
-                    .first.body.attributes[DBKeys.componentName] as String?;
+                final old =
+                    node.body.attributes[DBKeys.componentName] as String?;
                 pageObject = components
                     .firstWhere((final element) => element.name == newValue);
-                focusBloc.first.body.attributes[DBKeys.componentName] =
-                    pageObject!.name;
+                node.body.attributes[DBKeys.componentName] = pageObject!.name;
                 setState(() {
                   dropdown = newValue;
                 });
@@ -128,10 +134,21 @@ class ComponentControlState extends State<ComponentControl> {
                                   page: state.page,
                                   map: map,
                                   callBackParameters: (final map) {
-                                    final node =
-                                        context.read<FocusBloc>().state;
-                                    node.first.body
-                                        .attributes[DBKeys.paramsToSend] = map;
+                                    final nodeId =
+                                        BlocProvider.of<FocusBloc>(context)
+                                            .state
+                                            .first;
+                                    final node = (context
+                                            .read<PageCubit>()
+                                            .state as PageLoaded)
+                                        .page
+                                        .flatList
+                                        .firstWhere(
+                                          (final element) =>
+                                              element.nid == nodeId,
+                                        );
+                                    node.body.attributes[DBKeys.paramsToSend] =
+                                        map;
                                     widget.callBackParameters(map);
                                   },
                                 ),
@@ -291,11 +308,11 @@ class ElementState extends State<Element> {
               ),
               const Gap(Grid.small),
               if (dropdownDataset != null && dropdownDataset == 'Text')
-                BlocBuilder<FocusBloc, List<CNode>>(
+                BlocBuilder<FocusBloc, List<int>>(
                   builder: (final context, final state) {
                     if (state.isNotEmpty) {
-                      if (controller == null || nodeId != state.first.nid) {
-                        nodeId = state.first.nid;
+                      if (controller == null || nodeId != state.first) {
+                        nodeId = state.first;
                         controller = TextEditingController()
                           ..text = widget.map[widget.variable.id] != null &&
                                   widget.map[widget.variable.id]?['label'] !=

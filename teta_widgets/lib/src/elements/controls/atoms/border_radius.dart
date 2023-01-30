@@ -12,7 +12,6 @@ import 'package:teta_core/src/design_system/textfield/minitextfield.dart';
 import 'package:teta_core/teta_core.dart';
 // Project imports:
 import 'package:teta_widgets/src/elements/features/border_radius.dart';
-import 'package:teta_widgets/src/elements/nodes/node.dart';
 
 class BorderRadiusControl extends StatefulWidget {
   const BorderRadiusControl({
@@ -62,7 +61,7 @@ class BorderRadiusControlState extends State<BorderRadiusControl> {
       },
       child: BlocBuilder<DeviceModeCubit, DeviceState>(
         builder: (final context, final device) =>
-            BlocListener<FocusBloc, List<CNode>>(
+            BlocListener<FocusBloc, List<int>>(
           listener: (final context, final state) {
             if (state.isNotEmpty) {
               if (device.info.identifier.type == DeviceType.phone) {
@@ -77,7 +76,7 @@ class BorderRadiusControlState extends State<BorderRadiusControl> {
               }
             }
           },
-          child: BlocBuilder<FocusBloc, List<CNode>>(
+          child: BlocBuilder<FocusBloc, List<int>>(
             builder: (final context, final state) {
               return Column(
                 crossAxisAlignment: CrossAxisAlignment.start,

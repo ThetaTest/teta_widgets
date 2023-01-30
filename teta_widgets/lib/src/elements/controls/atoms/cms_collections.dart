@@ -37,7 +37,7 @@ class CMSCollectionControlState extends State<CMSCollectionControl> {
 
   @override
   Widget build(final BuildContext context) {
-    return BlocBuilder<FocusBloc, List<CNode>>(
+    return BlocBuilder<FocusBloc, List<int>>(
       builder: (final context, final state) {
         return Column(
           crossAxisAlignment: CrossAxisAlignment.start,
@@ -62,12 +62,17 @@ class CMSCollectionControlState extends State<CMSCollectionControl> {
                     child: CircularProgressIndicator(),
                   );
                 }
+                final nodeId = state.first;
+                final node = (context.read<PageCubit>().state as PageLoaded)
+                    .page
+                    .flatList
+                    .firstWhere((final element) => element.nid == nodeId);
                 dropdown = snapshot.data!
                     .firstWhereOrNull(
                       (final element) =>
                           element.id ==
                           (widget.collectionId ??
-                              (state.first.body.attributes[DBKeys.cmsCollection]
+                              (node.body.attributes[DBKeys.cmsCollection]
                                       as FTextTypeInput?)
                                   ?.value),
                     )
@@ -93,11 +98,10 @@ class CMSCollectionControlState extends State<CMSCollectionControl> {
                             (final element) => element.name == dropdown,
                           )
                           ?.id;
-                      if (state.first.body.attributes[DBKeys.cmsCollection] !=
-                              null &&
-                          state.first.body.attributes[DBKeys.cmsCollection]
+                      if (node.body.attributes[DBKeys.cmsCollection] != null &&
+                          node.body.attributes[DBKeys.cmsCollection]
                               is FTextTypeInput) {
-                        (state.first.body.attributes[DBKeys.cmsCollection]
+                        (node.body.attributes[DBKeys.cmsCollection]
                                 as FTextTypeInput)
                             .value = nw;
                       }

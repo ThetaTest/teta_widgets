@@ -10,7 +10,6 @@ import 'package:teta_core/teta_core.dart';
 // Project imports:
 import 'package:teta_widgets/src/elements/controls/atoms/map_element.dart';
 import 'package:teta_widgets/src/elements/features/text_type_input.dart';
-import 'package:teta_widgets/src/elements/nodes/node.dart';
 
 class DBMapControl extends StatefulWidget {
   const DBMapControl({
@@ -37,7 +36,7 @@ class DBMapControlState extends State<DBMapControl> {
 
   @override
   Widget build(final BuildContext context) {
-    return BlocListener<FocusBloc, List<CNode>>(
+    return BlocListener<FocusBloc, List<int>>(
       listener: (final context, final state) {
         if (state.isNotEmpty) {}
       },

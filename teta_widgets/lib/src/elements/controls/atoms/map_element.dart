@@ -9,7 +9,6 @@ import 'package:teta_core/src/design_system/textfield/textfield.dart';
 import 'package:teta_core/teta_core.dart';
 // Project imports:
 import 'package:teta_widgets/src/elements/controls/atoms/text.dart';
-import 'package:teta_widgets/src/elements/nodes/node.dart';
 
 class MapElementControl extends StatefulWidget {
   const MapElementControl({
@@ -37,7 +36,7 @@ class MapElementControlState extends State<MapElementControl> {
 
   @override
   Widget build(final BuildContext context) {
-    return BlocListener<FocusBloc, List<CNode>>(
+    return BlocListener<FocusBloc, List<int>>(
       listener: (final context, final state) {
         if (state.isNotEmpty) {
           setState(() {

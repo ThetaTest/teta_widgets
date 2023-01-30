@@ -18,11 +18,7 @@ import 'package:teta_widgets/src/elements/controls/atoms/text_align.dart';
 import 'package:teta_widgets/src/elements/controls/atoms/text_decoration.dart';
 import 'package:teta_widgets/src/elements/controls/atoms/text_direction.dart';
 import 'package:teta_widgets/src/elements/controls/atoms/text_styles.dart';
-import 'package:teta_widgets/src/elements/controls/type.dart';
-import 'package:teta_widgets/src/elements/features/fill.dart';
-import 'package:teta_widgets/src/elements/features/text_style.dart';
 import 'package:teta_widgets/src/elements/index.dart';
-import 'package:teta_widgets/src/elements/nodes/enum.dart';
 
 class TextPrefabControl extends StatelessWidget {
   const TextPrefabControl({
@@ -38,8 +34,12 @@ class TextPrefabControl extends StatelessWidget {
 
   @override
   Widget build(final BuildContext context) {
-    return BlocBuilder<FocusBloc, List<CNode>>(
+    return BlocBuilder<FocusBloc, List<int>>(
       builder: (final context, final state) {
+        final node = (context.read<PageCubit>().state as PageLoaded)
+            .page
+            .flatList
+            .firstWhere((final element) => element.nid == state.first);
         return Column(
           children: [
             TextStylesControl(
@@ -49,14 +49,14 @@ class TextPrefabControl extends StatelessWidget {
                 if (flag) {
                   sl.get<ProjectStylesRepository>().assignTextStyle(
                         styleName: textStyleModel,
-                        node: state.first,
+                        node: node,
                         keyValue: keyValue,
                       );
                 }
                 final old = textStyle;
                 textStyle.textStyleModel = textStyleModel;
                 ControlBuilder.toDB(
-                  state.first,
+                  node,
                   context,
                   keyValue,
                   textStyle.toJson(),
@@ -68,8 +68,8 @@ class TextPrefabControl extends StatelessWidget {
               padding: EdgeInsets.only(top: 16),
               child: Divider(height: 1, color: Colors.white38),
             ),
-            if (!(state.first.globalType == NType.text) ||
-                state.first.body.attributes[keyValue]?.textStyleModel == null)
+            if (!(node.globalType == NType.text) ||
+                node.body.attributes[keyValue]?.textStyleModel == null)
               Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
@@ -85,7 +85,7 @@ class TextPrefabControl extends StatelessWidget {
                       textStyle: textStyle,
                       callBack: (final value, final old) {
                         ControlBuilder.toDB(
-                          state.first,
+                          node,
                           context,
                           keyValue,
                           value,
@@ -99,7 +99,7 @@ class TextPrefabControl extends StatelessWidget {
                     child: FontFamilyControl(
                       textStyle: textStyle,
                       callBack: (final value, final old) => ControlBuilder.toDB(
-                        state.first,
+                        node,
                         context,
                         keyValue,
                         value,
@@ -112,7 +112,7 @@ class TextPrefabControl extends StatelessWidget {
                     child: FontWeightControl(
                       textStyle: textStyle,
                       callBack: (final value, final old) => ControlBuilder.toDB(
-                        state.first,
+                        node,
                         context,
                         keyValue,
                         value,
@@ -129,7 +129,7 @@ class TextPrefabControl extends StatelessWidget {
                             textStyle: textStyle,
                             callBack: (final value, final old) =>
                                 ControlBuilder.toDB(
-                              state.first,
+                              node,
                               context,
                               keyValue,
                               value,
@@ -152,7 +152,7 @@ class TextPrefabControl extends StatelessWidget {
                     child: TextAlignControls(
                       textStyle: textStyle,
                       callBack: (final value, final old) => ControlBuilder.toDB(
-                        state.first,
+                        node,
                         context,
                         keyValue,
                         value,
@@ -165,7 +165,7 @@ class TextPrefabControl extends StatelessWidget {
                     child: TextDecorationControl(
                       textStyle: textStyle,
                       callBack: (final value, final old) => ControlBuilder.toDB(
-                        state.first,
+                        node,
                         context,
                         keyValue,
                         value,
@@ -183,7 +183,7 @@ class TextPrefabControl extends StatelessWidget {
                   final old = FTextStyle.fromJson(textStyle.toJson());
                   textStyle.textDirection = dir;
                   ControlBuilder.toDB(
-                    state.first,
+                    node,
                     context,
                     keyValue,
                     textStyle.toJson(),
@@ -203,7 +203,7 @@ class TextPrefabControl extends StatelessWidget {
                   final old = FTextStyle.fromJson(textStyle.toJson());
                   textStyle.fill = color;
                   ControlBuilder.toDB(
-                    state.first,
+                    node,
                     context,
                     keyValue,
                     textStyle.toJson(),

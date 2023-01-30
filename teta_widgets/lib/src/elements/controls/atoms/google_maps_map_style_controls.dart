@@ -37,13 +37,13 @@ class GoogleMapsMapStyleControlsState
 
   @override
   Widget build(final BuildContext context) {
-    return BlocListener<FocusBloc, List<CNode>>(
+    return BlocListener<FocusBloc, List<int>>(
       listener: (final context, final state) {
         if (state.isNotEmpty) {
           dropdown = widget.mapStyle.getString;
         }
       },
-      child: BlocBuilder<FocusBloc, List<CNode>>(
+      child: BlocBuilder<FocusBloc, List<int>>(
         builder: (final context, final state) {
           return Column(
             crossAxisAlignment: CrossAxisAlignment.start,
@@ -96,7 +96,7 @@ class GoogleMapsMapStyleControlsState
   }
 
   DropdownCustomMenuItem<String> buildMapStyleMenuItem(
-          final String value, final String asset) =>
+          final String value, final String asset,) =>
       DropdownCustomMenuItem<String>(
         value: value,
         child: Row(

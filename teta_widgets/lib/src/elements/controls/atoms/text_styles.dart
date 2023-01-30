@@ -53,7 +53,7 @@ class TextStylesControlState extends State<TextStylesControl> {
             ),
             Row(
               children: [
-                if (widget.textStyle.textStyleModel == null)
+                if (textStyleModel == null)
                   GestureDetector(
                     onTap: () => showPicker(
                       context,
@@ -91,16 +91,19 @@ class TextStylesControlState extends State<TextStylesControl> {
                   ),
                 BounceSmall(
                   onTap: () {
-                    if (widget.textStyle.textStyleModel == null) {
+                    if (textStyleModel == null) {
                       /*newTextStylePicker(
                           context, BlocProvider.of<TextStylesBloc>(context));*/
                       BlocProvider.of<PanelsCubit>(context)
                           .changePanel(PanelsEnum.assets);
                     } else {
-                      final old = widget.textStyle.textStyleModel;
+                      final old = textStyleModel;
                       //String txtSM = widget.node.textStyleModel;
                       //txtSM = null;
                       widget.callBack(null, false, old);
+                      setState(() {
+                        textStyleModel = null;
+                      });
                     }
                   },
                   child: HoverWidget(
@@ -112,9 +115,7 @@ class TextStylesControlState extends State<TextStylesControl> {
                         ),
                       ),
                       child: Icon(
-                        (widget.textStyle.textStyleModel == null)
-                            ? Icons.add
-                            : Icons.remove,
+                        (textStyleModel == null) ? Icons.add : Icons.remove,
                         size: 24,
                         color: Colors.white,
                       ),
@@ -128,9 +129,7 @@ class TextStylesControlState extends State<TextStylesControl> {
                         ),
                       ),
                       child: Icon(
-                        (widget.textStyle.textStyleModel == null)
-                            ? Icons.add
-                            : Icons.remove,
+                        (textStyleModel == null) ? Icons.add : Icons.remove,
                         size: 24,
                         color: Colors.white,
                       ),
@@ -141,7 +140,7 @@ class TextStylesControlState extends State<TextStylesControl> {
             ),
           ],
         ),
-        if (widget.textStyle.textStyleModel != null)
+        if (textStyleModel != null)
           CButton(
             label: textStyleModel,
             callback: () {

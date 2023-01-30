@@ -56,22 +56,24 @@ class PaddingsState extends State<VideoUrlControl> {
       null,
       context,
     );
-    final nodes = BlocProvider.of<FocusBloc>(context).state;
-    if (nodes.isNotEmpty) {
-      controllerVideo = YoutubePlayerController(
-        initialVideoId: urlState!,
-        params: YoutubePlayerParams(
-          startAt: Duration(
-            seconds: nodes.first.body.attributes[DBKeys.startAt] as int,
-          ),
-          showControls:
-              nodes.first.body.attributes[DBKeys.showControls] as bool,
-          showFullscreenButton:
-              nodes.first.body.attributes[DBKeys.isFullWidth] as bool,
-          mute: true,
+    final nodeId = BlocProvider.of<FocusBloc>(context).state.first;
+    final node = (context.read<PageCubit>().state as PageLoaded)
+        .page
+        .flatList
+        .firstWhere((final element) => element.nid == nodeId);
+
+    controllerVideo = YoutubePlayerController(
+      initialVideoId: urlState!,
+      params: YoutubePlayerParams(
+        startAt: Duration(
+          seconds: node.body.attributes[DBKeys.startAt] as int,
         ),
-      );
-    }
+        showControls: node.body.attributes[DBKeys.showControls] as bool,
+        showFullscreenButton: node.body.attributes[DBKeys.isFullWidth] as bool,
+        mute: true,
+      ),
+    );
+
     super.initState();
   }
 

@@ -48,7 +48,7 @@ class ColorControlState extends State<RadialFillControl> {
 
   @override
   Widget build(final BuildContext context) {
-    return BlocBuilder<FocusBloc, List<CNode>>(
+    return BlocBuilder<FocusBloc, List<int>>(
       builder: (final context, final state) {
         //updateState(state);
         return Column(
@@ -364,7 +364,7 @@ class FillElementState extends State<FillElement> {
 
   @override
   Widget build(final BuildContext context) {
-    return BlocListener<FocusBloc, List<CNode>>(
+    return BlocListener<FocusBloc, List<int>>(
       listener: (final context, final state) {
         if (state.isNotEmpty) {
           editingController.text = widget.element.color;

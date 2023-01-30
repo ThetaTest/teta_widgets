@@ -37,7 +37,11 @@ class SizesPrefabControl extends StatelessWidget {
           keyAttr: DBKeys.width,
           isFromSizesPrefab: true,
           callBack: (final value, final old) {
-            final node = BlocProvider.of<FocusBloc>(context).state.first;
+            final nodeId = BlocProvider.of<FocusBloc>(context).state.first;
+            final node = (context.read<PageCubit>().state as PageLoaded)
+                .page
+                .flatList
+                .firstWhere((final element) => element.nid == nodeId);
             ControlBuilder.toDB(
               node,
               context,
@@ -54,7 +58,11 @@ class SizesPrefabControl extends StatelessWidget {
           keyAttr: DBKeys.height,
           isFromSizesPrefab: true,
           callBack: (final value, final old) {
-            final node = BlocProvider.of<FocusBloc>(context).state.first;
+            final nodeId = BlocProvider.of<FocusBloc>(context).state.first;
+            final node = (context.read<PageCubit>().state as PageLoaded)
+                .page
+                .flatList
+                .firstWhere((final element) => element.nid == nodeId);
             ControlBuilder.toDB(
               node,
               context,

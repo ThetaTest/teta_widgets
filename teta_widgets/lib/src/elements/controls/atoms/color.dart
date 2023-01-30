@@ -52,7 +52,7 @@ class SingleColorControlState extends State<SingleColorControl> {
       controller.text = tempColor;
       isUpdated = false;
     }*/
-    return BlocBuilder<FocusBloc, List<CNode>>(
+    return BlocBuilder<FocusBloc, List<int>>(
       builder: (final context, final state) {
         //updateState(state);
         return Row(

@@ -39,10 +39,12 @@ class FlagControlState extends State<FlagControl> {
       switchOn = value;
     });
     if (widget.keyValue != null) {
-      final nodes = BlocProvider.of<FocusBloc>(context).state;
-      if (nodes.isNotEmpty) {
-        nodes.first.body.attributes[widget.keyValue!] = value;
-      }
+      final nodeId = BlocProvider.of<FocusBloc>(context).state.first;
+      final node = (context.read<PageCubit>().state as PageLoaded)
+          .page
+          .flatList
+          .firstWhere((final element) => element.nid == nodeId);
+      node.body.attributes[widget.keyValue!] = value;
     }
     widget.callBack(value, widget.value);
   }

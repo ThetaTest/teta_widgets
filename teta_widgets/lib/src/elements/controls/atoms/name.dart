@@ -8,7 +8,6 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:teta_core/src/design_system/textfield/textfield.dart';
 import 'package:teta_core/teta_core.dart';
 // Project imports:
-import 'package:teta_widgets/src/elements/nodes/node.dart';
 
 class NameControl extends StatefulWidget {
   const NameControl({
@@ -32,19 +31,21 @@ class NameState extends State<NameControl> {
 
   @override
   void initState() {
-    final nodes = context.read<FocusBloc>().state;
-    if (nodes.length == 1) {
-      final node = nodes.first;
-      controller.text = widget.title == 'Description'
-          ? nodes.first.description ?? ''
-          : nodes.first.name ?? nodes.first.intrinsicState.displayName;
-    }
+    final nodeId = BlocProvider.of<FocusBloc>(context).state.first;
+    final node = (context.read<PageCubit>().state as PageLoaded)
+        .page
+        .flatList
+        .firstWhere((final element) => element.nid == nodeId);
+    controller.text = widget.title == 'Description'
+        ? node.description ?? ''
+        : node.name ?? node.intrinsicState.displayName;
+
     super.initState();
   }
 
   @override
   Widget build(final BuildContext context) {
-    return BlocBuilder<FocusBloc, List<CNode>>(
+    return BlocBuilder<FocusBloc, List<int>>(
       builder: (final context, final state) {
         return Column(
           crossAxisAlignment: CrossAxisAlignment.start,
@@ -63,19 +64,21 @@ class NameState extends State<NameControl> {
                 });
               },
               onSubmitted: (final text) {
-                final nodes = context.read<FocusBloc>().state;
-                if (nodes.length == 1) {
-                  final node = nodes.first;
+                final nodeId = BlocProvider.of<FocusBloc>(context).state.first;
+                final node = (context.read<PageCubit>().state as PageLoaded)
+                    .page
+                    .flatList
+                    .firstWhere((final element) => element.nid == nodeId);
+                widget.title == 'Description'
+                    ? node.description = text
+                    : node.name = text;
+                widget.callBack(
+                  text,
                   widget.title == 'Description'
-                      ? node.description = text
-                      : node.name = text;
-                  widget.callBack(
-                    text,
-                    widget.title == 'Description'
-                        ? node.description ?? ''
-                        : node.name ?? node.intrinsicState.displayName,
-                  );
-                }
+                      ? node.description ?? ''
+                      : node.name ?? node.intrinsicState.displayName,
+                );
+
                 setState(() {
                   isLoading = false;
                 });
@@ -87,19 +90,21 @@ class NameState extends State<NameControl> {
                 child: CButton(
                   label: 'Submit',
                   callback: () {
-                    final nodes = context.read<FocusBloc>().state;
-                    if (nodes.length == 1) {
-                      final node = nodes.first;
+                    final nodeId =
+                        BlocProvider.of<FocusBloc>(context).state.first;
+                    final node = (context.read<PageCubit>().state as PageLoaded)
+                        .page
+                        .flatList
+                        .firstWhere((final element) => element.nid == nodeId);
+                    widget.title == 'Description'
+                        ? node.description = controller.text
+                        : node.name = controller.text;
+                    widget.callBack(
+                      controller.text,
                       widget.title == 'Description'
-                          ? node.description = controller.text
-                          : node.name = controller.text;
-                      widget.callBack(
-                        controller.text,
-                        widget.title == 'Description'
-                            ? node.description ?? ''
-                            : node.name ?? node.intrinsicState.displayName,
-                      );
-                    }
+                          ? node.description ?? ''
+                          : node.name ?? node.intrinsicState.displayName,
+                    );
 
                     setState(() {
                       isLoading = false;

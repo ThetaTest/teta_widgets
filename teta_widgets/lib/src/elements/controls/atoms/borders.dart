@@ -15,7 +15,6 @@ import 'package:teta_widgets/src/elements/features/border.dart';
 import 'package:teta_widgets/src/elements/features/border_style.dart';
 import 'package:teta_widgets/src/elements/features/fill.dart';
 import 'package:teta_widgets/src/elements/features/margins.dart';
-import 'package:teta_widgets/src/elements/nodes/node.dart';
 
 class BordersControl extends StatefulWidget {
   const BordersControl({
@@ -42,7 +41,7 @@ class BordersControlState extends State<BordersControl> {
 
   @override
   Widget build(final BuildContext context) {
-    return BlocBuilder<FocusBloc, List<CNode>>(
+    return BlocBuilder<FocusBloc, List<int>>(
       builder: (final context, final state) {
         return Column(
           crossAxisAlignment: CrossAxisAlignment.start,

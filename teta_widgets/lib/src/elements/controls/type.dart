@@ -9,7 +9,6 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:teta_core/teta_core.dart';
 import 'package:teta_repositories/src/node_repository.dart';
 import 'package:teta_repositories/src/project_repository.dart';
-import 'package:teta_repositories/src/project_styles_repository.dart';
 import 'package:teta_repositories/teta_repositories.dart';
 // Project imports:
 import 'package:teta_widgets/src/elements/controls/atoms/action.dart';
@@ -41,10 +40,10 @@ import 'package:teta_widgets/src/elements/controls/atoms/map_controller.dart';
 import 'package:teta_widgets/src/elements/controls/atoms/margins.dart';
 import 'package:teta_widgets/src/elements/controls/atoms/navigation/component.dart';
 import 'package:teta_widgets/src/elements/controls/atoms/page_params.dart';
+import 'package:teta_widgets/src/elements/controls/atoms/page_states.dart';
 import 'package:teta_widgets/src/elements/controls/atoms/physics.dart';
 import 'package:teta_widgets/src/elements/controls/atoms/size.dart';
 import 'package:teta_widgets/src/elements/controls/atoms/src_image.dart';
-import 'package:teta_widgets/src/elements/controls/atoms/page_states.dart';
 import 'package:teta_widgets/src/elements/controls/atoms/text.dart';
 import 'package:teta_widgets/src/elements/controls/atoms/webview_controller.dart';
 import 'package:teta_widgets/src/elements/controls/current_song_controll.dart';
@@ -55,7 +54,6 @@ import 'package:teta_widgets/src/elements/controls/prefabs/text_prefab_control.d
 import 'package:teta_widgets/src/elements/features/google_maps_map_style.dart';
 import 'package:teta_widgets/src/elements/features/physic.dart';
 import 'package:teta_widgets/src/elements/index.dart';
-import 'package:very_good_analysis/very_good_analysis.dart';
 
 enum ControlType {
   /// Made for colors, gradients and images.
@@ -189,7 +187,7 @@ class ControlBuilder {
   ) async {
     final prj = BlocProvider.of<FocusProjectCubit>(context).state!;
     sl.get<ProjectRepository>().track(prj.id);
-    sl.get<NodeRepository>().changeNode(
+    await sl.get<NodeRepository>().changeNode(
           node: node as NDynamic,
         );
   }
@@ -246,18 +244,22 @@ class ControlBuilder {
     required final BuildContext context,
     required final ControlObject control,
   }) {
-    final node = BlocProvider.of<FocusBloc>(context).state.first;
+    final nodeId = BlocProvider.of<FocusBloc>(context).state.first;
+    final node = (context.read<PageCubit>().state as PageLoaded)
+        .page
+        .flatList
+        .firstWhere((final element) => element.nid == nodeId);
     if (control.type == ControlType.barcode) {
       return BarcodeControl(
         key: ValueKey(
-          '${node.nid} ${(control.value as FTextTypeInput).value}',
+          '$nodeId ${(control.value as FTextTypeInput).value}',
         ),
         value: control.value.runtimeType == FTextTypeInput
             ? control.value as FTextTypeInput
             : FTextTypeInput(),
         callBack: (final value, final old) {
           ControlBuilder.toDB(
-            BlocProvider.of<FocusBloc>(context).state.first,
+            node,
             context,
             control.key,
             value.toJson(),
@@ -873,11 +875,16 @@ class ControlBuilder {
     required final BuildContext context,
     required final BoxFitControlObject control,
   }) {
+    final nodeId = BlocProvider.of<FocusBloc>(context).state.first;
+    final node = (context.read<PageCubit>().state as PageLoaded)
+        .page
+        .flatList
+        .firstWhere((final element) => element.nid == nodeId);
     return BoxFitControl(
-      key: ValueKey('${BlocProvider.of<FocusBloc>(context).state.first.nid}'),
+      key: ValueKey('$nodeId'),
       boxFit: control.value,
       callBack: (final value, final old) => ControlBuilder.toDB(
-        BlocProvider.of<FocusBloc>(context).state.first,
+        node,
         context,
         control.key,
         value,
@@ -891,21 +898,22 @@ class ControlBuilder {
     required final BuildContext context,
     required final FlagControlObject control,
   }) {
+    final nodeId = BlocProvider.of<FocusBloc>(context).state.first;
+    final node = (context.read<PageCubit>().state as PageLoaded)
+        .page
+        .flatList
+        .firstWhere((final element) => element.nid == nodeId);
     return descriptionControlWidget(
       description: control.description,
       control: FlagControl(
-        key: ValueKey('${BlocProvider.of<FocusBloc>(context).state.first.nid}'),
+        key: ValueKey('$nodeId'),
         title: control.title,
         keyValue: control.key,
         value: control.value as bool,
         callBack: (final value, final old) {
-          BlocProvider.of<FocusBloc>(context)
-              .state
-              .first
-              .body
-              .attributes[control.key] = value;
+          node.body.attributes[control.key] = value;
           ControlBuilder.toDB(
-            BlocProvider.of<FocusBloc>(context).state.first,
+            node,
             context,
             control.key,
             value,
@@ -924,23 +932,24 @@ class ControlBuilder {
     required final BuildContext context,
     required final FillControlObject control,
   }) {
+    final nodeId = BlocProvider.of<FocusBloc>(context).state.first;
+    final node = (context.read<PageCubit>().state as PageLoaded)
+        .page
+        .flatList
+        .firstWhere((final element) => element.nid == nodeId);
     return FillControl(
       title: control.title.isNotEmpty ? control.title : 'Fill',
-      key: ValueKey('${BlocProvider.of<FocusBloc>(context).state.first.nid}'),
+      key: ValueKey('$nodeId'),
       isImageEnabled: isImageEnabled,
       isNoneEnabled: isNoneEnabled,
       type:
           isOnlySolid ? FillTypeControlType.onlySolid : FillTypeControlType.all,
       fill: control.value,
       callBack: (final value, final styled, final old) {
-        BlocProvider.of<FocusBloc>(context)
-            .state
-            .first
-            .body
-            .attributes[control.key] = value;
+        node.body.attributes[control.key] = value;
         if (!styled) {
           ControlBuilder.toDB(
-            BlocProvider.of<FocusBloc>(context).state.first,
+            node,
             context,
             control.key,
             value.toJson(),
@@ -964,12 +973,17 @@ class ControlBuilder {
     required final BuildContext context,
     required final FirestorePathControlObject control,
   }) {
+    final nodeId = BlocProvider.of<FocusBloc>(context).state.first;
+    final node = (context.read<PageCubit>().state as PageLoaded)
+        .page
+        .flatList
+        .firstWhere((final element) => element.nid == nodeId);
     return FirestorePathControl(
-      key: ValueKey('${BlocProvider.of<FocusBloc>(context).state.first.nid}'),
+      key: ValueKey('$nodeId'),
       path: control.value,
       isForAddData: true,
       callBack: (final value, final old) => ControlBuilder.toDB(
-        BlocProvider.of<FocusBloc>(context).state.first,
+        node,
         context,
         control.key,
         value.toJson(),
@@ -985,15 +999,20 @@ class ControlBuilder {
     required final BuildContext context,
     required final SizeControlObject control,
   }) {
+    final nodeId = BlocProvider.of<FocusBloc>(context).state.first;
+    final node = (context.read<PageCubit>().state as PageLoaded)
+        .page
+        .flatList
+        .firstWhere((final element) => element.nid == nodeId);
     return SizeControl(
-      key: ValueKey('${BlocProvider.of<FocusBloc>(context).state.first.nid}'),
+      key: ValueKey('$nodeId'),
       isWidth: control.isWidth,
       title: control.title,
       size: control.value,
       isFromSizesPrefab: false,
       keyAttr: control.key,
       callBack: (final value, final old) => ControlBuilder.toDB(
-        BlocProvider.of<FocusBloc>(context).state.first,
+        node,
         context,
         control.key,
         value,
@@ -1009,8 +1028,9 @@ class ControlBuilder {
     required final BuildContext context,
     required final SizesControlObject control,
   }) {
+    final nodeId = BlocProvider.of<FocusBloc>(context).state.first;
     return SizesPrefabControl(
-      key: ValueKey('${BlocProvider.of<FocusBloc>(context).state.first.nid}'),
+      key: ValueKey('$nodeId'),
       values: control.values,
     );
   }

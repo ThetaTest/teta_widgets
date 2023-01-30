@@ -9,7 +9,6 @@ import 'package:teta_core/src/design_system/textfield/textfield.dart';
 import 'package:teta_core/teta_core.dart';
 // Project imports:
 import 'package:teta_widgets/src/elements/features/text_type_input.dart';
-import 'package:teta_widgets/src/elements/nodes/node.dart';
 
 class FirestoreParameterControl extends StatefulWidget {
   const FirestoreParameterControl({
@@ -45,7 +44,7 @@ class ParameterState extends State<FirestoreParameterControl> {
   @override
   Widget build(final BuildContext context) {
     //controller.text = widget.value!.value ?? '';
-    return BlocListener<FocusBloc, List<CNode>>(
+    return BlocListener<FocusBloc, List<int>>(
       listener: (final context, final state) {
         if (state.isNotEmpty) {
           controller.text = widget.value.value ?? '';

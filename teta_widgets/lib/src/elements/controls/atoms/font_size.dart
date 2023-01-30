@@ -68,7 +68,7 @@ class FontSizeState extends State<FontSizeControl> {
       },
       child: BlocBuilder<DeviceModeCubit, DeviceState>(
         builder: (final context, final device) =>
-            BlocListener<FocusBloc, List<CNode>>(
+            BlocListener<FocusBloc, List<int>>(
           listener: (final context, final state) {
             if (state.isNotEmpty) {
               controller.text = '${widget.textStyle.fontSize!.get(context)}';

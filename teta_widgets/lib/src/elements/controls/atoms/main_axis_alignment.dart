@@ -8,7 +8,6 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:teta_core/teta_core.dart';
 // Project imports:
 import 'package:teta_widgets/src/elements/features/main_axis_alignment.dart';
-import 'package:teta_widgets/src/elements/nodes/node.dart';
 
 class MainAxisAlignmentControls extends StatefulWidget {
   const MainAxisAlignmentControls({
@@ -36,7 +35,7 @@ class MainAxisAlignmentControlsState extends State<MainAxisAlignmentControls> {
 
   @override
   Widget build(final BuildContext context) {
-    return BlocListener<FocusBloc, List<CNode>>(
+    return BlocListener<FocusBloc, List<int>>(
       listener: (final context, final state) {
         if (state.isNotEmpty) {
           setState(() {
@@ -44,7 +43,7 @@ class MainAxisAlignmentControlsState extends State<MainAxisAlignmentControls> {
           });
         }
       },
-      child: BlocBuilder<FocusBloc, List<CNode>>(
+      child: BlocBuilder<FocusBloc, List<int>>(
         builder: (final context, final state) {
           return Column(
             crossAxisAlignment: CrossAxisAlignment.start,

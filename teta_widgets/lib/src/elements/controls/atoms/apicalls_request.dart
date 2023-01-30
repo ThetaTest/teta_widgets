@@ -76,9 +76,14 @@ class ApiCallsRequestControlState extends State<ApiCallsRequestControl> {
 
   @override
   Widget build(final BuildContext context) {
-    return BlocBuilder<FocusBloc, List<CNode>>(
+    return BlocBuilder<FocusBloc, List<int>>(
       builder: (final context, final state) {
         if (state.length != 1) return const SizedBox();
+        final nodeId = state.first;
+        final node = (context.read<PageCubit>().state as PageLoaded)
+            .page
+            .flatList
+            .firstWhere((final element) => element.nid == nodeId);
         return Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
@@ -100,7 +105,7 @@ class ApiCallsRequestControlState extends State<ApiCallsRequestControl> {
                   (final element) =>
                       element ==
                       (widget.requestName ??
-                          (state.first.body.attributes[DBKeys.requestName]
+                          (node.body.attributes[DBKeys.requestName]
                                   as FTextTypeInput?)
                               ?.value),
                 ),
@@ -121,11 +126,10 @@ class ApiCallsRequestControlState extends State<ApiCallsRequestControl> {
                     final nw = requestNames.firstWhereOrNull(
                       (final element) => element == dropdown,
                     );
-                    if (state.first.body.attributes[DBKeys.requestName] !=
-                            null &&
-                        state.first.body.attributes[DBKeys.requestName]
+                    if (node.body.attributes[DBKeys.requestName] != null &&
+                        node.body.attributes[DBKeys.requestName]
                             is FTextTypeInput) {
-                      (state.first.body.attributes[DBKeys.requestName]
+                      (node.body.attributes[DBKeys.requestName]
                               as FTextTypeInput)
                           .value = nw;
                     }

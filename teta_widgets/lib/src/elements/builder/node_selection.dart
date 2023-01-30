@@ -127,9 +127,9 @@ class _BodyState extends State<_Body> {
 
   @override
   Widget build(final BuildContext context) {
-    return BlocBuilder<FocusBloc, List<CNode>>(
+    return BlocBuilder<FocusBloc, List<int>>(
       builder: (final context, final onFocusNodes) {
-        return BlocBuilder<HoverBloc, CNode>(
+        return BlocBuilder<HoverBloc, int>(
           builder: (final context, final onHover) {
             return Stack(
               clipBehavior: Clip.none,
@@ -141,10 +141,10 @@ class _BodyState extends State<_Body> {
                     border: Border.all(
                       color: onFocusNodes.firstWhereOrNull(
                                     (final element) =>
-                                        element.nid == widget.state.node.nid,
+                                        element == widget.state.node.nid,
                                   ) !=
                                   null ||
-                              onHover.nid == widget.state.node.nid
+                              onHover == widget.state.node.nid
                           ? primaryColor
                           : Colors.transparent,
                       style: (widget.state.forPlay)
@@ -152,11 +152,11 @@ class _BodyState extends State<_Body> {
                           : BorderStyle.solid,
                       width: onFocusNodes.firstWhereOrNull(
                                 (final element) =>
-                                    element.nid == widget.state.node.nid,
+                                    element == widget.state.node.nid,
                               ) !=
                               null
                           ? 1
-                          : onHover.nid == widget.state.node.nid
+                          : onHover == widget.state.node.nid
                               ? 2
                               : 0,
                     ),
@@ -164,11 +164,10 @@ class _BodyState extends State<_Body> {
                   child: child,
                 ),
                 if (onFocusNodes.firstWhereOrNull(
-                          (final element) =>
-                              element.nid == widget.state.node.nid,
+                          (final element) => element == widget.state.node.nid,
                         ) !=
                         null ||
-                    onHover.nid == widget.state.node.nid)
+                    onHover == widget.state.node.nid)
                   Transform.translate(
                     offset: Offset(
                       0,

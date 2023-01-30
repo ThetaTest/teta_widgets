@@ -64,19 +64,23 @@ class ActionControlState extends State<ActionControl> {
         color: Colors.black,
         borderRadius: BorderRadius.circular(8),
       ),
-      child: BlocBuilder<FocusBloc, List<CNode>>(
+      child: BlocBuilder<FocusBloc, List<int>>(
         builder: (final context, final state) {
+          final nodeId = state.first;
+          final node = (context.read<PageCubit>().state as PageLoaded)
+              .page
+              .flatList
+              .firstWhere((final element) => element.nid == nodeId);
           return Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              for (final trigger
-                  in state.first.intrinsicState.gestures.isNotEmpty
-                      ? state.first.intrinsicState.gestures
-                      : [
-                          ActionGesture.onTap,
-                          ActionGesture.onLongPress,
-                          ActionGesture.onDoubleTap
-                        ])
+              for (final trigger in node.intrinsicState.gestures.isNotEmpty
+                  ? node.intrinsicState.gestures
+                  : [
+                      ActionGesture.onTap,
+                      ActionGesture.onLongPress,
+                      ActionGesture.onDoubleTap
+                    ])
                 Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [

@@ -10,7 +10,6 @@ import 'package:teta_core/teta_core.dart';
 import 'package:teta_widgets/src/elements/controls/atoms/widgets/selection_tab.dart';
 import 'package:teta_widgets/src/elements/features/features.dart';
 import 'package:teta_widgets/src/elements/features/text_style.dart';
-import 'package:teta_widgets/src/elements/nodes/node.dart';
 
 class TextAlignControls extends StatefulWidget {
   const TextAlignControls({
@@ -39,7 +38,7 @@ class TextAlignControlsState extends State<TextAlignControls> {
 
   @override
   Widget build(final BuildContext context) {
-    return BlocBuilder<FocusBloc, List<CNode>>(
+    return BlocBuilder<FocusBloc, List<int>>(
       builder: (final context, final state) {
         return Column(
           crossAxisAlignment: CrossAxisAlignment.start,

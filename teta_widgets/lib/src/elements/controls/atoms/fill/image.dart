@@ -10,7 +10,6 @@ import 'package:teta_core/teta_core.dart';
 // Project imports:
 import 'package:teta_widgets/src/elements/controls/atoms/box_fit.dart';
 import 'package:teta_widgets/src/elements/features/features.dart';
-import 'package:teta_widgets/src/elements/nodes/node.dart';
 
 class ImageFillControl extends StatefulWidget {
   /// Constructor
@@ -44,13 +43,13 @@ class ImageFillControlState extends State<ImageFillControl> {
 
   @override
   Widget build(final BuildContext context) {
-    return BlocListener<FocusBloc, List<CNode>>(
+    return BlocListener<FocusBloc, List<int>>(
       listener: (final context, final state) {
         if (state.isNotEmpty) {
           controller.text = widget.fill.levels!.first.color;
         }
       },
-      child: BlocBuilder<FocusBloc, List<CNode>>(
+      child: BlocBuilder<FocusBloc, List<int>>(
         builder: (final context, final state) {
           //updateState(state);
           return Column(

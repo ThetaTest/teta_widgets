@@ -15,7 +15,6 @@ import 'package:teta_core/src/design_system/textfield/minitextfield.dart';
 import 'package:teta_core/teta_core.dart';
 // Project imports:
 import 'package:teta_widgets/src/elements/features/margins.dart';
-import 'package:teta_widgets/src/elements/nodes/node.dart';
 
 class Margins extends StatefulWidget {
   const Margins({
@@ -94,7 +93,7 @@ class MarginsState extends State<Margins> {
       },
       child: BlocBuilder<DeviceModeCubit, DeviceState>(
         builder: (final context, final device) =>
-            BlocBuilder<FocusBloc, List<CNode>>(
+            BlocBuilder<FocusBloc, List<int>>(
           builder: (final context, final state) {
             if (state.isNotEmpty) {
               if (mounted) {

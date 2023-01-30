@@ -71,8 +71,7 @@ class _WScaffoldState extends State<WScaffold> {
 
   @override
   Widget build(final BuildContext context) {
-    final isPage =
-        (BlocProvider.of<PageCubit>(context).state as PageLoaded).page.isPage;
+    final isPage = (context.watch<PageCubit>().state as PageLoaded).page.isPage;
     if (!isPage && !widget.state.forPlay) {
       return SizedBox(
         child: Center(
@@ -156,8 +155,7 @@ class _WScaffoldState extends State<WScaffold> {
       (final element) => element.globalType == NType.drawer,
     );
 
-    final isPage =
-        (BlocProvider.of<PageCubit>(context).state as PageLoaded).page.isPage;
+    final isPage = (context.watch<PageCubit>().state as PageLoaded).page.isPage;
     if (!isPage) return _childWids(context);
     return Stack(
       children: [

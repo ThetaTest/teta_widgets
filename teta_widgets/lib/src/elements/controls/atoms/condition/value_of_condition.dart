@@ -9,7 +9,6 @@ import 'package:teta_core/src/design_system/textfield/textfield.dart';
 import 'package:teta_core/teta_core.dart';
 // Project imports:
 import 'package:teta_widgets/src/elements/features/text_type_input.dart';
-import 'package:teta_widgets/src/elements/nodes/node.dart';
 
 class ValueOfConditionControl extends StatefulWidget {
   /// Constructor
@@ -42,7 +41,7 @@ class ValueOfConditionControlState extends State<ValueOfConditionControl> {
 
   @override
   Widget build(final BuildContext context) {
-    return BlocListener<FocusBloc, List<CNode>>(
+    return BlocListener<FocusBloc, List<int>>(
       listener: (final context, final state) {
         controller.text = widget.valueOfCond.value ?? '';
       },

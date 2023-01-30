@@ -31,20 +31,20 @@ class BarcodeControlState extends State<BarcodeControl> {
 
   @override
   void initState() {
-    nodeId = BlocProvider.of<FocusBloc>(context).state.first.nid;
+    nodeId = BlocProvider.of<FocusBloc>(context).state.first;
     super.initState();
   }
 
   @override
   Widget build(final BuildContext context) {
-    return BlocListener<FocusBloc, List<CNode>>(
+    return BlocListener<FocusBloc, List<int>>(
       listener: (final context, final state) {
         if (state.isNotEmpty) {
-          if (state.first.nid != nodeId) {
+          if (state.first != nodeId) {
             setState(() {
               isUpdated = true;
             });
-            nodeId = state.first.nid;
+            nodeId = state.first;
           }
         }
       },

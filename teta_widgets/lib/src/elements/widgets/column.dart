@@ -45,11 +45,11 @@ class _WColumnState extends State<WColumn> {
   Widget build(final BuildContext context) {
     return TetaWidget(
       state: widget.state,
-      child: BlocBuilder<FocusBloc, List<CNode>>(
+      child: BlocBuilder<FocusBloc, List<int>>(
         builder: (final context, final nodes) {
           if (nodes.length == 1) {
             final index = children
-                .indexWhere((final element) => element.nid == nodes.first.nid);
+                .indexWhere((final element) => element.nid == nodes.first);
             if (index != -1) {
               return ReorderableColumn(
                 onReorder: (final oldIndex, final newIndex) {

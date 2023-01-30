@@ -50,11 +50,11 @@ class _WRowState extends State<WRow> {
   Widget build(final BuildContext context) {
     return TetaWidget(
       state: widget._state,
-      child: BlocBuilder<FocusBloc, List<CNode>>(
+      child: BlocBuilder<FocusBloc, List<int>>(
         builder: (final context, final nodes) {
           if (nodes.length == 1) {
             final index = widget._children
-                .indexWhere((final element) => element.nid == nodes.first.nid);
+                .indexWhere((final element) => element.nid == nodes.first);
             if (index != -1) {
               return ReorderableRow(
                 onReorder: (final oldIndex, final newIndex) {
