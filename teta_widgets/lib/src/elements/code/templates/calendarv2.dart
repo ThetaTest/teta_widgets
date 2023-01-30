@@ -193,6 +193,13 @@ if (!isSameDay(_selectedDay, selectedDay)){
         todayDecoration: ${CS.boxDecoration(context, node.body, DBKeys.bgFill).replaceFirst('decoration:', '')}
         defaultDecoration: ${CS.boxDecoration(context, node.body, DBKeys.bgFill).replaceFirst('decoration:', '')}
         weekendDecoration: ${CS.boxDecoration(context, node.body, DBKeys.bgFill).replaceFirst('decoration:', '')}
+        disabledDecoration: ${CS.boxDecoration(context, node.body, DBKeys.bgFill).replaceFirst('decoration:', '')}
+        holidayDecoration: ${CS.boxDecoration(context, node.body, DBKeys.bgFill).replaceFirst('decoration:', '')}
+        outsideDecoration: ${CS.boxDecoration(context, node.body, DBKeys.bgFill).replaceFirst('decoration:', '')}
+        withinRangeDecoration: ${CS.boxDecoration(context, node.body, DBKeys.bgFill).replaceFirst('decoration:', '')}
+        rangeEndDecoration: ${CS.boxDecoration(context, node.body, DBKeys.bgFill).replaceFirst('decoration:', '')}
+        rangeStartDecoration: ${CS.boxDecoration(context, node.body, DBKeys.bgFill).replaceFirst('decoration:', '')}
+
       ),
 );
                     });

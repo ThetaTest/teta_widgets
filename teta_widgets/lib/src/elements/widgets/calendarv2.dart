@@ -153,12 +153,6 @@ class _WCalendarV2State extends State<WCalendarV2> {
         titleTextStyle: widget.textStyle.get(context, model),
       ),
       calendarStyle: CalendarStyle(
-        markerDecoration: TetaBoxDecoration.get(
-          context: context,
-          fill: widget.dotFill.get(context),
-          borderRadius: widget.dotBorderRadius,
-          shadow: widget.shadows,
-        ),
         outsideDaysVisible: false,
         selectedTextStyle: widget.textStyle2.get(context, model),
         defaultTextStyle: widget.textStyle2.get(context, model),
@@ -172,6 +166,12 @@ class _WCalendarV2State extends State<WCalendarV2> {
         outsideTextStyle: widget.textStyle2.get(context, model),
         rangeStartTextStyle: widget.textStyle2.get(context, model),
         isTodayHighlighted: true,
+        markerDecoration: TetaBoxDecoration.get(
+          context: context,
+          fill: widget.dotFill.get(context),
+          borderRadius: widget.dotBorderRadius,
+          shadow: widget.shadows,
+        ),
         selectedDecoration: TetaBoxDecoration.get(
           context: context,
           fill: widget.selectedFill.get(context),
@@ -191,6 +191,42 @@ class _WCalendarV2State extends State<WCalendarV2> {
           shadow: widget.shadows,
         ),
         weekendDecoration: TetaBoxDecoration.get(
+          context: context,
+          fill: widget.unselectedFill.get(context),
+          borderRadius: widget.borderRadius,
+          shadow: widget.shadows,
+        ),
+        disabledDecoration: TetaBoxDecoration.get(
+          context: context,
+          fill: widget.unselectedFill.get(context),
+          borderRadius: widget.borderRadius,
+          shadow: widget.shadows,
+        ),
+        holidayDecoration: TetaBoxDecoration.get(
+          context: context,
+          fill: widget.unselectedFill.get(context),
+          borderRadius: widget.borderRadius,
+          shadow: widget.shadows,
+        ),
+        outsideDecoration: TetaBoxDecoration.get(
+          context: context,
+          fill: widget.unselectedFill.get(context),
+          borderRadius: widget.borderRadius,
+          shadow: widget.shadows,
+        ),
+        withinRangeDecoration: TetaBoxDecoration.get(
+          context: context,
+          fill: widget.unselectedFill.get(context),
+          borderRadius: widget.borderRadius,
+          shadow: widget.shadows,
+        ),
+        rangeEndDecoration: TetaBoxDecoration.get(
+          context: context,
+          fill: widget.unselectedFill.get(context),
+          borderRadius: widget.borderRadius,
+          shadow: widget.shadows,
+        ),
+        rangeStartDecoration: TetaBoxDecoration.get(
           context: context,
           fill: widget.unselectedFill.get(context),
           borderRadius: widget.borderRadius,
