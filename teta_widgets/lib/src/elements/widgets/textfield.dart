@@ -70,7 +70,7 @@ class _WTextFieldState extends State<WTextField> {
 
   @override
   void initState() {
-    textEditingController.text = widget.value.get(
+    final valueInput = widget.value.get(
       widget.state.params,
       widget.state.states,
       widget.state.dataset,
@@ -78,13 +78,17 @@ class _WTextFieldState extends State<WTextField> {
       widget.state.loop,
       context,
     );
+    if (valueInput != null) {
+      textEditingController.text = valueInput;
+    }
+
     super.initState();
   }
 
   @override
   Widget build(final BuildContext context) {
     if (!widget.state.forPlay) {
-      textEditingController.text = widget.value.get(
+      final valueInput = widget.value.get(
         widget.state.params,
         widget.state.states,
         widget.state.dataset,
@@ -92,6 +96,9 @@ class _WTextFieldState extends State<WTextField> {
         widget.state.loop,
         context,
       );
+      if (valueInput != null) {
+        textEditingController.text = valueInput;
+      }
     }
 
     final borderRadius = widget.borderRadius.get(context);
