@@ -196,7 +196,6 @@ class _WTextFieldState extends State<WTextField> {
             textAlign: widget.textStyle.textAlign!.get,
             autocorrect: widget.autoCorrect,
             obscureText: widget.obscureText,
-            enabled: widget.state.forPlay,
             maxLength: int.tryParse(
               widget.maxLenght.get(
                 widget.state.params,
@@ -228,20 +227,27 @@ class _WTextFieldState extends State<WTextField> {
                 context,
               ),
             ),
-            onChanged: (final text) => GestureBuilder.get(
-              context: context,
-              state: widget.state,
-              gesture: ActionGesture.onChange,
-              action: widget.action,
-              actionValue: FTextTypeInput(value: text),
-            ),
-            onSubmitted: (final text) => GestureBuilder.get(
-              context: context,
-              state: widget.state,
-              gesture: ActionGesture.onSubmitted,
-              action: widget.action,
-              actionValue: FTextTypeInput(value: text),
-            ),
+            enabled: widget.state.forPlay,
+            onChanged: (final text) {
+              if (!widget.state.forPlay) return;
+              GestureBuilder.get(
+                context: context,
+                state: widget.state,
+                gesture: ActionGesture.onChange,
+                action: widget.action,
+                actionValue: FTextTypeInput(value: text),
+              );
+            },
+            onSubmitted: (final text) {
+              if (!widget.state.forPlay) return;
+              GestureBuilder.get(
+                context: context,
+                state: widget.state,
+                gesture: ActionGesture.onSubmitted,
+                action: widget.action,
+                actionValue: FTextTypeInput(value: text),
+              );
+            },
           ),
         ),
       ),

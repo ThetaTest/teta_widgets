@@ -121,25 +121,7 @@ class SizeControlsState extends State<SizeControl> {
                       Row(
                         mainAxisSize: MainAxisSize.min,
                         children: [
-                          BounceSmall(
-                            message: 'Change device',
-                            onTap: () {
-                              showDialog<void>(
-                                context: context,
-                                builder: (final ctx) => const DevicesDialog(),
-                              );
-                            },
-                            child: Image.asset(
-                              device.info.identifier.type == DeviceType.phone
-                                  ? Assets.icons.devices.smartphone.path
-                                  : device.info.identifier.type ==
-                                          DeviceType.tablet
-                                      ? Assets.icons.devices.tablet.path
-                                      : Assets.icons.devices.monitor.path,
-                              width: 20,
-                              height: 20,
-                            ),
-                          ),
+                          const DeviceIndicatorForControls(),
                           CSwitch(
                             callback: (final v) {
                               final value = v

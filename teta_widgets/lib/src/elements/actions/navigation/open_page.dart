@@ -85,7 +85,8 @@ class FActionNavigationOpenPage {
         final scaffold = sl.get<NodeRendering>().renderTree(nodes);
         page = page.copyWith(flatList: nodes, scaffold: scaffold);
 
-        BlocProvider.of<PageCubit>(context).onFocus(page: page, forPlay: true);
+        await BlocProvider.of<PageCubit>(context)
+            .onFocus(page: page, forPlay: true);
 
         await Navigator.push<void>(
           context,
@@ -128,8 +129,9 @@ class FActionNavigationOpenPage {
     final pages = BlocProvider.of<PagesCubit>(context).state;
 
     if (nameOfPage == null ||
-        pages.indexWhere((final element) => element.name == nameOfPage) == -1)
+        pages.indexWhere((final element) => element.name == nameOfPage) == -1) {
       return '';
+    }
     final page =
         pages.firstWhere((final element) => element.name == nameOfPage);
     final temp = removeDiacritics(

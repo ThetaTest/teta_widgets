@@ -81,27 +81,10 @@ class FontSizeState extends State<FontSizeControl> {
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
                   Row(
-                    children: [
-                      BounceSmall(
-                        message: 'Change device',
-                        onTap: () {
-                          showDialog<void>(
-                            context: context,
-                            builder: (final ctx) => const DevicesDialog(),
-                          );
-                        },
-                        child: Image.asset(
-                          device.info.identifier.type == DeviceType.phone
-                              ? Assets.icons.devices.smartphone.path
-                              : device.info.identifier.type == DeviceType.tablet
-                                  ? Assets.icons.devices.tablet.path
-                                  : Assets.icons.devices.monitor.path,
-                          width: 24,
-                          height: 24,
-                        ),
-                      ),
-                      const Gap(Grid.small),
-                      const TParagraph(
+                    children: const [
+                      DeviceIndicatorForControls(),
+                      Gap(Grid.small),
+                      TParagraph(
                         'Font Size',
                       ),
                     ],

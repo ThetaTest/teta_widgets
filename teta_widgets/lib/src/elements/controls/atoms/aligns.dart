@@ -10,7 +10,6 @@ import 'package:gap/gap.dart';
 import 'package:teta_core/teta_core.dart';
 // Project imports:
 import 'package:teta_widgets/src/elements/features/align.dart';
-import 'package:teta_widgets/src/elements/nodes/node.dart';
 
 class AlignsControl extends StatefulWidget {
   const AlignsControl({
@@ -44,27 +43,10 @@ class AlignsControlState extends State<AlignsControl> {
           Padding(
             padding: const EdgeInsets.only(bottom: 8),
             child: Row(
-              children: [
-                BounceSmall(
-                  message: 'Change device',
-                  onTap: () {
-                    showDialog<void>(
-                      context: context,
-                      builder: (final ctx) => const DevicesDialog(),
-                    );
-                  },
-                  child: Image.asset(
-                    device.info.identifier.type == DeviceType.phone
-                        ? Assets.icons.devices.smartphone.path
-                        : device.info.identifier.type == DeviceType.tablet
-                            ? Assets.icons.devices.tablet.path
-                            : Assets.icons.devices.monitor.path,
-                    width: 24,
-                    height: 24,
-                  ),
-                ),
-                const Gap(Grid.small),
-                const TParagraph(
+              children: const [
+                DeviceIndicatorForControls(),
+                Gap(Grid.small),
+                TParagraph(
                   'Align with the parent',
                 ),
               ],

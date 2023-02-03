@@ -51,33 +51,37 @@ class _WColumnState extends State<WColumn> {
             final index = children
                 .indexWhere((final element) => element.nid == nodes.first);
             if (index != -1) {
-              return ReorderableColumn(
-                onReorder: (final oldIndex, final newIndex) {
-                  ReorderChildren.reorder(
-                    widget.state.node,
-                    children,
-                    oldIndex,
-                    newIndex,
-                  );
-                  setState(() {});
-                },
-                needsLongPressDraggable: false,
-                mainAxisSize: widget.mainAxisSize.get,
-                mainAxisAlignment: widget.mainAxisAlignment.get,
-                crossAxisAlignment: widget.crossAxisAlignment.get,
-                children: children.isNotEmpty
-                    ? children
-                        .map(
-                          (final e) => e.toWidget(state: widget.state),
-                        )
-                        .toList()
-                    : [
-                        PlaceholderChildBuilder(
-                          name: widget.state.node.intrinsicState.displayName,
-                          node: widget.state.node,
-                          forPlay: widget.state.forPlay,
-                        ),
-                      ],
+              return LayoutBuilder(
+                builder: (final context, final constraints) => SizedBox(
+                  height: constraints.maxHeight,
+                  child: ReorderableColumn(
+                    onReorder: (final oldIndex, final newIndex) {
+                      ReorderChildren.reorder(
+                        widget.state.node,
+                        children,
+                        oldIndex,
+                        newIndex,
+                      );
+                      setState(() {});
+                    },
+                    needsLongPressDraggable: false,
+                    mainAxisSize: widget.mainAxisSize.get,
+                    mainAxisAlignment: widget.mainAxisAlignment.get,
+                    crossAxisAlignment: widget.crossAxisAlignment.get,
+                    children: children.isNotEmpty
+                        ? children
+                            .map((final e) => e.toWidget(state: widget.state))
+                            .toList()
+                        : [
+                            PlaceholderChildBuilder(
+                              name:
+                                  widget.state.node.intrinsicState.displayName,
+                              node: widget.state.node,
+                              forPlay: widget.state.forPlay,
+                            ),
+                          ],
+                  ),
+                ),
               );
             }
           }
@@ -87,9 +91,7 @@ class _WColumnState extends State<WColumn> {
             crossAxisAlignment: widget.crossAxisAlignment.get,
             children: children.isNotEmpty
                 ? children
-                    .map(
-                      (final e) => e.toWidget(state: widget.state),
-                    )
+                    .map((final e) => e.toWidget(state: widget.state))
                     .toList()
                 : [
                     PlaceholderChildBuilder(
