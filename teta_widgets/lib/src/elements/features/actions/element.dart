@@ -115,6 +115,20 @@ import 'package:teta_widgets/src/elements/nodes/enum.dart';
 import 'package:teta_widgets/src/elements/nodes/node.dart';
 import 'package:uuid/uuid.dart';
 
+import '../../actions/supabase/request_phone_otp.dart';
+import '../../actions/supabase/sign_out.dart';
+import '../../actions/supabase/signin_w_phone.dart';
+import '../../actions/supabase/signup_w_phone.dart';
+import '../../actions/supabase/storage/storage_bucket_list.dart';
+import '../../actions/supabase/storage/storage_create_bucket.dart';
+import '../../actions/supabase/storage/storage_delete_bucket.dart';
+import '../../actions/supabase/storage/storage_download.dart';
+import '../../actions/supabase/storage/storage_empty_bucket.dart';
+import '../../actions/supabase/storage/storage_list_all_files.dart';
+import '../../actions/supabase/storage/storage_retrive_bucket.dart';
+import '../../actions/supabase/storage/storage_update_binary.dart.dart';
+import '../../actions/supabase/storage/storage_update_bucket.dart';
+
 class FActionElement extends Equatable {
   FActionElement({
     this.id,
@@ -1947,7 +1961,7 @@ class FActionElement extends Equatable {
         switch (actionSupabaseStorage) {
           case ActionSupabaseStorage.upload:
             await actionS(
-              () => FASupabaseStorageUpload.action(
+              () => FASupabaseStorageBinaryUpload.action(
                 context,
                 dbFrom,
                 valueTextTypeInput,
@@ -1965,6 +1979,143 @@ class FActionElement extends Equatable {
           case ActionSupabaseStorage.remove:
             await actionS(
               () => FASupabaseStorageRemove.action(
+                context,
+                dbFrom,
+                valueTextTypeInput,
+                state.params,
+                state.states,
+                state.dataset,
+                state.loop,
+              ),
+              context: context,
+              state: state,
+            );
+            break;
+               case ActionSupabaseStorage.listBuckets:
+            await actionS(
+              () => FASupabaseStorageBucketList.action(
+                context,
+                dbFrom,
+                valueTextTypeInput,
+                state.params,
+                state.states,
+                state.dataset,
+                state.loop,
+              ),
+              context: context,
+              state: state,
+            );
+            break;
+                  case ActionSupabaseStorage.createBucket:
+            await actionS(
+              () => FASupabaseStorageCreateBucket.action(
+                context,
+                dbFrom,
+                valueTextTypeInput,
+                state.params,
+                state.states,
+                state.dataset,
+                state.loop,
+              ),
+              context: context,
+              state: state,
+            );
+            break;
+            case ActionSupabaseStorage.deleteBucket:
+            await actionS(
+              () => FASupabaseStorageDeleteBucket.action(
+                context,
+                dbFrom,
+                valueTextTypeInput,
+                state.params,
+                state.states,
+                state.dataset,
+                state.loop,
+              ),
+              context: context,
+              state: state,
+            );
+            break;
+            case ActionSupabaseStorage.downloadFile:
+            await actionS(
+              () => FASupabaseStorageDownload.action(
+                context,
+                dbFrom,
+                valueTextTypeInput,
+                state.params,
+                state.states,
+                state.dataset,
+                state.loop,
+              ),
+              context: context,
+              state: state,
+            );
+            break;
+             case ActionSupabaseStorage.emptyBucket:
+            await actionS(
+              () => FASupabaseStorageEmptyBucket.action(
+                context,
+                dbFrom,
+                valueTextTypeInput,
+                state.params,
+                state.states,
+                state.dataset,
+                state.loop,
+              ),
+              context: context,
+              state: state,
+            );
+            break;
+              case ActionSupabaseStorage.listAllFilesInBucket:
+            await actionS(
+              () => FASupabaseStorageListAllFilesInBucket.action(
+                context,
+                dbFrom,
+                valueTextTypeInput,
+                state.params,
+                state.states,
+                state.dataset,
+                state.loop,
+              ),
+              context: context,
+              state: state,
+            );
+            break;
+            case ActionSupabaseStorage.getBucket:
+            await actionS(
+              () => FASupabaseStorageRetrieveBucket.action(
+                context,
+                dbFrom,
+                valueTextTypeInput,
+                state.params,
+                state.states,
+                state.dataset,
+                state.loop,
+              ),
+              context: context,
+              state: state,
+            );
+            break;
+            case ActionSupabaseStorage.update:
+            await actionS(
+              () => FASupabaseStorageUpdateBinaryUpload.action(
+                             context,
+                dbFrom,
+                valueTextTypeInput,
+                stateName,
+                stateName2,
+                state.params,
+                state.states,
+                state.dataset,
+                state.loop,
+              ),
+              context: context,
+              state: state,
+            );
+            break;
+                  case ActionSupabaseStorage.updateBucket:
+            await actionS(
+              () => FASupabaseStorageUpdateBucket.action(
                 context,
                 dbFrom,
                 valueTextTypeInput,
@@ -2887,6 +3038,46 @@ class FActionElement extends Equatable {
               context,
             );
 
+            case ActionSupabaseAuth.signUpWithPhone:
+            return codeS(
+              FASupabaseSignUpWithPhone.toCode(
+                context,
+                nameOfPage,
+                paramsToSend,
+              ),
+              context,
+            );
+
+              case ActionSupabaseAuth.signInWithPhone:
+            return codeS(
+              FASupabaseSignInWithPhone.toCode(
+                context,
+                nameOfPage,
+                paramsToSend,
+              ),
+              context,
+            );
+
+              case ActionSupabaseAuth.requestOtp:
+            return codeS(
+              FASupabaseRequestPhoneOtp.toCode(
+                context,
+                nameOfPage,
+                paramsToSend,
+              ),
+              context,
+            );
+
+              case ActionSupabaseAuth.signOut:
+            return codeS(
+              FASupabaseSignOut.toCode(
+                context,
+                nameOfPage,
+                paramsToSend,
+              ),
+              context,
+            );
+
           case ActionSupabaseAuth.signInWithGoogle:
             return codeS(
               FASupabaseSignInWithProvider.toCode(
@@ -3022,11 +3213,13 @@ class FActionElement extends Equatable {
           case null:
             return '';
         }
+        break;
+        
       case ActionType.supabaseStorage:
         switch (actionSupabaseStorage) {
           case ActionSupabaseStorage.upload:
             return codeS(
-              FASupabaseStorageUpload.toCode(
+              FASupabaseStorageBinaryUpload.toCode(
                 context,
                 dbFrom,
                 valueTextTypeInput,
@@ -3039,6 +3232,98 @@ class FActionElement extends Equatable {
           case ActionSupabaseStorage.remove:
             return codeS(
               FASupabaseStorageRemove.toCode(
+                context,
+                dbFrom,
+                valueTextTypeInput,
+                loop,
+              ),
+              context,
+            );
+             case ActionSupabaseStorage.update:
+            return codeS(
+              FASupabaseStorageUpdateBinaryUpload.toCode(
+                context,
+                dbFrom,
+                valueTextTypeInput,
+                stateName ?? '',
+                stateName2 ?? '',
+                loop,
+              ),
+              context,
+            );
+              case ActionSupabaseStorage.listBuckets:
+            return codeS(
+              FASupabaseStorageBucketList.toCode(
+                context,
+                dbFrom,
+                valueTextTypeInput,
+                loop,
+              ),
+              context,
+            );
+            case ActionSupabaseStorage.createBucket:
+            return codeS(
+              FASupabaseStorageCreateBucket.toCode(
+                context,
+                dbFrom,
+                valueTextTypeInput,
+                loop,
+              ),
+              context,
+            );
+            case ActionSupabaseStorage.deleteBucket:
+            return codeS(
+              FASupabaseStorageDeleteBucket.toCode(
+                context,
+                dbFrom,
+                valueTextTypeInput,
+                loop,
+              ),
+              context,
+            );
+            case ActionSupabaseStorage.downloadFile:
+            return codeS(
+              FASupabaseStorageDownload.toCode(
+                context,
+                dbFrom,
+                valueTextTypeInput,
+                loop,
+              ),
+              context,
+            );
+             case ActionSupabaseStorage.emptyBucket:
+            return codeS(
+              FASupabaseStorageEmptyBucket.toCode(
+                context,
+                dbFrom,
+                valueTextTypeInput,
+                loop,
+              ),
+              context,
+            );
+           case ActionSupabaseStorage.listAllFilesInBucket:
+            return codeS(
+              FASupabaseStorageListAllFilesInBucket.toCode(
+                context,
+                dbFrom,
+                valueTextTypeInput,
+                loop,
+              ),
+              context,
+            );
+              case ActionSupabaseStorage.getBucket:
+            return codeS(
+              FASupabaseStorageRetrieveBucket.toCode(
+                context,
+                dbFrom,
+                valueTextTypeInput,
+                loop,
+              ),
+              context,
+            );
+               case ActionSupabaseStorage.updateBucket:
+            return codeS(
+              FASupabaseStorageUpdateBucket.toCode(
                 context,
                 dbFrom,
                 valueTextTypeInput,

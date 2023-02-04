@@ -14,7 +14,7 @@ import 'package:teta_widgets/src/elements/actions/snippets/change_state.dart';
 import 'package:teta_widgets/src/elements/actions/snippets/take_state_from.dart';
 import 'package:teta_widgets/src/elements/features/text_type_input.dart';
 
-class FASupabaseStorageBinaryUpload {
+class FASupabaseStorageUpdateBinaryUpload {
   static Future action(
     final BuildContext context,
     final FTextTypeInput? supabaseFrom,
@@ -50,7 +50,7 @@ class FASupabaseStorageBinaryUpload {
                 ) ??
                 '',
           )
-          .uploadBinary(
+          .updateBinary(
             pathFile?.get(
                   params,
                   states,

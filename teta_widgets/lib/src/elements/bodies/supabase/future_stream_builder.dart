@@ -104,7 +104,7 @@ class SupabaseStreamBuilderBody extends NodeBody {
         '${(attributes[DBKeys.supabaseFromRange] as FTextTypeInput).value}',
       );
     return WSupabaseStreamBuilder(
-      ValueKey(str.toString()),
+      ValueKey(str.toString()), 
       state: state,
       children: children ?? [],
       from: attributes[DBKeys.supabaseFrom] as FTextTypeInput,

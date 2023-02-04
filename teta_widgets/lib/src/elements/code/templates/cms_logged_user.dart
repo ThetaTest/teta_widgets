@@ -16,7 +16,7 @@ class CmsLoggedUserCodeTemplate {
     final List<CNode> children,
     final int? loop,
   ) async {
-    var child = 'const SizedBox()';
+    var child = 'const SizedBox()'; 
     if (children.isNotEmpty) {
       child = await children.first.toCode(context);
     }

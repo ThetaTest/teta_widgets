@@ -30,6 +30,19 @@ class WSupabaseFutureBuilder extends StatefulWidget {
     required this.eqName,
     required this.eqValue,
     required this.children,
+    required this.containsName,
+    required this.containsValue,
+    required this.filterName,
+    required this.filterValue,
+    required this.filterOperator,
+    required this.gtName,
+    required this.gtValue,
+    required this.gtEName,
+    required this.gtEValue,
+    required this.ltName,
+    required this.ltValue,
+    required this.ltEName,
+    required this.ltEValue,
   }) : super(key: key);
 
   final TetaWidgetState state;
@@ -56,6 +69,19 @@ class WSupabaseFutureBuilder extends StatefulWidget {
   final FTextTypeInput searchValue;
   final FTextTypeInput eqName;
   final FTextTypeInput eqValue;
+  final FTextTypeInput containsName;
+  final FTextTypeInput containsValue;
+  final FTextTypeInput filterName;
+  final FTextTypeInput filterValue;
+  final FTextTypeInput filterOperator;
+  final FTextTypeInput gtName;
+  final FTextTypeInput gtValue;
+  final FTextTypeInput gtEName;
+  final FTextTypeInput gtEValue;
+  final FTextTypeInput ltName;
+  final FTextTypeInput ltValue;
+  final FTextTypeInput ltEName;
+  final FTextTypeInput ltEValue;
 
   /// The opzional child of this widget
   final List<CNode> children;
@@ -80,6 +106,112 @@ class _WSupabaseFutureBuilderState extends State<WSupabaseFutureBuilder> {
   }
 
   Future calc() async {
+    final ltEName = widget.ltEName.get(
+      widget.state.params,
+      widget.state.states,
+      widget.state.dataset,
+      widget.state.forPlay,
+      widget.state.loop,
+      context,
+    );
+    final ltEValue = widget.ltEValue.get(
+      widget.state.params,
+      widget.state.states,
+      widget.state.dataset,
+      widget.state.forPlay,
+      widget.state.loop,
+      context,
+    );
+    final ltName = widget.ltName.get(
+      widget.state.params,
+      widget.state.states,
+      widget.state.dataset,
+      widget.state.forPlay,
+      widget.state.loop,
+      context,
+    );
+    final ltValue = widget.ltValue.get(
+      widget.state.params,
+      widget.state.states,
+      widget.state.dataset,
+      widget.state.forPlay,
+      widget.state.loop,
+      context,
+    );
+    final gtEName = widget.gtEName.get(
+      widget.state.params,
+      widget.state.states,
+      widget.state.dataset,
+      widget.state.forPlay,
+      widget.state.loop,
+      context,
+    );
+    final gtEValue = widget.gtEValue.get(
+      widget.state.params,
+      widget.state.states,
+      widget.state.dataset,
+      widget.state.forPlay,
+      widget.state.loop,
+      context,
+    );
+    final gtName = widget.gtName.get(
+      widget.state.params,
+      widget.state.states,
+      widget.state.dataset,
+      widget.state.forPlay,
+      widget.state.loop,
+      context,
+    );
+    final gtValue = widget.gtValue.get(
+      widget.state.params,
+      widget.state.states,
+      widget.state.dataset,
+      widget.state.forPlay,
+      widget.state.loop,
+      context,
+    );
+    final filterName = widget.filterName.get(
+      widget.state.params,
+      widget.state.states,
+      widget.state.dataset,
+      widget.state.forPlay,
+      widget.state.loop,
+      context,
+    );
+    final filterValue = widget.filterValue.get(
+      widget.state.params,
+      widget.state.states,
+      widget.state.dataset,
+      widget.state.forPlay,
+      widget.state.loop,
+      context,
+    );
+    final filterOperator = widget.filterOperator.get(
+      widget.state.params,
+      widget.state.states,
+      widget.state.dataset,
+      widget.state.forPlay,
+      widget.state.loop,
+      context,
+    );
+
+    final containName = widget.containsName.get(
+      widget.state.params,
+      widget.state.states,
+      widget.state.dataset,
+      widget.state.forPlay,
+      widget.state.loop,
+      context,
+    );
+
+    final containValue = widget.containsValue.get(
+      widget.state.params,
+      widget.state.states,
+      widget.state.dataset,
+      widget.state.forPlay,
+      widget.state.loop,
+      context,
+    );
     final from = widget.from.get(
       widget.state.params,
       widget.state.states,
@@ -175,6 +307,28 @@ class _WSupabaseFutureBuilderState extends State<WSupabaseFutureBuilder> {
     // ignore: literal_only_boolean_expressions
     if (order.isNotEmpty) {
       query.order(order, ascending: true);
+    }
+    if (gtName.isNotEmpty) {
+      query.gt(gtName, gtValue);
+    }
+
+    if (gtEName.isNotEmpty) {
+      query.gte(gtEName, gtEValue);
+    }
+
+    if (ltName.isNotEmpty) {
+      query.lt(ltName, ltValue);
+    }
+
+    if (ltEName.isNotEmpty) {
+      query.lte(ltEName, ltEValue);
+    }
+
+    if (filterName.isNotEmpty) {
+      query.filter(filterName, filterOperator, filterValue);
+    }
+    if (containName.isNotEmpty) {
+      query.contains(containName, int.tryParse(containValue) ?? 0);
     }
     if (searchName.isNotEmpty) {
       //query.textSearch(searchName, searchValue, type: TextSearchType.plain);

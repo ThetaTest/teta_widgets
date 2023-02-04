@@ -130,6 +130,7 @@ enum NType {
   supabaseFutureBuilder,
   supabaseStreamBuilder,
   supabaseLoggedUser,
+  supabaseUserIsLogged,
   //Stripe
   stripeProductsBuilder,
   stripeShippingBuilder,

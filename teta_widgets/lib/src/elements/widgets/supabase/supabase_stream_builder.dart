@@ -80,6 +80,7 @@ class _WSupabaseStreamBuilderState extends State<WSupabaseStreamBuilder> {
       widget.state.loop,
       context,
     );
+
     final valueFromRange =
         int.tryParse(fromRange) != null ? int.parse(fromRange) : 0;
 
@@ -87,6 +88,9 @@ class _WSupabaseStreamBuilderState extends State<WSupabaseStreamBuilder> {
     final query = client!.from(from).stream(['id']);
 
     // ignore: literal_only_boolean_expressions
+    if (order.isNotEmpty) {
+      query.order(order, ascending: true);
+    }
     if (order.isNotEmpty) {
       query.order(order, ascending: true);
     }

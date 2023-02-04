@@ -18,6 +18,7 @@ class StreamBuilderCodeTemplate {
     final List<CNode> children,
     final int? loop,
   ) async {
+    
     final from =
         (body.attributes[DBKeys.supabaseFrom] as FTextTypeInput).toCode(
       loop,

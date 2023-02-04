@@ -70,7 +70,6 @@ class _WCMSLoggedUserState extends State<WCMSLoggedUser> {
               );
             }
           }
-
           final data = snapshot.data as TetaUser?;
           final map = <String, dynamic>{
             'isLogged': data?.isLogged,

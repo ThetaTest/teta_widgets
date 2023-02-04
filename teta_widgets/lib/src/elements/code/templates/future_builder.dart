@@ -18,6 +18,66 @@ class SupabaseFutureBuilderCodeTemplate {
     final List<CNode> children,
     final int? loop,
   ) async {
+     final containsName =
+        (body.attributes[DBKeys.supabaseContainsName] as FTextTypeInput).toCode(
+      loop,
+      resultType: ResultTypeEnum.string,
+    );
+     final containsValue =
+        (body.attributes[DBKeys.supabaseContainsValue] as FTextTypeInput).toCode(
+      loop,
+      resultType: ResultTypeEnum.string,
+    );
+      final gtName =
+        (body.attributes[DBKeys.supabaseGreaterThanName] as FTextTypeInput).toCode(
+      loop,
+      resultType: ResultTypeEnum.string,
+    );
+     final gtValue =
+        (body.attributes[DBKeys.supabaseGreaterThanValue] as FTextTypeInput).toCode(
+      loop,
+      resultType: ResultTypeEnum.string,
+    );
+       final gtEName =
+        (body.attributes[DBKeys.supabaseGreaterOrEqualName] as FTextTypeInput).toCode(
+      loop,
+      resultType: ResultTypeEnum.string,
+    );
+     final gtEValue =
+        (body.attributes[DBKeys.supabaseGreaterOrEqualValue] as FTextTypeInput).toCode(
+      loop,
+      resultType: ResultTypeEnum.string,
+    );
+      final ltName =
+        (body.attributes[DBKeys.supabaseLessThanName] as FTextTypeInput).toCode(
+      loop,
+      resultType: ResultTypeEnum.string,
+    );
+     final ltValue =
+        (body.attributes[DBKeys.supabaseLessThanValue] as FTextTypeInput).toCode(
+      loop,
+      resultType: ResultTypeEnum.string,
+    );
+       final ltEName =
+        (body.attributes[DBKeys.supabaseLessThanOrEqualName] as FTextTypeInput).toCode(
+      loop,
+      resultType: ResultTypeEnum.string,
+    );
+     final ltEValue =
+        (body.attributes[DBKeys.supabaseLessThanOrEqualValue] as FTextTypeInput).toCode(
+      loop,
+      resultType: ResultTypeEnum.string,
+    );
+    final filterName =
+        (body.attributes[DBKeys.supabaseFilterName] as FTextTypeInput).toCode(
+      loop,
+      resultType: ResultTypeEnum.string,
+    );
+     final filterValue =
+        (body.attributes[DBKeys.supabaseFilterValue] as FTextTypeInput).toCode(
+      loop,
+      resultType: ResultTypeEnum.string,
+    );
     final from =
         (body.attributes[DBKeys.supabaseFrom] as FTextTypeInput).toCode(
       loop,
@@ -47,7 +107,6 @@ class SupabaseFutureBuilderCodeTemplate {
       resultType: ResultTypeEnum.int,
       defaultValue: '15',
     );
-
     final numberPage =
         (body.attributes[DBKeys.supabaseNumberPage] as FTextTypeInput).toCode(
       loop,
@@ -77,6 +136,12 @@ class SupabaseFutureBuilderCodeTemplate {
     .from($from)
     .select($select)
     .order($order)
+    .ltE($ltEName,$ltEValue)
+    .lt($ltName,$ltValue)
+    .gte($gtEName,$gtEValue)
+    .gt($gtName,$gtValue)
+    .filter($filterName, $filterValue)
+    .contains($containsName, $containsValue)
     .range(($numberPage * $rangeFrom) - 1, $numberPage * $rangeTo)
     .execute(),
     builder: (context, snapshot) {
@@ -88,6 +153,7 @@ class SupabaseFutureBuilderCodeTemplate {
     }
   )
   ''';
+  
     final res = FormatterTest.format(code);
     if (res) {
       return code;
@@ -144,6 +210,71 @@ class SupabaseFutureBuilderCodeTemplate {
             0,
             resultType: ResultTypeEnum.string,
           );
+           final gtEName =
+              (body.attributes[DBKeys.supabaseGreaterOrEqualName] as FTextTypeInput).toCode(
+            0,
+            resultType: ResultTypeEnum.string,
+          );
+           final gtEValue =
+              (body.attributes[DBKeys.supabaseGreaterOrEqualValue] as FTextTypeInput).toCode(
+            0,
+            resultType: ResultTypeEnum.string,
+          );
+          final gtName =
+              (body.attributes[DBKeys.supabaseGreaterThanName] as FTextTypeInput).toCode(
+            0,
+            resultType: ResultTypeEnum.string,
+          );
+           
+          final gtValue =
+              (body.attributes[DBKeys.supabaseGreaterThanValue] as FTextTypeInput).toCode(
+            0,
+            resultType: ResultTypeEnum.string,
+          );
+          final ltName =
+              (body.attributes[DBKeys.supabaseLessThanName] as FTextTypeInput).toCode(
+            0,
+            resultType: ResultTypeEnum.string,
+          );
+           
+          final ltValue =
+              (body.attributes[DBKeys.supabaseLessThanValue] as FTextTypeInput).toCode(
+            0,
+            resultType: ResultTypeEnum.string,
+          );
+            final filterName =
+              (body.attributes[DBKeys.supabaseFilterName] as FTextTypeInput).toCode(
+            0,
+            resultType: ResultTypeEnum.string,
+          );
+           
+          final filterValue =
+              (body.attributes[DBKeys.supabaseFilterValue] as FTextTypeInput).toCode(
+            0,
+            resultType: ResultTypeEnum.string,
+          );
+                  final ltEName =
+              (body.attributes[DBKeys.supabaseLessThanOrEqualName] as FTextTypeInput).toCode(
+            0,
+            resultType: ResultTypeEnum.string,
+          );
+           
+          final ltEValue =
+              (body.attributes[DBKeys.supabaseLessThanOrEqualValue] as FTextTypeInput).toCode(
+            0,
+            resultType: ResultTypeEnum.string,
+          );
+          final containsName =
+              (body.attributes[DBKeys.supabaseContainsName] as FTextTypeInput).toCode(
+            0,
+            resultType: ResultTypeEnum.string,
+          );
+           final containsValue =
+              (body.attributes[DBKeys.supabaseContainsValue] as FTextTypeInput).toCode(
+            0,
+            resultType: ResultTypeEnum.string,
+          );
+
           final select =
               (body.attributes[DBKeys.supabaseSelect] as FTextTypeInput).toCode(
             0,
@@ -187,6 +318,12 @@ class SupabaseFutureBuilderCodeTemplate {
               future: Supabase.instance.client
               .from($from)
               .select($select)
+              .gt($gtName,$gtValue)
+              .gte($gtEName,$gtEValue)
+              .filter($filterName,$filterValue)
+              .lte($ltEName, $ltEValue)
+              .lt($ltName,$ltValue)
+              .contains($containsName, $containsValue)
               .order($order)
               .range(($numberPage * $rangeFrom) - 1, $numberPage * $rangeTo)
               .execute(),

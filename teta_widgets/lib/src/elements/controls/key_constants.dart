@@ -163,6 +163,46 @@ class DBKeys {
   /// Use for from's value in Supabase operation
   static const String supabaseFrom = 'spF';
 
+  /// Use for contains's name in Supabase operation
+  static const String supabaseContainsName = 'spConN';
+
+  // Use for contains's value in Supabase operation
+  static const String supabaseContainsValue = 'spConV';
+
+  /// Use for greater's name in Supabase operation
+  static const String supabaseGreaterThanName = 'spGtN';
+
+  // Use for contains's value in Supabase operation
+  static const String supabaseGreaterThanValue = 'spGtV';
+
+  /// Use for greater's name in Supabase operation
+  static const String supabaseGreaterOrEqualName = 'spGtEN';
+
+  // Use for contains's value in Supabase operation
+  static const String supabaseGreaterOrEqualValue = 'spGtEV';
+
+  /// Use for less than name in Supabase operation
+  static const String supabaseLessThanName = 'spLtN';
+
+  // Use for less than value in Supabase operation
+  static const String supabaseLessThanValue = 'spLtV';
+
+  /// Use for less than or  name in Supabase operation
+  static const String supabaseLessThanOrEqualName = 'spLtEN';
+
+  // Use for less than value in Supabase operation
+  static const String supabaseLessThanOrEqualValue = 'spLtEV';
+
+  /// Use for filter's name in Supabase operation
+  static const String supabaseFilterName = 'spFilN';
+
+  // Use for filter's value in Supabase operation
+  static const String supabaseFilterOperator = 'spFilV';
+
+
+  // Use for filter's value in Supabase operation
+  static const String supabaseFilterValue = 'spFilV';
+
   /// Use for select's value in Supabase operation
   static const String supabaseSelect = 'spSl';
 

@@ -164,6 +164,19 @@ class SupabaseFutureBuilderBody extends NodeBody {
         ${(attributes[DBKeys.supabaseSearchValue] as FTextTypeInput).toJson()}
         ${(attributes[DBKeys.supabaseEqName] as FTextTypeInput).toJson()}
         ${(attributes[DBKeys.supabaseEqValue] as FTextTypeInput).toJson()}
+        ${(attributes[DBKeys.supabaseContainsName] as FTextTypeInput).toJson()}
+        ${(attributes[DBKeys.supabaseContainsValue] as FTextTypeInput).toJson()}
+        ${(attributes[DBKeys.supabaseFilterName] as FTextTypeInput).toJson()}
+        ${(attributes[DBKeys.supabaseFilterValue] as FTextTypeInput).toJson()}
+        ${(attributes[DBKeys.supabaseFilterOperator] as FTextTypeInput).toJson()}
+        ${(attributes[DBKeys.supabaseGreaterOrEqualName] as FTextTypeInput).toJson()}
+        ${(attributes[DBKeys.supabaseGreaterOrEqualValue] as FTextTypeInput).toJson()}
+        ${(attributes[DBKeys.supabaseGreaterThanName] as FTextTypeInput).toJson()}
+        ${(attributes[DBKeys.supabaseGreaterThanValue] as FTextTypeInput).toJson()}
+        ${(attributes[DBKeys.supabaseLessThanName] as FTextTypeInput).toJson()}
+        ${(attributes[DBKeys.supabaseLessThanValue] as FTextTypeInput).toJson()}
+        ${(attributes[DBKeys.supabaseLessThanOrEqualName] as FTextTypeInput).toJson()}
+        ${(attributes[DBKeys.supabaseLessThanOrEqualValue] as FTextTypeInput).toJson()}
       ''',
       ),
       state: state,
@@ -178,6 +191,22 @@ class SupabaseFutureBuilderBody extends NodeBody {
       searchValue: attributes[DBKeys.supabaseSearchValue] as FTextTypeInput,
       eqName: attributes[DBKeys.supabaseEqName] as FTextTypeInput,
       eqValue: attributes[DBKeys.supabaseEqValue] as FTextTypeInput,
+      containsName: attributes[DBKeys.supabaseContainsName] as FTextTypeInput,
+      containsValue: attributes[DBKeys.supabaseContainsValue] as FTextTypeInput,
+      filterName: attributes[DBKeys.supabaseFilterValue] as FTextTypeInput,
+      filterOperator:
+          attributes[DBKeys.supabaseFilterOperator] as FTextTypeInput,
+      filterValue: attributes[DBKeys.supabaseFilterValue] as FTextTypeInput,
+      gtEName: attributes[DBKeys.supabaseGreaterOrEqualName] as FTextTypeInput,
+      gtEValue:
+          attributes[DBKeys.supabaseGreaterOrEqualValue] as FTextTypeInput,
+      gtName: attributes[DBKeys.supabaseGreaterThanName] as FTextTypeInput,
+      gtValue: attributes[DBKeys.supabaseGreaterThanValue] as FTextTypeInput,
+      ltName: attributes[DBKeys.supabaseLessThanName] as FTextTypeInput,
+      ltValue: attributes[DBKeys.supabaseLessThanValue] as FTextTypeInput,
+      ltEName: attributes[DBKeys.supabaseLessThanOrEqualName] as FTextTypeInput,
+      ltEValue:
+          attributes[DBKeys.supabaseLessThanOrEqualValue] as FTextTypeInput,
     );
   }
 
