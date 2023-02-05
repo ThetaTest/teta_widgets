@@ -44,9 +44,17 @@ class _DragAndDropBuilderState extends State<DragAndDropBuilder> {
   bool isLeft(
     final double pointCoord,
     final double offset,
+    final double screenOffset,
     final double sideSize,
   ) {
-    return pointCoord > offset && pointCoord < offset + (sideSize / 2);
+    Logger.printDefault(
+      'Coords, pointer: $pointCoord, offset: $offset, screenOffset: $screenOffset, sideSize: $sideSize',
+    );
+    Logger.printMessage(
+      'Coords calc, ${pointCoord - screenOffset} ${offset - screenOffset} ${(offset - screenOffset) + (sideSize / 2)}',
+    );
+    return pointCoord - screenOffset > offset - screenOffset &&
+        pointCoord - screenOffset < (offset - screenOffset) + (sideSize / 2);
   }
 
   @override
@@ -72,16 +80,19 @@ class _DragAndDropBuilderState extends State<DragAndDropBuilder> {
       },
       onMove: (final details) {
         late bool leftFlag;
+        final screenOffset = context.read<ScreenPositionCubit>().state;
         if (widget.state.isVertical) {
           leftFlag = isLeft(
             details.offset.dy,
             key.globalPaintBounds!.top,
+            screenOffset.dy,
             key.globalPaintBounds!.height,
           );
         } else {
           leftFlag = isLeft(
             details.offset.dx,
             key.globalPaintBounds!.left,
+            screenOffset.dx,
             key.globalPaintBounds!.width,
           );
         }
@@ -89,7 +100,7 @@ class _DragAndDropBuilderState extends State<DragAndDropBuilder> {
         setState(() {
           isDragging = true;
           if (key.globalPaintBounds != null) {
-            onLeft = !leftFlag;
+            onLeft = leftFlag;
           }
         });
       },

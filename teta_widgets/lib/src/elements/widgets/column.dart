@@ -1,11 +1,7 @@
 // Flutter imports:
 import 'package:flutter/material.dart';
-import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:reorderables/reorderables.dart';
-import 'package:teta_core/teta_core.dart';
 // Package imports:
 import 'package:teta_widgets/src/core/teta_widget/index.dart';
-import 'package:teta_widgets/src/elements/builder/reorder_children.dart';
 // Project imports:
 import 'package:teta_widgets/src/elements/index.dart';
 
@@ -33,11 +29,13 @@ class WColumn extends StatefulWidget {
 }
 
 class _WColumnState extends State<WColumn> {
-  List<CNode> children = [];
+  List<Widget> children = [];
 
   @override
   void initState() {
-    children = widget.children;
+    children = widget.children
+        .map((final e) => e.toWidget(state: widget.state))
+        .toList();
     super.initState();
   }
 
@@ -45,63 +43,19 @@ class _WColumnState extends State<WColumn> {
   Widget build(final BuildContext context) {
     return TetaWidget(
       state: widget.state,
-      child: BlocBuilder<FocusBloc, List<int>>(
-        builder: (final context, final nodes) {
-          if (nodes.length == 1) {
-            final index = children
-                .indexWhere((final element) => element.nid == nodes.first);
-            if (index != -1) {
-              return LayoutBuilder(
-                builder: (final context, final constraints) => SizedBox(
-                  height: constraints.maxHeight,
-                  child: ReorderableColumn(
-                    onReorder: (final oldIndex, final newIndex) {
-                      ReorderChildren.reorder(
-                        widget.state.node,
-                        children,
-                        oldIndex,
-                        newIndex,
-                      );
-                      setState(() {});
-                    },
-                    needsLongPressDraggable: false,
-                    mainAxisSize: widget.mainAxisSize.get,
-                    mainAxisAlignment: widget.mainAxisAlignment.get,
-                    crossAxisAlignment: widget.crossAxisAlignment.get,
-                    children: children.isNotEmpty
-                        ? children
-                            .map((final e) => e.toWidget(state: widget.state))
-                            .toList()
-                        : [
-                            PlaceholderChildBuilder(
-                              name:
-                                  widget.state.node.intrinsicState.displayName,
-                              node: widget.state.node,
-                              forPlay: widget.state.forPlay,
-                            ),
-                          ],
-                  ),
+      child: Column(
+        mainAxisSize: widget.mainAxisSize.get,
+        mainAxisAlignment: widget.mainAxisAlignment.get,
+        crossAxisAlignment: widget.crossAxisAlignment.get,
+        children: children.isNotEmpty
+            ? children
+            : [
+                PlaceholderChildBuilder(
+                  name: widget.state.node.intrinsicState.displayName,
+                  node: widget.state.node,
+                  forPlay: widget.state.forPlay,
                 ),
-              );
-            }
-          }
-          return Column(
-            mainAxisSize: widget.mainAxisSize.get,
-            mainAxisAlignment: widget.mainAxisAlignment.get,
-            crossAxisAlignment: widget.crossAxisAlignment.get,
-            children: children.isNotEmpty
-                ? children
-                    .map((final e) => e.toWidget(state: widget.state))
-                    .toList()
-                : [
-                    PlaceholderChildBuilder(
-                      name: widget.state.node.intrinsicState.displayName,
-                      node: widget.state.node,
-                      forPlay: widget.state.forPlay,
-                    ),
-                  ],
-          );
-        },
+              ],
       ),
     );
   }

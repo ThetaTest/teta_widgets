@@ -87,13 +87,10 @@ class ComponentBody extends NodeBody {
       ValueKey(
         '''
         ${state.toKey}
-        ${child ?? children}
         ${attributes[DBKeys.componentName] as String} 
-        ${attributes[DBKeys.paramsToSend] as Map<String, dynamic>}
         ''',
       ),
       state: state,
-      child: child,
       componentName: attributes[DBKeys.componentName] as String,
       paramsToSend: attributes[DBKeys.paramsToSend] as Map<String, dynamic>,
     );

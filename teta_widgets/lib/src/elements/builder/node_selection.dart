@@ -48,7 +48,7 @@ class _NodeSelection extends StatefulWidget {
 }
 
 class NodeSelectionState extends State<_NodeSelection> {
-  List<CNode?> parents = [];
+  final List<CNode?> parents = [];
 
   @override
   void initState() {
@@ -152,87 +152,79 @@ class _BodyState extends State<_Body> {
 
   @override
   Widget build(final BuildContext context) {
-    return BlocBuilder<FocusBloc, List<int>>(
-      builder: (final context, final onFocusNodes) {
-        return BlocBuilder<HoverBloc, int>(
-          builder: (final context, final onHover) {
-            return Stack(
-              clipBehavior: Clip.none,
-              children: [
-                DecoratedBox(
-                  key: key,
-                  position: DecorationPosition.foreground,
-                  decoration: BoxDecoration(
-                    border: Border.all(
-                      color: onFocusNodes.firstWhereOrNull(
-                                    (final element) =>
-                                        element == widget.state.node.nid,
-                                  ) !=
-                                  null ||
-                              onHover == widget.state.node.nid
-                          ? primaryColor
-                          : Colors.transparent,
-                      style: (widget.state.forPlay)
-                          ? BorderStyle.none
-                          : BorderStyle.solid,
-                      width: onFocusNodes.firstWhereOrNull(
-                                (final element) =>
-                                    element == widget.state.node.nid,
-                              ) !=
-                              null
-                          ? 1
-                          : onHover == widget.state.node.nid
-                              ? 2
-                              : 0,
+    final onFocusNodes = context.watch<FocusBloc>().state;
+    final onHover = context.watch<HoverBloc>().state;
+    return Stack(
+      clipBehavior: Clip.none,
+      fit: StackFit.passthrough,
+      children: [
+        DecoratedBox(
+          key: key,
+          position: DecorationPosition.foreground,
+          decoration: BoxDecoration(
+            border: Border.all(
+              color: onFocusNodes.firstWhereOrNull(
+                            (final element) => element == widget.state.node.nid,
+                          ) !=
+                          null ||
+                      onHover == widget.state.node.nid
+                  ? primaryColor
+                  : Colors.transparent,
+              style:
+                  (widget.state.forPlay) ? BorderStyle.none : BorderStyle.solid,
+              width: onFocusNodes.firstWhereOrNull(
+                        (final element) => element == widget.state.node.nid,
+                      ) !=
+                      null
+                  ? 1
+                  : onHover == widget.state.node.nid
+                      ? 2
+                      : 0,
+            ),
+          ),
+          child: child,
+        ),
+        if (onFocusNodes.firstWhereOrNull(
+                  (final element) => element == widget.state.node.nid,
+                ) !=
+                null ||
+            onHover == widget.state.node.nid)
+          Positioned(
+            top: (key.globalPaintBounds?.top ?? 0) <
+                    (MediaQuery.of(context).size.height / 3)
+                ? (key.globalPaintBounds?.height ?? 0)
+                : -20,
+            child: RepaintBoundary(
+              child: InkWell(
+                onHover: (final e) {
+                  context
+                      .read<HoverBloc>()
+                      .add(OnHover(node: widget.state.node));
+                },
+                child: ColoredBox(
+                  color: primaryColor,
+                  child: Padding(
+                    padding: const EdgeInsets.symmetric(
+                      vertical: 2,
+                      horizontal: 4,
                     ),
-                  ),
-                  child: child,
-                ),
-                if (onFocusNodes.firstWhereOrNull(
-                          (final element) => element == widget.state.node.nid,
-                        ) !=
-                        null ||
-                    onHover == widget.state.node.nid)
-                  Positioned(
-                    top: (key.globalPaintBounds?.top ?? 0) <
-                            (MediaQuery.of(context).size.height / 3)
-                        ? (key.globalPaintBounds?.height ?? 0)
-                        : -20,
-                    child: RepaintBoundary(
-                      child: InkWell(
-                        onHover: (final e) {
-                          context
-                              .read<HoverBloc>()
-                              .add(OnHover(node: widget.state.node));
-                        },
-                        child: ColoredBox(
-                          color: primaryColor,
-                          child: Padding(
-                            padding: const EdgeInsets.symmetric(
-                              vertical: 2,
-                              horizontal: 4,
-                            ),
-                            child: Row(
-                              children: [
-                                for (final parent in widget.parents.reversed)
-                                  _ParentIndicator(
-                                    name: parent.intrinsicState.displayName,
-                                  ),
-                                TDetailLabel(
-                                  widget.state.node.intrinsicState.displayName,
-                                ),
-                              ],
-                            ),
+                    child: Row(
+                      children: [
+                        for (final parent in widget.parents.reversed)
+                          _ParentIndicator(
+                            name: parent.intrinsicState.displayName,
                           ),
+                        TDetailLabel(
+                          widget.state.node.intrinsicState.displayName,
                         ),
-                      ),
+                      ],
                     ),
                   ),
-              ],
-            );
-          },
-        );
-      },
+                ),
+              ),
+            ),
+          ),
+      ],
     );
   }
 }
