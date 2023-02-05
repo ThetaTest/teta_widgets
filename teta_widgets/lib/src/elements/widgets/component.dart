@@ -111,16 +111,7 @@ class _WComponentState extends State<WComponent> {
   ) async {
     final list = await sl.get<NodeRepository>().fetchNodesByPage(page.id);
     if (list.error != null) return [];
-    final nodes = <CNode>[];
-    for (final e in list.data!) {
-      nodes.add(
-        CNode.fromJson(
-          e as Map<String, dynamic>,
-          page.id,
-        ),
-      );
-    }
-    return nodes;
+    return list.data!;
   }
 
   Widget body(final BuildContext context) {

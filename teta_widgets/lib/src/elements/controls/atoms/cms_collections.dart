@@ -27,7 +27,8 @@ class CMSCollectionControl extends StatefulWidget {
 
 class CMSCollectionControlState extends State<CMSCollectionControl> {
   String? dropdown;
-  late Future<List<CollectionObject>> _future;
+  late Future<TetaResponse<List<CollectionObject>?, TetaErrorResponse?>>
+      _future;
 
   @override
   void initState() {
@@ -54,7 +55,8 @@ class CMSCollectionControlState extends State<CMSCollectionControl> {
                 ],
               ),
             ),
-            FutureBuilder<List<CollectionObject>>(
+            TetaFutureBuilder<
+                TetaResponse<List<CollectionObject>?, TetaErrorResponse?>>(
               future: _future,
               builder: (final context, final snapshot) {
                 if (!snapshot.hasData) {
@@ -67,7 +69,9 @@ class CMSCollectionControlState extends State<CMSCollectionControl> {
                     .page
                     .flatList
                     .firstWhere((final element) => element.nid == nodeId);
-                dropdown = snapshot.data!
+                // TODO: Make a valid error view
+                if (snapshot.requireData.error != null) return const SizedBox();
+                dropdown = snapshot.requireData.data!
                     .firstWhereOrNull(
                       (final element) =>
                           element.id ==
@@ -77,7 +81,7 @@ class CMSCollectionControlState extends State<CMSCollectionControl> {
                                   ?.value),
                     )
                     ?.name;
-                final list = snapshot.data!
+                final list = snapshot.requireData.data!
                     .where(
                       (final element) =>
                           element.schema == CollectionSchema.public,

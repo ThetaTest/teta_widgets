@@ -65,9 +65,12 @@ class NodeSelectionState extends State<_NodeSelection> {
   @override
   Widget build(final BuildContext context) {
     if (widget.state.forPlay) {
-      return _Body(
+      return widget.child;
+    }
+    final dragState = context.watch<DragCubit>().state;
+    if (dragState == DragState.active) {
+      return DragAndDropBuilder(
         state: widget.state,
-        parents: parents.whereNotNull().toList(),
         child: widget.child,
       );
     }

@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:teta_core/src/rendering/find.dart';
+import 'package:teta_core/src/services/node_service.dart';
 import 'package:teta_core/teta_core.dart';
-import 'package:teta_repositories/teta_repositories.dart';
 import 'package:teta_widgets/src/core/teta_widget/index.dart';
 import 'package:teta_widgets/src/elements/index.dart';
 
@@ -41,12 +41,21 @@ class _DragAndDropBuilderState extends State<DragAndDropBuilder> {
     super.initState();
   }
 
+  bool isLeft(
+    final double pointCoord,
+    final double offset,
+    final double sideSize,
+  ) {
+    return pointCoord > offset && pointCoord < offset + (sideSize / 2);
+  }
+
   @override
   Widget build(final BuildContext context) {
     if (!canReceiveDrag) return widget.child;
-    return DragTarget<DragTargetObject>(
+    return DragTarget<DragTargetModel>(
       key: key,
       onAccept: (final data) async {
+        context.read<DragCubit>().update(DragState.active);
         setState(() {
           isDragging = true;
         });
@@ -54,31 +63,38 @@ class _DragAndDropBuilderState extends State<DragAndDropBuilder> {
             parent?.childrenIds.ids.indexOf(widget.state.node.nid);
         if (currentIndex == null) return;
         if (parent == null) return;
-        final page = (context.read<PageCubit>().state as PageLoaded).page;
-        await sl.get<NodeRepository>().addNodeWithCustomIndex(
-              node: data.node!,
+        await sl.get<NodeService>().add(
+              dragTarget: data,
               parent: parent!,
-              index: onLeft ?? false ? currentIndex : currentIndex + 1,
-              pageId: page.id,
+              context: context,
+              customIndex: onLeft ?? false ? currentIndex : currentIndex + 1,
             );
       },
       onMove: (final details) {
         late bool leftFlag;
         if (widget.state.isVertical) {
-          leftFlag = details.offset.dy > key.globalPaintBounds!.top &&
-              details.offset.dy <= (key.globalPaintBounds!.height / 2);
+          leftFlag = isLeft(
+            details.offset.dy,
+            key.globalPaintBounds!.top,
+            key.globalPaintBounds!.height,
+          );
         } else {
-          leftFlag = details.offset.dx > key.globalPaintBounds!.left &&
-              details.offset.dx <= (key.globalPaintBounds!.width / 2);
+          leftFlag = isLeft(
+            details.offset.dx,
+            key.globalPaintBounds!.left,
+            key.globalPaintBounds!.width,
+          );
         }
+        context.read<DragCubit>().update(DragState.active);
         setState(() {
           isDragging = true;
           if (key.globalPaintBounds != null) {
-            onLeft = leftFlag;
+            onLeft = !leftFlag;
           }
         });
       },
       onLeave: (final details) {
+        context.read<DragCubit>().update(DragState.disable);
         setState(() {
           isDragging = false;
           onLeft = null;
@@ -145,6 +161,30 @@ class _DragAndDropBuilderState extends State<DragAndDropBuilder> {
                           const Spacer(),
                       ],
                     ),
+            ),
+            Positioned(
+              top: (key.globalPaintBounds?.top ?? 0) <
+                      (MediaQuery.of(context).size.height / 3)
+                  ? (key.globalPaintBounds?.height ?? 0)
+                  : -20,
+              child: RepaintBoundary(
+                child: ColoredBox(
+                  color: primaryColor,
+                  child: Padding(
+                    padding: const EdgeInsets.symmetric(
+                      vertical: 2,
+                      horizontal: 4,
+                    ),
+                    child: Row(
+                      children: [
+                        TDetailLabel(
+                          'Drop in ${parent!.intrinsicState.displayName}',
+                        ),
+                      ],
+                    ),
+                  ),
+                ),
+              ),
             ),
           ],
         );

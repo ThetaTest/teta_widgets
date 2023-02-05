@@ -47,7 +47,7 @@ class WCmsFetch extends StatefulWidget {
 class _WCmsFetchState extends State<WCmsFetch> {
   bool isInitialized = false;
   List<dynamic> list = <dynamic>[];
-  DatasetObject _map = DatasetObject(
+  DatasetObject _map = const DatasetObject(
     name: 'Collection Query',
     map: [<String, dynamic>{}],
   );
@@ -96,7 +96,7 @@ class _WCmsFetchState extends State<WCmsFetch> {
     Logger.printWarning(
       '$collectionId, keyName: $keyName, keyValue: $keyValue',
     );
-    final dbElements = await TetaCMS.instance.client.getCollection(
+    final res = await TetaCMS.instance.client.getCollection(
       collectionId,
       filters: [
         if (keyName.isNotEmpty && keyValue.isNotEmpty)
@@ -106,10 +106,11 @@ class _WCmsFetchState extends State<WCmsFetch> {
       page: int.tryParse(page) ?? 0,
       showDrafts: widget.showDrafts,
     );
+    if (res.error != null) return;
 
     if (mounted) {
       setState(() {
-        list = dbElements;
+        list = res.data!;
         isInitialized = true;
       });
     }

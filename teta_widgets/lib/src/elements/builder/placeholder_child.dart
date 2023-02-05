@@ -1,8 +1,8 @@
 // Flutter imports:
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:teta_core/src/services/node_service.dart';
 import 'package:teta_core/teta_core.dart';
-import 'package:teta_repositories/teta_repositories.dart';
 // Package imports:
 import 'package:teta_widgets/src/elements/index.dart';
 
@@ -34,17 +34,16 @@ class _PlaceholderChildBuilderState extends State<PlaceholderChildBuilder> {
   @override
   Widget build(final BuildContext context) {
     if (widget.forPlay) return const SizedBox();
-    return DragTarget<DragTargetObject>(
+    return DragTarget<DragTargetModel>(
       onAccept: (final data) async {
         setState(() {
           isDragging = true;
         });
-        final page = (context.read<PageCubit>().state as PageLoaded).page;
-        await sl.get<NodeRepository>().addNodeWithCustomIndex(
-              node: data.node!,
+        await sl.get<NodeService>().add(
+              dragTarget: data,
               parent: widget.node,
-              index: 0,
-              pageId: page.id,
+              context: context,
+              customIndex: 0,
             );
       },
       onMove: (final details) {
