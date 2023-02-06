@@ -105,6 +105,7 @@ enum NType {
   concentricPageView,
   bouncingWidget,
   calendar,
+  calendarV2,
   camera,
   audioPlayer,
   audioPlayerProgressIndicator,

@@ -738,23 +738,30 @@ class CS {
   /// )
   /// ```
   static String boxDecoration(
-    final BuildContext context,
-    final NodeBody body,
-    final String keyFill,
-  ) {
+      final BuildContext context, final NodeBody body, final String keyFill,
+      {final bool borderRadiusTwo = false}) {
     final fill = FFill.toCode(
       body.attributes[keyFill] as FFill,
       context,
       flagConst: false,
     );
-
-    return '''
+    if (borderRadiusTwo == true) {
+      return '''
+      decoration: BoxDecoration(
+        ${fill ?? ''}
+        ${CS.borderRadiusTwo(context, body)}
+        ${CS.border(context, body)}
+      ),
+    ''';
+    } else {
+      return '''
       decoration: BoxDecoration(
         ${fill ?? ''}
         ${CS.borderRadius(context, body)}
         ${CS.border(context, body)}
       ),
     ''';
+    }
   }
 
   ///shape for card
@@ -782,6 +789,24 @@ class CS {
   static String borderRadius(final BuildContext context, final NodeBody body) {
     final value = body.attributes[DBKeys.borderRadius] != null
         ? (body.attributes[DBKeys.borderRadius] as FBorderRadius).toCode()
+        : null;
+    return avoidRedundantValue(value, 'borderRadius', '');
+  }
+
+  /// Returns BorderRadius code for borderRadiusTwo
+  ///
+  /// ```dart
+  /// BorderRadius.only(
+  ///   topLeft: Radius.circular(value),
+  ///   topRight: Radius.circular(value),
+  ///   bottomRight: Radius.circular(value),
+  ///   bottomLeft: Radius.circular(value),
+  /// )
+  /// ```
+  static String borderRadiusTwo(
+      final BuildContext context, final NodeBody body) {
+    final value = body.attributes[DBKeys.borderRadiusTwo] != null
+        ? (body.attributes[DBKeys.borderRadiusTwo] as FBorderRadius).toCode()
         : null;
     return avoidRedundantValue(value, 'borderRadius', '');
   }
@@ -830,14 +855,19 @@ class CS {
   /// textAlign: TextAlign.center,
   /// ```
   static String textStyle(
-    final BuildContext context,
-    final NodeBody body,
-    final String key,
-  ) {
-    final value = body.attributes[key] != null
-        ? (body.attributes[key] as FTextStyle).toCode(context)
-        : null;
-    return value ?? '';
+      final BuildContext context, final NodeBody body, final String key,
+      {final bool textStyleOnly = false}) {
+    if (textStyleOnly == true) {
+      final value = body.attributes[key] != null
+          ? (body.attributes[key] as FTextStyle).toCodeTextStyleOnly(context)
+          : null;
+      return value ?? '';
+    } else {
+      final value = body.attributes[key] != null
+          ? (body.attributes[key] as FTextStyle).toCode(context)
+          : null;
+      return value ?? '';
+    }
   }
 
   /// Returns a gesture's code calling specificAction.toCode().
