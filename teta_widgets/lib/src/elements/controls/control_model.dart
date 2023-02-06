@@ -30,6 +30,7 @@ class ControlObject extends ControlModel {
     this.title,
     this.description,
     this.flag,
+    this.list,
   });
 
   final ControlType type;
@@ -39,6 +40,7 @@ class ControlObject extends ControlModel {
   final String? description;
   final bool? flag;
   final VariableType valueType;
+  final List<String>? list;
 
   @override
   List<Object?> get props => [
@@ -47,6 +49,7 @@ class ControlObject extends ControlModel {
         value,
         title,
         valueType,
+        list,
       ];
 
   @override

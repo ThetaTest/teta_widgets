@@ -35,7 +35,7 @@ class _WAudioPlayerState extends State<WAudioPlayer> {
   bool isInitialized = false;
   AudioPlayer? ap;
   VariableObject? variable;
-  DatasetObject _map = DatasetObject(
+  DatasetObject _map = const DatasetObject(
     name: '',
     map: [<String, dynamic>{}],
   );
@@ -47,7 +47,7 @@ class _WAudioPlayerState extends State<WAudioPlayer> {
       _map = DatasetObject(
         name: widget.state.node.name ??
             widget.state.node.intrinsicState.displayName,
-        map: [<String, dynamic>{}],
+        map: const [<String, dynamic>{}],
       );
 
       if (widget.controller.type == FTextTypeEnum.param) {
@@ -104,9 +104,10 @@ class _WAudioPlayerState extends State<WAudioPlayer> {
           ap = audioPlayer;
           isInitialized = true;
         });
+        // BlocProvider.of<RefreshCubit>(context).change();
       }
     } catch (e) {
-      print('WAudioPlayer.initAudioPlayer.error -> $e');
+      Logger.printError('WAudioPlayer.initAudioPlayer.error -> $e');
       throw Exception(e);
     }
   }
@@ -149,7 +150,6 @@ class _WAudioPlayerState extends State<WAudioPlayer> {
               );
             }
             final datasets = addDataset(context, widget.state.dataset, _map);
-
             return ChildConditionBuilder(
               ValueKey('${widget.state.node.nid} ${widget.state.loop}'),
               state: widget.state.copyWith(

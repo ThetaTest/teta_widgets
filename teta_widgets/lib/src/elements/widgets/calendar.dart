@@ -7,6 +7,7 @@ import 'package:paged_vertical_calendar/paged_vertical_calendar.dart';
 import 'package:teta_core/teta_core.dart';
 // Project imports:
 import 'package:teta_widgets/src/core/teta_widget/index.dart';
+import 'package:teta_widgets/src/elements/builder/save_dataset.dart';
 import 'package:teta_widgets/src/elements/index.dart';
 
 // ignore_for_file: public_member_api_docs
@@ -37,6 +38,11 @@ class WCalendar extends StatefulWidget {
     required this.borderRadius,
     required this.shadows,
     required this.children,
+    required this.selectedItemName,
+    required this.fillEventCount,
+    required this.borderRaiudEventCount,
+    required this.widthEventCount,
+    required this.heightEventCount,
   }) : super(key: key);
 
   final TetaWidgetState state;
@@ -49,9 +55,13 @@ class WCalendar extends StatefulWidget {
   final FMargins padding;
   final FFill fill;
   final FFill fill2;
+  final FFill fillEventCount;
   final FBorderRadius borderRadius;
   final FShadow shadows;
-
+  final FTextTypeInput selectedItemName;
+  final FBorderRadius borderRaiudEventCount;
+  final FSize widthEventCount;
+  final FSize heightEventCount;
   @override
   State<WCalendar> createState() => _WCalendarState();
 }
@@ -66,16 +76,26 @@ class _WCalendarState extends State<WCalendar> {
   void initState() {
     dataset = null;
     _setDataset();
+
     super.initState();
   }
 
   @override
   Widget build(final BuildContext context) {
+    final selectedItemNameNew = widget.selectedItemName.get(
+      widget.state.params,
+      widget.state.states,
+      widget.state.dataset,
+      widget.state.forPlay,
+      widget.state.loop,
+      context,
+    );
     return PagedVerticalCalendar(
       minDate: DateTime.now(),
       addAutomaticKeepAlives: true,
       dayBuilder: (final context, final date) {
         var eventExists = false;
+        var eventCounter = 0;
         final dayFlag = list.firstWhereOrNull(
           (final e) =>
               e.date.year == date.year &&
@@ -87,21 +107,33 @@ class _WCalendarState extends State<WCalendar> {
             (final e) => e.getName == widget.value.datasetName,
           );
           if (dataset != null && widget.value.datasetAttrName != null) {
-            final element = dataset!.getMap.firstWhereOrNull((final element) {
+            final element = dataset!.getMap.where((final element) {
               final a = DateTime.tryParse(
                 element[widget.value.datasetAttrName] as String? ?? '',
               );
               return a?.year == date.year &&
                   a?.month == date.month &&
                   a?.day == date.day;
-            });
-            eventExists = element != null;
+            }).toList();
+            eventExists = element.isNotEmpty;
+            eventCounter = element.length;
           }
           if (dataset != null) {
             list.add(DateCalendarObject(date: date, hasEvents: eventExists));
           }
         } else if (dayFlag.hasEvents) {
           eventExists = true;
+          if (dataset != null) {
+            final element = dataset!.getMap.where((final element) {
+              final a = DateTime.tryParse(
+                element[widget.value.datasetAttrName] as String? ?? '',
+              );
+              return a?.year == date.year &&
+                  a?.month == date.month &&
+                  a?.day == date.day;
+            }).toList();
+            eventCounter = element.length;
+          }
         }
         return Container(
           margin: widget.margins.get(context),
@@ -127,6 +159,26 @@ class _WCalendarState extends State<WCalendar> {
                 forPlay: widget.state.forPlay,
                 loop: widget.state.loop,
               ),
+              if (eventExists)
+                Wrap(
+                  children: List.generate(1, (index) {
+                    return Padding(
+                      padding: const EdgeInsets.all(1.0),
+                      child: Container(
+                        width: widget.widthEventCount
+                            .get(context: context, isWidth: true),
+                        height: widget.heightEventCount
+                            .get(context: context, isWidth: false),
+                        decoration: TetaBoxDecoration.get(
+                          context: context,
+                          fill: widget.fillEventCount.get(context),
+                          borderRadius: widget.borderRaiudEventCount,
+                          shadow: widget.shadows,
+                        ),
+                      ),
+                    );
+                  }).toList(),
+                )
             ],
           ),
         );
@@ -147,9 +199,24 @@ class _WCalendarState extends State<WCalendar> {
           ),
         );
       },
-      onDayPressed: (final date) {
+      onDayPressed: (final date) async {
         final data = widget.state.dataset.firstWhere(
-          (final element) => element.getName == 'Cms stream',
+          (final element) => element.getName == widget.value.datasetName,
+        );
+        var selectedItemList = data.getMap
+            .where(
+              (final element) =>
+                  element[widget.value.datasetAttrName]
+                      .toString()
+                      .substring(0, 10) ==
+                  date.toString().substring(0, 10),
+            )
+            .toList();
+        await saveSelectedItemDatasets(
+          selectedItemNameNew,
+          context,
+          selectedItemList,
+          widget.state.dataset,
         );
         final loop = data.getMap.indexOf(
           data.getMap.firstWhere(
@@ -195,5 +262,29 @@ class _WCalendarState extends State<WCalendar> {
         }
       }
     } catch (_) {}
+  }
+}
+
+///when you click day, save event as dataset.
+Future<void> saveSelectedItemDatasets(
+    String selectedItemNameNew,
+    BuildContext context,
+    List<Map<String, dynamic>> selectedItemList,
+    List<DatasetObject> dataset) async {
+  DatasetObject _newMap = DatasetObject(
+    name: 'Selected Items Name',
+    map: [<String, dynamic>{}],
+  );
+  if (selectedItemNameNew.isNotEmpty) {
+    _newMap = _newMap.copyWith(
+      name: selectedItemNameNew,
+      map: selectedItemList,
+    );
+    await saveDatasets(context, dataset, _newMap);
+  } else {
+    _newMap = _newMap.copyWith(
+      map: selectedItemList,
+    );
+    await saveDatasets(context, dataset, _newMap);
   }
 }

@@ -2,13 +2,10 @@
 // ignore_for_file: public_member_api_docs
 
 // Flutter imports:
-import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 // Package imports:
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:teta_core/teta_core.dart';
-import 'package:teta_repositories/src/node_repository.dart';
-import 'package:teta_repositories/src/project_repository.dart';
 import 'package:teta_repositories/teta_repositories.dart';
 // Project imports:
 import 'package:teta_widgets/src/elements/controls/atoms/action.dart';
@@ -24,6 +21,7 @@ import 'package:teta_widgets/src/elements/controls/atoms/cms_collections.dart';
 import 'package:teta_widgets/src/elements/controls/atoms/code_field.dart';
 import 'package:teta_widgets/src/elements/controls/atoms/cross_axis_alignment.dart';
 import 'package:teta_widgets/src/elements/controls/atoms/dataset.dart';
+import 'package:teta_widgets/src/elements/controls/atoms/dropdownControl.dart';
 import 'package:teta_widgets/src/elements/controls/atoms/fill.dart';
 import 'package:teta_widgets/src/elements/controls/atoms/firebase/path.dart';
 import 'package:teta_widgets/src/elements/controls/atoms/flag.dart';
@@ -158,6 +156,9 @@ enum ControlType {
 
   /// Made to select dataset only
   datasetType,
+
+  ///dropdown List select
+  dropdownControl,
   barcode,
   params,
   states,
@@ -808,6 +809,25 @@ class ControlBuilder {
         key: ValueKey('${node.nid}'),
         title: control.title,
         httpMethod: control.value as String,
+        callBack: (final value, final old) => {
+          node.body.attributes[control.key] = value,
+          ControlBuilder.toDB(
+            node,
+            context,
+            control.key,
+            value,
+            old,
+          ),
+        },
+      );
+    }
+    if (control.type == ControlType.dropdownControl) {
+      return DropdownControl(
+        key: ValueKey('${node.nid}'),
+        node: node,
+        title: control.title,
+        item: control.value as String,
+        list: control.list ?? ['EmptyList'],
         callBack: (final value, final old) => {
           node.body.attributes[control.key] = value,
           ControlBuilder.toDB(

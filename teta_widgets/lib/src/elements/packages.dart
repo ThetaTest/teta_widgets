@@ -45,6 +45,11 @@ const PackageModel pPagedVerticalCalendar = PackageModel(
   packageVersion: '1.1.3',
   isDart: false,
 );
+const PackageModel pTableCalendar = PackageModel(
+  packageName: 'table_calendar',
+  packageVersion: '3.0.7',
+  isDart: false,
+);
 const PackageModel pConcentricTransition = PackageModel(
   packageName: 'concentric_transition',
   packageVersion: '1.0.3',

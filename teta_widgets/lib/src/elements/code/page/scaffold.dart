@@ -165,7 +165,6 @@ Future<String> pageCodeTemplate(
     '',
     loop: loop,
   );
-
   return '''
     import 'dart:async';
     import 'package:myapp/src/teta_files/imports.dart';

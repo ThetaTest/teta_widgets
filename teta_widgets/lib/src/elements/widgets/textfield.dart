@@ -70,14 +70,35 @@ class _WTextFieldState extends State<WTextField> {
 
   @override
   void initState() {
-    textEditingController.text = widget.value.value ?? '';
+    final valueInput = widget.value.get(
+      widget.state.params,
+      widget.state.states,
+      widget.state.dataset,
+      widget.state.forPlay,
+      widget.state.loop,
+      context,
+    );
+    if (valueInput != null) {
+      textEditingController.text = valueInput;
+    }
+
     super.initState();
   }
 
   @override
   Widget build(final BuildContext context) {
     if (!widget.state.forPlay) {
-      textEditingController.text = widget.value.value!;
+      final valueInput = widget.value.get(
+        widget.state.params,
+        widget.state.states,
+        widget.state.dataset,
+        widget.state.forPlay,
+        widget.state.loop,
+        context,
+      );
+      if (valueInput != null) {
+        textEditingController.text = valueInput;
+      }
     }
 
     final borderRadius = widget.borderRadius.get(context);
@@ -113,6 +134,7 @@ class _WTextFieldState extends State<WTextField> {
             borderRadius: widget.borderRadius.get(context),
           ),
           child: TextField(
+            autofocus: true,
             controller: textEditingController,
             decoration: InputDecoration(
               filled: true,

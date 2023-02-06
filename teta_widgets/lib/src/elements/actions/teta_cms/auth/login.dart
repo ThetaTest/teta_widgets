@@ -3,12 +3,10 @@
 // ignore_for_file: public_member_api_docs
 
 // Flutter imports:
-import 'package:enum_to_string/enum_to_string.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 // Package imports:
 import 'package:teta_cms/teta_cms.dart';
-import 'package:teta_core/src/services/track_service.dart';
 import 'package:teta_core/teta_core.dart';
 import 'package:teta_widgets/src/core/teta_widget/index.dart';
 import 'package:teta_widgets/src/elements/actions/navigation/open_page.dart';
@@ -36,14 +34,6 @@ class FATetaCMSLogin {
       ),
     );
     */
-
-    TrackService.instance.track(
-      eventName: 'Teta Auth: login in Teta',
-      eventProperties: <String, String>{
-        'provider': EnumToString.convertToString(provider),
-      },
-      prjId: prj.id,
-    );
 
     await TetaCMS.instance.auth.signIn(
       provider: provider,

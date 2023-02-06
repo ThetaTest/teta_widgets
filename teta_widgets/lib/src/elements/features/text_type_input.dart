@@ -558,7 +558,7 @@ getValueForScreenType<$type>(
         } else {
           //this dataset has one element
           if (datasetLength == '1') {
-            return "this.datasets[${_calcStringType(datasetName)}]?[${0}]?[${_calcStringType(datasetAttr)}]?.toString() ?? ''";
+            return "this.datasets[${_calcStringType(datasetName)}]?[index]?[${_calcStringType(datasetAttr)}]?.toString() ?? ''";
           } else {
             //this dataset has one then more element
             //Dataset->Data

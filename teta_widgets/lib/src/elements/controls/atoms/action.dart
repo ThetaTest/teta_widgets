@@ -18,6 +18,8 @@ import 'package:teta_widgets/src/elements/features/actions/enums/audio_player_ac
 import 'package:teta_widgets/src/elements/features/actions/enums/braintree.dart';
 import 'package:teta_widgets/src/elements/features/actions/enums/camera.dart';
 import 'package:teta_widgets/src/elements/features/actions/enums/custom_http_request.dart';
+import 'package:teta_widgets/src/elements/features/actions/enums/firebase/firebase_analytics.dart';
+import 'package:teta_widgets/src/elements/features/actions/enums/firebase/firebase_message.dart';
 import 'package:teta_widgets/src/elements/features/actions/enums/index.dart';
 import 'package:teta_widgets/src/elements/features/actions/enums/mixpanel.dart';
 import 'package:teta_widgets/src/elements/features/actions/enums/qonversion.dart';
@@ -425,6 +427,18 @@ class __NewActionAlertState extends State<_NewActionAlert> {
         actionType: ActionType.braintree,
         options: FActionElement.getBraintree(config),
         type: ActionBraintree.values,
+      ),
+      _SelectionClass(
+        title: 'Firebase Analytics',
+        actionType: ActionType.firebaseAnalytics,
+        options: FActionElement.getFirebaseAnalytics(config),
+        type: ActionFirebaseAnalytics.values,
+      ),
+      _SelectionClass(
+        title: 'Firebase Messages',
+        actionType: ActionType.firebaseMessages,
+        options: FActionElement.getFirebaseMessages(config),
+        type: ActionFirebaseMessages.values,
       ),
       _SelectionClass(
         title: 'WebView',

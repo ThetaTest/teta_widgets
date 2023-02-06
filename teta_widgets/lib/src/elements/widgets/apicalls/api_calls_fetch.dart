@@ -204,10 +204,12 @@ class _WApiCallsFetchState extends State<WApiCallsFetch> {
       final response = await http.get(Uri.parse(newURL), headers: headersNew);
 
       final json = response.body;
-
+      final statusCode = <String, dynamic>{'statusCode': response.statusCode};
       final dynamic resp = jsonDecode(json);
       if (resp is List) {
-        final data = resp;
+        final data = (resp)
+            .map((final dynamic e) => <String, dynamic>{...e, ...statusCode})
+            .toList();
         if (mounted) {
           setState(() {
             list = data;
@@ -215,8 +217,9 @@ class _WApiCallsFetchState extends State<WApiCallsFetch> {
           });
         }
       } else {
-        final data = <dynamic>[];
-        data.add(resp);
+        final data = <dynamic>[
+          <String, dynamic>{...resp, ...statusCode}
+        ];
         if (mounted) {
           setState(() {
             list = data;

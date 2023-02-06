@@ -21,6 +21,7 @@ import 'package:teta_widgets/src/elements/bodies/bottombaritem.dart';
 import 'package:teta_widgets/src/elements/bodies/bouncing_widget.dart';
 import 'package:teta_widgets/src/elements/bodies/button.dart';
 import 'package:teta_widgets/src/elements/bodies/calendar.dart';
+import 'package:teta_widgets/src/elements/bodies/calendarV2.dart';
 import 'package:teta_widgets/src/elements/bodies/camera.dart';
 import 'package:teta_widgets/src/elements/bodies/card.dart';
 import 'package:teta_widgets/src/elements/bodies/center.dart';
@@ -238,6 +239,7 @@ final stateTypes = <IntrinsicStates>[
   concentricPageViewIntrinsicStates,
   bouncingWidgetIntrinsicStates,
   calendarIntrinsicStates,
+  calendarV2IntrinsicStates,
   cameraIntrinsicStates,
   webviewIntrinsicStates,
   audioPlayerIntrinsicStates,
@@ -492,6 +494,8 @@ NodeBody getBody(final NType type) {
       return BouncingWidgetBody();
     case NType.calendar:
       return CalendarBody();
+    case NType.calendarV2:
+      return CalenderV2Body();
     case NType.camera:
       return CameraBody();
     case NType.webview:
@@ -577,7 +581,7 @@ NodeBody getBody(final NType type) {
       // TODO: Handle this case.
       break;
     case NType.airtableFetch:
-      // TODO: Handle this case.
+      return AirtableFetchBody();
       break;
     case NType.apiCallsFetch:
       return ApiCallsFetchBody();

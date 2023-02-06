@@ -71,30 +71,9 @@ class WVideo extends StatelessWidget {
       ),
     );
     return TetaWidget(
-      state: state,
-      child: state.forPlay
-          ? YoutubePlayerIFrame(
-              controller: controller,
-            )
-          : AspectRatio(
-              aspectRatio: 16 / 9,
-              child: Container(
-                color: Palette.bgGreyLight,
-                child: Column(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  children: const [
-                    Icon(
-                      Icons.play_arrow,
-                      size: 48,
-                      color: Colors.white,
-                    ),
-                    THeadline3(
-                      'Play to watch',
-                    ),
-                  ],
-                ),
-              ),
-            ),
-    );
+        state: state,
+        child: YoutubePlayerIFrame(
+          controller: controller,
+        ));
   }
 }

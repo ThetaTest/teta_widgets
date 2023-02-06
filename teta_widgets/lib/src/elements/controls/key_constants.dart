@@ -44,14 +44,18 @@ class DBKeys {
   static const String maxHeight = 'mahgh';
   static const String textAlign = 'txtAlg';
   static const String borderRadius = 'bR';
+  static const String borderRadiusTwo = 'bRT';
   static const String crossAxisAlignment = 'cAA';
   static const String mainAxisAlignment = 'mAA';
   static const String mainAxisSize = 'mAS';
   static const String firestorePath = 'path';
   static const String fill = 'fill';
+  static const String fill2 = 'fill2';
+  static const String fill3 = 'fill3';
   static const String textFill = 'txtF';
   static const String activeFill = 'actF';
   static const String bgFill = 'bgFl';
+  static const String bgTwoFill = 'bgTwoFL';
   static const String startAt = 'stAt';
   static const String shadows = 'shd';
   static const String borders = 'brd';
@@ -126,6 +130,10 @@ class DBKeys {
   static const String showCursor = 'shCrs';
   static const String autoCorrect = 'autoC';
   static const String obscureText = 'obT';
+  static const String selectedItemName = 'sIN';
+
+  ///calendar v2
+  static const String dropdownItem = 'drdI';
 
   //
   static const String showBorders = 'bEnb';
@@ -261,7 +269,11 @@ class DynamicAttributes {
           return FPhysic.fromJson(value as String);
         case DBKeys.bgFill:
           return FFill().fromJson(value as Map<String, dynamic>);
+        case DBKeys.bgTwoFill:
+          return FFill().fromJson(value as Map<String, dynamic>);
         case DBKeys.borderRadius:
+          return FBorderRadius.fromJson(value as dynamic);
+        case DBKeys.borderRadiusTwo:
           return FBorderRadius.fromJson(value as dynamic);
         case DBKeys.borders:
           return FBorder.fromJson(value as Map<String, dynamic>);
@@ -286,6 +298,10 @@ class DynamicAttributes {
         case DBKeys.crossAxisAlignment:
           return FCrossAxisAlignment().fromJson(value as String);
         case DBKeys.fill:
+          return FFill().fromJson(value as Map<String, dynamic>);
+        case DBKeys.fill2:
+          return FFill().fromJson(value as Map<String, dynamic>);
+        case DBKeys.fill3:
           return FFill().fromJson(value as Map<String, dynamic>);
         case DBKeys.firestorePath:
           return FFirestorePath.fromJson(value as List<Map<String, dynamic>>);
@@ -471,6 +487,8 @@ class DynamicAttributes {
           return value;
         case DBKeys.showDrawer:
           return value;
+        case DBKeys.dropdownItem:
+          return value;
         case DBKeys.customHttpRequestURL:
           return FTextTypeInput.fromJson(value as Map<String, dynamic>);
         case DBKeys.customHttpRequestList:
@@ -617,6 +635,8 @@ class DynamicAttributes {
           return value is String
               ? FKeyboardType.fromJson(value)
               : FKeyboardType();
+        case DBKeys.selectedItemName:
+          return FTextTypeInput.fromJson(value as Map<String, dynamic>);
         default:
           return value;
       }
@@ -642,7 +662,11 @@ class DynamicAttributes {
         return value != null ? value.toJson() : FPhysic().toJson();
       case DBKeys.bgFill:
         return value != null ? value.toJson() : FFill().toJson();
+      case DBKeys.bgTwoFill:
+        return value != null ? value.toJson() : FFill().toJson();
       case DBKeys.borderRadius:
+        return value != null ? value.toJson() : FBorderRadius().toJson();
+      case DBKeys.borderRadiusTwo:
         return value != null ? value.toJson() : FBorderRadius().toJson();
       case DBKeys.borders:
         return value != null ? value.toJson() : FBorder().toJson();
@@ -659,6 +683,10 @@ class DynamicAttributes {
       case DBKeys.crossAxisAlignment:
         return value != null ? value.toJson() : FCrossAxisAlignment().toJson();
       case DBKeys.fill:
+        return value != null ? value.toJson() : FFill().toJson();
+      case DBKeys.fill2:
+        return value != null ? value.toJson() : FFill().toJson();
+      case DBKeys.fill3:
         return value != null ? value.toJson() : FFill().toJson();
       case DBKeys.firestorePath:
         return value != null ? value.toJson() : FFirestorePath().toJson();
@@ -948,6 +976,8 @@ class DynamicAttributes {
         return value != null ? value.toJson() : FSize().toJson();
       case DBKeys.requestName:
         return value;
+      case DBKeys.dropdownItem:
+        return value;
       case DBKeys.apiCallsResponseName:
         return value != null ? value.toJson() : FTextTypeInput().toJson();
       case DBKeys.apiCallsDynamicValue:
@@ -958,6 +988,8 @@ class DynamicAttributes {
         return (value != null)
             ? (value as Map<String, dynamic>)
             : <String, dynamic>{};
+      case DBKeys.selectedItemName:
+        return value != null ? value.toJson() : FTextTypeInput().toJson();
 
       default:
         return <String, dynamic>{};
