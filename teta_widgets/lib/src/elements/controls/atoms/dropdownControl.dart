@@ -29,67 +29,55 @@ class DropdownControl extends StatefulWidget {
 }
 
 class _DropdownControlState extends State<DropdownControl> {
-  int? nodeId;
-  bool? isUpdated;
   String? dropdown;
   List<String>? dropdownList;
+
   @override
   void initState() {
     super.initState();
-    nodeId = widget.node.nid;
     dropdown = widget.item;
     dropdownList = widget.list;
   }
 
   @override
   Widget build(final BuildContext context) {
-    return BlocListener<FocusBloc, List<CNode>>(
+    return BlocListener<FocusBloc, List<int>>(
       listener: (final context, final state) {
-        if (state.isNotEmpty) {
-          if (state.first.nid != nodeId) {
-            setState(() {
-              isUpdated = true;
-              dropdown = widget.item;
-              dropdownList = widget.list;
-            });
-            nodeId = state.first.nid;
-          }
-        }
+        setState(() {
+          dropdown = widget.item;
+          dropdownList = widget.list;
+        });
       },
-      child: BlocBuilder<FocusBloc, List<CNode>>(
-        builder: (final context, final state) {
-          return Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              Padding(
-                padding: const EdgeInsets.only(
-                  bottom: 8,
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          Padding(
+            padding: const EdgeInsets.only(
+              bottom: 8,
+            ),
+            child: Row(
+              children: [
+                TParagraph(
+                  widget.title ?? 'Select from List',
                 ),
-                child: Row(
-                  children: [
-                    TParagraph(
-                      widget.title ?? 'Select from List',
-                    ),
-                  ],
-                ),
-              ),
-              CDropdown(
-                value: dropdown,
-                items: dropdownList ?? ['EmptyList'],
-                onChange: (final newValue) {
-                  if (newValue != null) {
-                    setState(() {
-                      dropdown = newValue;
-                    });
-                    final old = widget.item;
-                    final value = newValue;
-                    widget.callBack(value, old);
-                  }
-                },
-              ),
-            ],
-          );
-        },
+              ],
+            ),
+          ),
+          CDropdown(
+            value: dropdown,
+            items: dropdownList ?? ['EmptyList'],
+            onChange: (final newValue) {
+              if (newValue != null) {
+                setState(() {
+                  dropdown = newValue;
+                });
+                final old = widget.item;
+                final value = newValue;
+                widget.callBack(value, old);
+              }
+            },
+          ),
+        ],
       ),
     );
   }

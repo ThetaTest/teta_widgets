@@ -3,27 +3,19 @@
 
 // Flutter imports:
 import 'package:flutter/material.dart';
-import 'package:gap/gap.dart';
 // Package imports:
 import 'package:teta_core/teta_core.dart';
 import 'package:teta_widgets/src/elements/controls/atoms/text.dart';
-import 'package:teta_widgets/src/elements/controls/http_params.dart';
 // Project imports:
 import 'package:teta_widgets/src/elements/index.dart';
 
 class FirebaseMessagesSubscribeToTopicControl extends StatelessWidget {
   const FirebaseMessagesSubscribeToTopicControl({
-    required this.prj,
-    required this.page,
-    required this.node,
     required this.action,
     required this.callback,
     final Key? key,
   }) : super(key: key);
 
-  final ProjectObject prj;
-  final PageObject page;
-  final CNode node;
   final FActionElement action;
   final Function() callback;
 
@@ -41,9 +33,7 @@ class FirebaseMessagesSubscribeToTopicControl extends StatelessWidget {
           ),
           child: TextControl(
             valueType: VariableType.string,
-            node: node,
             value: action.firebaseMessagesTopic ?? FTextTypeInput(),
-            page: page,
             title: 'Topic',
             callBack: (final value, final old) {
               action.firebaseMessagesTopic = value;

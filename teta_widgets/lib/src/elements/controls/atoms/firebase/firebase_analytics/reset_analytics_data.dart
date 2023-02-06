@@ -13,17 +13,11 @@ import 'package:teta_widgets/src/elements/index.dart';
 
 class FirebaseAnalyticsLogResetAnalyticsDataControl extends StatelessWidget {
   const FirebaseAnalyticsLogResetAnalyticsDataControl({
-    required this.prj,
-    required this.page,
-    required this.node,
     required this.action,
     required this.callback,
     final Key? key,
   }) : super(key: key);
 
-  final ProjectObject prj;
-  final PageObject page;
-  final CNode node;
   final FActionElement action;
   final Function() callback;
 
@@ -32,7 +26,7 @@ class FirebaseAnalyticsLogResetAnalyticsDataControl extends StatelessWidget {
     return Column(
       mainAxisSize: MainAxisSize.min,
       crossAxisAlignment: CrossAxisAlignment.start,
-      children: [],
+      children: const [],
     );
   }
 }

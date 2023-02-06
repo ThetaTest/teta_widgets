@@ -13,17 +13,11 @@ import 'package:teta_widgets/src/elements/index.dart';
 
 class FirebaseAnalyticsLogJoinGroupControl extends StatelessWidget {
   const FirebaseAnalyticsLogJoinGroupControl({
-    required this.prj,
-    required this.page,
-    required this.node,
     required this.action,
     required this.callback,
     final Key? key,
   }) : super(key: key);
 
-  final ProjectObject prj;
-  final PageObject page;
-  final CNode node;
   final FActionElement action;
   final Function() callback;
 
@@ -41,9 +35,7 @@ class FirebaseAnalyticsLogJoinGroupControl extends StatelessWidget {
           ),
           child: TextControl(
             valueType: VariableType.string,
-            node: node,
             value: action.firebaseAnalyticsGroupId ?? FTextTypeInput(),
-            page: page,
             title: 'groupId',
             callBack: (final value, final old) {
               action.firebaseAnalyticsGroupId = value;
