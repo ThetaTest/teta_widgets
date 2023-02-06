@@ -3,7 +3,6 @@ import 'package:collection/collection.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 // Package imports:
-import 'package:intl/intl.dart';
 import 'package:table_calendar/table_calendar.dart';
 import 'package:teta_core/teta_core.dart';
 
@@ -72,7 +71,7 @@ class _WCalendarV2State extends State<WCalendarV2> {
   List<DateCalendarObject> list = <DateCalendarObject>[];
   Map<String, List> mySelectedEvents = {};
   TextStyleModel? model;
-  PaletteModel? modelPalette;
+  ColorStyleModel? modelPalette;
 
   @override
   void initState() {
@@ -84,17 +83,17 @@ class _WCalendarV2State extends State<WCalendarV2> {
   @override
   Widget build(final BuildContext context) {
     final isLight = BlocProvider.of<PaletteDarkLightCubit>(context).state;
-    PaletteModel? model2;
+    ColorStyleModel? model2;
     BlocProvider.of<ColorStylesCubit>(context).state.forEach((final element) {
       if (element.id == widget.iconFill.paletteStyle) model2 = element;
       if (element.name == widget.iconFill.paletteStyle) model2 = element;
     });
-    Color _getIconColor(final PaletteModel? model2, final bool isLight) {
+    Color _getIconColor(final ColorStyleModel? model2, final bool isLight) {
       final tempOpacity = widget.iconFill.levels?.first.opacity ?? 1;
       if (model2 != null) {
         return isLight
-            ? HexColor(model2.light!.levels!.first.color)
-            : HexColor(model2.fill!.levels!.first.color);
+            ? HexColor(model2.light.levels!.first.color)
+            : HexColor(model2.fill.levels!.first.color);
       } else {
         return HexColor(widget.iconFill.levels!.first.color)
             .withOpacity(tempOpacity);
@@ -117,7 +116,7 @@ class _WCalendarV2State extends State<WCalendarV2> {
       default:
         break;
     }
-    var dayHeight = widget.textStyle2.fontSize?.get(context);
+    final dayHeight = widget.textStyle2.fontSize?.get(context);
     var dayHeight2 = 16.0;
     if (dayHeight != null) {
       dayHeight2 = dayHeight + 5;
@@ -126,17 +125,18 @@ class _WCalendarV2State extends State<WCalendarV2> {
       firstDay: DateTime.utc(2010, 10, 16),
       lastDay: DateTime.utc(2030, 3, 14),
       focusedDay: _focusedDay,
-      selectedDayPredicate: (day) => isSameDay(day, _selectedDay),
+      selectedDayPredicate: (final day) => isSameDay(day, _selectedDay),
       calendarFormat: _calendarFormat,
       onDaySelected: _onDaySelected,
       eventLoader: _listOfDayEvents,
-      onPageChanged: (focusedDay) {
+      onPageChanged: (final focusedDay) {
         _focusedDay = focusedDay;
       },
       daysOfWeekHeight: dayHeight2,
       daysOfWeekStyle: DaysOfWeekStyle(
-          weekdayStyle: widget.textStyle2.get(context, model),
-          weekendStyle: widget.textStyle2.get(context, model)),
+        weekdayStyle: widget.textStyle2.get(context, model),
+        weekendStyle: widget.textStyle2.get(context, model),
+      ),
       headerStyle: HeaderStyle(
         leftChevronIcon: Icon(
           Icons.arrow_back,
@@ -165,7 +165,6 @@ class _WCalendarV2State extends State<WCalendarV2> {
         withinRangeTextStyle: widget.textStyle2.get(context, model),
         outsideTextStyle: widget.textStyle2.get(context, model),
         rangeStartTextStyle: widget.textStyle2.get(context, model),
-        isTodayHighlighted: true,
         markerDecoration: TetaBoxDecoration.get(
           context: context,
           fill: widget.dotFill.get(context),
@@ -236,12 +235,12 @@ class _WCalendarV2State extends State<WCalendarV2> {
     );
   }
 
-  List<Map<String, dynamic>> _listOfDayEvents(DateTime dateTime) {
+  List<Map<String, dynamic>> _listOfDayEvents(final DateTime dateTime) {
     dataset ??= widget.state.dataset.firstWhereOrNull(
       (final e) => e.getName == widget.calendarEvents.datasetName,
     );
     if (dataset != null && widget.calendarEvents.datasetAttrName != null) {
-      var selectedItemList = dataset!.getMap
+      final selectedItemList = dataset!.getMap
           .where(
             (final element) =>
                 element[widget.calendarEvents.datasetAttrName]
@@ -258,7 +257,10 @@ class _WCalendarV2State extends State<WCalendarV2> {
     return <Map<String, dynamic>>[];
   }
 
-  Future<void> _onDaySelected(DateTime selectedDay, DateTime focusedDay) async {
+  Future<void> _onDaySelected(
+    final DateTime selectedDay,
+    final DateTime focusedDay,
+  ) async {
     List<Map<String, dynamic>> selectedItemList;
     if (!isSameDay(_selectedDay, selectedDay)) {
       setState(() {
@@ -365,11 +367,12 @@ class _WCalendarV2State extends State<WCalendarV2> {
 
   ///when you click day, save event as dataset.
   Future<void> saveSelectedItemDatasets(
-      String selectedItemNameNew,
-      BuildContext context,
-      List<Map<String, dynamic>> selectedItemList,
-      List<DatasetObject> dataset) async {
-    DatasetObject _newMap = DatasetObject(
+    final String selectedItemNameNew,
+    final BuildContext context,
+    final List<Map<String, dynamic>> selectedItemList,
+    final List<DatasetObject> dataset,
+  ) async {
+    var _newMap = const DatasetObject(
       name: 'Selected Items Name',
       map: [<String, dynamic>{}],
     );
