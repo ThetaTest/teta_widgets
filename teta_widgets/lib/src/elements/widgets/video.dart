@@ -71,9 +71,10 @@ class WVideo extends StatelessWidget {
       ),
     );
     return TetaWidget(
-        state: state,
-        child: YoutubePlayerIFrame(
-          controller: controller,
-        ));
+      state: state,
+      child: YoutubePlayerIFrame(
+        controller: controller,
+      ),
+    );
   }
 }
