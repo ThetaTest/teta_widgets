@@ -54,11 +54,9 @@ class StyleFillControlState extends State<StyleFillControl> {
                         .toList(),
                     onChange: (final value) {
                       ColorStyleModel? model;
-                      BlocProvider.of<ColorStylesCubit>(context)
-                          .state
-                          .forEach((final element) {
+                      for (var element in paletteStyles) {
                         if (element.name == value) model = element;
-                      });
+                      }
                       final old = FFill().fromJson(widget.fill.toJson());
                       widget.fill.paletteStyle = model!.name;
                       widget.callBack(

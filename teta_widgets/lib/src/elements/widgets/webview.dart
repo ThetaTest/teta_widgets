@@ -64,7 +64,10 @@ class _WWebViewXPageState extends State<WWebViewXPage> {
       child: WebViewX(
         key: const ValueKey('webviewx'),
         onWebViewCreated: (final controller) {
-          variable?.webViewController = controller;
+          variable = variable!.copyWith(
+            webViewController: controller,
+          );
+
           _setUrl();
         },
         height: double.maxFinite,

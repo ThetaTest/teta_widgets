@@ -29,15 +29,15 @@ class _DragAndDropBuilderState extends State<DragAndDropBuilder> {
 
   @override
   void initState() {
-    final page = (context.read<PageCubit>().state as PageLoaded).page;
+    final pageState = context.read<PageCubit>().state;
+    if (pageState is! PageLoaded) return;
     parent = sl.get<FindNodeRendering>().findParentByChildrenIds(
-          flatList: page.flatList,
+          flatList: pageState.page.flatList,
           element: widget.state.node,
         );
     canReceiveDrag = parent?.globalType == NType.row ||
         parent?.globalType == NType.column ||
         parent?.globalType == NType.listView;
-
     super.initState();
   }
 

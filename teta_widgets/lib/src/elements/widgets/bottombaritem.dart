@@ -64,8 +64,7 @@ class WBottomBarItem extends StatelessWidget {
           children: [
             BlocBuilder<ColorStylesCubit, List<ColorStyleModel>>(
               builder: (final context, final state) {
-                final isLight =
-                    BlocProvider.of<PaletteDarkLightCubit>(context).state;
+                final isLight = context.watch<PaletteDarkLightCubit>().state;
                 ColorStyleModel? model;
                 for (final element in state) {
                   if (element.id == fill.paletteStyle) model = element;

@@ -12,7 +12,6 @@ import 'package:teta_core/teta_core.dart';
 import 'package:teta_widgets/src/core/teta_widget/index.dart';
 // Project imports:
 import 'package:teta_widgets/src/elements/actions/navigation/open_page.dart';
-import 'package:teta_widgets/src/elements/actions/snippets/change_state.dart';
 import 'package:teta_widgets/src/elements/actions/snippets/take_state_from.dart';
 import 'package:teta_widgets/src/elements/nodes/node.dart';
 import 'package:uni_links/uni_links.dart';
@@ -34,7 +33,6 @@ class FASupabaseSignInWithProvider {
     // Take status from states
     final status = takeStateFrom(page, 'status');
 
-    changeState(status, context, 'Loading');
     final client = BlocProvider.of<SupabaseCubit>(context).state;
     if (client != null) {
       final response = await UserSocialLoginService.instance
@@ -58,11 +56,6 @@ class FASupabaseSignInWithProvider {
           },
         );
       }
-
-      if (response != null && response.jwt.isEmpty) {
-        changeState(status, context, 'Failed');
-      }
-      changeState(status, context, 'Success');
       await FActionNavigationOpenPage.action(
         context,
         state,

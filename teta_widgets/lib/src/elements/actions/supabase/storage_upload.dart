@@ -10,7 +10,6 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:recase/recase.dart';
 import 'package:teta_core/teta_core.dart';
 // Project imports:
-import 'package:teta_widgets/src/elements/actions/snippets/change_state.dart';
 import 'package:teta_widgets/src/elements/actions/snippets/take_state_from.dart';
 import 'package:teta_widgets/src/elements/features/text_type_input.dart';
 
@@ -21,29 +20,23 @@ class FASupabaseStorageUpload {
     final FTextTypeInput? pathFile,
     final String? stateName,
     final String? stateName2,
-    final List<VariableObject> params,
-    final List<VariableObject> states,
-    final List<DatasetObject> dataset,
     final int? loop,
   ) async {
-    final page = BlocProvider.of<PageCubit>(context).state as PageLoaded;
+    final pageState = BlocProvider.of<PageCubit>(context).state;
+    if (pageState is! PageLoaded) return;
 
-    // Take status from states
-    final status = takeStateFrom(page, 'status');
-
-    changeState(status, context, 'Loading');
-    final index =
-        states.indexWhere((final element) => element.name == stateName);
+    final index = pageState.states
+        .indexWhere((final element) => element.name == stateName);
     final client = BlocProvider.of<SupabaseCubit>(context).state;
     if (client != null && index != -1) {
-      final bytes = await states[index].file?.readAsBytes();
+      final bytes = await pageState.states[index].file?.readAsBytes();
       if (bytes == null || bytes.isEmpty) return;
       final response = await client.storage
           .from(
             supabaseFrom?.get(
-                  params,
-                  states,
-                  dataset,
+                  pageState.params,
+                  pageState.states,
+                  pageState.datasets,
                   true,
                   loop,
                   context,
@@ -52,9 +45,9 @@ class FASupabaseStorageUpload {
           )
           .uploadBinary(
             pathFile?.get(
-                  params,
-                  states,
-                  dataset,
+                  pageState.params,
+                  pageState.states,
+                  pageState.datasets,
                   true,
                   loop,
                   context,
@@ -62,15 +55,14 @@ class FASupabaseStorageUpload {
                 '',
             bytes,
           );
-      if (response.error != null) changeState(status, context, 'Failed');
-      final index2 =
-          states.indexWhere((final element) => element.name == stateName2);
+      final index2 = pageState.states
+          .indexWhere((final element) => element.name == stateName2);
       final res = client.storage
           .from(
             supabaseFrom?.get(
-                  params,
-                  states,
-                  dataset,
+                  pageState.params,
+                  pageState.states,
+                  pageState.datasets,
                   true,
                   loop,
                   context,
@@ -79,9 +71,9 @@ class FASupabaseStorageUpload {
           )
           .getPublicUrl(
             pathFile?.get(
-                  params,
-                  states,
-                  dataset,
+                  pageState.params,
+                  pageState.states,
+                  pageState.datasets,
                   true,
                   loop,
                   context,
@@ -92,10 +84,7 @@ class FASupabaseStorageUpload {
         Logger.printError(
           'Error retriving the public url from just uploaded file, error: ${res.error?.message}',
         );
-      } else if (res.data != null) {
-        changeState(states[index2], context, res.data!);
       }
-      changeState(status, context, 'Success');
     }
   }
 

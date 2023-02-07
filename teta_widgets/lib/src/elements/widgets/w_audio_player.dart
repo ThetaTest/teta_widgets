@@ -61,7 +61,9 @@ class _WAudioPlayerState extends State<WAudioPlayer> {
       }
       await variable?.audioController?.dispose();
 
-      variable?.audioController = AudioPlayer();
+      variable = variable!.copyWith(
+        audioController: AudioPlayer(),
+      );
 
       final audioPlayer = variable!.audioController!;
 

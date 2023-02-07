@@ -32,7 +32,9 @@ class GestureBuilder {
         );
       }
       if (action != null) {
-        final page = (context.read<PageCubit>().state as PageLoaded).page;
+        final pageState = context.read<PageCubit>().state;
+        if (pageState is! PageLoaded) return;
+        final page = pageState.page;
         action.actions!
             .where((final element) => element.actionGesture == gesture)
             .forEach(

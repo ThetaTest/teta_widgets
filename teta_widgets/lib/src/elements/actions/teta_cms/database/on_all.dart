@@ -10,7 +10,7 @@ import 'package:teta_cms/teta_cms.dart';
 import 'package:teta_core/teta_core.dart';
 // Project imports:
 import 'package:teta_widgets/src/elements/actions/snippets/take_state_from.dart';
-import 'package:teta_widgets/src/elements/actions/snippets/update.dart';
+import 'package:teta_widgets/src/elements/actions/snippets/update_state_value.dart';
 import 'package:teta_widgets/src/elements/features/text_type_input.dart';
 
 class FATetaCMSOnAll {
@@ -18,18 +18,17 @@ class FATetaCMSOnAll {
     final BuildContext context,
     final FTextTypeInput? collection,
     final String? stateName,
-    final List<VariableObject> params,
-    final List<VariableObject> states,
-    final List<DatasetObject> dataset,
     final int? loop,
   ) async {
-    final page = BlocProvider.of<PageCubit>(context).state as PageLoaded;
-    final state = takeStateFrom(page, stateName ?? '');
+    if (stateName == null) return;
+    final pageState = BlocProvider.of<PageCubit>(context).state;
+    if (pageState is! PageLoaded) return;
+    final state = takeStateFrom(pageState, stateName);
     if (collection != null) {
       final collectionId = collection.get(
-        params,
-        states,
-        dataset,
+        pageState.params,
+        pageState.states,
+        pageState.datasets,
         true,
         loop,
         context,
@@ -38,8 +37,11 @@ class FATetaCMSOnAll {
         collectionId: collectionId,
         callback: (final event) {
           if (state != null && state.type == VariableType.json) {
-            state.value = event.action;
-            update(context);
+            updateStateValue(
+              context,
+              state.name,
+              event.action,
+            );
           }
         },
       );
@@ -72,10 +74,12 @@ class FATetaCMSOnAll {
             );
           }
         } else {
-          map[e.key] = int.tryParse(e.value.toCode(
-            0,
-            resultType: ResultTypeEnum.int,
-          ));
+          map[e.key] = int.tryParse(
+            e.value.toCode(
+              0,
+              resultType: ResultTypeEnum.int,
+            ),
+          );
         }
       }
       final mapString = StringBuffer()..write('{');

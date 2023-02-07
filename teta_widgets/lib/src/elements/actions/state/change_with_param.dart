@@ -3,41 +3,39 @@
 
 // Flutter imports:
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 // Package imports:
 import 'package:recase/recase.dart';
-import 'package:teta_core/src/models/variable.dart';
-import 'package:teta_widgets/src/core/teta_widget/index.dart';
+import 'package:teta_core/teta_core.dart';
 import 'package:teta_widgets/src/elements/actions/snippets/get_page_on_code.dart';
 // Project imports:
 import 'package:teta_widgets/src/elements/actions/snippets/take_param_from.dart';
 import 'package:teta_widgets/src/elements/actions/snippets/take_state_from.dart';
-import 'package:teta_widgets/src/elements/actions/snippets/update.dart';
 
 class FActionStateChangeWithParam {
   static Future action(
     final BuildContext context,
-    final TetaWidgetState state,
     final String? stateName,
     final String? paramName,
   ) async {
-    try {
-      final index = state.states.indexWhere(
-        (final element) => element.name == stateName,
-      );
-      final indexParam = state.params.indexWhere(
-        (final element) => element.name == paramName,
-      );
-
-      state.states[index]
-        ..value = state.params[indexParam].value ?? state.params[indexParam].defaultValue
-        ..controller = state.params[index].controller
-        ..file = state.params[index].file
-        ..webViewController = state.params[index].webViewController;
-      // states[index].audioController = params[index].audioController;
-      update(context);
-    } catch (e) {
-      debugPrint('$e');
-    }
+    if (stateName == null) return;
+    if (paramName == null) return;
+    final pageState = context.read<PageCubit>().state;
+    if (pageState is! PageLoaded) return;
+    final index = pageState.states.indexWhere(
+      (final element) => element.name == stateName,
+    );
+    final indexParam = pageState.params.indexWhere(
+      (final element) => element.name == paramName,
+    );
+    final variable = pageState.states[index].copyWith(
+      value: pageState.params[indexParam].value ??
+          pageState.params[indexParam].defaultValue,
+      controller: pageState.params[index].controller,
+      file: pageState.params[index].file,
+      webViewController: pageState.params[index].webViewController,
+    );
+    context.read<PageCubit>().updateState(variable);
   }
 
   static String toCode(
@@ -47,10 +45,12 @@ class FActionStateChangeWithParam {
     final String? paramN,
   ) {
     final page = getPageOnToCode(pageId, context);
-    if (page == null) return '';
     final variable = takeStateFrom(page, '$stateName');
     final param = takeParamFrom(page, '$paramN');
-    if (param == null || stateName == null || variable == null || paramN == null) return '';
+    if (param == null ||
+        stateName == null ||
+        variable == null ||
+        paramN == null) return '';
 
     final varName = ReCase(stateName).camelCase;
     final paramName = ReCase(paramN).camelCase;

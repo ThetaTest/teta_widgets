@@ -6,32 +6,32 @@ import 'package:camera/camera.dart';
 import 'package:file_picker/file_picker.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 // Package imports:
 import 'package:recase/recase.dart';
 import 'package:teta_core/teta_core.dart';
 import 'package:teta_widgets/src/elements/actions/snippets/get_page_on_code.dart';
 // Project imports:
 import 'package:teta_widgets/src/elements/actions/snippets/take_state_from.dart';
-import 'package:teta_widgets/src/elements/actions/snippets/update.dart';
+import 'package:teta_widgets/src/elements/actions/snippets/update_state_file.dart';
 
 class FActionStateFilePicker {
   static Future action({
     required final BuildContext context,
-    required final List<VariableObject> params,
-    required final List<VariableObject> states,
-    required final List<DatasetObject> datasets,
     required final String? stateName,
     final int loop = 0,
   }) async {
     try {
-      final index =
-          states.indexWhere((final element) => element.name == stateName);
+      if (stateName == null) return;
+      final pageState = context.read<PageCubit>().state;
+      if (pageState is! PageLoaded) return;
+      final index = pageState.states
+          .indexWhere((final element) => element.name == stateName);
       if (index >= 0) {
         final result = await FilePicker.platform.pickFiles();
         if (result == null) return;
         final file = XFile(result.files.single.path!);
-        states[index].file = file;
-        update(context);
+        updateStateFile(context, stateName, file);
       }
     } catch (e) {
       if (kDebugMode) {

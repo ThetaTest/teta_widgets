@@ -52,7 +52,7 @@ class FillControlState extends State<FillControl> {
       padding: const EdgeInsets.only(left: 4),
       child: BlocBuilder<ColorStylesCubit, List<ColorStyleModel>>(
         builder: (final context, final state) {
-          list = BlocProvider.of<ColorStylesCubit>(context).state.isNotEmpty
+          list = state.isNotEmpty
               ? widget.isImageEnabled
                   ? widget.isNoneEnabled
                       ? <String>[
@@ -148,9 +148,7 @@ class FillControlState extends State<FillControl> {
                       if (value == 'styles') {
                         try {
                           final model =
-                              BlocProvider.of<ColorStylesCubit>(context)
-                                  .state
-                                  .first;
+                              context.read<ColorStylesCubit>().state.first;
                           final palette = widget.fill
                             ..paletteStyle = model.name;
                           widget.callBack(palette, false, widget.fill);
@@ -173,12 +171,10 @@ class FillControlState extends State<FillControl> {
       builder: (final context, final state) {
         ColorStyleModel? model;
         if (widget.fill.paletteStyle != null) {
-          BlocProvider.of<ColorStylesCubit>(context)
-              .state
-              .forEach((final element) {
+          for (var element in state) {
             if (element.id == widget.fill.paletteStyle) model = element;
             if (element.name == widget.fill.paletteStyle) model = element;
-          });
+          }
         }
         return model != null
             ? StyleFillControl(

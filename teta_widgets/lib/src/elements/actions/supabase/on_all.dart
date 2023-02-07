@@ -10,7 +10,7 @@ import 'package:supabase/supabase.dart';
 import 'package:teta_core/teta_core.dart';
 // Project imports:
 import 'package:teta_widgets/src/elements/actions/snippets/take_state_from.dart';
-import 'package:teta_widgets/src/elements/actions/snippets/update.dart';
+import 'package:teta_widgets/src/elements/actions/snippets/update_state_value.dart';
 import 'package:teta_widgets/src/elements/features/text_type_input.dart';
 
 class FASupabaseOnAll {
@@ -18,21 +18,20 @@ class FASupabaseOnAll {
     final BuildContext context,
     final FTextTypeInput? supabaseFrom,
     final String? stateName,
-    final List<VariableObject> params,
-    final List<VariableObject> states,
-    final List<DatasetObject> dataset,
     final int? loop,
   ) async {
-    final page = BlocProvider.of<PageCubit>(context).state as PageLoaded;
+    if (stateName == null) return;
+    final pageState = BlocProvider.of<PageCubit>(context).state;
+    if (pageState is! PageLoaded) return;
     final client = BlocProvider.of<SupabaseCubit>(context).state;
-    final state = takeStateFrom(page, stateName ?? '');
+    final state = takeStateFrom(pageState, stateName);
     if (client != null) {
       client
           .from(
         supabaseFrom?.get(
-              params,
-              states,
-              dataset,
+              pageState.params,
+              pageState.states,
+              pageState.datasets,
               true,
               loop,
               context,
@@ -41,8 +40,11 @@ class FASupabaseOnAll {
       )
           .on(SupabaseEventTypes.all, (final payload) {
         if (state != null && state.type == VariableType.json) {
-          state.value = payload.newRecord ?? payload.oldRecord;
-          update(context);
+          updateStateValue(
+            context,
+            state.name,
+            payload.newRecord ?? payload.oldRecord,
+          );
         }
       }).subscribe();
     }

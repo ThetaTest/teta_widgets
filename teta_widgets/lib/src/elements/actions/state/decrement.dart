@@ -2,35 +2,29 @@
 // ignore_for_file: public_member_api_docs
 
 // Flutter imports:
-import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 // Package imports:
 import 'package:recase/recase.dart';
-import 'package:teta_core/src/models/variable.dart';
+import 'package:teta_core/teta_core.dart';
 import 'package:teta_widgets/src/elements/actions/snippets/get_page_on_code.dart';
 // Project imports:
 import 'package:teta_widgets/src/elements/actions/snippets/take_state_from.dart';
-import 'package:teta_widgets/src/elements/actions/snippets/update.dart';
+import 'package:teta_widgets/src/elements/actions/snippets/update_state_value.dart';
 
 class FActionStateDecrement {
   static Future action(
     final BuildContext context,
-    final List<VariableObject> states,
     final String? stateName,
   ) async {
-    try {
-      final index =
-          states.indexWhere((final element) => element.name == stateName);
-      if (double.tryParse('${states[index].get}') != null) {
-        final value = double.parse('${states[index].get}');
-        states[index].value = '${value - 1}';
-      }
-      update(context);
-    } catch (e) {
-      if (kDebugMode) {
-        // ignore: avoid_print
-        print(e);
-      }
+    if (stateName == null) return;
+    final pageState = context.read<PageCubit>().state;
+    if (pageState is! PageLoaded) return;
+    final index = pageState.states
+        .indexWhere((final element) => element.name == stateName);
+    if (double.tryParse('${pageState.states[index].get}') != null) {
+      final value = double.parse('${pageState.states[index].get}');
+      updateStateValue(context, stateName, value);
     }
   }
 
@@ -40,7 +34,6 @@ class FActionStateDecrement {
     final String? stateName,
   ) {
     final page = getPageOnToCode(pageId, context);
-    if (page == null) return '';
     final variable = takeStateFrom(page, '$stateName');
     if (variable == null || stateName == null) return '';
 

@@ -2,47 +2,41 @@
 // ignore_for_file: public_member_api_docs, lines_longer_than_80_chars
 
 // Flutter imports:
-import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 // Package imports:
 import 'package:recase/recase.dart';
 import 'package:teta_core/teta_core.dart';
 import 'package:teta_widgets/src/elements/actions/snippets/get_page_on_code.dart';
 // Project imports:
 import 'package:teta_widgets/src/elements/actions/snippets/take_state_from.dart';
-import 'package:teta_widgets/src/elements/actions/snippets/update.dart';
+import 'package:teta_widgets/src/elements/actions/snippets/update_state_value.dart';
 
 class FActionWebsiteValidator {
   static Future action({
     required final BuildContext context,
-    required final List<VariableObject> states,
     required final String? stateName,
     required final String? stateName2,
   }) async {
-    try {
-      final index =
-          states.indexWhere((final element) => element.name == stateName);
-      final index2 =
-          states.indexWhere((final element) => element.name == stateName2);
-      if (index >= 0 && index2 >= 0) {
-        const pattern =
-            r'(http|https)://[\w-]+(\.[\w-]+)+([\w.,@?^=%&amp;:/~+#-]*[\w@?^=%&amp;/~+#-])?';
-        final regExp = RegExp(pattern);
-        if ('${states[index].value}'.isEmpty) {
-          states[index2].value = 'false';
-        } else if (!regExp.hasMatch('${states[index].value}')) {
-          states[index2].value = 'false';
-        } else {
-          states[index2].value = 'true';
-        }
-        update(context);
-        return;
+    if (stateName2 == null) return;
+    final pageState = context.read<PageCubit>().state;
+    if (pageState is! PageLoaded) return;
+    final index = pageState.states
+        .indexWhere((final element) => element.name == stateName);
+    if (index >= 0) {
+      const pattern =
+          r'(http|https)://[\w-]+(\.[\w-]+)+([\w.,@?^=%&amp;:/~+#-]*[\w@?^=%&amp;/~+#-])?';
+      final regExp = RegExp(pattern);
+      var value = '';
+      if ('${pageState.states[index].value}'.isEmpty) {
+        value = 'false';
+      } else if (!regExp.hasMatch('${pageState.states[index].value}')) {
+        value = 'false';
+      } else {
+        value = 'true';
       }
-    } catch (e) {
-      if (kDebugMode) {
-        // ignore: avoid_print
-        print(e);
-      }
+      updateStateValue(context, stateName2, value);
+      return;
     }
   }
 

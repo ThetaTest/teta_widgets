@@ -82,9 +82,9 @@ class _WCalendarV2State extends State<WCalendarV2> {
 
   @override
   Widget build(final BuildContext context) {
-    final isLight = BlocProvider.of<PaletteDarkLightCubit>(context).state;
+    final isLight = context.watch<PaletteDarkLightCubit>().state;
     ColorStyleModel? model2;
-    BlocProvider.of<ColorStylesCubit>(context).state.forEach((final element) {
+    context.watch<ColorStylesCubit>().state.forEach((final element) {
       if (element.id == widget.iconFill.paletteStyle) model2 = element;
       if (element.name == widget.iconFill.paletteStyle) model2 = element;
     });

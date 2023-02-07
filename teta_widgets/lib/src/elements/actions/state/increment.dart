@@ -9,7 +9,7 @@ import 'package:teta_core/src/models/variable.dart';
 import 'package:teta_widgets/src/elements/actions/snippets/get_page_on_code.dart';
 // Project imports:
 import 'package:teta_widgets/src/elements/actions/snippets/take_state_from.dart';
-import 'package:teta_widgets/src/elements/actions/snippets/update.dart';
+import 'package:teta_widgets/src/elements/actions/snippets/update_state_value.dart';
 
 class FActionStateIncrement {
   static Future action(
@@ -27,9 +27,12 @@ class FActionStateIncrement {
         final value = double.parse(
           states[index].value as String? ?? states[index].defaultValue!,
         );
-        states[index].value = '${value + 1}';
+        updateStateValue(
+          context,
+          stateName!,
+          '${value + 1}',
+        );
       }
-      update(context);
     } catch (e) {
       // ignore: avoid_print
       print(e);

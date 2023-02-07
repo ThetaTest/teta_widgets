@@ -9,10 +9,12 @@ List<VariableObject> passParamsToNewPage(
   final List<DatasetObject> dataset, {
   final int? loop = 0,
 }) {
-  return newPageParams.map((final e) {
-    if (paramsToSend?[e.id] != null) {
-      if (paramsToSend?[e.id]['dataset'] == 'Text') {
-        e.value = paramsToSend?[e.id]['label'];
+  final variables = <VariableObject>[];
+  for (var i = 0; i < newPageParams.length; i++) {
+    if (paramsToSend?[newPageParams[i].id] != null) {
+      if (paramsToSend?[newPageParams[i].id]['dataset'] == 'Text') {
+        newPageParams[i]
+            .copyWith(value: paramsToSend?[newPageParams[i].id]['label']);
       } else {
         final list = <DatasetObject>[
           DatasetObject(
@@ -31,7 +33,8 @@ List<VariableObject> passParamsToNewPage(
         ];
         Map<String, dynamic>? selectedDataset;
         for (final element in list) {
-          if (element.getName == paramsToSend?[e.id]['dataset']) {
+          if (element.getName ==
+              paramsToSend?[newPageParams[i].id]['dataset']) {
             selectedDataset = <String, dynamic>{
               'name': element.getName,
               'map': element.getMap
@@ -45,7 +48,7 @@ List<VariableObject> passParamsToNewPage(
           //final element = map[loop ?? 0];
           for (final element in map) {
             if (element.keys.toList()[loop ?? 0] ==
-                paramsToSend?[e.id]?['label']) {
+                paramsToSend?[newPageParams[i].id]?['label']) {
               if (element[element.keys.toList()[loop ?? 0]] is String) {
                 variable = VariableObject(
                   name: element.keys.toList()[loop ?? 0],
@@ -82,20 +85,20 @@ List<VariableObject> passParamsToNewPage(
           final el = selectedDataset!['map'] as List<Map<String, dynamic>>;
           final map = el[loop ?? 0];
           for (final key in map.keys) {
-            if (key == paramsToSend?[e.id]?['label']) {
+            if (key == paramsToSend?[newPageParams[i].id]?['label']) {
               variable = VariableObject(name: key, value: map[key]);
             }
           }
         }
         if (variable != null) {
-          e
-            ..value = variable.get
-            ..file = variable.file
-            ..controller = variable.controller;
+          newPageParams[i].copyWith(
+            value: variable.get,
+            file: variable.file,
+            controller: variable.controller,
+          );
         }
       }
-      return e;
     }
-    return e;
-  }).toList();
+  }
+  return variables;
 }

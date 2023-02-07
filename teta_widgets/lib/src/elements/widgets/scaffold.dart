@@ -71,7 +71,9 @@ class _WScaffoldState extends State<WScaffold> {
 
   @override
   Widget build(final BuildContext context) {
-    final isPage = (context.watch<PageCubit>().state as PageLoaded).page.isPage;
+    final pageState = context.watch<PageCubit>().state;
+    if (pageState is! PageLoaded) return const SizedBox();
+    final isPage = pageState.page.isPage;
     if (!isPage && !widget.state.forPlay) {
       return SizedBox(
         child: Center(
@@ -79,15 +81,9 @@ class _WScaffoldState extends State<WScaffold> {
         ),
       );
     } else if (!isPage && widget.state.forPlay) {
-      return SizedBox(
-        child: Center(
-          child: _childWids(context),
-        ),
-      );
+      return _childWids(context);
     } else {
-      return BlocBuilder<PaletteDarkLightCubit, bool>(
-        builder: (final context, final theme) => _scaffold(context),
-      );
+      return _scaffold(context);
     }
   }
 

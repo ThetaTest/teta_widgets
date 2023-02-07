@@ -215,16 +215,18 @@ class StatesControlState extends State<StatesControl> {
     final PageObject page,
     final VariableObject variable,
   ) {
-    final nameController = TextEditingController()..text = variable.name;
+    var _variable = variable;
+    final nameController = TextEditingController()..text = _variable.name;
     final defaultValueController = TextEditingController()
-      ..text = variable.defaultValue!;
+      ..text = _variable.defaultValue!;
     final docValueController = TextEditingController()
-      ..text = variable.doc ?? '';
+      ..text = _variable.doc ?? '';
     showDialog<void>(
       context: context,
       builder: (final context) {
         var isNameUnique = true;
-        var type = EnumToString.convertToString(variable.type, camelCase: true);
+        var type =
+            EnumToString.convertToString(_variable.type, camelCase: true);
         return StatefulBuilder(
           builder: (final context, final setState) {
             return AlertDialog(
@@ -239,7 +241,7 @@ class StatesControlState extends State<StatesControl> {
                   GestureDetector(
                     onTap: () {
                       widget.callBack(
-                        [...page.defaultStates]..remove(variable),
+                        [...page.defaultStates]..remove(_variable),
                       );
                       Navigator.of(context, rootNavigator: true).pop(null);
                     },
@@ -280,7 +282,7 @@ class StatesControlState extends State<StatesControl> {
                           controller: nameController,
                           placeholder: 'Name',
                           backgroundColor: Palette.bgGrey,
-                          text: variable.name,
+                          text: _variable.name,
                           callBack: (final text) {
                             if (page.defaultStates.indexWhere(
                                   (final element) =>
@@ -295,7 +297,7 @@ class StatesControlState extends State<StatesControl> {
                               setState(() {
                                 isNameUnique = true;
                               });
-                              variable.name = text;
+                              _variable = _variable.copyWith(name: text);
                             }
                           },
                         ),
@@ -348,7 +350,7 @@ class StatesControlState extends State<StatesControl> {
                                   newValue,
                                   camelCase: true,
                                 );
-                                variable.type = tempType;
+                                _variable = _variable.copyWith(type: tempType);
                                 setState(() {
                                   type = newValue;
                                 });
@@ -386,16 +388,20 @@ class StatesControlState extends State<StatesControl> {
                         child: CMiniTextField(
                           controller: defaultValueController,
                           placeholder: 'Default Value',
-                          text: variable.defaultValue,
+                          text: _variable.defaultValue,
                           backgroundColor: Palette.bgGrey,
                           callBack: (final text) {
-                            if (variable.type ==
+                            if (_variable.type ==
                                 VariableType.cameraController) {
                               if (int.tryParse(text) != null) {
-                                variable.cameraIndex = int.tryParse(text) ?? 0;
+                                _variable = _variable.copyWith(
+                                  cameraIndex: int.tryParse(text) ?? 0,
+                                );
                               }
                             }
-                            variable.defaultValue = text;
+                            _variable = _variable.copyWith(
+                              defaultValue: text,
+                            );
                           },
                         ),
                       ),
@@ -407,9 +413,11 @@ class StatesControlState extends State<StatesControl> {
                         child: CMultiLinesTextField(
                           controller: docValueController,
                           placeholder: 'Description',
-                          text: variable.doc,
+                          text: _variable.doc,
                           callBack: (final text) {
-                            variable.doc = text;
+                            _variable = _variable.copyWith(
+                              doc: text,
+                            );
                           },
                         ),
                       ),
@@ -426,8 +434,8 @@ class StatesControlState extends State<StatesControl> {
                     label: 'Close',
                     callback: () {
                       for (var i = 0; i < page.defaultStates.length; i++) {
-                        if (page.defaultStates[i].id == variable.id) {
-                          page.defaultStates[i] = variable;
+                        if (page.defaultStates[i].id == _variable.id) {
+                          page.defaultStates[i] = _variable;
                         }
                       }
                       widget.callBack(page.defaultStates);

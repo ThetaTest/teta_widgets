@@ -39,9 +39,9 @@ class _WConcentricPageViewState extends State<WConcentricPageView> {
 
   @override
   Widget build(final BuildContext context) {
-    final isLight = BlocProvider.of<PaletteDarkLightCubit>(context).state;
+    final isLight = context.watch<PaletteDarkLightCubit>().state;
     ColorStyleModel? model;
-    BlocProvider.of<ColorStylesCubit>(context).state.forEach((final element) {
+    context.watch<ColorStylesCubit>().state.forEach((final element) {
       if (element.id == widget.fill.paletteStyle) model = element;
       if (element.name == widget.fill.paletteStyle) model = element;
     });

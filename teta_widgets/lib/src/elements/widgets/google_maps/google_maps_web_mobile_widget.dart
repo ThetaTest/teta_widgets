@@ -5,7 +5,6 @@
 import 'dart:async';
 
 // Flutter imports:
-import 'package:collection/collection.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -198,16 +197,16 @@ class _WGoogleMapsState extends State<WGoogleMaps> {
       final page = BlocProvider.of<PageCubit>(context).state as PageLoaded;
       final VariableObject? variable;
 
-      variable = page.states.firstWhereOrNull(
+      final index = page.states.indexWhere(
         (final e) => e.name == widget.cubitName,
       );
+      if (index == -1) return;
+      variable = page.states[index];
 
-      if (variable == null) {
-        // throw exception
-      }
-
-      if (variable!.googleMapsCubit == null) {
-        variable.googleMapsCubit = GoogleMapsCubit();
+      if (variable.googleMapsCubit == null) {
+        context.read<PageCubit>().updateState(
+              variable.copyWith(googleMapsCubit: GoogleMapsCubit()),
+            );
       }
 
       variable.googleMapsCubit?.onEmitReloadDataState();

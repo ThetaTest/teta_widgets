@@ -11,6 +11,7 @@ import 'package:recase/recase.dart';
 import 'package:teta_core/teta_core.dart';
 import 'package:teta_widgets/src/core/teta_widget/index.dart';
 import 'package:teta_widgets/src/elements/actions/snippets/get_page_on_code.dart';
+import 'package:teta_widgets/src/elements/actions/snippets/update_state_file.dart';
 
 class FACameraStopRecording {
   static Future action(
@@ -18,6 +19,7 @@ class FACameraStopRecording {
     final TetaWidgetState state,
     final String? stateName,
   ) async {
+    if (stateName == null) return;
     final page = BlocProvider.of<PageCubit>(context).state as PageLoaded;
     final stateFound = page.states.firstWhereOrNull(
       (final e) => e.type == VariableType.cameraController,
@@ -26,10 +28,7 @@ class FACameraStopRecording {
     if (controller != null) {
       if (controller.value.isRecordingVideo) {
         final file = await controller.stopVideoRecording();
-        final index = state.states.indexWhere(
-          (final element) => element.name == stateName,
-        );
-        state.states[index].file = file;
+        updateStateFile(context, stateName, file);
       }
     }
   }
@@ -40,7 +39,6 @@ class FACameraStopRecording {
     final String? stateName,
   ) {
     final page = getPageOnToCode(pageId, context);
-    if (page == null) return '';
     final state = page.states
         .firstWhereOrNull((final e) => e.type == VariableType.cameraController);
     if (state == null || stateName == null) return '';

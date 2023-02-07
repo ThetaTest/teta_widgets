@@ -25,9 +25,9 @@ class WFeatherIcon extends StatelessWidget {
 
   @override
   Widget build(final BuildContext context) {
-    final isLight = BlocProvider.of<PaletteDarkLightCubit>(context).state;
+    final isLight = context.watch<PaletteDarkLightCubit>().state;
     ColorStyleModel? model;
-    BlocProvider.of<ColorStylesCubit>(context).state.forEach((final element) {
+    context.watch<ColorStylesCubit>().state.forEach((final element) {
       if (element.id == fill.paletteStyle) model = element;
       if (element.name == fill.paletteStyle) model = element;
     });

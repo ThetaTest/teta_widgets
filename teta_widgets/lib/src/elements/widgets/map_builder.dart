@@ -75,9 +75,11 @@ class _WMapBuilderState extends State<WMapBuilder> {
       variable = page.states
           .firstWhereOrNull((final e) => e.name == widget.controller.stateName);
     }
-    variable?.mapController ??= MapController(
-      location: LatLng(41.52, 12.30),
-      zoom: 4,
+    variable = variable!.copyWith(
+      mapController: MapController(
+        location: LatLng(41.52, 12.30),
+        zoom: 4,
+      ),
     );
     setState(() {});
   }

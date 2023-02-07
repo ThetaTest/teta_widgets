@@ -85,32 +85,33 @@ class FActionNavigationOpenPage {
         final scaffold = sl.get<NodeRendering>().renderTree(nodes);
         page = page.copyWith(flatList: nodes, scaffold: scaffold);
 
-        await BlocProvider.of<PageCubit>(context)
-            .onFocus(page: page, forPlay: true);
-
-        await Navigator.push<void>(
-          context,
-          MaterialPageRoute(
-            builder: (final context) => BlocProvider(
-              create: (final context) =>
-                  PageCubit(sl.get())..onFocus(page: page!, forPlay: true),
-              child: page!.scaffold.toWidget(
-                state: state.copyWith(
-                  forPlay: true,
-                  states: page.defaultStates,
-                  dataset: [],
-                  params: passParamsToNewPage(
-                    page.defaultParams,
-                    currentPage.params,
-                    paramsToSend,
-                    state.dataset,
-                    loop: state.loop,
+        await Future.wait([
+          BlocProvider.of<PageCubit>(context)
+              .onFocus(page: page, forPlay: true),
+          Navigator.push<void>(
+            context,
+            MaterialPageRoute(
+              builder: (final context) => BlocProvider(
+                create: (final context) =>
+                    PageCubit(sl.get())..onFocus(page: page!, forPlay: true),
+                child: page!.scaffold.toWidget(
+                  state: state.copyWith(
+                    forPlay: true,
+                    states: page.defaultStates,
+                    dataset: [],
+                    params: passParamsToNewPage(
+                      page.defaultParams,
+                      currentPage.params,
+                      paramsToSend,
+                      state.dataset,
+                      loop: state.loop,
+                    ),
                   ),
                 ),
               ),
             ),
           ),
-        );
+        ]);
       }
     } catch (e) {
       if (kDebugMode) {

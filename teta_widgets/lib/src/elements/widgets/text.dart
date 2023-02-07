@@ -73,9 +73,7 @@ class _WTextState extends State<WText> {
 
           TextStyleModel? model;
           if (widget.textStyle.textStyleModel != null) {
-            BlocProvider.of<TextStylesCubit>(context)
-                .state
-                .forEach((final element) {
+            context.watch<TextStylesCubit>().state.forEach((final element) {
               if (element.name == widget.textStyle.textStyleModel) {
                 model = element;
               }

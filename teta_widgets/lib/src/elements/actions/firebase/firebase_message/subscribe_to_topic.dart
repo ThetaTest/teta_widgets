@@ -11,7 +11,6 @@ import 'package:teta_core/teta_core.dart';
 import 'package:teta_widgets/src/core/teta_widget/index.dart';
 import 'package:teta_widgets/src/elements/actions/snippets/get_page_on_code.dart';
 import 'package:teta_widgets/src/elements/actions/snippets/take_state_from.dart';
-import 'package:teta_widgets/src/elements/actions/snippets/update.dart';
 import 'package:teta_widgets/src/elements/index.dart';
 import 'package:universal_platform/universal_platform.dart';
 
@@ -34,22 +33,22 @@ class FActionFirebaseMessagesSubscribeTopic {
       context: context,
       builder: (final context) {
         return AlertDialog(
-          title: TAlertTitle('Firebase Messages'),
-          titleTextStyle: TextStyle(
+          title: const TAlertTitle('Firebase Messages'),
+          titleTextStyle: const TextStyle(
             fontWeight: FontWeight.bold,
             color: Colors.white,
             fontSize: 20,
           ),
-          backgroundColor: Color(0xFF333333),
-          shape: RoundedRectangleBorder(
+          backgroundColor: const Color(0xFF333333),
+          shape: const RoundedRectangleBorder(
             borderRadius: BorderRadius.all(Radius.circular(20)),
           ),
           content: SizedBox(
             width: 400,
             height: 400,
             child: Text(
-              '(Firebase Messages- Subscribe To Topic- ${firebaseMessagesTopicNew} ) will be activated in your released app.',
-              style: TextStyle(
+              '(Firebase Messages- Subscribe To Topic- $firebaseMessagesTopicNew ) will be activated in your released app.',
+              style: const TextStyle(
                 color: Colors.white,
               ),
             ),

@@ -16,7 +16,6 @@ import 'package:map/map.dart';
 import 'package:teta_core/teta_core.dart';
 import 'package:teta_widgets/src/core/teta_widget/index.dart';
 // Project imports:
-import 'package:teta_widgets/src/elements/controls/key_constants.dart';
 import 'package:teta_widgets/src/elements/index.dart';
 
 // ignore_for_file: public_member_api_docs
@@ -61,9 +60,11 @@ class _WMapState extends State<WMap> {
       variable = page.states
           .firstWhereOrNull((final e) => e.name == widget.controller.stateName);
     }
-    variable?.mapController ??= MapController(
-      location: LatLng(41.52, 12.30),
-      zoom: 4,
+    variable = variable!.copyWith(
+      mapController: MapController(
+        location: LatLng(41.52, 12.30),
+        zoom: 4,
+      ),
     );
     if (mounted) {
       setState(() {});

@@ -11,7 +11,6 @@ import 'package:teta_core/teta_core.dart';
 import 'package:teta_widgets/src/core/teta_widget/index.dart';
 // Project imports:
 import 'package:teta_widgets/src/elements/actions/navigation/open_page.dart';
-import 'package:teta_widgets/src/elements/actions/snippets/change_state.dart';
 import 'package:teta_widgets/src/elements/actions/snippets/take_state_from.dart';
 import 'package:teta_widgets/src/elements/nodes/node.dart';
 
@@ -32,19 +31,12 @@ class FASupabaseSignUp {
     // Take password from states
     final password = takeStateFrom(page, 'password');
 
-    // Take status from states
-    final status = takeStateFrom(page, 'status');
-
     if (email != null && password != null) {
-      changeState(status, context, 'Loading');
       final client = BlocProvider.of<SupabaseCubit>(context).state;
       if (client != null) {
         final response =
             await client.auth.signUp('${email.get}', '${password.get}');
-        if (response.error != null) {
-          changeState(status, context, '${response.error?.message}');
-        } else {
-          changeState(status, context, 'Success');
+        if (response.error == null) {
           final box = await Hive.openBox<dynamic>('social_login');
           await box.put('key', {'email': '${email.get}'});
           await FActionNavigationOpenPage.action(

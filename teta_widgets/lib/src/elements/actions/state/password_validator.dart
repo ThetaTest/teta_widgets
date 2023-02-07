@@ -2,53 +2,50 @@
 // ignore_for_file: public_member_api_docs, lines_longer_than_80_chars
 
 // Flutter imports:
-import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 // Package imports:
 import 'package:recase/recase.dart';
 import 'package:teta_core/teta_core.dart';
 import 'package:teta_widgets/src/elements/actions/snippets/get_page_on_code.dart';
 // Project imports:
 import 'package:teta_widgets/src/elements/actions/snippets/take_state_from.dart';
-import 'package:teta_widgets/src/elements/actions/snippets/update.dart';
+import 'package:teta_widgets/src/elements/actions/snippets/update_state_value.dart';
 
 class FActionPasswordValidator {
   static Future action({
     required final BuildContext context,
-    required final List<VariableObject> states,
     required final String? stateName,
     required final String? stateName2,
   }) async {
-    try {
-      final index =
-          states.indexWhere((final element) => element.name == stateName);
-      final index2 =
-          states.indexWhere((final element) => element.name == stateName2);
-      if (index >= 0 && index2 >= 0) {
-        final numReg = RegExp('.*[0-9].*');
-        final letterReg = RegExp('.*[A-Za-z].*');
-        if ('${states[index].value}'.isEmpty) {
-          states[index2].value = 'Please enter you password';
-        } else if ('${states[index].value}'.length < 6) {
-          states[index2].value = 'Your password is too short';
-        } else if ('${states[index].value}'.length < 8) {
-          states[index2].value = 'Your password is acceptable but not strong';
+    final pageState = context.read<PageCubit>().state;
+    if (pageState is! PageLoaded) return;
+    final index = pageState.states
+        .indexWhere((final element) => element.name == stateName);
+    if (index >= 0) {
+      final numReg = RegExp('.*[0-9].*');
+      final letterReg = RegExp('.*[A-Za-z].*');
+      var value = '';
+      if ('${pageState.states[index].value}'.isEmpty) {
+        value = 'Please enter you password';
+      } else if ('${pageState.states[index].value}'.length < 6) {
+        value = 'Your password is too short';
+      } else if ('${pageState.states[index].value}'.length < 8) {
+        value = 'Your password is acceptable but not strong';
+      } else {
+        if (!letterReg.hasMatch('${pageState.states[index].value}') ||
+            !numReg.hasMatch('${pageState.states[index].value}')) {
+          value = 'Your password is strong';
         } else {
-          if (!letterReg.hasMatch('${states[index].value}') ||
-              !numReg.hasMatch('${states[index].value}')) {
-            states[index2].value = 'Your password is strong';
-          } else {
-            states[index2].value = 'Your password is great';
-          }
+          value = 'Your password is great';
         }
-        update(context);
-        return;
       }
-    } catch (e) {
-      if (kDebugMode) {
-        // ignore: avoid_print
-        print(e);
-      }
+      updateStateValue(
+        context,
+        stateName2!,
+        value,
+      );
+      return;
     }
   }
 

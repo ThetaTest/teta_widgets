@@ -7,6 +7,7 @@ import 'package:flutter_test/flutter_test.dart';
 import 'package:recase/recase.dart';
 // Package imports:
 import 'package:teta_widgets/src/core/teta_widget/index.dart';
+import 'package:teta_widgets/src/elements/actions/snippets/update_state_value.dart';
 import 'package:teta_widgets/src/elements/code/formatter_test.dart';
 
 // Project imports:
@@ -17,7 +18,7 @@ class FActionNavigationOpenDatePicker {
     final TetaWidgetState state,
     final String? stateName,
   ) async {
-    final index = state.states.indexWhere((final element) => element.name == stateName);
+    if (stateName == null) return;
     final datePicked = await showDatePicker(
       context: context,
       initialDate: DateTime.now(),
@@ -29,6 +30,7 @@ class FActionNavigationOpenDatePicker {
       context: context,
       initialTime: initialTime,
     );
+    var value = '';
     if (datePicked != null && hourPicked != null) {
       final dateToPass = DateTime(
         datePicked.year,
@@ -37,12 +39,13 @@ class FActionNavigationOpenDatePicker {
         hourPicked.hour,
         hourPicked.minute,
       );
-      state.states[index].value = dateToPass.toIso8601String();
+      value = dateToPass.toIso8601String();
     } else if (datePicked != null && hourPicked == null) {
-      state.states[index].value = datePicked.toIso8601String();
+      value = datePicked.toIso8601String();
     } else {
-      state.states[index].value = '';
+      value = '';
     }
+    updateStateValue(context, stateName, value);
   }
 
   static String toCode(

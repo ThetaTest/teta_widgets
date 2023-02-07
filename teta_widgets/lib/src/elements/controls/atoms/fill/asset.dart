@@ -62,7 +62,8 @@ class AssetFillControlState extends State<AssetFillControl> {
                         items: list,
                         onChange: (final value) {
                           ColorStyleModel? model;
-                          BlocProvider.of<ColorStylesCubit>(context)
+                          context
+                              .read<ColorStylesCubit>()
                               .state
                               .forEach((final element) {
                             if (element.name == value.name) {

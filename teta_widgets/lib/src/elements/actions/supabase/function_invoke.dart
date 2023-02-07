@@ -8,7 +8,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:teta_core/teta_core.dart';
 // Project imports:
-import 'package:teta_widgets/src/elements/actions/snippets/change_state.dart';
 import 'package:teta_widgets/src/elements/actions/snippets/take_state_from.dart';
 import 'package:teta_widgets/src/elements/index.dart';
 
@@ -18,22 +17,17 @@ class FASupabaseFunctionsInvoke {
     final FTextTypeInput? supabaseFrom,
     final List<MapElement>? body,
     final List<MapElement>? headers,
-    final List<VariableObject> params,
-    final List<VariableObject> states,
-    final List<DatasetObject> dataset,
     final int? loop,
   ) async {
-    final page = BlocProvider.of<PageCubit>(context).state as PageLoaded;
+    final pageState = BlocProvider.of<PageCubit>(context).state;
+    if (pageState is! PageLoaded) return;
 
-    // Take status from states
-    final status = takeStateFrom(page, 'status');
-    changeState(status, context, 'Loading');
     final client = BlocProvider.of<SupabaseCubit>(context).state;
     if (client != null) {
       final name = supabaseFrom?.get(
-            params,
-            states,
-            dataset,
+            pageState.params,
+            pageState.states,
+            pageState.datasets,
             true,
             loop,
             context,
@@ -42,17 +36,29 @@ class FASupabaseFunctionsInvoke {
       if (name == '') return;
       var _map = DatasetObject(
         name: 'Supabase func $name',
-        map: [<String, dynamic>{}],
+        map: const [<String, dynamic>{}],
       );
       final mapHeaders = <String, String>{};
       for (final e in headers ?? <MapElement>[]) {
-        mapHeaders[e.key] =
-            e.value.get(params, states, dataset, true, loop, context);
+        mapHeaders[e.key] = e.value.get(
+          pageState.params,
+          pageState.states,
+          pageState.datasets,
+          true,
+          loop,
+          context,
+        );
       }
       final mapBody = <String, String>{};
       for (final e in body ?? <MapElement>[]) {
-        mapBody[e.key] =
-            e.value.get(params, states, dataset, true, loop, context);
+        mapBody[e.key] = e.value.get(
+          pageState.params,
+          pageState.states,
+          pageState.datasets,
+          true,
+          loop,
+          context,
+        );
       }
 
       final response = await client.functions.invoke(
@@ -77,7 +83,6 @@ class FASupabaseFunctionsInvoke {
                     <String, dynamic>{...response.data as Map<String, dynamic>}
                 ],
         );
-        changeState(status, context, 'Success');
       }
       if (response.error != null) {
         _map = _map.copyWith(
@@ -87,9 +92,8 @@ class FASupabaseFunctionsInvoke {
             return e as Map<String, dynamic>;
           }).toList(),
         );
-        changeState(status, context, 'Failed');
       }
-      final datasets = addDataset(context, dataset, _map);
+      final datasets = addDataset(context, pageState.datasets, _map);
     }
   }
 

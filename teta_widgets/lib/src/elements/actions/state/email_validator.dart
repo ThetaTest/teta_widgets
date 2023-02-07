@@ -2,7 +2,6 @@
 // ignore_for_file: public_member_api_docs, lines_longer_than_80_chars
 
 // Flutter imports:
-import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:recase/recase.dart';
 // Package imports:
@@ -10,7 +9,7 @@ import 'package:teta_core/teta_core.dart';
 import 'package:teta_widgets/src/elements/actions/snippets/get_page_on_code.dart';
 import 'package:teta_widgets/src/elements/actions/snippets/take_state_from.dart';
 // Project imports:
-import 'package:teta_widgets/src/elements/actions/snippets/update.dart';
+import 'package:teta_widgets/src/elements/actions/snippets/update_state_value.dart';
 
 class FActionEmailValidator {
   static Future action({
@@ -19,30 +18,17 @@ class FActionEmailValidator {
     required final String? stateName,
     required final String? stateName2,
   }) async {
-    try {
-      final index =
-          states.indexWhere((final element) => element.name == stateName);
-      final index2 =
-          states.indexWhere((final element) => element.name == stateName2);
-      if (index >= 0 && index2 >= 0) {
-        const pattern =
-            r"^[a-zA-Z0-9.a-zA-Z0-9.!#$%&'*+-/=?^_`{|}~]+@[a-zA-Z0-9]+\.[a-zA-Z]+";
-        final regex = RegExp(pattern);
-        Logger.printMessage(
-          'Email validator with value: ${states[index].get}, result: ${regex.hasMatch('${states[index].get}')}',
-        );
-        if (!regex.hasMatch('${states[index].get}')) {
-          states[index2].value = 'false';
-        } else {
-          states[index2].value = 'true';
-        }
-        update(context);
-      }
-    } catch (e) {
-      if (kDebugMode) {
-        // ignore: avoid_print
-        print(e);
-      }
+    final index =
+        states.indexWhere((final element) => element.name == stateName);
+    if (index >= 0) {
+      const pattern =
+          r"^[a-zA-Z0-9.a-zA-Z0-9.!#$%&'*+-/=?^_`{|}~]+@[a-zA-Z0-9]+\.[a-zA-Z]+";
+      final regex = RegExp(pattern);
+      updateStateValue(
+        context,
+        stateName2!,
+        '${!regex.hasMatch('${states[index].get}')}',
+      );
     }
   }
 
@@ -57,7 +43,6 @@ class FActionEmailValidator {
       return '';
     }
     final page = getPageOnToCode(pageId, context);
-    if (page == null) return '';
     final variable = takeStateFrom(page, stateName);
     if (variable == null) return '';
 

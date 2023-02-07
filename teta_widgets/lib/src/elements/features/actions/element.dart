@@ -1779,7 +1779,6 @@ class FActionElement extends Equatable {
             await actionS(
               () => FActionStateDecrement.action(
                 context,
-                state.states,
                 stateName,
               ),
               context: context,
@@ -1790,9 +1789,6 @@ class FActionElement extends Equatable {
             await actionS(
               () => FActionStateChangeWith.action(
                 context: context,
-                states: state.states,
-                params: state.params,
-                datasets: state.dataset,
                 stateName: stateName,
                 valueToChangeWith: valueTextTypeInput ?? FTextTypeInput(),
                 value: value,
@@ -1806,9 +1802,6 @@ class FActionElement extends Equatable {
             await actionS(
               () => FActionStateFilePicker.action(
                 context: context,
-                states: state.states,
-                params: state.params,
-                datasets: state.dataset,
                 stateName: stateName,
                 loop: state.loop ?? 0,
               ),
@@ -1820,7 +1813,6 @@ class FActionElement extends Equatable {
             await actionS(
               () => FActionStateChangeWithParam.action(
                 context,
-                state,
                 stateName,
                 this.value,
               ),
@@ -1844,7 +1836,6 @@ class FActionElement extends Equatable {
             await actionS(
               () => FActionPasswordValidator.action(
                 context: context,
-                states: state.states,
                 stateName: stateName,
                 stateName2: stateName2,
               ),
@@ -1856,7 +1847,6 @@ class FActionElement extends Equatable {
             await actionS(
               () => FActionWebsiteValidator.action(
                 context: context,
-                states: state.states,
                 stateName: stateName,
                 stateName2: stateName2,
               ),
@@ -1868,7 +1858,6 @@ class FActionElement extends Equatable {
             await actionS(
               () => FActionPhoneValidator.action(
                 context: context,
-                states: state.states,
                 stateName: stateName,
                 stateName2: stateName2,
               ),
@@ -2254,9 +2243,6 @@ class FActionElement extends Equatable {
                 valueTextTypeInput,
                 stateName,
                 stateName2,
-                state.params,
-                state.states,
-                state.dataset,
                 state.loop,
               ),
               context: context,
@@ -2269,9 +2255,6 @@ class FActionElement extends Equatable {
                 context,
                 dbFrom,
                 valueTextTypeInput,
-                state.params,
-                state.states,
-                state.dataset,
                 state.loop,
               ),
               context: context,
@@ -2291,9 +2274,6 @@ class FActionElement extends Equatable {
                 dbFrom,
                 customHttpRequestBody,
                 customHttpRequestHeader,
-                state.params,
-                state.states,
-                state.dataset,
                 state.loop,
               ),
               context: context,
@@ -2554,9 +2534,6 @@ class FActionElement extends Equatable {
                 context,
                 dbFrom,
                 dbData,
-                state.params,
-                state.states,
-                state.dataset,
                 state.loop,
               ),
               context: context,
@@ -2570,9 +2547,6 @@ class FActionElement extends Equatable {
                 context,
                 dbFrom,
                 dbEq!,
-                state.params,
-                state.states,
-                state.dataset,
                 state.loop,
               ),
               context: context,
@@ -2587,9 +2561,6 @@ class FActionElement extends Equatable {
                 dbFrom,
                 dbData,
                 dbEq!,
-                state.params,
-                state.states,
-                state.dataset,
                 state.loop,
               ),
               context: context,

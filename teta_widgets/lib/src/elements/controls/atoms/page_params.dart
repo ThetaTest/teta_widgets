@@ -218,16 +218,18 @@ class PaddingsState extends State<PageParamsControl> {
     final PageObject page,
     final VariableObject variable,
   ) {
-    final nameController = TextEditingController()..text = variable.name;
+    var _variable = variable;
+    final nameController = TextEditingController()..text = _variable.name;
     final defaultValueController = TextEditingController()
-      ..text = variable.defaultValue!;
+      ..text = _variable.defaultValue!;
     final docValueController = TextEditingController()
-      ..text = variable.doc ?? '';
+      ..text = _variable.doc ?? '';
     showDialog<void>(
       context: context,
       builder: (final context) {
         var isNameUnique = true;
-        var type = EnumToString.convertToString(variable.type, camelCase: true);
+        var type =
+            EnumToString.convertToString(_variable.type, camelCase: true);
         return StatefulBuilder(
           builder: (final context, final setState) {
             return AlertDialog(
@@ -241,7 +243,7 @@ class PaddingsState extends State<PageParamsControl> {
                   GestureDetector(
                     onTap: () {
                       widget
-                          .callBack([...page.defaultParams]..remove(variable));
+                          .callBack([...page.defaultParams]..remove(_variable));
                       Navigator.of(context, rootNavigator: true).pop(null);
                     },
                     child: MouseRegion(
@@ -296,7 +298,7 @@ class PaddingsState extends State<PageParamsControl> {
                               setState(() {
                                 isNameUnique = true;
                               });
-                              variable.name = text;
+                              _variable = _variable.copyWith(name: text);
                             }
                           },
                         ),
@@ -349,7 +351,7 @@ class PaddingsState extends State<PageParamsControl> {
                                   newValue,
                                   camelCase: true,
                                 );
-                                variable.type = tempType;
+                                _variable = _variable.copyWith(type: tempType);
                                 setState(() {
                                   type = newValue;
                                 });
@@ -392,13 +394,15 @@ class PaddingsState extends State<PageParamsControl> {
                           text: variable.defaultValue,
                           backgroundColor: Palette.bgGrey,
                           callBack: (final text) {
-                            if (variable.type ==
+                            if (_variable.type ==
                                 VariableType.cameraController) {
                               if (int.tryParse(text) != null) {
-                                variable.cameraIndex = int.tryParse(text) ?? 0;
+                                _variable = _variable.copyWith(
+                                  cameraIndex: int.tryParse(text) ?? 0,
+                                );
                               }
                             }
-                            variable.defaultValue = text;
+                            _variable = _variable.copyWith(defaultValue: text);
                           },
                         ),
                       ),
@@ -410,9 +414,9 @@ class PaddingsState extends State<PageParamsControl> {
                         child: CMultiLinesTextField(
                           controller: docValueController,
                           placeholder: 'Description',
-                          text: variable.doc,
+                          text: _variable.doc,
                           callBack: (final text) {
-                            variable.doc = text;
+                            _variable = _variable.copyWith(doc: text);
                           },
                         ),
                       ),
