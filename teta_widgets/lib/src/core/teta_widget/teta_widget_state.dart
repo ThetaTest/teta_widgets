@@ -56,10 +56,6 @@ class TetaWidgetState {
 
   String get toKey => '''
 ${node.nid}
-$forPlay
 $loop
-$params
-$states
-$dataset
 ''';
 }

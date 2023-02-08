@@ -240,7 +240,6 @@ class TextFieldBody extends NodeBody {
         ValueKey(
           '''
             ${state.toKey}
-            ${child ?? children}
             ${(attributes[DBKeys.value] as FTextTypeInput? ?? FTextTypeInput()).toJson()}
             ${(attributes[DBKeys.textStyle] as FTextStyle? ?? FTextStyle()).toJson()}
             ${(attributes[DBKeys.labelText] as FTextTypeInput? ?? FTextTypeInput()).toJson()}
