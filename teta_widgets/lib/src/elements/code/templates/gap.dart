@@ -11,6 +11,7 @@ class GapCodeTemplate {
     final NodeBody body,
     final CNode? child,
   ) async {
+    return '';
     final mainAxisExpanded = body.attributes[DBKeys.mainAxisExtend] as FSize;
     final crossAxisExpanded = body.attributes[DBKeys.mainAxisExtend] as FSize;
 
@@ -19,14 +20,22 @@ class GapCodeTemplate {
     if (!(body.attributes[DBKeys.isExpandedGap] as bool)) {
       code = '''
       Gap(
-        ${mainAxisExpanded.get(context: context, isWidth: true)},
+        ${mainAxisExpanded.get(
+        context: context,
+        isWidth: true,
+        forPlay: false,
+      )},
         crossAxisExtent: ${crossAxisExpanded.toCode(context: context, isWidth: true)},
       )
     ''';
     } else {
       code = '''
       Gap.expand(
-        ${mainAxisExpanded.get(context: context, isWidth: true)}
+        ${mainAxisExpanded.get(
+        context: context,
+        isWidth: true,
+        forPlay: false,
+      )}
       )
     ''';
     }

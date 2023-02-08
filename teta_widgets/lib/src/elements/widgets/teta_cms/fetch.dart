@@ -3,6 +3,9 @@
 // ignore_for_file: avoid_dynamic_calls
 
 // Flutter imports:
+import 'dart:async';
+
+import 'package:after_layout/after_layout.dart';
 import 'package:flutter/material.dart';
 // Package imports:
 import 'package:teta_cms/teta_cms.dart';
@@ -44,13 +47,18 @@ class WCmsFetch extends StatefulWidget {
   _WCmsFetchState createState() => _WCmsFetchState();
 }
 
-class _WCmsFetchState extends State<WCmsFetch> {
+class _WCmsFetchState extends State<WCmsFetch> with AfterLayoutMixin {
   bool isInitialized = false;
   List<dynamic> list = <dynamic>[];
   DatasetObject _map = const DatasetObject(
     name: 'Collection Query',
     map: [<String, dynamic>{}],
   );
+
+  @override
+  FutureOr<void> afterFirstLayout(final BuildContext context) {
+    getDbElements();
+  }
 
   Future<void> getDbElements() async {
     final collectionId = widget.collection.get(
@@ -114,12 +122,6 @@ class _WCmsFetchState extends State<WCmsFetch> {
         isInitialized = true;
       });
     }
-  }
-
-  @override
-  void initState() {
-    super.initState();
-    getDbElements();
   }
 
   @override

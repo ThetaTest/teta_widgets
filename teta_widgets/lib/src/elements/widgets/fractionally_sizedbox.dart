@@ -29,8 +29,16 @@ class WFractionallySizedBox extends StatelessWidget {
     return TetaWidget(
       state: state,
       child: FractionallySizedBox(
-        widthFactor: widthFactor?.get(context: context, isWidth: true),
-        heightFactor: heightFactor?.get(context: context, isWidth: false),
+        widthFactor: widthFactor?.get(
+          context: context,
+          isWidth: true,
+          forPlay: state.forPlay,
+        ),
+        heightFactor: heightFactor?.get(
+          context: context,
+          isWidth: false,
+          forPlay: state.forPlay,
+        ),
         child: ChildConditionBuilder(
           ValueKey(state.toKey),
           state: state,

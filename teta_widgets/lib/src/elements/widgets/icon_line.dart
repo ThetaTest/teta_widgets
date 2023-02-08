@@ -35,7 +35,11 @@ class WLineIcon extends StatelessWidget {
       child: Icon(
         LineIcons.byName(icon),
         color: _getIconColor(model, isLight),
-        size: width!.get(context: context, isWidth: true),
+        size: width!.get(
+          context: context,
+          isWidth: true,
+          forPlay: state.forPlay,
+        ),
       ),
     );
   }

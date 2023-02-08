@@ -2,6 +2,9 @@
 // ignore_for_file: public_member_api_docs
 
 // Package imports:
+import 'dart:async';
+
+import 'package:after_layout/after_layout.dart';
 import 'package:fluentui_system_icons/fluentui_system_icons.dart';
 // Flutter imports:
 import 'package:flutter/material.dart';
@@ -12,7 +15,7 @@ import 'package:teta_widgets/src/elements/index.dart';
 import 'package:universal_platform/universal_platform.dart';
 import 'package:youtube_player_iframe/youtube_player_iframe.dart';
 
-class WVideo extends StatelessWidget {
+class WVideo extends StatefulWidget {
   /// Returns a Video widget in Teta
   const WVideo(
     final Key? key, {
@@ -30,6 +33,34 @@ class WVideo extends StatelessWidget {
   final bool showControls;
   final bool showFullScreen;
   final bool loopVideo;
+
+  @override
+  State<WVideo> createState() => _WVideoState();
+}
+
+class _WVideoState extends State<WVideo> with AfterLayoutMixin {
+  late final YoutubePlayerController controller;
+  @override
+  FutureOr<void> afterFirstLayout(final BuildContext context) {
+    setState(() {
+      controller = YoutubePlayerController(
+        initialVideoId: widget.value.get(
+          widget.state.params,
+          widget.state.states,
+          widget.state.dataset,
+          widget.state.forPlay,
+          widget.state.loop,
+          context,
+        ),
+        params: YoutubePlayerParams(
+          startAt: Duration(seconds: widget.startAt),
+          showControls: widget.showControls,
+          showFullscreenButton: widget.showFullScreen,
+          loop: widget.loopVideo,
+        ),
+      );
+    });
+  }
 
   @override
   Widget build(final BuildContext context) {
@@ -54,24 +85,9 @@ class WVideo extends StatelessWidget {
         ),
       );
     }
-    final controller = YoutubePlayerController(
-      initialVideoId: value.get(
-        state.params,
-        state.states,
-        state.dataset,
-        state.forPlay,
-        state.loop,
-        context,
-      ),
-      params: YoutubePlayerParams(
-        startAt: Duration(seconds: startAt),
-        showControls: showControls,
-        showFullscreenButton: showFullScreen,
-        loop: loopVideo,
-      ),
-    );
+
     return TetaWidget(
-      state: state,
+      state: widget.state,
       child: YoutubePlayerIFrame(
         controller: controller,
       ),

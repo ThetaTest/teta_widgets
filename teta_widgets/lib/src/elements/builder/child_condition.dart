@@ -21,16 +21,18 @@ class ChildConditionBuilder extends StatelessWidget {
 
   @override
   Widget build(final BuildContext context) {
-    return (child != null)
-        ? child!.toWidget(
-            state: state,
-          )
-        : !state.forPlay
-            ? PlaceholderChildBuilder(
-                name: state.node.intrinsicState.displayName,
-                node: state.node,
-                forPlay: state.forPlay,
-              )
-            : const SizedBox();
+    if (child != null) {
+      return child!.toWidget(
+        state: state,
+      );
+    }
+    if (state.forPlay) {
+      return const SizedBox();
+    }
+    return PlaceholderChildBuilder(
+      name: state.node.intrinsicState.displayName,
+      node: state.node,
+      forPlay: state.forPlay,
+    );
   }
 }

@@ -23,12 +23,25 @@ class WGap extends StatelessWidget {
       state: state,
       child: isExpanded
           ? Gap.expand(
-              mainAxisExtent.get(context: context, isWidth: true) ?? 0,
+              mainAxisExtent.get(
+                    context: context,
+                    isWidth: true,
+                    forPlay: state.forPlay,
+                  ) ??
+                  0,
             )
           : Gap(
-              mainAxisExtent.get(context: context, isWidth: true) ?? 0,
-              crossAxisExtent:
-                  crossAxisExtent.get(context: context, isWidth: true),
+              mainAxisExtent.get(
+                    context: context,
+                    isWidth: true,
+                    forPlay: state.forPlay,
+                  ) ??
+                  0,
+              crossAxisExtent: crossAxisExtent.get(
+                context: context,
+                isWidth: true,
+                forPlay: state.forPlay,
+              ),
             ),
     );
   }

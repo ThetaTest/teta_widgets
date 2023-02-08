@@ -5,7 +5,6 @@
 import 'dart:async';
 
 // Flutter imports:
-import 'package:device_frame/device_frame.dart';
 import 'package:flutter/material.dart';
 // Package imports:
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -40,7 +39,10 @@ class MarginsState extends State<Margins> {
 
   @override
   void initState() {
-    margins = widget.value.getList(context);
+    margins = widget.value.getList(
+      context,
+      forPlay: false,
+    );
     for (var i = 0; i < 4; i++) {
       controllers.add(TextEditingController());
     }
@@ -77,7 +79,10 @@ class MarginsState extends State<Margins> {
   Widget build(final BuildContext context) {
     return BlocListener<DeviceModeCubit, DeviceState>(
       listener: (final context, final state) {
-        margins = widget.value.getList(context);
+        margins = widget.value.getList(
+          context,
+          forPlay: false,
+        );
         for (var i = 0; i < 4; i++) {
           controllers[i].text = margins![i];
         }
@@ -97,7 +102,10 @@ class MarginsState extends State<Margins> {
           builder: (final context, final state) {
             if (state.isNotEmpty) {
               if (mounted) {
-                margins = widget.value.getList(context);
+                margins = widget.value.getList(
+                  context,
+                  forPlay: false,
+                );
                 for (var i = 0; i < 4; i++) {
                   controllers[i].text = margins![i];
                 }
@@ -179,7 +187,10 @@ class MarginsState extends State<Margins> {
                       child: CMiniTextField(
                         title: (!isLinked) ? 'LEFT' : 'ALL',
                         controller: controllers[0],
-                        text: widget.value.getList(context)[0],
+                        text: widget.value.getList(
+                          context,
+                          forPlay: false,
+                        )[0],
                         hpadding: isLinked ? 0 : 4,
                         withSwipe: true,
                         callBack: (final text) {
@@ -204,7 +215,10 @@ class MarginsState extends State<Margins> {
                         child: CMiniTextField(
                           title: 'TOP',
                           controller: controllers[1],
-                          text: widget.value.getList(context)[1],
+                          text: widget.value.getList(
+                            context,
+                            forPlay: false,
+                          )[1],
                           hpadding: 4,
                           withSwipe: true,
                           callBack: (final text) {
@@ -223,7 +237,10 @@ class MarginsState extends State<Margins> {
                         child: CMiniTextField(
                           title: 'RIGHT',
                           controller: controllers[2],
-                          text: widget.value.getList(context)[2],
+                          text: widget.value.getList(
+                            context,
+                            forPlay: false,
+                          )[2],
                           hpadding: 4,
                           withSwipe: true,
                           callBack: (final text) {
@@ -242,7 +259,10 @@ class MarginsState extends State<Margins> {
                         child: CMiniTextField(
                           title: 'BOTTOM',
                           controller: controllers[3],
-                          text: widget.value.getList(context)[3],
+                          text: widget.value.getList(
+                            context,
+                            forPlay: false,
+                          )[3],
                           hpadding: 4,
                           withSwipe: true,
                           callBack: (final text) {

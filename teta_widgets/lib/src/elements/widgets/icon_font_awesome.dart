@@ -35,7 +35,11 @@ class WFontAwesome extends StatelessWidget {
       child: Icon(
         faIconNameMapping[icon],
         color: _getIconColor(model, isLight),
-        size: width!.get(context: context, isWidth: true),
+        size: width!.get(
+          context: context,
+          isWidth: true,
+          forPlay: state.forPlay,
+        ),
       ),
     );
   }

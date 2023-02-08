@@ -4,7 +4,6 @@ import 'package:flutter_staggered_animations/flutter_staggered_animations.dart';
 // Package imports:
 import 'package:teta_core/teta_core.dart';
 import 'package:teta_widgets/src/core/teta_widget/teta_widget_state.dart';
-import 'package:teta_widgets/src/elements/controls/key_constants.dart';
 // Project imports:
 import 'package:teta_widgets/src/elements/index.dart';
 import 'package:teta_widgets/src/elements/nodes/node_body.dart';
@@ -139,8 +138,10 @@ class MarginOrPaddingBase {
         final originalType = NodeBody.get(node.globalType);
         if (originalType.attributes[DBKeys.margins] == null) {
           return Padding(
-            padding:
-                (node.body.attributes[DBKeys.margins] as FMargins).get(context),
+            padding: (node.body.attributes[DBKeys.margins] as FMargins).get(
+              context,
+              forPlay: forPlay,
+            ),
             child: child,
           );
         }
@@ -150,8 +151,10 @@ class MarginOrPaddingBase {
         final originalType = NodeBody.get(node.globalType);
         if (originalType.attributes[DBKeys.padding] == null) {
           return Padding(
-            padding:
-                (node.body.attributes[DBKeys.padding] as FMargins).get(context),
+            padding: (node.body.attributes[DBKeys.padding] as FMargins).get(
+              context,
+              forPlay: forPlay,
+            ),
             child: child,
           );
         }

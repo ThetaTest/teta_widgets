@@ -2,6 +2,9 @@
 // ignore_for_file: public_member_api_docs
 
 // Package imports:
+import 'dart:async';
+
+import 'package:after_layout/after_layout.dart';
 import 'package:collection/collection.dart';
 // Flutter imports:
 import 'package:flutter/material.dart';
@@ -54,9 +57,9 @@ class WScaffold extends StatefulWidget {
   State<WScaffold> createState() => _WScaffoldState();
 }
 
-class _WScaffoldState extends State<WScaffold> {
+class _WScaffoldState extends State<WScaffold> with AfterLayoutMixin {
   @override
-  void initState() {
+  FutureOr<void> afterFirstLayout(final BuildContext context) {
     if (widget.state.forPlay) {
       GestureBuilder.get(
         context: context,

@@ -98,89 +98,102 @@ class ActionControlState extends State<ActionControl> {
                       icon: FeatherIcons.plus,
                       onTap: () {
                         final pageBloc = BlocProvider.of<PageCubit>(context);
+                        final prjCubit = context.read<FocusProjectCubit>();
+                        final configCubit = context.read<ConfigCubit>();
+
                         showDialog<void>(
                           context: context,
                           builder: (final context) => BlocProvider.value(
-                            value: pageBloc,
-                            child: _NewActionAlert(
-                              callback: (final value, final actionString) {
-                                final dynamic action =
-                                    FActionElement.convertDropdownToValue(
-                                  value.type,
-                                  actionString,
-                                );
-                                final old = widget.action;
-                                widget.action.actions = [
-                                  ...widget.action.actions ?? [],
-                                  FActionElement(
-                                    id: const Uuid().v1(),
-                                    actionType: value.actionType,
-                                    actionGesture: trigger,
-                                    actionState:
-                                        (action is ActionState) ? action : null,
-                                    actionNavigation:
-                                        (action is ActionNavigation)
+                            value: configCubit,
+                            child: BlocProvider.value(
+                              value: prjCubit,
+                              child: BlocProvider.value(
+                                value: pageBloc,
+                                child: _NewActionAlert(
+                                  callback: (final value, final actionString) {
+                                    final dynamic action =
+                                        FActionElement.convertDropdownToValue(
+                                      value.type,
+                                      actionString,
+                                    );
+                                    final old = widget.action;
+                                    widget.action.actions = [
+                                      ...widget.action.actions ?? [],
+                                      FActionElement(
+                                        id: const Uuid().v1(),
+                                        actionType: value.actionType,
+                                        actionGesture: trigger,
+                                        actionState: (action is ActionState)
                                             ? action
                                             : null,
-                                    actionTheme:
-                                        (action is ActionTheme) ? action : null,
-                                    actionWebView: (action is ActionWebView)
-                                        ? action
-                                        : null,
-                                    actionQonversion:
-                                        (action is ActionQonversion)
+                                        actionNavigation:
+                                            (action is ActionNavigation)
+                                                ? action
+                                                : null,
+                                        actionTheme: (action is ActionTheme)
                                             ? action
                                             : null,
-                                    actionAudioPlayer:
-                                        (action is ActionAudioPlayerActions)
+                                        actionWebView: (action is ActionWebView)
                                             ? action
                                             : null,
-                                    actionRevenueCat:
-                                        (action is ActionRevenueCat)
+                                        actionQonversion:
+                                            (action is ActionQonversion)
+                                                ? action
+                                                : null,
+                                        actionAudioPlayer:
+                                            (action is ActionAudioPlayerActions)
+                                                ? action
+                                                : null,
+                                        actionRevenueCat:
+                                            (action is ActionRevenueCat)
+                                                ? action
+                                                : null,
+                                        actionStripe: (action is ActionStripe)
                                             ? action
                                             : null,
-                                    actionStripe: (action is ActionStripe)
-                                        ? action
-                                        : null,
-                                    actionCamera: (action is ActionCamera)
-                                        ? action
-                                        : null,
-                                    actionSupabaseAuth:
-                                        (action is ActionSupabaseAuth)
+                                        actionCamera: (action is ActionCamera)
                                             ? action
                                             : null,
-                                    actionSupabaseDB:
-                                        (action is ActionSupabaseDB)
-                                            ? action
-                                            : null,
-                                    actionAirtableDB:
-                                        (action is ActionAirtableDB)
-                                            ? action
-                                            : null,
-                                    actionTetaAuth:
-                                        (action is ActionTetaCmsAuth)
-                                            ? action
-                                            : null,
-                                    actionTetaDB: (action is ActionTetaCmsDB)
-                                        ? action
-                                        : null,
-                                    actionCustomHttpRequest:
-                                        (action is ActionCustomHttpRequest)
-                                            ? action
-                                            : null,
-                                    actionApiCalls: (action is ActionApiCalls)
-                                        ? action
-                                        : null,
-                                    actionTranslator:
-                                        (action is ActionTranslator)
-                                            ? action
-                                            : null,
-                                  )
-                                ];
-                                widget.callBack(widget.action, old);
-                                Navigator.of(context, rootNavigator: true)
-                                    .pop(null);
-                              },
+                                        actionSupabaseAuth:
+                                            (action is ActionSupabaseAuth)
+                                                ? action
+                                                : null,
+                                        actionSupabaseDB:
+                                            (action is ActionSupabaseDB)
+                                                ? action
+                                                : null,
+                                        actionAirtableDB:
+                                            (action is ActionAirtableDB)
+                                                ? action
+                                                : null,
+                                        actionTetaAuth:
+                                            (action is ActionTetaCmsAuth)
+                                                ? action
+                                                : null,
+                                        actionTetaDB:
+                                            (action is ActionTetaCmsDB)
+                                                ? action
+                                                : null,
+                                        actionCustomHttpRequest:
+                                            (action is ActionCustomHttpRequest)
+                                                ? action
+                                                : null,
+                                        actionApiCalls:
+                                            (action is ActionApiCalls)
+                                                ? action
+                                                : null,
+                                        actionTranslator:
+                                            (action is ActionTranslator)
+                                                ? action
+                                                : null,
+                                      )
+                                    ];
+                                    widget.callBack(widget.action, old);
+                                    Navigator.of(context, rootNavigator: true)
+                                        .pop(null);
+                                  },
+                                ),
+                              ),
                             ),
                           ),
                         );

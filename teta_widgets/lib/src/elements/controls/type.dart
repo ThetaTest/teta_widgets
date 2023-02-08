@@ -187,10 +187,10 @@ class ControlBuilder {
     final dynamic old,
   ) async {
     final prj = BlocProvider.of<FocusProjectCubit>(context).state!;
-    sl.get<ProjectRepository>().track(prj.id);
     await sl.get<NodeRepository>().changeNode(
           node: node as NDynamic,
         );
+    sl.get<ProjectRepository>().track(prj.id);
   }
 
   /// Returns a control widget based of [control] value.
@@ -931,6 +931,7 @@ class ControlBuilder {
         keyValue: control.key,
         value: control.value as bool,
         callBack: (final value, final old) {
+          Logger.printMessage('FlagControl, value updated: $value');
           node.body.attributes[control.key] = value;
           ControlBuilder.toDB(
             node,

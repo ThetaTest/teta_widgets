@@ -25,11 +25,6 @@ class _WNumericStepButtonState extends State<WNumericStepButton> {
   int maxValue = 0;
 
   @override
-  void initState() {
-    super.initState();
-  }
-
-  @override
   Widget build(final BuildContext context) {
     return NodeSelectionBuilder(
       state: widget.state,

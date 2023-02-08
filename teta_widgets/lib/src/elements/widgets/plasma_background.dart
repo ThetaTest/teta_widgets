@@ -38,8 +38,16 @@ class WPlasmaBackgroundState extends State<WPlasmaBackground> {
     return TetaWidget(
       state: widget.state,
       child: Container(
-        width: widget.width.get(context: context, isWidth: true),
-        height: widget.height.get(context: context, isWidth: false),
+        width: widget.width.get(
+          context: context,
+          isWidth: true,
+          forPlay: widget.state.forPlay,
+        ),
+        height: widget.height.get(
+          context: context,
+          isWidth: false,
+          forPlay: widget.state.forPlay,
+        ),
         color: Colors.black,
         child: PlasmaRenderer(
           fps: 50,

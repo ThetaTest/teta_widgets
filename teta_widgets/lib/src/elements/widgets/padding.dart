@@ -26,7 +26,10 @@ class WPadding extends StatelessWidget {
     return TetaWidget(
       state: state,
       child: Padding(
-        padding: padding.get(context),
+        padding: padding.get(
+          context,
+          forPlay: state.forPlay,
+        ),
         child: ChildConditionBuilder(
           ValueKey(state.toKey),
           state: state,

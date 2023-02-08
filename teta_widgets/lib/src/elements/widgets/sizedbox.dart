@@ -27,8 +27,16 @@ class WSizedBox extends StatelessWidget {
     return TetaWidget(
       state: state,
       child: SizedBox(
-        width: width.get(context: context, isWidth: true),
-        height: height.get(context: context, isWidth: false),
+        width: width.get(
+          context: context,
+          isWidth: true,
+          forPlay: state.forPlay,
+        ),
+        height: height.get(
+          context: context,
+          isWidth: false,
+          forPlay: state.forPlay,
+        ),
         child: ChildConditionBuilder(
           ValueKey(state.toKey),
           state: state,

@@ -1,6 +1,9 @@
 // Flutter imports:
 
 // Flutter imports:
+import 'dart:async';
+
+import 'package:after_layout/after_layout.dart';
 import 'package:flutter/material.dart';
 // Package imports:
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -41,8 +44,9 @@ class WSupabaseStreamBuilder extends StatefulWidget {
   _WSupabaseStreamBuilderState createState() => _WSupabaseStreamBuilderState();
 }
 
-class _WSupabaseStreamBuilderState extends State<WSupabaseStreamBuilder> {
-  DatasetObject _map = DatasetObject(
+class _WSupabaseStreamBuilderState extends State<WSupabaseStreamBuilder>
+    with AfterLayoutMixin {
+  DatasetObject _map = const DatasetObject(
     name: 'Supabase Query',
     map: [<String, dynamic>{}],
   );
@@ -50,8 +54,7 @@ class _WSupabaseStreamBuilderState extends State<WSupabaseStreamBuilder> {
   SupabaseClient? client;
 
   @override
-  void initState() {
-    super.initState();
+  FutureOr<void> afterFirstLayout(final BuildContext context) {
     calc();
   }
 

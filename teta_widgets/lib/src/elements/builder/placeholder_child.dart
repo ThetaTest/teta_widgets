@@ -1,6 +1,8 @@
 // Flutter imports:
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:flutter_feather_icons/flutter_feather_icons.dart';
+import 'package:gap/gap.dart';
 import 'package:teta_core/src/services/node_service.dart';
 import 'package:teta_core/teta_core.dart';
 // Package imports:
@@ -57,33 +59,35 @@ class _PlaceholderChildBuilderState extends State<PlaceholderChildBuilder> {
         });
       },
       builder: (final context, final candidateData, final rejectedData) {
-        return MouseRegion(
-          cursor: SystemMouseCursors.click,
-          child: GestureDetector(
-            onTap: () {
-              BlocProvider.of<FocusBloc>(context).add(
-                OnFocus(
-                  node: widget.node,
-                ),
-              );
-            },
-            child: TContainer(
-              width: double.infinity,
-              padding: EI.smA,
-              decoration: BoxDecoration(
-                color: isDragging
-                    ? primaryColor.withOpacity(0.3)
-                    : Colors.transparent,
-                border: Border.all(
+        return GestureDetector(
+          onTap: () {
+            BlocProvider.of<FocusBloc>(context).add(
+              OnFocus(
+                node: widget.node,
+              ),
+            );
+          },
+          child: TContainer(
+            padding: EI.smA,
+            decoration: BoxDecoration(
+              color: isDragging
+                  ? primaryColor.withOpacity(0.3)
+                  : Colors.transparent,
+            ),
+            child: Row(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+                const Icon(
+                  FeatherIcons.plusSquare,
+                  size: 24,
                   color: Colors.grey,
                 ),
-              ),
-              child: Center(
-                child: THeadline3(
-                  'Add in ${widget.name}',
+                const Gap(Grid.small),
+                THeadline3(
+                  'Drop in ${widget.name}',
                   color: Colors.grey,
                 ),
-              ),
+              ],
             ),
           ),
         );

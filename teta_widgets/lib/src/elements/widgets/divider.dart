@@ -33,7 +33,11 @@ class WDivider extends StatelessWidget {
       if (element.id == fill.paletteStyle) model = element;
       if (element.name == fill.paletteStyle) model = element;
     });
-    final h = height.get(context: context, isWidth: false);
+    final h = height.get(
+      context: context,
+      isWidth: false,
+      forPlay: state.forPlay,
+    );
     return TetaWidget(
       state: state,
       child: Divider(

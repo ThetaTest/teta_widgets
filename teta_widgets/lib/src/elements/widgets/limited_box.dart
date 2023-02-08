@@ -2,6 +2,9 @@
 // ignore_for_file: public_member_api_docs
 
 // Flutter imports:
+import 'dart:async';
+
+import 'package:after_layout/after_layout.dart';
 import 'package:flutter/material.dart';
 // Package imports:
 import 'package:teta_widgets/src/core/teta_widget/index.dart';
@@ -27,15 +30,26 @@ class WLimitedBox extends StatefulWidget {
   State<WLimitedBox> createState() => _WLimitedBoxState();
 }
 
-class _WLimitedBoxState extends State<WLimitedBox> {
+class _WLimitedBoxState extends State<WLimitedBox> with AfterLayoutMixin {
   late final double maxW;
   late final double maxH;
 
   @override
-  void initState() {
-    super.initState();
-    maxW = widget.maxWidth.get(context: context, isWidth: true) ?? double.infinity;
-    maxH = widget.maxHeight.get(context: context, isWidth: false) ?? double.infinity;
+  FutureOr<void> afterFirstLayout(final BuildContext context) {
+    setState(() {
+      maxW = widget.maxWidth.get(
+            context: context,
+            isWidth: true,
+            forPlay: widget.state.forPlay,
+          ) ??
+          double.infinity;
+      maxH = widget.maxHeight.get(
+            context: context,
+            isWidth: false,
+            forPlay: widget.state.forPlay,
+          ) ??
+          double.infinity;
+    });
   }
 
   @override

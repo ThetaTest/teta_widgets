@@ -51,7 +51,7 @@ class FBorder {
 
   /// Get [Border] from actual values
   Border get(final BuildContext context, {required final bool forPlay}) {
-    final values = width!.getList(context);
+    final values = width!.getList(context, forPlay: forPlay);
     final tempOpacity = fill?.levels?.first.opacity ?? 1;
     final opacity = tempOpacity >= 0 && tempOpacity <= 1 ? tempOpacity : 1.0;
     return Border(

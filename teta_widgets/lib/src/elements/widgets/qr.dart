@@ -46,8 +46,13 @@ class WQR extends StatelessWidget {
           context,
         ),
         gapless: false,
-        size: size.get(context: context, isWidth: true),
-        foregroundColor: HexColor(fill.getHexColor(context)).withOpacity(opacity),
+        size: size.get(
+          context: context,
+          isWidth: true,
+          forPlay: state.forPlay,
+        ),
+        foregroundColor:
+            HexColor(fill.getHexColor(context)).withOpacity(opacity),
         embeddedImage: withImage
             ? NetworkImage(
                 image.get(

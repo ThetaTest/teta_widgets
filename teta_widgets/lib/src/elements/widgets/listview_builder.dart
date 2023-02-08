@@ -4,11 +4,12 @@
 // Flutter imports:
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
+// Project imports:
+import 'package:teta_core/src/services/node_service.dart';
 // Package imports:
 import 'package:teta_core/teta_core.dart';
 import 'package:teta_widgets/src/core/teta_widget/index.dart';
 import 'package:teta_widgets/src/elements/features/physic.dart';
-// Project imports:
 import 'package:teta_widgets/src/elements/index.dart';
 
 class WListViewBuilder extends StatefulWidget {
@@ -103,60 +104,72 @@ class WListViewBuilderState extends State<WListViewBuilder> {
     }
     return TetaWidget(
       state: widget.state,
-      child: NotificationListener<ScrollEndNotification>(
-        onNotification: (final scrollEnd) {
-          final metrics = scrollEnd.metrics;
-          if (metrics.atEdge) {
-            final isTop = metrics.pixels == 0;
-            if (isTop) {
-              Logger.printMessage('At the top');
-              GestureBuilder.get(
+      child: DragTarget<DragTargetModel>(
+        onAccept: (final data) async {
+          await sl.get<NodeService>().add(
+                dragTarget: data,
+                parent: widget.state.node,
                 context: context,
-                state: widget.state,
-                gesture: ActionGesture.scrollToTop,
-                action: widget.action,
-                actionValue: null,
+                customIndex: 0,
               );
-            } else {
-              Logger.printMessage('At the bottom');
-              GestureBuilder.get(
-                context: context,
-                state: widget.state,
-                gesture: ActionGesture.scrollToBottom,
-                action: widget.action,
-                actionValue: null,
-              );
-            }
-          }
-          return true;
         },
-        child: ScrollConfiguration(
-          behavior: _MyCustomScrollBehavior(),
-          child: ListView.builder(
-            reverse: widget.isReverse,
-            physics: widget.physic.physics,
-            addAutomaticKeepAlives: false,
-            addRepaintBoundaries: false,
-            shrinkWrap: widget.shrinkWrap,
-            scrollDirection:
-                widget.isVertical ? Axis.vertical : Axis.horizontal,
-            itemCount: newDB.sublist(startFromIndex, limit).length,
-            itemBuilder: (final context, final index) {
-              return widget.child != null
-                  ? widget.child!.toWidget(
-                      state: widget.state.copyWith(
-                        loop: index,
-                      ),
-                      isVertical: widget.isVertical,
-                    )
-                  : PlaceholderChildBuilder(
-                      name: widget.state.node.intrinsicState.displayName,
-                      node: widget.state.node,
-                      forPlay: widget.state.forPlay,
-                    );
+        builder: (final context, final candidateData, final rejectedData) {
+          return NotificationListener<ScrollEndNotification>(
+            onNotification: (final scrollEnd) {
+              final metrics = scrollEnd.metrics;
+              if (metrics.atEdge) {
+                final isTop = metrics.pixels == 0;
+                if (isTop) {
+                  Logger.printMessage('At the top');
+                  GestureBuilder.get(
+                    context: context,
+                    state: widget.state,
+                    gesture: ActionGesture.scrollToTop,
+                    action: widget.action,
+                    actionValue: null,
+                  );
+                } else {
+                  Logger.printMessage('At the bottom');
+                  GestureBuilder.get(
+                    context: context,
+                    state: widget.state,
+                    gesture: ActionGesture.scrollToBottom,
+                    action: widget.action,
+                    actionValue: null,
+                  );
+                }
+              }
+              return true;
             },
-          ),
-        ),
+            child: ScrollConfiguration(
+              behavior: _MyCustomScrollBehavior(),
+              child: ListView.builder(
+                reverse: widget.isReverse,
+                physics: widget.physic.physics,
+                addAutomaticKeepAlives: false,
+                addRepaintBoundaries: false,
+                shrinkWrap: widget.shrinkWrap,
+                scrollDirection:
+                    widget.isVertical ? Axis.vertical : Axis.horizontal,
+                itemCount: newDB.sublist(startFromIndex, limit).length,
+                itemBuilder: (final context, final index) {
+                  return widget.child != null
+                      ? widget.child!.toWidget(
+                          state: widget.state.copyWith(
+                            loop: index,
+                          ),
+                          isVertical: widget.isVertical,
+                        )
+                      : PlaceholderChildBuilder(
+                          name: widget.state.node.intrinsicState.displayName,
+                          node: widget.state.node,
+                          forPlay: widget.state.forPlay,
+                        );
+                },
+              ),
+            ),
+          );
+        },
       ),
     );
   }

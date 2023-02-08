@@ -30,7 +30,12 @@ class WRefreshIndicator extends StatelessWidget {
 
   @override
   Widget build(final BuildContext context) {
-    final val = height.get(context: context, isWidth: false) ?? 150;
+    final val = height.get(
+          context: context,
+          isWidth: false,
+          forPlay: state.forPlay,
+        ) ??
+        150;
     return NodeSelectionBuilder(
       state: state,
       child: CustomRefreshIndicator(

@@ -24,7 +24,10 @@ class WAlign extends StatelessWidget {
     return TetaWidget(
       state: state,
       child: Align(
-        alignment: align.get(context),
+        alignment: align.get(
+          context,
+          forPlay: state.forPlay,
+        ),
         child: ChildConditionBuilder(
           ValueKey(state.toKey),
           state: state,

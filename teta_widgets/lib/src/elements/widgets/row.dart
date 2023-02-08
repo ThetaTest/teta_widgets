@@ -3,11 +3,9 @@
 
 // Flutter imports:
 import 'package:flutter/material.dart';
-import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:reorderables/reorderables.dart';
+import 'package:teta_core/src/services/node_service.dart';
 import 'package:teta_core/teta_core.dart';
 import 'package:teta_widgets/src/core/teta_widget/index.dart';
-import 'package:teta_widgets/src/elements/builder/reorder_children.dart';
 // Project imports:
 import 'package:teta_widgets/src/elements/index.dart';
 
@@ -50,44 +48,16 @@ class _WRowState extends State<WRow> {
   Widget build(final BuildContext context) {
     return TetaWidget(
       state: widget._state,
-      child: BlocBuilder<FocusBloc, List<int>>(
-        builder: (final context, final nodes) {
-          if (nodes.length == 1) {
-            final index = widget._children
-                .indexWhere((final element) => element.nid == nodes.first);
-            if (index != -1) {
-              return ReorderableRow(
-                onReorder: (final oldIndex, final newIndex) {
-                  ReorderChildren.reorder(
-                    widget._state.node,
-                    children,
-                    oldIndex,
-                    newIndex,
-                  );
-                  setState(() {});
-                },
-                mainAxisAlignment: widget._mainAxisAlignment.get,
-                crossAxisAlignment: widget._crossAxisAlignment.get,
-                mainAxisSize: widget._mainAxisSize.get,
-                children: children.isNotEmpty
-                    ? children
-                        .map(
-                          (final e) => e.toWidget(
-                            state: widget._state,
-                            isVertical: false,
-                          ),
-                        )
-                        .toList()
-                    : [
-                        PlaceholderChildBuilder(
-                          name: widget._state.node.intrinsicState.displayName,
-                          node: widget._state.node,
-                          forPlay: widget._state.forPlay,
-                        ),
-                      ],
+      child: DragTarget<DragTargetModel>(
+        onAccept: (final data) async {
+          await sl.get<NodeService>().add(
+                dragTarget: data,
+                parent: widget._state.node,
+                context: context,
+                customIndex: 0,
               );
-            }
-          }
+        },
+        builder: (final context, final candidateData, final rejectedData) {
           return Row(
             mainAxisAlignment: widget._mainAxisAlignment.get,
             crossAxisAlignment: widget._crossAxisAlignment.get,

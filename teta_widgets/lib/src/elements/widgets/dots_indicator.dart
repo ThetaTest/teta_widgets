@@ -65,9 +65,20 @@ class WDotsIndicator extends StatelessWidget {
                     3);
             i++)
           Container(
-            margin: margins.get(context),
-            width: width.get(context: context, isWidth: true),
-            height: height.get(context: context, isWidth: false),
+            margin: margins.get(
+              context,
+              forPlay: state.forPlay,
+            ),
+            width: width.get(
+              context: context,
+              isWidth: true,
+              forPlay: state.forPlay,
+            ),
+            height: height.get(
+              context: context,
+              isWidth: false,
+              forPlay: state.forPlay,
+            ),
             decoration: TetaBoxDecoration.get(
               context: context,
               fill: i ==

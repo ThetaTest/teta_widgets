@@ -10,6 +10,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:recase/recase.dart';
+import 'package:teta_core/src/pages/play_page/cubit_value_initializer.dart';
 import 'package:teta_core/src/rendering/nodes.dart';
 import 'package:teta_core/teta_core.dart';
 import 'package:teta_db/teta_db.dart';
@@ -53,7 +54,6 @@ class FActionNavigationOpenPage {
     final Map<String, dynamic>? paramsToSend,
   ) async {
     try {
-      final prj = BlocProvider.of<FocusProjectCubit>(context).state!;
       final pages = BlocProvider.of<PagesCubit>(context).state;
 
       final currentPage =
@@ -85,15 +85,14 @@ class FActionNavigationOpenPage {
         final scaffold = sl.get<NodeRendering>().renderTree(nodes);
         page = page.copyWith(flatList: nodes, scaffold: scaffold);
 
-        await Future.wait([
-          BlocProvider.of<PageCubit>(context)
-              .onFocus(page: page, forPlay: true),
-          Navigator.push<void>(
-            context,
-            MaterialPageRoute(
-              builder: (final context) => BlocProvider(
-                create: (final context) =>
-                    PageCubit(sl.get())..onFocus(page: page!, forPlay: true),
+        await Navigator.push<void>(
+          context,
+          MaterialPageRoute(
+            builder: (final c) => BlocProvider(
+              create: (final c) =>
+                  PageCubit(sl.get())..onFocus(page: page!, forPlay: true),
+              child: PlayCubitsValueInitializer(
+                originalContext: context,
                 child: page!.scaffold.toWidget(
                   state: state.copyWith(
                     forPlay: true,
@@ -108,10 +107,10 @@ class FActionNavigationOpenPage {
                     ),
                   ),
                 ),
-              ),
+              ).build(),
             ),
           ),
-        ]);
+        );
       }
     } catch (e) {
       if (kDebugMode) {

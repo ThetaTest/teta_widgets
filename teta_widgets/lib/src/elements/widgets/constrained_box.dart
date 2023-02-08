@@ -28,12 +28,30 @@ class WConstrainedBox extends StatelessWidget {
 
   @override
   Widget build(final BuildContext context) {
-    final minW = minWidth.get(context: context, isWidth: true) ?? 0;
-    final minH = minHeight.get(context: context, isWidth: false) ?? 0;
-    final maxW =
-        maxWidth.get(context: context, isWidth: true) ?? double.infinity;
-    final maxH =
-        maxHeight.get(context: context, isWidth: false) ?? double.infinity;
+    final minW = minWidth.get(
+          context: context,
+          isWidth: true,
+          forPlay: state.forPlay,
+        ) ??
+        0;
+    final minH = minHeight.get(
+          context: context,
+          isWidth: false,
+          forPlay: state.forPlay,
+        ) ??
+        0;
+    final maxW = maxWidth.get(
+          context: context,
+          isWidth: true,
+          forPlay: state.forPlay,
+        ) ??
+        double.infinity;
+    final maxH = maxHeight.get(
+          context: context,
+          isWidth: false,
+          forPlay: state.forPlay,
+        ) ??
+        double.infinity;
 
     return TetaWidget(
       state: state,

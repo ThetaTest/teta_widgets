@@ -35,7 +35,12 @@ class _WCupertinoPickerState extends State<WCupertinoPicker> {
     return NodeSelectionBuilder(
       state: widget.state,
       child: CupertinoPicker(
-        itemExtent: widget.height.get(context: context, isWidth: false) ?? 44,
+        itemExtent: widget.height.get(
+              context: context,
+              isWidth: false,
+              forPlay: widget.state.forPlay,
+            ) ??
+            44,
         onSelectedItemChanged: (final index) {
           GestureBuilder.get(
             context: context,

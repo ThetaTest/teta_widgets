@@ -27,12 +27,14 @@ class WRevenueCatSingleSubStatus extends StatefulWidget {
   final FTextTypeInput entitlementInfo;
 
   @override
-  State<WRevenueCatSingleSubStatus> createState() => _WRevenueCatSingleSubStatusState();
+  State<WRevenueCatSingleSubStatus> createState() =>
+      _WRevenueCatSingleSubStatusState();
 }
 
-class _WRevenueCatSingleSubStatusState extends State<WRevenueCatSingleSubStatus> {
+class _WRevenueCatSingleSubStatusState
+    extends State<WRevenueCatSingleSubStatus> {
   static const mapTitle = 'RevenueCat Sub Status';
-  DatasetObject _map = DatasetObject(
+  DatasetObject _map = const DatasetObject(
     name: mapTitle,
     map: [<String, dynamic>{}],
   );
@@ -82,7 +84,9 @@ class _WRevenueCatSingleSubStatusState extends State<WRevenueCatSingleSubStatus>
           if (widget.child != null) {
             return widget.child!.toWidget(
               state: widget.state.copyWith(
-                dataset: widget.state.dataset.isEmpty ? datasets : widget.state.dataset,
+                dataset: widget.state.dataset.isEmpty
+                    ? datasets
+                    : widget.state.dataset,
               ),
             );
           } else {

@@ -36,7 +36,11 @@ class WFeatherIcon extends StatelessWidget {
       child: Icon(
         FeatherIconsMap[icon],
         color: _getIconColor(model, isLight),
-        size: width!.get(context: context, isWidth: true),
+        size: width!.get(
+          context: context,
+          isWidth: true,
+          forPlay: state.forPlay,
+        ),
       ),
     );
   }

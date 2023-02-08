@@ -30,7 +30,7 @@ class WCMSLoggedUser extends StatefulWidget {
 }
 
 class _WCMSLoggedUserState extends State<WCMSLoggedUser> {
-  DatasetObject _map = DatasetObject(
+  DatasetObject _map = const DatasetObject(
     name: 'Teta Auth User',
     map: [<String, dynamic>{}],
   );

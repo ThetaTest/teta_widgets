@@ -32,8 +32,16 @@ class WLottie extends StatelessWidget {
         image.value != null
             ? image.value!
             : 'https://assets10.lottiefiles.com/packages/lf20_ptplezpy.json',
-        width: width.get(context: context, isWidth: true),
-        height: height.get(context: context, isWidth: false),
+        width: width.get(
+          context: context,
+          isWidth: true,
+          forPlay: state.forPlay,
+        ),
+        height: height.get(
+          context: context,
+          isWidth: false,
+          forPlay: state.forPlay,
+        ),
         fit: BoxFit.contain,
       ),
     );

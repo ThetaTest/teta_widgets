@@ -3,6 +3,9 @@
 // ignore_for_file: avoid_dynamic_calls
 
 // Flutter imports:
+import 'dart:async';
+
+import 'package:after_layout/after_layout.dart';
 import 'package:flutter/material.dart';
 // Package imports:
 import 'package:teta_cms/teta_cms.dart';
@@ -34,17 +37,17 @@ class WCmsCustomQuery extends StatefulWidget {
   _WCmsCustomQueryState createState() => _WCmsCustomQueryState();
 }
 
-class _WCmsCustomQueryState extends State<WCmsCustomQuery> {
-  DatasetObject _map = DatasetObject(
+class _WCmsCustomQueryState extends State<WCmsCustomQuery>
+    with AfterLayoutMixin {
+  DatasetObject _map = const DatasetObject(
     name: 'CMS Custom Query',
     map: [<String, dynamic>{}],
   );
   Future<TetaResponse<List<dynamic>?, TetaErrorResponse?>>? _future;
 
   @override
-  void initState() {
+  FutureOr<void> afterFirstLayout(final BuildContext context) {
     calc();
-    super.initState();
   }
 
   Future calc() async {

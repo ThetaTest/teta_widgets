@@ -38,7 +38,10 @@ class WPositioned extends StatelessWidget {
 
   @override
   Widget build(final BuildContext context) {
-    final pos = _margins.get(context);
+    final pos = _margins.get(
+      context,
+      forPlay: _state.forPlay,
+    );
 
     return TetaWidget(
       state: _state,

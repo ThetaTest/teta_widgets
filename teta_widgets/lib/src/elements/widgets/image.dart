@@ -2,9 +2,11 @@
 // ignore_for_file: public_member_api_docs
 
 // Dart imports:
+import 'dart:async';
 import 'dart:typed_data';
 
 // Package imports:
+import 'package:after_layout/after_layout.dart';
 import 'package:cross_file/cross_file.dart';
 // Flutter imports:
 import 'package:flutter/material.dart';
@@ -38,25 +40,26 @@ class WImage extends StatefulWidget {
   State<WImage> createState() => _WImageState();
 }
 
-class _WImageState extends State<WImage> {
+class _WImageState extends State<WImage> with AfterLayoutMixin {
   dynamic result;
   Uint8List? bytes;
   bool isLoading = false;
 
   @override
-  void initState() {
-    result = widget.image.getForImages(
-      widget.state.params,
-      widget.state.states,
-      widget.state.dataset,
-      widget.state.loop,
-      forPlay: widget.state.forPlay,
-      context: context,
-    );
+  FutureOr<void> afterFirstLayout(final BuildContext context) {
+    setState(() {
+      result = widget.image.getForImages(
+        widget.state.params,
+        widget.state.states,
+        widget.state.dataset,
+        widget.state.loop,
+        forPlay: widget.state.forPlay,
+        context: context,
+      );
+    });
     if (result is XFile) {
       calc();
     }
-    super.initState();
   }
 
   Future<void> calc() async {
@@ -76,10 +79,12 @@ class _WImageState extends State<WImage> {
         width: widget.width.get(
           context: context,
           isWidth: true,
+          forPlay: widget.state.forPlay,
         ),
         height: widget.height.get(
           context: context,
           isWidth: false,
+          forPlay: widget.state.forPlay,
         ),
         child: const CircularProgressIndicator(),
       );
@@ -93,10 +98,12 @@ class _WImageState extends State<WImage> {
           width: widget.width.get(
             context: context,
             isWidth: true,
+            forPlay: widget.state.forPlay,
           ),
           height: widget.height.get(
             context: context,
             isWidth: false,
+            forPlay: widget.state.forPlay,
           ),
           child: _LocalImage(
             key: ValueKey('Image ${widget.state.node.nid} $bytes $result'),
@@ -107,10 +114,12 @@ class _WImageState extends State<WImage> {
             width: widget.width.get(
               context: context,
               isWidth: true,
+              forPlay: widget.state.forPlay,
             ),
             height: widget.height.get(
               context: context,
               isWidth: false,
+              forPlay: widget.state.forPlay,
             ),
             fit: widget.boxFit.get,
           ),

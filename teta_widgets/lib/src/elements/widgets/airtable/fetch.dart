@@ -3,6 +3,9 @@
 // ignore_for_file: avoid_dynamic_calls
 
 // Flutter imports:
+import 'dart:async';
+
+import 'package:after_layout/after_layout.dart';
 import 'package:dart_airtable/dart_airtable.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -36,13 +39,18 @@ class WAirtableFetch extends StatefulWidget {
   _WAirtableFetchState createState() => _WAirtableFetchState();
 }
 
-class _WAirtableFetchState extends State<WAirtableFetch> {
+class _WAirtableFetchState extends State<WAirtableFetch> with AfterLayoutMixin {
   bool isInitialized = false;
   List<dynamic> list = <dynamic>[];
   DatasetObject _map = DatasetObject(
     name: 'Collection Query',
     map: [<String, dynamic>{}],
   );
+
+  @override
+  FutureOr<void> afterFirstLayout(final BuildContext context) {
+    getDbElements();
+  }
 
   Future<void> getDbElements() async {
     final recordName = widget.recordName.get(
@@ -70,12 +78,6 @@ class _WAirtableFetchState extends State<WAirtableFetch> {
         isInitialized = true;
       });
     }
-  }
-
-  @override
-  void initState() {
-    super.initState();
-    getDbElements();
   }
 
   @override

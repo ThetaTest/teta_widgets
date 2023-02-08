@@ -43,7 +43,7 @@ class _WAdaptyProductsListState extends State<WAdaptyProductsList> {
     _map = DatasetObject(
       name: widget.state.node.name ??
           widget.state.node.intrinsicState.displayName,
-      map: [<String, dynamic>{}],
+      map: const [<String, dynamic>{}],
     );
     super.initState();
   }

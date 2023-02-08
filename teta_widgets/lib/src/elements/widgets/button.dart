@@ -69,8 +69,16 @@ class WButton extends StatelessWidget {
             context: context,
             state: state,
             child: SizedBox(
-              width: width.get(context: context, isWidth: true),
-              height: height.get(context: context, isWidth: false),
+              width: width.get(
+                context: context,
+                isWidth: true,
+                forPlay: state.forPlay,
+              ),
+              height: height.get(
+                context: context,
+                isWidth: false,
+                forPlay: state.forPlay,
+              ),
               child: DecoratedBox(
                 decoration: TetaBoxDecoration.get(
                   context: context,

@@ -47,12 +47,6 @@ class _DragAndDropBuilderState extends State<DragAndDropBuilder> {
     final double screenOffset,
     final double sideSize,
   ) {
-    Logger.printDefault(
-      'Coords, pointer: $pointCoord, offset: $offset, screenOffset: $screenOffset, sideSize: $sideSize',
-    );
-    Logger.printMessage(
-      'Coords calc, ${pointCoord - screenOffset} ${offset - screenOffset} ${(offset - screenOffset) + (sideSize / 2)}',
-    );
     return pointCoord - screenOffset > offset - screenOffset &&
         pointCoord - screenOffset < (offset - screenOffset) + (sideSize / 2);
   }

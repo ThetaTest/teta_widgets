@@ -3,6 +3,9 @@
 // ignore_for_file: avoid_dynamic_calls
 
 // Flutter imports:
+import 'dart:async';
+
+import 'package:after_layout/after_layout.dart';
 import 'package:flutter/material.dart';
 // Package imports:
 import 'package:teta_cms/teta_cms.dart';
@@ -44,16 +47,15 @@ class WCmsCount extends StatefulWidget {
   _WCmsCountState createState() => _WCmsCountState();
 }
 
-class _WCmsCountState extends State<WCmsCount> {
-  DatasetObject _map = DatasetObject(
+class _WCmsCountState extends State<WCmsCount> with AfterLayoutMixin {
+  DatasetObject _map = const DatasetObject(
     name: 'Collection Query',
     map: [<String, dynamic>{}],
   );
   late final Future<int>? _future;
 
   @override
-  void initState() {
-    super.initState();
+  FutureOr<void> afterFirstLayout(final BuildContext context) {
     calc();
   }
 

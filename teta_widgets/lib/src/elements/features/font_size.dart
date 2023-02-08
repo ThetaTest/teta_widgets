@@ -4,6 +4,7 @@ import 'package:device_frame/device_frame.dart' as frame;
 import 'package:enum_to_string/enum_to_string.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:responsive_builder/responsive_builder.dart';
 import 'package:sizer/sizer.dart';
 import 'package:teta_core/teta_core.dart';
 import 'package:teta_widgets/src/elements/index.dart';
@@ -27,28 +28,23 @@ class FFontSize {
 
   SizeUnit unit;
 
-  /// Get current value of [size]
-  double get(final BuildContext context) {
-    final device = BlocProvider.of<DeviceModeCubit>(context).state;
-    late double size;
-    if (device.info.identifier.type == frame.DeviceType.phone) {
-      size = this.size;
-    } else if (device.info.identifier.type == frame.DeviceType.tablet) {
-      size = sizeTablet ?? this.size;
-    } else {
-      size = sizeDesktop ?? this.size;
-    }
+  double _getValue(final double value) {
     if (unit == SizeUnit.pixel) {
       return size;
-    }
-    if (unit == SizeUnit.width) {
+    } else if (unit == SizeUnit.width) {
       return size.w;
-    }
-    if (unit == SizeUnit.height) {
+    } else {
       return size.h;
     }
-    return size;
   }
+
+  /// Get current value of [size]
+  double get(final BuildContext context) => getValueForScreenType<double>(
+        context: context,
+        mobile: _getValue(size),
+        tablet: _getValue(sizeTablet ?? size),
+        desktop: _getValue(sizeDesktop ?? size),
+      );
 
   void update(final double value, final BuildContext context) {
     final device = BlocProvider.of<DeviceModeCubit>(context).state;

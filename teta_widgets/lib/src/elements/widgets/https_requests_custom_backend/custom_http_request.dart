@@ -1,8 +1,10 @@
 // ignore_for_file: avoid_dynamic_calls
 
 // Flutter imports:
+import 'dart:async';
 import 'dart:convert';
 
+import 'package:after_layout/after_layout.dart';
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
 // Package imports:
@@ -33,13 +35,19 @@ class WCustomHttpRequest extends StatefulWidget {
   State<WCustomHttpRequest> createState() => _WCustomHttpRequestState();
 }
 
-class _WCustomHttpRequestState extends State<WCustomHttpRequest> {
+class _WCustomHttpRequestState extends State<WCustomHttpRequest>
+    with AfterLayoutMixin {
   bool isInitialized = false;
   List<dynamic> list = <dynamic>[];
-  DatasetObject _map = DatasetObject(
+  DatasetObject _map = const DatasetObject(
     name: 'Custom HTTP Request URL',
     map: [<String, dynamic>{}],
   );
+
+  @override
+  FutureOr<void> afterFirstLayout(final BuildContext context) {
+    getDataFromURL();
+  }
 
   Future<void> getDataFromURL() async {
     final url = widget.url.get(
@@ -58,7 +66,7 @@ class _WCustomHttpRequestState extends State<WCustomHttpRequest> {
               '$url?${widget.addParams![i].key.toString()}=${widget.addParams![i].value.value.toString()}';
         } else {
           newURL =
-              "$newURL&${widget.addParams![i].key.toString()}=${widget.addParams![i].value.value.toString()}";
+              '$newURL&${widget.addParams![i].key.toString()}=${widget.addParams![i].value.value.toString()}';
         }
       }
       // print("new URL : " + newURL);
@@ -102,12 +110,6 @@ class _WCustomHttpRequestState extends State<WCustomHttpRequest> {
     } catch (e) {
       print('error: ${e.toString()}');
     }
-  }
-
-  @override
-  void initState() {
-    super.initState();
-    getDataFromURL();
   }
 
   @override

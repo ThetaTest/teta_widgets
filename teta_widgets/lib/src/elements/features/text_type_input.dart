@@ -13,6 +13,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:intl/intl.dart';
 import 'package:recase/recase.dart';
+import 'package:responsive_builder/responsive_builder.dart';
 import 'package:teta_core/teta_core.dart';
 
 enum FTextTypeEnum {
@@ -257,26 +258,20 @@ class FTextTypeInput {
         ).state.getString(keyTranslator!);
       }
     }
-    final device = BlocProvider.of<DeviceModeCubit>(context).state;
-    if (device.info.identifier.type == DeviceType.phone) {
-      return value ?? '';
-    } else if (device.info.identifier.type == DeviceType.tablet) {
-      return valueTablet != '' ? valueTablet ?? value ?? '' : value ?? '';
-    } else {
-      return valueDesktop != '' ? valueDesktop ?? value ?? '' : value ?? '';
-    }
+    return getValueForScreenType<String>(
+      context: context,
+      mobile: value ?? '',
+      tablet: valueTablet != '' ? valueTablet ?? value ?? '' : value ?? '',
+      desktop: valueDesktop != '' ? valueDesktop ?? value ?? '' : value ?? '',
+    );
   }
 
-  String getValue(final BuildContext context) {
-    final device = BlocProvider.of<DeviceModeCubit>(context).state;
-    if (device.info.identifier.type == DeviceType.phone) {
-      return value ?? '';
-    } else if (device.info.identifier.type == DeviceType.tablet) {
-      return valueTablet != '' ? valueTablet ?? value ?? '' : value ?? '';
-    } else {
-      return valueDesktop != '' ? valueDesktop ?? value ?? '' : value ?? '';
-    }
-  }
+  String getValue(final BuildContext context) => getValueForScreenType<String>(
+        context: context,
+        mobile: value ?? '',
+        tablet: valueTablet != '' ? valueTablet ?? value ?? '' : value ?? '',
+        desktop: valueDesktop != '' ? valueDesktop ?? value ?? '' : value ?? '',
+      );
 
   void updateValue(final String val, final BuildContext context) {
     final device = BlocProvider.of<DeviceModeCubit>(context).state;

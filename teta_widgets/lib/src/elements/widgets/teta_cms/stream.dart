@@ -5,6 +5,7 @@
 // Flutter imports:
 import 'dart:async';
 
+import 'package:after_layout/after_layout.dart';
 import 'package:flutter/material.dart';
 // Package imports:
 import 'package:supabase/supabase.dart';
@@ -47,8 +48,8 @@ class WCmsStream extends StatefulWidget {
   _WCmsStreamState createState() => _WCmsStreamState();
 }
 
-class _WCmsStreamState extends State<WCmsStream> {
-  DatasetObject _map = DatasetObject(
+class _WCmsStreamState extends State<WCmsStream> with AfterLayoutMixin {
+  DatasetObject _map = const DatasetObject(
     name: 'Collection Stream',
     map: [<String, dynamic>{}],
   );
@@ -57,8 +58,7 @@ class _WCmsStreamState extends State<WCmsStream> {
   SupabaseClient? client;
 
   @override
-  void initState() {
-    super.initState();
+  FutureOr<void> afterFirstLayout(final BuildContext context) {
     calc();
   }
 

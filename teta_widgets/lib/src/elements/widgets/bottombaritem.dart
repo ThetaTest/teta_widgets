@@ -63,17 +63,21 @@ class WBottomBarItem extends StatelessWidget {
         child: Column(
           children: [
             BlocBuilder<ColorStylesCubit, List<ColorStyleModel>>(
-              builder: (final context, final state) {
+              builder: (final context, final s) {
                 final isLight = context.watch<PaletteDarkLightCubit>().state;
                 ColorStyleModel? model;
-                for (final element in state) {
+                for (final element in s) {
                   if (element.id == fill.paletteStyle) model = element;
                   if (element.name == fill.paletteStyle) model = element;
                 }
                 return Icon(
                   MdiIcons.fromString(icon),
                   color: _getBottomBarItemColor(model, isLight),
-                  size: width!.get(context: context, isWidth: true),
+                  size: width!.get(
+                    context: context,
+                    isWidth: true,
+                    forPlay: state.forPlay,
+                  ),
                 );
               },
             ),

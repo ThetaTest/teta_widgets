@@ -136,8 +136,14 @@ class _WCalendarState extends State<WCalendar> {
           }
         }
         return Container(
-          margin: widget.margins.get(context),
-          padding: widget.padding.get(context),
+          margin: widget.margins.get(
+            context,
+            forPlay: widget.state.forPlay,
+          ),
+          padding: widget.padding.get(
+            context,
+            forPlay: widget.state.forPlay,
+          ),
           decoration: TetaBoxDecoration.get(
             context: context,
             fill: eventExists
@@ -161,14 +167,20 @@ class _WCalendarState extends State<WCalendar> {
               ),
               if (eventExists)
                 Wrap(
-                  children: List.generate(1, (index) {
+                  children: List.generate(1, (final index) {
                     return Padding(
-                      padding: const EdgeInsets.all(1.0),
+                      padding: const EdgeInsets.all(1),
                       child: Container(
-                        width: widget.widthEventCount
-                            .get(context: context, isWidth: true),
-                        height: widget.heightEventCount
-                            .get(context: context, isWidth: false),
+                        width: widget.widthEventCount.get(
+                          context: context,
+                          isWidth: true,
+                          forPlay: widget.state.forPlay,
+                        ),
+                        height: widget.heightEventCount.get(
+                          context: context,
+                          isWidth: false,
+                          forPlay: widget.state.forPlay,
+                        ),
                         decoration: TetaBoxDecoration.get(
                           context: context,
                           fill: widget.fillEventCount.get(context),
@@ -203,7 +215,7 @@ class _WCalendarState extends State<WCalendar> {
         final data = widget.state.dataset.firstWhere(
           (final element) => element.getName == widget.value.datasetName,
         );
-        var selectedItemList = data.getMap
+        final selectedItemList = data.getMap
             .where(
               (final element) =>
                   element[widget.value.datasetAttrName]
@@ -267,11 +279,12 @@ class _WCalendarState extends State<WCalendar> {
 
 ///when you click day, save event as dataset.
 Future<void> saveSelectedItemDatasets(
-    String selectedItemNameNew,
-    BuildContext context,
-    List<Map<String, dynamic>> selectedItemList,
-    List<DatasetObject> dataset) async {
-  DatasetObject _newMap = DatasetObject(
+  final String selectedItemNameNew,
+  final BuildContext context,
+  final List<Map<String, dynamic>> selectedItemList,
+  final List<DatasetObject> dataset,
+) async {
+  var _newMap = const DatasetObject(
     name: 'Selected Items Name',
     map: [<String, dynamic>{}],
   );

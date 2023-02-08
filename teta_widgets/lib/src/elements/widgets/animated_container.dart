@@ -54,10 +54,24 @@ class WAnimatedContainer extends StatelessWidget {
         duration: Duration(
           milliseconds: int.tryParse(val) != null ? int.parse(val) : 400,
         ),
-        margin: margins.get(context),
-        padding: paddings.get(context),
-        width: width.get(context: context, isWidth: true),
-        height: height.get(context: context, isWidth: false),
+        margin: margins.get(
+          context,
+          forPlay: state.forPlay,
+        ),
+        padding: paddings.get(
+          context,
+          forPlay: state.forPlay,
+        ),
+        width: width.get(
+          context: context,
+          isWidth: true,
+          forPlay: state.forPlay,
+        ),
+        height: height.get(
+          context: context,
+          isWidth: false,
+          forPlay: state.forPlay,
+        ),
         decoration: TetaBoxDecoration.get(
           context: context,
           fill: fill.get(context),

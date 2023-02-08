@@ -1,4 +1,7 @@
 // Flutter imports:
+import 'dart:async';
+
+import 'package:after_layout/after_layout.dart';
 import 'package:flutter/material.dart';
 // Package imports:
 import 'package:teta_widgets/src/core/teta_widget/index.dart';
@@ -22,20 +25,21 @@ class WCheckBox extends StatefulWidget {
   State<WCheckBox> createState() => _WCheckBoxState();
 }
 
-class _WCheckBoxState extends State<WCheckBox> {
+class _WCheckBoxState extends State<WCheckBox> with AfterLayoutMixin {
   String val = 'false';
 
   @override
-  void initState() {
-    super.initState();
-    val = widget.value.get(
-      widget.state.params,
-      widget.state.states,
-      widget.state.dataset,
-      widget.state.forPlay,
-      widget.state.loop,
-      context,
-    );
+  FutureOr<void> afterFirstLayout(final BuildContext context) {
+    setState(() {
+      val = widget.value.get(
+        widget.state.params,
+        widget.state.states,
+        widget.state.dataset,
+        widget.state.forPlay,
+        widget.state.loop,
+        context,
+      );
+    });
   }
 
   // bool flag = false;

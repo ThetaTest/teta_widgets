@@ -5,6 +5,7 @@
 import 'package:device_frame/device_frame.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:responsive_builder/responsive_builder.dart';
 import 'package:teta_core/teta_core.dart';
 
 class FAlign {
@@ -30,15 +31,16 @@ class FAlign {
         'Bottom Right'
       ];
 
-  Alignment get(final BuildContext context) {
-    final device = BlocProvider.of<DeviceModeCubit>(context).state;
-    if (device.info.identifier.type == DeviceType.phone) {
-      return align!;
-    } else if (device.info.identifier.type == DeviceType.tablet) {
-      return alignTablet ?? align!;
-    } else {
-      return alignDesktop ?? align!;
-    }
+  Alignment get(
+    final BuildContext context, {
+    required final bool forPlay,
+  }) {
+    return getValueForScreenType<Alignment>(
+      context: context,
+      mobile: align!,
+      tablet: alignTablet ?? align!,
+      desktop: alignDesktop ?? align!,
+    );
   }
 
   String getStringForDropDown(final BuildContext context) {

@@ -1,8 +1,10 @@
 // ignore_for_file: avoid_dynamic_calls
 
 // Flutter imports:
+import 'dart:async';
 import 'dart:convert';
 
+import 'package:after_layout/after_layout.dart';
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
 // Package imports:
@@ -33,9 +35,14 @@ class WApiCallsFetch extends StatefulWidget {
   State<WApiCallsFetch> createState() => _WApiCallsFetchState();
 }
 
-class _WApiCallsFetchState extends State<WApiCallsFetch> {
+class _WApiCallsFetchState extends State<WApiCallsFetch> with AfterLayoutMixin {
   bool isInitialized = false;
   List<dynamic> list = <dynamic>[];
+
+  @override
+  FutureOr<void> afterFirstLayout(final BuildContext context) {
+    getDataFromURL();
+  }
 
   Future<void> getDataFromURL() async {
     final apiCallsSelectedRequest = widget.apiCallsSelectedRequest;
@@ -230,12 +237,6 @@ class _WApiCallsFetchState extends State<WApiCallsFetch> {
     } catch (e) {
       print('error:$e');
     }
-  }
-
-  @override
-  void initState() {
-    super.initState();
-    getDataFromURL();
   }
 
   @override

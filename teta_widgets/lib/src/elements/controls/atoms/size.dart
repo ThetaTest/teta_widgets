@@ -40,9 +40,14 @@ class SizeControlsState extends State<SizeControl> {
 
   @override
   void initState() {
-    controller.text =
-        '${widget.size.get(context: context, isWidth: widget.isWidth)}';
-    flag = widget.size.get(context: context, isWidth: widget.isWidth) != null;
+    controller.text = '${widget.size.get(
+      context: context,
+      isWidth: widget.isWidth,
+      forPlay: false,
+    )}';
+    flag = widget.size
+            .get(context: context, isWidth: widget.isWidth, forPlay: false) !=
+        null;
     super.initState();
   }
 
@@ -50,8 +55,12 @@ class SizeControlsState extends State<SizeControl> {
   Widget build(final BuildContext context) {
     return BlocListener<DeviceModeCubit, DeviceState>(
       listener: (final context, final device) {
-        flag =
-            widget.size.get(context: context, isWidth: widget.isWidth) != null;
+        flag = widget.size.get(
+              context: context,
+              isWidth: widget.isWidth,
+              forPlay: false,
+            ) !=
+            null;
         String? size;
         if (device.info.identifier.type == DeviceType.phone) {
           size = widget.size.size;
@@ -81,8 +90,11 @@ class SizeControlsState extends State<SizeControl> {
           builder: (final context, final state) {
             if (state.isNotEmpty) {
               if (mounted) {
-                flag = widget.size
-                        .get(context: context, isWidth: widget.isWidth) !=
+                flag = widget.size.get(
+                      context: context,
+                      isWidth: widget.isWidth,
+                      forPlay: false,
+                    ) !=
                     null;
                 var size = widget.size.size;
                 if (device.info.identifier.type == DeviceType.phone) {
@@ -164,12 +176,14 @@ class SizeControlsState extends State<SizeControl> {
                         visible: widget.size.get(
                               context: context,
                               isWidth: widget.isWidth,
+                              forPlay: false,
                             ) !=
                             null,
                         child: IgnorePointer(
                           ignoring: widget.size.get(
                                 context: context,
                                 isWidth: widget.isWidth,
+                                forPlay: false,
                               ) ==
                               null,
                           child: Row(
@@ -237,12 +251,18 @@ class SizeControlsState extends State<SizeControl> {
                   ),
                 ),
                 Visibility(
-                  visible: widget.size
-                          .get(context: context, isWidth: widget.isWidth) !=
+                  visible: widget.size.get(
+                        context: context,
+                        isWidth: widget.isWidth,
+                        forPlay: false,
+                      ) !=
                       null,
                   child: IgnorePointer(
-                    ignoring: widget.size
-                            .get(context: context, isWidth: widget.isWidth) ==
+                    ignoring: widget.size.get(
+                          context: context,
+                          isWidth: widget.isWidth,
+                          forPlay: false,
+                        ) ==
                         null,
                     child: Row(
                       children: [

@@ -2,7 +2,6 @@
 import 'package:flutter/material.dart';
 // Package imports:
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:profanity_filter/profanity_filter.dart';
 import 'package:teta_core/teta_core.dart';
 // Project imports:
 import 'package:teta_widgets/src/elements/features/fill.dart';
@@ -54,7 +53,6 @@ class TextBuilder extends StatelessWidget {
           }
         }
         finalFill ??= _textStyle.fill!;
-
         TextStyleModel? model;
         if (_textStyle.textStyleModel != null) {
           BlocProvider.of<TextStylesCubit>(context)
@@ -63,7 +61,6 @@ class TextBuilder extends StatelessWidget {
             if (element.name == _textStyle.textStyleModel) model = element;
           });
         }
-
         final maxLines = _maxLines?.get(
           _params,
           _states,
@@ -76,17 +73,14 @@ class TextBuilder extends StatelessWidget {
         if (intValue != null && intValue <= 0) {
           intValue = 1;
         }
-        final filter = ProfanityFilter();
         return Text(
-          filter.censor(
-            _value.get(
-              _params,
-              _states,
-              _dataset,
-              _forPlay,
-              _loop,
-              context,
-            ),
+          _value.get(
+            _params,
+            _states,
+            _dataset,
+            _forPlay,
+            _loop,
+            context,
           ),
           style: _textStyle.get(context, model),
           textAlign: _textStyle.textAlign!.get,

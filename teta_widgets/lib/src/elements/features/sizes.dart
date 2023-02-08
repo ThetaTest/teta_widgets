@@ -45,16 +45,28 @@ class FSize {
   double? get({
     required final BuildContext context,
     required final bool isWidth,
+    required final bool forPlay,
   }) {
     var size = sizeDesktop ?? this.size!;
     var unit = unitDesktop ?? this.unit!;
-    final device = BlocProvider.of<DeviceModeCubit>(context).state;
-    if (device.info.identifier.type == frame.DeviceType.phone) {
-      size = this.size ?? '0';
-      unit = this.unit!;
-    } else if (device.info.identifier.type == frame.DeviceType.tablet) {
-      size = sizeTablet ?? this.size ?? '0';
-      unit = unitTablet ?? this.unit!;
+    if (forPlay) {
+      final width = MediaQuery.of(context).size.width;
+      if (width < 600) {
+        size = this.size ?? '0';
+        unit = this.unit!;
+      } else if (width < 1000) {
+        size = sizeTablet ?? this.size ?? '0';
+        unit = unitTablet ?? this.unit!;
+      }
+    } else {
+      final device = BlocProvider.of<DeviceModeCubit>(context).state;
+      if (device.info.identifier.type == frame.DeviceType.phone) {
+        size = this.size ?? '0';
+        unit = this.unit!;
+      } else if (device.info.identifier.type == frame.DeviceType.tablet) {
+        size = sizeTablet ?? this.size ?? '0';
+        unit = unitTablet ?? this.unit!;
+      }
     }
 
     double? value = 0;

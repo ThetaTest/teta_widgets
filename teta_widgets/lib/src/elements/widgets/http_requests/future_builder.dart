@@ -1,9 +1,11 @@
 // Flutter imports:
 
 // Dart imports:
+import 'dart:async';
 import 'dart:convert';
 
 // Flutter imports:
+import 'package:after_layout/after_layout.dart';
 import 'package:flutter/material.dart';
 // Package imports:
 import 'package:http/http.dart' as http;
@@ -36,7 +38,8 @@ class WHTTPRequestFutureBuilder extends StatefulWidget {
       _WHTTPRequestFutureBuilderState();
 }
 
-class _WHTTPRequestFutureBuilderState extends State<WHTTPRequestFutureBuilder> {
+class _WHTTPRequestFutureBuilderState extends State<WHTTPRequestFutureBuilder>
+    with AfterLayoutMixin {
   bool isLoaded = true;
   Future<DatasetObject?>? _future;
   String? responseJson;
@@ -53,8 +56,7 @@ class _WHTTPRequestFutureBuilderState extends State<WHTTPRequestFutureBuilder> {
   int idIndex = 0;
 
   @override
-  void initState() {
-    super.initState();
+  FutureOr<void> afterFirstLayout(final BuildContext context) {
     calc();
   }
 

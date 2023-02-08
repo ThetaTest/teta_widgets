@@ -1,4 +1,7 @@
 // Flutter imports:
+import 'dart:async';
+
+import 'package:after_layout/after_layout.dart';
 import 'package:flutter/material.dart';
 // Package imports:
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -65,11 +68,11 @@ class WTextField extends StatefulWidget {
   _WTextFieldState createState() => _WTextFieldState();
 }
 
-class _WTextFieldState extends State<WTextField> {
+class _WTextFieldState extends State<WTextField> with AfterLayoutMixin {
   TextEditingController textEditingController = TextEditingController();
 
   @override
-  void initState() {
+  FutureOr<void> afterFirstLayout(final BuildContext context) {
     final valueInput = widget.value.get(
       widget.state.params,
       widget.state.states,
@@ -78,11 +81,7 @@ class _WTextFieldState extends State<WTextField> {
       widget.state.loop,
       context,
     );
-    if (valueInput != null) {
-      textEditingController.text = valueInput;
-    }
-
-    super.initState();
+    textEditingController.text = valueInput;
   }
 
   @override
@@ -96,9 +95,7 @@ class _WTextFieldState extends State<WTextField> {
         widget.state.loop,
         context,
       );
-      if (valueInput != null) {
-        textEditingController.text = valueInput;
-      }
+      textEditingController.text = valueInput;
     }
 
     final borderRadius = widget.borderRadius.get(context);
@@ -129,7 +126,10 @@ class _WTextFieldState extends State<WTextField> {
       state: widget.state,
       child: Center(
         child: TContainer(
-          margin: widget.margins.get(context),
+          margin: widget.margins.get(
+            context,
+            forPlay: widget.state.forPlay,
+          ),
           decoration: BoxDecoration(
             borderRadius: widget.borderRadius.get(context),
           ),
@@ -212,7 +212,10 @@ class _WTextFieldState extends State<WTextField> {
                   hintOpacity,
                 ),
               ),
-              contentPadding: widget.paddings.get(context),
+              contentPadding: widget.paddings.get(
+                context,
+                forPlay: widget.state.forPlay,
+              ),
             ),
             style: widget.textStyle.get(context, model),
             textAlign: widget.textStyle.textAlign!.get,

@@ -47,8 +47,18 @@ class WPlaceholder extends StatelessWidget {
     return TetaWidget(
       state: state,
       child: SizedBox(
-        width: width.get(context: context, isWidth: true) ?? 400,
-        height: height.get(context: context, isWidth: false) ?? 400,
+        width: width.get(
+              context: context,
+              isWidth: true,
+              forPlay: state.forPlay,
+            ) ??
+            400,
+        height: height.get(
+              context: context,
+              isWidth: false,
+              forPlay: state.forPlay,
+            ) ??
+            400,
         child: Placeholder(
           strokeWidth: double.tryParse(val) != null ? double.parse(val) : 2.0,
           color: _getPlaceHolderColor(model, isLight),

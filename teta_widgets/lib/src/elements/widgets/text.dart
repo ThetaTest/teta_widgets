@@ -2,6 +2,9 @@
 // ignore_for_file: public_member_api_docs
 
 // Flutter imports:
+import 'dart:async';
+
+import 'package:after_layout/after_layout.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 // Package imports:
@@ -33,14 +36,13 @@ class WText extends StatefulWidget {
   State<WText> createState() => _WTextState();
 }
 
-class _WTextState extends State<WText> {
+class _WTextState extends State<WText> with AfterLayoutMixin {
   final TextEditingController _controller = TextEditingController();
   bool isEditing = false;
   final FocusNode focusNode = FocusNode();
 
   @override
-  void initState() {
-    super.initState();
+  FutureOr<void> afterFirstLayout(final BuildContext context) {
     _controller.text = widget.value.get(
       widget.state.params,
       widget.state.states,

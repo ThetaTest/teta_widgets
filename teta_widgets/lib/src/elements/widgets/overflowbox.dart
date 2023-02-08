@@ -31,10 +31,30 @@ class WOverFlowBox extends StatelessWidget {
     return TetaWidget(
       state: state,
       child: OverflowBox(
-        minWidth: minWidth.get(context: context, isWidth: true) ?? 0,
-        minHeight: minHeight.get(context: context, isWidth: false) ?? 0,
-        maxWidth: maxWidth.get(context: context, isWidth: true) ?? 0,
-        maxHeight: maxHeight.get(context: context, isWidth: false) ?? 0,
+        minWidth: minWidth.get(
+              context: context,
+              isWidth: true,
+              forPlay: state.forPlay,
+            ) ??
+            0,
+        minHeight: minHeight.get(
+              context: context,
+              isWidth: false,
+              forPlay: state.forPlay,
+            ) ??
+            0,
+        maxWidth: maxWidth.get(
+              context: context,
+              isWidth: true,
+              forPlay: state.forPlay,
+            ) ??
+            0,
+        maxHeight: maxHeight.get(
+              context: context,
+              isWidth: false,
+              forPlay: state.forPlay,
+            ) ??
+            0,
         child: ChildConditionBuilder(
           ValueKey(state.toKey),
           state: state,
