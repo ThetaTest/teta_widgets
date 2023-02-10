@@ -62,7 +62,7 @@ class _WListViewState extends State<WListView> {
                 dragTarget: data,
                 parent: widget.state.node,
                 context: context,
-                customIndex: 0,
+                customIndex: null,
               );
         },
         builder: (final context, final candidateData, final rejectedData) {

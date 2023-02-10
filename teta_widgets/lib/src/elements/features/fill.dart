@@ -123,12 +123,12 @@ class FFill {
       );
     } else {
       ColorStyleModel? model;
-      context.watch<ColorStylesCubit>().state.forEach((final element) {
+      context.read<ColorStylesCubit>().state.forEach((final element) {
         if (element.id == paletteStyle) model = element;
         if (element.name == paletteStyle) model = element;
       });
       fill = (model != null)
-          ? context.watch<PaletteDarkLightCubit>().state
+          ? context.read<PaletteDarkLightCubit>().state
               ? model!.light
               : model!.fill
           : FFill().ready(FFillType.solid);

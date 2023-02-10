@@ -51,10 +51,11 @@ class StyleFillControlState extends State<StyleFillControl> {
                               !widget.onlySolid,
                         )
                         .map((final e) => e.name)
+                        .toSet()
                         .toList(),
                     onChange: (final value) {
                       ColorStyleModel? model;
-                      for (var element in paletteStyles) {
+                      for (final element in paletteStyles) {
                         if (element.name == value) model = element;
                       }
                       final old = FFill().fromJson(widget.fill.toJson());

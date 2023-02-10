@@ -54,7 +54,7 @@ class _WRowState extends State<WRow> {
                 dragTarget: data,
                 parent: widget._state.node,
                 context: context,
-                customIndex: 0,
+                customIndex: null,
               );
         },
         builder: (final context, final candidateData, final rejectedData) {

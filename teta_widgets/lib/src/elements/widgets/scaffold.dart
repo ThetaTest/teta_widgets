@@ -158,9 +158,7 @@ class _WScaffoldState extends State<WScaffold> with AfterLayoutMixin {
     if (!isPage) return _childWids(context);
     return Stack(
       children: [
-        SizedBox(
-          width: double.maxFinite,
-          height: double.maxFinite,
+        Positioned.fill(
           child: _childWids(context),
         ),
         if (widget.showDrawer && !widget.state.forPlay)
@@ -232,12 +230,10 @@ class _WScaffoldState extends State<WScaffold> with AfterLayoutMixin {
   }
 
   Widget _placeholder(final BuildContext context) {
-    return Center(
-      child: PlaceholderChildBuilder(
-        name: widget.state.node.intrinsicState.displayName,
-        node: widget.state.node,
-        forPlay: widget.state.forPlay,
-      ),
+    return PlaceholderChildBuilder(
+      name: widget.state.node.intrinsicState.displayName,
+      node: widget.state.node,
+      forPlay: widget.state.forPlay,
     );
   }
 }

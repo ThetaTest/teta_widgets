@@ -8,11 +8,15 @@ import 'package:after_layout/after_layout.dart';
 import 'package:fluentui_system_icons/fluentui_system_icons.dart';
 // Flutter imports:
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:flutter_feather_icons/flutter_feather_icons.dart';
+import 'package:gap/gap.dart';
 import 'package:teta_core/teta_core.dart';
 // Project imports:
 import 'package:teta_widgets/src/core/teta_widget/index.dart';
 import 'package:teta_widgets/src/elements/index.dart';
 import 'package:universal_platform/universal_platform.dart';
+import 'package:url_launcher/url_launcher_string.dart';
 import 'package:youtube_player_iframe/youtube_player_iframe.dart';
 
 class WVideo extends StatefulWidget {
@@ -88,9 +92,56 @@ class _WVideoState extends State<WVideo> with AfterLayoutMixin {
 
     return TetaWidget(
       state: widget.state,
-      child: YoutubePlayerIFrame(
-        controller: controller,
-      ),
+      child: widget.state.forPlay
+          ? YoutubePlayerIFrame(
+              controller: controller,
+            )
+          : AspectRatio(
+              aspectRatio: 16 / 9,
+              child: Container(
+                color: const Color(0xFF8f8f8f),
+                child: Column(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: [
+                    const Icon(
+                      FeatherIcons.maximize,
+                      size: 48,
+                      color: Colors.white,
+                    ),
+                    const Gap(Grid.small),
+                    BounceSmall(
+                      onTap: () {
+                        final base = Uri.base.origin;
+                        final prjId =
+                            context.read<FocusProjectCubit>().state!.id;
+                        final channelId = (context.read<ChannelCubit>().state
+                                as ChannelStateLoaded)
+                            .channel
+                            .id;
+                        launchUrlString(
+                          '$base/#/play/$prjId/channel/$channelId',
+                        );
+                      },
+                      child: Row(
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        children: const [
+                          THeadline2(
+                            'See in Play mode',
+                            color: Palette.txtPrimary,
+                          ),
+                          Gap(4),
+                          Icon(
+                            FeatherIcons.externalLink,
+                            size: 12,
+                            color: Palette.txtPrimary,
+                          )
+                        ],
+                      ),
+                    ),
+                  ],
+                ),
+              ),
+            ),
     );
   }
 }

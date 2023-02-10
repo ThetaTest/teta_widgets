@@ -45,7 +45,7 @@ class _PlaceholderChildBuilderState extends State<PlaceholderChildBuilder> {
               dragTarget: data,
               parent: widget.node,
               context: context,
-              customIndex: 0,
+              customIndex: null,
             );
       },
       onMove: (final details) {
