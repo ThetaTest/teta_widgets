@@ -5,6 +5,12 @@ enum ActionTetaCmsAuth {
   signInWithGitHub,
   signInWithTwitter,
   signInWithApple,
+  signInWithFacebook,
+  signInWithTwitch,
+  signInWithLinkedin,
+  signInWithDiscord,
+  signInWithGitLab,
+  signInWithBitBucket,
   logout,
 }
 
