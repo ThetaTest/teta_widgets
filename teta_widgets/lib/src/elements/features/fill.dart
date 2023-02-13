@@ -2,6 +2,7 @@
 // ignore_for_file: public_member_api_docs, unrelated_type_equality_checks, lines_longer_than_80_chars
 
 // Flutter imports:
+import 'package:equatable/equatable.dart';
 import 'package:flutter/material.dart';
 // Package imports:
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -20,7 +21,7 @@ enum FFillType {
 }
 
 /// Make easier including colors, gradients and images in Teta
-class FFillElement {
+class FFillElement extends Equatable {
   /// Constructor
   FFillElement({
     required this.color,
@@ -35,6 +36,13 @@ class FFillElement {
 
   /// [int] value for gradients
   double stop;
+
+  @override
+  List<Object?> get props => [
+        color,
+        opacity,
+        stop,
+      ];
 
   static FFillElement fromJson({required final Map<String, dynamic> json}) {
     final opacity = (json['opacity'] as num? ?? 1).toDouble();
@@ -53,7 +61,7 @@ class FFillElement {
 }
 
 /// Class to use solid colors, gradients, images inside Teta
-class FFill {
+class FFill extends Equatable {
   /// Constructor
   FFill({
     this.type,
@@ -78,6 +86,19 @@ class FFill {
   FBoxFit? boxFit;
   dynamic paletteStyle;
   AssetFile? file;
+
+  @override
+  List<Object?> get props => [
+        levels,
+        type,
+        begin,
+        end,
+        center,
+        radius,
+        boxFit,
+        paletteStyle,
+        file,
+      ];
 
   FFill get(final BuildContext context) {
     if (paletteStyle == null) {

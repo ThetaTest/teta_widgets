@@ -89,8 +89,11 @@ class FActionNavigationOpenPage {
           context,
           MaterialPageRoute(
             builder: (final c) => BlocProvider(
-              create: (final c) =>
-                  PageCubit(sl.get())..onFocus(page: page!, forPlay: true),
+              create: (final c) => PageCubit(
+                sl.get(),
+                sl.get(),
+                sl.get(),
+              )..onFocus(page: page!, forPlay: true),
               child: PlayCubitsValueInitializer(
                 originalContext: context,
                 child: page!.scaffold.toWidget(

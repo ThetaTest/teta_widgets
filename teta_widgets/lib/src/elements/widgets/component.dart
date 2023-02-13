@@ -172,8 +172,11 @@ class _VisualBody extends StatelessWidget {
   @override
   Widget build(final BuildContext context) {
     return BlocProvider<PageCubit>(
-      create: (final context) => PageCubit(sl.get())
-        ..onFocus(
+      create: (final context) => PageCubit(
+        sl.get(),
+        sl.get(),
+        sl.get(),
+      )..onFocus(
           page: component,
           forPlay: state.forPlay,
         ),
