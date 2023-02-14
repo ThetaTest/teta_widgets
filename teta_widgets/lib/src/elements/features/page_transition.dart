@@ -1,12 +1,13 @@
 // Flutter imports:
 // ignore_for_file: public_member_api_docs, library_prefixes
 
+import 'package:equatable/equatable.dart';
 // Flutter imports:
 import 'package:flutter/material.dart';
 // Package imports:
 import 'package:transition/transition.dart' as T;
 
-class FPageTransition {
+class FPageTransition extends Equatable {
   FPageTransition({
     this.transitionEffect,
   }) {
@@ -14,6 +15,9 @@ class FPageTransition {
   }
 
   T.TransitionEffect? transitionEffect;
+
+  @override
+  List<Object?> get props => [transitionEffect];
 
   T.TransitionEffect get(final BuildContext context) {
     return transitionEffect!;

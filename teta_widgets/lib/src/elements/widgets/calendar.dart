@@ -146,6 +146,7 @@ class _WCalendarState extends State<WCalendar> {
           ),
           decoration: TetaBoxDecoration.get(
             context: context,
+            forPlay: widget.state.forPlay,
             fill: eventExists
                 ? widget.fill2.get(context)
                 : widget.fill.get(context),
@@ -183,6 +184,7 @@ class _WCalendarState extends State<WCalendar> {
                         ),
                         decoration: TetaBoxDecoration.get(
                           context: context,
+                          forPlay: widget.state.forPlay,
                           fill: widget.fillEventCount.get(context),
                           borderRadius: widget.borderRaiudEventCount,
                           shadow: widget.shadows,

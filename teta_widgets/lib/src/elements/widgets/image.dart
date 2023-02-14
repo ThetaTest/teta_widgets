@@ -93,7 +93,8 @@ class _WImageState extends State<WImage> with AfterLayoutMixin {
     return TetaWidget(
       state: widget.state,
       child: ClipRRect(
-        borderRadius: widget.borderRadius.get(context),
+        borderRadius:
+            widget.borderRadius.get(context, forPlay: widget.state.forPlay),
         child: SizedBox(
           width: widget.width.get(
             context: context,

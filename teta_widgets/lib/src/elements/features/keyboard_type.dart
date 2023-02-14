@@ -1,10 +1,11 @@
 // Flutter imports:
 // ignore_for_file: public_member_api_docs
 
+import 'package:equatable/equatable.dart';
 // Flutter imports:
 import 'package:flutter/material.dart';
 
-class FKeyboardType {
+class FKeyboardType extends Equatable {
   /// Set of funcs to use [TextInputType] in Teta
   FKeyboardType({
     final TextInputType type = TextInputType.text,
@@ -12,6 +13,9 @@ class FKeyboardType {
 
   /// Value of [FKeyboardType]
   TextInputType _type;
+
+  @override
+  List<Object?> get props => [_type];
 
   /// Return value of [FKeyboardType]
   TextInputType get get => _type;

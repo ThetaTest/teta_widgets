@@ -1,17 +1,21 @@
 // Flutter imports:
 // ignore_for_file: public_member_api_docs
 
+import 'package:equatable/equatable.dart';
 // Flutter imports:
 import 'package:flutter/material.dart';
 
 ///
-class FMainAxisSize {
+class FMainAxisSize extends Equatable {
   /// Set of funcs for use [MainAxisSize] property in Teta
   FMainAxisSize({
     final MainAxisSize align = MainAxisSize.max,
   }) : _align = align;
 
   MainAxisSize _align;
+
+  @override
+  List<Object?> get props => [_align];
 
   MainAxisSize get get => _align;
 

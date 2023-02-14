@@ -5,7 +5,6 @@
 import 'dart:async';
 
 // Flutter imports:
-import 'package:device_frame/device_frame.dart';
 import 'package:flutter/material.dart';
 // Package imports:
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -36,7 +35,10 @@ class FontSizeState extends State<FontSizeControl> {
 
   @override
   void initState() {
-    controller.text = '${widget.textStyle.fontSize?.get(context)}';
+    controller.text = '${widget.textStyle.fontSize?.get(
+      context,
+      forPlay: false,
+    )}';
     super.initState();
   }
 
@@ -64,14 +66,20 @@ class FontSizeState extends State<FontSizeControl> {
   Widget build(final BuildContext context) {
     return BlocListener<DeviceModeCubit, DeviceState>(
       listener: (final context, final state) {
-        controller.text = '${widget.textStyle.fontSize!.get(context)}';
+        controller.text = '${widget.textStyle.fontSize!.get(
+          context,
+          forPlay: false,
+        )}';
       },
       child: BlocBuilder<DeviceModeCubit, DeviceState>(
         builder: (final context, final device) =>
             BlocListener<FocusBloc, List<int>>(
           listener: (final context, final state) {
             if (state.isNotEmpty) {
-              controller.text = '${widget.textStyle.fontSize!.get(context)}';
+              controller.text = '${widget.textStyle.fontSize!.get(
+                context,
+                forPlay: false,
+              )}';
             }
           },
           child: Column(
@@ -132,7 +140,10 @@ class FontSizeState extends State<FontSizeControl> {
               const Gap(Grid.small),
               CTextField(
                 controller: controller,
-                text: '${widget.textStyle.fontSize?.get(context)}',
+                text: '${widget.textStyle.fontSize?.get(
+                  context,
+                  forPlay: false,
+                )}',
                 callBack: (final value) {
                   final old = widget.textStyle;
                   widget.textStyle.fontSize!

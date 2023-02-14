@@ -40,7 +40,10 @@ class SrcImageControlState extends State<SrcImageControl> {
   void initState() {
     try {
       text = widget.image.value ?? '';
-      controller.text = widget.image.value!;
+      controller.text = controller.text = widget.image.getValue(
+        context,
+        forPlay: false,
+      );
       typeOfInput = widget.image.type!;
       databaseName = widget.image.datasetName!;
       databaseAttribute = widget.image.datasetAttr!;

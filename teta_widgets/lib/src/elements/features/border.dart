@@ -1,4 +1,5 @@
 // Flutter imports:
+import 'package:equatable/equatable.dart';
 import 'package:flutter/material.dart';
 // Package imports:
 import 'package:teta_core/src/design_system/hex_color.dart';
@@ -26,7 +27,7 @@ Widget toWidget() {
 }
 
 /// [FBorder] is a set of functions to use [Border] in widgets in Teta
-class FBorder {
+class FBorder extends Equatable {
   /// Constructor
   FBorder({
     this.fill,
@@ -48,6 +49,9 @@ class FBorder {
 
   /// The [style] of [Border]
   FBorderStyle? style;
+
+  @override
+  List<Object?> get props => [fill, width, style];
 
   /// Get [Border] from actual values
   Border get(final BuildContext context, {required final bool forPlay}) {

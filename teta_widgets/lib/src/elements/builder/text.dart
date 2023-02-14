@@ -42,52 +42,46 @@ class TextBuilder extends StatelessWidget {
 
   @override
   Widget build(final BuildContext context) {
-    return BlocBuilder<ColorStylesCubit, List<ColorStyleModel>>(
-      buildWhen: (final previous, final current) => current != previous,
-      builder: (final context, final state) {
-        FFill? finalFill;
-        if (state.isNotEmpty) {
-          for (final e in state) {
-            if (e.id == _textStyle.fill!.paletteStyle) finalFill = e.fill;
-            if (e.name == _textStyle.fill!.paletteStyle) finalFill = e.fill;
-          }
-        }
-        finalFill ??= _textStyle.fill!;
-        TextStyleModel? model;
-        if (_textStyle.textStyleModel != null) {
-          BlocProvider.of<TextStylesCubit>(context)
-              .state
-              .forEach((final element) {
-            if (element.name == _textStyle.textStyleModel) model = element;
-          });
-        }
-        final maxLines = _maxLines?.get(
-          _params,
-          _states,
-          _dataset,
-          _forPlay,
-          _loop,
-          context,
-        );
-        var intValue = int.tryParse(maxLines ?? '');
-        if (intValue != null && intValue <= 0) {
-          intValue = 1;
-        }
-        return Text(
-          _value.get(
-            _params,
-            _states,
-            _dataset,
-            _forPlay,
-            _loop,
-            context,
-          ),
-          style: _textStyle.get(context, model),
-          textAlign: _textStyle.textAlign!.get,
-          maxLines: intValue,
-          textDirection: _textStyle.textDirection?.get,
-        );
-      },
+    final state = context.watch<ColorStylesCubit>().state;
+    FFill? finalFill;
+    if (state.isNotEmpty) {
+      for (final e in state) {
+        if (e.id == _textStyle.fill!.paletteStyle) finalFill = e.fill;
+        if (e.name == _textStyle.fill!.paletteStyle) finalFill = e.fill;
+      }
+    }
+    finalFill ??= _textStyle.fill!;
+    TextStyleModel? model;
+    if (_textStyle.textStyleModel != null) {
+      BlocProvider.of<TextStylesCubit>(context).state.forEach((final element) {
+        if (element.name == _textStyle.textStyleModel) model = element;
+      });
+    }
+    final maxLines = _maxLines?.get(
+      _params,
+      _states,
+      _dataset,
+      _forPlay,
+      _loop,
+      context,
+    );
+    var intValue = int.tryParse(maxLines ?? '');
+    if (intValue != null && intValue <= 0) {
+      intValue = 1;
+    }
+    return Text(
+      _value.get(
+        _params,
+        _states,
+        _dataset,
+        _forPlay,
+        _loop,
+        context,
+      ),
+      style: _textStyle.get(context, true, model),
+      textAlign: _textStyle.textAlign!.get,
+      maxLines: intValue,
+      textDirection: _textStyle.textDirection?.get,
     );
   }
 }

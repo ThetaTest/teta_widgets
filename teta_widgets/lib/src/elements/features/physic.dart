@@ -3,11 +3,15 @@
 
 // Flutter imports:
 import 'package:flutter/material.dart';
+import 'package:equatable/equatable.dart';
 
-class FPhysic {
-  FPhysic({this.physics = const AlwaysScrollableScrollPhysics()});
+class FPhysic extends Equatable {
+  const FPhysic({this.physics = const AlwaysScrollableScrollPhysics()});
 
   final ScrollPhysics? physics;
+
+  @override
+  List<Object?> get props => [physics];
 
   static List<String> get physicsList => [
         'AlwaysScrollableScrollPhysics',

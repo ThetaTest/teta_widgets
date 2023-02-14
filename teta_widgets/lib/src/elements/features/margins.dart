@@ -3,6 +3,7 @@
 
 // Flutter imports:
 import 'package:device_frame/device_frame.dart';
+import 'package:equatable/equatable.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:responsive_builder/responsive_builder.dart';
@@ -10,7 +11,7 @@ import 'package:responsive_builder/responsive_builder.dart';
 import 'package:teta_core/src/utils/expression/expression.dart';
 import 'package:teta_core/teta_core.dart';
 
-class FMargins {
+class FMargins extends Equatable {
   FMargins({
     this.margins,
     this.marginsTablet,
@@ -24,6 +25,13 @@ class FMargins {
   List<String>? margins;
   List<String>? marginsTablet;
   List<String>? marginsDesktop;
+
+  @override
+  List<Object?> get props => [
+        margins,
+        marginsTablet,
+        marginsDesktop,
+      ];
 
   EdgeInsets _getValue(
     final BuildContext context, {
@@ -47,13 +55,25 @@ class FMargins {
   EdgeInsets get(
     final BuildContext context, {
     required final bool forPlay,
-  }) =>
-      getValueForScreenType<EdgeInsets>(
+  }) {
+    if (forPlay) {
+      return getValueForScreenType<EdgeInsets>(
         context: context,
         mobile: _getValue(context, values: margins!),
         tablet: _getValue(context, values: marginsTablet ?? margins!),
         desktop: _getValue(context, values: marginsDesktop ?? margins!),
       );
+    } else {
+      final device = context.read<DeviceModeCubit>().state;
+      if (device.type == DeviceType.phone) {
+        return _getValue(context, values: margins!);
+      } else if (device.type == DeviceType.tablet) {
+        return _getValue(context, values: marginsTablet ?? margins!);
+      } else {
+        return _getValue(context, values: marginsDesktop ?? margins!);
+      }
+    }
+  }
 
   List<String> getList(
     final BuildContext context, {

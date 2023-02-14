@@ -49,6 +49,7 @@ class WAutoAppBar extends StatelessWidget {
         padding: EI.mdA,
         decoration: TetaBoxDecoration.get(
           context: context,
+          forPlay: state.forPlay,
           fill: fill.get(context),
         ),
         child: SafeArea(

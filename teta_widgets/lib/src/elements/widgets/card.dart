@@ -47,7 +47,10 @@ class WCard extends StatelessWidget {
       child: Card(
         color: _getCardColor(model, isLight),
         elevation: double.tryParse(val) != null ? double.parse(val) : 1,
-        shape: TetaShapeCard.get(context: context, borderRadius: borderRadius),
+        shape: TetaShapeCard.get(
+            context: context,
+            forPlay: state.forPlay,
+            borderRadius: borderRadius),
         child: ChildConditionBuilder(
           ValueKey(state.toKey),
           state: state,

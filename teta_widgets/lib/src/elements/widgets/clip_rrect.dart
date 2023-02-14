@@ -25,7 +25,7 @@ class WClipRRect extends StatelessWidget {
     return TetaWidget(
       state: state,
       child: ClipRRect(
-        borderRadius: borderRadius.get(context),
+        borderRadius: borderRadius.get(context, forPlay: state.forPlay),
         child: ChildConditionBuilder(
           ValueKey(state.toKey),
           state: state,

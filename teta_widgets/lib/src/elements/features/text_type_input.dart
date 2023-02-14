@@ -258,20 +258,44 @@ class FTextTypeInput {
         ).state.getString(keyTranslator!);
       }
     }
-    return getValueForScreenType<String>(
-      context: context,
-      mobile: value ?? '',
-      tablet: valueTablet != '' ? valueTablet ?? value ?? '' : value ?? '',
-      desktop: valueDesktop != '' ? valueDesktop ?? value ?? '' : value ?? '',
-    );
-  }
-
-  String getValue(final BuildContext context) => getValueForScreenType<String>(
+    if (forPlay) {
+      return getValueForScreenType<String>(
         context: context,
         mobile: value ?? '',
         tablet: valueTablet != '' ? valueTablet ?? value ?? '' : value ?? '',
         desktop: valueDesktop != '' ? valueDesktop ?? value ?? '' : value ?? '',
       );
+    } else {
+      final device = context.read<DeviceModeCubit>().state;
+      if (device.type == DeviceType.phone) {
+        return value ?? '';
+      } else if (device.type == DeviceType.tablet) {
+        return valueTablet != '' ? valueTablet ?? value ?? '' : value ?? '';
+      } else {
+        return valueDesktop != '' ? valueDesktop ?? value ?? '' : value ?? '';
+      }
+    }
+  }
+
+  String getValue(final BuildContext context, {required final bool forPlay}) {
+    if (forPlay) {
+      return getValueForScreenType<String>(
+        context: context,
+        mobile: value ?? '',
+        tablet: valueTablet != '' ? valueTablet ?? value ?? '' : value ?? '',
+        desktop: valueDesktop != '' ? valueDesktop ?? value ?? '' : value ?? '',
+      );
+    } else {
+      final device = context.read<DeviceModeCubit>().state;
+      if (device.type == DeviceType.phone) {
+        return value ?? '';
+      } else if (device.type == DeviceType.tablet) {
+        return valueTablet != '' ? valueTablet ?? value ?? '' : value ?? '';
+      } else {
+        return valueDesktop != '' ? valueDesktop ?? value ?? '' : value ?? '';
+      }
+    }
+  }
 
   void updateValue(final String val, final BuildContext context) {
     final device = BlocProvider.of<DeviceModeCubit>(context).state;

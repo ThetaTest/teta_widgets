@@ -1,11 +1,12 @@
 // Flutter imports:
 // ignore_for_file: public_member_api_docs
 
+import 'package:equatable/equatable.dart';
 // Flutter imports:
 import 'package:flutter/material.dart';
 
 /// [FBoxFit] is a set of functions to use [BoxFit] in widgets in Teta
-class FBoxFit {
+class FBoxFit extends Equatable {
   /// Constructor
   FBoxFit({
     this.fit = BoxFit.cover,
@@ -13,6 +14,9 @@ class FBoxFit {
 
   /// The value in [BoxFit] of [FBoxFit]
   BoxFit fit;
+
+  @override
+  List<Object?> get props => [fit];
 
   /// The list of optios for dropdown
   static List<String> get dropdownList => [

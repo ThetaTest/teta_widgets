@@ -84,7 +84,10 @@ class MarginsState extends State<Margins> {
           forPlay: false,
         );
         for (var i = 0; i < 4; i++) {
-          controllers[i].text = margins![i];
+          final text = margins![i];
+          if (text != controllers[i].text) {
+            controllers[i].text = margins![i];
+          }
         }
         var flag = false;
         var lastValue = '';
@@ -97,190 +100,159 @@ class MarginsState extends State<Margins> {
         isLinked = !flag;
       },
       child: BlocBuilder<DeviceModeCubit, DeviceState>(
-        builder: (final context, final device) =>
-            BlocBuilder<FocusBloc, List<int>>(
-          builder: (final context, final state) {
-            if (state.isNotEmpty) {
-              if (mounted) {
-                margins = widget.value.getList(
-                  context,
-                  forPlay: false,
-                );
-                for (var i = 0; i < 4; i++) {
-                  controllers[i].text = margins![i];
-                }
-                var flag = false;
-                var lastValue = '';
-                for (final element in margins ?? const <String>[]) {
-                  if (lastValue == '') lastValue = element;
-                  if (element != lastValue) {
-                    flag = true;
-                  }
-                }
-                isLinked = !flag;
-              }
-            }
-            return Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                Padding(
-                  padding: const EdgeInsets.only(bottom: 12),
-                  child: Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                    children: [
-                      Padding(
-                        padding: const EdgeInsets.only(bottom: 8),
-                        child: Row(
-                          children: [
-                            const DeviceIndicatorForControls(),
-                            const Gap(Grid.small),
-                            TParagraph(
-                              widget.title,
-                            ),
-                          ],
+        builder: (final context, final device) => Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            Padding(
+              padding: const EdgeInsets.only(bottom: 12),
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: [
+                  Padding(
+                    padding: const EdgeInsets.only(bottom: 8),
+                    child: Row(
+                      children: [
+                        const DeviceIndicatorForControls(),
+                        const Gap(Grid.small),
+                        TParagraph(
+                          widget.title,
                         ),
-                      ),
-                      BounceSmall(
-                        message: 'Link or unlink values',
-                        onTap: () {
-                          setState(() {
-                            isLinked = !isLinked;
-                          });
-                        },
-                        child: HoverWidget(
-                          hoverChild: Container(
-                            padding: const EdgeInsets.all(4),
-                            decoration: BoxDecoration(
-                              border: Border.all(
-                                color: Colors.white,
-                              ),
-                            ),
-                            child: Icon(
-                              isLinked ? Icons.link : Icons.link_off,
-                              size: 24,
-                              color: Colors.white,
-                            ),
-                          ),
-                          onHover: (final e) {},
-                          child: Container(
-                            padding: const EdgeInsets.all(4),
-                            decoration: BoxDecoration(
-                              border: Border.all(
-                                color: Colors.transparent,
-                              ),
-                            ),
-                            child: Icon(
-                              isLinked ? Icons.link : Icons.link_off,
-                              size: 24,
-                              color: Colors.white,
-                            ),
-                          ),
-                        ),
-                      ),
-                    ],
+                      ],
+                    ),
                   ),
-                ),
-                Row(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    Expanded(
-                      child: CMiniTextField(
-                        title: (!isLinked) ? 'LEFT' : 'ALL',
-                        controller: controllers[0],
-                        text: widget.value.getList(
-                          context,
-                          forPlay: false,
-                        )[0],
-                        hpadding: isLinked ? 0 : 4,
-                        withSwipe: true,
-                        callBack: (final text) {
-                          final finalText = text.replaceAll('-', '');
-                          margins![0] = finalText;
-                          if (isLinked) {
-                            margins![1] = finalText;
-                            controllers[1].text = finalText;
-                            margins![2] = finalText;
-                            controllers[2].text = finalText;
-                            margins![3] = finalText;
-                            controllers[3].text = finalText;
-                          }
-                          final old = FMargins.fromJson(widget.value.toJson());
-                          final temp = FMargins.fromJson(widget.value.toJson());
-                          onChangeHandler(temp, old);
-                        },
+                  BounceSmall(
+                    message: 'Link or unlink values',
+                    onTap: () {
+                      setState(() {
+                        isLinked = !isLinked;
+                      });
+                    },
+                    child: HoverWidget(
+                      hoverChild: Container(
+                        padding: const EdgeInsets.all(4),
+                        decoration: BoxDecoration(
+                          border: Border.all(
+                            color: Colors.white,
+                          ),
+                        ),
+                        child: Icon(
+                          isLinked ? Icons.link : Icons.link_off,
+                          size: 24,
+                          color: Colors.white,
+                        ),
+                      ),
+                      onHover: (final e) {},
+                      child: Container(
+                        padding: const EdgeInsets.all(4),
+                        decoration: BoxDecoration(
+                          border: Border.all(
+                            color: Colors.transparent,
+                          ),
+                        ),
+                        child: Icon(
+                          isLinked ? Icons.link : Icons.link_off,
+                          size: 24,
+                          color: Colors.white,
+                        ),
                       ),
                     ),
-                    if (!isLinked)
-                      Expanded(
-                        child: CMiniTextField(
-                          title: 'TOP',
-                          controller: controllers[1],
-                          text: widget.value.getList(
-                            context,
-                            forPlay: false,
-                          )[1],
-                          hpadding: 4,
-                          withSwipe: true,
-                          callBack: (final text) {
-                            final finalText = text.replaceAll('-', '');
-                            margins![1] = finalText;
-                            final old =
-                                FMargins.fromJson(widget.value.toJson());
-                            final temp =
-                                FMargins.fromJson(widget.value.toJson());
-                            onChangeHandler(temp, old);
-                          },
-                        ),
-                      ),
-                    if (!isLinked)
-                      Expanded(
-                        child: CMiniTextField(
-                          title: 'RIGHT',
-                          controller: controllers[2],
-                          text: widget.value.getList(
-                            context,
-                            forPlay: false,
-                          )[2],
-                          hpadding: 4,
-                          withSwipe: true,
-                          callBack: (final text) {
-                            final finalText = text.replaceAll('-', '');
-                            margins![2] = finalText;
-                            final old =
-                                FMargins.fromJson(widget.value.toJson());
-                            final temp =
-                                FMargins.fromJson(widget.value.toJson());
-                            onChangeHandler(temp, old);
-                          },
-                        ),
-                      ),
-                    if (!isLinked)
-                      Expanded(
-                        child: CMiniTextField(
-                          title: 'BOTTOM',
-                          controller: controllers[3],
-                          text: widget.value.getList(
-                            context,
-                            forPlay: false,
-                          )[3],
-                          hpadding: 4,
-                          withSwipe: true,
-                          callBack: (final text) {
-                            final finalText = text.replaceAll('-', '');
-                            margins![3] = finalText;
-                            final old =
-                                FMargins.fromJson(widget.value.toJson());
-                            final temp =
-                                FMargins.fromJson(widget.value.toJson());
-                            onChangeHandler(temp, old);
-                          },
-                        ),
-                      ),
-                  ],
+                  ),
+                ],
+              ),
+            ),
+            Row(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                Expanded(
+                  child: CMiniTextField(
+                    title: (!isLinked) ? 'LEFT' : 'ALL',
+                    controller: controllers[0],
+                    text: widget.value.getList(
+                      context,
+                      forPlay: false,
+                    )[0],
+                    hpadding: isLinked ? 0 : 4,
+                    withSwipe: true,
+                    callBack: (final text) {
+                      final finalText = text.replaceAll('-', '');
+                      margins![0] = finalText;
+                      if (isLinked) {
+                        margins![1] = finalText;
+                        controllers[1].text = finalText;
+                        margins![2] = finalText;
+                        controllers[2].text = finalText;
+                        margins![3] = finalText;
+                        controllers[3].text = finalText;
+                      }
+                      final old = FMargins.fromJson(widget.value.toJson());
+                      final temp = FMargins.fromJson(widget.value.toJson());
+                      onChangeHandler(temp, old);
+                    },
+                  ),
                 ),
+                if (!isLinked)
+                  Expanded(
+                    child: CMiniTextField(
+                      title: 'TOP',
+                      controller: controllers[1],
+                      text: widget.value.getList(
+                        context,
+                        forPlay: false,
+                      )[1],
+                      hpadding: 4,
+                      withSwipe: true,
+                      callBack: (final text) {
+                        final finalText = text.replaceAll('-', '');
+                        margins![1] = finalText;
+                        final old = FMargins.fromJson(widget.value.toJson());
+                        final temp = FMargins.fromJson(widget.value.toJson());
+                        onChangeHandler(temp, old);
+                      },
+                    ),
+                  ),
+                if (!isLinked)
+                  Expanded(
+                    child: CMiniTextField(
+                      title: 'RIGHT',
+                      controller: controllers[2],
+                      text: widget.value.getList(
+                        context,
+                        forPlay: false,
+                      )[2],
+                      hpadding: 4,
+                      withSwipe: true,
+                      callBack: (final text) {
+                        final finalText = text.replaceAll('-', '');
+                        margins![2] = finalText;
+                        final old = FMargins.fromJson(widget.value.toJson());
+                        final temp = FMargins.fromJson(widget.value.toJson());
+                        onChangeHandler(temp, old);
+                      },
+                    ),
+                  ),
+                if (!isLinked)
+                  Expanded(
+                    child: CMiniTextField(
+                      title: 'BOTTOM',
+                      controller: controllers[3],
+                      text: widget.value.getList(
+                        context,
+                        forPlay: false,
+                      )[3],
+                      hpadding: 4,
+                      withSwipe: true,
+                      callBack: (final text) {
+                        final finalText = text.replaceAll('-', '');
+                        margins![3] = finalText;
+                        final old = FMargins.fromJson(widget.value.toJson());
+                        final temp = FMargins.fromJson(widget.value.toJson());
+                        onChangeHandler(temp, old);
+                      },
+                    ),
+                  ),
               ],
-            );
-          },
+            ),
+          ],
         ),
       ),
     );

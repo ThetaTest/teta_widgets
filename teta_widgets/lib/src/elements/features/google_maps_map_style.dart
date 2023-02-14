@@ -1,15 +1,18 @@
 // Flutter imports:
-import 'package:flutter/material.dart';
+import 'package:equatable/equatable.dart';
 import 'package:teta_widgets/src/elements/widgets/google_maps/maps/map_style.dart';
 
 ///
-class FGoogleMapsMapStyle {
+class FGoogleMapsMapStyle extends Equatable {
   /// Constructor
   FGoogleMapsMapStyle({
     final MapStyle style = MapStyle.standard,
   }) : _style = style;
 
   MapStyle _style;
+
+  @override
+  List<Object?> get props => [_style];
 
   /// Returns current value
   MapStyle get get => _style;

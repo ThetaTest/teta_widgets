@@ -5,10 +5,11 @@
 import 'package:teta_widgets/src/elements/features/fill.dart';
 import 'package:teta_widgets/src/elements/features/sizes.dart';
 import 'package:teta_widgets/src/elements/features/text_type_input.dart';
+import 'package:equatable/equatable.dart';
 
-class FShadow {
+class FShadow extends Equatable {
   /// Set of funcs to use Shadow property in Teta
-  FShadow({
+  const FShadow({
     final FTextTypeInput? x,
     final FTextTypeInput? y,
     final FTextTypeInput? spread,
@@ -26,6 +27,16 @@ class FShadow {
   final FTextTypeInput? _spread, _blur;
   final FFill? _fill;
   final FSize? _opacity;
+
+  @override
+  List<Object?> get props => [
+        _x,
+        _y,
+        _spread,
+        _blur,
+        _fill,
+        _opacity,
+      ];
 
   FShadow ready() => FShadow(
         x: FTextTypeInput(value: '0'),

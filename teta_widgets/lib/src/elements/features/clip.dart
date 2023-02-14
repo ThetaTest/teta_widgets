@@ -3,16 +3,20 @@
 
 // Flutter imports:
 import 'package:flutter/material.dart';
+import 'package:equatable/equatable.dart';
 
 /// [FClip] is a set of functions to save use Clip within Teta
-class FClip {
+class FClip extends Equatable {
   /// Constructor
-  FClip({
+  const FClip({
     this.clip = Clip.hardEdge,
   });
 
   /// The value in [Clip] of [FClip]
   final Clip? clip;
+
+  @override
+  List<Object?> get props => [clip];
 
   /// Get a [Clip] value
   /// Includes optionality checks

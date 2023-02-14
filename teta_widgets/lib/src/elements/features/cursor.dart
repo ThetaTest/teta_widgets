@@ -1,16 +1,20 @@
 // Flutter imports:
 // ignore_for_file: public_member_api_docs
 
+import 'package:equatable/equatable.dart';
 // Flutter imports:
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 
-class FCursor {
+class FCursor extends Equatable {
   const FCursor({
     this.cursor,
   });
 
   final MouseCursor? cursor;
+
+  @override
+  List<Object?> get props => [cursor];
 
   MouseCursor get() {
     return (cursor != null) ? cursor! : MouseCursor.defer;

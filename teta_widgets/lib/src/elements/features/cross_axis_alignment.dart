@@ -1,10 +1,11 @@
 // Flutter imports:
 // ignore_for_file: public_member_api_docs, lines_longer_than_80_chars
 
+import 'package:equatable/equatable.dart';
 // Flutter imports:
 import 'package:flutter/material.dart';
 
-class FCrossAxisAlignment {
+class FCrossAxisAlignment extends Equatable {
   /// Constructor
   FCrossAxisAlignment({
     this.value = CrossAxisAlignment.start,
@@ -12,6 +13,9 @@ class FCrossAxisAlignment {
 
   /// The value in [CrossAxisAlignment] of [FCrossAxisAlignment]
   CrossAxisAlignment? value;
+
+  @override
+  List<Object?> get props => [value];
 
   /// Get a [CrossAxisAlignment] value
   /// Includes optionality checks

@@ -4,11 +4,8 @@
 // Flutter imports:
 import 'package:flutter/material.dart';
 import 'package:table_calendar/table_calendar.dart';
-import 'package:teta_core/teta_core.dart';
-import 'package:teta_widgets/src/elements/code/formatter_test.dart';
 // Project imports:
 import 'package:teta_widgets/src/elements/code/snippets.dart';
-import 'package:teta_widgets/src/elements/controls/key_constants.dart';
 import 'package:teta_widgets/src/elements/index.dart';
 
 /// Generates the code for Calendar widget
@@ -21,7 +18,7 @@ class CalendarV2CodeTemplate {
   ) async {
     //CalendarView
     final calendarView = node.body.attributes[DBKeys.dropdownItem] as String;
-    CalendarFormat _calendarFormat = CalendarFormat.month;
+    var _calendarFormat = CalendarFormat.month;
     switch (calendarView) {
       case 'month':
         _calendarFormat = CalendarFormat.month;
@@ -40,7 +37,11 @@ class CalendarV2CodeTemplate {
     //Icon Size from text attributes
     final textStyleTitle =
         node.body.attributes[DBKeys.textStyle2] as FTextStyle;
-    final iconSize = textStyleTitle.fontSize?.get(context) ?? 16;
+    final iconSize = textStyleTitle.fontSize?.get(
+          context,
+          forPlay: false,
+        ) ??
+        16;
     //Icon Color
     final fillIconColor = FFill.toCode(
       node.body.attributes[DBKeys.fill2] as FFill,
@@ -48,11 +49,13 @@ class CalendarV2CodeTemplate {
       flagConst: false,
     );
     //weekDaysHeight
-    var dayHeight = textStyleTitle.fontSize?.get(context) ?? 16;
+    final dayHeight = textStyleTitle.fontSize?.get(
+          context,
+          forPlay: false,
+        ) ??
+        16;
     var weekDaysHeight = 16.0;
-    if (dayHeight != null) {
-      weekDaysHeight = dayHeight + 5;
-    }
+    weekDaysHeight = dayHeight + 5;
     //Datasets
     final dataset = node.body.attributes[DBKeys.datasetInput] as FDataset;
     //Clicked Event List
@@ -66,7 +69,7 @@ class CalendarV2CodeTemplate {
         .replaceAll("'", '')
         .replaceAll(' ', '');
     //listOfDayEvents
-    var _listOfDayEvents = '''
+    final _listOfDayEvents = '''
 (DateTime dateTime){
   var list = datasets['${dataset.datasetName}']
         .where((element) =>
@@ -106,7 +109,7 @@ if(list != null){
 // }
 //''';
 //onDaySelected: $_onDaySelected,
-    var _onDaySelected = '''
+    final _onDaySelected = '''
  ${CS.action(
       pageId,
       context,

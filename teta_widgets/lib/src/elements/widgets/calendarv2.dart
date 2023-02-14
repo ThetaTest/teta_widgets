@@ -116,7 +116,8 @@ class _WCalendarV2State extends State<WCalendarV2> {
       default:
         break;
     }
-    final dayHeight = widget.textStyle2.fontSize?.get(context);
+    final dayHeight =
+        widget.textStyle2.fontSize?.get(context, forPlay: widget.state.forPlay);
     var dayHeight2 = 16.0;
     if (dayHeight != null) {
       dayHeight2 = dayHeight + 5;
@@ -134,99 +135,135 @@ class _WCalendarV2State extends State<WCalendarV2> {
       },
       daysOfWeekHeight: dayHeight2,
       daysOfWeekStyle: DaysOfWeekStyle(
-        weekdayStyle: widget.textStyle2.get(context, model),
-        weekendStyle: widget.textStyle2.get(context, model),
+        weekdayStyle: widget.textStyle2.get(
+          context,
+          widget.state.forPlay,
+          model,
+        ),
+        weekendStyle:
+            widget.textStyle2.get(context, widget.state.forPlay, model),
       ),
       headerStyle: HeaderStyle(
         leftChevronIcon: Icon(
           Icons.arrow_back,
           color: _getIconColor(model2, isLight),
-          size: widget.textStyle2.fontSize?.get(context) ?? 16,
+          size: widget.textStyle2.fontSize?.get(
+                context,
+                forPlay: widget.state.forPlay,
+              ) ??
+              16,
         ),
         rightChevronIcon: Icon(
           Icons.arrow_forward,
           color: _getIconColor(model2, isLight),
-          size: widget.textStyle2.fontSize?.get(context) ?? 16,
+          size: widget.textStyle2.fontSize?.get(
+                context,
+                forPlay: widget.state.forPlay,
+              ) ??
+              16,
         ),
         formatButtonVisible: false,
         titleCentered: true,
-        titleTextStyle: widget.textStyle.get(context, model),
+        titleTextStyle:
+            widget.textStyle.get(context, widget.state.forPlay, model),
       ),
       calendarStyle: CalendarStyle(
         outsideDaysVisible: false,
-        selectedTextStyle: widget.textStyle2.get(context, model),
-        defaultTextStyle: widget.textStyle2.get(context, model),
-        holidayTextStyle: widget.textStyle2.get(context, model),
-        weekendTextStyle: widget.textStyle2.get(context, model),
-        disabledTextStyle: widget.textStyle2.get(context, model),
-        todayTextStyle: widget.textStyle2.get(context, model),
-        rangeEndTextStyle: widget.textStyle2.get(context, model),
-        weekNumberTextStyle: widget.textStyle2.get(context, model),
-        withinRangeTextStyle: widget.textStyle2.get(context, model),
-        outsideTextStyle: widget.textStyle2.get(context, model),
-        rangeStartTextStyle: widget.textStyle2.get(context, model),
+        selectedTextStyle:
+            widget.textStyle2.get(context, widget.state.forPlay, model),
+        defaultTextStyle:
+            widget.textStyle2.get(context, widget.state.forPlay, model),
+        holidayTextStyle:
+            widget.textStyle2.get(context, widget.state.forPlay, model),
+        weekendTextStyle:
+            widget.textStyle2.get(context, widget.state.forPlay, model),
+        disabledTextStyle:
+            widget.textStyle2.get(context, widget.state.forPlay, model),
+        todayTextStyle:
+            widget.textStyle2.get(context, widget.state.forPlay, model),
+        rangeEndTextStyle:
+            widget.textStyle2.get(context, widget.state.forPlay, model),
+        weekNumberTextStyle:
+            widget.textStyle2.get(context, widget.state.forPlay, model),
+        withinRangeTextStyle:
+            widget.textStyle2.get(context, widget.state.forPlay, model),
+        outsideTextStyle:
+            widget.textStyle2.get(context, widget.state.forPlay, model),
+        rangeStartTextStyle:
+            widget.textStyle2.get(context, widget.state.forPlay, model),
         markerDecoration: TetaBoxDecoration.get(
           context: context,
+          forPlay: widget.state.forPlay,
           fill: widget.dotFill.get(context),
           borderRadius: widget.dotBorderRadius,
           shadow: widget.shadows,
         ),
         selectedDecoration: TetaBoxDecoration.get(
           context: context,
+          forPlay: widget.state.forPlay,
           fill: widget.selectedFill.get(context),
           borderRadius: widget.borderRadius,
           shadow: widget.shadows,
         ),
         todayDecoration: TetaBoxDecoration.get(
           context: context,
+          forPlay: widget.state.forPlay,
           fill: widget.unselectedFill.get(context),
           borderRadius: widget.borderRadius,
           shadow: widget.shadows,
         ),
         defaultDecoration: TetaBoxDecoration.get(
           context: context,
+          forPlay: widget.state.forPlay,
           fill: widget.unselectedFill.get(context),
           borderRadius: widget.borderRadius,
           shadow: widget.shadows,
         ),
         weekendDecoration: TetaBoxDecoration.get(
           context: context,
+          forPlay: widget.state.forPlay,
           fill: widget.unselectedFill.get(context),
           borderRadius: widget.borderRadius,
           shadow: widget.shadows,
         ),
         disabledDecoration: TetaBoxDecoration.get(
           context: context,
+          forPlay: widget.state.forPlay,
           fill: widget.unselectedFill.get(context),
           borderRadius: widget.borderRadius,
           shadow: widget.shadows,
         ),
         holidayDecoration: TetaBoxDecoration.get(
           context: context,
+          forPlay: widget.state.forPlay,
           fill: widget.unselectedFill.get(context),
           borderRadius: widget.borderRadius,
           shadow: widget.shadows,
         ),
         outsideDecoration: TetaBoxDecoration.get(
           context: context,
+          forPlay: widget.state.forPlay,
           fill: widget.unselectedFill.get(context),
           borderRadius: widget.borderRadius,
           shadow: widget.shadows,
         ),
         withinRangeDecoration: TetaBoxDecoration.get(
           context: context,
+          forPlay: widget.state.forPlay,
           fill: widget.unselectedFill.get(context),
           borderRadius: widget.borderRadius,
           shadow: widget.shadows,
         ),
         rangeEndDecoration: TetaBoxDecoration.get(
           context: context,
+          forPlay: widget.state.forPlay,
           fill: widget.unselectedFill.get(context),
           borderRadius: widget.borderRadius,
           shadow: widget.shadows,
         ),
         rangeStartDecoration: TetaBoxDecoration.get(
           context: context,
+          forPlay: widget.state.forPlay,
           fill: widget.unselectedFill.get(context),
           borderRadius: widget.borderRadius,
           shadow: widget.shadows,

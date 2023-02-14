@@ -1,17 +1,21 @@
 // Package imports:
 // ignore_for_file: public_member_api_docs
 
+import 'package:equatable/equatable.dart';
 // Package imports:
 
 import 'package:flutter/material.dart';
 
-class FTextDirection {
+class FTextDirection extends Equatable {
   /// Set of funcs to use TextDirection within Teta
   FTextDirection({
     final TextDirection dir = TextDirection.ltr,
   }) : _dir = dir;
 
   TextDirection _dir;
+
+  @override
+  List<Object?> get props => [_dir];
 
   TextDirection get get => _dir;
 

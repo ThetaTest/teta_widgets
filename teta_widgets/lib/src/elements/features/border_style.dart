@@ -1,11 +1,12 @@
 // Flutter imports:
 // ignore_for_file: public_member_api_docs
 
+import 'package:equatable/equatable.dart';
 // Flutter imports:
 import 'package:flutter/material.dart';
 
 /// [FBorderStyle] is a set of functions to use [BorderStyle] in widgets in Teta
-class FBorderStyle {
+class FBorderStyle extends Equatable {
   /// Constructor
   FBorderStyle({
     this.style,
@@ -15,6 +16,9 @@ class FBorderStyle {
 
   /// Value of [FBorderStyle], optional [BorderStyle]
   BorderStyle? style;
+
+  @override
+  List<Object?> get props => [style];
 
   BorderStyle get get => style ?? BorderStyle.solid;
 

@@ -1,13 +1,14 @@
 // Flutter imports:
 // ignore_for_file: public_member_api_docs
 
+import 'package:equatable/equatable.dart';
 // Flutter imports:
 import 'package:flutter/material.dart';
 
 /// Name of the property for code generation
 const codeNameAtt = 'WrapAlignment';
 
-class FWrapAlignment {
+class FWrapAlignment extends Equatable {
   /// Set of funcs to use WrapAlignment within Teta
   FWrapAlignment({
     this.align = WrapAlignment.start,
@@ -17,6 +18,9 @@ class FWrapAlignment {
       : align = _convertJsonToValue(json ?? '');
 
   WrapAlignment align;
+
+  @override
+  List<Object?> get props => [align];
 
   WrapAlignment get get => align;
 

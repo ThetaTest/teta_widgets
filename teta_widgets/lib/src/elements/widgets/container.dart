@@ -12,7 +12,7 @@ import 'package:teta_widgets/src/core/teta_widget/index.dart';
 // Project imports:
 import 'package:teta_widgets/src/elements/index.dart';
 
-class WContainer extends StatefulWidget {
+class WContainer extends StatelessWidget {
   /// Returns a Container widget
   const WContainer(
     final Key? key, {
@@ -40,70 +40,65 @@ class WContainer extends StatefulWidget {
   final FShadow shadows;
 
   @override
-  State<WContainer> createState() => _WContainerState();
-}
-
-class _WContainerState extends State<WContainer> {
-  @override
   Widget build(final BuildContext context) {
-    final nodes = (context.read<PageCubit>().state as PageLoaded).page.flatList;
+    final nodes =
+        (context.watch<PageCubit>().state as PageLoaded).page.flatList;
     final parent = sl.get<FindNodeRendering>().findParentByChildrenIds(
           flatList: nodes,
-          element: widget.state.node,
+          element: state.node,
         )!;
-    final width = widget.width.get(
+    final _width = width.get(
       context: context,
       isWidth: true,
-      forPlay: widget.state.forPlay,
+      forPlay: state.forPlay,
     );
-    final height = widget.height.get(
+    final _height = height.get(
       context: context,
       isWidth: false,
-      forPlay: widget.state.forPlay,
+      forPlay: state.forPlay,
     );
     var mustBeWrappedInExpanded = false;
-    if (parent.globalType == NType.row && width == double.maxFinite) {
+    if (parent.globalType == NType.row && _width == double.maxFinite) {
       mustBeWrappedInExpanded = true;
     } else if (parent.globalType == NType.column &&
-        height == double.maxFinite) {
+        _height == double.maxFinite) {
       mustBeWrappedInExpanded = true;
     }
-    final container = TetaWidget(
-      state: widget.state,
+    return TetaWidget(
+      state: state,
       child: Container(
-        margin: widget.margins.get(
+        margin: margins.get(
           context,
-          forPlay: widget.state.forPlay,
+          forPlay: state.forPlay,
         ),
-        padding: widget.paddings.get(
+        padding: paddings.get(
           context,
-          forPlay: widget.state.forPlay,
+          forPlay: state.forPlay,
         ),
-        width: width,
-        height: widget.height.get(
-          context: context,
-          isWidth: false,
-          forPlay: widget.state.forPlay,
-        ),
+        width: _width,
+        height: _height,
         decoration: TetaBoxDecoration.get(
           context: context,
-          fill: widget.fill.get(context),
-          borderRadius: widget.borderRadius,
-          shadow: widget.shadows,
-          borders: widget.borders,
+          forPlay: state.forPlay,
+          fill: fill.get(context),
+          borderRadius: borderRadius,
+          shadow: shadows,
+          borders: borders,
         ),
         child: ChildConditionBuilder(
-          ValueKey(widget.state.toKey),
-          state: widget.state,
-          child: widget.child,
+          ValueKey(state.toKey),
+          state: state,
+          child: child,
         ),
       ),
     );
+    /*
     if (mustBeWrappedInExpanded) {
       return Expanded(
         child: container,
       );
     }
     return container;
+    */
   }
 }

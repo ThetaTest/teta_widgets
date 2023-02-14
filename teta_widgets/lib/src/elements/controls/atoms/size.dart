@@ -70,84 +70,91 @@ class SizeControlsState extends State<SizeControl> {
           size = widget.size.sizeDesktop;
         }
         final unit = widget.size.getUnit(context);
-        for (var i = 0; i < 2; i++) {
-          controller.text = (size == 'max' ||
-                  size == 'inf' && size == '100%' && unit == SizeUnit.pixel)
-              ? 'max'
-              : (size == 'max' ||
-                      size == 'inf' &&
-                          size == '100%' &&
-                          unit == SizeUnit.percent)
-                  ? '100%'
-                  : (widget.size.size == 'auto')
-                      ? 'auto'
-                      : '$size';
+        final text = (size == 'max' ||
+                size == 'inf' && size == '100%' && unit == SizeUnit.pixel)
+            ? 'max'
+            : (size == 'max' ||
+                    size == 'inf' && size == '100%' && unit == SizeUnit.percent)
+                ? '100%'
+                : (widget.size.size == 'auto')
+                    ? 'auto'
+                    : '$size';
+        if (text != controller.text) {
+          controller.text = text;
         }
       },
       child: BlocBuilder<DeviceModeCubit, DeviceState>(
-        builder: (final context, final device) =>
-            BlocBuilder<FocusBloc, List<int>>(
-          builder: (final context, final state) {
-            if (state.isNotEmpty) {
-              if (mounted) {
-                flag = widget.size.get(
-                      context: context,
-                      isWidth: widget.isWidth,
-                      forPlay: false,
-                    ) !=
-                    null;
-                var size = widget.size.size;
-                if (device.info.identifier.type == DeviceType.phone) {
-                  size = widget.size.size;
-                } else if (device.info.identifier.type == DeviceType.tablet) {
-                  size = widget.size.sizeTablet;
-                } else {
-                  size = widget.size.sizeDesktop;
-                }
-                final unit = widget.size.getUnit(context);
-                for (var i = 0; i < 2; i++) {
-                  controller.text = (size == 'max' ||
-                          size == 'inf' &&
-                              size == '100%' &&
-                              unit == SizeUnit.pixel)
-                      ? 'max'
-                      : (size == 'max' ||
-                              size == 'inf' &&
-                                  size == '100%' &&
-                                  unit == SizeUnit.percent)
-                          ? '100%'
-                          : (size == 'auto')
-                              ? 'auto'
-                              : '$size';
-                }
-              }
-            }
-            return Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                Padding(
-                  padding: const EdgeInsets.only(bottom: 8, right: 4),
-                  child: Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+        builder: (final context, final device) => Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            Padding(
+              padding: const EdgeInsets.only(bottom: 8, right: 4),
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: [
+                  Row(
+                    mainAxisSize: MainAxisSize.min,
                     children: [
-                      Row(
+                      const DeviceIndicatorForControls(),
+                      CSwitch(
+                        callback: (final v) {
+                          final value = v
+                              ? widget.isWidth
+                                  ? 'max'
+                                  : '150'
+                              : 'null';
+                          setState(() {
+                            flag = v;
+                          });
+                          final szs = widget.size;
+                          final old = FSize.fromJson(widget.size.toJson());
+                          value.replaceAll('%', '');
+                          szs.updateSize(value, context);
+                          final nodeId =
+                              BlocProvider.of<FocusBloc>(context).state.first;
+                          final node =
+                              (context.read<PageCubit>().state as PageLoaded)
+                                  .page
+                                  .flatList
+                                  .firstWhere(
+                                    (final element) => element.nid == nodeId,
+                                  );
+
+                          node.body.attributes[widget.keyAttr] = szs;
+                          widget.callBack(szs.toJson(), old.toJson());
+                        },
+                        value: flag,
+                      ),
+                      Padding(
+                        padding: const EdgeInsets.only(left: 8),
+                        child: TParagraph(
+                          widget.title,
+                        ),
+                      ),
+                    ],
+                  ),
+                  Visibility(
+                    visible: widget.size.get(
+                          context: context,
+                          isWidth: widget.isWidth,
+                          forPlay: false,
+                        ) !=
+                        null,
+                    child: IgnorePointer(
+                      ignoring: widget.size.get(
+                            context: context,
+                            isWidth: widget.isWidth,
+                            forPlay: false,
+                          ) ==
+                          null,
+                      child: Row(
                         mainAxisSize: MainAxisSize.min,
                         children: [
-                          const DeviceIndicatorForControls(),
-                          CSwitch(
-                            callback: (final v) {
-                              final value = v
-                                  ? widget.isWidth
-                                      ? 'max'
-                                      : '150'
-                                  : 'null';
-                              setState(() {
-                                flag = v;
-                              });
-                              final szs = widget.size;
+                          GestureDetector(
+                            onTap: () {
                               final old = FSize.fromJson(widget.size.toJson());
-                              value.replaceAll('%', '');
-                              szs.updateSize(value, context);
+                              widget.size.updateUnit(SizeUnit.pixel, context);
+                              final szs = widget.size;
                               final nodeId = BlocProvider.of<FocusBloc>(context)
                                   .state
                                   .first;
@@ -158,148 +165,134 @@ class SizeControlsState extends State<SizeControl> {
                                   .firstWhere(
                                     (final element) => element.nid == nodeId,
                                   );
-
                               node.body.attributes[widget.keyAttr] = szs;
                               widget.callBack(szs.toJson(), old.toJson());
                             },
-                            value: flag,
+                            child: unitIcon(
+                              unit: SizeUnit.pixel,
+                              unitFromNode: widget.size.getUnit(context),
+                            ),
                           ),
-                          Padding(
-                            padding: const EdgeInsets.only(left: 8),
-                            child: TParagraph(
-                              widget.title,
+                          GestureDetector(
+                            onTap: () {
+                              final old = FSize.fromJson(widget.size.toJson());
+                              widget.size.updateUnit(SizeUnit.percent, context);
+                              final szs = widget.size;
+                              final nodeId = BlocProvider.of<FocusBloc>(context)
+                                  .state
+                                  .first;
+                              final node = (context.read<PageCubit>().state
+                                      as PageLoaded)
+                                  .page
+                                  .flatList
+                                  .firstWhere(
+                                    (final element) => element.nid == nodeId,
+                                  );
+                              node.body.attributes[widget.keyAttr] = szs;
+                              widget.callBack(szs.toJson(), old.toJson());
+                            },
+                            child: unitIcon(
+                              unit: SizeUnit.percent,
+                              unitFromNode: widget.size.getUnit(context),
                             ),
                           ),
                         ],
                       ),
-                      Visibility(
-                        visible: widget.size.get(
-                              context: context,
-                              isWidth: widget.isWidth,
-                              forPlay: false,
-                            ) !=
-                            null,
-                        child: IgnorePointer(
-                          ignoring: widget.size.get(
-                                context: context,
-                                isWidth: widget.isWidth,
-                                forPlay: false,
-                              ) ==
-                              null,
-                          child: Row(
-                            mainAxisSize: MainAxisSize.min,
-                            children: [
-                              GestureDetector(
-                                onTap: () {
-                                  final old =
-                                      FSize.fromJson(widget.size.toJson());
-                                  widget.size
-                                      .updateUnit(SizeUnit.pixel, context);
-                                  final szs = widget.size;
-                                  final nodeId =
-                                      BlocProvider.of<FocusBloc>(context)
-                                          .state
-                                          .first;
-                                  final node = (context.read<PageCubit>().state
-                                          as PageLoaded)
-                                      .page
-                                      .flatList
-                                      .firstWhere(
-                                        (final element) =>
-                                            element.nid == nodeId,
-                                      );
-                                  node.body.attributes[widget.keyAttr] = szs;
-                                  widget.callBack(szs.toJson(), old.toJson());
-                                },
-                                child: unitIcon(
-                                  unit: SizeUnit.pixel,
-                                  unitFromNode: widget.size.getUnit(context),
-                                ),
-                              ),
-                              GestureDetector(
-                                onTap: () {
-                                  final old =
-                                      FSize.fromJson(widget.size.toJson());
-                                  widget.size
-                                      .updateUnit(SizeUnit.percent, context);
-                                  final szs = widget.size;
-                                  final nodeId =
-                                      BlocProvider.of<FocusBloc>(context)
-                                          .state
-                                          .first;
-                                  final node = (context.read<PageCubit>().state
-                                          as PageLoaded)
-                                      .page
-                                      .flatList
-                                      .firstWhere(
-                                        (final element) =>
-                                            element.nid == nodeId,
-                                      );
-                                  node.body.attributes[widget.keyAttr] = szs;
-                                  widget.callBack(szs.toJson(), old.toJson());
-                                },
-                                child: unitIcon(
-                                  unit: SizeUnit.percent,
-                                  unitFromNode: widget.size.getUnit(context),
-                                ),
-                              ),
-                            ],
-                          ),
-                        ),
-                      ),
-                    ],
+                    ),
                   ),
-                ),
-                Visibility(
-                  visible: widget.size.get(
-                        context: context,
-                        isWidth: widget.isWidth,
-                        forPlay: false,
-                      ) !=
-                      null,
-                  child: IgnorePointer(
-                    ignoring: widget.size.get(
-                          context: context,
-                          isWidth: widget.isWidth,
-                          forPlay: false,
-                        ) ==
-                        null,
-                    child: Row(
-                      children: [
-                        SizedBox(
-                          width: MediaQuery.of(context).size.width >= 600
-                              ? 300
-                              : MediaQuery.of(context).size.width - 20,
-                          height: 60,
-                          child: Stack(
-                            fit: StackFit.expand,
-                            children: [
-                              Positioned(
-                                left: 0,
-                                right: 0,
-                                top: 0,
-                                bottom: 0,
-                                child: Padding(
-                                  padding: const EdgeInsets.only(right: 4),
-                                  child: CMiniTextField(
-                                    controller: controller,
-                                    text: (device.info.identifier.type ==
-                                            DeviceType.phone)
-                                        ? widget.size.size
-                                        : (device.info.identifier.type ==
-                                                DeviceType.tablet)
-                                            ? widget.size.sizeTablet
-                                            : widget.size.sizeDesktop,
-                                    callBack: (final value) {
-                                      final szs = widget.size;
-                                      final old =
-                                          FSize.fromJson(widget.size.toJson());
-                                      value.replaceAll('%', '');
-                                      szs.updateSize(value, context);
-                                      final nodeId =
-                                          BlocProvider.of<FocusBloc>(context)
-                                              .state
-                                              .first;
+                ],
+              ),
+            ),
+            Visibility(
+              visible: widget.size.get(
+                    context: context,
+                    isWidth: widget.isWidth,
+                    forPlay: false,
+                  ) !=
+                  null,
+              child: IgnorePointer(
+                ignoring: widget.size.get(
+                      context: context,
+                      isWidth: widget.isWidth,
+                      forPlay: false,
+                    ) ==
+                    null,
+                child: Row(
+                  children: [
+                    SizedBox(
+                      width: MediaQuery.of(context).size.width >= 600
+                          ? 300
+                          : MediaQuery.of(context).size.width - 20,
+                      height: 60,
+                      child: Stack(
+                        fit: StackFit.expand,
+                        children: [
+                          Positioned(
+                            left: 0,
+                            right: 0,
+                            top: 0,
+                            bottom: 0,
+                            child: Padding(
+                              padding: const EdgeInsets.only(right: 4),
+                              child: CMiniTextField(
+                                controller: controller,
+                                text: (device.info.identifier.type ==
+                                        DeviceType.phone)
+                                    ? widget.size.size
+                                    : (device.info.identifier.type ==
+                                            DeviceType.tablet)
+                                        ? widget.size.sizeTablet
+                                        : widget.size.sizeDesktop,
+                                callBack: (final value) {
+                                  final szs = widget.size;
+                                  final old =
+                                      FSize.fromJson(widget.size.toJson());
+                                  value.replaceAll('%', '');
+                                  szs.updateSize(value, context);
+                                  final nodeId =
+                                      BlocProvider.of<FocusBloc>(context)
+                                          .state
+                                          .first;
+                                  final node = (context.read<PageCubit>().state
+                                          as PageLoaded)
+                                      .page
+                                      .flatList
+                                      .firstWhere(
+                                        (final element) =>
+                                            element.nid == nodeId,
+                                      );
+                                  node.body.attributes[widget.keyAttr] = szs;
+                                  widget.callBack(
+                                    szs.toJson(),
+                                    old.toJson(),
+                                  );
+                                },
+                              ),
+                            ),
+                          ),
+                          Positioned(
+                            top: 4,
+                            right: 12,
+                            bottom: 18,
+                            child: Container(
+                              color: Palette.bgTertiary,
+                              child: Column(
+                                mainAxisAlignment: MainAxisAlignment.center,
+                                children: [
+                                  GestureDetector(
+                                    onTap: () {
+                                      final old = FSize.fromJson(
+                                        widget.size.toJson(),
+                                      );
+                                      widget.size.updateSize(
+                                        widget.size.unit == SizeUnit.pixel
+                                            ? 'max'
+                                            : '100%',
+                                        context,
+                                      );
+                                      final nodeId = BlocProvider.of<FocusBloc>(
+                                        context,
+                                      ).state.first;
                                       final node = (context
                                               .read<PageCubit>()
                                               .state as PageLoaded)
@@ -310,77 +303,32 @@ class SizeControlsState extends State<SizeControl> {
                                                 element.nid == nodeId,
                                           );
                                       node.body.attributes[widget.keyAttr] =
-                                          szs;
+                                          widget.size;
                                       widget.callBack(
-                                        szs.toJson(),
+                                        widget.size.toJson(),
                                         old.toJson(),
                                       );
+                                      controller.text =
+                                          widget.size.unit == SizeUnit.pixel
+                                              ? 'max'
+                                              : '100%';
                                     },
+                                    child: maxIcon(
+                                      unit: widget.size.unit,
+                                    ),
                                   ),
-                                ),
+                                ],
                               ),
-                              Positioned(
-                                top: 4,
-                                right: 12,
-                                bottom: 18,
-                                child: Container(
-                                  color: Palette.bgTertiary,
-                                  child: Column(
-                                    mainAxisAlignment: MainAxisAlignment.center,
-                                    children: [
-                                      GestureDetector(
-                                        onTap: () {
-                                          final old = FSize.fromJson(
-                                            widget.size.toJson(),
-                                          );
-                                          widget.size.updateSize(
-                                            widget.size.unit == SizeUnit.pixel
-                                                ? 'max'
-                                                : '100%',
-                                            context,
-                                          );
-                                          final nodeId =
-                                              BlocProvider.of<FocusBloc>(
-                                            context,
-                                          ).state.first;
-                                          final node = (context
-                                                  .read<PageCubit>()
-                                                  .state as PageLoaded)
-                                              .page
-                                              .flatList
-                                              .firstWhere(
-                                                (final element) =>
-                                                    element.nid == nodeId,
-                                              );
-                                          node.body.attributes[widget.keyAttr] =
-                                              widget.size;
-                                          widget.callBack(
-                                            widget.size.toJson(),
-                                            old.toJson(),
-                                          );
-                                          controller.text =
-                                              widget.size.unit == SizeUnit.pixel
-                                                  ? 'max'
-                                                  : '100%';
-                                        },
-                                        child: maxIcon(
-                                          unit: widget.size.unit,
-                                        ),
-                                      ),
-                                    ],
-                                  ),
-                                ),
-                              )
-                            ],
-                          ),
-                        ),
-                      ],
+                            ),
+                          )
+                        ],
+                      ),
                     ),
-                  ),
+                  ],
                 ),
-              ],
-            );
-          },
+              ),
+            ),
+          ],
         ),
       ),
     );

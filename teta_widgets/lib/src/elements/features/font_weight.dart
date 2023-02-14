@@ -1,10 +1,11 @@
 // Flutter imports:
 // ignore_for_file: public_member_api_docs
 
+import 'package:equatable/equatable.dart';
 // Flutter imports:
 import 'package:flutter/material.dart';
 
-class FFontWeight {
+class FFontWeight extends Equatable {
   /// Constructor
   FFontWeight({
     this.weight = FontWeight.w400,
@@ -12,6 +13,9 @@ class FFontWeight {
 
   /// The value [weight] of [FFontWeight]
   FontWeight weight;
+
+  @override
+  List<Object?> get props => [weight];
 
   /// Returns a [FontWeight] value
   FontWeight get get => weight;

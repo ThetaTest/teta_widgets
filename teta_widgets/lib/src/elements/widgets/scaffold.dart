@@ -69,7 +69,6 @@ class _WScaffoldState extends State<WScaffold> with AfterLayoutMixin {
         action: widget.action,
       );
     }
-    super.initState();
   }
 
   @override

@@ -3,6 +3,7 @@
 
 // Flutter imports:
 import 'package:device_frame/device_frame.dart' as frame;
+import 'package:equatable/equatable.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -18,7 +19,7 @@ enum SizeUnit {
   height,
 }
 
-class FSize {
+class FSize extends Equatable {
   FSize({
     this.size,
     this.unit,
@@ -39,6 +40,16 @@ class FSize {
   SizeUnit? unit;
   SizeUnit? unitTablet;
   SizeUnit? unitDesktop;
+
+  @override
+  List<Object?> get props => [
+        size,
+        sizeTablet,
+        sizeDesktop,
+        unit,
+        unitTablet,
+        unitDesktop,
+      ];
 
   static FSize ready() => FSize(size: '0', unit: SizeUnit.pixel);
 
@@ -97,8 +108,6 @@ class FSize {
     if (unit == SizeUnit.percent ||
         unit == SizeUnit.width ||
         unit == SizeUnit.height) {
-      final screen =
-          BlocProvider.of<DeviceModeCubit>(context).state.info.screenSize;
       return isWidth ? value.toInt().w : value.toInt().h;
     }
     return value;
@@ -215,8 +224,7 @@ class FSize {
       if (value != null && unit == SizeUnit.percent) {
         if (value != 'double.maxFinite') {
           var finalString = '';
-          finalString +=
-              '${(size ?? '16').replaceAll('%', '')}${isWidth ? '.w' : '.h'}';
+          finalString += '${size.replaceAll('%', '')}${isWidth ? '.w' : '.h'}';
           return finalString;
         }
       }

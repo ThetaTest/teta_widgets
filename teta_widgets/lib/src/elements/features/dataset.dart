@@ -2,11 +2,12 @@
 // Project imports:
 // ignore_for_file: public_member_api_docs, lines_longer_than_80_chars
 
+import 'package:equatable/equatable.dart';
 // Package imports:
 import 'package:teta_core/src/models/dataset.dart';
 import 'package:teta_core/src/models/variable.dart';
 
-class FDataset {
+class FDataset extends Equatable {
   /// Set of func to use text string in Teta's widgets
   FDataset({
     this.datasetName,
@@ -15,6 +16,9 @@ class FDataset {
 
   String? datasetName;
   String? datasetAttrName;
+
+  @override
+  List<Object?> get props => [datasetName, datasetAttrName];
 
   /// Returns value for texts
   String get(

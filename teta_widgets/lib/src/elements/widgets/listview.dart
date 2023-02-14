@@ -12,7 +12,7 @@ import 'package:teta_widgets/src/elements/features/physic.dart';
 // Project imports:
 import 'package:teta_widgets/src/elements/index.dart';
 
-class WListView extends StatefulWidget {
+class WListView extends StatelessWidget {
   /// Returns a ListView in Teta
   const WListView(
     final Key? key, {
@@ -40,27 +40,14 @@ class WListView extends StatefulWidget {
   final bool shrinkWrap;
 
   @override
-  State<WListView> createState() => _WListViewState();
-}
-
-class _WListViewState extends State<WListView> {
-  List<CNode> children = [];
-
-  @override
-  void initState() {
-    children = widget.children;
-    super.initState();
-  }
-
-  @override
   Widget build(final BuildContext context) {
     return TetaWidget(
-      state: widget.state,
+      state: state,
       child: DragTarget<DragTargetModel>(
         onAccept: (final data) async {
           await sl.get<NodeService>().add(
                 dragTarget: data,
-                parent: widget.state.node,
+                parent: state.node,
                 context: context,
                 customIndex: null,
               );
@@ -74,17 +61,17 @@ class _WListViewState extends State<WListView> {
                 if (isTop) {
                   GestureBuilder.get(
                     context: context,
-                    state: widget.state,
+                    state: state,
                     gesture: ActionGesture.scrollToTop,
-                    action: widget.action,
+                    action: action,
                     actionValue: null,
                   );
                 } else {
                   GestureBuilder.get(
                     context: context,
-                    state: widget.state,
+                    state: state,
                     gesture: ActionGesture.scrollToBottom,
-                    action: widget.action,
+                    action: action,
                     actionValue: null,
                   );
                 }
@@ -94,23 +81,22 @@ class _WListViewState extends State<WListView> {
             child: ScrollConfiguration(
               behavior: _MyCustomScrollBehavior(),
               child: ListView.builder(
-                reverse: widget.isReverse,
-                physics: widget.physic.physics,
+                reverse: isReverse,
+                physics: physic.physics,
                 addAutomaticKeepAlives: false,
                 addRepaintBoundaries: false,
-                scrollDirection:
-                    widget.isVertical ? Axis.vertical : Axis.horizontal,
+                scrollDirection: isVertical ? Axis.vertical : Axis.horizontal,
                 itemCount: children.isEmpty ? 1 : children.length,
                 itemBuilder: (final context, final index) {
                   return children.isNotEmpty
                       ? children[index].toWidget(
-                          state: widget.state,
-                          isVertical: widget.isVertical,
+                          state: state,
+                          isVertical: isVertical,
                         )
                       : PlaceholderChildBuilder(
-                          name: widget.state.node.intrinsicState.displayName,
-                          node: widget.state.node,
-                          forPlay: widget.state.forPlay,
+                          name: state.node.intrinsicState.displayName,
+                          node: state.node,
+                          forPlay: state.forPlay,
                         );
                 },
               ),

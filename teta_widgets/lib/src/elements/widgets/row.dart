@@ -9,7 +9,7 @@ import 'package:teta_widgets/src/core/teta_widget/index.dart';
 // Project imports:
 import 'package:teta_widgets/src/elements/index.dart';
 
-class WRow extends StatefulWidget {
+class WRow extends StatelessWidget {
   /// Constructor
   const WRow(
     final Key? key, {
@@ -32,50 +32,37 @@ class WRow extends StatefulWidget {
   final FMainAxisSize _mainAxisSize;
 
   @override
-  State<WRow> createState() => _WRowState();
-}
-
-class _WRowState extends State<WRow> {
-  List<CNode> children = [];
-
-  @override
-  void initState() {
-    children = widget._children;
-    super.initState();
-  }
-
-  @override
   Widget build(final BuildContext context) {
     return TetaWidget(
-      state: widget._state,
+      state: _state,
       child: DragTarget<DragTargetModel>(
         onAccept: (final data) async {
           await sl.get<NodeService>().add(
                 dragTarget: data,
-                parent: widget._state.node,
+                parent: _state.node,
                 context: context,
                 customIndex: null,
               );
         },
         builder: (final context, final candidateData, final rejectedData) {
           return Row(
-            mainAxisAlignment: widget._mainAxisAlignment.get,
-            crossAxisAlignment: widget._crossAxisAlignment.get,
-            mainAxisSize: widget._mainAxisSize.get,
-            children: widget._children.isNotEmpty
-                ? widget._children
+            mainAxisAlignment: _mainAxisAlignment.get,
+            crossAxisAlignment: _crossAxisAlignment.get,
+            mainAxisSize: _mainAxisSize.get,
+            children: _children.isNotEmpty
+                ? _children
                     .map(
                       (final e) => e.toWidget(
-                        state: widget._state,
+                        state: _state,
                         isVertical: false,
                       ),
                     )
                     .toList()
                 : [
                     PlaceholderChildBuilder(
-                      name: widget._state.node.intrinsicState.displayName,
-                      node: widget._state.node,
-                      forPlay: widget._state.forPlay,
+                      name: _state.node.intrinsicState.displayName,
+                      node: _state.node,
+                      forPlay: _state.forPlay,
                     ),
                   ],
           );

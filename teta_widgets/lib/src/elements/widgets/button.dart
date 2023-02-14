@@ -82,6 +82,7 @@ class WButton extends StatelessWidget {
               child: DecoratedBox(
                 decoration: TetaBoxDecoration.get(
                   context: context,
+                  forPlay: state.forPlay,
                   fill: fill.get(context),
                   borderRadius: borderRadius,
                 ),

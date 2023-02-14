@@ -1,17 +1,21 @@
 // Flutter imports:
 // ignore_for_file: public_member_api_docs, lines_longer_than_80_chars
 
+import 'package:equatable/equatable.dart';
 // Flutter imports:
 import 'package:flutter/material.dart';
 
 ///
-class FTextAlign {
+class FTextAlign extends Equatable {
   /// Set of funcs to use TextAlign to Teta
   FTextAlign({
     final TextAlign align = TextAlign.left,
   }) : _align = align;
 
   TextAlign _align;
+
+  @override
+  List<Object?> get props => [_align];
 
   /// Get actual value
   TextAlign get get => _align;

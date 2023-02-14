@@ -55,154 +55,155 @@ class _WTextState extends State<WText> with AfterLayoutMixin {
 
   @override
   Widget build(final BuildContext context) {
+    final state = context.watch<ColorStylesCubit>().state;
+
+    FFill? finalFill;
+    if (state.isNotEmpty) {
+      for (final e in state) {
+        if (e.id == widget.textStyle.fill!.paletteStyle) {
+          finalFill = e.fill;
+        }
+        if (e.name == widget.textStyle.fill!.paletteStyle) {
+          finalFill = e.fill;
+        }
+      }
+    }
+    finalFill ??= widget.textStyle.fill!;
+
+    TextStyleModel? model;
+    if (widget.textStyle.textStyleModel != null) {
+      context.watch<TextStylesCubit>().state.forEach((final element) {
+        if (element.name == widget.textStyle.textStyleModel) {
+          model = element;
+        }
+      });
+    }
+
+    Logger.printMessage(
+      'TextWidget, value: ${widget.value.getValue(context, forPlay: widget.state.forPlay)}',
+    );
     return NodeSelectionBuilder(
       state: widget.state,
-      child: BlocBuilder<ColorStylesCubit, List<ColorStyleModel>>(
-        buildWhen: (final previous, final current) => current != previous,
-        builder: (final context, final state) {
-          FFill? finalFill;
-          if (state.isNotEmpty) {
-            for (final e in state) {
-              if (e.id == widget.textStyle.fill!.paletteStyle) {
-                finalFill = e.fill;
-              }
-              if (e.name == widget.textStyle.fill!.paletteStyle) {
-                finalFill = e.fill;
-              }
-            }
-          }
-          finalFill ??= widget.textStyle.fill!;
-
-          TextStyleModel? model;
-          if (widget.textStyle.textStyleModel != null) {
-            context.watch<TextStylesCubit>().state.forEach((final element) {
-              if (element.name == widget.textStyle.textStyleModel) {
-                model = element;
-              }
+      child: GestureDetector(
+        onDoubleTap: () {
+          if (!widget.state.forPlay) {
+            _controller.text = widget.value.get(
+              widget.state.params,
+              widget.state.states,
+              widget.state.dataset,
+              widget.state.forPlay,
+              widget.state.loop,
+              context,
+            );
+            setState(() {
+              isEditing = !isEditing;
             });
+            if (_controller.text.isNotEmpty) {
+              _controller.selection = TextSelection(
+                baseOffset: 0,
+                extentOffset: _controller.text.length,
+              );
+            }
+            BlocProvider.of<FocusBloc>(context).add(
+              OnFocus(node: widget.state.node),
+            );
           }
-          return GestureDetector(
-            onDoubleTap: () {
-              if (!widget.state.forPlay) {
-                _controller.text = widget.value.get(
-                  widget.state.params,
-                  widget.state.states,
-                  widget.state.dataset,
-                  widget.state.forPlay,
-                  widget.state.loop,
-                  context,
-                );
-                setState(() {
-                  isEditing = !isEditing;
-                });
-                if (_controller.text.isNotEmpty) {
-                  _controller.selection = TextSelection(
-                    baseOffset: 0,
-                    extentOffset: _controller.text.length,
-                  );
-                }
-                BlocProvider.of<FocusBloc>(context).add(
-                  OnFocus(node: widget.state.node),
-                );
-              }
-            },
-            child: isEditing
-                ? Focus(
-                    focusNode: focusNode,
-                    onFocusChange: (final hasFocus) {
-                      if (!hasFocus) {
-                        updateTextOnSubmit(_controller.text, context);
-                      }
-                    },
-                    child: !widget.isFullWidth
-                        ? IntrinsicWidth(
-                            child: TextField(
-                              controller: _controller,
-                              autofocus: true,
-                              style: widget.textStyle.get(context, model),
-                              textAlign: widget.textStyle.textAlign?.get ??
-                                  TextAlign.start,
-                              decoration: const InputDecoration(
-                                contentPadding:
-                                    EdgeInsets.symmetric(vertical: 4),
-                                isDense: true,
-                                border: InputBorder.none,
-                              ),
-                              maxLines: int.tryParse(
-                                    widget.maxLines.get(
-                                      widget.state.params,
-                                      widget.state.states,
-                                      widget.state.dataset,
-                                      widget.state.forPlay,
-                                      widget.state.loop,
-                                      context,
-                                    ),
-                                  ) ??
-                                  1,
-                              onSubmitted: (final text) =>
-                                  updateTextOnSubmit(text, context),
-                            ),
-                          )
-                        : SizedBox(
-                            width: double.maxFinite,
-                            child: TextField(
-                              controller: _controller,
-                              autofocus: true,
-                              style: widget.textStyle.get(context, model),
-                              textAlign: widget.textStyle.textAlign?.get ??
-                                  TextAlign.start,
-                              decoration: const InputDecoration(
-                                contentPadding:
-                                    EdgeInsets.symmetric(vertical: 4),
-                                isDense: true,
-                                border: InputBorder.none,
-                              ),
-                              maxLines: int.tryParse(
-                                    widget.maxLines.get(
-                                      widget.state.params,
-                                      widget.state.states,
-                                      widget.state.dataset,
-                                      widget.state.forPlay,
-                                      widget.state.loop,
-                                      context,
-                                    ),
-                                  ) ??
-                                  1,
-                              onSubmitted: (final text) =>
-                                  updateTextOnSubmit(text, context),
-                            ),
-                          ),
-                  )
-                : GestureBuilderBase.get(
-                    context: context,
-                    state: widget.state,
-                    child: widget.isFullWidth
-                        ? SizedBox(
-                            width: double.maxFinite,
-                            child: TextBuilder(
-                              textStyle: widget.textStyle,
-                              value: widget.value,
-                              maxLines: widget.maxLines,
-                              params: widget.state.params,
-                              states: widget.state.states,
-                              dataset: widget.state.dataset,
-                              forPlay: widget.state.forPlay,
-                              loop: widget.state.loop,
-                            ),
-                          )
-                        : TextBuilder(
-                            textStyle: widget.textStyle,
-                            value: widget.value,
-                            maxLines: widget.maxLines,
-                            params: widget.state.params,
-                            states: widget.state.states,
-                            dataset: widget.state.dataset,
-                            forPlay: widget.state.forPlay,
-                            loop: widget.state.loop,
-                          ),
-                  ),
-          );
         },
+        child: isEditing
+            ? Focus(
+                focusNode: focusNode,
+                onFocusChange: (final hasFocus) {
+                  if (!hasFocus) {
+                    updateTextOnSubmit(_controller.text, context);
+                  }
+                },
+                child: !widget.isFullWidth
+                    ? IntrinsicWidth(
+                        child: TextField(
+                          controller: _controller,
+                          autofocus: true,
+                          style: widget.textStyle
+                              .get(context, widget.state.forPlay, model),
+                          textAlign: widget.textStyle.textAlign?.get ??
+                              TextAlign.start,
+                          decoration: const InputDecoration(
+                            contentPadding: EdgeInsets.symmetric(vertical: 4),
+                            isDense: true,
+                            border: InputBorder.none,
+                          ),
+                          maxLines: int.tryParse(
+                                widget.maxLines.get(
+                                  widget.state.params,
+                                  widget.state.states,
+                                  widget.state.dataset,
+                                  widget.state.forPlay,
+                                  widget.state.loop,
+                                  context,
+                                ),
+                              ) ??
+                              1,
+                          onSubmitted: (final text) =>
+                              updateTextOnSubmit(text, context),
+                        ),
+                      )
+                    : SizedBox(
+                        width: double.maxFinite,
+                        child: TextField(
+                          controller: _controller,
+                          autofocus: true,
+                          style: widget.textStyle
+                              .get(context, widget.state.forPlay, model),
+                          textAlign: widget.textStyle.textAlign?.get ??
+                              TextAlign.start,
+                          decoration: const InputDecoration(
+                            contentPadding: EdgeInsets.symmetric(vertical: 4),
+                            isDense: true,
+                            border: InputBorder.none,
+                          ),
+                          maxLines: int.tryParse(
+                                widget.maxLines.get(
+                                  widget.state.params,
+                                  widget.state.states,
+                                  widget.state.dataset,
+                                  widget.state.forPlay,
+                                  widget.state.loop,
+                                  context,
+                                ),
+                              ) ??
+                              1,
+                          onSubmitted: (final text) =>
+                              updateTextOnSubmit(text, context),
+                        ),
+                      ),
+              )
+            : GestureBuilderBase.get(
+                context: context,
+                state: widget.state,
+                child: widget.isFullWidth
+                    ? SizedBox(
+                        width: double.maxFinite,
+                        child: TextBuilder(
+                          textStyle: widget.textStyle,
+                          value: widget.value,
+                          maxLines: widget.maxLines,
+                          params: widget.state.params,
+                          states: widget.state.states,
+                          dataset: widget.state.dataset,
+                          forPlay: widget.state.forPlay,
+                          loop: widget.state.loop,
+                        ),
+                      )
+                    : TextBuilder(
+                        textStyle: widget.textStyle,
+                        value: widget.value,
+                        maxLines: widget.maxLines,
+                        params: widget.state.params,
+                        states: widget.state.states,
+                        dataset: widget.state.dataset,
+                        forPlay: widget.state.forPlay,
+                        loop: widget.state.loop,
+                      ),
+              ),
       ),
     );
   }

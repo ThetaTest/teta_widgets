@@ -1,14 +1,18 @@
 // Flutter imports:
+import 'package:equatable/equatable.dart';
 import 'package:flutter/material.dart';
 
 ///
-class FMainAxisAlignment {
+class FMainAxisAlignment extends Equatable {
   /// Constructor
   FMainAxisAlignment({
     final MainAxisAlignment align = MainAxisAlignment.start,
   }) : _align = align;
 
   MainAxisAlignment _align;
+
+  @override
+  List<Object?> get props => [_align];
 
   /// Returns current value
   MainAxisAlignment get get => _align;

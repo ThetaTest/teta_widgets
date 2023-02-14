@@ -3,13 +3,14 @@
 
 // Flutter imports:
 import 'package:device_frame/device_frame.dart';
+import 'package:equatable/equatable.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:responsive_builder/responsive_builder.dart';
 import 'package:teta_core/teta_core.dart';
 
-class FAlign {
-  FAlign({
+class FAlign extends Equatable {
+  const FAlign({
     this.align = Alignment.topLeft,
     this.alignTablet,
     this.alignDesktop,
@@ -31,16 +32,34 @@ class FAlign {
         'Bottom Right'
       ];
 
+  @override
+  List<Object?> get props => [
+        align,
+        alignTablet,
+        alignDesktop,
+      ];
+
   Alignment get(
     final BuildContext context, {
     required final bool forPlay,
   }) {
-    return getValueForScreenType<Alignment>(
-      context: context,
-      mobile: align!,
-      tablet: alignTablet ?? align!,
-      desktop: alignDesktop ?? align!,
-    );
+    if (forPlay) {
+      return getValueForScreenType<Alignment>(
+        context: context,
+        mobile: align!,
+        tablet: alignTablet ?? align!,
+        desktop: alignDesktop ?? align!,
+      );
+    } else {
+      final device = context.read<DeviceModeCubit>().state;
+      if (device.type == DeviceType.phone) {
+        return align!;
+      } else if (device.type == DeviceType.tablet) {
+        return alignTablet ?? align!;
+      } else {
+        return alignDesktop ?? align!;
+      }
+    }
   }
 
   String getStringForDropDown(final BuildContext context) {
@@ -68,7 +87,7 @@ class FAlign {
           alignDesktop: convertDropDownToValue(json['d'] as String? ?? ''),
         );
       } catch (e) {
-        return FAlign();
+        return const FAlign();
       }
     }
   }

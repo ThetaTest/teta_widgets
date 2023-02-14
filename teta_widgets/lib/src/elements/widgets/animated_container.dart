@@ -74,6 +74,7 @@ class WAnimatedContainer extends StatelessWidget {
         ),
         decoration: TetaBoxDecoration.get(
           context: context,
+          forPlay: state.forPlay,
           fill: fill.get(context),
           borderRadius: borderRadius,
           shadow: shadows,

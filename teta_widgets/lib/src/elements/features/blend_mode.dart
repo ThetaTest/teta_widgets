@@ -4,13 +4,14 @@
 
 // Package imports:
 import 'package:enum_to_string/enum_to_string.dart';
+import 'package:equatable/equatable.dart';
 // Flutter imports:
 import 'package:flutter/material.dart';
 
 const nameAttr = 'BlendMode';
 
-class FBlendMode {
-  FBlendMode({
+class FBlendMode extends Equatable {
+  const FBlendMode({
     this.mode = BlendMode.clear,
   });
 
@@ -24,6 +25,9 @@ class FBlendMode {
         ),
       )
       .toList();
+
+  @override
+  List<Object?> get props => [mode];
 
   BlendMode get() {
     return mode!;

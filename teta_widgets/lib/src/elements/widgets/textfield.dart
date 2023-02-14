@@ -98,7 +98,10 @@ class _WTextFieldState extends State<WTextField> with AfterLayoutMixin {
       textEditingController.text = valueInput;
     }
 
-    final borderRadius = widget.borderRadius.get(context);
+    final borderRadius = widget.borderRadius.get(
+      context,
+      forPlay: widget.state.forPlay,
+    );
     TextStyleModel? model;
     if (widget.textStyle.textStyleModel != null) {
       BlocProvider.of<TextStylesCubit>(context).state.forEach((final element) {
@@ -131,7 +134,10 @@ class _WTextFieldState extends State<WTextField> with AfterLayoutMixin {
             forPlay: widget.state.forPlay,
           ),
           decoration: BoxDecoration(
-            borderRadius: widget.borderRadius.get(context),
+            borderRadius: widget.borderRadius.get(
+              context,
+              forPlay: widget.state.forPlay,
+            ),
           ),
           child: TextField(
             autofocus: true,
@@ -217,7 +223,7 @@ class _WTextFieldState extends State<WTextField> with AfterLayoutMixin {
                 forPlay: widget.state.forPlay,
               ),
             ),
-            style: widget.textStyle.get(context, model),
+            style: widget.textStyle.get(context, widget.state.forPlay, model),
             textAlign: widget.textStyle.textAlign!.get,
             autocorrect: widget.autoCorrect,
             obscureText: widget.obscureText,

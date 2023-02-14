@@ -2,8 +2,10 @@
 // ignore_for_file: public_member_api_docs
 
 // Package imports:
+import 'dart:async';
+
+import 'package:after_layout/after_layout.dart';
 import 'package:collection/collection.dart';
-import 'package:device_frame/device_frame.dart';
 import 'package:enum_to_string/enum_to_string.dart';
 // Flutter imports:
 import 'package:flutter/material.dart';
@@ -42,9 +44,9 @@ class TextControl extends StatefulWidget {
   PaddingsState createState() => PaddingsState();
 }
 
-class PaddingsState extends State<TextControl> {
-  late TextEditingController controller;
-  late TextEditingController keyController;
+class PaddingsState extends State<TextControl> with AfterLayoutMixin {
+  TextEditingController controller = TextEditingController();
+  TextEditingController keyController = TextEditingController();
   String databaseName = '';
   String databaseAttribute = '';
   String datasetSubListData = '';
@@ -57,11 +59,12 @@ class PaddingsState extends State<TextControl> {
   DatasetObject dataset = DatasetObject.empty();
 
   @override
-  void initState() {
-    controller = TextEditingController();
-    keyController = TextEditingController();
+  FutureOr<void> afterFirstLayout(final BuildContext context) {
     try {
-      controller.text = widget.value.getValue(context);
+      controller.text = widget.value.getValue(
+        context,
+        forPlay: false,
+      );
       typeOfInput = widget.value.type!;
       if (widget.value.datasetName != null) {
         databaseName = widget.value.datasetName!;
@@ -77,14 +80,29 @@ class PaddingsState extends State<TextControl> {
       datasetLength = widget.value.datasetLength!;
     } catch (_) {}
     keyController.text = widget.value.mapKey ?? '';
-    super.initState();
+  }
+
+  @override
+  void dispose() {
+    controller.dispose();
+    keyController.dispose();
+    super.dispose();
   }
 
   @override
   Widget build(final BuildContext context) {
     return BlocListener<DeviceModeCubit, DeviceState>(
       listener: (final context, final device) {
-        controller.text = widget.value.getValue(context);
+        if (controller.text !=
+            widget.value.getValue(
+              context,
+              forPlay: false,
+            )) {
+          controller.text = widget.value.getValue(
+            context,
+            forPlay: false,
+          );
+        }
       },
       child: BlocBuilder<DeviceModeCubit, DeviceState>(
         builder: (final context, final device) =>
@@ -285,30 +303,20 @@ class PaddingsState extends State<TextControl> {
                         //text: text,
                         controller: controller,
                         callBack: (final value) {
+                          final old = widget.value;
+                          widget.value.updateValue(
+                            controller.text.replaceAll(r'\', r'\\'),
+                            context,
+                          );
+                          widget.callBack(widget.value, old);
                           setState(() {
-                            isChanged = true;
+                            isChanged = false;
                           });
                         },
                         onSubmitted: (final value) {
                           value.replaceAll(r'\', r'\\');
                           final old = widget.value;
                           widget.value.updateValue(value, context);
-                          widget.callBack(widget.value, old);
-                          setState(() {
-                            isChanged = false;
-                          });
-                        },
-                      ),
-                      const Gap(Grid.small),
-                      CButton(
-                        label: 'Confirm',
-                        isPrimary: isChanged,
-                        callback: () {
-                          final old = widget.value;
-                          widget.value.updateValue(
-                            controller.text.replaceAll(r'\', r'\\'),
-                            context,
-                          );
                           widget.callBack(widget.value, old);
                           setState(() {
                             isChanged = false;

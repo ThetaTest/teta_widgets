@@ -81,6 +81,7 @@ class WDotsIndicator extends StatelessWidget {
             ),
             decoration: TetaBoxDecoration.get(
               context: context,
+              forPlay: state.forPlay,
               fill: i ==
                       (int.tryParse(
                             position.get(

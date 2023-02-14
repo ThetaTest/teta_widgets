@@ -1,13 +1,17 @@
 // Project imports:
+import 'package:equatable/equatable.dart';
 import 'package:teta_widgets/src/elements/controls/key_constants.dart';
 
 /// [FChildrenIds] is a set of functions to save children' ids
-class FChildrenIds {
+class FChildrenIds extends Equatable {
   /// Constructor
   FChildrenIds({this.ids = const []});
 
   /// The value in List<String> of [FChildrenIds]
   List<int> ids;
+
+  @override
+  List<Object?> get props => [ids];
 
   /// Get [ids] list
   List<int> get get => ids;

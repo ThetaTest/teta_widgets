@@ -2,6 +2,7 @@
 
 import 'package:device_frame/device_frame.dart' as frame;
 import 'package:enum_to_string/enum_to_string.dart';
+import 'package:equatable/equatable.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:responsive_builder/responsive_builder.dart';
@@ -9,7 +10,7 @@ import 'package:sizer/sizer.dart';
 import 'package:teta_core/teta_core.dart';
 import 'package:teta_widgets/src/elements/index.dart';
 
-class FFontSize {
+class FFontSize extends Equatable {
   /// Constructor
   FFontSize({
     this.size = 16,
@@ -28,6 +29,14 @@ class FFontSize {
 
   SizeUnit unit;
 
+  @override
+  List<Object?> get props => [
+        size,
+        sizeTablet,
+        sizeDesktop,
+        unit,
+      ];
+
   double _getValue(final double value) {
     if (unit == SizeUnit.pixel) {
       return size;
@@ -39,12 +48,28 @@ class FFontSize {
   }
 
   /// Get current value of [size]
-  double get(final BuildContext context) => getValueForScreenType<double>(
+  double get(
+    final BuildContext context, {
+    required final bool forPlay,
+  }) {
+    if (forPlay) {
+      return getValueForScreenType<double>(
         context: context,
         mobile: _getValue(size),
         tablet: _getValue(sizeTablet ?? size),
         desktop: _getValue(sizeDesktop ?? size),
       );
+    } else {
+      final device = context.read<DeviceModeCubit>().state;
+      if (device.type == frame.DeviceType.phone) {
+        return _getValue(size);
+      } else if (device.type == frame.DeviceType.tablet) {
+        return _getValue(sizeTablet ?? size);
+      } else {
+        return _getValue(sizeDesktop ?? size);
+      }
+    }
+  }
 
   void update(final double value, final BuildContext context) {
     final device = BlocProvider.of<DeviceModeCubit>(context).state;

@@ -24,16 +24,20 @@ class TetaTextStyles {
     required final FFontWeight fontWeight,
     required final FTextDecoration textDecoration,
     required final FFontStyle fontStyle,
+    required final bool forPlay,
     final TextStyleModel? model,
   }) {
     final tempOpacity = fill.levels?.first.opacity ?? 1;
     final opacity = tempOpacity >= 0 && tempOpacity <= 1 ? tempOpacity : 1.0;
     return GoogleFonts.getFont(
-      (model != null) ? model.fontFamily! : fontFamily,
+      (model != null) ? model.fontFamily : fontFamily,
       fontSize: (model != null)
-          ? model.fontSize!.get(context)
-          : fontSize.get(context),
-      fontWeight: (model != null) ? model.fontWeight!.get : fontWeight.get,
+          ? model.fontSize.get(context, forPlay: forPlay)
+          : fontSize.get(
+              context,
+              forPlay: forPlay,
+            ),
+      fontWeight: (model != null) ? model.fontWeight.get : fontWeight.get,
       color:
           HexColor(fill.get(context).getHexColor(context)).withOpacity(opacity),
       decoration: textDecoration.get,

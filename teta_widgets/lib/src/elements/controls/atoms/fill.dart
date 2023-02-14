@@ -171,7 +171,7 @@ class FillControlState extends State<FillControl> {
       builder: (final context, final state) {
         ColorStyleModel? model;
         if (widget.fill.paletteStyle != null) {
-          for (var element in state) {
+          for (final element in state) {
             if (element.id == widget.fill.paletteStyle) model = element;
             if (element.name == widget.fill.paletteStyle) model = element;
           }
@@ -179,7 +179,7 @@ class FillControlState extends State<FillControl> {
         return model != null
             ? StyleFillControl(
                 onlySolid: widget.type == FillTypeControlType.onlySolid,
-                model: model!,
+                model: model,
                 callBack: widget.callBack,
                 fill: widget.fill,
               )

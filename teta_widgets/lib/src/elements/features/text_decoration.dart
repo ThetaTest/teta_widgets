@@ -1,16 +1,20 @@
 // Flutter imports:
 // ignore_for_file: public_member_api_docs, lines_longer_than_80_chars
 
+import 'package:equatable/equatable.dart';
 // Flutter imports:
 import 'package:flutter/material.dart';
 
-class FTextDecoration {
+class FTextDecoration extends Equatable {
   /// Set of funcs to use TextDecoration within Teta
   FTextDecoration({
     this.textDecoration = TextDecoration.none,
   });
 
   TextDecoration textDecoration;
+
+  @override
+  List<Object?> get props => [textDecoration];
 
   TextDecoration get get => textDecoration;
 
