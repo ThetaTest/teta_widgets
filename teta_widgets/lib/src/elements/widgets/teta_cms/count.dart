@@ -60,7 +60,7 @@ class _WCmsCountState extends State<WCmsCount> with AfterLayoutMixin {
   }
 
   Future calc() async {
-    final collectionId = widget.collection.get(
+    final collectionName = widget.collection.get(
       widget.state.params,
       widget.state.states,
       widget.state.dataset,
@@ -102,8 +102,8 @@ class _WCmsCountState extends State<WCmsCount> with AfterLayoutMixin {
     );
     if (mounted) {
       setState(() {
-        _future = TetaCMS.instance.client.getCollectionCount(
-          collectionId,
+        _future = TetaCMS.instance.client.getCollectionCountByName(
+          collectionName,
           filters: [
             if (keyName.isNotEmpty && keyValue.isNotEmpty)
               Filter(keyName, keyValue),

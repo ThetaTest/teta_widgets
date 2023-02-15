@@ -63,7 +63,7 @@ class _WCmsStreamState extends State<WCmsStream> with AfterLayoutMixin {
   }
 
   Future calc() async {
-    final collectionId = widget.collection.get(
+    final collectionName = widget.collection.get(
       widget.state.params,
       widget.state.states,
       widget.state.dataset,
@@ -104,12 +104,12 @@ class _WCmsStreamState extends State<WCmsStream> with AfterLayoutMixin {
       context,
     );
     Logger.printWarning(
-      '$collectionId, keyName: $keyName, keyValue: $keyValue, limit: $limit, page: $page ',
+      '$collectionName, keyName: $keyName, keyValue: $keyValue, limit: $limit, page: $page ',
     );
     if (mounted) {
       setState(() {
         _stream = TetaCMS.instance.realtime.streamCollection(
-          collectionId,
+          collectionName,
           filters: [
             if (keyName.isNotEmpty && keyValue.isNotEmpty)
               Filter(keyName, keyValue),

@@ -48,7 +48,7 @@ class WCmsFetch extends StatefulWidget {
 }
 
 class _WCmsFetchState extends State<WCmsFetch> with AfterLayoutMixin {
-  String? collectionId;
+  String? collectionName;
   bool isInitialized = false;
   List<dynamic> list = <dynamic>[];
   DatasetObject _map = const DatasetObject(
@@ -62,7 +62,7 @@ class _WCmsFetchState extends State<WCmsFetch> with AfterLayoutMixin {
   }
 
   Future<void> getDbElements() async {
-    collectionId = widget.collection.get(
+    collectionName = widget.collection.get(
       widget.state.params,
       widget.state.states,
       widget.state.dataset,
@@ -70,7 +70,7 @@ class _WCmsFetchState extends State<WCmsFetch> with AfterLayoutMixin {
       widget.state.loop,
       context,
     );
-    if (collectionId == '') return;
+    if (collectionName == '') return;
     final limit = widget.limit.get(
       widget.state.params,
       widget.state.states,
@@ -103,8 +103,8 @@ class _WCmsFetchState extends State<WCmsFetch> with AfterLayoutMixin {
       widget.state.loop,
       context,
     );
-    final res = await TetaCMS.instance.client.getCollection(
-      collectionId!,
+    final res = await TetaCMS.instance.client.getCollectionByName(
+      collectionName!,
       filters: [
         if (keyName.isNotEmpty && keyValue.isNotEmpty)
           Filter(keyName, keyValue),
@@ -129,8 +129,8 @@ class _WCmsFetchState extends State<WCmsFetch> with AfterLayoutMixin {
       state: widget.state,
       child: Builder(
         builder: (final context) {
-          if (collectionId == null ||
-              collectionId == '' ||
+          if (collectionName == null ||
+              collectionName == '' ||
               widget.children.isEmpty) {
             return Center(
               child: ChildConditionBuilder(
