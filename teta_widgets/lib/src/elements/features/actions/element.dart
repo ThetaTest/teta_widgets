@@ -1303,6 +1303,84 @@ class FActionElement extends Equatable {
               state: state,
             );
             break;
+          case ActionTetaCmsAuth.signInWithTwitch:
+            await actionS(
+              () => FATetaCMSLogin.action(
+                context,
+                state,
+                nameOfPage,
+                paramsToSend,
+                TetaProvider.twitch,
+              ),
+              context: context,
+              state: state,
+            );
+            break;
+          case ActionTetaCmsAuth.signInWithLinkedin:
+            await actionS(
+              () => FATetaCMSLogin.action(
+                context,
+                state,
+                nameOfPage,
+                paramsToSend,
+                TetaProvider.linkedin,
+              ),
+              context: context,
+              state: state,
+            );
+            break;
+          case ActionTetaCmsAuth.signInWithDiscord:
+            await actionS(
+              () => FATetaCMSLogin.action(
+                context,
+                state,
+                nameOfPage,
+                paramsToSend,
+                TetaProvider.discord,
+              ),
+              context: context,
+              state: state,
+            );
+            break;
+          case ActionTetaCmsAuth.signInWithGitlab:
+            await actionS(
+              () => FATetaCMSLogin.action(
+                context,
+                state,
+                nameOfPage,
+                paramsToSend,
+                TetaProvider.gitlab,
+              ),
+              context: context,
+              state: state,
+            );
+            break;
+          case ActionTetaCmsAuth.signInWithBitBucket:
+            await actionS(
+              () => FATetaCMSLogin.action(
+                context,
+                state,
+                nameOfPage,
+                paramsToSend,
+                TetaProvider.bitbucket,
+              ),
+              context: context,
+              state: state,
+            );
+            break;
+          case ActionTetaCmsAuth.signInWithFacebook:
+            await actionS(
+              () => FATetaCMSLogin.action(
+                context,
+                state,
+                nameOfPage,
+                paramsToSend,
+                TetaProvider.facebook,
+              ),
+              context: context,
+              state: state,
+            );
+            break;
           case ActionTetaCmsAuth.logout:
             await actionS(
               () => FATetaCMSLogout.action(
@@ -2767,6 +2845,66 @@ class FActionElement extends Equatable {
               FATetaCMSLogin.toCode(
                 context,
                 TetaProvider.apple,
+                nameOfPage,
+                paramsToSend,
+              ),
+              context,
+            );
+          case ActionTetaCmsAuth.signInWithTwitch:
+            return codeS(
+              FATetaCMSLogin.toCode(
+                context,
+                TetaProvider.twitch,
+                nameOfPage,
+                paramsToSend,
+              ),
+              context,
+            );
+          case ActionTetaCmsAuth.signInWithLinkedin:
+            return codeS(
+              FATetaCMSLogin.toCode(
+                context,
+                TetaProvider.linkedin,
+                nameOfPage,
+                paramsToSend,
+              ),
+              context,
+            );
+          case ActionTetaCmsAuth.signInWithDiscord:
+            return codeS(
+              FATetaCMSLogin.toCode(
+                context,
+                TetaProvider.discord,
+                nameOfPage,
+                paramsToSend,
+              ),
+              context,
+            );
+          case ActionTetaCmsAuth.signInWithGitlab:
+            return codeS(
+              FATetaCMSLogin.toCode(
+                context,
+                TetaProvider.gitlab,
+                nameOfPage,
+                paramsToSend,
+              ),
+              context,
+            );
+          case ActionTetaCmsAuth.signInWithBitBucket:
+            return codeS(
+              FATetaCMSLogin.toCode(
+                context,
+                TetaProvider.bitbucket,
+                nameOfPage,
+                paramsToSend,
+              ),
+              context,
+            );
+          case ActionTetaCmsAuth.signInWithFacebook:
+            return codeS(
+              FATetaCMSLogin.toCode(
+                context,
+                TetaProvider.facebook,
                 nameOfPage,
                 paramsToSend,
               ),
