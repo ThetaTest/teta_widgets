@@ -4,7 +4,6 @@
 // Flutter imports:
 import 'package:device_frame/device_frame.dart' as frame;
 import 'package:equatable/equatable.dart';
-import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:sizer/sizer.dart';
@@ -94,21 +93,13 @@ class FSize extends Equatable {
     } else {
       if (size.toLowerCase() == 'null' || size.toLowerCase() == 'auto') {
         return null;
-      } else {
-        final exp = MathExpression.parse(
-          context: context,
-          expression: size.replaceAll('%', ''),
-        );
-        if (double.tryParse(exp) != null) {
-          value = double.parse(exp);
-        }
       }
     }
 
     if (unit == SizeUnit.percent ||
         unit == SizeUnit.width ||
         unit == SizeUnit.height) {
-      return isWidth ? value.toInt().w : value.toInt().h;
+      return isWidth ? value.w : value.h;
     }
     return value;
   }
@@ -116,9 +107,9 @@ class FSize extends Equatable {
   SizeUnit getUnit(final BuildContext context) {
     final device = BlocProvider.of<DeviceModeCubit>(context).state;
     if (device.info.identifier.type == frame.DeviceType.phone) {
-      return unit = unit!;
+      return unit!;
     } else if (device.info.identifier.type == frame.DeviceType.tablet) {
-      return unit = unitTablet ?? unit!;
+      return unitTablet ?? unit!;
     }
     return unitDesktop ?? unit!;
   }
@@ -166,10 +157,7 @@ class FSize extends Equatable {
             : SizeUnit.percent,
       );
     } catch (e) {
-      if (kDebugMode) {
-        // ignore: avoid_print
-        print('Error in FSize fromJson: $e');
-      }
+      Logger.printError('Error in FSize fromJson: $e');
       return FSize();
     }
   }

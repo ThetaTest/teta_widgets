@@ -184,8 +184,7 @@ class _WCmsFetchState extends State<WCmsFetch> with AfterLayoutMixin {
 
   List<DatasetObject> _addFetchDataToDataset(final List<dynamic>? list) {
     _map = _map.copyWith(
-      name: widget.state.node.name ??
-          widget.state.node.intrinsicState.displayName,
+      name: collectionName ?? widget.state.node.intrinsicState.displayName,
       map: (list ?? const <dynamic>[])
           .map((final dynamic e) => e as Map<String, dynamic>)
           .toList(),

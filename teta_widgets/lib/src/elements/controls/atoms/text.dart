@@ -60,7 +60,7 @@ class PaddingsState extends State<TextControl> with AfterLayoutMixin {
 
   @override
   FutureOr<void> afterFirstLayout(final BuildContext context) {
-    try {
+    setState(() {
       controller.text = widget.value.getValue(
         context,
         forPlay: false,
@@ -74,12 +74,23 @@ class PaddingsState extends State<TextControl> with AfterLayoutMixin {
         (final element) => element.getName == widget.value.datasetName,
       );
       dataset = index != -1 ? datasets[index] : DatasetObject.empty();
-      databaseAttribute = widget.value.datasetAttr!;
-      datasetSubListData = widget.value.datasetSubListData!;
-      datasetSubMapData = widget.value.datasetSubMapData!;
-      datasetLength = widget.value.datasetLength!;
-    } catch (_) {}
-    keyController.text = widget.value.mapKey ?? '';
+      Logger.printMessage(
+        'Datasets: $datasets, name: ${widget.value.datasetName}, index: $index',
+      );
+      if (widget.value.datasetAttr != null) {
+        databaseAttribute = widget.value.datasetAttr!;
+      }
+      if (widget.value.datasetSubListData != null) {
+        datasetSubListData = widget.value.datasetSubListData!;
+      }
+      if (widget.value.datasetSubMapData != null) {
+        datasetSubMapData = widget.value.datasetSubMapData!;
+      }
+      if (widget.value.datasetLength != null) {
+        datasetLength = widget.value.datasetLength!;
+      }
+      keyController.text = widget.value.mapKey ?? '';
+    });
   }
 
   @override

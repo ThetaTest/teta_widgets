@@ -37,6 +37,7 @@ class SizeControl extends StatefulWidget {
 class SizeControlsState extends State<SizeControl> {
   TextEditingController controller = TextEditingController();
   bool flag = false;
+  SizeUnit unit = SizeUnit.pixel;
 
   @override
   void initState() {
@@ -45,6 +46,8 @@ class SizeControlsState extends State<SizeControl> {
       isWidth: widget.isWidth,
       forPlay: false,
     )}';
+    unit = widget.size.getUnit(context);
+    Logger.printMessage('Unit: $unit');
     flag = widget.size
             .get(context: context, isWidth: widget.isWidth, forPlay: false) !=
         null;
@@ -55,33 +58,37 @@ class SizeControlsState extends State<SizeControl> {
   Widget build(final BuildContext context) {
     return BlocListener<DeviceModeCubit, DeviceState>(
       listener: (final context, final device) {
-        flag = widget.size.get(
-              context: context,
-              isWidth: widget.isWidth,
-              forPlay: false,
-            ) !=
-            null;
-        String? size;
-        if (device.info.identifier.type == DeviceType.phone) {
-          size = widget.size.size;
-        } else if (device.info.identifier.type == DeviceType.tablet) {
-          size = widget.size.sizeTablet;
-        } else {
-          size = widget.size.sizeDesktop;
-        }
-        final unit = widget.size.getUnit(context);
-        final text = (size == 'max' ||
-                size == 'inf' && size == '100%' && unit == SizeUnit.pixel)
-            ? 'max'
-            : (size == 'max' ||
-                    size == 'inf' && size == '100%' && unit == SizeUnit.percent)
-                ? '100%'
-                : (widget.size.size == 'auto')
-                    ? 'auto'
-                    : '$size';
-        if (text != controller.text) {
-          controller.text = text;
-        }
+        setState(() {
+          unit = widget.size.getUnit(context);
+          flag = widget.size.get(
+                context: context,
+                isWidth: widget.isWidth,
+                forPlay: false,
+              ) !=
+              null;
+          String? size;
+          if (device.info.identifier.type == DeviceType.phone) {
+            size = widget.size.size;
+          } else if (device.info.identifier.type == DeviceType.tablet) {
+            size = widget.size.sizeTablet;
+          } else {
+            size = widget.size.sizeDesktop;
+          }
+          final text = (size == 'max' ||
+                  size == 'inf' && size == '100%' && unit == SizeUnit.pixel)
+              ? 'max'
+              : (size == 'max' ||
+                      size == 'inf' &&
+                          size == '100%' &&
+                          unit == SizeUnit.percent)
+                  ? '100%'
+                  : (widget.size.size == 'auto')
+                      ? 'auto'
+                      : '$size';
+          if (text != controller.text) {
+            controller.text = text;
+          }
+        });
       },
       child: BlocBuilder<DeviceModeCubit, DeviceState>(
         builder: (final context, final device) => Column(
@@ -128,7 +135,7 @@ class SizeControlsState extends State<SizeControl> {
                       Padding(
                         padding: const EdgeInsets.only(left: 8),
                         child: TParagraph(
-                          widget.title,
+                          '$unit',
                         ),
                       ),
                     ],
@@ -140,64 +147,38 @@ class SizeControlsState extends State<SizeControl> {
                           forPlay: false,
                         ) !=
                         null,
-                    child: IgnorePointer(
-                      ignoring: widget.size.get(
-                            context: context,
-                            isWidth: widget.isWidth,
-                            forPlay: false,
-                          ) ==
-                          null,
-                      child: Row(
-                        mainAxisSize: MainAxisSize.min,
-                        children: [
-                          GestureDetector(
-                            onTap: () {
-                              final old = FSize.fromJson(widget.size.toJson());
-                              widget.size.updateUnit(SizeUnit.pixel, context);
-                              final szs = widget.size;
-                              final nodeId = BlocProvider.of<FocusBloc>(context)
-                                  .state
-                                  .first;
-                              final node = (context.read<PageCubit>().state
-                                      as PageLoaded)
-                                  .page
-                                  .flatList
-                                  .firstWhere(
-                                    (final element) => element.nid == nodeId,
-                                  );
-                              node.body.attributes[widget.keyAttr] = szs;
-                              widget.callBack(szs.toJson(), old.toJson());
-                            },
-                            child: unitIcon(
-                              unit: SizeUnit.pixel,
-                              unitFromNode: widget.size.getUnit(context),
-                            ),
+                    child: Row(
+                      mainAxisSize: MainAxisSize.min,
+                      children: [
+                        BounceSmall(
+                          onTap: () {
+                            final old = FSize.fromJson(widget.size.toJson());
+                            widget.size.updateUnit(SizeUnit.pixel, context);
+                            widget.callBack(widget.size.toJson(), old.toJson());
+                            setState(() {
+                              unit = SizeUnit.pixel;
+                            });
+                          },
+                          child: VisualIcon(
+                            unit: SizeUnit.pixel,
+                            unitFromNode: unit,
                           ),
-                          GestureDetector(
-                            onTap: () {
-                              final old = FSize.fromJson(widget.size.toJson());
-                              widget.size.updateUnit(SizeUnit.percent, context);
-                              final szs = widget.size;
-                              final nodeId = BlocProvider.of<FocusBloc>(context)
-                                  .state
-                                  .first;
-                              final node = (context.read<PageCubit>().state
-                                      as PageLoaded)
-                                  .page
-                                  .flatList
-                                  .firstWhere(
-                                    (final element) => element.nid == nodeId,
-                                  );
-                              node.body.attributes[widget.keyAttr] = szs;
-                              widget.callBack(szs.toJson(), old.toJson());
-                            },
-                            child: unitIcon(
-                              unit: SizeUnit.percent,
-                              unitFromNode: widget.size.getUnit(context),
-                            ),
+                        ),
+                        BounceSmall(
+                          onTap: () {
+                            final old = FSize.fromJson(widget.size.toJson());
+                            widget.size.updateUnit(SizeUnit.percent, context);
+                            widget.callBack(widget.size.toJson(), old.toJson());
+                            setState(() {
+                              unit = SizeUnit.percent;
+                            });
+                          },
+                          child: VisualIcon(
+                            unit: SizeUnit.percent,
+                            unitFromNode: unit,
                           ),
-                        ],
-                      ),
+                        ),
+                      ],
                     ),
                   ),
                 ],
@@ -355,53 +336,75 @@ class SizeControlsState extends State<SizeControl> {
   }
 }
 
-Widget unitIcon({final SizeUnit? unit, final SizeUnit? unitFromNode}) {
-  return HoverWidget(
-    hoverChild: Container(
-      width: 32,
-      height: 32,
-      decoration: BoxDecoration(
-        color: unitFromNode == unit ? Colors.white24 : Colors.transparent,
+class VisualIcon extends StatelessWidget {
+  const VisualIcon({super.key, required this.unit, required this.unitFromNode});
+
+  final SizeUnit? unit;
+  final SizeUnit? unitFromNode;
+
+  @override
+  Widget build(final BuildContext context) {
+    late BoxDecoration decoration;
+    late BoxDecoration hoverDecoration;
+    if (unitFromNode == unit) {
+      decoration = BoxDecoration(
+        color: Colors.white24,
+        borderRadius: BorderRadius.circular(4),
+      );
+      hoverDecoration = BoxDecoration(
+        color: Colors.white24,
         border: Border.all(
           color: Colors.white,
         ),
         borderRadius: BorderRadius.circular(4),
-      ),
-      child: Center(
-        child: TDetailLabel(
-          unit == SizeUnit.pixel
-              ? 'px'
-              : unit == SizeUnit.percent
-                  ? '%'
-                  : unit == SizeUnit.width
-                      ? '.w'
-                      : '.h',
-        ),
-      ),
-    ),
-    onHover: (final event) {},
-    child: Container(
-      width: 32,
-      height: 32,
-      decoration: BoxDecoration(
-        color: unitFromNode == unit ? Colors.white24 : Colors.transparent,
+      );
+    } else {
+      decoration = BoxDecoration(
+        color: Colors.transparent,
+        borderRadius: BorderRadius.circular(4),
+      );
+      hoverDecoration = BoxDecoration(
+        color: Colors.transparent,
         border: Border.all(
           color: Colors.white,
-          style: BorderStyle.none,
         ),
         borderRadius: BorderRadius.circular(4),
-      ),
-      child: Center(
-        child: TDetailLabel(
-          unit == SizeUnit.pixel
-              ? 'px'
-              : unit == SizeUnit.percent
-                  ? '%'
-                  : unit == SizeUnit.width
-                      ? '.w'
-                      : '.h',
+      );
+    }
+    return HoverWidget(
+      hoverChild: Container(
+        width: 32,
+        height: 32,
+        decoration: hoverDecoration,
+        child: Center(
+          child: TDetailLabel(
+            unit == SizeUnit.pixel
+                ? 'px'
+                : unit == SizeUnit.percent
+                    ? '%'
+                    : unit == SizeUnit.width
+                        ? '.w'
+                        : '.h',
+          ),
         ),
       ),
-    ),
-  );
+      onHover: (final event) {},
+      child: Container(
+        width: 32,
+        height: 32,
+        decoration: decoration,
+        child: Center(
+          child: TDetailLabel(
+            unit == SizeUnit.pixel
+                ? 'px'
+                : unit == SizeUnit.percent
+                    ? '%'
+                    : unit == SizeUnit.width
+                        ? '.w'
+                        : '.h',
+          ),
+        ),
+      ),
+    );
+  }
 }

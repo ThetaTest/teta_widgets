@@ -412,7 +412,7 @@ class PaddingsState extends State<PageParamsControl> {
                       maxWidth: 300,
                     ),
                     child: CButton(
-                      label: 'Close',
+                      label: 'Save',
                       callback: () {
                         context.read<PageCubit>().updateParam(_variable);
                         Navigator.of(context, rootNavigator: true).pop(null);

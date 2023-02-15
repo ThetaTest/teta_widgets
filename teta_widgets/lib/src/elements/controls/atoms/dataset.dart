@@ -29,14 +29,12 @@ class DatasetControl extends StatefulWidget {
 
 class DatasetControlState extends State<DatasetControl> {
   String databaseName = '';
-  String? databaseAttribute;
 
   @override
   void initState() {
-    try {
+    if (widget.value.datasetName != null) {
       databaseName = widget.value.datasetName!;
-      databaseAttribute = widget.value.datasetAttrName;
-    } catch (_) {}
+    }
     super.initState();
   }
 
@@ -78,7 +76,7 @@ class DatasetControlState extends State<DatasetControl> {
             );
           },
         ),
-        _buildAttrSelection(
+        _BuildAttrSelection(
           value: widget.value,
           isAttrRequired: widget.isAttrRequired ?? false,
           datasetName: databaseName,
@@ -89,8 +87,8 @@ class DatasetControlState extends State<DatasetControl> {
   }
 }
 
-class _buildAttrSelection extends StatefulWidget {
-  const _buildAttrSelection({
+class _BuildAttrSelection extends StatefulWidget {
+  const _BuildAttrSelection({
     final Key? key,
     required this.value,
     required this.isAttrRequired,
@@ -104,16 +102,15 @@ class _buildAttrSelection extends StatefulWidget {
   final Function(FDataset, FDataset) callBack;
 
   @override
-  __buildAttrSelectionState createState() => __buildAttrSelectionState();
+  __BuildAttrSelectionState createState() => __BuildAttrSelectionState();
 }
 
-class __buildAttrSelectionState extends State<_buildAttrSelection> {
+class __BuildAttrSelectionState extends State<_BuildAttrSelection> {
   bool isAttrRequired = false;
   String databaseAttribute = '';
 
   @override
   void initState() {
-    super.initState();
     isAttrRequired = widget.isAttrRequired;
     if (widget.datasetName != '') {
       bool hasSubList;
@@ -136,6 +133,7 @@ class __buildAttrSelectionState extends State<_buildAttrSelection> {
         isAttrRequired = true;
       }
     }
+    super.initState();
   }
 
   @override
