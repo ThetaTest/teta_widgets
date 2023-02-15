@@ -37,9 +37,14 @@ import 'package:teta_widgets/src/elements/bodies/condition.dart';
 import 'package:teta_widgets/src/elements/bodies/constrained_box.dart';
 import 'package:teta_widgets/src/elements/bodies/container.dart';
 import 'package:teta_widgets/src/elements/bodies/cta/apple.dart';
+import 'package:teta_widgets/src/elements/bodies/cta/bitbucket.dart';
+import 'package:teta_widgets/src/elements/bodies/cta/discord.dart';
 import 'package:teta_widgets/src/elements/bodies/cta/facebook.dart';
 import 'package:teta_widgets/src/elements/bodies/cta/github.dart';
+import 'package:teta_widgets/src/elements/bodies/cta/gitlab.dart';
 import 'package:teta_widgets/src/elements/bodies/cta/google.dart';
+import 'package:teta_widgets/src/elements/bodies/cta/linkedin.dart';
+import 'package:teta_widgets/src/elements/bodies/cta/twitch.dart';
 import 'package:teta_widgets/src/elements/bodies/cta/twitter.dart';
 import 'package:teta_widgets/src/elements/bodies/cupertino_appbar.dart';
 import 'package:teta_widgets/src/elements/bodies/cupertino_picker.dart';
@@ -200,6 +205,11 @@ final stateTypes = <IntrinsicStates>[
   loginGoogleIntrinsicStates,
   loginFacebookIntrinsicStates,
   loginGitHubIntrinsicStates,
+  loginTwitchIntrinsicStates,
+  loginLinkedinIntrinsicStates,
+  loginDiscordIntrinsicStates,
+  loginGitlabIntrinsicStates,
+  loginBitBucketIntrinsicStates,
   firebaseIsAuthenticatedIntrinsicStates,
   wpExampleIntrinsicStates,
   radioIntrinsicStates,
@@ -374,6 +384,16 @@ NodeBody getBody(final NType type) {
       return LoginWithGoogleBody();
     case NType.loginWithTwitter:
       return LoginWithTwitterBody();
+    case NType.loginWithTwitch:
+      return LoginWithTwitchBody();
+    case NType.loginWithLinkedin:
+      return LoginWithLinkedinBody();
+    case NType.loginWithDiscord:
+      return LoginWithDiscordBody();
+    case NType.loginWithGitlab:
+      return LoginWithGitlabBody();
+    case NType.loginWithBitBucket:
+      return LoginWithBitBucketBody();
     case NType.lottie:
       return LottieBody();
     case NType.opacity:

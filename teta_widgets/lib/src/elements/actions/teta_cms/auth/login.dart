@@ -64,7 +64,19 @@ class FATetaCMSLogin {
             ? 'TetaProvider.twitter'
             : provider == TetaProvider.apple
                 ? 'TetaProvider.apple'
-                : 'TetaProvider.github';
+                : provider == TetaProvider.facebook
+                    ? 'TetaProvider.facebook'
+                    : provider == TetaProvider.twitch
+                        ? 'TetaProvider.twitch'
+                        : provider == TetaProvider.linkedin
+                            ? 'TetaProvider.linkedin'
+                            : provider == TetaProvider.discord
+                                ? 'TetaProvider.discord'
+                                : provider == TetaProvider.gitlab
+                                    ? 'TetaProvider.gitlab'
+                                    : provider == TetaProvider.bitbucket
+                                        ? 'TetaProvider.bitbucket'
+                                        : 'TetaProvider.github';
     return '''
       await TetaCMS.instance.auth.signIn(
         provider: $providerStr,
