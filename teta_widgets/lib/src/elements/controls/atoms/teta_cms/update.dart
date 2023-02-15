@@ -11,7 +11,6 @@ import 'package:teta_widgets/src/elements/controls/atoms/db_map.dart';
 import 'package:teta_widgets/src/elements/controls/atoms/text.dart';
 import 'package:teta_widgets/src/elements/features/actions/element.dart';
 import 'package:teta_widgets/src/elements/features/text_type_input.dart';
-import 'package:teta_widgets/src/elements/nodes/node.dart';
 
 class TetaCmsUpdateControl extends StatelessWidget {
   const TetaCmsUpdateControl({
@@ -45,7 +44,7 @@ class TetaCmsUpdateControl extends StatelessWidget {
           ),
         ),
         CMSCollectionControl(
-          collectionId: action.cmsCollectionId,
+          collectionName: action.cmsCollectionId,
           callBack: (final value, final old) {
             action.cmsCollectionId = value;
             callback();

@@ -93,6 +93,7 @@ class FActionNavigationOpenPage {
                 sl.get(),
                 sl.get(),
                 sl.get(),
+                sl.get(),
               )..onFocus(page: page!, forPlay: true),
               child: PlayCubitsValueInitializer(
                 originalContext: context,

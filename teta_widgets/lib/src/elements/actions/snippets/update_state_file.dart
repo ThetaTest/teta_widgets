@@ -19,6 +19,6 @@ void updateStateFile(
     final variable = pageState.states[index].copyWith(
       file: value,
     );
-    context.read<PageCubit>().updateState(variable);
+    context.read<PageCubit>().updateStateInPlayMode(variable);
   }
 }

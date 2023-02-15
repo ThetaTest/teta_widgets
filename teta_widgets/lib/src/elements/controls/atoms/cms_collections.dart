@@ -13,12 +13,12 @@ import 'package:teta_widgets/src/elements/index.dart';
 
 class CMSCollectionControl extends StatefulWidget {
   const CMSCollectionControl({
-    required this.collectionId,
+    required this.collectionName,
     required this.callBack,
     final Key? key,
   }) : super(key: key);
 
-  final String? collectionId;
+  final String? collectionName;
   final Function(String, String?) callBack;
 
   @override
@@ -74,8 +74,8 @@ class CMSCollectionControlState extends State<CMSCollectionControl> {
                 dropdown = snapshot.requireData.data!
                     .firstWhereOrNull(
                       (final element) =>
-                          element.id ==
-                          (widget.collectionId ??
+                          element.name ==
+                          (widget.collectionName ??
                               (node.body.attributes[DBKeys.cmsCollection]
                                       as FTextTypeInput?)
                                   ?.value),
@@ -96,22 +96,15 @@ class CMSCollectionControlState extends State<CMSCollectionControl> {
                         dropdown = newValue;
                       });
 
-                      final old = widget.collectionId;
-                      final nw = list
-                          .firstWhereOrNull(
-                            (final element) => element.name == dropdown,
-                          )
-                          ?.id;
+                      final old = widget.collectionName;
                       if (node.body.attributes[DBKeys.cmsCollection] != null &&
                           node.body.attributes[DBKeys.cmsCollection]
                               is FTextTypeInput) {
                         (node.body.attributes[DBKeys.cmsCollection]
                                 as FTextTypeInput)
-                            .value = nw;
+                            .value = newValue;
                       }
-                      if (nw != null) {
-                        widget.callBack(nw, old);
-                      }
+                      widget.callBack(newValue, old);
                     }
                   },
                 );

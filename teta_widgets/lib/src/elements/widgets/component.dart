@@ -176,6 +176,7 @@ class _VisualBody extends StatelessWidget {
         sl.get(),
         sl.get(),
         sl.get(),
+        sl.get(),
       )..onFocus(
           page: component,
           forPlay: state.forPlay,

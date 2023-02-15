@@ -10,7 +10,6 @@ import 'package:teta_widgets/src/elements/controls/atoms/cms_collections.dart';
 // Project imports:
 import 'package:teta_widgets/src/elements/controls/atoms/db_map.dart';
 import 'package:teta_widgets/src/elements/features/actions/element.dart';
-import 'package:teta_widgets/src/elements/nodes/node.dart';
 
 class TetaCmsInsertControl extends StatelessWidget {
   const TetaCmsInsertControl({
@@ -44,7 +43,7 @@ class TetaCmsInsertControl extends StatelessWidget {
           ),
         ),
         CMSCollectionControl(
-          collectionId: action.cmsCollectionId,
+          collectionName: action.cmsCollectionId,
           callBack: (final value, final old) {
             action.cmsCollectionId = value;
             callback();

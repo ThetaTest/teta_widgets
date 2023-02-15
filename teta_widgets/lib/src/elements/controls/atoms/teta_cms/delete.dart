@@ -10,7 +10,6 @@ import 'package:teta_widgets/src/elements/controls/atoms/text.dart';
 // Project imports:
 import 'package:teta_widgets/src/elements/features/actions/element.dart';
 import 'package:teta_widgets/src/elements/features/text_type_input.dart';
-import 'package:teta_widgets/src/elements/nodes/node.dart';
 
 class TetaCmsDeleteControl extends StatelessWidget {
   const TetaCmsDeleteControl({
@@ -44,7 +43,7 @@ class TetaCmsDeleteControl extends StatelessWidget {
           ),
         ),
         CMSCollectionControl(
-          collectionId: action.cmsCollectionId,
+          collectionName: action.cmsCollectionId,
           callBack: (final value, final old) {
             action.cmsCollectionId = value;
             callback();

@@ -295,7 +295,7 @@ class ControlBuilder {
           key: ValueKey(
             '${node.nid} ${(node.body.attributes[control.key] as FTextTypeInput).value}',
           ),
-          collectionId:
+          collectionName:
               (node.body.attributes[control.key] as FTextTypeInput).value ?? '',
           callBack: (final value, final old) {
             node.body.attributes[control.key] = FTextTypeInput(value: value);

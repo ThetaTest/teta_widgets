@@ -113,7 +113,13 @@ class _WCmsFetchState extends State<WCmsFetch> with AfterLayoutMixin {
       page: int.tryParse(page) ?? 0,
       showDrafts: widget.showDrafts,
     );
-    if (res.error != null) return;
+    if (res.error != null) {
+      Logger.printError(
+        'getCollectionByName in Cms Fetch node, error: ${res.error?.message}',
+      );
+      return;
+    }
+    Logger.printSuccess('Cms Fetch node data: ${res.data}');
 
     if (mounted) {
       setState(() {

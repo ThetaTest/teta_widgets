@@ -13,7 +13,6 @@ import 'package:teta_core/src/design_system/textfield/minitextfield.dart';
 import 'package:teta_core/src/design_system/textfield/multi_line_textfield.dart';
 import 'package:teta_core/teta_core.dart';
 // Project imports:
-import 'package:uuid/uuid.dart';
 
 class PageParamsControl extends StatefulWidget {
   const PageParamsControl({
@@ -40,31 +39,7 @@ class PaddingsState extends State<PageParamsControl> {
             ),
             BounceSmall(
               onTap: () {
-                //widget.page.params.remove(null);
-                //widget.page.params["Untitled ${widget.page.params.length}"] =
-                //"";
-                //widget.callBack();
-                const pagePrefix = 'Param';
-                var pageName = '';
-                var index = 0;
-                final pageState =
-                    BlocProvider.of<PageCubit>(context).state as PageLoaded;
-                do {
-                  index++;
-                  pageName = '$pagePrefix $index';
-                } while (pageState.params.indexWhere(
-                      (final element) => element.name == pageName,
-                    ) !=
-                    -1);
-                widget.callBack([
-                  ...pageState.page.defaultParams,
-                  VariableObject(
-                    id: const Uuid().v1(),
-                    type: VariableType.string,
-                    name: pageName,
-                    defaultValue: '0',
-                  ),
-                ]);
+                context.read<PageCubit>().addParam();
               },
               child: HoverWidget(
                 hoverChild: Padding(
@@ -125,9 +100,9 @@ class PaddingsState extends State<PageParamsControl> {
                           ),
                           child: GestureDetector(
                             onTap: () {
-                              widget.callBack(
-                                [...state.page.defaultParams]..remove(variable),
-                              );
+                              context
+                                  .read<PageCubit>()
+                                  .deleteParam(variable.id!);
                             },
                             child: Tooltip(
                               message: 'Delete. This action cannot be undone',
@@ -224,227 +199,230 @@ class PaddingsState extends State<PageParamsControl> {
       ..text = _variable.defaultValue!;
     final docValueController = TextEditingController()
       ..text = _variable.doc ?? '';
+    final pageCubit = context.read<PageCubit>();
     showDialog<void>(
       context: context,
       builder: (final context) {
         var isNameUnique = true;
         var type =
             EnumToString.convertToString(_variable.type, camelCase: true);
-        return StatefulBuilder(
-          builder: (final context, final setState) {
-            return AlertDialog(
-              backgroundColor: const Color(0xFF222222),
-              title: Row(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                children: [
-                  const TAlertTitle(
-                    'Edit Parameter',
-                  ),
-                  GestureDetector(
-                    onTap: () {
-                      widget
-                          .callBack([...page.defaultParams]..remove(_variable));
-                      Navigator.of(context, rootNavigator: true).pop(null);
-                    },
-                    child: MouseRegion(
-                      cursor: SystemMouseCursors.click,
-                      child: Tooltip(
-                        message: 'This action cannot be undone',
-                        child: HoverWidget(
-                          hoverChild: const Icon(
-                            FeatherIcons.trash,
-                            size: 20,
-                            color: Colors.red,
+
+        return BlocProvider.value(
+          value: pageCubit,
+          child: StatefulBuilder(
+            builder: (final context, final setState) {
+              return AlertDialog(
+                backgroundColor: const Color(0xFF222222),
+                title: Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: [
+                    const TAlertTitle(
+                      'Edit Parameter',
+                    ),
+                    GestureDetector(
+                      onTap: () {
+                        widget.callBack(
+                          [...page.defaultParams]..remove(_variable),
+                        );
+                        Navigator.of(context, rootNavigator: true).pop(null);
+                      },
+                      child: MouseRegion(
+                        cursor: SystemMouseCursors.click,
+                        child: Tooltip(
+                          message: 'This action cannot be undone',
+                          child: HoverWidget(
+                            hoverChild: const Icon(
+                              FeatherIcons.trash,
+                              size: 20,
+                              color: Colors.red,
+                            ),
+                            child: const Icon(
+                              FeatherIcons.trash,
+                              size: 20,
+                              color: Colors.white,
+                            ),
+                            onHover: (final e) {},
                           ),
-                          child: const Icon(
-                            FeatherIcons.trash,
-                            size: 20,
-                            color: Colors.white,
-                          ),
-                          onHover: (final e) {},
                         ),
                       ),
                     ),
-                  ),
-                ],
-              ),
-              content: SizedBox(
-                width: 250,
-                child: SingleChildScrollView(
-                  child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      const TParagraph(
-                        'Name',
-                      ),
-                      Padding(
-                        padding: const EdgeInsets.only(top: 8, bottom: 16),
-                        child: CMiniTextField(
-                          controller: nameController,
-                          placeholder: 'Name',
-                          text: variable.name,
-                          backgroundColor: Palette.bgGrey,
-                          callBack: (final text) {
-                            if (page.defaultParams.indexWhere(
-                                  (final element) =>
-                                      element.name.toLowerCase() ==
-                                      text.toLowerCase(),
-                                ) !=
-                                -1) {
-                              setState(() {
-                                isNameUnique = false;
-                              });
-                            } else {
-                              setState(() {
-                                isNameUnique = true;
-                              });
-                              _variable = _variable.copyWith(name: text);
-                            }
-                          },
+                  ],
+                ),
+                content: SizedBox(
+                  width: 250,
+                  child: SingleChildScrollView(
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        const TParagraph(
+                          'Name',
                         ),
-                      ),
-                      if (!isNameUnique)
-                        Container(
-                          margin: const EdgeInsets.only(bottom: 16),
-                          padding: const EdgeInsets.symmetric(
-                            vertical: 8,
-                            horizontal: 16,
-                          ),
-                          width: double.maxFinite,
-                          decoration: BoxDecoration(
-                            color: Colors.red.withOpacity(0.4),
-                            border: Border.all(
-                              color: Colors.red,
-                            ),
-                            borderRadius: BorderRadius.circular(8),
-                          ),
-                          child: const TDetailLabel(
-                            'Please provide a unique name',
-                          ),
-                        ),
-                      const TParagraph(
-                        'Type',
-                      ),
-                      Container(
-                        margin: const EdgeInsets.only(top: 8, bottom: 16),
-                        padding: const EdgeInsets.symmetric(
-                          horizontal: 10,
-                          vertical: 11,
-                        ),
-                        decoration: BoxDecoration(
-                          color: Colors.white24,
-                          borderRadius: BorderRadius.circular(8),
-                        ),
-                        // dropdown below..
-                        child: Theme(
-                          data: Theme.of(context).copyWith(
-                            canvasColor: const Color(0xFF222222),
-                          ),
-                          child: DropdownButton<String>(
-                            value: type,
-                            icon: const Icon(Icons.arrow_drop_down),
-                            underline: const SizedBox(),
-                            onChanged: (final String? newValue) {
-                              if (newValue != null) {
-                                final tempType = EnumToString.fromString(
-                                  VariableType.values,
-                                  newValue,
-                                  camelCase: true,
-                                );
-                                _variable = _variable.copyWith(type: tempType);
+                        Padding(
+                          padding: const EdgeInsets.only(top: 8, bottom: 16),
+                          child: CMiniTextField(
+                            controller: nameController,
+                            placeholder: 'Name',
+                            text: variable.name,
+                            backgroundColor: Palette.bgGrey,
+                            callBack: (final text) {
+                              if (page.defaultParams.indexWhere(
+                                    (final element) =>
+                                        element.name.toLowerCase() ==
+                                        text.toLowerCase(),
+                                  ) !=
+                                  -1) {
                                 setState(() {
-                                  type = newValue;
+                                  isNameUnique = false;
                                 });
+                              } else {
+                                setState(() {
+                                  isNameUnique = true;
+                                });
+                                _variable = _variable.copyWith(name: text);
                               }
                             },
-                            isDense: true,
-                            isExpanded: true,
-                            items: EnumToString.toList(
-                              VariableType.values,
-                              camelCase: true,
-                            )
-                                .where(
-                              (final element) =>
-                                  (element == 'Int' ||
-                                      element == 'Double' ||
-                                      element == 'String' ||
-                                      element == 'Audio controller') ||
-                                  kDebugMode,
-                            )
-                                .map<DropdownMenuItem<String>>(
-                                    (final String value) {
-                              return DropdownMenuItem<String>(
-                                value: value,
-                                child: TParagraph(
-                                  value,
-                                ),
-                              );
-                            }).toList(),
                           ),
                         ),
-                      ),
-                      const TParagraph(
-                        'Default Value',
-                      ),
-                      Padding(
-                        padding: const EdgeInsets.only(top: 8, bottom: 16),
-                        child: CMiniTextField(
-                          controller: defaultValueController,
-                          placeholder: 'Default Value',
-                          text: variable.defaultValue,
-                          backgroundColor: Palette.bgGrey,
-                          callBack: (final text) {
-                            if (_variable.type ==
-                                VariableType.cameraController) {
-                              if (int.tryParse(text) != null) {
-                                _variable = _variable.copyWith(
-                                  cameraIndex: int.tryParse(text) ?? 0,
+                        if (!isNameUnique)
+                          Container(
+                            margin: const EdgeInsets.only(bottom: 16),
+                            padding: const EdgeInsets.symmetric(
+                              vertical: 8,
+                              horizontal: 16,
+                            ),
+                            width: double.maxFinite,
+                            decoration: BoxDecoration(
+                              color: Colors.red.withOpacity(0.4),
+                              border: Border.all(
+                                color: Colors.red,
+                              ),
+                              borderRadius: BorderRadius.circular(8),
+                            ),
+                            child: const TDetailLabel(
+                              'Please provide a unique name',
+                            ),
+                          ),
+                        const TParagraph(
+                          'Type',
+                        ),
+                        Container(
+                          margin: const EdgeInsets.only(top: 8, bottom: 16),
+                          padding: const EdgeInsets.symmetric(
+                            horizontal: 10,
+                            vertical: 11,
+                          ),
+                          decoration: BoxDecoration(
+                            color: Colors.white24,
+                            borderRadius: BorderRadius.circular(8),
+                          ),
+                          // dropdown below..
+                          child: Theme(
+                            data: Theme.of(context).copyWith(
+                              canvasColor: const Color(0xFF222222),
+                            ),
+                            child: DropdownButton<String>(
+                              value: type,
+                              icon: const Icon(Icons.arrow_drop_down),
+                              underline: const SizedBox(),
+                              onChanged: (final String? newValue) {
+                                if (newValue != null) {
+                                  final tempType = EnumToString.fromString(
+                                    VariableType.values,
+                                    newValue,
+                                    camelCase: true,
+                                  );
+                                  _variable =
+                                      _variable.copyWith(type: tempType);
+                                  setState(() {
+                                    type = newValue;
+                                  });
+                                }
+                              },
+                              isDense: true,
+                              isExpanded: true,
+                              items: EnumToString.toList(
+                                VariableType.values,
+                                camelCase: true,
+                              )
+                                  .where(
+                                (final element) =>
+                                    (element == 'Int' ||
+                                        element == 'Double' ||
+                                        element == 'String' ||
+                                        element == 'Audio controller') ||
+                                    kDebugMode,
+                              )
+                                  .map<DropdownMenuItem<String>>(
+                                      (final String value) {
+                                return DropdownMenuItem<String>(
+                                  value: value,
+                                  child: TParagraph(
+                                    value,
+                                  ),
                                 );
+                              }).toList(),
+                            ),
+                          ),
+                        ),
+                        const TParagraph(
+                          'Default Value',
+                        ),
+                        Padding(
+                          padding: const EdgeInsets.only(top: 8, bottom: 16),
+                          child: CMiniTextField(
+                            controller: defaultValueController,
+                            placeholder: 'Default Value',
+                            text: variable.defaultValue,
+                            backgroundColor: Palette.bgGrey,
+                            callBack: (final text) {
+                              if (_variable.type ==
+                                  VariableType.cameraController) {
+                                if (int.tryParse(text) != null) {
+                                  _variable = _variable.copyWith(
+                                    cameraIndex: int.tryParse(text) ?? 0,
+                                  );
+                                }
                               }
-                            }
-                            _variable = _variable.copyWith(defaultValue: text);
-                          },
+                              _variable =
+                                  _variable.copyWith(defaultValue: text);
+                            },
+                          ),
                         ),
-                      ),
-                      const TParagraph(
-                        'Description',
-                      ),
-                      Padding(
-                        padding: const EdgeInsets.only(top: 8, bottom: 16),
-                        child: CMultiLinesTextField(
-                          controller: docValueController,
-                          placeholder: 'Description',
-                          text: _variable.doc,
-                          callBack: (final text) {
-                            _variable = _variable.copyWith(doc: text);
-                          },
+                        const TParagraph(
+                          'Description',
                         ),
-                      ),
-                    ],
+                        Padding(
+                          padding: const EdgeInsets.only(top: 8, bottom: 16),
+                          child: CMultiLinesTextField(
+                            controller: docValueController,
+                            placeholder: 'Description',
+                            text: _variable.doc,
+                            callBack: (final text) {
+                              _variable = _variable.copyWith(doc: text);
+                            },
+                          ),
+                        ),
+                      ],
+                    ),
                   ),
                 ),
-              ),
-              actions: <Widget>[
-                ConstrainedBox(
-                  constraints: const BoxConstraints(
-                    maxWidth: 300,
+                actions: <Widget>[
+                  ConstrainedBox(
+                    constraints: const BoxConstraints(
+                      maxWidth: 300,
+                    ),
+                    child: CButton(
+                      label: 'Close',
+                      callback: () {
+                        context.read<PageCubit>().updateParam(_variable);
+                        Navigator.of(context, rootNavigator: true).pop(null);
+                      },
+                    ),
                   ),
-                  child: CButton(
-                    label: 'Close',
-                    callback: () {
-                      for (var i = 0; i < page.defaultParams.length; i++) {
-                        if (page.defaultParams[i].id == variable.id) {
-                          page.defaultParams[i] = variable;
-                        }
-                      }
-                      widget.callBack(page.defaultParams);
-                      Navigator.of(context, rootNavigator: true).pop(null);
-                    },
-                  ),
-                ),
-              ],
-            );
-          },
+                ],
+              );
+            },
+          ),
         );
       },
     );
