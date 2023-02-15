@@ -31,11 +31,18 @@ class WLoginWithDiscord extends StatelessWidget {
   @override
   Widget build(final BuildContext context) {
     return NodeSelectionBuilder(
-      node: state.node,
-      forPlay: state.forPlay,
+      state: state,
       child: SizedBox(
-        width: width.get(context: context, isWidth: true),
-        height: height.get(context: context, isWidth: false),
+        width: width.get(
+          context: context,
+          isWidth: true,
+          forPlay: state.forPlay,
+        ),
+        height: height.get(
+          context: context,
+          isWidth: false,
+          forPlay: state.forPlay,
+        ),
         child: SizedBox(
           width: double.maxFinite,
           height: double.maxFinite,
@@ -53,6 +60,24 @@ class WLoginWithDiscord extends StatelessWidget {
               gesture: ActionGesture.onLongPress,
               action: action,
               actionValue: null,
+            ),
+            style: ButtonStyle(
+              padding: MaterialStateProperty.all(const EdgeInsets.all(10)),
+              backgroundColor: MaterialStateProperty.all(Colors.white),
+              elevation: MaterialStateProperty.all(2),
+              side: MaterialStateProperty.all(
+                const BorderSide(
+                  width: 2,
+                  color: Colors.transparent,
+                ),
+              ),
+              shape: MaterialStateProperty.all(
+                RoundedRectangleBorder(
+                  borderRadius: BorderRadius.circular(8),
+                ),
+              ),
+              shadowColor: MaterialStateProperty.all(Colors.black),
+              overlayColor: MaterialStateProperty.all(Colors.white),
             ),
             child: Row(
               mainAxisSize: MainAxisSize.min,
@@ -84,24 +109,6 @@ class WLoginWithDiscord extends StatelessWidget {
                   ),
                 ),
               ],
-            ),
-            style: ButtonStyle(
-              padding: MaterialStateProperty.all(EdgeInsets.all(10)),
-              backgroundColor: MaterialStateProperty.all(Colors.white),
-              elevation: MaterialStateProperty.all(2),
-              side: MaterialStateProperty.all(
-                BorderSide(
-                  width: 2.0,
-                  color: Colors.transparent,
-                ),
-              ),
-              shape: MaterialStateProperty.all(
-                RoundedRectangleBorder(
-                  borderRadius: BorderRadius.circular(8),
-                ),
-              ),
-              shadowColor: MaterialStateProperty.all(Colors.black),
-              overlayColor: MaterialStateProperty.all(Colors.white),
             ),
           ),
         ),

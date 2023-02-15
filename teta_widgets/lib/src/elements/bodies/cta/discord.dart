@@ -38,7 +38,7 @@ final loginDiscordIntrinsicStates = IntrinsicStates(
   advicedChildrenCanHaveAtLeastAChild: [],
   displayName: 'Login with Discord',
   type: _globalType,
-  category: NodeCategories.input,
+  category: NodeCategories.form,
   maxChildren: 0,
   canHave: ChildrenEnum.none,
   addChildLabels: [],
@@ -98,7 +98,12 @@ class LoginWithDiscordBody extends NodeBody {
         node,
         pageId,
         LoginDiscordCodeTemplate.toCode(
-            pageId, context, node, child, loop ?? 0),
+          pageId,
+          context,
+          node,
+          child,
+          loop ?? 0,
+        ),
         loop ?? 0,
       );
 }
