@@ -28,7 +28,7 @@ class SizeControl extends StatefulWidget {
   final bool isWidth;
   final String title;
   final bool isFromSizesPrefab;
-  final Function(Map<String, dynamic>, Map<String, dynamic>) callBack;
+  final Function(FSize, FSize) callBack;
 
   @override
   SizeControlsState createState() => SizeControlsState();
@@ -128,7 +128,7 @@ class SizeControlsState extends State<SizeControl> {
                                   );
 
                           node.body.attributes[widget.keyAttr] = szs;
-                          widget.callBack(szs.toJson(), old.toJson());
+                          widget.callBack(szs, old);
                         },
                         value: flag,
                       ),
@@ -154,7 +154,7 @@ class SizeControlsState extends State<SizeControl> {
                           onTap: () {
                             final old = FSize.fromJson(widget.size.toJson());
                             widget.size.updateUnit(SizeUnit.pixel, context);
-                            widget.callBack(widget.size.toJson(), old.toJson());
+                            widget.callBack(widget.size, old);
                             setState(() {
                               unit = SizeUnit.pixel;
                             });
@@ -168,7 +168,10 @@ class SizeControlsState extends State<SizeControl> {
                           onTap: () {
                             final old = FSize.fromJson(widget.size.toJson());
                             widget.size.updateUnit(SizeUnit.percent, context);
-                            widget.callBack(widget.size.toJson(), old.toJson());
+                            Logger.printMessage(
+                              'Size toJson: ${widget.size.toJson()}',
+                            );
+                            widget.callBack(widget.size, old);
                             setState(() {
                               unit = SizeUnit.percent;
                             });
@@ -244,8 +247,8 @@ class SizeControlsState extends State<SizeControl> {
                                       );
                                   node.body.attributes[widget.keyAttr] = szs;
                                   widget.callBack(
-                                    szs.toJson(),
-                                    old.toJson(),
+                                    szs,
+                                    old,
                                   );
                                 },
                               ),
@@ -286,8 +289,8 @@ class SizeControlsState extends State<SizeControl> {
                                       node.body.attributes[widget.keyAttr] =
                                           widget.size;
                                       widget.callBack(
-                                        widget.size.toJson(),
-                                        old.toJson(),
+                                        widget.size,
+                                        old,
                                       );
                                       controller.text =
                                           widget.size.unit == SizeUnit.pixel

@@ -108,7 +108,7 @@ class _WCmsStreamState extends State<WCmsStream> with AfterLayoutMixin {
     );
     if (mounted) {
       setState(() {
-        _stream = TetaCMS.instance.realtime.streamCollection(
+        _stream = TetaCMS.instance.realtime.streamCollectionByName(
           collectionName,
           filters: [
             if (keyName.isNotEmpty && keyValue.isNotEmpty)

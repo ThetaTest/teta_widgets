@@ -42,6 +42,7 @@ class SizesPrefabControl extends StatelessWidget {
                 .page
                 .flatList
                 .firstWhere((final element) => element.nid == nodeId);
+            node.body.attributes[DBKeys.width] = value;
             ControlBuilder.toDB(
               node,
               context,
@@ -63,6 +64,7 @@ class SizesPrefabControl extends StatelessWidget {
                 .page
                 .flatList
                 .firstWhere((final element) => element.nid == nodeId);
+            node.body.attributes[DBKeys.height] = value;
             ControlBuilder.toDB(
               node,
               context,

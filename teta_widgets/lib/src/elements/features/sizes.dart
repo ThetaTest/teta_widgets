@@ -106,9 +106,9 @@ class FSize extends Equatable {
 
   SizeUnit getUnit(final BuildContext context) {
     final device = BlocProvider.of<DeviceModeCubit>(context).state;
-    if (device.info.identifier.type == frame.DeviceType.phone) {
+    if (device.type == frame.DeviceType.phone) {
       return unit!;
-    } else if (device.info.identifier.type == frame.DeviceType.tablet) {
+    } else if (device.type == frame.DeviceType.tablet) {
       return unitTablet ?? unit!;
     }
     return unitDesktop ?? unit!;
@@ -133,9 +133,9 @@ class FSize extends Equatable {
     final BuildContext context,
   ) {
     final device = BlocProvider.of<DeviceModeCubit>(context).state;
-    if (device.info.identifier.type == frame.DeviceType.phone) {
+    if (device.type == frame.DeviceType.phone) {
       unit = newUnit;
-    } else if (device.info.identifier.type == frame.DeviceType.tablet) {
+    } else if (device.type == frame.DeviceType.tablet) {
       unitTablet = newUnit;
     } else {
       unitDesktop = newUnit;

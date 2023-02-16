@@ -106,7 +106,7 @@ class FontSizeState extends State<FontSizeControl> {
                           widget.textStyle.fontSize!.unit = SizeUnit.pixel;
                           onChangeHandler(widget.textStyle, old);
                         },
-                        child: unitIcon(
+                        child: VisualIcon(
                           unit: SizeUnit.pixel,
                           unitFromNode: widget.textStyle.fontSize!.unit,
                         ),
@@ -114,22 +114,11 @@ class FontSizeState extends State<FontSizeControl> {
                       GestureDetector(
                         onTap: () {
                           final old = widget.textStyle;
-                          widget.textStyle.fontSize!.unit = SizeUnit.width;
+                          widget.textStyle.fontSize!.unit = SizeUnit.percent;
                           onChangeHandler(widget.textStyle, old);
                         },
-                        child: unitIcon(
-                          unit: SizeUnit.width,
-                          unitFromNode: widget.textStyle.fontSize!.unit,
-                        ),
-                      ),
-                      GestureDetector(
-                        onTap: () {
-                          final old = widget.textStyle;
-                          widget.textStyle.fontSize!.unit = SizeUnit.height;
-                          onChangeHandler(widget.textStyle, old);
-                        },
-                        child: unitIcon(
-                          unit: SizeUnit.height,
+                        child: VisualIcon(
+                          unit: SizeUnit.percent,
                           unitFromNode: widget.textStyle.fontSize!.unit,
                         ),
                       ),
