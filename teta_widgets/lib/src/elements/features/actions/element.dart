@@ -79,6 +79,7 @@ import 'package:teta_widgets/src/elements/actions/state/increment.dart';
 import 'package:teta_widgets/src/elements/actions/state/password_validator.dart';
 import 'package:teta_widgets/src/elements/actions/state/phone_validator.dart';
 import 'package:teta_widgets/src/elements/actions/state/pick_file.dart';
+import 'package:teta_widgets/src/elements/actions/state/unfocus.dart';
 import 'package:teta_widgets/src/elements/actions/state/website_validator.dart';
 import 'package:teta_widgets/src/elements/actions/stripe/stripe_add_list_item_to_cart.dart';
 import 'package:teta_widgets/src/elements/actions/stripe/stripe_cart_buy_all.dart';
@@ -1863,6 +1864,13 @@ class FActionElement extends Equatable {
               state: state,
             );
             break;
+          case ActionState.unfocus:
+            await actionS(
+              () => FActionStateUnfocus.action(context),
+              context: context,
+              state: state,
+            );
+            break;
           case ActionState.changeWith:
             await actionS(
               () => FActionStateChangeWith.action(
@@ -3277,7 +3285,11 @@ class FActionElement extends Equatable {
               FActionStateDecrement.toCode(pageId, context, stateName),
               context,
             );
-
+          case ActionState.unfocus:
+            return codeS(
+              FActionStateUnfocus.toCode(),
+              context,
+            );
           case ActionState.changeWith:
             return codeS(
               FActionStateChangeWith.toCode(

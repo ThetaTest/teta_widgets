@@ -10,4 +10,5 @@ enum ActionState {
   websiteValidator,
   passwordValidator,
   pickFile,
+  unfocus,
 }

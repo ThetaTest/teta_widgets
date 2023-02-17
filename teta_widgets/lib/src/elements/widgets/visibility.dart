@@ -20,14 +20,16 @@ class WVisibility extends StatelessWidget {
 
   @override
   Widget build(final BuildContext context) {
-    final val = value.get(
-      state.params,
-      state.states,
-      state.dataset,
-      state.forPlay,
-      state.loop,
-      context,
-    );
+    final val = value
+        .get(
+          state.params,
+          state.states,
+          state.dataset,
+          state.forPlay,
+          state.loop,
+          context,
+        )
+        .replaceAll(' ', '');
     return TetaWidget(
       state: state,
       child: Visibility(

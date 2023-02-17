@@ -34,7 +34,7 @@ class StatesControlState extends State<StatesControl> {
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: [
             const TParagraph(
-              'States',
+              'Page States',
             ),
             BounceSmall(
               onTap: () {
@@ -139,7 +139,6 @@ class StatesControlState extends State<StatesControl> {
     return GestureDetector(
       onTap: () {
         final page = (context.read<PageCubit>().state as PageLoaded).page;
-
         showAlert(context, page, variable);
       },
       child: Container(
@@ -414,7 +413,7 @@ class StatesControlState extends State<StatesControl> {
                       maxWidth: 300,
                     ),
                     child: CButton(
-                      label: 'Close',
+                      label: 'Save',
                       callback: () {
                         context.read<PageCubit>().updateState(_variable);
                         Navigator.of(context, rootNavigator: true).pop(null);

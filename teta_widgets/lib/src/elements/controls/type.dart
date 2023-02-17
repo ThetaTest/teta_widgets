@@ -862,7 +862,7 @@ class ControlBuilder {
       return descriptionControlWidget(
         description: control.description,
         control: PageParamsControl(
-          key: ValueKey('${node.nid}'),
+          key: ValueKey('${node.nid} params'),
           callBack: (final list) async {
             await sl.get<PageRepository>().updatePage(
                   (BlocProvider.of<PageCubit>(context).state as PageLoaded)
@@ -876,7 +876,7 @@ class ControlBuilder {
       return descriptionControlWidget(
         description: control.description,
         control: StatesControl(
-          key: ValueKey('${node.nid}'),
+          key: ValueKey('${node.nid} states'),
           callBack: (final list) async {
             await sl.get<PageRepository>().updatePage(
                   (BlocProvider.of<PageCubit>(context).state as PageLoaded)

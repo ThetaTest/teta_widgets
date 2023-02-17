@@ -206,7 +206,6 @@ class PaddingsState extends State<PageParamsControl> {
         var isNameUnique = true;
         var type =
             EnumToString.convertToString(_variable.type, camelCase: true);
-
         return BlocProvider.value(
           value: pageCubit,
           child: StatefulBuilder(

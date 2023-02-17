@@ -340,23 +340,50 @@ class PaddingsState extends State<TextControl> with AfterLayoutMixin {
                   BlocBuilder<PageCubit, PageState>(
                     builder: (final context, final state) {
                       if (state is! PageLoaded) return const SizedBox();
+                      final variables = state.page.defaultParams
+                          .where(
+                            (final element) =>
+                                widget.valueType != VariableType.dynamic
+                                    ? element.type == widget.valueType
+                                    : true,
+                          )
+                          .toList();
+                      if (variables.isEmpty) {
+                        return Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            TDetailLabel(
+                              'This attribute requires a ${widget.valueType!.name} variable.',
+                              color: Palette.txtPrimary.withOpacity(0.6),
+                            ),
+                            const Gap(Grid.small),
+                            CButton(
+                              label: 'Add ${widget.valueType!.name} param',
+                              isPrimary: true,
+                              callback: () {
+                                context
+                                    .read<PageCubit>()
+                                    .addParam(type: widget.valueType);
+                              },
+                            ),
+                          ],
+                        );
+                      }
                       return Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
+                          TDetailLabel(
+                            'It requires a ${widget.valueType!.name} variable.',
+                            color: Palette.txtPrimary.withOpacity(0.6),
+                          ),
+                          const Gap(Grid.small),
                           CDropdown(
                             value: state.page.defaultParams
                                     .map((final e) => e.name)
                                     .contains(widget.value.paramName)
                                 ? widget.value.paramName
                                 : null,
-                            items: state.page.defaultParams
-                                .where(
-                                  (final element) =>
-                                      widget.valueType != VariableType.dynamic
-                                          ? element.type == widget.valueType
-                                          : true,
-                                )
-                                .map((final e) => e.name)
-                                .toList(),
+                            items: variables.map((final e) => e.name).toList(),
                             onChange: (final newValue) {
                               final old = widget.value;
                               widget.value.paramName = newValue;
@@ -389,23 +416,50 @@ class PaddingsState extends State<TextControl> with AfterLayoutMixin {
                   BlocBuilder<PageCubit, PageState>(
                     builder: (final context, final state) {
                       if (state is! PageLoaded) return const SizedBox();
+                      final variables = state.page.defaultStates
+                          .where(
+                            (final element) =>
+                                widget.valueType != VariableType.dynamic
+                                    ? element.type == widget.valueType
+                                    : true,
+                          )
+                          .toList();
+                      if (variables.isEmpty) {
+                        return Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            TDetailLabel(
+                              'This attribute requires a ${widget.valueType!.name} variable.',
+                              color: Palette.txtPrimary.withOpacity(0.6),
+                            ),
+                            const Gap(Grid.small),
+                            CButton(
+                              label: 'Add ${widget.valueType!.name} state',
+                              isPrimary: true,
+                              callback: () {
+                                context
+                                    .read<PageCubit>()
+                                    .addState(type: widget.valueType);
+                              },
+                            ),
+                          ],
+                        );
+                      }
                       return Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
+                          TDetailLabel(
+                            'It requires a ${widget.valueType!.name} variable',
+                            color: Palette.txtPrimary.withOpacity(0.6),
+                          ),
+                          const Gap(Grid.small),
                           CDropdown(
                             value: state.page.defaultStates
                                     .map((final e) => e.name)
                                     .contains(widget.value.stateName)
                                 ? widget.value.stateName
                                 : null,
-                            items: state.page.defaultStates
-                                .where(
-                                  (final element) =>
-                                      widget.valueType != VariableType.dynamic
-                                          ? element.type == widget.valueType
-                                          : true,
-                                )
-                                .map((final e) => e.name)
-                                .toList(),
+                            items: variables.map((final e) => e.name).toList(),
                             onChange: (final newValue) {
                               final old = widget.value;
                               widget.value.stateName = newValue;
