@@ -22,10 +22,12 @@ class WAppBar extends StatelessWidget {
   Widget build(final BuildContext context) {
     return TetaWidget(
       state: state,
-      child: ChildConditionBuilder(
-        ValueKey(state.toKey),
-        state: state,
-        child: child,
+      child: SafeArea(
+        child: ChildConditionBuilder(
+          ValueKey(state.toKey),
+          state: state,
+          child: child,
+        ),
       ),
     );
   }

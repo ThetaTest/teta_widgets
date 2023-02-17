@@ -135,54 +135,10 @@ class SizeControlsState extends State<SizeControl> {
                       Padding(
                         padding: const EdgeInsets.only(left: 8),
                         child: TParagraph(
-                          '$unit',
+                          widget.title,
                         ),
                       ),
                     ],
-                  ),
-                  Visibility(
-                    visible: widget.size.get(
-                          context: context,
-                          isWidth: widget.isWidth,
-                          forPlay: false,
-                        ) !=
-                        null,
-                    child: Row(
-                      mainAxisSize: MainAxisSize.min,
-                      children: [
-                        BounceSmall(
-                          onTap: () {
-                            final old = FSize.fromJson(widget.size.toJson());
-                            widget.size.updateUnit(SizeUnit.pixel, context);
-                            widget.callBack(widget.size, old);
-                            setState(() {
-                              unit = SizeUnit.pixel;
-                            });
-                          },
-                          child: VisualIcon(
-                            unit: SizeUnit.pixel,
-                            unitFromNode: unit,
-                          ),
-                        ),
-                        BounceSmall(
-                          onTap: () {
-                            final old = FSize.fromJson(widget.size.toJson());
-                            widget.size.updateUnit(SizeUnit.percent, context);
-                            Logger.printMessage(
-                              'Size toJson: ${widget.size.toJson()}',
-                            );
-                            widget.callBack(widget.size, old);
-                            setState(() {
-                              unit = SizeUnit.percent;
-                            });
-                          },
-                          child: VisualIcon(
-                            unit: SizeUnit.percent,
-                            unitFromNode: unit,
-                          ),
-                        ),
-                      ],
-                    ),
                   ),
                 ],
               ),

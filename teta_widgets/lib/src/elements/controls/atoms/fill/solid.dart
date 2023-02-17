@@ -2,6 +2,9 @@
 // ignore_for_file: public_member_api_docs
 
 // Flutter imports:
+import 'dart:async';
+
+import 'package:after_layout/after_layout.dart';
 import 'package:flutter/material.dart';
 // Package imports:
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -34,7 +37,8 @@ class SolidFillControl extends StatefulWidget {
   SolidFillControlState createState() => SolidFillControlState();
 }
 
-class SolidFillControlState extends State<SolidFillControl> {
+class SolidFillControlState extends State<SolidFillControl>
+    with AfterLayoutMixin {
   bool isVisible = true;
   TextEditingController controller = TextEditingController();
   TextEditingController opacityController = TextEditingController();
@@ -42,7 +46,7 @@ class SolidFillControlState extends State<SolidFillControl> {
   String? tempColor;
 
   @override
-  void initState() {
+  FutureOr<void> afterFirstLayout(final BuildContext context) {
     if (widget.color != null) {
       controller.text = widget.color ?? '';
       opacityController.text = '${widget.opacity}';

@@ -6,7 +6,6 @@ import 'package:device_frame/device_frame.dart' as frame;
 import 'package:equatable/equatable.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:sizer/sizer.dart';
 // Package imports:
 import 'package:teta_core/src/utils/expression/expression.dart';
 import 'package:teta_core/teta_core.dart';
@@ -57,49 +56,72 @@ class FSize extends Equatable {
     required final bool isWidth,
     required final bool forPlay,
   }) {
-    var size = sizeDesktop ?? this.size!;
-    var unit = unitDesktop ?? this.unit!;
+    Logger.printWarning(
+      'FSize, size: $size, sizeTablet: $sizeTablet, sizeDesktop: $sizeDesktop',
+    );
+    String? sizeValue;
+    SizeUnit? unitValue;
     if (forPlay) {
       final width = MediaQuery.of(context).size.width;
       if (width < 600) {
-        size = this.size ?? '0';
-        unit = this.unit!;
+        sizeValue = size ?? '0';
+        unitValue = unit;
       } else if (width < 1000) {
-        size = sizeTablet ?? this.size ?? '0';
-        unit = unitTablet ?? this.unit!;
+        sizeValue = sizeTablet ?? size ?? '0';
+        unitValue = unitTablet ?? unit;
+      } else {
+        unitValue = unitDesktop ?? unit;
       }
     } else {
       final device = BlocProvider.of<DeviceModeCubit>(context).state;
-      if (device.info.identifier.type == frame.DeviceType.phone) {
-        size = this.size ?? '0';
-        unit = this.unit!;
-      } else if (device.info.identifier.type == frame.DeviceType.tablet) {
-        size = sizeTablet ?? this.size ?? '0';
-        unit = unitTablet ?? this.unit!;
+      if (device.type == frame.DeviceType.phone) {
+        sizeValue = size ?? '0';
+        unitValue = unit;
+      } else if (device.type == frame.DeviceType.tablet) {
+        sizeValue = sizeTablet ?? size ?? '0';
+        unitValue = unitTablet ?? unit;
+      } else {
+        sizeValue = sizeDesktop ?? size;
+        unitValue = unitDesktop ?? unit;
       }
     }
 
     double? value = 0;
-    if (unit == SizeUnit.pixel &&
-        (size.toLowerCase() == 'max' ||
-            size.toLowerCase() == 'inf' ||
-            size.toLowerCase() == '100%')) {
-      value = double.maxFinite;
-    } else if (unit == SizeUnit.percent &&
-        (size.toLowerCase() == 'max' ||
-            size.toLowerCase() == 'inf' ||
-            size.toLowerCase() == '100%')) {
-      value = double.maxFinite;
-    } else {
-      if (size.toLowerCase() == 'null' || size.toLowerCase() == 'auto') {
-        return null;
-      }
+    if (sizeValue == null) {
+      return null;
+    } else if (sizeValue.toLowerCase() == 'max' ||
+        sizeValue.toLowerCase() == 'inf' ||
+        sizeValue.toLowerCase() == '100%') {
+      return double.maxFinite;
+    } else if (sizeValue.toLowerCase() == 'null' ||
+        sizeValue.toLowerCase() == 'auto') {
+      return null;
     }
-
-    if (unit == SizeUnit.percent ||
-        unit == SizeUnit.width ||
-        unit == SizeUnit.height) {
-      return isWidth ? value.w : value.h;
+    final temp = sizeValue.replaceAll('%', '');
+    value = double.tryParse(temp) ?? 0;
+    if (sizeValue.contains('%') || unit == SizeUnit.percent) {
+      if (forPlay) {
+        if (isWidth) {
+          return MediaQuery.of(context).size.width * 100 / value;
+        } else {
+          return MediaQuery.of(context).size.height * 100 / value;
+        }
+      } else {
+        final device = BlocProvider.of<DeviceModeCubit>(context).state;
+        if (isWidth) {
+          final side = device.type != frame.DeviceType.phone &&
+                  device.type != frame.DeviceType.tablet
+              ? 1920
+              : device.info.screenSize.width;
+          return side * (value / 100);
+        } else {
+          final side = device.type != frame.DeviceType.phone &&
+                  device.type != frame.DeviceType.tablet
+              ? 1080
+              : device.info.screenSize.height;
+          return side * (value / 100);
+        }
+      }
     }
     return value;
   }
