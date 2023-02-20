@@ -134,21 +134,6 @@ class _Body extends StatefulWidget {
 
 class _BodyState extends State<_Body> {
   final key = GlobalKey();
-  late Widget child;
-
-  @override
-  void initState() {
-    child = widget.child;
-    super.initState();
-  }
-
-  @override
-  void didUpdateWidget(covariant final _Body oldWidget) {
-    super.didUpdateWidget(oldWidget);
-    if (widget.child != oldWidget.child) {
-      child = widget.child;
-    }
-  }
 
   @override
   Widget build(final BuildContext context) {
@@ -159,7 +144,6 @@ class _BodyState extends State<_Body> {
       fit: StackFit.passthrough,
       children: [
         DecoratedBox(
-          key: key,
           position: DecorationPosition.foreground,
           decoration: BoxDecoration(
             border: Border.all(
@@ -182,7 +166,7 @@ class _BodyState extends State<_Body> {
                       : 0,
             ),
           ),
-          child: child,
+          child: widget.child,
         ),
         if (onFocusNodes.firstWhereOrNull(
                   (final element) => element == widget.state.node.nid,
