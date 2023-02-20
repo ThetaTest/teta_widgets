@@ -57,7 +57,6 @@ class WContainer extends StatelessWidget {
       isWidth: false,
       forPlay: state.forPlay,
     );
-    Logger.printWarning('Container, width: $_width, height: $_height');
     var mustBeWrappedInExpanded = false;
     if (parent.globalType == NType.row && _width == double.maxFinite) {
       mustBeWrappedInExpanded = true;

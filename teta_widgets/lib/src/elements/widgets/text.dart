@@ -78,10 +78,6 @@ class _WTextState extends State<WText> with AfterLayoutMixin {
         }
       });
     }
-
-    Logger.printMessage(
-      'TextWidget, value: ${widget.value.getValue(context, forPlay: widget.state.forPlay)}',
-    );
     return NodeSelectionBuilder(
       state: widget.state,
       child: GestureDetector(

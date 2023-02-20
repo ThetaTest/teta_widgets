@@ -139,13 +139,14 @@ class FBorderRadius extends Equatable {
 
   /// Convert [FBorderRadius] to code String
   String toCode() {
-    String convertValueToCode(final List<dynamic> radius) {
-      return radius[0] == 0 &&
-              radius[1] == 0 &&
-              radius[2] == 0 &&
-              radius[3] == 0
-          ? 'BorderRadius.zero'
-          : '''
+    String convertValueToCode(final List<double> radius) {
+      if (radius[0] == 0 &&
+          radius[1] == 0 &&
+          radius[2] == 0 &&
+          radius[3] == 0) {
+        return 'BorderRadius.zero';
+      }
+      return '''
     BorderRadius.only(
       topLeft: Radius.circular(${radius[0]}),
       topRight: Radius.circular(${radius[1]}),
@@ -154,8 +155,10 @@ class FBorderRadius extends Equatable {
     )''';
     }
 
-    if (radius == (radiusTablet ?? radius) &&
-        radius == (radiusDesktop ?? radius)) {
+    if (convertValueToCode(radius!) ==
+            convertValueToCode(radiusTablet ?? radius!) &&
+        convertValueToCode(radius!) ==
+            convertValueToCode(radiusDesktop ?? radius!)) {
       return convertValueToCode(radius!);
     }
 

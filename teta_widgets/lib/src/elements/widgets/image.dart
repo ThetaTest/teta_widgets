@@ -156,9 +156,6 @@ class _LocalImage extends StatefulWidget {
 class _LocalImageState extends State<_LocalImage> {
   @override
   Widget build(final BuildContext context) {
-    Logger.printDefault(
-      '_LocalImage, widget.result: ${widget.result}, widget.bytes: ${widget.bytes}',
-    );
     return widget.result is XFile
         ? widget.bytes == null
             ? const SizedBox()

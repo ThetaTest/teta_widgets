@@ -7,7 +7,6 @@ import 'package:equatable/equatable.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 // Package imports:
-import 'package:teta_core/src/utils/expression/expression.dart';
 import 'package:teta_core/teta_core.dart';
 
 enum SizeUnit {
@@ -56,9 +55,6 @@ class FSize extends Equatable {
     required final bool isWidth,
     required final bool forPlay,
   }) {
-    Logger.printWarning(
-      'FSize, size: $size, sizeTablet: $sizeTablet, sizeDesktop: $sizeDesktop',
-    );
     String? sizeValue;
     SizeUnit? unitValue;
     if (forPlay) {
@@ -207,38 +203,24 @@ class FSize extends Equatable {
     required final bool isWidth,
   }) {
     String _valueToCode(final String size, final SizeUnit unit) {
-      String? value;
-      if (unit == SizeUnit.pixel &&
-          (size.toLowerCase() == 'max' ||
-              size.toLowerCase() == 'inf' ||
-              size.toLowerCase() == '100%')) {
-        value = 'double.maxFinite';
-      } else if (unit == SizeUnit.percent &&
-          (size.toLowerCase() == 'max' ||
-              size.toLowerCase() == 'inf' ||
-              size.toLowerCase() == '100%')) {
-        value = 'double.maxFinite';
-      } else {
-        if (size.toLowerCase() == 'null' || size.toLowerCase() == 'auto') {
-          value = null;
+      double? value = 0;
+      if (size.toLowerCase() == 'max' ||
+          size.toLowerCase() == 'inf' ||
+          size.toLowerCase() == '100%') {
+        return 'double.maxFinite';
+      } else if (size.toLowerCase() == 'null' || size.toLowerCase() == 'auto') {
+        return 'null';
+      }
+      final temp = size.replaceAll('%', '');
+      value = double.tryParse(temp) ?? 0;
+      if (size.contains('%') || unit == SizeUnit.percent) {
+        if (isWidth) {
+          return 'MediaQuery.of(context).size.width * 100 / $value';
         } else {
-          final exp = MathExpression.parse(
-            context: context,
-            expression: size.replaceAll('%', ''),
-          );
-          if (double.tryParse(exp) != null) {
-            value = size.replaceAll('%', '');
-          }
+          return 'MediaQuery.of(context).size.height * 100 / $value';
         }
       }
-      if (value != null && unit == SizeUnit.percent) {
-        if (value != 'double.maxFinite') {
-          var finalString = '';
-          finalString += '${size.replaceAll('%', '')}${isWidth ? '.w' : '.h'}';
-          return finalString;
-        }
-      }
-      return value ?? 'null';
+      return '$value';
     }
 
     if (_valueToCode(size!, unit!) ==
@@ -246,15 +228,15 @@ class FSize extends Equatable {
         _valueToCode(size!, unit!) ==
             _valueToCode(sizeDesktop ?? size!, unitDesktop ?? unit!)) {
       return _valueToCode(size!, unit!);
-    }
-
-    return '''
+    } else {
+      return '''
 getValueForScreenType<double?>(
   context: context,
   mobile: ${_valueToCode(size!, unit!)},
   tablet: ${_valueToCode(sizeTablet ?? size!, unitTablet ?? unit!)},
   desktop: ${_valueToCode(sizeDesktop ?? size!, unitDesktop ?? unit!)},
 )''';
+    }
   }
 
   @override

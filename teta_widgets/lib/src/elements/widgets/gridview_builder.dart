@@ -97,7 +97,8 @@ class _WGridViewState extends State<WGridViewBuilder> {
             (final element) => element.getName == widget.value.datasetName,
           )
         : -1;
-    final db = index != -1 ? widget.state.dataset[index] : DatasetObject.empty();
+    final db =
+        index != -1 ? widget.state.dataset[index] : DatasetObject.empty();
     var startFromIndex = int.tryParse(
           widget.startFromIndex.get(
             widget.state.params,
@@ -126,7 +127,6 @@ class _WGridViewState extends State<WGridViewBuilder> {
           ),
         ) ??
         db.getMap.length;
-    Logger.printWarning('Listview.builder limit: $limit');
     if (limit <= 0) {
       limit = db.getMap.length;
     }
@@ -176,7 +176,8 @@ class _WGridViewState extends State<WGridViewBuilder> {
       final index = widget.state.dataset.indexWhere(
         (final element) => element.getName == widget.value.datasetName,
       );
-      final db = index != -1 ? widget.state.dataset[index] : DatasetObject.empty();
+      final db =
+          index != -1 ? widget.state.dataset[index] : DatasetObject.empty();
       if (mounted) {
         if (db.getName != '') {
           setState(() {

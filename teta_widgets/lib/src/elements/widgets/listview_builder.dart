@@ -95,7 +95,6 @@ class WListViewBuilderState extends State<WListViewBuilder> {
           ),
         ) ??
         newDB.length;
-    Logger.printWarning('Listview.builder limit: $limit');
     if (limit <= 0) {
       limit = newDB.length;
     }

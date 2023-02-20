@@ -170,7 +170,6 @@ Future<String> pageCodeTemplate(
     import 'package:myapp/src/teta_files/imports.dart';
     import 'package:myapp/constants.dart' as constantz;
     import 'package:hive_flutter/hive_flutter.dart';
-    ${page.isAuthenticatedRequired ? "import 'package:myapp/auth/auth_required_state.dart';" : "import 'package:myapp/auth/auth_state.dart';"}
     ${config.revenuecat is RevenueCatConfigModelInitialized ? "import 'package:purchases_flutter/purchases_flutter.dart';" : ''}
     ${config.qonversion is QonversionConfigModelInitialized ? "import 'package:qonversion_flutter/qonversion_flutter.dart';" : ''}
     ${config.braintree is BraintreeConfigModelInitialized ? "import 'package:flutter_braintree/flutter_braintree.dart';" : ''}
