@@ -18,7 +18,7 @@ import 'package:teta_core/src/design_system/textfield/multi_line_textfield.dart'
 import 'package:teta_core/src/design_system/textfield/textfield.dart';
 import 'package:teta_core/teta_core.dart';
 // Project imports:
-import 'package:teta_widgets/src/elements/features/text_type_input.dart';
+import 'package:teta_widgets/teta_widgets.dart';
 
 class TextControl extends StatefulWidget {
   const TextControl({
@@ -118,7 +118,7 @@ class PaddingsState extends State<TextControl> with AfterLayoutMixin {
       child: BlocBuilder<DeviceModeCubit, DeviceState>(
         builder: (final context, final device) =>
             BlocBuilder<FocusBloc, List<int>>(
-          builder: (final context, final state) {
+          builder: (final context, final focusState) {
             return Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
@@ -340,10 +340,14 @@ class PaddingsState extends State<TextControl> with AfterLayoutMixin {
                   BlocBuilder<PageCubit, PageState>(
                     builder: (final context, final state) {
                       if (state is! PageLoaded) return const SizedBox();
+                      final focusedNode = state.page.flatList.firstWhere(
+                        (final element) => element.nid == focusState.first,
+                      );
                       final variables = state.page.defaultParams
                           .where(
                             (final element) =>
-                                widget.valueType != VariableType.dynamic
+                                widget.valueType != VariableType.dynamic &&
+                                        focusedNode.globalType != NType.text
                                     ? element.type == widget.valueType
                                     : true,
                           )
@@ -416,10 +420,14 @@ class PaddingsState extends State<TextControl> with AfterLayoutMixin {
                   BlocBuilder<PageCubit, PageState>(
                     builder: (final context, final state) {
                       if (state is! PageLoaded) return const SizedBox();
+                      final focusedNode = state.page.flatList.firstWhere(
+                        (final element) => element.nid == focusState.first,
+                      );
                       final variables = state.page.defaultStates
                           .where(
                             (final element) =>
-                                widget.valueType != VariableType.dynamic
+                                widget.valueType != VariableType.dynamic &&
+                                        focusedNode.globalType != NType.text
                                     ? element.type == widget.valueType
                                     : true,
                           )

@@ -8,7 +8,7 @@ class FActionChangeTheme {
   static Future action(
     final BuildContext context,
   ) async {
-    await BlocProvider.of<PaletteDarkLightCubit>(context).switchVal();
+    BlocProvider.of<PaletteDarkLightCubit>(context).switchVal();
   }
 
   static String toCode(

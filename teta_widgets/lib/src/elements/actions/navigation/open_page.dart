@@ -22,6 +22,7 @@ import 'package:teta_widgets/src/elements/controls/key_constants.dart';
 import 'package:teta_widgets/src/elements/features/page_transition.dart';
 import 'package:teta_widgets/src/elements/nodes/node.dart';
 import 'package:transition/transition.dart' as T;
+import 'package:universal_platform/universal_platform.dart';
 
 // ignore: library_prefixes
 
@@ -53,6 +54,12 @@ class FActionNavigationOpenPage {
     final String? nameOfPage,
     final Map<String, dynamic>? paramsToSend,
   ) async {
+    if (UniversalPlatform.isWeb) {
+      final uri = Uri.base;
+      if (uri.toString().contains('/editor/')) {
+        return;
+      }
+    }
     try {
       final pages = BlocProvider.of<PagesCubit>(context).state;
 
