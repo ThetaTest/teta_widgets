@@ -55,10 +55,19 @@ class _WCmsFetchState extends State<WCmsFetch> with AfterLayoutMixin {
     name: 'Collection Query',
     map: [<String, dynamic>{}],
   );
+  List<DatasetObject> datasets = [];
+
+  @override
+  void initState() {
+    super.initState();
+    datasets = widget.state.dataset;
+  }
 
   @override
   FutureOr<void> afterFirstLayout(final BuildContext context) {
-    getDbElements();
+    if (!isInitialized) {
+      getDbElements();
+    }
   }
 
   Future<void> getDbElements() async {
@@ -119,11 +128,16 @@ class _WCmsFetchState extends State<WCmsFetch> with AfterLayoutMixin {
       );
       return;
     }
-    Logger.printSuccess('Cms Fetch node data: ${res.data}');
+    Logger.printSuccess(
+      'getCollectionByName Cms Fetch, collection: $collectionName, data: ${res.data}',
+    );
+
+    final _datasets = _addFetchDataToDataset(res.data);
 
     if (mounted) {
       setState(() {
-        list = res.data!;
+        list = res.data ?? <dynamic>[];
+        datasets = _datasets;
         isInitialized = true;
       });
     }
@@ -146,8 +160,6 @@ class _WCmsFetchState extends State<WCmsFetch> with AfterLayoutMixin {
               ),
             );
           }
-
-          final datasets = _addFetchDataToDataset(list);
 
           if (list.isEmpty) {
             if (widget.children.length > 1) {
@@ -190,9 +202,7 @@ class _WCmsFetchState extends State<WCmsFetch> with AfterLayoutMixin {
           .map((final dynamic e) => e as Map<String, dynamic>)
           .toList(),
     );
-
     final datasets = addDataset(context, widget.state.dataset, _map);
-
-    return widget.state.dataset.isEmpty ? datasets : widget.state.dataset;
+    return datasets;
   }
 }

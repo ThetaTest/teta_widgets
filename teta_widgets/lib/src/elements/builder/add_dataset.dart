@@ -10,17 +10,22 @@ List<DatasetObject> addDataset(
   final List<DatasetObject> dataset,
   final DatasetObject map,
 ) {
-  final prj = BlocProvider.of<FocusProjectCubit>(context).state!;
-  final pageFocused = BlocProvider.of<PageCubit>(context).state as PageLoaded;
+  try {
+    final prj = BlocProvider.of<FocusProjectCubit>(context).state!;
+    final pageFocused = BlocProvider.of<PageCubit>(context).state as PageLoaded;
 
-  final list = [
-    ...List<DatasetObject>.from(pageFocused.datasets)
-      ..removeWhere((final element) => element.getName == map.getName),
-    map,
-  ];
+    final list = [
+      ...List<DatasetObject>.from(pageFocused.datasets)
+        ..removeWhere((final element) => element.getName == map.getName),
+      map,
+    ];
 
-  context.read<PageCubit>().updateDatasets(list);
-  return list;
+    context.read<PageCubit>().updateDatasets(list);
+    return list;
+  } catch (e) {
+    Logger.printError('Error in addDataset func, error: $e');
+    return [];
+  }
 /*
     Box<List<dynamic>> box;
     if (Hive.isBoxOpen('datasets${prj.id}')) {

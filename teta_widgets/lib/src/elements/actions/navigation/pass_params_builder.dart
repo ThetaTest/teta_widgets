@@ -44,57 +44,71 @@ List<VariableObject> passParamsToNewPage(
         VariableObject? variable;
         if (selectedDataset?['name'] == 'Parameters' ||
             selectedDataset?['name'] == 'States') {
-          final map = selectedDataset!['map'] as List<Map<String, dynamic>>;
-          //final element = map[loop ?? 0];
-          for (final element in map) {
-            if (element.keys.toList()[loop ?? 0] ==
-                paramsToSend?[newPageParams[i].id]?['label']) {
-              if (element[element.keys.toList()[loop ?? 0]] is String) {
-                variable = VariableObject(
-                  name: element.keys.toList()[loop ?? 0],
-                  value: element[element.keys.toList()[loop ?? 0]],
-                );
-              }
-              if (element[element.keys.toList()[loop ?? 0]]
-                  is CameraController) {
-                variable = VariableObject(
-                  name: element.keys.toList()[loop ?? 0],
-                  type: VariableType.cameraController,
-                  controller: element[element.keys.toList()[loop ?? 0]]
-                      as CameraController,
-                );
-              }
-              if (element[element.keys.toList()[loop ?? 0]] is AudioPlayer) {
-                variable = VariableObject(
-                  name: element.keys.toList()[loop ?? 0],
-                  type: VariableType.audioController,
-                  audioController:
-                      element[element.keys.toList()[loop ?? 0]] as AudioPlayer,
-                );
-              }
-              if (element[element.keys.toList()[loop ?? 0]] is XFile) {
-                variable = VariableObject(
-                  name: element.keys.toList()[loop ?? 0],
-                  type: VariableType.file,
-                  file: element[element.keys.toList()[loop ?? 0]] as XFile,
-                );
+          try {
+            final map = selectedDataset!['map'] as List<Map<String, dynamic>>;
+            //final element = map[loop ?? 0];
+            for (final element in map) {
+              if (element.keys.toList()[loop ?? 0] ==
+                  paramsToSend?[newPageParams[i].id]?['label']) {
+                if (element[element.keys.toList()[loop ?? 0]] is String) {
+                  variable = VariableObject(
+                    name: element.keys.toList()[loop ?? 0],
+                    value: element[element.keys.toList()[loop ?? 0]],
+                  );
+                }
+                if (element[element.keys.toList()[loop ?? 0]]
+                    is CameraController) {
+                  variable = VariableObject(
+                    name: element.keys.toList()[loop ?? 0],
+                    type: VariableType.cameraController,
+                    controller: element[element.keys.toList()[loop ?? 0]]
+                        as CameraController,
+                  );
+                }
+                if (element[element.keys.toList()[loop ?? 0]] is AudioPlayer) {
+                  variable = VariableObject(
+                    name: element.keys.toList()[loop ?? 0],
+                    type: VariableType.audioController,
+                    audioController: element[element.keys.toList()[loop ?? 0]]
+                        as AudioPlayer,
+                  );
+                }
+                if (element[element.keys.toList()[loop ?? 0]] is XFile) {
+                  variable = VariableObject(
+                    name: element.keys.toList()[loop ?? 0],
+                    type: VariableType.file,
+                    file: element[element.keys.toList()[loop ?? 0]] as XFile,
+                  );
+                }
               }
             }
+          } catch (e) {
+            variables.add(
+              newPageParams[i],
+            );
           }
         } else {
-          final el = selectedDataset!['map'] as List<Map<String, dynamic>>;
-          final map = el[loop ?? 0];
-          for (final key in map.keys) {
-            if (key == paramsToSend?[newPageParams[i].id]?['label']) {
-              variable = VariableObject(name: key, value: map[key]);
+          try {
+            final el = selectedDataset!['map'] as List<Map<String, dynamic>>;
+            final map = el[loop ?? 0];
+            for (final key in map.keys) {
+              if (key == paramsToSend?[newPageParams[i].id]?['label']) {
+                variable = VariableObject(name: key, value: map[key]);
+              }
             }
+          } catch (e) {
+            variables.add(
+              newPageParams[i],
+            );
           }
         }
         if (variable != null) {
-          newPageParams[i].copyWith(
-            value: variable.get,
-            file: variable.file,
-            controller: variable.controller,
+          variables.add(
+            newPageParams[i].copyWith(
+              value: variable.get,
+              file: variable.file,
+              controller: variable.controller,
+            ),
           );
         }
       }

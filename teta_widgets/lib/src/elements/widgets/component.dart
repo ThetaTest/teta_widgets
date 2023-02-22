@@ -172,6 +172,7 @@ class _VisualBody extends StatelessWidget {
   @override
   Widget build(final BuildContext context) {
     return BlocProvider<PageCubit>(
+      lazy: false,
       create: (final context) => PageCubit(
         sl.get(),
         sl.get(),
@@ -204,31 +205,27 @@ class _VBody extends StatelessWidget {
 
   @override
   Widget build(final BuildContext context) {
-    return BlocBuilder<PageCubit, PageState>(
-      builder: (final context, final pageState) {
-        return (pageState is! PageLoaded)
-            ? const SizedBox()
-            : GestureBuilderBase.get(
-                context: context,
-                state: state,
-                child: IgnorePointer(
-                  ignoring: !state.forPlay,
-                  child: pageState.page.scaffold.toWidget(
-                    state: state.copyWith(
-                      params: (paramsToSend != null)
-                          ? getVariableObjectsFromParams(
-                              state,
-                              pageState.page,
-                              paramsToSend,
-                            )
-                          : pageState.params,
-                      states: pageState.states,
-                      dataset: pageState.datasets,
-                    ),
-                  ),
-                ),
-              );
-      },
+    final pageState = context.watch<PageCubit>().state;
+    if (pageState is! PageLoaded) return const SizedBox();
+    return GestureBuilderBase.get(
+      context: context,
+      state: state,
+      child: IgnorePointer(
+        ignoring: !state.forPlay,
+        child: pageState.page.scaffold.toWidget(
+          state: state.copyWith(
+            params: (paramsToSend != null)
+                ? getVariableObjectsFromParams(
+                    state,
+                    pageState.page,
+                    paramsToSend,
+                  )
+                : pageState.params,
+            states: pageState.states,
+            dataset: pageState.datasets,
+          ),
+        ),
+      ),
     );
   }
 }

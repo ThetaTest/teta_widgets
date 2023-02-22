@@ -253,130 +253,129 @@ class ElementState extends State<Element> {
     try {
       dropdown = widget.map[widget.variable.id]['label'] as String;
       dropdownDataset = widget.map[widget.variable.id]['dataset'] as String;
-    } catch (_) {}
+    } catch (e) {
+      Logger.printError(
+        'Error fetching component params in controls/atoms/navigation/component, error: $e',
+      );
+    }
   }
 
   @override
   Widget build(final BuildContext context) {
-    return StatefulBuilder(
-      builder: (final context, final setState) {
-        var listSecondDropwdown = <Map<String, dynamic>>[];
-        if (dropdownDataset != null) {
-          final temp = listDataset.firstWhereOrNull(
-            (final element) => element.getName == dropdownDataset,
-          );
-          if (temp != null) {
-            listSecondDropwdown = temp.getMap;
-          }
-        }
-        return Padding(
-          padding: const EdgeInsets.only(bottom: 16),
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              Padding(
-                padding: const EdgeInsets.only(bottom: 8),
-                child: TParagraph(
-                  widget.variable.name,
-                ),
-              ),
-              CDropdown(
-                value: dropdownDataset,
-                items: listDataset
-                    .where(
-                      (final element) =>
-                          element.getMap.isNotEmpty ||
-                          element.getName == 'Text',
-                    )
-                    .map((final e) => e.getName)
-                    .toSet()
-                    .toList(),
-                onChange: (final String? newValue) {
-                  setState(() {
-                    dropdownDataset = newValue;
-                    listSecondDropwdown = [
-                      ...listDataset
-                          .where(
-                            (final element) =>
-                                element.getName == dropdownDataset,
-                          )
-                          .map(
-                            (final e) =>
-                                e.getMap.firstOrNull ?? <String, dynamic>{},
-                          ),
-                    ];
-                  });
-                },
-              ),
-              const Gap(Grid.small),
-              if (dropdownDataset != null && dropdownDataset == 'Text')
-                BlocBuilder<FocusBloc, List<int>>(
-                  builder: (final context, final state) {
-                    if (state.isNotEmpty) {
-                      if (controller == null || nodeId != state.firstOrNull) {
-                        nodeId = state.firstOrNull;
-                        controller = TextEditingController()
-                          ..text = widget.map[widget.variable.id] != null &&
-                                  widget.map[widget.variable.id]?['label'] !=
-                                      null
-                              ? widget.map[widget.variable.id]['label']
-                                  as String
-                              : '';
-                      }
-                    }
-                    return CTextField(
-                      //text: text,
-                      controller: controller!,
-                      placeholder: 'Write here',
-                      callBack: (final value) {
-                        widget.map[widget.variable.id ?? ''] = {
-                          'dataset': dropdownDataset,
-                          'label': value,
-                        };
-                        widget.callBackParameters(widget.map);
-                      },
-                    );
-                  },
-                ),
-              if (dropdownDataset != null && dropdownDataset != 'Text')
-                CDropdown(
-                  value: listSecondDropwdown.firstOrNull != null
-                      ? listSecondDropwdown.firstOrNull!.keys
-                                  .map((final key) => key)
-                                  .toSet()
-                                  .toList()
-                                  .contains(dropdown ?? '') ||
-                              listSecondDropwdown
-                                  .map((final map) => map.keys.firstOrNull)
-                                  .toSet()
-                                  .toList()
-                                  .contains(dropdown ?? '')
-                          ? dropdown
-                          : null
-                      : null,
-                  items: listSecondDropwdown.firstOrNull != null
-                      ? listSecondDropwdown.firstOrNull!.keys
-                          .map((final key) => key)
-                          .toSet()
-                          .toList()
-                      : [],
-                  onChange: (final String? newValue) {
-                    if (newValue != null) {
-                      setState(() {
-                        dropdown = newValue;
-                      });
-                      widget.map[widget.variable.id ?? ''] = {
-                        'dataset': dropdownDataset,
-                        'label': newValue,
-                      };
-                      widget.callBackParameters(widget.map);
-                    }
-                  },
-                ),
-            ],
+    var listSecondDropwdown = <Map<String, dynamic>>[];
+    if (dropdownDataset != null) {
+      final temp = listDataset.firstWhereOrNull(
+        (final element) => element.getName == dropdownDataset,
+      );
+      if (temp != null) {
+        listSecondDropwdown = temp.getMap;
+      }
+    }
+    final items = listDataset
+        .where(
+          (final element) =>
+              element.getMap.isNotEmpty || element.getName == 'Text',
+        )
+        .map((final e) => e.getName)
+        .toSet()
+        .toList();
+    return Padding(
+      padding: const EdgeInsets.only(bottom: 16),
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          Padding(
+            padding: const EdgeInsets.only(bottom: 8),
+            child: TParagraph(
+              widget.variable.name,
+            ),
           ),
-        );
-      },
+          CDropdown(
+            value: dropdownDataset,
+            items: items,
+            onChange: (final String? newValue) {
+              setState(() {
+                dropdownDataset = newValue;
+                listSecondDropwdown = [
+                  ...listDataset
+                      .where(
+                        (final element) => element.getName == dropdownDataset,
+                      )
+                      .map(
+                        (final e) =>
+                            e.getMap.firstOrNull ?? <String, dynamic>{},
+                      ),
+                ];
+              });
+            },
+          ),
+          const Gap(Grid.small),
+          if (dropdownDataset != null && dropdownDataset == 'Text')
+            BlocBuilder<FocusBloc, List<int>>(
+              builder: (final context, final state) {
+                if (state.isNotEmpty) {
+                  if (controller == null || nodeId != state.firstOrNull) {
+                    nodeId = state.firstOrNull;
+                    controller = TextEditingController()
+                      ..text = widget.map[widget.variable.id] != null &&
+                              widget.map[widget.variable.id]?['label'] != null
+                          ? widget.map[widget.variable.id]['label'] as String
+                          : '';
+                  }
+                }
+                return CTextField(
+                  //text: text,
+                  controller: controller!,
+                  placeholder: 'Write here',
+                  callBack: (final value) {
+                    widget.map[widget.variable.id ?? ''] = {
+                      'dataset': dropdownDataset,
+                      'label': value,
+                    };
+                    widget.callBackParameters(widget.map);
+                  },
+                );
+              },
+            ),
+          if (dropdownDataset != null && dropdownDataset != 'Text')
+            CDropdown(
+              value: listSecondDropwdown.firstOrNull != null
+                  ? listSecondDropwdown.firstOrNull!.keys
+                              .map((final key) => key)
+                              .toSet()
+                              .toList()
+                              .contains(dropdown ?? '') ||
+                          listSecondDropwdown
+                              .map((final map) => map.keys.firstOrNull)
+                              .whereNotNull()
+                              .toSet()
+                              .toList()
+                              .contains(dropdown ?? '')
+                      ? dropdown
+                      : null
+                  : null,
+              items: listSecondDropwdown.firstOrNull != null
+                  ? listSecondDropwdown.firstOrNull!.keys
+                      .map((final key) => key)
+                      .whereNotNull()
+                      .toSet()
+                      .toList()
+                  : [],
+              onChange: (final String? newValue) {
+                if (newValue != null) {
+                  setState(() {
+                    dropdown = newValue;
+                  });
+                  widget.map[widget.variable.id ?? ''] = {
+                    'dataset': dropdownDataset,
+                    'label': newValue,
+                  };
+                  widget.callBackParameters(widget.map);
+                }
+              },
+            ),
+        ],
+      ),
     );
   }
 }

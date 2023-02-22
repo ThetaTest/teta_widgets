@@ -66,6 +66,7 @@ class FSize extends Equatable {
         sizeValue = sizeTablet ?? size ?? '0';
         unitValue = unitTablet ?? unit;
       } else {
+        sizeValue = sizeDesktop ?? size ?? '0';
         unitValue = unitDesktop ?? unit;
       }
     } else {

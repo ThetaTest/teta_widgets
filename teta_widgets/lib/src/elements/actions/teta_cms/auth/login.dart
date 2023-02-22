@@ -20,21 +20,6 @@ class FATetaCMSLogin {
     final Map<String, dynamic>? paramsToSend,
     final TetaProvider provider,
   ) async {
-    final prj = BlocProvider.of<FocusProjectCubit>(context).state!;
-
-    // final page = BlocProvider.of<PageCubit>(context).state;
-    // final status = takeStateFrom(page, 'status');
-
-    /*
-    await showDialog<void>(
-      barrierDismissible: false,
-      context: context,
-      builder: (final context) => PrivacyTermsDialog(
-        config: prj.config!,
-      ),
-    );
-    */
-
     await TetaCMS.instance.auth.signIn(
       provider: provider,
       fromEditor: true,

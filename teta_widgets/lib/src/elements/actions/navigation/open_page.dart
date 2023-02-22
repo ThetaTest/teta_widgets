@@ -61,61 +61,60 @@ class FActionNavigationOpenPage {
       PageObject? page;
       page =
           pages.firstWhereOrNull((final element) => element.name == nameOfPage);
-      if (page != null) {
-        final list = await TetaDB.instance.client.selectList(
-          'nodes',
-          match: <String, dynamic>{
-            'page_id': page.id,
-          },
+      if (page == null) return;
+      final list = await TetaDB.instance.client.selectList(
+        'nodes',
+        match: <String, dynamic>{
+          'page_id': page.id,
+        },
+      );
+      if (list.error != null) {
+        Logger.printError(
+          'Error fetching nodes FActionNavigationOpenPage func, error: ${list.error?.message}',
         );
-        if (list.error != null) {
-          Logger.printError(
-            'Error fetching nodes FActionNavigationOpenPage func, error: ${list.error?.message}',
-          );
-        }
-        final nodes = <CNode>[];
-        for (final e in list.data ?? <dynamic>[]) {
-          nodes.add(
-            CNode.fromJson(
-              e as Map<String, dynamic>,
-              page.id,
-            ),
-          );
-        }
-        final scaffold = sl.get<NodeRendering>().renderTree(nodes);
-        page = page.copyWith(flatList: nodes, scaffold: scaffold);
-
-        await Navigator.push<void>(
-          context,
-          MaterialPageRoute(
-            builder: (final c) => BlocProvider(
-              create: (final c) => PageCubit(
-                sl.get(),
-                sl.get(),
-                sl.get(),
-                sl.get(),
-              )..onFocus(page: page!, forPlay: true),
-              child: PlayCubitsValueInitializer(
-                originalContext: context,
-                child: page!.scaffold.toWidget(
-                  state: state.copyWith(
-                    forPlay: true,
-                    states: page.defaultStates,
-                    dataset: [],
-                    params: passParamsToNewPage(
-                      page.defaultParams,
-                      currentPage.params,
-                      paramsToSend,
-                      state.dataset,
-                      loop: state.loop,
-                    ),
-                  ),
-                ),
-              ).build(),
-            ),
+      }
+      final nodes = <CNode>[];
+      for (final e in list.data ?? <dynamic>[]) {
+        nodes.add(
+          CNode.fromJson(
+            e as Map<String, dynamic>,
+            page.id,
           ),
         );
       }
+      final scaffold = sl.get<NodeRendering>().renderTree(nodes);
+      page = page.copyWith(flatList: nodes, scaffold: scaffold);
+      await Navigator.push<void>(
+        context,
+        MaterialPageRoute(
+          builder: (final c) => BlocProvider(
+            lazy: false,
+            create: (final c) => PageCubit(
+              sl.get(),
+              sl.get(),
+              sl.get(),
+              sl.get(),
+            )..onFocus(page: page!, forPlay: true),
+            child: PlayCubitsValueInitializer(
+              originalContext: context,
+              child: page!.scaffold.toWidget(
+                state: state.copyWith(
+                  forPlay: true,
+                  states: page.defaultStates,
+                  dataset: [],
+                  params: passParamsToNewPage(
+                    page.defaultParams,
+                    currentPage.params,
+                    paramsToSend,
+                    state.dataset,
+                    loop: state.loop,
+                  ),
+                ),
+              ),
+            ).build(),
+          ),
+        ),
+      );
     } catch (e) {
       if (kDebugMode) {
         // ignore: avoid_print
