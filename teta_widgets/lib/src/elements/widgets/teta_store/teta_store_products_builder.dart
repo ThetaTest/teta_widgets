@@ -48,11 +48,6 @@ class WTetaStoreProductsBuilderState extends State<WTetaStoreProductsBuilder> {
 
   @override
   Widget build(final BuildContext context) {
-    _getTetaStoreProducts().whenComplete(() {
-      if (mounted) {
-        setState(() {});
-      }
-    });
     return TetaWidget(
       state: widget.state,
       child: ListView.builder(
@@ -84,7 +79,14 @@ class WTetaStoreProductsBuilderState extends State<WTetaStoreProductsBuilder> {
       if (r.data != null) {
         final datasetObject = DatasetObject(
           name: 'products',
-          map: r.data!.map((final e) => e.toJson()).toList(growable: true),
+          map: r.data!
+              .map(
+                (final e) => <String, dynamic>{
+                  '_id': e.id,
+                  ...e.toJson(),
+                },
+              )
+              .toList(growable: true),
         );
         addDataset(context, widget.state.dataset, datasetObject);
       } else {

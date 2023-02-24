@@ -4,6 +4,8 @@
 import 'package:collection/collection.dart';
 // Flutter imports:
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:teta_cms/teta_cms.dart';
 // Package imports:
 import 'package:teta_core/teta_core.dart';
 import 'package:teta_widgets/src/elements/nodes/node.dart';
@@ -18,17 +20,13 @@ class FActionTetaStoreAddProductsListItemToCart {
     final List<DatasetObject> datasets,
     final int? loop,
   ) async {
-    const _style = TextStyle(
-      fontWeight: FontWeight.bold,
-      color: Colors.white,
-      fontSize: 20,
-    );
-    //get the dataset --> always called products
-    final dataset = datasets
+    final dataset = (context.read<PageCubit>().state as PageLoaded)
+        .datasets
         .firstWhereOrNull((final element) => element.getName == 'products');
-    //take the automatic id and loop foreach elements and take the id, this is used for purchase
-    final id = dataset!.getMap[loop ?? 0]['_id'] as String;
-    // TODO(andrei): create a special add to cart button that will transform into a minus sign or change text to remove from cart if the item is in cart
+    Logger.printWarning('${dataset?.getMap}');
+    final prodId = dataset?.getMap[loop ?? 0]['_id'] as String?;
+    if (prodId == null) return;
+    await TetaCMS.instance.store.cart.insert(prodId);
   }
 
   static String toCode(

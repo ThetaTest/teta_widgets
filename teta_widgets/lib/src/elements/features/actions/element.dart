@@ -248,9 +248,9 @@ class FActionElement extends Equatable {
     actionTheme =
         convertDropdownToValue(ActionTheme.values, doc['aTh'] as String?)
             as ActionTheme?;
-    actionTetaStore =
-        convertDropdownToValue(ActionTetaStore.values, doc['sPK'] as String?)
-            as ActionTetaStore?;
+    actionTetaStore = convertDropdownToValue(
+            ActionTetaStore.values, doc['aTetaStore'] as String?)
+        as ActionTetaStore?;
     actionGoogleMaps = convertDropdownToValue(
       ActionGoogleMaps.values,
       doc['actionGoogleMaps'] as String?,
