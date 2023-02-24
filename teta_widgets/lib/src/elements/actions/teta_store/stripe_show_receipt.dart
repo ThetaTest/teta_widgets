@@ -3,12 +3,11 @@
 
 // Flutter imports:
 import 'package:flutter/material.dart';
-
 // Package imports:
 import 'package:teta_core/teta_core.dart';
 import 'package:teta_widgets/src/elements/nodes/node.dart';
 
-class FActionStripeShowReceipt {
+class FActionTetaStoreShowReceipt {
   static Future action(
     final BuildContext context,
     final List<VariableObject> states,
@@ -23,8 +22,7 @@ class FActionStripeShowReceipt {
     final CNode body, {
     required final String paymentIntentId,
   }) {
-   return
-     '''
+    return '''
      await launchUrl(
       Uri.parse(
         (await TetaCMS.instance.store.getReceiptLink(

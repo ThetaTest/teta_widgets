@@ -81,10 +81,6 @@ import 'package:teta_widgets/src/elements/actions/state/phone_validator.dart';
 import 'package:teta_widgets/src/elements/actions/state/pick_file.dart';
 import 'package:teta_widgets/src/elements/actions/state/unfocus.dart';
 import 'package:teta_widgets/src/elements/actions/state/website_validator.dart';
-import 'package:teta_widgets/src/elements/actions/stripe/stripe_add_list_item_to_cart.dart';
-import 'package:teta_widgets/src/elements/actions/stripe/stripe_cart_buy_all.dart';
-import 'package:teta_widgets/src/elements/actions/stripe/stripe_cart_remove_list_item_from_cart.dart';
-import 'package:teta_widgets/src/elements/actions/stripe/stripe_show_receipt.dart';
 import 'package:teta_widgets/src/elements/actions/supabase/delete.dart';
 import 'package:teta_widgets/src/elements/actions/supabase/function_invoke.dart';
 import 'package:teta_widgets/src/elements/actions/supabase/insert.dart';
@@ -99,6 +95,10 @@ import 'package:teta_widgets/src/elements/actions/teta_cms/auth/logout.dart';
 import 'package:teta_widgets/src/elements/actions/teta_cms/database/delete.dart';
 import 'package:teta_widgets/src/elements/actions/teta_cms/database/insert.dart';
 import 'package:teta_widgets/src/elements/actions/teta_cms/database/update.dart';
+import 'package:teta_widgets/src/elements/actions/teta_store/stripe_add_list_item_to_cart.dart';
+import 'package:teta_widgets/src/elements/actions/teta_store/stripe_cart_buy_all.dart';
+import 'package:teta_widgets/src/elements/actions/teta_store/stripe_cart_remove_list_item_from_cart.dart';
+import 'package:teta_widgets/src/elements/actions/teta_store/stripe_show_receipt.dart';
 import 'package:teta_widgets/src/elements/actions/theme/change_theme.dart';
 import 'package:teta_widgets/src/elements/actions/translator/translate.dart';
 import 'package:teta_widgets/src/elements/actions/webview/back.dart';
@@ -137,7 +137,6 @@ class FActionElement extends Equatable {
     this.actionQonversion,
     this.actionMixpanel,
     this.actionTheme,
-    this.actionStripe,
     this.actionGoogleMaps,
     this.actionType,
     this.actionGesture,
@@ -151,6 +150,7 @@ class FActionElement extends Equatable {
     this.actionSupabaseStorage,
     this.actionTetaDB,
     this.actionTetaAuth,
+    this.actionTetaStore,
     this.actionCustomHttpRequest,
     this.actionApiCalls,
     this.actionCamera,
@@ -248,9 +248,9 @@ class FActionElement extends Equatable {
     actionTheme =
         convertDropdownToValue(ActionTheme.values, doc['aTh'] as String?)
             as ActionTheme?;
-    actionStripe =
-        convertDropdownToValue(ActionStripe.values, doc['sPK'] as String?)
-            as ActionStripe?;
+    actionTetaStore =
+        convertDropdownToValue(ActionTetaStore.values, doc['sPK'] as String?)
+            as ActionTetaStore?;
     actionGoogleMaps = convertDropdownToValue(
       ActionGoogleMaps.values,
       doc['actionGoogleMaps'] as String?,
@@ -542,7 +542,7 @@ class FActionElement extends Equatable {
   ActionBraintree? actionBraintree;
   ActionTranslator? actionTranslator;
   ActionTheme? actionTheme;
-  ActionStripe? actionStripe;
+  ActionTetaStore? actionTetaStore;
   ActionGoogleMaps? actionGoogleMaps;
   int? customFunctionId;
   ActionSupabaseAuth? actionSupabaseAuth;
@@ -687,6 +687,7 @@ class FActionElement extends Equatable {
           'Navigation',
           'Teta database',
           'Teta auth',
+          'Teta store',
           'Custom Http Request',
           'Api Calls',
           'Theme',
@@ -814,8 +815,8 @@ class FActionElement extends Equatable {
     return enumsToListString(ActionTranslator.values);
   }
 
-  static List<String> getStripe(final ProjectConfigModel config) {
-    return enumsToListString(ActionStripe.values);
+  static List<String> getTetaStore() {
+    return enumsToListString(ActionTetaStore.values);
   }
 
   static List<String> getGoogleMaps(final ProjectConfigModel config) {
@@ -903,9 +904,6 @@ class FActionElement extends Equatable {
     if (type == ActionType.mixpanel) {
       return 'Mixpanel';
     }
-    if (type == ActionType.stripe) {
-      return 'Stripe';
-    }
     if (type == ActionType.customFunctions) {
       return 'Custom Functions';
     }
@@ -948,9 +946,6 @@ class FActionElement extends Equatable {
     }
     if (value == 'Mixpanel') {
       return ActionType.mixpanel;
-    }
-    if (value == 'Stripe') {
-      return ActionType.stripe;
     }
 
     if (value == 'Google Maps') {
@@ -1012,7 +1007,7 @@ class FActionElement extends Equatable {
         'aFirebaseAnalytics': convertValueToDropdown(actionFirebaseAnalytics),
         'aFirebaseMessages': convertValueToDropdown(actionFirebaseMessages),
         'aTrans': convertValueToDropdown(actionTranslator),
-        'sPK': convertValueToDropdown(actionStripe),
+        'aTetaStore': convertValueToDropdown(actionTetaStore),
         'actionGoogleMaps': convertValueToDropdown(actionGoogleMaps),
         'aTDb': convertValueToDropdown(actionTetaDB),
         'aTAu': convertValueToDropdown(actionTetaAuth),
@@ -1149,7 +1144,6 @@ class FActionElement extends Equatable {
     final String? value,
     final CNode scaffold,
   ) async {
-    Logger.printSuccess(actionType.toString());
     switch (actionType) {
       case ActionType.theme:
         switch (actionTheme) {
@@ -1780,11 +1774,11 @@ class FActionElement extends Equatable {
             );
         }
         break;
-      case ActionType.stripe:
-        switch (actionStripe) {
-          case ActionStripe.showReceipt:
+      case ActionType.tetaStore:
+        switch (actionTetaStore) {
+          case ActionTetaStore.showReceipt:
             await actionS(
-              () => FActionStripeShowReceipt.action(
+              () => FActionTetaStoreShowReceipt.action(
                 context,
                 state.states,
                 stateName,
@@ -1796,9 +1790,9 @@ class FActionElement extends Equatable {
             );
 
             break;
-          case ActionStripe.buyCartItems:
+          case ActionTetaStore.buyCartItems:
             await actionS(
-              () => FActionStripeCartBuyAll.action(
+              () => FActionTetaStoreCartBuyAll.action(
                 context,
                 state.states,
                 stateName,
@@ -1810,9 +1804,9 @@ class FActionElement extends Equatable {
             );
 
             break;
-          case ActionStripe.addProductsListItemToCart:
+          case ActionTetaStore.addProductsListItemToCart:
             await actionS(
-              () => FActionStripeAddProductsListItemToCart.action(
+              () => FActionTetaStoreAddProductsListItemToCart.action(
                 context,
                 state.states,
                 stateName,
@@ -1824,9 +1818,9 @@ class FActionElement extends Equatable {
             );
 
             break;
-          case ActionStripe.removeCartListItemFromCart:
+          case ActionTetaStore.removeCartListItemFromCart:
             await actionS(
-              () => FActionStripeCartRemoveProductsListItemFromCart.action(
+              () => FActionTetaStoreCartRemoveProductsListItemFromCart.action(
                 context,
                 state.states,
                 stateName,
@@ -3187,11 +3181,11 @@ class FActionElement extends Equatable {
             return '';
         }
         break;
-      case ActionType.stripe:
-        switch (actionStripe) {
-          case ActionStripe.showReceipt:
+      case ActionType.tetaStore:
+        switch (actionTetaStore) {
+          case ActionTetaStore.showReceipt:
             return codeS(
-              FActionStripeShowReceipt.toCode(
+              FActionTetaStoreShowReceipt.toCode(
                 context,
                 stateName,
                 body,
@@ -3203,9 +3197,9 @@ class FActionElement extends Equatable {
               ),
               context,
             );
-          case ActionStripe.buyCartItems:
+          case ActionTetaStore.buyCartItems:
             return codeS(
-              FActionStripeCartBuyAll.toCode(
+              FActionTetaStoreCartBuyAll.toCode(
                 context,
                 stateName,
                 body,
@@ -3252,18 +3246,18 @@ class FActionElement extends Equatable {
               ),
               context,
             );
-          case ActionStripe.addProductsListItemToCart:
+          case ActionTetaStore.addProductsListItemToCart:
             return codeS(
-              FActionStripeAddProductsListItemToCart.toCode(
+              FActionTetaStoreAddProductsListItemToCart.toCode(
                 context,
                 stateName,
                 body,
               ),
               context,
             );
-          case ActionStripe.removeCartListItemFromCart:
+          case ActionTetaStore.removeCartListItemFromCart:
             return codeS(
-              FActionStripeCartRemoveProductsListItemFromCart.toCode(
+              FActionTetaStoreCartRemoveProductsListItemFromCart.toCode(
                 context,
                 stateName,
                 body,

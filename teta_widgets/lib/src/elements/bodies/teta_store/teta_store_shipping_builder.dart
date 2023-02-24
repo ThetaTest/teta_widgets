@@ -8,7 +8,7 @@ import 'package:teta_core/gen/assets.gen.dart';
 import 'package:teta_widgets/src/core/teta_widget/index.dart';
 import 'package:teta_widgets/src/elements/code/snippets.dart';
 // Project imports:
-import 'package:teta_widgets/src/elements/code/templates/stripe_transactions_builder_template.dart';
+import 'package:teta_widgets/src/elements/code/templates/teta_store/teta_store_shipping_builder_template.dart';
 import 'package:teta_widgets/src/elements/controls/control_model.dart';
 import 'package:teta_widgets/src/elements/controls/key_constants.dart';
 import 'package:teta_widgets/src/elements/features/dataset.dart';
@@ -18,18 +18,18 @@ import 'package:teta_widgets/src/elements/nodes/children_enum.dart';
 import 'package:teta_widgets/src/elements/nodes/enum.dart';
 import 'package:teta_widgets/src/elements/nodes/node.dart';
 import 'package:teta_widgets/src/elements/nodes/node_body.dart';
-import 'package:teta_widgets/src/elements/widgets/stripe_transactions_builder.dart';
+import 'package:teta_widgets/src/elements/widgets/teta_store/teta_store_shipping_builder.dart';
 
-const _globalType = NType.stripeTransactionsBuilder;
+const _globalType = NType.tetaStoreShippingBuilder;
 
 /// Intrinsic States of ListView Builder
-final stripeTransactionsBuilder = IntrinsicStates(
+final tetaStoreShippingBuilder = IntrinsicStates(
   nodeIcon: Assets.wIcons.supabaseLogoIcon,
   nodeVideo: null,
   nodeDescription: null,
   advicedChildren: [],
   blockedTypes: [],
-  synonymous: ['stripe', 'scroll', 'vertical list', 'transactions'],
+  synonymous: ['stripe', 'shipping', 'vertical list', 'products'],
   advicedChildrenCanHaveAtLeastAChild: [],
   displayName: NodeType.name(_globalType),
   type: _globalType,
@@ -43,7 +43,7 @@ final stripeTransactionsBuilder = IntrinsicStates(
 );
 
 /// ListView Builder's body
-class StripeTransactionsBuilderBody extends NodeBody {
+class TetaStoreShippingBuilderBody extends NodeBody {
   @override
   // ignore: overridden_fields
   Map<String, dynamic> attributes = <String, dynamic>{
@@ -76,11 +76,11 @@ class StripeTransactionsBuilderBody extends NodeBody {
     final CNode? child,
     final List<CNode>? children,
   }) =>
-      WStripeTransactionsBuilder(
+      WTetaStoreShippingBuilder(
         ValueKey(
           '''
       ${state.toKey}
-      ${child ?? children}
+            ${child ?? children}
       ${(attributes[DBKeys.datasetInput] as FDataset).toJson()}
       ${attributes[DBKeys.isVertical] as bool}
       ${attributes[DBKeys.flag] as bool}
@@ -106,7 +106,7 @@ class StripeTransactionsBuilderBody extends NodeBody {
         context,
         node,
         pageId,
-        StripeTransactionsBuilderCodeTemplate.toCode(context, this, child),
+        TetaStoreShippingBuilderCodeTemplate.toCode(context, this, child),
         loop ?? 0,
       );
 }

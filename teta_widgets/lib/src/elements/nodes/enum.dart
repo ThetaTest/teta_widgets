@@ -136,11 +136,12 @@ enum NType {
   supabaseFutureBuilder,
   supabaseStreamBuilder,
   supabaseLoggedUser,
-  //Stripe
-  stripeProductsBuilder,
-  stripeShippingBuilder,
-  stripeCartItemsBuilder,
-  stripeTransactionsBuilder,
+
+  //Teta Store
+  tetaStoreProductsBuilder,
+  tetaStoreShippingBuilder,
+  tetaStoreCartItemsBuilder,
+  tetaStoreTransactionsBuilder,
 
   // RevenueCat
   revenueCatProducts,

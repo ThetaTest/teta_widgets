@@ -8,8 +8,8 @@ import 'package:teta_widgets/src/elements/nodes/enum.dart';
 import 'package:teta_widgets/src/elements/nodes/node.dart';
 import 'package:teta_widgets/src/elements/nodes/node_body.dart';
 
-/// Generates the code for StripeProductsBuilder widget
-class StripeProductsBuilderCodeTemplate {
+/// Generates the code for StripeCartItems widget
+class TetaStoreCartItemsBuilderTemplate {
   static Future<String> toCode(
     final BuildContext context,
     final NodeBody body,
@@ -27,7 +27,7 @@ class StripeProductsBuilderCodeTemplate {
     }
     final code = '''
    FutureBuilder<TetaProductsResponse>(
-      future: TetaCMS.instance.store.products.all(),
+      future: TetaCMS.instance.store.cart.get(),
       builder: ((context, snapshot) {
         if (!snapshot.hasData) {
           return Center(
@@ -36,11 +36,11 @@ class StripeProductsBuilderCodeTemplate {
         } else {
           final r = snapshot.data?.data;
           if(r != null) {
-          this.datasets['products'] = r.map((final e) => e.toJson()).toList(growable: true);
+          this.datasets['cart'] = r.map((final e) => e.toJson()).toList(growable: true);
           return ListView.builder(
             $_scrollDirection
             shrinkWrap: $shrinkWrap,
-            itemCount: this.datasets['products'].length,
+            itemCount: this.datasets['cart'].length,
             itemBuilder: (context, index) {
               return $childCode;
             },
@@ -62,11 +62,11 @@ class StripeProductsBuilderCodeTemplate {
   }
 
   static void testCode() {
-    group('Stripe Products Builder toCode test', () {
+    group('Stripe Cart Items Builder toCode test', () {
       test(
-        'Stripe Products Builder: default code',
+        'Stripe Cart Items Builder: default code',
         () {
-          final body = NodeBody.get(NType.stripeProductsBuilder);
+          final body = NodeBody.get(NType.tetaStoreCartItemsBuilder);
           final _scrollDirection =
               !(body.attributes[DBKeys.isVertical] as bool? ?? false)
                   ? 'scrollDirection: Axis.horizontal,'
@@ -77,7 +77,7 @@ class StripeProductsBuilderCodeTemplate {
           expect(
             FormatterTest.format('''
 FutureBuilder<TetaProductsResponse>(
-      future: TetaCMS.instance.store.products.all(),
+      future: TetaCMS.instance.store.getCartProducts(),
       builder: ((context, snapshot) {
         if (!snapshot.hasData) {
           return Center(
@@ -86,11 +86,11 @@ FutureBuilder<TetaProductsResponse>(
         } else {
           final r = snapshot.data?.data;
           if(r != null) {
-          this.datasets['products'] = r.map((final e) => e.toJson()).toList(growable: true);
+          this.datasets['cart'] = r.map((final e) => e.toJson()).toList(growable: true);
           return ListView.builder(
             $_scrollDirection
             shrinkWrap: $shrinkWrap,
-            itemCount: this.datasets['products'].length,
+            itemCount: this.datasets['cart'].length,
             itemBuilder: (context, index) {
               return $childCode;
             },

@@ -1,19 +1,19 @@
 // Flutter imports:
 // ignore_for_file: public_member_api_docs
 
+// Flutter imports:
+
 import 'package:flutter/material.dart';
 import 'package:teta_cms/teta_cms.dart';
-
 // Package imports:
 import 'package:teta_core/teta_core.dart';
 import 'package:teta_widgets/src/core/teta_widget/index.dart';
-
 // Project imports:
 import 'package:teta_widgets/src/elements/index.dart';
 
-class WStripeCartItemsBuilder extends StatefulWidget {
+class WTetaStoreProductsBuilder extends StatefulWidget {
   /// Returns a ListView.builder in Teta
-  const WStripeCartItemsBuilder(
+  const WTetaStoreProductsBuilder(
     final Key? key, {
     required this.state,
     required this.child,
@@ -29,24 +29,29 @@ class WStripeCartItemsBuilder extends StatefulWidget {
   final FDataset value;
 
   @override
-  _WStripeCartItemsBuilderState createState() => _WStripeCartItemsBuilderState();
+  WTetaStoreProductsBuilderState createState() =>
+      WTetaStoreProductsBuilderState();
 }
 
-class _WStripeCartItemsBuilderState extends State<WStripeCartItemsBuilder> {
+class WTetaStoreProductsBuilderState extends State<WTetaStoreProductsBuilder> {
   bool isLoading = true;
 
   @override
   void initState() {
-    _getStripeProducts().whenComplete(() {
-      setState(() {});
+    _getTetaStoreProducts().whenComplete(() {
+      if (mounted) {
+        setState(() {});
+      }
     });
     super.initState();
   }
 
   @override
   Widget build(final BuildContext context) {
-    _getStripeProducts().whenComplete(() {
-      setState(() {});
+    _getTetaStoreProducts().whenComplete(() {
+      if (mounted) {
+        setState(() {});
+      }
     });
     return TetaWidget(
       state: widget.state,
@@ -57,7 +62,7 @@ class _WStripeCartItemsBuilderState extends State<WStripeCartItemsBuilder> {
         scrollDirection: widget.isVertical ? Axis.vertical : Axis.horizontal,
         itemCount: widget.state.dataset
             .firstWhere(
-              (final element) => element.getName.contains('cart'),
+              (final element) => element.getName.contains('products'),
               orElse: DatasetObject.empty,
             )
             .getMap
@@ -73,24 +78,22 @@ class _WStripeCartItemsBuilderState extends State<WStripeCartItemsBuilder> {
     );
   }
 
-  Future _getStripeProducts() async {
+  Future _getTetaStoreProducts() async {
     try {
-      final tetaCms = TetaCMS.instance;
-      final products = await tetaCms.store.cart.get();
-
-      if (products.data != null) {
+      final r = await TetaCMS.instance.store.products.getAll();
+      if (r.data != null) {
         final datasetObject = DatasetObject(
-          name: 'cart',
-          map: products.data!.map((final e) => e.toJson()).toList(growable: true),
+          name: 'products',
+          map: r.data!.map((final e) => e.toJson()).toList(growable: true),
         );
         addDataset(context, widget.state.dataset, datasetObject);
       } else {
         debugPrint(
-          'Error in calc WStripeProductsCartList -> ${products.error?.message ?? 'no message'}',
+          'Error in calc WTetaStoreProductsList -> ${r.error?.message ?? 'no message'}',
         );
       }
     } catch (e) {
-      debugPrint('Error in calc WStripeProductsCartList -> $e');
+      debugPrint('Error in calc WTetaStoreProductsList -> $e');
     }
   }
 }

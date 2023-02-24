@@ -7,8 +7,8 @@ import 'package:flutter/material.dart';
 import 'package:teta_core/gen/assets.gen.dart';
 import 'package:teta_widgets/src/core/teta_widget/index.dart';
 import 'package:teta_widgets/src/elements/code/snippets.dart';
+import 'package:teta_widgets/src/elements/code/templates/teta_store/teta_store_cart_items_builder_template.dart';
 // Project imports:
-import 'package:teta_widgets/src/elements/code/templates/stripe_shipping_builder_template.dart';
 import 'package:teta_widgets/src/elements/controls/control_model.dart';
 import 'package:teta_widgets/src/elements/controls/key_constants.dart';
 import 'package:teta_widgets/src/elements/features/dataset.dart';
@@ -18,18 +18,25 @@ import 'package:teta_widgets/src/elements/nodes/children_enum.dart';
 import 'package:teta_widgets/src/elements/nodes/enum.dart';
 import 'package:teta_widgets/src/elements/nodes/node.dart';
 import 'package:teta_widgets/src/elements/nodes/node_body.dart';
-import 'package:teta_widgets/src/elements/widgets/stripe_shipping_builder.dart';
+import 'package:teta_widgets/src/elements/widgets/teta_store/teta_store_cart_items_builder.dart';
 
-const _globalType = NType.stripeShippingBuilder;
+const _globalType = NType.tetaStoreCartItemsBuilder;
 
 /// Intrinsic States of ListView Builder
-final stripeShippingBuilder = IntrinsicStates(
+final tetaStoreCartItemsBuilderBodyIntrinsicStates = IntrinsicStates(
   nodeIcon: Assets.wIcons.supabaseLogoIcon,
   nodeVideo: null,
   nodeDescription: null,
   advicedChildren: [],
   blockedTypes: [],
-  synonymous: ['stripe', 'shipping', 'vertical list', 'products'],
+  synonymous: [
+    'stripe',
+    'scroll',
+    'vertical list',
+    'products',
+    'cart',
+    'checkout'
+  ],
   advicedChildrenCanHaveAtLeastAChild: [],
   displayName: NodeType.name(_globalType),
   type: _globalType,
@@ -43,7 +50,7 @@ final stripeShippingBuilder = IntrinsicStates(
 );
 
 /// ListView Builder's body
-class StripeShippingBuilderBody extends NodeBody {
+class TetaStoreCartItemsBuilderBody extends NodeBody {
   @override
   // ignore: overridden_fields
   Map<String, dynamic> attributes = <String, dynamic>{
@@ -76,15 +83,15 @@ class StripeShippingBuilderBody extends NodeBody {
     final CNode? child,
     final List<CNode>? children,
   }) =>
-      WStripeShippingBuilder(
+      WTetaStoreCartItemsBuilder(
         ValueKey(
           '''
-      ${state.toKey}
-            ${child ?? children}
-      ${(attributes[DBKeys.datasetInput] as FDataset).toJson()}
-      ${attributes[DBKeys.isVertical] as bool}
-      ${attributes[DBKeys.flag] as bool}
-      ''',
+          ${state.toKey}
+          ${child ?? children}
+          ${(attributes[DBKeys.datasetInput] as FDataset).toJson()}
+          ${attributes[DBKeys.isVertical] as bool}
+          ${attributes[DBKeys.flag] as bool}
+          ''',
         ),
         state: state,
         child: child,
@@ -106,7 +113,7 @@ class StripeShippingBuilderBody extends NodeBody {
         context,
         node,
         pageId,
-        StripeShippingBuilderCodeTemplate.toCode(context, this, child),
+        TetaStoreCartItemsBuilderTemplate.toCode(context, this, child),
         loop ?? 0,
       );
 }

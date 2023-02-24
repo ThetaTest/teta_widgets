@@ -148,9 +148,6 @@ class ActionControlState extends State<ActionControl> {
                                             (action is ActionRevenueCat)
                                                 ? action
                                                 : null,
-                                        actionStripe: (action is ActionStripe)
-                                            ? action
-                                            : null,
                                         actionCamera: (action is ActionCamera)
                                             ? action
                                             : null,
@@ -172,6 +169,10 @@ class ActionControlState extends State<ActionControl> {
                                                 : null,
                                         actionTetaDB:
                                             (action is ActionTetaCmsDB)
+                                                ? action
+                                                : null,
+                                        actionTetaStore:
+                                            (action is ActionTetaStore)
                                                 ? action
                                                 : null,
                                         actionCustomHttpRequest:
@@ -361,6 +362,12 @@ class __NewActionAlertState extends State<_NewActionAlert> {
         title: 'Teta CMS',
         actionType: ActionType.tetaDatabase,
         options: FActionElement.getTetaDB(),
+        type: ActionTetaCmsDB.values,
+      ),
+      _SelectionClass(
+        title: 'Teta Store',
+        actionType: ActionType.tetaStore,
+        options: FActionElement.getTetaStore(),
         type: ActionTetaCmsDB.values,
       ),
       _SelectionClass(

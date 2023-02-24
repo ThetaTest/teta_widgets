@@ -10,7 +10,7 @@ import 'package:teta_widgets/src/elements/nodes/node.dart';
 
 //pk_test_51KqdzMGPvMnMI31y86lGM16w4HD9XITvjxuBMiQ7c74Q2lo8g9M94nU2W149XcM0Nb86rzWxik0AdIHsyBuHayqh000Jvu5Te7
 //sk_test_51KqdzMGPvMnMI31yeQ2EIzATq6JtLElCHJuWoDp9JC8cxXSpVWZfOdQHdqdCO4Us4nlQYY8cVRx1lisCRk5zU2og00HM2MhVWL
-class FActionStripeAddProductsListItemToCart {
+class FActionTetaStoreAddProductsListItemToCart {
   static Future action(
     final BuildContext context,
     final List<VariableObject> states,

@@ -9,7 +9,7 @@ import 'package:teta_widgets/src/elements/nodes/node.dart';
 import 'package:teta_widgets/src/elements/nodes/node_body.dart';
 
 /// Generates the code for StripeProductsBuilder widget
-class StripeShippingBuilderCodeTemplate {
+class TetaStoreProductsBuilderCodeTemplate {
   static Future<String> toCode(
     final BuildContext context,
     final NodeBody body,
@@ -26,8 +26,8 @@ class StripeShippingBuilderCodeTemplate {
       childCode = await child.toCode(context);
     }
     final code = '''
-   FutureBuilder<TetaShippingResponse>(
-      future: TetaCMS.instance.store.getShippingMethods(),
+   FutureBuilder<TetaProductsResponse>(
+      future: TetaCMS.instance.store.products.getAll(),
       builder: ((context, snapshot) {
         if (!snapshot.hasData) {
           return Center(
@@ -36,7 +36,7 @@ class StripeShippingBuilderCodeTemplate {
         } else {
           final r = snapshot.data?.data;
           if(r != null) {
-          this.datasets['shipping'] = r.map((final e) => e.toJson()).toList(growable: true);
+          this.datasets['products'] = r.map((final e) => e.toJson()).toList(growable: true);
           return ListView.builder(
             $_scrollDirection
             shrinkWrap: $shrinkWrap,
@@ -66,7 +66,7 @@ class StripeShippingBuilderCodeTemplate {
       test(
         'Stripe Products Builder: default code',
         () {
-          final body = NodeBody.get(NType.stripeProductsBuilder);
+          final body = NodeBody.get(NType.tetaStoreProductsBuilder);
           final _scrollDirection =
               !(body.attributes[DBKeys.isVertical] as bool? ?? false)
                   ? 'scrollDirection: Axis.horizontal,'
@@ -77,7 +77,7 @@ class StripeShippingBuilderCodeTemplate {
           expect(
             FormatterTest.format('''
 FutureBuilder<TetaProductsResponse>(
-      future: TetaCMS.instance.store.products.all(),
+      future: TetaCMS.instance.store.products.getAll(),
       builder: ((context, snapshot) {
         if (!snapshot.hasData) {
           return Center(

@@ -1,21 +1,17 @@
 // Flutter imports:
 // ignore_for_file: public_member_api_docs
 
-// Flutter imports:
-
 import 'package:flutter/material.dart';
 import 'package:teta_cms/teta_cms.dart';
-
 // Package imports:
 import 'package:teta_core/teta_core.dart';
 import 'package:teta_widgets/src/core/teta_widget/index.dart';
-
 // Project imports:
 import 'package:teta_widgets/src/elements/index.dart';
 
-class WStripeTransactionsBuilder extends StatefulWidget {
+class WTetaStoreCartItemsBuilder extends StatefulWidget {
   /// Returns a ListView.builder in Teta
-  const WStripeTransactionsBuilder(
+  const WTetaStoreCartItemsBuilder(
     final Key? key, {
     required this.state,
     required this.child,
@@ -31,30 +27,27 @@ class WStripeTransactionsBuilder extends StatefulWidget {
   final FDataset value;
 
   @override
-  WStripeTransactionsBuilderState createState() => WStripeTransactionsBuilderState();
+  _WTetaStoreCartItemsBuilderState createState() =>
+      _WTetaStoreCartItemsBuilderState();
 }
 
-class WStripeTransactionsBuilderState extends State<WStripeTransactionsBuilder> {
+class _WTetaStoreCartItemsBuilderState
+    extends State<WTetaStoreCartItemsBuilder> {
   bool isLoading = true;
 
   @override
   void initState() {
-    _getTransactions().whenComplete(() {
-      if (mounted) {
-        setState(() {});
-      }
+    _getStripeProducts().whenComplete(() {
+      setState(() {});
     });
     super.initState();
   }
 
   @override
   Widget build(final BuildContext context) {
-    _getTransactions().whenComplete(() {
-      if (mounted) {
-        setState(() {});
-      }
+    _getStripeProducts().whenComplete(() {
+      setState(() {});
     });
-
     return TetaWidget(
       state: widget.state,
       child: ListView.builder(
@@ -64,15 +57,13 @@ class WStripeTransactionsBuilderState extends State<WStripeTransactionsBuilder> 
         scrollDirection: widget.isVertical ? Axis.vertical : Axis.horizontal,
         itemCount: widget.state.dataset
             .firstWhere(
-              (final element) => element.getName.contains('products'),
+              (final element) => element.getName.contains('cart'),
               orElse: DatasetObject.empty,
             )
             .getMap
             .length,
         itemBuilder: (final context, final index) => widget.child != null
-            ? widget.child!.toWidget(
-                state: widget.state.copyWith(loop: index),
-              )
+            ? widget.child!.toWidget(state: widget.state.copyWith(loop: index))
             : PlaceholderChildBuilder(
                 name: widget.state.node.intrinsicState.displayName,
                 node: widget.state.node,
@@ -82,20 +73,26 @@ class WStripeTransactionsBuilderState extends State<WStripeTransactionsBuilder> 
     );
   }
 
-  Future _getTransactions() async {
+  Future _getStripeProducts() async {
     try {
-      final r = await TetaCMS.instance.store.transactions();
-      if (r.data != null) {
+      final tetaCms = TetaCMS.instance;
+      final products = await tetaCms.store.cart.get();
+
+      if (products.data != null) {
         final datasetObject = DatasetObject(
-          name: 'transactions',
-          map: r.data!.map((final e) => e.toJson()).toList(growable: true),
+          name: 'cart',
+          map: products.data!
+              .map((final e) => e.toJson())
+              .toList(growable: true),
         );
         addDataset(context, widget.state.dataset, datasetObject);
       } else {
-        debugPrint('Error in calc _getTransactions -> ${r.error?.message ?? 'no message'}');
+        debugPrint(
+          'Error in calc WStripeProductsCartList -> ${products.error?.message ?? 'no message'}',
+        );
       }
     } catch (e) {
-      debugPrint('Error in calc _getTransactions -> $e');
+      debugPrint('Error in calc WStripeProductsCartList -> $e');
     }
   }
 }

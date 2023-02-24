@@ -5,17 +5,15 @@
 
 import 'package:flutter/material.dart';
 import 'package:teta_cms/teta_cms.dart';
-
 // Package imports:
 import 'package:teta_core/teta_core.dart';
 import 'package:teta_widgets/src/core/teta_widget/index.dart';
-
 // Project imports:
 import 'package:teta_widgets/src/elements/index.dart';
 
-class WStripeShippingBuilder extends StatefulWidget {
+class WTetaStoreTransactionsBuilder extends StatefulWidget {
   /// Returns a ListView.builder in Teta
-  const WStripeShippingBuilder(
+  const WTetaStoreTransactionsBuilder(
     final Key? key, {
     required this.state,
     required this.child,
@@ -31,15 +29,17 @@ class WStripeShippingBuilder extends StatefulWidget {
   final FDataset value;
 
   @override
-  WStripeShippingBuilderState createState() => WStripeShippingBuilderState();
+  WTetaStoreTransactionsBuilderState createState() =>
+      WTetaStoreTransactionsBuilderState();
 }
 
-class WStripeShippingBuilderState extends State<WStripeShippingBuilder> {
+class WTetaStoreTransactionsBuilderState
+    extends State<WTetaStoreTransactionsBuilder> {
   bool isLoading = true;
 
   @override
   void initState() {
-    _getShippingMethods().whenComplete(() {
+    _getTransactions().whenComplete(() {
       if (mounted) {
         setState(() {});
       }
@@ -49,11 +49,12 @@ class WStripeShippingBuilderState extends State<WStripeShippingBuilder> {
 
   @override
   Widget build(final BuildContext context) {
-    _getShippingMethods().whenComplete(() {
+    _getTransactions().whenComplete(() {
       if (mounted) {
         setState(() {});
       }
     });
+
     return TetaWidget(
       state: widget.state,
       child: ListView.builder(
@@ -63,13 +64,15 @@ class WStripeShippingBuilderState extends State<WStripeShippingBuilder> {
         scrollDirection: widget.isVertical ? Axis.vertical : Axis.horizontal,
         itemCount: widget.state.dataset
             .firstWhere(
-              (final element) => element.getName.contains('shipping'),
+              (final element) => element.getName.contains('products'),
               orElse: DatasetObject.empty,
             )
             .getMap
             .length,
         itemBuilder: (final context, final index) => widget.child != null
-            ? widget.child!.toWidget(state: widget.state.copyWith(loop: index))
+            ? widget.child!.toWidget(
+                state: widget.state.copyWith(loop: index),
+              )
             : PlaceholderChildBuilder(
                 name: widget.state.node.intrinsicState.displayName,
                 node: widget.state.node,
@@ -79,20 +82,21 @@ class WStripeShippingBuilderState extends State<WStripeShippingBuilder> {
     );
   }
 
-  Future _getShippingMethods() async {
+  Future _getTransactions() async {
     try {
-      final r = await TetaCMS.instance.store.getShippingMethods();
+      final r = await TetaCMS.instance.store.transactions();
       if (r.data != null) {
         final datasetObject = DatasetObject(
-          name: 'shipping',
+          name: 'transactions',
           map: r.data!.map((final e) => e.toJson()).toList(growable: true),
         );
         addDataset(context, widget.state.dataset, datasetObject);
       } else {
-        debugPrint('Error in calc WStripeProductsList -> ${r.error?.message ?? 'no message'}');
+        debugPrint(
+            'Error in calc _getTransactions -> ${r.error?.message ?? 'no message'}');
       }
     } catch (e) {
-      debugPrint('Error in calc WStripeProductsList -> $e');
+      debugPrint('Error in calc _getTransactions -> $e');
     }
   }
 }

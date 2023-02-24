@@ -22,7 +22,9 @@ import 'package:teta_widgets/src/elements/controls/atoms/airtable/insert.dart';
 import 'package:teta_widgets/src/elements/controls/atoms/airtable/update.dart';
 import 'package:teta_widgets/src/elements/controls/atoms/apicalls/apicalls.dart';
 import 'package:teta_widgets/src/elements/controls/atoms/firebase/firebase_analytics/log_app_open.dart';
+import 'package:teta_widgets/src/elements/controls/atoms/firebase/firebase_analytics/log_event.dart';
 import 'package:teta_widgets/src/elements/controls/atoms/firebase/firebase_analytics/log_join_group.dart';
+import 'package:teta_widgets/src/elements/controls/atoms/firebase/firebase_analytics/log_login.dart';
 import 'package:teta_widgets/src/elements/controls/atoms/firebase/firebase_analytics/log_screen_view.dart';
 import 'package:teta_widgets/src/elements/controls/atoms/firebase/firebase_analytics/log_share.dart';
 import 'package:teta_widgets/src/elements/controls/atoms/firebase/firebase_analytics/reset_analytics_data.dart';
@@ -71,9 +73,6 @@ import 'package:teta_widgets/src/elements/features/actions/enums/type.dart';
 import 'package:teta_widgets/src/elements/features/actions/enums/webview.dart';
 import 'package:teta_widgets/src/elements/index.dart';
 import 'package:uuid/uuid.dart';
-
-import 'package:teta_widgets/src/elements/controls/atoms/firebase/firebase_analytics/log_event.dart';
-import 'package:teta_widgets/src/elements/controls/atoms/firebase/firebase_analytics/log_login.dart';
 
 /// Widget to control a single action
 class ActionElementControl extends StatefulWidget {
@@ -1198,28 +1197,28 @@ class ActionElementControlState extends State<ActionElementControl> {
                     ]
                   ],
                 ),
-              if (widget.element.actionType == ActionType.stripe)
+              if (widget.element.actionType == ActionType.tetaStore)
                 Column(
                   children: [
                     CDropdown(
                       value: FActionElement.convertValueToDropdown(
-                        widget.element.actionStripe,
+                        widget.element.actionTetaStore,
                       ),
-                      items: FActionElement.getStripe(config).toSet().toList(),
+                      items: FActionElement.getTetaStore().toSet().toList(),
                       onChange: (final newValue) {
                         if (newValue != null) {
                           final old = widget.element;
-                          widget.element.actionStripe =
+                          widget.element.actionTetaStore =
                               FActionElement.convertDropdownToValue(
-                            ActionStripe.values,
+                            ActionTetaStore.values,
                             newValue,
-                          ) as ActionStripe?;
+                          ) as ActionTetaStore?;
                           widget.callBack(widget.element, old);
                         }
                       },
                     ),
-                    if (ActionStripe.buyCartItems ==
-                        widget.element.actionStripe) ...[
+                    if (ActionTetaStore.buyCartItems ==
+                        widget.element.actionTetaStore) ...[
                       Padding(
                         padding: const EdgeInsets.only(top: 8),
                         child: SizedBox(
@@ -1391,8 +1390,8 @@ class ActionElementControlState extends State<ActionElementControl> {
                         ),
                       ),
                     ],
-                    if (ActionStripe.showReceipt ==
-                        widget.element.actionStripe) ...[
+                    if (ActionTetaStore.showReceipt ==
+                        widget.element.actionTetaStore) ...[
                       Padding(
                         padding: const EdgeInsets.only(top: 8),
                         child: SizedBox(

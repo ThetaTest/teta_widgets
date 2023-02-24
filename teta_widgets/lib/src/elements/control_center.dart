@@ -118,10 +118,6 @@ import 'package:teta_widgets/src/elements/bodies/scaffold.dart';
 import 'package:teta_widgets/src/elements/bodies/sizedbox.dart';
 import 'package:teta_widgets/src/elements/bodies/spacer.dart';
 import 'package:teta_widgets/src/elements/bodies/stack.dart';
-import 'package:teta_widgets/src/elements/bodies/stripe_cart_items_builder_body.dart';
-import 'package:teta_widgets/src/elements/bodies/stripe_products_builder.dart';
-import 'package:teta_widgets/src/elements/bodies/stripe_shipping_builder.dart';
-import 'package:teta_widgets/src/elements/bodies/stripe_transactions_builder.dart';
 import 'package:teta_widgets/src/elements/bodies/supabase/future_builder.dart';
 import 'package:teta_widgets/src/elements/bodies/supabase/future_stream_builder.dart';
 import 'package:teta_widgets/src/elements/bodies/supabase/logged_user.dart';
@@ -132,6 +128,10 @@ import 'package:teta_widgets/src/elements/bodies/teta_cms/custom_query.dart';
 import 'package:teta_widgets/src/elements/bodies/teta_cms/fetch.dart';
 import 'package:teta_widgets/src/elements/bodies/teta_cms/logged_user.dart';
 import 'package:teta_widgets/src/elements/bodies/teta_cms/stream.dart';
+import 'package:teta_widgets/src/elements/bodies/teta_store/teta_store_cart_items_builder_body.dart';
+import 'package:teta_widgets/src/elements/bodies/teta_store/teta_store_products_builder.dart';
+import 'package:teta_widgets/src/elements/bodies/teta_store/teta_store_shipping_builder.dart';
+import 'package:teta_widgets/src/elements/bodies/teta_store/teta_store_transactions_builder.dart';
 import 'package:teta_widgets/src/elements/bodies/text.dart';
 import 'package:teta_widgets/src/elements/bodies/textbutton.dart';
 import 'package:teta_widgets/src/elements/bodies/textfield.dart';
@@ -267,10 +267,10 @@ final stateTypes = <IntrinsicStates>[
   wrapperIntrinsicStates,
   revenueCatProductsListIntrinsicStates,
   revenueCatSubStatusIntrinsicStates,
-  stripeProductsBuilder,
-  stripeShippingBuilder,
-  stripeTransactionsBuilder,
-  stripeCartItemsBuilderBodyIntrinsicStates,
+  tetaStoreProductsBuilder,
+  tetaStoreShippingBuilder,
+  tetaStoreTransactionsBuilder,
+  tetaStoreCartItemsBuilderBodyIntrinsicStates,
   transformPerspectiveIntrinsicStates,
   cmsFetchIntrinsicStates,
   cmsStreamIntrinsicStates,
@@ -320,14 +320,14 @@ NodeBody getBody(final NType type) {
       return CenterBody();
     case NType.checkbox:
       return CheckBoxBody();
-    case NType.stripeProductsBuilder:
-      return StripeProductsBuilderBody();
-    case NType.stripeShippingBuilder:
-      return StripeShippingBuilderBody();
-    case NType.stripeTransactionsBuilder:
-      return StripeTransactionsBuilderBody();
-    case NType.stripeCartItemsBuilder:
-      return StripeCartItemsBuilderBody();
+    case NType.tetaStoreProductsBuilder:
+      return TetaStoreProductsBuilderBody();
+    case NType.tetaStoreShippingBuilder:
+      return TetaStoreShippingBuilderBody();
+    case NType.tetaStoreTransactionsBuilder:
+      return TetaStoreTransactionsBuilderBody();
+    case NType.tetaStoreCartItemsBuilder:
+      return TetaStoreCartItemsBuilderBody();
     case NType.column:
       return ColumnBody();
     case NType.component:

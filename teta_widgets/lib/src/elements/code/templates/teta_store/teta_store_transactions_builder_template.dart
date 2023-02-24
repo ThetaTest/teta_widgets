@@ -9,7 +9,7 @@ import 'package:teta_widgets/src/elements/nodes/node.dart';
 import 'package:teta_widgets/src/elements/nodes/node_body.dart';
 
 /// Generates the code for StripeProductsBuilder widget
-class StripeTransactionsBuilderCodeTemplate {
+class TetaStoreTransactionsBuilderCodeTemplate {
   static Future<String> toCode(
     final BuildContext context,
     final NodeBody body,
@@ -66,7 +66,7 @@ class StripeTransactionsBuilderCodeTemplate {
       test(
         'Stripe Products Builder: default code',
         () {
-          final body = NodeBody.get(NType.stripeProductsBuilder);
+          final body = NodeBody.get(NType.tetaStoreProductsBuilder);
           final _scrollDirection =
               !(body.attributes[DBKeys.isVertical] as bool? ?? false)
                   ? 'scrollDirection: Axis.horizontal,'
@@ -77,7 +77,7 @@ class StripeTransactionsBuilderCodeTemplate {
           expect(
             FormatterTest.format('''
 FutureBuilder<TetaProductsResponse>(
-      future: TetaCMS.instance.store.products.all(),
+      future: TetaCMS.instance.store.products.getAll(),
       builder: ((context, snapshot) {
         if (!snapshot.hasData) {
           return Center(

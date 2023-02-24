@@ -7,7 +7,7 @@ import 'package:flutter/material.dart';
 import 'package:teta_core/src/models/variable.dart';
 import 'package:teta_core/src/utils/stripe/html/stripe_checkout.dart';
 
-class FActionStripe {
+class FActionTetaStoreCheckout {
   Future makeAction(
     final BuildContext context,
     final List<VariableObject> states,
