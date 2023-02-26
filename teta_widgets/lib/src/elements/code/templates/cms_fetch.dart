@@ -18,14 +18,14 @@ class CmsFetchCodeTemplate {
     final List<CNode> children,
     final int? loop,
   ) async {
-    var collectionId =
+    var collectionName =
         (node.body.attributes[DBKeys.cmsCollection] as FTextTypeInput).toCode(
       loop,
       resultType: ResultTypeEnum.string,
       defaultValue: '',
     );
-    if (!collectionId.contains("'")) {
-      collectionId = "'$collectionId'";
+    if (!collectionName.contains("'")) {
+      collectionName = "'$collectionName'";
     }
     final limit = (node.body.attributes[DBKeys.cmsLimit] as FTextTypeInput)
         .toCode(
@@ -73,8 +73,7 @@ class CmsFetchCodeTemplate {
 
     final code = '''
   TetaFutureBuilder(
-    future: TetaCMS.instance.client.getCollection(
-      $collectionId,
+    future: TetaCMS.I.db.from($collectionName).get(
       filters: [
         $filter
       ], 

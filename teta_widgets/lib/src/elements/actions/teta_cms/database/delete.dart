@@ -29,7 +29,7 @@ class FATetaCMSDelete {
       context,
     );
     if (collectionId != null && docId != null) {
-      await TetaCMS.I.db.from(collectionId).doc(docId).delete();
+      await TetaCMS.I.db.from(collectionId).row(docId).delete();
     }
   }
 
@@ -42,6 +42,6 @@ class FATetaCMSDelete {
       loop,
       resultType: ResultTypeEnum.string,
     );
-    return "await TetaCMS.instance.client.deleteDocument('$collectionId', $eqValue);";
+    return "await TetaCMS.I.db.from('$collectionId').row($eqValue).delete();";
   }
 }

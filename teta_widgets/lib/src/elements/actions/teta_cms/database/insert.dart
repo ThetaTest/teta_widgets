@@ -14,7 +14,7 @@ import 'package:teta_widgets/src/elements/index.dart';
 class FATetaCMSInsert {
   static Future action(
     final BuildContext context,
-    final String? collectionId,
+    final String? collectionName,
     final List<MapElement>? dbData,
     final TetaWidgetState state,
   ) async {
@@ -29,11 +29,11 @@ class FATetaCMSInsert {
         context,
       );
     }
-    await TetaCMS.I.db.from(collectionId).insert(map);
+    await TetaCMS.I.db.from(collectionName!).insert(map);
   }
 
   static String toCode(
-    final String? collectionId,
+    final String? collectionName,
     final List<MapElement>? dbData,
   ) {
     final map = <String, dynamic>{};
@@ -64,6 +64,6 @@ class FATetaCMSInsert {
       mapString.write("'$key': ${map[key]},");
     }
     mapString.write('}');
-    return "await TetaCMS.instance.client.insertDocument('$collectionId', <String, dynamic>$mapString);";
+    return "await TetaCMS.I.db.from('$collectionName').insert(<String, dynamic>$mapString);";
   }
 }

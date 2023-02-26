@@ -81,7 +81,7 @@ if (UniversalPlatform.isIOS || UniversalPlatform.isAndroid || UniversalPlatform.
             FormatterTest.format('''
 TetaFutureBuilder<TetaUser>(
     future: Future.sync(() async {
-      final user = await TetaCMS.instance.auth.user.get;
+      final user = await TetaCMS.I.auth.user.get;
       ${revenueCatFlag ? r"""
 if (UniversalPlatform.isIOS || UniversalPlatform.isAndroid || UniversalPlatform.isMacOS) {
   await Purchases.logIn('${user.uid}');

@@ -57,8 +57,8 @@ class ApiCallsRequestControlState extends State<ApiCallsRequestControl> {
         .first
         .id;
     final resCollection = await TetaCMS.I.db
-        .from(
-          id: allCollections
+        .fromId(
+          allCollections
               .where(
                 (final element) =>
                     element.name == '_apiCallsRequests' &&

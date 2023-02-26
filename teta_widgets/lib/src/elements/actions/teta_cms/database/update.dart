@@ -13,7 +13,7 @@ import 'package:teta_widgets/src/elements/index.dart';
 class FATetaCMSUpdate {
   static Future action(
     final BuildContext context,
-    final String? collectionId,
+    final String? collectionName,
     final List<MapElement>? list,
     final FTextTypeInput? documentId,
     final List<VariableObject> params,
@@ -25,8 +25,7 @@ class FATetaCMSUpdate {
     for (final e in list ?? <MapElement>[]) {
       map[e.key] = e.value.get(params, states, dataset, true, loop, context);
     }
-    String? docId;
-    docId = documentId?.get(
+    final docId = documentId?.get(
       params,
       states,
       dataset,
@@ -34,15 +33,15 @@ class FATetaCMSUpdate {
       loop,
       context,
     );
-    if (collectionId != null && docId != null) {
-      await TetaCMS.I.db.from(collectionId).doc(docId).update(
+    if (collectionName != null && docId != null) {
+      await TetaCMS.I.db.from(collectionName).row(docId).update(
             map,
           );
     }
   }
 
   static String toCode(
-    final String? collectionId,
+    final String? collectionName,
     final List<MapElement>? list,
     final FTextTypeInput? documentId,
     final int? loop,
@@ -64,6 +63,6 @@ class FATetaCMSUpdate {
       mapString.write("'''$key''': '${map[key]}',");
     }
     mapString.write('}');
-    return "await TetaCMS.instance.client.updateDocument('$collectionId', $eqValue, $map);";
+    return "await TetaCMS.I.db.from('$collectionName').row($eqValue).update($map);";
   }
 }

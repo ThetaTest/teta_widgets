@@ -39,7 +39,7 @@ class CmsCustomQueryCodeTemplate {
 
     final code = '''
   TetaFutureBuilder(
-    future: TetaCMS.instance.client.query(
+    future: TetaCMS.I.db.query(
       $query,
     ),
     builder: (context, snapshot) {

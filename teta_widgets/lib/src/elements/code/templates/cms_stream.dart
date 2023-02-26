@@ -30,14 +30,14 @@ class CmsStreamCodeTemplate {
       loop: loop,
     );
 
-    var collectionId =
+    var collectionName =
         (node.body.attributes[DBKeys.cmsCollection] as FTextTypeInput).toCode(
       loop,
       resultType: ResultTypeEnum.string,
       defaultValue: '',
     );
-    if (!collectionId.contains("'")) {
-      collectionId = "'$collectionId'";
+    if (!collectionName.contains("'")) {
+      collectionName = "'$collectionName'";
     }
     final limit = (node.body.attributes[DBKeys.cmsLimit] as FTextTypeInput)
         .toCode(
@@ -85,8 +85,7 @@ class CmsStreamCodeTemplate {
 
     final code = '''
   TetaStreamBuilder(
-    stream: TetaCMS.instance.realtime.streamCollection(
-      $collectionId,
+    stream: TetaCMS.I.db.from($collectionName).stream(
       filters: [
         $filter
       ], 
