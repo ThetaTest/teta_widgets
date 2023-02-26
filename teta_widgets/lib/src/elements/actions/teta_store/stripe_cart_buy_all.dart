@@ -25,7 +25,7 @@ class FActionTetaStoreCartBuyAll {
     required final String country,
     required final String shippingId,
   }) async {
-    final res = await TetaCMS.instance.store.cart.getPaymentIntent(
+    final res = await TetaCMS.I.store.cart.getPaymentIntent(
       shippingId,
       UserAddress(
         email: email,
@@ -39,7 +39,7 @@ class FActionTetaStoreCartBuyAll {
     );
     final purchaseData = res.data;
 
-    final settings = (await TetaCMS.instance.store.getSettings()).data!;
+    final settings = (await TetaCMS.I.store.getSettings()).data!;
 
     if (purchaseData != null) {
       Stripe.publishableKey = purchaseData.stripePublishableKey;
