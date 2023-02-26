@@ -33,7 +33,7 @@ class CMSCollectionControlState extends State<CMSCollectionControl> {
   @override
   void initState() {
     super.initState();
-    _future = TetaCMS.instance.client.getCollections();
+    _future = TetaCMS.I.db.getCollections();
   }
 
   @override

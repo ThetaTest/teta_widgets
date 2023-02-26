@@ -25,8 +25,8 @@ class FATetaCMSUpdate {
     for (final e in list ?? <MapElement>[]) {
       map[e.key] = e.value.get(params, states, dataset, true, loop, context);
     }
-    String? eqValue;
-    eqValue = documentId?.get(
+    String? docId;
+    docId = documentId?.get(
       params,
       states,
       dataset,
@@ -34,12 +34,10 @@ class FATetaCMSUpdate {
       loop,
       context,
     );
-    if (collectionId != null && eqValue != null) {
-      await TetaCMS.instance.client.updateDocument(
-        collectionId,
-        eqValue,
-        map,
-      );
+    if (collectionId != null && docId != null) {
+      await TetaCMS.I.db.from(name: collectionId).doc(docId).update(
+            map,
+          );
     }
   }
 

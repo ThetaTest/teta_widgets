@@ -43,7 +43,7 @@ class ApiCallsRequestControlState extends State<ApiCallsRequestControl> {
   }
 
   Future<void> getRequest() async {
-    final res = await TetaCMS.instance.client.getCollections();
+    final res = await TetaCMS.I.db.getCollections();
     if (res.error != null) return;
     allCollections = res.data!;
     collectionID = allCollections
@@ -56,18 +56,20 @@ class ApiCallsRequestControlState extends State<ApiCallsRequestControl> {
         .toList()
         .first
         .id;
-    final resCollection = await TetaCMS.instance.client.getCollection(
-      allCollections
-          .where(
-            (final element) =>
-                element.name == '_apiCallsRequests' &&
-                element.schema == CollectionSchema.private &&
-                element.role == CollectionRole.request,
-          )
-          .toList()
-          .first
-          .id,
-    );
+    final resCollection = await TetaCMS.I.db
+        .from(
+          id: allCollections
+              .where(
+                (final element) =>
+                    element.name == '_apiCallsRequests' &&
+                    element.schema == CollectionSchema.private &&
+                    element.role == CollectionRole.request,
+              )
+              .toList()
+              .first
+              .id,
+        )
+        .get();
     if (resCollection.error != null) return;
     _requestList = resCollection.data!;
 
