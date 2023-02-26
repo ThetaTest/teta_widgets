@@ -108,7 +108,7 @@ class _WCmsStreamState extends State<WCmsStream> with AfterLayoutMixin {
     );
     if (mounted) {
       setState(() {
-        _stream = TetaCMS.I.db.from(name: 'collectionName').stream(
+        _stream = TetaCMS.I.db.from('collectionName').stream(
           filters: [
             if (keyName.isNotEmpty && keyValue.isNotEmpty)
               Filter(keyName, keyValue),

@@ -29,7 +29,7 @@ class FATetaCMSInsert {
         context,
       );
     }
-    await TetaCMS.I.db.from(name: collectionId).insert(map);
+    await TetaCMS.I.db.from(collectionId).insert(map);
   }
 
   static String toCode(

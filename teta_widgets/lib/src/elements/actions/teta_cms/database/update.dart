@@ -35,7 +35,7 @@ class FATetaCMSUpdate {
       context,
     );
     if (collectionId != null && docId != null) {
-      await TetaCMS.I.db.from(name: collectionId).doc(docId).update(
+      await TetaCMS.I.db.from(collectionId).doc(docId).update(
             map,
           );
     }

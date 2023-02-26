@@ -29,7 +29,7 @@ class FATetaCMSDelete {
       context,
     );
     if (collectionId != null && docId != null) {
-      await TetaCMS.I.db.from(name: collectionId).doc(docId).delete();
+      await TetaCMS.I.db.from(collectionId).doc(docId).delete();
     }
   }
 
