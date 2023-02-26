@@ -33,8 +33,7 @@ class FATetaCMSOnAll {
         loop,
         context,
       );
-      await TetaCMS.instance.realtime.on(
-        collectionId: collectionId,
+      await TetaCMS.I.db.from(id: collectionId).on(
         callback: (final event) {
           if (state != null && state.type == VariableType.json) {
             updateStateValue(

@@ -135,7 +135,7 @@ class GoogleMapsCubit extends Cubit<GoogleMapsState> {
     final polyLines = <Polyline>{};
     final mapMarkers = <Marker>{};
 
-    final cms = TetaCMS.instance.client;
+    final cms = TetaCMS.I.db;
 
     try {
       if (kDebugMode) {

@@ -112,8 +112,7 @@ class _WCmsFetchState extends State<WCmsFetch> with AfterLayoutMixin {
       widget.state.loop,
       context,
     );
-    final res = await TetaCMS.instance.client.getCollectionByName(
-      collectionName!,
+    final res = await TetaCMS.I.db.from(name: collectionName).get(
       filters: [
         if (keyName.isNotEmpty && keyValue.isNotEmpty)
           Filter(keyName, keyValue),

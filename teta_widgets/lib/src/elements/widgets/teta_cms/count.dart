@@ -102,8 +102,7 @@ class _WCmsCountState extends State<WCmsCount> with AfterLayoutMixin {
     );
     if (mounted) {
       setState(() {
-        _future = TetaCMS.instance.client.getCollectionCountByName(
-          collectionName,
+        _future = TetaCMS.I.db.from(name: collectionName).count(
           filters: [
             if (keyName.isNotEmpty && keyValue.isNotEmpty)
               Filter(keyName, keyValue),

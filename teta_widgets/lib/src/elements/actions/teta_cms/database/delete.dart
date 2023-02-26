@@ -20,7 +20,7 @@ class FATetaCMSDelete {
     final List<DatasetObject> dataset,
     final int? loop,
   ) async {
-    final eqValue = documentId?.get(
+    final docId = documentId?.get(
       params,
       states,
       dataset,
@@ -28,8 +28,8 @@ class FATetaCMSDelete {
       loop,
       context,
     );
-    if (collectionId != null && eqValue != null) {
-      await TetaCMS.instance.client.deleteDocument(collectionId, eqValue);
+    if (collectionId != null && docId != null) {
+      await TetaCMS.I.db.from(name: collectionId).doc(docId).delete();
     }
   }
 

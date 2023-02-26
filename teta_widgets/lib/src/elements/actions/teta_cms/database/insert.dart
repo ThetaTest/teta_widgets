@@ -29,7 +29,7 @@ class FATetaCMSInsert {
         context,
       );
     }
-    await TetaCMS.instance.client.insertDocument(collectionId!, map);
+    await TetaCMS.I.db.from(name: collectionId).insert(map);
   }
 
   static String toCode(
@@ -51,10 +51,12 @@ class FATetaCMSInsert {
           );
         }
       } else {
-        map[e.key] = int.tryParse(e.value.toCode(
-          0,
-          resultType: ResultTypeEnum.int,
-        ));
+        map[e.key] = int.tryParse(
+          e.value.toCode(
+            0,
+            resultType: ResultTypeEnum.int,
+          ),
+        );
       }
     }
     final mapString = StringBuffer()..write('{');
