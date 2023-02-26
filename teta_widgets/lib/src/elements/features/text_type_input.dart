@@ -601,7 +601,11 @@ getValueForScreenType<$type>(
         final string = StringBuffer("'''");
         for (final element in combination ?? <FTextTypeInput>[]) {
           final code = convertType(
-            element.toCode(loop, resultType: resultType).replaceAll("'''", ''),
+            element
+                .toCode(loop, resultType: resultType, wrapInString: false)
+                .replaceAll("'''", '')
+                .replaceAll("' ", '')
+                .replaceAll("'", ''),
             resType: resultType,
           ).replaceAll("'''", '');
           string.write(code);

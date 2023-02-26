@@ -6,7 +6,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter_staggered_animations/flutter_staggered_animations.dart';
 import 'package:teta_core/teta_core.dart';
 // Project imports:
-import 'package:teta_widgets/src/elements/controls/key_constants.dart';
 import 'package:teta_widgets/src/elements/features/physic.dart';
 import 'package:teta_widgets/src/elements/index.dart';
 import 'package:teta_widgets/src/elements/nodes/node_body.dart';
@@ -738,8 +737,11 @@ class CS {
   /// )
   /// ```
   static String boxDecoration(
-      final BuildContext context, final NodeBody body, final String keyFill,
-      {final bool borderRadiusTwo = false}) {
+    final BuildContext context,
+    final NodeBody body,
+    final String keyFill, {
+    final bool borderRadiusTwo = false,
+  }) {
     final fill = FFill.toCode(
       body.attributes[keyFill] as FFill,
       context,
@@ -804,7 +806,9 @@ class CS {
   /// )
   /// ```
   static String borderRadiusTwo(
-      final BuildContext context, final NodeBody body) {
+    final BuildContext context,
+    final NodeBody body,
+  ) {
     final value = body.attributes[DBKeys.borderRadiusTwo] != null
         ? (body.attributes[DBKeys.borderRadiusTwo] as FBorderRadius).toCode()
         : null;
@@ -825,7 +829,7 @@ class CS {
     final value = body.attributes[DBKeys.borders] != null
         ? (body.attributes[DBKeys.borders] as FBorder).toCode(context)
         : null;
-    // if (value != null && value != '') return '';
+    if (value == 'null') return '';
     return avoidRedundantValue(value, 'border', '');
   }
 
@@ -855,8 +859,11 @@ class CS {
   /// textAlign: TextAlign.center,
   /// ```
   static String textStyle(
-      final BuildContext context, final NodeBody body, final String key,
-      {final bool textStyleOnly = false}) {
+    final BuildContext context,
+    final NodeBody body,
+    final String key, {
+    final bool textStyleOnly = false,
+  }) {
     if (textStyleOnly == true) {
       final value = body.attributes[key] != null
           ? (body.attributes[key] as FTextStyle).toCodeTextStyleOnly(context)

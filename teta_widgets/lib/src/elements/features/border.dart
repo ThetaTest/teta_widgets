@@ -1,5 +1,6 @@
 // Flutter imports:
 import 'package:equatable/equatable.dart';
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 // Package imports:
 import 'package:teta_core/src/design_system/hex_color.dart';
@@ -110,6 +111,9 @@ class FBorder extends Equatable {
       final tempOpacity = fill?.levels?.first.opacity ?? 1;
       final opacity = tempOpacity >= 0 && tempOpacity <= 1 ? tempOpacity : 1.0;
       // if (style?.get != BorderStyle.none) return '';
+      if (values.indexWhere((final element) => element != '0') == -1) {
+        return 'null';
+      }
       return '''
     Border(
       left:
@@ -124,8 +128,8 @@ class FBorder extends Equatable {
   ''';
     }
 
-    if (width!.margins! == (width!.marginsTablet ?? width!.margins!) &&
-        width!.margins! == (width!.marginsDesktop ?? width!.margins!)) {
+    if (listEquals(width!.margins, width!.marginsTablet ?? width!.margins) &&
+        listEquals(width!.margins, width!.marginsDesktop ?? width!.margins)) {
       return _valueToCode(width!.margins!);
     }
 

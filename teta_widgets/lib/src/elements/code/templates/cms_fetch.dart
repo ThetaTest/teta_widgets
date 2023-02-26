@@ -74,11 +74,11 @@ class CmsFetchCodeTemplate {
     final code = '''
   TetaFutureBuilder(
     future: TetaCMS.I.db.from($collectionName).get(
-      filters: [
+      ${filter.isNotEmpty ? '''filters: [
         $filter
-      ], 
-      ${limit.isNotEmpty ? 'limit: $limit,' : ''}
-      ${page.isNotEmpty ? 'page: $page,' : ''}
+      ],''' : ''}
+      ${limit.isNotEmpty && limit != '20' ? 'limit: $limit,' : ''}
+      ${page.isNotEmpty && page != '0' ? 'page: $page,' : ''}
     ),
     builder: (context, snapshot) {
       if (!snapshot.hasData) {

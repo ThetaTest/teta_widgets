@@ -4,6 +4,7 @@
 // Flutter imports:
 import 'package:device_frame/device_frame.dart';
 import 'package:equatable/equatable.dart';
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:responsive_builder/responsive_builder.dart';
@@ -180,8 +181,8 @@ class FMargins extends Equatable {
     )''';
     }
 
-    if (margins! == (marginsTablet ?? margins!) &&
-        margins! == (marginsDesktop ?? margins!)) {
+    if (listEquals(margins, marginsTablet ?? margins) &&
+        listEquals(margins, marginsDesktop ?? margins)) {
       return valueToCode(margins!);
     }
 

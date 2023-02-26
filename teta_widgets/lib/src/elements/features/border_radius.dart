@@ -2,6 +2,7 @@
 
 import 'package:device_frame/device_frame.dart';
 import 'package:equatable/equatable.dart';
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:responsive_builder/responsive_builder.dart';
@@ -137,28 +138,24 @@ class FBorderRadius extends Equatable {
     return toJson();
   }
 
-  /// Convert [FBorderRadius] to code String
-  String toCode() {
-    String convertValueToCode(final List<double> radius) {
-      if (radius[0] == 0 &&
-          radius[1] == 0 &&
-          radius[2] == 0 &&
-          radius[3] == 0) {
-        return 'BorderRadius.zero';
-      }
-      return '''
+  String convertValueToCode(final List<double> radius) {
+    if (radius[0] == 0 && radius[1] == 0 && radius[2] == 0 && radius[3] == 0) {
+      return 'BorderRadius.zero';
+    }
+    return '''
     BorderRadius.only(
       topLeft: Radius.circular(${radius[0]}),
       topRight: Radius.circular(${radius[1]}),
       bottomRight: Radius.circular(${radius[2]}),
       bottomLeft: Radius.circular(${radius[3]}),
     )''';
-    }
+  }
 
-    if (convertValueToCode(radius!) ==
-            convertValueToCode(radiusTablet ?? radius!) &&
-        convertValueToCode(radius!) ==
-            convertValueToCode(radiusDesktop ?? radius!)) {
+  /// Convert [FBorderRadius] to code String
+  String toCode() {
+    final valueTablet = radiusTablet ?? radius;
+    final valueDesktop = radiusDesktop ?? radius;
+    if (listEquals(radius, valueTablet) && listEquals(radius, valueDesktop)) {
       return convertValueToCode(radius!);
     }
 
