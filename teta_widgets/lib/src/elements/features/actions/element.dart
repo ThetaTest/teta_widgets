@@ -249,8 +249,9 @@ class FActionElement extends Equatable {
         convertDropdownToValue(ActionTheme.values, doc['aTh'] as String?)
             as ActionTheme?;
     actionTetaStore = convertDropdownToValue(
-            ActionTetaStore.values, doc['aTetaStore'] as String?)
-        as ActionTetaStore?;
+      ActionTetaStore.values,
+      doc['aTetaStore'] as String?,
+    ) as ActionTetaStore?;
     actionGoogleMaps = convertDropdownToValue(
       ActionGoogleMaps.values,
       doc['actionGoogleMaps'] as String?,
@@ -1798,6 +1799,70 @@ class FActionElement extends Equatable {
                 stateName,
                 state.dataset,
                 state.loop,
+                email: stripeBillingInfoEmail!.get(
+                  state.params,
+                  state.states,
+                  state.dataset,
+                  state.forPlay,
+                  state.loop,
+                  context,
+                ),
+                phone: stripeBillingInfoPhone!.get(
+                  state.params,
+                  state.states,
+                  state.dataset,
+                  state.forPlay,
+                  state.loop,
+                  context,
+                ),
+                city: stripeBillingInfoCity!.get(
+                  state.params,
+                  state.states,
+                  state.dataset,
+                  state.forPlay,
+                  state.loop,
+                  context,
+                ),
+                state: stripeBillingInfoState!.get(
+                  state.params,
+                  state.states,
+                  state.dataset,
+                  state.forPlay,
+                  state.loop,
+                  context,
+                ),
+                line: stripeBillingInfoLine!.get(
+                  state.params,
+                  state.states,
+                  state.dataset,
+                  state.forPlay,
+                  state.loop,
+                  context,
+                ),
+                postalCode: stripeBillingInfoPostalCode!.get(
+                  state.params,
+                  state.states,
+                  state.dataset,
+                  state.forPlay,
+                  state.loop,
+                  context,
+                ),
+                country: stripeBillingInfoCountry!.get(
+                  state.params,
+                  state.states,
+                  state.dataset,
+                  state.forPlay,
+                  state.loop,
+                  context,
+                ),
+                shippingId: stripeShippingId!.get(
+                  state.params,
+                  state.states,
+                  state.dataset,
+                  state.forPlay,
+                  state.loop,
+                  context,
+                ),
               ),
               context: context,
               state: state,
