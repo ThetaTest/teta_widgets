@@ -176,8 +176,8 @@ dependencies:
   responsive_builder: ^0.4.3
   device_frame:
   reorderables:
-  flutter_stripe:
-  flutter_stripe_web:
+  #flutter_stripe:
+  #flutter_stripe_web:
 
 dev_dependencies:
   flutter_test:
