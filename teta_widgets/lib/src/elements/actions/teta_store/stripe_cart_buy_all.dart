@@ -25,6 +25,7 @@ class FActionTetaStoreCartBuyAll {
     required final String country,
     required final String shippingId,
   }) async {
+		/*
     final res = await TetaCMS.I.store.cart.getPaymentIntent(
       shippingId,
       UserAddress(
@@ -66,7 +67,7 @@ class FActionTetaStoreCartBuyAll {
       );
       await Stripe.instance.presentPaymentSheet();
       await TetaCMS.instance.store.checkPayment(purchaseData.paymentIntent);
-    }
+    }*/
   }
 
   static String toCode(
