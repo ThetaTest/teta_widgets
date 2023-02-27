@@ -3,7 +3,7 @@
 
 // Flutter imports:
 import 'package:flutter/material.dart';
-import 'package:flutter_stripe/flutter_stripe.dart';
+//import 'package:flutter_stripe/flutter_stripe.dart';
 import 'package:teta_cms/teta_cms.dart';
 // Package imports:
 import 'package:teta_core/teta_core.dart';
