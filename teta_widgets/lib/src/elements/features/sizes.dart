@@ -8,6 +8,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 // Package imports:
 import 'package:teta_core/teta_core.dart';
+import 'package:universal_platform/universal_platform.dart';
 
 enum SizeUnit {
   pixel,
@@ -56,34 +57,32 @@ class FSize extends Equatable {
     required final bool forPlay,
   }) {
     String? sizeValue;
-    SizeUnit? unitValue;
-    if (forPlay) {
+    var inEditor = false;
+    if (UniversalPlatform.isWeb) {
+      if (Uri.base.toString().contains('/editor/')) {
+        inEditor = true;
+      }
+    }
+    if (forPlay && !inEditor) {
       final width = MediaQuery.of(context).size.width;
       if (width < 600) {
         sizeValue = size ?? '0';
-        unitValue = unit;
       } else if (width < 1000) {
         sizeValue = sizeTablet ?? size ?? '0';
-        unitValue = unitTablet ?? unit;
       } else {
         sizeValue = sizeDesktop ?? size ?? '0';
-        unitValue = unitDesktop ?? unit;
       }
     } else {
       final device = BlocProvider.of<DeviceModeCubit>(context).state;
       if (device.type == frame.DeviceType.phone) {
         sizeValue = size ?? '0';
-        unitValue = unit;
       } else if (device.type == frame.DeviceType.tablet) {
         sizeValue = sizeTablet ?? size ?? '0';
-        unitValue = unitTablet ?? unit;
       } else {
         sizeValue = sizeDesktop ?? size;
-        unitValue = unitDesktop ?? unit;
       }
     }
 
-    double? value = 0;
     if (sizeValue == null) {
       return null;
     } else if (sizeValue.toLowerCase() == 'max' ||
@@ -95,13 +94,13 @@ class FSize extends Equatable {
       return null;
     }
     final temp = sizeValue.replaceAll('%', '');
-    value = double.tryParse(temp) ?? 0;
-    if (sizeValue.contains('%') || unit == SizeUnit.percent) {
-      if (forPlay) {
+    final value = double.tryParse(temp) ?? 0;
+    if (sizeValue.contains('%')) {
+      if (forPlay && !inEditor) {
         if (isWidth) {
-          return MediaQuery.of(context).size.width * 100 / value;
+          return MediaQuery.of(context).size.width * (value / 100);
         } else {
-          return MediaQuery.of(context).size.height * 100 / value;
+          return MediaQuery.of(context).size.height * (value / 100);
         }
       } else {
         final device = BlocProvider.of<DeviceModeCubit>(context).state;

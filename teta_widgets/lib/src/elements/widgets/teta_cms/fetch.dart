@@ -6,7 +6,6 @@
 import 'dart:async';
 
 import 'package:after_layout/after_layout.dart';
-import 'package:easy_debounce/easy_debounce.dart';
 import 'package:flutter/material.dart';
 // Package imports:
 import 'package:teta_cms/teta_cms.dart';
@@ -67,11 +66,7 @@ class _WCmsFetchState extends State<WCmsFetch> with AfterLayoutMixin {
   @override
   FutureOr<void> afterFirstLayout(final BuildContext context) {
     if (!isInitialized) {
-      EasyDebounce.debounce(
-        '${widget.state.node.nid}',
-        const Duration(milliseconds: 500),
-        getDbElements,
-      );
+      getDbElements();
     }
   }
 

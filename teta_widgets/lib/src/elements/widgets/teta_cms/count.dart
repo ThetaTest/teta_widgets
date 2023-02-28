@@ -6,7 +6,6 @@
 import 'dart:async';
 
 import 'package:after_layout/after_layout.dart';
-import 'package:easy_debounce/easy_debounce.dart';
 import 'package:flutter/material.dart';
 // Package imports:
 import 'package:teta_cms/teta_cms.dart';
@@ -57,11 +56,7 @@ class _WCmsCountState extends State<WCmsCount> with AfterLayoutMixin {
 
   @override
   FutureOr<void> afterFirstLayout(final BuildContext context) {
-    EasyDebounce.debounce(
-      '${widget.state.node.nid}',
-      const Duration(milliseconds: 500),
-      calc,
-    );
+    calc();
   }
 
   Future calc() async {
