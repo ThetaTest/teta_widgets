@@ -84,6 +84,8 @@ class CMSCollectionControlState extends State<CMSCollectionControl> {
                 final list = snapshot.requireData.data!
                     .where(
                       (final element) =>
+                          element.name != '_queries' &&
+                          element.name != '_apiCallsRequests' &&
                           element.schema == CollectionSchema.public,
                     )
                     .toList();
