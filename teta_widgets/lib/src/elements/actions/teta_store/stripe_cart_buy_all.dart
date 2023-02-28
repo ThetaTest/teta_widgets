@@ -3,7 +3,7 @@
 
 // Flutter imports:
 import 'package:flutter/material.dart';
-import 'package:flutter_stripe/flutter_stripe.dart';
+//import 'package:flutter_stripe/flutter_stripe.dart';
 import 'package:teta_cms/teta_cms.dart';
 // Package imports:
 import 'package:teta_core/teta_core.dart';
@@ -25,6 +25,7 @@ class FActionTetaStoreCartBuyAll {
     required final String country,
     required final String shippingId,
   }) async {
+		/*
     final res = await TetaCMS.I.store.cart.getPaymentIntent(
       shippingId,
       UserAddress(
@@ -66,7 +67,7 @@ class FActionTetaStoreCartBuyAll {
       );
       await Stripe.instance.presentPaymentSheet();
       await TetaCMS.instance.store.checkPayment(purchaseData.paymentIntent);
-    }
+    }*/
   }
 
   static String toCode(
