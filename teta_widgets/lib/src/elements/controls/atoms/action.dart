@@ -13,6 +13,7 @@ import 'package:teta_core/teta_core.dart';
 import 'package:teta_widgets/src/elements/controls/atoms/action_element.dart';
 import 'package:teta_widgets/src/elements/features/actions/enums/action_google_maps.dart';
 import 'package:teta_widgets/src/elements/features/actions/enums/airtable.dart';
+import 'package:teta_widgets/src/elements/features/actions/enums/alert.dart';
 import 'package:teta_widgets/src/elements/features/actions/enums/apicalls.dart';
 import 'package:teta_widgets/src/elements/features/actions/enums/audio_player_actions.dart';
 import 'package:teta_widgets/src/elements/features/actions/enums/braintree.dart';
@@ -185,6 +186,10 @@ class ActionControlState extends State<ActionControl> {
                                                 : null,
                                         actionTranslator:
                                             (action is ActionTranslator)
+                                                ? action
+                                                : null,
+                                        actionAlert:
+                                            (action is ActionAlert)
                                                 ? action
                                                 : null,
                                       )
@@ -495,6 +500,12 @@ class __NewActionAlertState extends State<_NewActionAlert> {
             ? FActionElement.getGoogleMaps(config)
             : [],
         type: ActionGoogleMaps.values,
+      ),
+      _SelectionClass(
+        title: 'Alert',
+        actionType: ActionType.alert,
+        options: FActionElement.getAlert(),
+        type: ActionAlert.values,
       ),
     ]);
   }

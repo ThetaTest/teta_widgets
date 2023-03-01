@@ -190,3 +190,9 @@ const PackageModel pEquatable = PackageModel(
   isDart: false,
   customPath: "import 'package:equatable/equatable.dart';",
 );
+const PackageModel pAnotherFlushbar = PackageModel(
+  packageName: 'another_flushbar',
+  packageVersion: '1.12.29',
+  isDart: false,
+  customPath: "import 'package:another_flushbar/flushbar.dart';",
+);

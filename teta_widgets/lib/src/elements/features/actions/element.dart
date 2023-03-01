@@ -18,6 +18,7 @@ import 'package:teta_widgets/src/core/teta_widget/index.dart';
 import 'package:teta_widgets/src/elements/actions/airtable/delete.dart';
 import 'package:teta_widgets/src/elements/actions/airtable/insert.dart';
 import 'package:teta_widgets/src/elements/actions/airtable/update.dart';
+import 'package:teta_widgets/src/elements/actions/alert/snackbar.dart';
 import 'package:teta_widgets/src/elements/actions/api_calls/apicalls.dart';
 import 'package:teta_widgets/src/elements/actions/audio_player/loop_all.dart';
 import 'package:teta_widgets/src/elements/actions/audio_player/loop_off.dart';
@@ -107,6 +108,7 @@ import 'package:teta_widgets/src/elements/actions/webview/navigate_to.dart';
 import 'package:teta_widgets/src/elements/actions/webview/reload.dart';
 import 'package:teta_widgets/src/elements/features/actions/enums/action_google_maps.dart';
 import 'package:teta_widgets/src/elements/features/actions/enums/airtable.dart';
+import 'package:teta_widgets/src/elements/features/actions/enums/alert.dart';
 import 'package:teta_widgets/src/elements/features/actions/enums/apicalls.dart';
 import 'package:teta_widgets/src/elements/features/actions/enums/audio_player_actions.dart';
 import 'package:teta_widgets/src/elements/features/actions/enums/braintree.dart';
@@ -128,6 +130,7 @@ import 'package:teta_widgets/src/elements/features/text_type_input.dart';
 import 'package:teta_widgets/src/elements/nodes/dynamic.dart';
 import 'package:teta_widgets/src/elements/nodes/enum.dart';
 import 'package:teta_widgets/src/elements/nodes/node.dart';
+import 'package:teta_widgets/teta_widgets.dart';
 import 'package:uuid/uuid.dart';
 
 class FActionElement extends Equatable {
@@ -159,6 +162,7 @@ class FActionElement extends Equatable {
     this.actionTranslator,
     this.actionFirebaseAnalytics,
     this.actionFirebaseMessages,
+    this.actionAlert,
     this.prodId,
     this.stateName,
     this.stateName2,
@@ -199,6 +203,22 @@ class FActionElement extends Equatable {
     this.firebaseAnalyticsUserId,
     this.firebaseAnalyticsValue,
     this.firebaseMessagesTopic,
+    this.snackbarTitle,
+    this.snackbarMessage,
+    this.addIcon,
+    this.addTitle,
+    this.textStyle,
+    this.textStyle2,
+    this.icon,
+    this.fill,
+    this.fill2,
+    this.bgFill,
+    this.borderRadius,
+    this.width,
+    this.duration,
+    this.margin,
+    this.dropdownItem,
+    this.dropdownItem2,
   }) {
     id ??= const Uuid().v1();
     delay ??= FTextTypeInput(value: '0');
@@ -208,6 +228,13 @@ class FActionElement extends Equatable {
     withCondition ??= false;
     condition ??= FTextTypeInput(value: '0');
     valueOfCondition ??= FTextTypeInput(value: '0');
+    icon ??= 'plus';
+    duration ??= FTextTypeInput(value: '3000');
+    fill ??= FFill();
+    fill2 ??= FFill();
+    bgFill ??= FFill();
+    width ??= FSize(size: 'max', unit: SizeUnit.pixel);
+    margin ??= FMargins();
   }
 
   FActionElement.fromJson(final Map<String, dynamic> doc) {
@@ -302,6 +329,9 @@ class FActionElement extends Equatable {
     actionApiCalls =
         convertDropdownToValue(ActionApiCalls.values, doc['aAC'] as String?)
             as ActionApiCalls?;
+    actionAlert =
+        convertDropdownToValue(ActionAlert.values, doc['aAlrt'] as String?)
+            as ActionAlert?;
     stateName = doc['sN'] as String?;
     stateName2 = doc['sN2'] as String?;
     stateName3 = doc['sN3'] as String?;
@@ -528,6 +558,30 @@ class FActionElement extends Equatable {
     firebaseMessagesTopic = FTextTypeInput.fromJson(
       doc['sFirebaseMessagesTopic'] as Map<String, dynamic>?,
     );
+    textStyle = FTextStyle.fromJson(doc['sTxtStl'] as Map<String, dynamic>);
+    textStyle2 = FTextStyle.fromJson(doc['sTxtStl2'] as Map<String, dynamic>);
+    fill = FFill().fromJson(doc['sFill'] as Map<String, dynamic>);
+    fill2 = FFill().fromJson(doc['sFill2'] as Map<String, dynamic>);
+    bgFill = FFill().fromJson(doc['sBgFill'] as Map<String, dynamic>);
+    borderRadius = FBorderRadius.fromJson(doc['sBrdrR'] as dynamic);
+    width = FSize.fromJson(doc['sWidth'] as Map<String, dynamic>);
+    dropdownItem = doc['sDrpdownI'] as String?;
+    dropdownItem2 = doc['sDrpdownI2'] as String?;
+    duration = FTextTypeInput.fromJson(
+      doc['sDuration'] as Map<String, dynamic>?,
+    );
+    margin = FMargins.fromJson(doc['sMargin'] as dynamic);
+    snackbarTitle = FTextTypeInput.fromJson(
+      doc['sSnackbarTitle'] as Map<String, dynamic>?,
+    );
+    snackbarMessage = FTextTypeInput.fromJson(
+      doc['sSnackbarMessage'] as Map<String, dynamic>?,
+    );
+    icon = doc['sIcon'] as String?;
+    addIcon =
+        doc['sAddIcon'] != null ? doc['sAddIcon'] as bool? ?? false : false;
+    addTitle =
+        doc['sAddTitle'] != null ? doc['sAddTitle'] as bool? ?? false : false;
   }
 
   String? id;
@@ -558,6 +612,7 @@ class FActionElement extends Equatable {
   ActionTetaCmsAuth? actionTetaAuth;
   ActionCustomHttpRequest? actionCustomHttpRequest;
   ActionApiCalls? actionApiCalls;
+  ActionAlert? actionAlert;
   FTextTypeInput? delay;
   FTextTypeInput? audioPlayerUrl = FTextTypeInput(value: 'url');
   bool? withCondition;
@@ -637,6 +692,24 @@ class FActionElement extends Equatable {
   FTextTypeInput? firebaseAnalyticsValue;
   //Firebase Messages
   FTextTypeInput? firebaseMessagesTopic;
+  //Design System
+  FTextStyle? textStyle;
+  FTextStyle? textStyle2;
+  FFill? fill;
+  FFill? fill2;
+  FFill? bgFill;
+  FBorderRadius? borderRadius;
+  FSize? width;
+  String? dropdownItem;
+  String? dropdownItem2;
+  FTextTypeInput? duration;
+  FMargins? margin;
+  String? icon;
+  //Snackbar
+  FTextTypeInput? snackbarTitle;
+  FTextTypeInput? snackbarMessage;
+  bool? addIcon;
+  bool? addTitle;
 
   @override
   List<Object?> get props => [
@@ -694,6 +767,7 @@ class FActionElement extends Equatable {
           'Theme',
           'Languages',
           'Google Maps',
+          'Alert',
           if (kDebugMode) 'Custom Functions',
           if (config.supabase is SupabaseConfigModelInitialized)
             'Supabase auth',
@@ -895,6 +969,10 @@ class FActionElement extends Equatable {
     return enumsToListString(ActionAudioPlayerActions.values);
   }
 
+  static List<String> getAlert() {
+    return enumsToListString(ActionAlert.values);
+  }
+
   static String? convertValueToDropdown(final dynamic type) {
     if (type == ActionType.revenueCat) {
       return 'RevenueCat';
@@ -924,6 +1002,9 @@ class FActionElement extends Equatable {
     }
     if (type == ActionType.apiCalls) {
       return 'Api Calls';
+    }
+    if (type == ActionType.alert) {
+      return 'Alert';
     }
     if (type == ActionType.airtable) return 'Airtable Database';
     if (type == ActionType.firebaseAnalytics) return 'Firebase Analytics';
@@ -967,6 +1048,9 @@ class FActionElement extends Equatable {
     }
     if (value == 'Api Calls') {
       return ActionType.apiCalls;
+    }
+    if (value == 'Alert') {
+      return ActionType.alert;
     }
     if (value == 'Airtable Database') return ActionType.airtable;
     if (value == 'Firebase Analytics') return ActionType.firebaseAnalytics;
@@ -1014,6 +1098,7 @@ class FActionElement extends Equatable {
         'aTAu': convertValueToDropdown(actionTetaAuth),
         'aCHr': convertValueToDropdown(actionCustomHttpRequest),
         'aAC': convertValueToDropdown(actionApiCalls),
+        'aAlrt': convertValueToDropdown(actionAlert),
         'sN': stateName,
         'sN2': stateName2,
         'sN3': stateName3,
@@ -1137,6 +1222,28 @@ class FActionElement extends Equatable {
         'sFirebaseMessagesTopic': firebaseMessagesTopic != null
             ? firebaseMessagesTopic!.toJson()
             : null,
+        'sTxtStl':
+            textStyle != null ? textStyle!.toJson() : FTextStyle().toJson(),
+        'sTxtStl2':
+            textStyle2 != null ? textStyle2!.toJson() : FTextStyle().toJson(),
+        'sFill': fill != null ? fill!.toJson() : FFill().toJson(),
+        'sFill2': fill2 != null ? fill2!.toJson() : FFill().toJson(),
+        'sBgFill': bgFill != null ? bgFill!.toJson() : FFill().toJson(),
+        'sBrdrR': borderRadius != null
+            ? borderRadius!.toJson()
+            : FBorderRadius().toJson(),
+        'sWidth': width != null ? width!.toJson() : FSize().toJson(),
+        'sDrpdownI': dropdownItem,
+        'sDrpdownI2': dropdownItem2,
+        'sDuration': duration != null ? duration!.toJson() : null,
+        'sMargin':margin != null ? margin!.toJson() : FMargins().toJson(),
+        'sSnackbarTitle':
+            snackbarTitle != null ? snackbarTitle!.toJson() : null,
+        'sSnackbarMessage':
+            snackbarMessage != null ? snackbarMessage!.toJson() : null,
+        'sIcon': icon,
+        'sAddIcon': addIcon,
+        'sAddTitle': addTitle,
       }..removeWhere((final String key, final dynamic value) => value == null);
 
   Future getAction(
@@ -2670,6 +2777,43 @@ class FActionElement extends Equatable {
         break;
       case ActionType.firebaseStorage:
         break;
+      case ActionType.alert:
+        switch (actionAlert) {
+          case ActionAlert.snackbar:
+          PackagesService.instance
+                .insertPackages(FActionAlertSnackbar.packages);
+            await actionS(
+              () => FActionAlertSnackbar.action(
+                context,
+                state.params,
+                state.states,
+                state.dataset,
+                state.loop,
+                textStyle,
+                textStyle2,
+                snackbarTitle,
+                snackbarMessage,
+                icon,
+                addIcon,
+                addTitle,
+                fill,
+                fill2,
+                bgFill,
+                borderRadius,
+                width,
+                dropdownItem,
+                dropdownItem2,
+                duration,
+                margin
+              ),
+              context: context,
+              state: state,
+            );
+            break;
+          case null:
+            break;
+        }
+        break;
       case ActionType.supabaseDatabase:
         switch (actionSupabaseDB) {
           case ActionSupabaseDB.insert:
@@ -3930,6 +4074,38 @@ class FActionElement extends Equatable {
         break;
       case ActionType.firebaseStorage:
         break;
+      case ActionType.alert:
+        switch (actionAlert) {
+          case ActionAlert.snackbar:
+          PackagesService.instance
+                .insertPackages(FActionAlertSnackbar.packages);
+            return codeS(
+              FActionAlertSnackbar.toCode(
+                context,
+                loop,
+                textStyle,
+                textStyle2,
+                snackbarTitle,
+                snackbarMessage,
+                icon,
+                addIcon,
+                addTitle,
+                fill,
+                fill2,
+                bgFill,
+                borderRadius,
+                width,
+                dropdownItem,
+                dropdownItem2,
+                duration,
+                margin
+
+              ),
+              context,
+            );
+          case null:
+            return '';
+        }
     }
     return '';
   }

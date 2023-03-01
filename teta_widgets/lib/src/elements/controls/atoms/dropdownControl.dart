@@ -10,7 +10,7 @@ import 'package:teta_widgets/src/elements/index.dart';
 
 class DropdownControl extends StatefulWidget {
   const DropdownControl({
-    required this.node,
+    this.node,
     required this.item,
     required this.list,
     required this.callBack,
@@ -18,7 +18,7 @@ class DropdownControl extends StatefulWidget {
     this.title,
   }) : super(key: key);
 
-  final CNode node;
+  final CNode? node;
   final String? title;
   final String item;
   final List<String> list;

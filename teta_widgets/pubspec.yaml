@@ -98,6 +98,7 @@ dependencies:
   download_assets: 3.0.0
   mobile_scanner: 2.0.0
   gap: 2.0.0
+  another_flushbar: 1.12.29
 
   # Utils
   uuid: 3.0.6
