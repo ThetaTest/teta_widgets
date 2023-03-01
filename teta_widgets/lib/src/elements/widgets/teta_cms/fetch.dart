@@ -69,7 +69,7 @@ class _WCmsFetchState extends State<WCmsFetch> with AfterLayoutMixin {
     if (!isInitialized) {
       EasyDebounce.debounce(
         'Collection Query ${widget.state.node.nid}',
-        const Duration(milliseconds: 500),
+        const Duration(seconds: 1),
         getDbElements,
       );
     }

@@ -6,6 +6,7 @@ import 'dart:async';
 
 import 'package:after_layout/after_layout.dart';
 import 'package:collection/collection.dart';
+import 'package:easy_debounce/easy_debounce.dart';
 import 'package:enum_to_string/enum_to_string.dart';
 // Flutter imports:
 import 'package:flutter/material.dart';
@@ -319,7 +320,11 @@ class PaddingsState extends State<TextControl> with AfterLayoutMixin {
                             controller.text.replaceAll(r'\', r'\\'),
                             context,
                           );
-                          widget.callBack(widget.value, old);
+                          EasyDebounce.debounce(
+                            'Editing text ${focusState.first}',
+                            const Duration(milliseconds: 500),
+                            () => widget.callBack(widget.value, old),
+                          );
                           setState(() {
                             isChanged = false;
                           });
