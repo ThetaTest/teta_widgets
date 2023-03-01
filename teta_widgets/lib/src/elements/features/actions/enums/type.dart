@@ -32,4 +32,5 @@ enum ActionType {
   apiCalls,
   firebaseAnalytics,
   firebaseMessages,
+  alert
 }

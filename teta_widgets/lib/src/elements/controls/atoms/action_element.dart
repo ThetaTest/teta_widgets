@@ -20,6 +20,7 @@ import 'package:teta_widgets/src/elements/controls/atoms/actions/validator.dart'
 import 'package:teta_widgets/src/elements/controls/atoms/airtable/delete.dart';
 import 'package:teta_widgets/src/elements/controls/atoms/airtable/insert.dart';
 import 'package:teta_widgets/src/elements/controls/atoms/airtable/update.dart';
+import 'package:teta_widgets/src/elements/controls/atoms/alert/snackbar.dart';
 import 'package:teta_widgets/src/elements/controls/atoms/apicalls/apicalls.dart';
 import 'package:teta_widgets/src/elements/controls/atoms/firebase/firebase_analytics/log_app_open.dart';
 import 'package:teta_widgets/src/elements/controls/atoms/firebase/firebase_analytics/log_event.dart';
@@ -54,6 +55,7 @@ import 'package:teta_widgets/src/elements/controls/atoms/teta_cms/update.dart';
 import 'package:teta_widgets/src/elements/controls/atoms/text.dart';
 import 'package:teta_widgets/src/elements/features/actions/enums/action_google_maps.dart';
 import 'package:teta_widgets/src/elements/features/actions/enums/airtable.dart';
+import 'package:teta_widgets/src/elements/features/actions/enums/alert.dart';
 import 'package:teta_widgets/src/elements/features/actions/enums/apicalls.dart';
 import 'package:teta_widgets/src/elements/features/actions/enums/audio_player_actions.dart';
 import 'package:teta_widgets/src/elements/features/actions/enums/braintree.dart';
@@ -1434,6 +1436,25 @@ class ActionElementControlState extends State<ActionElementControl> {
                     }
                   },
                 ),
+              if (widget.element.actionType == ActionType.alert)
+                CDropdown(
+                  value: FActionElement.convertValueToDropdown(
+                    widget.element.actionAlert,
+                  ),
+                  items: FActionElement.getAlert().toSet().toList(),
+                  onChange: (final newValue) {
+                    if (newValue != null) {
+                      final old = widget.element;
+                      widget.element.actionAlert =
+                          FActionElement.convertDropdownToValue(
+                        ActionAlert.values,
+                        newValue,
+                      ) as ActionAlert?;
+                      widget.callBack(widget.element, old);
+                    }
+                  },
+                ),
+              
               if (widget.element.actionType == ActionType.airtable)
                 CDropdown(
                   value: FActionElement.convertValueToDropdown(
@@ -2204,6 +2225,15 @@ class ActionElementControlState extends State<ActionElementControl> {
                   widget.element.actionFirebaseMessages ==
                       ActionFirebaseMessages.unsubscribeToTopic)
                 FirebaseMessagesUnsubscribeFromTopicControl(
+                  action: widget.element,
+                  callback: () {
+                    final old = widget.element;
+                    widget.callBack(widget.element, old);
+                  },
+                ),
+              if (widget.element.actionType == ActionType.alert &&
+                  widget.element.actionAlert == ActionAlert.snackbar)
+                AlertSnackbarControl(
                   action: widget.element,
                   callback: () {
                     final old = widget.element;
