@@ -72,14 +72,14 @@ class FActionAlertSnackbar {
     final iconS = icon != null
         ? Icon(
             FeatherIconsMap[icon],
-            size: 28.0,
+            size: 28,
             color: _getIconColor(
               iconModel,
             ),
           )
         : null;
 
-    FlushbarStyle flushbarStyle = FlushbarStyle.FLOATING;
+    var flushbarStyle = FlushbarStyle.FLOATING;
     switch (dropdownItem) {
       case 'FLOATING':
         flushbarStyle = FlushbarStyle.FLOATING;
@@ -91,7 +91,7 @@ class FActionAlertSnackbar {
         flushbarStyle = FlushbarStyle.FLOATING;
         break;
     }
-    FlushbarPosition flushbarPosition = FlushbarPosition.BOTTOM;
+    var flushbarPosition = FlushbarPosition.BOTTOM;
     switch (dropdownItem2) {
       case 'BOTTOM':
         flushbarPosition = FlushbarPosition.BOTTOM;
@@ -137,7 +137,7 @@ class FActionAlertSnackbar {
                   ) ??
                   3000,
             )
-          : Duration(seconds: 3),
+          : const Duration(seconds: 3),
       icon: (addIcon != null)
           ? addIcon == true
               ? iconS
@@ -166,17 +166,14 @@ class FActionAlertSnackbar {
     final FTextTypeInput? duration,
     final FMargins? margin,
   ) {
-    
-    final textStyleX = textStyle != null ? textStyle.toCode(context) : null;
-    final textStyle2X = textStyle2 != null ? textStyle2.toCode(context) : null;
+    final textStyleX = textStyle?.toCode(context);
+    final textStyle2X = textStyle2?.toCode(context);
 
-    final snackbarTitleX = snackbarTitle != null
-        ? snackbarTitle.toCode(
-            loop,
-            resultType: ResultTypeEnum.string,
-            defaultValue: '',
-          )
-        : null;
+    final snackbarTitleX = snackbarTitle?.toCode(
+      loop,
+      resultType: ResultTypeEnum.string,
+      defaultValue: '',
+    );
 
     final snackbarMessageX = (snackbarMessage as FTextTypeInput).toCode(
       loop,
@@ -185,27 +182,24 @@ class FActionAlertSnackbar {
     );
     final fillX = fill != null
         ? FFill.toCode(
-            fill as FFill,
+            fill,
             context,
             flagConst: false,
           )
         : null;
     final fill2X = fill2 != null
         ? FFill.toCode(
-            fill2 as FFill,
+            fill2,
             context,
             flagConst: false,
           )?.replaceAll('color:', '')
         : null;
-    final borderRadiusX = borderRadius != null ? borderRadius.toCode() : null;
-    final withX =
-        width != null ? width.toCode(context: context, isWidth: true) : null;
-    final durationeX = duration != null
-        ? duration.toCode(loop, resultType: ResultTypeEnum.int)
-        : null;
-    final marginX = margin != null ? margin.toCode(context) : null;
+    final borderRadiusX = borderRadius?.toCode();
+    final withX = width?.toCode(context: context, isWidth: true);
+    final durationeX = duration?.toCode(loop, resultType: ResultTypeEnum.int);
+    final marginX = margin?.toCode(context);
 
-    FlushbarStyle flushbarStyle = FlushbarStyle.FLOATING;
+    var flushbarStyle = FlushbarStyle.FLOATING;
     switch (dropdownItem) {
       case 'FLOATING':
         flushbarStyle = FlushbarStyle.FLOATING;
@@ -217,7 +211,7 @@ class FActionAlertSnackbar {
         flushbarStyle = FlushbarStyle.FLOATING;
         break;
     }
-    FlushbarPosition flushbarPosition = FlushbarPosition.BOTTOM;
+    var flushbarPosition = FlushbarPosition.BOTTOM;
     switch (dropdownItem2) {
       case 'BOTTOM':
         flushbarPosition = FlushbarPosition.BOTTOM;
@@ -229,7 +223,7 @@ class FActionAlertSnackbar {
         flushbarPosition = FlushbarPosition.BOTTOM;
         break;
     }
-    String snackbarText = '''
+    var snackbarText = '''
 ''';
     if ((addTitle != null && addTitle == true) && snackbarTitleX != null) {
       snackbarText = '''titleText:Text(
