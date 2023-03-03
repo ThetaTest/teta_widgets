@@ -45,13 +45,14 @@ class TextPrefabControl extends StatelessWidget {
             TextStylesControl(
               textStyle: textStyle,
               callBack: (final textStyleModel, final flag, final old) {
-                if (textStyleModel == null) return;
-                if (flag) {
-                  sl.get<ProjectStylesRepository>().assignTextStyle(
-                        styleName: textStyleModel,
-                        node: node,
-                        keyValue: keyValue,
-                      );
+                if (textStyleModel != null) {
+                  if (flag) {
+                    sl.get<ProjectStylesRepository>().assignTextStyle(
+                          styleName: textStyleModel,
+                          node: node,
+                          keyValue: keyValue,
+                        );
+                  }
                 }
                 final old = textStyle;
                 textStyle.textStyleModel = textStyleModel;

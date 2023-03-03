@@ -6,7 +6,6 @@ import 'package:equatable/equatable.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:responsive_builder/responsive_builder.dart';
-import 'package:sizer/sizer.dart';
 import 'package:teta_core/teta_core.dart';
 import 'package:teta_widgets/src/elements/index.dart';
 
@@ -15,17 +14,14 @@ class FFontSize extends Equatable {
   FFontSize({
     this.size = 16,
     this.unit = SizeUnit.pixel,
-    this.sizeTablet,
-    this.sizeDesktop,
-  }) {
-    sizeTablet ??= size;
-    sizeDesktop ??= size;
-  }
+    this.sizeTablet = 16,
+    this.sizeDesktop = 16,
+  });
 
   /// Value of [size] of [FFontSize]
   double size;
-  double? sizeTablet;
-  double? sizeDesktop;
+  double sizeTablet;
+  double sizeDesktop;
 
   SizeUnit unit;
 
@@ -38,13 +34,7 @@ class FFontSize extends Equatable {
       ];
 
   double _getValue(final double value) {
-    if (unit == SizeUnit.pixel) {
-      return size;
-    } else if (unit == SizeUnit.width) {
-      return size.w;
-    } else {
-      return size.h;
-    }
+    return size;
   }
 
   /// Get current value of [size]
@@ -55,18 +45,18 @@ class FFontSize extends Equatable {
     if (forPlay) {
       return getValueForScreenType<double>(
         context: context,
-        mobile: _getValue(size),
-        tablet: _getValue(sizeTablet ?? size),
-        desktop: _getValue(sizeDesktop ?? size),
+        mobile: size,
+        tablet: sizeTablet,
+        desktop: sizeDesktop,
       );
     } else {
       final device = context.read<DeviceModeCubit>().state;
       if (device.type == frame.DeviceType.phone) {
-        return _getValue(size);
+        return size;
       } else if (device.type == frame.DeviceType.tablet) {
-        return _getValue(sizeTablet ?? size);
+        return sizeTablet;
       } else {
-        return _getValue(sizeDesktop ?? size);
+        return sizeDesktop;
       }
     }
   }
@@ -88,6 +78,8 @@ class FFontSize extends Equatable {
       var size = 16.0;
       if (double.tryParse('$json') != null) {
         size = double.tryParse('$json') ?? 16;
+        sizeTablet = size;
+        sizeDesktop = size;
       } else {
         size = double.parse('${json['s']}');
         sizeTablet = double.tryParse('${json['st']}') ?? size;
@@ -97,16 +89,9 @@ class FFontSize extends Equatable {
         size: size,
         sizeTablet: sizeTablet,
         sizeDesktop: sizeDesktop,
-        unit: (json is Map<String, dynamic>)
-            ? EnumToString.fromString(
-                  SizeUnit.values,
-                  json['u'] as String? ?? 'pixel',
-                ) ??
-                SizeUnit.pixel
-            : SizeUnit.pixel,
       );
     } catch (e) {
-      Logger.printError('$e');
+      Logger.printError('Error fromJson in FFontSize, error: $e');
       return this;
     }
   }
@@ -119,22 +104,25 @@ class FFontSize extends Equatable {
         'u': EnumToString.convertToString(unit),
       };
 
+  FFontSize copyWith({
+    final double? size,
+    final double? sizeTablet,
+    final double? sizeDesktop,
+  }) {
+    return FFontSize(
+      size: size ?? this.size,
+      sizeTablet: sizeTablet ?? this.sizeTablet,
+      sizeDesktop: sizeDesktop ?? this.sizeDesktop,
+    );
+  }
+
   /// Returns double for code
   String toCode() {
     String _valueToCode(final double size) {
-      if (unit == SizeUnit.pixel) {
-        return size.toString();
-      }
-      if (unit == SizeUnit.width) {
-        return '$size.w';
-      }
-      if (unit == SizeUnit.height) {
-        return '$size.h';
-      }
       return size.toString();
     }
 
-    if (size == (sizeTablet ?? size) && size == (sizeDesktop ?? size)) {
+    if (size == sizeTablet && size == sizeDesktop) {
       return _valueToCode(size);
     }
 
@@ -142,8 +130,8 @@ class FFontSize extends Equatable {
 getValueForScreenType<double>(
   context: context,
   mobile: ${_valueToCode(size)},
-  tablet: ${_valueToCode(sizeTablet ?? size)},
-  desktop: ${_valueToCode(sizeDesktop ?? size)},
+  tablet: ${_valueToCode(sizeTablet)},
+  desktop: ${_valueToCode(sizeDesktop)},
 )''';
   }
 }

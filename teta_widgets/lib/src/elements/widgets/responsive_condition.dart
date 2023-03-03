@@ -18,7 +18,7 @@ class WResponsiveCondition extends StatelessWidget {
     required this.state,
     required this.visibleOnMobile,
     required this.visibleOnTablet,
-    //required this.visibleOnDesktop,
+    required this.visibleOnDesktop,
     this.child,
   }) : super(key: key);
 
@@ -26,26 +26,21 @@ class WResponsiveCondition extends StatelessWidget {
   final CNode? child;
   final bool visibleOnMobile;
   final bool visibleOnTablet;
-  //final bool visibleOnDesktop;
+  final bool visibleOnDesktop;
 
   @override
   Widget build(final BuildContext context) {
     return BlocBuilder<DeviceModeCubit, DeviceState>(
       builder: (final context, final deviceInfostate) {
-        // if (deviceInfostate.identifier.type == DeviceType.desktop) {
-        //   return visibleOnDesktop
-        //       ? ChildConditionBuilder(
-        //           ValueKey('${node.nid} $loop'),
-        //           name: node.intrinsicState.displayName,
-        //           child: child,
-        //           params: params,
-        //           states: states,
-        //           dataset: dataset,
-        //           forPlay: forPlay,
-        //           loop: loop,
-        //         )
-        //       : const SizedBox();
-        // }
+        if (deviceInfostate.info.identifier.type == DeviceType.desktop) {
+          return visibleOnDesktop
+              ? ChildConditionBuilder(
+                  ValueKey(state.toKey),
+                  state: state,
+                  child: child,
+                )
+              : const SizedBox();
+        }
         if (deviceInfostate.info.identifier.type == DeviceType.tablet) {
           return visibleOnTablet
               ? ChildConditionBuilder(
