@@ -133,7 +133,7 @@ class _WCmsFetchState extends State<WCmsFetch> with AfterLayoutMixin {
       return;
     }
     Logger.printSuccess(
-      'getCollectionByName Cms Fetch, collection: $collectionName, data: ${res.data}',
+      'getCollectionByName Cms Fetch, collection: $collectionName, data: ${res.data}, name: $keyName, value: $keyValue',
     );
 
     final _datasets = _addFetchDataToDataset(res.data);
