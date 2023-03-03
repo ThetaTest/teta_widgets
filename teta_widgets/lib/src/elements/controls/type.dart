@@ -3,6 +3,7 @@
 
 // Flutter imports:
 
+import 'package:easy_debounce/easy_debounce.dart';
 import 'package:flutter/material.dart';
 // Package imports:
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -181,6 +182,20 @@ enum ControlType {
 class ControlBuilder {
   /// It makes a call to NodeRepository.change.
   static Future<void> toDB(
+    final CNode node,
+    final BuildContext context,
+    final String key,
+    final dynamic value,
+    final dynamic old,
+  ) async {
+    EasyDebounce.debounce(
+      'toDB ${node.nid}',
+      const Duration(milliseconds: 500),
+      () => _toDB(node, context, key, value, old),
+    );
+  }
+
+  static Future<void> _toDB(
     final CNode node,
     final BuildContext context,
     final String key,
