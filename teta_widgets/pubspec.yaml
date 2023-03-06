@@ -2,7 +2,7 @@ name: teta_widgets
 description: Official package of Teta
 version: 0.0.16
 homepage:
-publish_to: builder.teta.so:8888
+publish_to: none
 
 environment:
   sdk: ">=2.17.0 <3.0.0"
@@ -13,19 +13,14 @@ dependencies:
     sdk: flutter
 
   teta_core:
-    git:
-      url: git@github.com:andreabuttarelli/Teta.git
-      path: teta_core
-      ref: develop
-  teta_repositories:
-    git:
-      url: git@github.com:andreabuttarelli/Teta.git
-      path: teta_repositories
-      ref: develop
+    path: ../../Teta/teta_core
+
   teta_cms:
-    git:
-      url: https://github.com/teta-so/cms-dart.git
-      ref: main
+    path: ../../teta-db
+
+  teta_repositories:
+    path: ../../Teta/teta_repositories
+
   flutter_polyline_points:
     git:
       url: https://github.com/AndreiCosmaTeta/flutter_polyline_points.git
@@ -97,7 +92,7 @@ dependencies:
   flutter_cache_manager: 3.3.0
   download_assets: 3.0.0
   mobile_scanner: 2.0.0
-  gap: 2.0.0
+  gap: ^2.0.1
   another_flushbar: 1.12.29
 
   # Utils
@@ -157,10 +152,6 @@ dependencies:
   flutter_highlight: 0.7.0
   dart_style: 2.2.3
 
-  # Web
-  js: 0.6.4
-  #  flutter_js: 0.5.0+6
-
   # Payments
   purchases_flutter: 3.10.0
 
@@ -187,14 +178,6 @@ dev_dependencies:
 
   import_sorter: 4.6.0
   flutter_gen_runner: 4.2.0
-
-dependency_overrides:
-  teta_core:
-    path: ../../Teta/teta_core
-  teta_cms:
-    path: ../../teta-db
-  teta_repositories:
-    path: ../../Teta/teta_repositories
 
 # For information on the generic Dart part of this file, see the
 # following page: https://dart.dev/tools/pub/pubspec
