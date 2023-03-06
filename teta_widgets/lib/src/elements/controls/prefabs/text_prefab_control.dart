@@ -40,18 +40,20 @@ class TextPrefabControl extends StatelessWidget {
             .page
             .flatList
             .firstWhere((final element) => element.nid == state.first);
+
         return Column(
           children: [
             TextStylesControl(
               textStyle: textStyle,
               callBack: (final textStyleModel, final flag, final old) {
-                if (textStyleModel == null) return;
-                if (flag) {
-                  sl.get<ProjectStylesRepository>().assignTextStyle(
-                        styleName: textStyleModel,
-                        node: node,
-                        keyValue: keyValue,
-                      );
+                if (textStyleModel != null) {
+                  if (flag) {
+                    sl.get<ProjectStylesRepository>().assignTextStyle(
+                          styleName: textStyleModel,
+                          node: node,
+                          keyValue: keyValue,
+                        );
+                  }
                 }
                 final old = textStyle;
                 textStyle.textStyleModel = textStyleModel;
@@ -68,8 +70,7 @@ class TextPrefabControl extends StatelessWidget {
               padding: EdgeInsets.only(top: 16),
               child: Divider(height: 1, color: Colors.white38),
             ),
-            if (!(node.globalType == NType.text) ||
-                node.body.attributes[keyValue]?.textStyleModel == null)
+            if (textStyle.textStyleModel == null)
               Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [

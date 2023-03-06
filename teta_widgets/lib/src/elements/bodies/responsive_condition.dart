@@ -73,12 +73,12 @@ class ResponsiveBody extends NodeBody {
           value: attributes[DBKeys.visibleOnTablet],
           description: 'Is the child visible on tablet?',
         ),
-        // FlagControlObject(
-        //   title: 'Desktop',
-        //   key: DBKeys.visibleOnDesktop,
-        //   value: attributes[DBKeys.visibleOnDesktop],
-        //   description: 'Is the child visible on desktop?',
-        // ),
+        FlagControlObject(
+          title: 'Desktop',
+          key: DBKeys.visibleOnDesktop,
+          value: attributes[DBKeys.visibleOnDesktop],
+          description: 'Is the child visible on desktop?',
+        ),
       ];
 
   @override
@@ -94,11 +94,12 @@ class ResponsiveBody extends NodeBody {
             ${child ?? children}
             ${attributes[DBKeys.visibleOnMobile] as bool}
             ${attributes[DBKeys.visibleOnTablet] as bool}
+            ${attributes[DBKeys.visibleOnDesktop] as bool}
             ''',
         ),
         state: state,
         child: child,
-        //visibleOnDesktop: attributes[DBKeys.visibleOnDesktop] as bool,
+        visibleOnDesktop: attributes[DBKeys.visibleOnDesktop] as bool,
         visibleOnMobile: attributes[DBKeys.visibleOnMobile] as bool,
         visibleOnTablet: attributes[DBKeys.visibleOnTablet] as bool,
       );

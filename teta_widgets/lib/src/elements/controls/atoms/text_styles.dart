@@ -5,6 +5,7 @@
 import 'package:flutter/material.dart';
 // Package imports:
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:gap/gap.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:hovering/hovering.dart';
 import 'package:teta_core/src/design_system/textfield/minitextfield.dart';
@@ -89,14 +90,45 @@ class TextStylesControlState extends State<TextStylesControl> {
                       ),
                     ),
                   ),
-                BounceSmall(
-                  onTap: () {
-                    if (textStyleModel == null) {
-                      /*newTextStylePicker(
-                          context, BlocProvider.of<TextStylesBloc>(context));*/
+                if (textStyleModel == null)
+                  BounceSmall(
+                    onTap: () {
                       BlocProvider.of<PanelsCubit>(context)
                           .changePanel(PanelsEnum.assets);
-                    } else {
+                    },
+                    child: HoverWidget(
+                      hoverChild: Container(
+                        padding: const EdgeInsets.all(4),
+                        decoration: BoxDecoration(
+                          border: Border.all(
+                            color: Colors.white,
+                          ),
+                        ),
+                        child: const Icon(
+                          Icons.add,
+                          size: 24,
+                          color: Colors.white,
+                        ),
+                      ),
+                      onHover: (final e) {},
+                      child: Container(
+                        padding: const EdgeInsets.all(4),
+                        decoration: BoxDecoration(
+                          border: Border.all(
+                            color: Colors.transparent,
+                          ),
+                        ),
+                        child: const Icon(
+                          Icons.add,
+                          size: 24,
+                          color: Colors.white,
+                        ),
+                      ),
+                    ),
+                  )
+                else
+                  BounceSmall(
+                    onTap: () {
                       final old = textStyleModel;
                       //String txtSM = widget.node.textStyleModel;
                       //txtSM = null;
@@ -104,38 +136,37 @@ class TextStylesControlState extends State<TextStylesControl> {
                       setState(() {
                         textStyleModel = null;
                       });
-                    }
-                  },
-                  child: HoverWidget(
-                    hoverChild: Container(
-                      padding: const EdgeInsets.all(4),
-                      decoration: BoxDecoration(
-                        border: Border.all(
+                    },
+                    child: HoverWidget(
+                      hoverChild: Container(
+                        padding: const EdgeInsets.all(4),
+                        decoration: BoxDecoration(
+                          border: Border.all(
+                            color: Colors.white,
+                          ),
+                        ),
+                        child: const Icon(
+                          Icons.remove,
+                          size: 24,
                           color: Colors.white,
                         ),
                       ),
-                      child: Icon(
-                        (textStyleModel == null) ? Icons.add : Icons.remove,
-                        size: 24,
-                        color: Colors.white,
-                      ),
-                    ),
-                    onHover: (final e) {},
-                    child: Container(
-                      padding: const EdgeInsets.all(4),
-                      decoration: BoxDecoration(
-                        border: Border.all(
-                          color: Colors.transparent,
+                      onHover: (final e) {},
+                      child: Container(
+                        padding: const EdgeInsets.all(4),
+                        decoration: BoxDecoration(
+                          border: Border.all(
+                            color: Colors.transparent,
+                          ),
                         ),
-                      ),
-                      child: Icon(
-                        (textStyleModel == null) ? Icons.add : Icons.remove,
-                        size: 24,
-                        color: Colors.white,
+                        child: const Icon(
+                          Icons.remove,
+                          size: 24,
+                          color: Colors.white,
+                        ),
                       ),
                     ),
                   ),
-                ),
               ],
             ),
           ],
@@ -169,88 +200,95 @@ class TextStylesControlState extends State<TextStylesControl> {
   ) {
     final editingController = TextEditingController();
 
-    showDialog<void>(
+    showModalBottomSheet<void>(
       context: context,
+      backgroundColor: Palette.bgDialog,
+      shape: const RoundedRectangleBorder(
+        borderRadius: BorderRadius.only(
+          topLeft: Radius.circular(Grid.medium),
+          topRight: Radius.circular(Grid.medium),
+        ),
+      ),
+      clipBehavior: Clip.hardEdge,
+      constraints: BoxConstraints(
+        maxWidth: 600,
+        maxHeight: MediaQuery.of(context).size.height / 6 * 5,
+      ),
+      isScrollControlled: true,
       builder: (final context) {
         var searchedText = '';
-        return StatefulBuilder(
-          builder: (final context, final setState) =>
-              BlocProvider<DeviceModeCubit>(
-            create: (final BuildContext context) => DeviceModeCubit(),
-            child: AlertDialog(
-              backgroundColor: const Color(0xFF222222),
-              title: const TAlertTitle(
-                'Text Styles',
-                color: Colors.white,
-              ),
-              content: SizedBox(
-                height: 400,
-                width: 300,
-                child: Column(
-                  children: [
-                    CMiniTextField(
-                      controller: editingController,
-                      placeholder: 'write here',
-                      callBack: (final text) => setState(() {
-                        searchedText = text;
-                      }),
-                    ),
-                    SizedBox(
-                      height: 326,
-                      child: BlocBuilder<TextStylesCubit, List<TextStyleModel>>(
-                        bloc: textStylesBloc,
-                        builder: (final context, final state) {
-                          return ListView(
-                            shrinkWrap: true,
-                            children: state.map((final entry) {
-                              if (entry.name.contains(searchedText)) {
-                                return GestureDetector(
-                                  onTap: () {
-                                    updateTextStyleModel(
-                                      entry.name,
-                                      flag: false,
-                                    );
-                                  },
-                                  child: MouseRegion(
-                                    cursor: SystemMouseCursors.click,
-                                    child: Padding(
-                                      padding: const EdgeInsets.symmetric(
-                                        vertical: 8,
-                                      ),
-                                      child: Text(
+        return Padding(
+          padding: EI.mdA,
+          child: StatefulBuilder(
+            builder: (final context, final setState) =>
+                BlocProvider<DeviceModeCubit>(
+              create: (final BuildContext context) => DeviceModeCubit(),
+              child: Column(
+                children: [
+                  const THeadline1(
+                    'Text Styles',
+                    color: Colors.white,
+                  ),
+                  const Gap(Grid.medium),
+                  Column(
+                    children: [
+                      CMiniTextField(
+                        controller: editingController,
+                        placeholder: 'Search by name',
+                        callBack: (final text) => setState(() {
+                          searchedText = text;
+                        }),
+                      ),
+                      SizedBox(
+                        height: 326,
+                        child:
+                            BlocBuilder<TextStylesCubit, List<TextStyleModel>>(
+                          bloc: textStylesBloc,
+                          builder: (final context, final state) {
+                            return ListView(
+                              shrinkWrap: true,
+                              children: state.map((final entry) {
+                                if (entry.name.contains(searchedText)) {
+                                  return GestureDetector(
+                                    onTap: () {
+                                      updateTextStyleModel(
                                         entry.name,
-                                        style: GoogleFonts.getFont(
-                                          entry.fontFamily,
-                                          fontSize: entry.fontSize.get(
-                                            context,
-                                            forPlay: false,
+                                        flag: false,
+                                      );
+                                    },
+                                    child: MouseRegion(
+                                      cursor: SystemMouseCursors.click,
+                                      child: Padding(
+                                        padding: const EdgeInsets.symmetric(
+                                          vertical: 8,
+                                        ),
+                                        child: Text(
+                                          entry.name,
+                                          style: GoogleFonts.getFont(
+                                            entry.fontFamily,
+                                            fontSize: entry.fontSize.get(
+                                              context,
+                                              forPlay: false,
+                                            ),
+                                            fontWeight: entry.fontWeight.get,
+                                            color: Colors.white,
                                           ),
-                                          fontWeight: entry.fontWeight.get,
-                                          color: Colors.white,
                                         ),
                                       ),
                                     ),
-                                  ),
-                                );
-                              } else {
-                                return const SizedBox();
-                              }
-                            }).toList(),
-                          );
-                        },
+                                  );
+                                } else {
+                                  return const SizedBox();
+                                }
+                              }).toList(),
+                            );
+                          },
+                        ),
                       ),
-                    ),
-                  ],
-                ),
+                    ],
+                  ),
+                ],
               ),
-              actions: <Widget>[
-                CButton(
-                  label: 'Cancel',
-                  callback: () => Navigator.of(context).pop(),
-                  maxWidth: 60,
-                  isPrimary: false,
-                ),
-              ],
             ),
           ),
         );

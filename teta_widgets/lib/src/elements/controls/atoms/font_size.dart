@@ -11,7 +11,6 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:gap/gap.dart';
 import 'package:teta_core/src/design_system/textfield/textfield.dart';
 import 'package:teta_core/teta_core.dart';
-import 'package:teta_widgets/src/elements/controls/atoms/size.dart';
 // Project imports:
 import 'package:teta_widgets/src/elements/index.dart';
 
@@ -94,33 +93,6 @@ class FontSizeState extends State<FontSizeControl> {
                       Gap(Grid.small),
                       TParagraph(
                         'Font Size',
-                      ),
-                    ],
-                  ),
-                  Row(
-                    mainAxisSize: MainAxisSize.min,
-                    children: [
-                      GestureDetector(
-                        onTap: () {
-                          final old = widget.textStyle;
-                          widget.textStyle.fontSize!.unit = SizeUnit.pixel;
-                          onChangeHandler(widget.textStyle, old);
-                        },
-                        child: VisualIcon(
-                          unit: SizeUnit.pixel,
-                          unitFromNode: widget.textStyle.fontSize!.unit,
-                        ),
-                      ),
-                      GestureDetector(
-                        onTap: () {
-                          final old = widget.textStyle;
-                          widget.textStyle.fontSize!.unit = SizeUnit.percent;
-                          onChangeHandler(widget.textStyle, old);
-                        },
-                        child: VisualIcon(
-                          unit: SizeUnit.percent,
-                          unitFromNode: widget.textStyle.fontSize!.unit,
-                        ),
                       ),
                     ],
                   ),
