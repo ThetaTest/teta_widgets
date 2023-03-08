@@ -44,8 +44,7 @@ class WSupabaseStreamBuilder extends StatefulWidget {
   _WSupabaseStreamBuilderState createState() => _WSupabaseStreamBuilderState();
 }
 
-class _WSupabaseStreamBuilderState extends State<WSupabaseStreamBuilder>
-    with AfterLayoutMixin {
+class _WSupabaseStreamBuilderState extends State<WSupabaseStreamBuilder> {
   DatasetObject _map = const DatasetObject(
     name: 'Supabase Query',
     map: [<String, dynamic>{}],
@@ -54,11 +53,14 @@ class _WSupabaseStreamBuilderState extends State<WSupabaseStreamBuilder>
   SupabaseClient? client;
 
   @override
-  FutureOr<void> afterFirstLayout(final BuildContext context) {
-    calc();
+  void initState() {
+    super.initState();
+    WidgetsBinding.instance.addPostFrameCallback((_) => calc());
   }
 
   Future calc() async {
+    if (_stream != null) return;
+
     final from = widget.from.get(
       widget.state.params,
       widget.state.states,
@@ -97,7 +99,7 @@ class _WSupabaseStreamBuilderState extends State<WSupabaseStreamBuilder>
       query.limit(valueFromRange);
     }
 
-    _stream = query.execute();
+    setState(() => _stream = query.execute());
   }
 
   @override
@@ -106,10 +108,12 @@ class _WSupabaseStreamBuilderState extends State<WSupabaseStreamBuilder>
 
     if (client == null) {
       return const Center(
-        child: THeadline3(
-          'Supabase is not initialized yet',
-        ),
+        child: THeadline3('Supabase is not initialized yet'),
       );
+    }
+
+    if (_stream == null) {
+      return const Center(child: CircularProgressIndicator());
     }
 
     return NodeSelectionBuilder(
@@ -117,8 +121,13 @@ class _WSupabaseStreamBuilderState extends State<WSupabaseStreamBuilder>
       child: StreamBuilder(
         stream: _stream,
         builder: (final context, final snapshot) {
+          if (snapshot.error != null) {
+            return Text(
+              'Supabase error while fetching data: ${snapshot.error}',
+            );
+          }
+
           if (!snapshot.hasData) {
-            // snapshot has no data yet
             if (widget.children.isNotEmpty) {
               return widget.children.last.toWidget(
                 state: widget.state,
@@ -127,13 +136,8 @@ class _WSupabaseStreamBuilderState extends State<WSupabaseStreamBuilder>
               return const CircularProgressIndicator();
             }
           }
-          if (snapshot.error != null) {
-            // TODO: Returns a error widget
-          }
+
           final response = snapshot.data as List<Map<String, dynamic>>?;
-          if ((response ?? <Map<String, dynamic>>[]).isEmpty) {
-            // TODO: Returns a error widget
-          }
           _map = _map.copyWith(
             name: widget.state.node.name ??
                 widget.state.node.intrinsicState.displayName,
@@ -151,7 +155,7 @@ class _WSupabaseStreamBuilderState extends State<WSupabaseStreamBuilder>
               ),
             );
           } else {
-            return const SizedBox();
+            return const SizedBox.shrink();
           }
         },
       ),

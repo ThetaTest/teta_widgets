@@ -31,7 +31,7 @@ class WSupabaseLoggedUser extends StatefulWidget {
 }
 
 class _WSupabaseLoggedUserState extends State<WSupabaseLoggedUser> {
-  DatasetObject _map = DatasetObject(
+  DatasetObject _map = const DatasetObject(
     name: 'Supabase User',
     map: [<String, dynamic>{}],
   );
@@ -48,7 +48,8 @@ class _WSupabaseLoggedUserState extends State<WSupabaseLoggedUser> {
 
   Future<Map<String, dynamic>> load() async {
     final box = await Hive.openBox<dynamic>('social_login');
-    final result = box.get('key') as Map<String, dynamic>? ?? <String, dynamic>{};
+    final result =
+        box.get('key') as Map<String, dynamic>? ?? <String, dynamic>{};
     return result;
   }
 
@@ -95,7 +96,9 @@ class _WSupabaseLoggedUserState extends State<WSupabaseLoggedUser> {
         if (widget.child != null) {
           return widget.child!.toWidget(
             state: widget.state.copyWith(
-              dataset: widget.state.dataset.isEmpty ? datasets : widget.state.dataset,
+              dataset: widget.state.dataset.isEmpty
+                  ? datasets
+                  : widget.state.dataset,
             ),
           );
         } else {
