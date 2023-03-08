@@ -155,9 +155,6 @@ dependencies:
   # Payments
   purchases_flutter: 3.10.0
 
-  # Lint
-  very_good_analysis: 2.4.0
-
   # Adapty
   adapty_flutter: ^1.0.14
 
@@ -178,6 +175,7 @@ dev_dependencies:
 
   import_sorter: 4.6.0
   flutter_gen_runner: 4.2.0
+  very_good_analysis: ^4.0.0+1
 
 # For information on the generic Dart part of this file, see the
 # following page: https://dart.dev/tools/pub/pubspec
