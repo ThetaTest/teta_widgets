@@ -16,6 +16,7 @@ import 'package:teta_widgets/src/core/teta_widget/index.dart';
 import 'package:teta_widgets/src/elements/actions/navigation/pass_params_builder.dart';
 import 'package:teta_widgets/src/elements/code/formatter_test.dart';
 import 'package:teta_widgets/src/elements/index.dart';
+import 'package:teta_core/src/pages/play_page/cubit_value_initializer.dart';
 
 class FActionNavigationOpenSnackBar {
   static Future action(
@@ -58,19 +59,36 @@ class FActionNavigationOpenSnackBar {
           final scaffold = sl.get<NodeRendering>().renderTree(nodes);
           page = page.copyWith(flatList: nodes, scaffold: scaffold);
           final snackBar = SnackBar(
-            content: page.scaffold.toWidget(
-              state: state.copyWith(
-                forPlay: true,
-                states: page.defaultStates,
-                dataset: [],
-                params: passParamsToNewPage(
-                  page.defaultParams,
-                  currentPage.params,
-                  paramsToSend,
-                  state.dataset,
-                  loop: state.loop,
+            padding: EdgeInsets.zero,
+            margin: EdgeInsets.zero,
+            behavior: SnackBarBehavior.floating,
+            backgroundColor: Colors.transparent,
+            elevation: 0,
+            content: BlocProvider(
+              lazy: false,
+              create: (final c) => PageCubit(
+                sl.get(),
+                sl.get(),
+                sl.get(),
+                sl.get(),
+              )..onFocus(page: page!, forPlay: true),
+              child: PlayCubitsValueInitializer(
+                originalContext: context,
+                child: page.scaffold.toWidget(
+                  state: state.copyWith(
+                    forPlay: true,
+                    states: page.defaultStates,
+                    dataset: [],
+                    params: passParamsToNewPage(
+                      page.defaultParams,
+                      currentPage.params,
+                      paramsToSend,
+                      state.dataset,
+                      loop: state.loop,
+                    ),
+                  ),
                 ),
-              ),
+              ).build(),
             ),
           );
           ScaffoldMessenger.of(context).showSnackBar(snackBar);
