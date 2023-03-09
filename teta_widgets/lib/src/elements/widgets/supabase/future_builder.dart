@@ -15,6 +15,8 @@ import 'package:teta_widgets/src/core/teta_widget/index.dart';
 // Project imports:
 import 'package:teta_widgets/src/elements/index.dart';
 
+import '../../builder/remove_dataset.dart';
+
 // ignore_for_file: public_member_api_docs
 
 class WSupabaseFutureBuilder extends StatefulWidget {
@@ -80,6 +82,14 @@ class _WSupabaseFutureBuilderState extends State<WSupabaseFutureBuilder> {
   void initState() {
     super.initState();
     WidgetsBinding.instance.addPostFrameCallback((_) => calc());
+  }
+
+  @override
+  void dispose() {
+    final node = widget.state.node;
+    final datasetName = node.name ?? node.intrinsicState.displayName;
+    removeDataset(context, datasetName);
+    super.dispose();
   }
 
   Future calc() async {
@@ -243,7 +253,7 @@ class _WSupabaseFutureBuilderState extends State<WSupabaseFutureBuilder> {
                 widget.state.node.intrinsicState.displayName,
             map: (list ?? const <dynamic>[]).cast<Map<String, dynamic>>(),
           );
-          final datasets = addDataset(context, widget.state.dataset, _map);
+          final datasets = addDataset(context, _map);
 
           // Returns child
           if (widget.children.isNotEmpty) {

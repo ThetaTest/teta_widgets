@@ -25,7 +25,8 @@ class WRevenueCatProductsList extends StatefulWidget {
   final CNode? child;
 
   @override
-  State<WRevenueCatProductsList> createState() => _WRevenueCatProductsListState();
+  State<WRevenueCatProductsList> createState() =>
+      _WRevenueCatProductsListState();
 }
 
 class _WRevenueCatProductsListState extends State<WRevenueCatProductsList> {
@@ -37,7 +38,8 @@ class _WRevenueCatProductsListState extends State<WRevenueCatProductsList> {
   void initState() {
     getProducts();
     _map = DatasetObject(
-      name: widget.state.node.name ?? widget.state.node.intrinsicState.displayName,
+      name: widget.state.node.name ??
+          widget.state.node.intrinsicState.displayName,
       map: [<String, dynamic>{}],
     );
     super.initState();
@@ -47,9 +49,11 @@ class _WRevenueCatProductsListState extends State<WRevenueCatProductsList> {
     if (UniversalPlatform.isAndroid) {
       try {
         final offerings = await Purchases.getOfferings();
-        if (offerings.current != null && (offerings.current?.availablePackages ?? []).isNotEmpty) {
+        if (offerings.current != null &&
+            (offerings.current?.availablePackages ?? []).isNotEmpty) {
           final prods = <Product>[];
-          for (final product in offerings.current?.availablePackages ?? <Package>[]) {
+          for (final product
+              in offerings.current?.availablePackages ?? <Package>[]) {
             prods.add(product.product);
           }
           products = prods;
@@ -82,10 +86,11 @@ class _WRevenueCatProductsListState extends State<WRevenueCatProductsList> {
       );
     }
     _map = _map.copyWith(
-      name: widget.state.node.name ?? widget.state.node.intrinsicState.displayName,
+      name: widget.state.node.name ??
+          widget.state.node.intrinsicState.displayName,
       map: products.map((final e) => e.toJson()).toList(),
     );
-    final datasets = addDataset(context, widget.state.dataset, _map);
+    final datasets = addDataset(context, _map);
 
     return TetaWidget(
       state: widget.state,
@@ -95,7 +100,8 @@ class _WRevenueCatProductsListState extends State<WRevenueCatProductsList> {
         itemBuilder: (final context, final index) => ChildConditionBuilder(
           ValueKey('${widget.state.node.nid} ${widget.state.loop}'),
           state: widget.state.copyWith(
-            dataset: widget.state.dataset.isEmpty ? datasets : widget.state.dataset,
+            dataset:
+                widget.state.dataset.isEmpty ? datasets : widget.state.dataset,
           ),
           child: widget.child,
         ),

@@ -143,7 +143,7 @@ class _WCmsCountState extends State<WCmsCount> with AfterLayoutMixin {
                   },
                 ],
               );
-              final datasets = addDataset(context, widget.state.dataset, _map);
+              final datasets = addDataset(context, _map);
 
               // Returns child
               if (widget.children.isNotEmpty) {

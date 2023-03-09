@@ -62,7 +62,7 @@ class _WWordPressExampleGridviewState extends State<WWordPressExampleGridview> {
 
   Widget body(BuildContext context) {
     if (_isLoading) _fetchProducts(context);
-    final list = addDataset(context, widget.dataset, map);
+    final list = addDataset(context,  map);
     return _isLoading
         ? const CircularProgressIndicator()
         : StaggeredGridView.countBuilder(

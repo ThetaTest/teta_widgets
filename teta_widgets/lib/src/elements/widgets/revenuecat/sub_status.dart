@@ -80,7 +80,7 @@ class _WRevenueCatSingleSubStatusState
             name: mapTitle,
             map: [map],
           );
-          final datasets = addDataset(context, widget.state.dataset, _map);
+          final datasets = addDataset(context, _map);
           if (widget.child != null) {
             return widget.child!.toWidget(
               state: widget.state.copyWith(

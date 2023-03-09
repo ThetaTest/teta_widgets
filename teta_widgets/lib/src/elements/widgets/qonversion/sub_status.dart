@@ -25,10 +25,12 @@ class WQonversionSingleSubStatus extends StatefulWidget {
   final FTextTypeInput entitlementInfo;
 
   @override
-  State<WQonversionSingleSubStatus> createState() => _WQonversionSingleSubStatusState();
+  State<WQonversionSingleSubStatus> createState() =>
+      _WQonversionSingleSubStatusState();
 }
 
-class _WQonversionSingleSubStatusState extends State<WQonversionSingleSubStatus> {
+class _WQonversionSingleSubStatusState
+    extends State<WQonversionSingleSubStatus> {
   static const mapTitle = 'Qonversion Sub Status';
   DatasetObject _map = DatasetObject(
     name: mapTitle,
@@ -60,11 +62,13 @@ class _WQonversionSingleSubStatusState extends State<WQonversionSingleSubStatus>
             name: mapTitle,
             map: [map],
           );
-          final datasets = addDataset(context, widget.state.dataset, _map);
+          final datasets = addDataset(context, _map);
           if (widget.child != null) {
             return widget.child!.toWidget(
                 state: widget.state.copyWith(
-              dataset: widget.state.dataset.isEmpty ? datasets : widget.state.dataset,
+              dataset: widget.state.dataset.isEmpty
+                  ? datasets
+                  : widget.state.dataset,
             ));
           } else {
             return const SizedBox();

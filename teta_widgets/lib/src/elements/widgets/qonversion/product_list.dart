@@ -23,7 +23,8 @@ class WQonversionProductsList extends StatefulWidget {
   final CNode? child;
 
   @override
-  State<WQonversionProductsList> createState() => _WQonversionProductsListState();
+  State<WQonversionProductsList> createState() =>
+      _WQonversionProductsListState();
 }
 
 class _WQonversionProductsListState extends State<WQonversionProductsList> {
@@ -35,7 +36,8 @@ class _WQonversionProductsListState extends State<WQonversionProductsList> {
   void initState() {
     getProducts();
     _map = DatasetObject(
-      name: widget.state.node.name ?? widget.state.node.intrinsicState.displayName,
+      name: widget.state.node.name ??
+          widget.state.node.intrinsicState.displayName,
       map: [<String, dynamic>{}],
     );
     super.initState();
@@ -65,10 +67,11 @@ class _WQonversionProductsListState extends State<WQonversionProductsList> {
       );
     }
     _map = _map.copyWith(
-      name: widget.state.node.name ?? widget.state.node.intrinsicState.displayName,
+      name: widget.state.node.name ??
+          widget.state.node.intrinsicState.displayName,
       map: products.map((final e) => e.toJson()).toList(),
     );
-    final datasets = addDataset(context, widget.state.dataset, _map);
+    final datasets = addDataset(context, _map);
 
     return TetaWidget(
       state: widget.state,
@@ -78,7 +81,8 @@ class _WQonversionProductsListState extends State<WQonversionProductsList> {
         itemBuilder: (final context, final index) => ChildConditionBuilder(
           ValueKey('${widget.state.node.nid} ${widget.state.loop}'),
           state: widget.state.copyWith(
-            dataset: widget.state.dataset.isEmpty ? datasets : widget.state.dataset,
+            dataset:
+                widget.state.dataset.isEmpty ? datasets : widget.state.dataset,
           ),
           child: widget.child,
         ),

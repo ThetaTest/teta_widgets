@@ -90,7 +90,7 @@ class WTetaStoreTransactionsBuilderState
           name: 'transactions',
           map: r.data!.map((final e) => e.toJson()).toList(growable: true),
         );
-        addDataset(context, widget.state.dataset, datasetObject);
+        addDataset(context, datasetObject);
       } else {
         debugPrint(
             'Error in calc _getTransactions -> ${r.error?.message ?? 'no message'}');
