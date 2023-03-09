@@ -7,7 +7,6 @@ import 'package:flutter/material.dart';
 // Package imports:
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:gap/gap.dart';
-import 'package:hovering/hovering.dart';
 import 'package:teta_core/src/design_system/textfield/minitextfield.dart';
 import 'package:teta_core/teta_core.dart';
 // Project imports:
@@ -98,41 +97,45 @@ class BorderRadiusControlState extends State<BorderRadiusControl> {
                             ],
                           ),
                         ),
-                        GestureDetector(
+                        BounceSmall(
+                          key: ValueKey('toggle $isLinked'),
+                          message: 'Link or unlink values',
                           onTap: () {
                             setState(() {
                               isLinked = !isLinked;
                             });
                           },
-                          child: HoverWidget(
-                            hoverChild: Container(
-                              padding: const EdgeInsets.all(4),
-                              decoration: BoxDecoration(
-                                border: Border.all(
-                                  color: Colors.white,
+                          child: isLinked
+                              ? Row(
+                                  children: [
+                                    const Icon(
+                                      Icons.link,
+                                      size: 24,
+                                      color: Colors.white,
+                                    ),
+                                    const Gap(4),
+                                    TDetailLabel(
+                                      'Linked',
+                                      color:
+                                          Palette.txtPrimary.withOpacity(0.6),
+                                    )
+                                  ],
+                                )
+                              : Row(
+                                  children: [
+                                    const Icon(
+                                      Icons.link_off,
+                                      size: 24,
+                                      color: Colors.white,
+                                    ),
+                                    const Gap(4),
+                                    TDetailLabel(
+                                      'Unlinked',
+                                      color:
+                                          Palette.txtPrimary.withOpacity(0.6),
+                                    )
+                                  ],
                                 ),
-                              ),
-                              child: Icon(
-                                isLinked ? Icons.link : Icons.link_off,
-                                size: 24,
-                                color: Colors.white,
-                              ),
-                            ),
-                            onHover: (final e) {},
-                            child: Container(
-                              padding: const EdgeInsets.all(4),
-                              decoration: BoxDecoration(
-                                border: Border.all(
-                                  color: Colors.transparent,
-                                ),
-                              ),
-                              child: Icon(
-                                isLinked ? Icons.link : Icons.link_off,
-                                size: 24,
-                                color: Colors.white,
-                              ),
-                            ),
-                          ),
                         ),
                       ],
                     ),
@@ -167,8 +170,9 @@ class BorderRadiusControlState extends State<BorderRadiusControl> {
                           },
                         ),
                       ),
-                      if (!isLinked)
-                        Expanded(
+                      Expanded(
+                        child: Opacity(
+                          opacity: isLinked ? 0.3 : 1,
                           child: CMiniTextField(
                             title: 'T. R.',
                             controller: controllers[1],
@@ -196,8 +200,10 @@ class BorderRadiusControlState extends State<BorderRadiusControl> {
                             },
                           ),
                         ),
-                      if (!isLinked)
-                        Expanded(
+                      ),
+                      Expanded(
+                        child: Opacity(
+                          opacity: isLinked ? 0.3 : 1,
                           child: CMiniTextField(
                             title: 'B. R.',
                             controller: controllers[2],
@@ -225,8 +231,10 @@ class BorderRadiusControlState extends State<BorderRadiusControl> {
                             },
                           ),
                         ),
-                      if (!isLinked)
-                        Expanded(
+                      ),
+                      Expanded(
+                        child: Opacity(
+                          opacity: isLinked ? 0.3 : 1,
                           child: CMiniTextField(
                             title: 'B. L.',
                             controller: controllers[3],
@@ -254,6 +262,7 @@ class BorderRadiusControlState extends State<BorderRadiusControl> {
                             },
                           ),
                         ),
+                      ),
                     ],
                   ),
                 ],

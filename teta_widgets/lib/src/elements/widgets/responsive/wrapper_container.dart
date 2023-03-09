@@ -12,6 +12,7 @@ import 'package:teta_widgets/src/elements/index.dart';
 class WWrapperContainer extends StatelessWidget {
   const WWrapperContainer({
     required this.state,
+    required this.isBoxed,
     final Key? key,
     this.child,
     this.index,
@@ -19,6 +20,7 @@ class WWrapperContainer extends StatelessWidget {
   }) : super(key: key);
 
   final TetaWidgetState state;
+  final bool isBoxed;
   final CNode? child;
   final double? index;
   final String? component;
@@ -30,40 +32,46 @@ class WWrapperContainer extends StatelessWidget {
       child: GestureBuilderBase.get(
         context: context,
         state: state,
-        child: Builder(
-          builder: (final context) {
-            if (MediaQuery.of(context).size.width > 1200) {
-              return Center(
-                child: ConstrainedBox(
-                  constraints: const BoxConstraints(maxWidth: 1200),
-                  child: ChildConditionBuilder(
-                    ValueKey('${state.toKey} desktop'),
-                    state: state,
-                    child: child,
-                  ),
-                ),
-              );
-            }
-            if (MediaQuery.of(context).size.width > 600) {
-              return Padding(
-                padding: const EdgeInsets.symmetric(horizontal: 100),
-                child: ChildConditionBuilder(
-                  ValueKey('${state.toKey} tablet'),
-                  state: state,
-                  child: child,
-                ),
-              );
-            }
-            return Padding(
-              padding: const EdgeInsets.symmetric(horizontal: 16),
-              child: ChildConditionBuilder(
+        child: isBoxed
+            ? Builder(
+                builder: (final context) {
+                  if (MediaQuery.of(context).size.width > 1200) {
+                    return Center(
+                      child: ConstrainedBox(
+                        constraints: const BoxConstraints(maxWidth: 1200),
+                        child: ChildConditionBuilder(
+                          ValueKey('${state.toKey} desktop'),
+                          state: state,
+                          child: child,
+                        ),
+                      ),
+                    );
+                  }
+                  if (MediaQuery.of(context).size.width > 600) {
+                    return Padding(
+                      padding: const EdgeInsets.symmetric(horizontal: 100),
+                      child: ChildConditionBuilder(
+                        ValueKey('${state.toKey} tablet'),
+                        state: state,
+                        child: child,
+                      ),
+                    );
+                  }
+                  return Padding(
+                    padding: const EdgeInsets.symmetric(horizontal: 16),
+                    child: ChildConditionBuilder(
+                      ValueKey('${state.toKey} mobile'),
+                      state: state,
+                      child: child,
+                    ),
+                  );
+                },
+              )
+            : ChildConditionBuilder(
                 ValueKey('${state.toKey} mobile'),
                 state: state,
                 child: child,
               ),
-            );
-          },
-        ),
       ),
     );
   }

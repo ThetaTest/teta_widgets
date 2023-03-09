@@ -308,6 +308,7 @@ class PaddingsState extends State<TextControl> with AfterLayoutMixin {
                     ),
                   ],
                 ),
+                const Gap(Grid.small),
                 if (widget.value.type == FTextTypeEnum.text)
                   Column(
                     children: [

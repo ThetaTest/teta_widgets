@@ -9,7 +9,6 @@ import 'package:flutter/material.dart';
 // Package imports:
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:gap/gap.dart';
-import 'package:hovering/hovering.dart';
 import 'package:teta_core/src/design_system/textfield/minitextfield.dart';
 import 'package:teta_core/teta_core.dart';
 // Project imports:
@@ -121,41 +120,42 @@ class MarginsState extends State<Margins> {
                     ),
                   ),
                   BounceSmall(
+                    key: ValueKey('toggle $isLinked'),
                     message: 'Link or unlink values',
                     onTap: () {
                       setState(() {
                         isLinked = !isLinked;
                       });
                     },
-                    child: HoverWidget(
-                      hoverChild: Container(
-                        padding: const EdgeInsets.all(4),
-                        decoration: BoxDecoration(
-                          border: Border.all(
-                            color: Colors.white,
+                    child: isLinked
+                        ? Row(
+                            children: [
+                              const Icon(
+                                Icons.link,
+                                size: 24,
+                                color: Colors.white,
+                              ),
+                              const Gap(4),
+                              TDetailLabel(
+                                'Linked',
+                                color: Palette.txtPrimary.withOpacity(0.6),
+                              )
+                            ],
+                          )
+                        : Row(
+                            children: [
+                              const Icon(
+                                Icons.link_off,
+                                size: 24,
+                                color: Colors.white,
+                              ),
+                              const Gap(4),
+                              TDetailLabel(
+                                'Unlinked',
+                                color: Palette.txtPrimary.withOpacity(0.6),
+                              )
+                            ],
                           ),
-                        ),
-                        child: Icon(
-                          isLinked ? Icons.link : Icons.link_off,
-                          size: 24,
-                          color: Colors.white,
-                        ),
-                      ),
-                      onHover: (final e) {},
-                      child: Container(
-                        padding: const EdgeInsets.all(4),
-                        decoration: BoxDecoration(
-                          border: Border.all(
-                            color: Colors.transparent,
-                          ),
-                        ),
-                        child: Icon(
-                          isLinked ? Icons.link : Icons.link_off,
-                          size: 24,
-                          color: Colors.white,
-                        ),
-                      ),
-                    ),
                   ),
                 ],
               ),
@@ -171,7 +171,7 @@ class MarginsState extends State<Margins> {
                       context,
                       forPlay: false,
                     )[0],
-                    hpadding: isLinked ? 0 : 4,
+                    hpadding: 4,
                     withSwipe: true,
                     callBack: (final text) {
                       final finalText = text.replaceAll('-', '');
@@ -190,8 +190,9 @@ class MarginsState extends State<Margins> {
                     },
                   ),
                 ),
-                if (!isLinked)
-                  Expanded(
+                Expanded(
+                  child: Opacity(
+                    opacity: isLinked ? 0.3 : 1,
                     child: CMiniTextField(
                       title: 'TOP',
                       controller: controllers[1],
@@ -210,8 +211,10 @@ class MarginsState extends State<Margins> {
                       },
                     ),
                   ),
-                if (!isLinked)
-                  Expanded(
+                ),
+                Expanded(
+                  child: Opacity(
+                    opacity: isLinked ? 0.3 : 1,
                     child: CMiniTextField(
                       title: 'RIGHT',
                       controller: controllers[2],
@@ -230,8 +233,10 @@ class MarginsState extends State<Margins> {
                       },
                     ),
                   ),
-                if (!isLinked)
-                  Expanded(
+                ),
+                Expanded(
+                  child: Opacity(
+                    opacity: isLinked ? 0.3 : 1,
                     child: CMiniTextField(
                       title: 'BOTTOM',
                       controller: controllers[3],
@@ -250,6 +255,7 @@ class MarginsState extends State<Margins> {
                       },
                     ),
                   ),
+                ),
               ],
             ),
           ],

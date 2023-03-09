@@ -3,6 +3,8 @@
 
 // Flutter imports:
 import 'package:flutter/material.dart';
+import 'package:gap/gap.dart';
+import 'package:teta_core/teta_core.dart';
 
 class Wrapper extends StatelessWidget {
   const Wrapper({
@@ -16,19 +18,23 @@ class Wrapper extends StatelessWidget {
 
   @override
   Widget build(final BuildContext context) {
-    return Container(
-      margin: const EdgeInsets.only(top: 12),
-      padding: const EdgeInsets.only(left: 12, right: 12),
-      child: Column(
-        children: [
-          control,
-          if (divider)
-            const Padding(
-              padding: EdgeInsets.only(top: 8),
-              child: Divider(height: 1, color: Colors.white38),
-            ),
-        ],
-      ),
+    return Column(
+      children: [
+        const Gap(Grid.medium),
+        Container(
+          padding: const EdgeInsets.only(left: 12, right: 12),
+          child: Column(
+            children: [
+              control,
+            ],
+          ),
+        ),
+        if (divider)
+          const Padding(
+            padding: EdgeInsets.only(top: 8),
+            child: Divider(height: 1, color: Colors.white38),
+          ),
+      ],
     );
   }
 }

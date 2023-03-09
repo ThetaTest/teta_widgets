@@ -3,19 +3,15 @@
 // Flutter imports:
 import 'package:flutter/material.dart';
 // Package imports:
-import 'package:teta_core/gen/assets.gen.dart';
+import 'package:teta_core/teta_core.dart';
 import 'package:teta_widgets/src/core/teta_widget/index.dart';
 import 'package:teta_widgets/src/elements/code/snippets.dart';
 // Project imports:
 import 'package:teta_widgets/src/elements/code/templates/responsive/wrapper.dart';
-import 'package:teta_widgets/src/elements/controls/control_model.dart';
 import 'package:teta_widgets/src/elements/intrinsic_states/class.dart';
 import 'package:teta_widgets/src/elements/nodes/categories.dart';
-import 'package:teta_widgets/src/elements/nodes/children_enum.dart';
-import 'package:teta_widgets/src/elements/nodes/enum.dart';
-import 'package:teta_widgets/src/elements/nodes/node.dart';
 import 'package:teta_widgets/src/elements/nodes/node_body.dart';
-import 'package:teta_widgets/src/elements/widgets/responsive/wrapper_container.dart';
+import 'package:teta_widgets/teta_widgets.dart';
 
 const _globalType = NType.wrapper;
 
@@ -52,10 +48,19 @@ final wrapperIntrinsicStates = IntrinsicStates(
 class WrapperBody extends NodeBody {
   @override
   // ignore: overridden_fields
-  Map<String, dynamic> attributes = <String, dynamic>{};
+  Map<String, dynamic> attributes = <String, dynamic>{
+    DBKeys.flag: true,
+  };
 
   @override
-  List<ControlModel> get controls => [];
+  List<ControlModel> get controls => [
+        ControlObject(
+          type: ControlType.boxedWidth,
+          key: DBKeys.flag,
+          value: attributes[DBKeys.flag],
+          valueType: VariableType.dynamic,
+        ),
+      ];
 
   @override
   Widget toWidget({
@@ -70,6 +75,7 @@ class WrapperBody extends NodeBody {
           ${child ?? children}
         ''',
         ),
+        isBoxed: attributes[DBKeys.flag] as bool,
         state: state,
         child: child,
       );

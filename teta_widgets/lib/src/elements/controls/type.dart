@@ -18,6 +18,7 @@ import 'package:teta_widgets/src/elements/controls/atoms/barcode.dart';
 import 'package:teta_widgets/src/elements/controls/atoms/border_radius.dart';
 import 'package:teta_widgets/src/elements/controls/atoms/borders.dart';
 import 'package:teta_widgets/src/elements/controls/atoms/box_fit.dart';
+import 'package:teta_widgets/src/elements/controls/atoms/boxed_width.dart';
 import 'package:teta_widgets/src/elements/controls/atoms/camera_controller.dart';
 import 'package:teta_widgets/src/elements/controls/atoms/cms_collections.dart';
 import 'package:teta_widgets/src/elements/controls/atoms/code_field.dart';
@@ -156,6 +157,8 @@ enum ControlType {
   /// Made to use FMainAxisSize.
   mainAxisSize,
 
+  boxedWidth,
+
   /// Made to select dataset only
   datasetType,
 
@@ -285,8 +288,7 @@ class ControlBuilder {
           );
         },
       );
-    }
-    if (control.type == ControlType.cmsCustomQuery) {
+    } else if (control.type == ControlType.cmsCustomQuery) {
       return CodeFieldControl(
         key: ValueKey(
           '${node.nid} ${(control.value as FTextTypeInput).value}',
@@ -304,8 +306,7 @@ class ControlBuilder {
           );
         },
       );
-    }
-    if (control.type == ControlType.cmsCollections) {
+    } else if (control.type == ControlType.cmsCollections) {
       return descriptionControlWidget(
         description: control.description,
         control: CMSCollectionControl(
@@ -326,8 +327,7 @@ class ControlBuilder {
           },
         ),
       );
-    }
-    if (control.type == ControlType.audioPlayerCurrentDataset) {
+    } else if (control.type == ControlType.audioPlayerCurrentDataset) {
       return descriptionControlWidget(
         description: control.description,
         control: CurrentSongControl(
@@ -343,8 +343,7 @@ class ControlBuilder {
           ),
         ),
       );
-    }
-    if (control.type == ControlType.audioController) {
+    } else if (control.type == ControlType.audioController) {
       return descriptionControlWidget(
         description: control.description,
         control: AudioControllerControl(
@@ -360,8 +359,7 @@ class ControlBuilder {
           ),
         ),
       );
-    }
-    if (control.type == ControlType.mapController) {
+    } else if (control.type == ControlType.mapController) {
       return descriptionControlWidget(
         description: control.description,
         control: MapControllerControl(
@@ -377,9 +375,7 @@ class ControlBuilder {
           ),
         ),
       );
-    }
-
-    if (control.type == ControlType.googleMapsController) {
+    } else if (control.type == ControlType.googleMapsController) {
       return descriptionControlWidget(
         description: control.description,
         control: GoogleMapsControl(
@@ -395,9 +391,7 @@ class ControlBuilder {
           ),
         ),
       );
-    }
-
-    if (control.type == ControlType.googleMapsCubitController) {
+    } else if (control.type == ControlType.googleMapsCubitController) {
       return descriptionControlWidget(
         description: control.description,
         control: GoogleMapsCubitControl(
@@ -413,9 +407,7 @@ class ControlBuilder {
           ),
         ),
       );
-    }
-
-    if (control.type == ControlType.cameraController) {
+    } else if (control.type == ControlType.cameraController) {
       return descriptionControlWidget(
         description: control.description,
         control: CameraControllerControl(
@@ -431,8 +423,7 @@ class ControlBuilder {
           ),
         ),
       );
-    }
-    if (control.type == ControlType.webViewController) {
+    } else if (control.type == ControlType.webViewController) {
       return descriptionControlWidget(
         description: control.description,
         control: WebViewControllerControl(
@@ -448,8 +439,7 @@ class ControlBuilder {
           ),
         ),
       );
-    }
-    if (control.type == ControlType.action) {
+    } else if (control.type == ControlType.action) {
       return descriptionControlWidget(
         description: control.description,
         control: ActionControl(
@@ -467,8 +457,7 @@ class ControlBuilder {
           },
         ),
       );
-    }
-    if (control.type == ControlType.align) {
+    } else if (control.type == ControlType.align) {
       return descriptionControlWidget(
         description: control.description,
         control: AlignsControl(
@@ -486,8 +475,7 @@ class ControlBuilder {
           },
         ),
       );
-    }
-    if (control.type == ControlType.physics) {
+    } else if (control.type == ControlType.physics) {
       return descriptionControlWidget(
         description: control.description,
         control: PhysicsControl(
@@ -505,8 +493,7 @@ class ControlBuilder {
           },
         ),
       );
-    }
-    if (control.type == ControlType.borderRadius) {
+    } else if (control.type == ControlType.borderRadius) {
       return descriptionControlWidget(
         description: control.description,
         control: BorderRadiusControl(
@@ -521,8 +508,7 @@ class ControlBuilder {
           ),
         ),
       );
-    }
-    if (control.type == ControlType.border) {
+    } else if (control.type == ControlType.border) {
       return descriptionControlWidget(
         description: control.description,
         control: BordersControl(
@@ -537,8 +523,7 @@ class ControlBuilder {
           ),
         ),
       );
-    }
-    if (control.type == ControlType.component) {
+    } else if (control.type == ControlType.component) {
       return ComponentControl(
         key: ValueKey('${node.nid}'),
         callBack: (final value, final old) => ControlBuilder.toDB(
@@ -556,9 +541,9 @@ class ControlBuilder {
           null,
         ),
       );
-    }
-    if (control.type == ControlType.condition) return const SizedBox();
-    if (control.type == ControlType.crossAxisAlignment) {
+    } else if (control.type == ControlType.condition) {
+      return const SizedBox();
+    } else if (control.type == ControlType.crossAxisAlignment) {
       return descriptionControlWidget(
         description: control.description,
         control: CrossAxisAlignmentControls(
@@ -573,8 +558,7 @@ class ControlBuilder {
           ),
         ),
       );
-    }
-    if (control.type == ControlType.image) {
+    } else if (control.type == ControlType.image) {
       return descriptionControlWidget(
         description: control.description,
         control: SrcImageControl(
@@ -590,9 +574,7 @@ class ControlBuilder {
           ),
         ),
       );
-    }
-
-    if (control.type == ControlType.icon) {
+    } else if (control.type == ControlType.icon) {
       return descriptionControlWidget(
         description: control.description,
         control: IconControl(
@@ -610,8 +592,7 @@ class ControlBuilder {
           },
         ),
       );
-    }
-    if (control.type == ControlType.fontAwesomeIcon) {
+    } else if (control.type == ControlType.fontAwesomeIcon) {
       return descriptionControlWidget(
         description: control.description,
         control: IconFontAwesomeControl(
@@ -629,8 +610,7 @@ class ControlBuilder {
           },
         ),
       );
-    }
-    if (control.type == ControlType.featherIcon) {
+    } else if (control.type == ControlType.featherIcon) {
       return descriptionControlWidget(
         description: control.description,
         control: IconFeatherControl(
@@ -648,8 +628,7 @@ class ControlBuilder {
           },
         ),
       );
-    }
-    if (control.type == ControlType.lineIcon) {
+    } else if (control.type == ControlType.lineIcon) {
       return descriptionControlWidget(
         description: control.description,
         control: IconLineControl(
@@ -667,8 +646,7 @@ class ControlBuilder {
           },
         ),
       );
-    }
-    if (control.type == ControlType.mainAxisAlignment) {
+    } else if (control.type == ControlType.mainAxisAlignment) {
       return descriptionControlWidget(
         description: control.description,
         control: MainAxisAlignmentControls(
@@ -683,8 +661,25 @@ class ControlBuilder {
           ),
         ),
       );
-    }
-    if (control.type == ControlType.googleMapsMapStyle) {
+    } else if (control.type == ControlType.boxedWidth) {
+      return descriptionControlWidget(
+        description: control.description,
+        control: BoxedWidthControls(
+          key: ValueKey('${node.nid}'),
+          isBoxed: control.value as bool,
+          callBack: (final value, final old) {
+            node.body.attributes[control.key] = value;
+            ControlBuilder.toDB(
+              node,
+              context,
+              control.key,
+              value,
+              old,
+            );
+          },
+        ),
+      );
+    } else if (control.type == ControlType.googleMapsMapStyle) {
       return descriptionControlWidget(
         description: control.description,
         control: GoogleMapsMapStyleControls(
@@ -699,8 +694,7 @@ class ControlBuilder {
           ),
         ),
       );
-    }
-    if (control.type == ControlType.mainAxisSize) {
+    } else if (control.type == ControlType.mainAxisSize) {
       return descriptionControlWidget(
         description: control.description,
         control: MainAxisSizeControl(
@@ -715,8 +709,7 @@ class ControlBuilder {
           ),
         ),
       );
-    }
-    if (control.type == ControlType.margins) {
+    } else if (control.type == ControlType.margins) {
       return descriptionControlWidget(
         description: control.description,
         control: Margins(
@@ -735,8 +728,7 @@ class ControlBuilder {
           },
         ),
       );
-    }
-    if (control.type == ControlType.padding) {
+    } else if (control.type == ControlType.padding) {
       return descriptionControlWidget(
         description: control.description,
         control: Margins(
@@ -755,9 +747,9 @@ class ControlBuilder {
           },
         ),
       );
-    }
-    if (control.type == ControlType.shadows) return const SizedBox();
-    if (control.type == ControlType.value) {
+    } else if (control.type == ControlType.shadows) {
+      return const SizedBox();
+    } else if (control.type == ControlType.value) {
       return descriptionControlWidget(
         description: control.description,
         control: TextControl(
@@ -777,8 +769,7 @@ class ControlBuilder {
           },
         ),
       );
-    }
-    if (control.type == ControlType.datasetType) {
+    } else if (control.type == ControlType.datasetType) {
       return descriptionControlWidget(
         description: control.description,
         control: DatasetControl(
@@ -795,16 +786,14 @@ class ControlBuilder {
           ),
         ),
       );
-    }
-    if (control.type == ControlType.text) {
+    } else if (control.type == ControlType.text) {
       return TextPrefabControl(
         title: control.title,
         key: ValueKey('${node.nid}'),
         textStyle: control.value as FTextStyle,
         keyValue: control.key,
       );
-    }
-    if (control.type == ControlType.httpParamsControl) {
+    } else if (control.type == ControlType.httpParamsControl) {
       return HttpParamsControl(
         key: ValueKey('${node.nid}'),
         title: control.title,
@@ -820,8 +809,7 @@ class ControlBuilder {
           ),
         },
       );
-    }
-    if (control.type == ControlType.httpMethodControl) {
+    } else if (control.type == ControlType.httpMethodControl) {
       return HttpMethodControl(
         key: ValueKey('${node.nid}'),
         title: control.title,
@@ -837,8 +825,7 @@ class ControlBuilder {
           ),
         },
       );
-    }
-    if (control.type == ControlType.dropdownControl) {
+    } else if (control.type == ControlType.dropdownControl) {
       return DropdownControl(
         key: ValueKey('${node.nid}'),
         node: node,
@@ -856,8 +843,7 @@ class ControlBuilder {
           ),
         },
       );
-    }
-    if (control.type == ControlType.apiCallsRequestControl) {
+    } else if (control.type == ControlType.apiCallsRequestControl) {
       return ApiCallsRequestControl(
         key: ValueKey('${node.nid}'),
         requestName: control.value as String,
@@ -874,8 +860,7 @@ class ControlBuilder {
           ),
         },
       );
-    }
-    if (control.type == ControlType.params) {
+    } else if (control.type == ControlType.params) {
       return descriptionControlWidget(
         description: control.description,
         control: PageParamsControl(
@@ -888,8 +873,7 @@ class ControlBuilder {
           },
         ),
       );
-    }
-    if (control.type == ControlType.states) {
+    } else if (control.type == ControlType.states) {
       return descriptionControlWidget(
         description: control.description,
         control: StatesControl(

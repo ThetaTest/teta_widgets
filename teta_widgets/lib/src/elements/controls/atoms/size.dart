@@ -6,6 +6,7 @@ import 'package:device_frame/device_frame.dart';
 import 'package:flutter/material.dart';
 // Package imports:
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:gap/gap.dart';
 import 'package:hovering/hovering.dart';
 import 'package:teta_core/src/design_system/textfield/minitextfield.dart';
 import 'package:teta_core/teta_core.dart';
@@ -103,35 +104,6 @@ class SizeControlsState extends State<SizeControl> {
                     mainAxisSize: MainAxisSize.min,
                     children: [
                       const DeviceIndicatorForControls(),
-                      CSwitch(
-                        callback: (final v) {
-                          final value = v
-                              ? widget.isWidth
-                                  ? 'max'
-                                  : '150'
-                              : 'null';
-                          setState(() {
-                            flag = v;
-                          });
-                          final szs = widget.size;
-                          final old = FSize.fromJson(widget.size.toJson());
-                          value.replaceAll('%', '');
-                          szs.updateSize(value, context);
-                          final nodeId =
-                              BlocProvider.of<FocusBloc>(context).state.first;
-                          final node =
-                              (context.read<PageCubit>().state as PageLoaded)
-                                  .page
-                                  .flatList
-                                  .firstWhere(
-                                    (final element) => element.nid == nodeId,
-                                  );
-
-                          node.body.attributes[widget.keyAttr] = szs;
-                          widget.callBack(szs, old);
-                        },
-                        value: flag,
-                      ),
                       Padding(
                         padding: const EdgeInsets.only(left: 8),
                         child: TParagraph(
@@ -140,134 +112,174 @@ class SizeControlsState extends State<SizeControl> {
                       ),
                     ],
                   ),
+                  CSwitch(
+                    callback: (final v) {
+                      final value = v
+                          ? widget.isWidth
+                              ? 'max'
+                              : '150'
+                          : 'null';
+                      setState(() {
+                        flag = v;
+                      });
+                      final szs = widget.size;
+                      final old = FSize.fromJson(widget.size.toJson());
+                      value.replaceAll('%', '');
+                      szs.updateSize(value, context);
+                      final nodeId =
+                          BlocProvider.of<FocusBloc>(context).state.first;
+                      final node =
+                          (context.read<PageCubit>().state as PageLoaded)
+                              .page
+                              .flatList
+                              .firstWhere(
+                                (final element) => element.nid == nodeId,
+                              );
+
+                      node.body.attributes[widget.keyAttr] = szs;
+                      widget.callBack(szs, old);
+                    },
+                    value: flag,
+                  ),
                 ],
               ),
             ),
-            Visibility(
-              visible: widget.size.get(
-                    context: context,
-                    isWidth: widget.isWidth,
-                    forPlay: false,
-                  ) !=
-                  null,
-              child: IgnorePointer(
-                ignoring: widget.size.get(
+            if (widget.size.get(
+                  context: context,
+                  isWidth: widget.isWidth,
+                  forPlay: false,
+                ) !=
+                null)
+              Visibility(
+                visible: widget.size.get(
                       context: context,
                       isWidth: widget.isWidth,
                       forPlay: false,
-                    ) ==
+                    ) !=
                     null,
-                child: Row(
-                  children: [
-                    SizedBox(
-                      width: MediaQuery.of(context).size.width >= 600
-                          ? 300
-                          : MediaQuery.of(context).size.width - 20,
-                      height: 60,
-                      child: Stack(
-                        fit: StackFit.expand,
-                        children: [
-                          Positioned(
-                            left: 0,
-                            right: 0,
-                            top: 0,
-                            bottom: 0,
-                            child: Padding(
-                              padding: const EdgeInsets.only(right: 4),
-                              child: CMiniTextField(
-                                controller: controller,
-                                text: (device.info.identifier.type ==
-                                        DeviceType.phone)
-                                    ? widget.size.size
-                                    : (device.info.identifier.type ==
-                                            DeviceType.tablet)
-                                        ? widget.size.sizeTablet
-                                        : widget.size.sizeDesktop,
-                                callBack: (final value) {
-                                  final szs = widget.size;
-                                  final old =
-                                      FSize.fromJson(widget.size.toJson());
-                                  value.replaceAll('%', '');
-                                  szs.updateSize(value, context);
-                                  final nodeId =
-                                      BlocProvider.of<FocusBloc>(context)
-                                          .state
-                                          .first;
-                                  final node = (context.read<PageCubit>().state
-                                          as PageLoaded)
-                                      .page
-                                      .flatList
-                                      .firstWhere(
-                                        (final element) =>
-                                            element.nid == nodeId,
-                                      );
-                                  node.body.attributes[widget.keyAttr] = szs;
-                                  widget.callBack(
-                                    szs,
-                                    old,
+                child: IgnorePointer(
+                  ignoring: widget.size.get(
+                        context: context,
+                        isWidth: widget.isWidth,
+                        forPlay: false,
+                      ) ==
+                      null,
+                  child: Row(
+                    children: [
+                      Expanded(
+                        child: Padding(
+                          padding: const EdgeInsets.only(right: 4),
+                          child: CMiniTextField(
+                            controller: controller,
+                            text: (device.info.identifier.type ==
+                                    DeviceType.phone)
+                                ? widget.size.size
+                                : (device.info.identifier.type ==
+                                        DeviceType.tablet)
+                                    ? widget.size.sizeTablet
+                                    : widget.size.sizeDesktop,
+                            callBack: (final value) {
+                              final szs = widget.size;
+                              final old = FSize.fromJson(widget.size.toJson());
+                              value.replaceAll('%', '');
+                              szs.updateSize(value, context);
+                              final nodeId = BlocProvider.of<FocusBloc>(context)
+                                  .state
+                                  .first;
+                              final node = (context.read<PageCubit>().state
+                                      as PageLoaded)
+                                  .page
+                                  .flatList
+                                  .firstWhere(
+                                    (final element) => element.nid == nodeId,
                                   );
-                                },
+                              node.body.attributes[widget.keyAttr] = szs;
+                              widget.callBack(
+                                szs,
+                                old,
+                              );
+                            },
+                          ),
+                        ),
+                      ),
+                      const Gap(4),
+                      BounceLarge(
+                        onTap: () {
+                          final old = FSize.fromJson(
+                            widget.size.toJson(),
+                          );
+                          widget.size.updateSize(
+                            'max',
+                            context,
+                          );
+                          final nodeId = BlocProvider.of<FocusBloc>(
+                            context,
+                          ).state.first;
+                          final node =
+                              (context.read<PageCubit>().state as PageLoaded)
+                                  .page
+                                  .flatList
+                                  .firstWhere(
+                                    (final element) => element.nid == nodeId,
+                                  );
+                          node.body.attributes[widget.keyAttr] = widget.size;
+                          widget.callBack(
+                            widget.size,
+                            old,
+                          );
+                          controller.text = 'max';
+                        },
+                        child: HoverWidget(
+                          onHover: (final e) {},
+                          hoverChild: const TContainer(
+                            height: 40,
+                            padding: EdgeInsets.all(1),
+                            decoration: BoxDecoration(
+                              gradient: LinearGradient(
+                                colors: [Palette.yellow, Palette.magenta],
                               ),
+                              borderRadius:
+                                  BorderRadius.all(Radius.circular(8)),
+                            ),
+                            child: TContainer(
+                              padding: EI.mdH,
+                              decoration: BoxDecoration(
+                                color: Palette.bgPrimary,
+                                borderRadius:
+                                    BorderRadius.all(Radius.circular(8)),
+                              ),
+                              child: Center(child: TDetailLabel('Set to max')),
                             ),
                           ),
-                          Positioned(
-                            top: 4,
-                            right: 12,
-                            bottom: 18,
-                            child: Container(
-                              color: Palette.bgTertiary,
-                              child: Column(
-                                mainAxisAlignment: MainAxisAlignment.center,
-                                children: [
-                                  GestureDetector(
-                                    onTap: () {
-                                      final old = FSize.fromJson(
-                                        widget.size.toJson(),
-                                      );
-                                      widget.size.updateSize(
-                                        widget.size.unit == SizeUnit.pixel
-                                            ? 'max'
-                                            : '100%',
-                                        context,
-                                      );
-                                      final nodeId = BlocProvider.of<FocusBloc>(
-                                        context,
-                                      ).state.first;
-                                      final node = (context
-                                              .read<PageCubit>()
-                                              .state as PageLoaded)
-                                          .page
-                                          .flatList
-                                          .firstWhere(
-                                            (final element) =>
-                                                element.nid == nodeId,
-                                          );
-                                      node.body.attributes[widget.keyAttr] =
-                                          widget.size;
-                                      widget.callBack(
-                                        widget.size,
-                                        old,
-                                      );
-                                      controller.text =
-                                          widget.size.unit == SizeUnit.pixel
-                                              ? 'max'
-                                              : '100%';
-                                    },
-                                    child: maxIcon(
-                                      unit: widget.size.unit,
-                                    ),
-                                  ),
-                                ],
-                              ),
+                          child: TContainer(
+                            height: 40,
+                            padding: const EdgeInsets.all(1),
+                            decoration: BoxDecoration(
+                              color: Palette.txtPrimary.withOpacity(0.3),
+                              borderRadius:
+                                  const BorderRadius.all(Radius.circular(8)),
                             ),
-                          )
-                        ],
+                            child: const TContainer(
+                              padding: EI.mdH,
+                              decoration: BoxDecoration(
+                                color: Palette.bgPrimary,
+                                borderRadius:
+                                    BorderRadius.all(Radius.circular(8)),
+                              ),
+                              child: Center(child: TDetailLabel('Set to max')),
+                            ),
+                          ),
+                        ),
                       ),
-                    ),
-                  ],
+                    ],
+                  ),
                 ),
+              )
+            else
+              TDetailLabel(
+                'Property disabled',
+                color: Palette.txtPrimary.withOpacity(0.6),
               ),
-            ),
           ],
         ),
       ),

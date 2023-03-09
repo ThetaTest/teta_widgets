@@ -138,67 +138,67 @@ class _WCmsFetchState extends State<WCmsFetch> with AfterLayoutMixin {
 
     final _datasets = _addFetchDataToDataset(res.data);
 
-    if (mounted) {
-      setState(() {
-        list = res.data ?? <dynamic>[];
-        datasets = _datasets;
-        isInitialized = true;
-      });
-    }
+    setState(() {
+      list = res.data ?? <dynamic>[];
+      datasets = _datasets;
+      isInitialized = true;
+    });
   }
 
   @override
   Widget build(final BuildContext context) {
+    if (collectionName == null ||
+        collectionName == '' ||
+        widget.children.isEmpty) {
+      return TetaWidget(
+        state: widget.state,
+        child: Center(
+          child: ChildConditionBuilder(
+            ValueKey(widget.state.toKey),
+            state: widget.state,
+            child: null,
+          ),
+        ),
+      );
+    }
+
+    if (list.isEmpty) {
+      if (widget.children.length > 1) {
+        return TetaWidget(
+          state: widget.state,
+          child: widget.children.last.toWidget(
+            state: widget.state.copyWith(dataset: datasets),
+          ),
+        );
+      } else {
+        return TetaWidget(
+          state: widget.state,
+          child: const Center(
+            child: THeadline3(
+              'CMS Fetch returned an empty list. Add children to customize this message,',
+              isCentered: true,
+              color: Colors.grey,
+            ),
+          ),
+        );
+      }
+    }
+
     return TetaWidget(
       state: widget.state,
-      child: Builder(
-        builder: (final context) {
-          if (collectionName == null ||
-              collectionName == '' ||
-              widget.children.isEmpty) {
-            return Center(
-              child: ChildConditionBuilder(
-                ValueKey(widget.state.toKey),
-                state: widget.state,
-                child: null,
+      child: NodeSelectionBuilder(
+        state: widget.state,
+        child: widget.children.isEmpty
+            ? const THeadline3('CMS Fetch requires at least one child')
+            : widget.children.first.toWidget(
+                state: widget.state.copyWith(dataset: datasets),
               ),
-            );
-          }
-
-          if (list.isEmpty) {
-            if (widget.children.length > 1) {
-              return RepaintBoundary(
-                child: widget.children.last.toWidget(
-                  state: widget.state.copyWith(dataset: datasets),
-                ),
-              );
-            } else {
-              return const Center(
-                child: THeadline3(
-                  'CMS Fetch returned an empty list. Add children to customize this message,',
-                  isCentered: true,
-                  color: Colors.grey,
-                ),
-              );
-            }
-          }
-
-          return NodeSelectionBuilder(
-            state: widget.state,
-            child: widget.children.isEmpty
-                ? const THeadline3('CMS Fetch requires at least one child')
-                : RepaintBoundary(
-                    child: widget.children.first.toWidget(
-                      state: widget.state.copyWith(dataset: datasets),
-                    ),
-                  ),
-          );
-        },
       ),
     );
   }
 
   List<DatasetObject> _addFetchDataToDataset(final List<dynamic>? list) {
+    if ((list ?? <dynamic>[]).isEmpty) return widget.state.dataset;
     _map = _map.copyWith(
       name: widget.state.node.name ??
           widget.state.node.intrinsicState.displayName,

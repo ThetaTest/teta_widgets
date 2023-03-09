@@ -4,8 +4,8 @@ import 'package:flutter_test/flutter_test.dart';
 import 'package:teta_widgets/src/elements/code/formatter_test.dart';
 // Project imports:
 import 'package:teta_widgets/src/elements/code/snippets.dart';
-import 'package:teta_widgets/src/elements/nodes/node.dart';
 import 'package:teta_widgets/src/elements/nodes/node_body.dart';
+import 'package:teta_widgets/teta_widgets.dart';
 
 /// Generates the code for Padding widget
 class WrapperCodeTemplate {
@@ -15,6 +15,10 @@ class WrapperCodeTemplate {
     final CNode? child,
   ) async {
     final childString = await CS.child(context, child, comma: true);
+    final isBoxed = body.attributes[DBKeys.flag] as bool;
+    if (!isBoxed) {
+      return '''SizedBox($childString)''';
+    }
     final code = '''
     Builder(
       builder: (context) {

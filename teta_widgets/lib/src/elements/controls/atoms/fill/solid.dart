@@ -90,9 +90,7 @@ class SolidFillControlState extends State<SolidFillControl>
           child: BlocBuilder<FocusBloc, List<int>>(
             builder: (final context, final state) {
               return TContainer(
-                padding: const EdgeInsets.symmetric(horizontal: 8),
                 decoration: BoxDecoration(
-                  color: Palette.bgTertiary,
                   borderRadius: BorderRadius.circular(8),
                 ),
                 child: Row(
@@ -136,6 +134,7 @@ class SolidFillControlState extends State<SolidFillControl>
                     ),
                     Expanded(
                       child: CMiniTextField(
+                        backgroundColor: Colors.transparent,
                         controller: controller,
                         placeholder: tempColor,
                         hpadding: 4,
@@ -191,6 +190,7 @@ class SolidFillControlState extends State<SolidFillControl>
                     ),
                     Expanded(
                       child: CMiniTextField(
+                        backgroundColor: Colors.transparent,
                         controller: opacityController,
                         placeholder: '1',
                         hpadding: 4,
