@@ -60,6 +60,7 @@ class FActionNavigationOpenBottomSheet {
           final scaffold = sl.get<NodeRendering>().renderTree(nodes);
           page = page.copyWith(flatList: nodes, scaffold: scaffold);
           await showModalBottomSheet<void>(
+            backgroundColor: Colors.transparent,
             context: context,
             builder: (final c) => BlocProvider(
               create: (final c) => PageCubit(
