@@ -154,7 +154,7 @@ Future<String> pageCodeTemplate(
   final isARState = isSupabaseIntegrated
       ? page.isAuthenticatedRequired
           ? 'AuthRequiredState<Page${pageNameRC.pascalCase}> with SingleTickerProviderStateMixin'
-          : 'AuthState<Page${pageNameRC.pascalCase}> with SingleTickerProviderStateMixin'
+          : 'State<Page${pageNameRC.pascalCase}> with SingleTickerProviderStateMixin'
       : 'State<Page${pageNameRC.pascalCase}>';
 
   final onInitActions = CS.getActionsInFormOfFutureDelayed(
