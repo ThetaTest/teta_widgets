@@ -50,7 +50,7 @@ class _WDeviceInfoState extends State<WDeviceInfo> {
 
   @override
   Widget build(final BuildContext context) {
-    final list = addDataset(context, widget.state.dataset, _map);
+    final list = addDataset(context, _map);
 
     return TetaWidget(
       state: widget.state,

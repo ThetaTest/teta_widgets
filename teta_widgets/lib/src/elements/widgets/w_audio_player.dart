@@ -151,7 +151,7 @@ class _WAudioPlayerState extends State<WAudioPlayer> {
                 ],
               );
             }
-            final datasets = addDataset(context, widget.state.dataset, _map);
+            final datasets = addDataset(context, _map);
             return ChildConditionBuilder(
               ValueKey('${widget.state.node.nid} ${widget.state.loop}'),
               state: widget.state.copyWith(

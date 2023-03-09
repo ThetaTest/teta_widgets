@@ -59,8 +59,7 @@ class WFirebaseIsAuthenticatedBuilderState
                       ],
                     );
 
-                    final list =
-                        addDataset(context, widget.state.dataset, _map);
+                    final list = addDataset(context, _map);
                     ChildConditionBuilder(
                       ValueKey('${widget.state.node.nid} ${widget.state.loop}'),
                       state: widget.state.copyWith(

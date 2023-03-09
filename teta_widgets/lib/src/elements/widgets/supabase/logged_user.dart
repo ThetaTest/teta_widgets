@@ -92,7 +92,7 @@ class _WSupabaseLoggedUserState extends State<WSupabaseLoggedUser> {
             ],
           );
         }
-        datasets = addDataset(context, widget.state.dataset, _map);
+        datasets = addDataset(context, _map);
         if (widget.child != null) {
           return widget.child!.toWidget(
             state: widget.state.copyWith(

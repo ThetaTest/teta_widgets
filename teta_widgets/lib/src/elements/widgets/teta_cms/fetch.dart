@@ -206,7 +206,7 @@ class _WCmsFetchState extends State<WCmsFetch> with AfterLayoutMixin {
           .map((final dynamic e) => e as Map<String, dynamic>)
           .toList(),
     );
-    final datasets = addDataset(context, widget.state.dataset, _map);
+    final datasets = addDataset(context, _map);
     return datasets;
   }
 }

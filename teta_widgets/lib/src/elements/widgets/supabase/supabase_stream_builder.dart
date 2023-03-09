@@ -1,19 +1,12 @@
-// Flutter imports:
-
-// Flutter imports:
 import 'dart:async';
 
-import 'package:after_layout/after_layout.dart';
 import 'package:flutter/material.dart';
-// Package imports:
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:supabase/supabase.dart';
 import 'package:teta_core/teta_core.dart';
-import 'package:teta_widgets/src/core/teta_widget/index.dart';
-// Project imports:
-import 'package:teta_widgets/src/elements/index.dart';
 
-// ignore_for_file: public_member_api_docs
+import '../../../core/teta_widget/index.dart';
+import '../../index.dart';
 
 class WSupabaseStreamBuilder extends StatefulWidget {
   /// Construct
@@ -104,7 +97,7 @@ class _WSupabaseStreamBuilderState extends State<WSupabaseStreamBuilder> {
 
   @override
   Widget build(final BuildContext context) {
-    final client = BlocProvider.of<SupabaseCubit>(context).state;
+    final client = context.read<SupabaseCubit>().state;
 
     if (client == null) {
       return const Center(
@@ -143,7 +136,7 @@ class _WSupabaseStreamBuilderState extends State<WSupabaseStreamBuilder> {
                 widget.state.node.intrinsicState.displayName,
             map: response?.map((final Map<String, dynamic> e) => e).toList(),
           );
-          final datasets = addDataset(context, widget.state.dataset, _map);
+          final datasets = addDataset(context, _map);
 
           // Returns child
           if (widget.children.isNotEmpty) {

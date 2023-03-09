@@ -1,21 +1,11 @@
-// Flutter imports:
-// Package imports:
-// ignore_for_file: avoid_dynamic_calls
-
-// Flutter imports:
 import 'dart:async';
 
-import 'package:after_layout/after_layout.dart';
 import 'package:flutter/material.dart';
-// Package imports:
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:supabase/supabase.dart';
 import 'package:teta_core/teta_core.dart';
-import 'package:teta_widgets/src/core/teta_widget/index.dart';
-// Project imports:
-import 'package:teta_widgets/src/elements/index.dart';
-
-// ignore_for_file: public_member_api_docs
+import '../../../core/teta_widget/index.dart';
+import '../../index.dart';
 
 class WSupabaseFutureBuilder extends StatefulWidget {
   /// Construct
@@ -243,7 +233,7 @@ class _WSupabaseFutureBuilderState extends State<WSupabaseFutureBuilder> {
                 widget.state.node.intrinsicState.displayName,
             map: (list ?? const <dynamic>[]).cast<Map<String, dynamic>>(),
           );
-          final datasets = addDataset(context, widget.state.dataset, _map);
+          final datasets = addDataset(context, _map);
 
           // Returns child
           if (widget.children.isNotEmpty) {

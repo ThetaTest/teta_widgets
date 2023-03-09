@@ -96,7 +96,7 @@ class _WTetaStoreCartItemsBuilderState
           name: 'cart',
           map: uniqueProducts,
         );
-        addDataset(context, widget.state.dataset, datasetObject);
+        addDataset(context, datasetObject);
       } else {
         debugPrint(
           'Error in calc WStripeProductsCartList -> ${products.error?.message ?? 'no message'}',

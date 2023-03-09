@@ -32,7 +32,8 @@ class FACustomHttpRequestDelete {
       state.loop,
       context,
     );
-    final customHttpRequestExpectedStatusCodeNew = customHttpRequestExpectedStatusCode?.get(
+    final customHttpRequestExpectedStatusCodeNew =
+        customHttpRequestExpectedStatusCode?.get(
       state.params,
       state.states,
       state.dataset,
@@ -64,8 +65,8 @@ class FACustomHttpRequestDelete {
     }
 
     if (urlNew != null && customHttpRequestExpectedStatusCodeNew != null) {
-      final response = await TetaCMS.instance.httpRequest
-          .delete(urlNew, customHttpRequestExpectedStatusCodeNew, mapParameters, mapHeaders);
+      final response = await TetaCMS.instance.httpRequest.delete(urlNew,
+          customHttpRequestExpectedStatusCodeNew, mapParameters, mapHeaders);
       if (response.data != null) {
         _map = _map.copyWith(
           name: 'Custom Http Request Delete',
@@ -82,7 +83,7 @@ class FACustomHttpRequestDelete {
           }).toList(),
         );
       }
-      final datasets = addDataset(context, state.dataset, _map);
+      final datasets = addDataset(context, _map);
     }
   }
 
@@ -141,13 +142,14 @@ class FACustomHttpRequestDelete {
         )
         .replaceAll("'", '')
         .replaceAll(' ', '');
-    final customHttpRequestExpectedStatusCodeNew = customHttpRequestExpectedStatusCode
-        ?.toCode(
-          loop,
-          resultType: ResultTypeEnum.string,
-        )
-        .replaceAll("'", '')
-        .replaceAll(' ', '');
+    final customHttpRequestExpectedStatusCodeNew =
+        customHttpRequestExpectedStatusCode
+            ?.toCode(
+              loop,
+              resultType: ResultTypeEnum.string,
+            )
+            .replaceAll("'", '')
+            .replaceAll(' ', '');
 
     return '''
       final response =await TetaCMS.instance.httpRequest.delete(
