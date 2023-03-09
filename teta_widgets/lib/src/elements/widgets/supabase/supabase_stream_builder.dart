@@ -4,9 +4,9 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:supabase/supabase.dart';
 import 'package:teta_core/teta_core.dart';
-import 'package:teta_widgets/src/core/teta_widget/index.dart';
-import 'package:teta_widgets/src/elements/builder/remove_dataset.dart';
-import 'package:teta_widgets/src/elements/index.dart';
+
+import '../../../core/teta_widget/index.dart';
+import '../../index.dart';
 
 class WSupabaseStreamBuilder extends StatefulWidget {
   /// Construct
@@ -49,14 +49,6 @@ class _WSupabaseStreamBuilderState extends State<WSupabaseStreamBuilder> {
   void initState() {
     super.initState();
     WidgetsBinding.instance.addPostFrameCallback((_) => calc());
-  }
-
-  @override
-  void dispose() {
-    final node = widget.state.node;
-    final datasetName = node.name ?? node.intrinsicState.displayName;
-    removeDataset(context, datasetName);
-    super.dispose();
   }
 
   Future calc() async {

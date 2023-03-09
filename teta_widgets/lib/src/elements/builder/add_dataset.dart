@@ -8,7 +8,6 @@ List<DatasetObject> addDataset(
   final DatasetObject map,
 ) {
   try {
-    final prj = BlocProvider.of<FocusProjectCubit>(context).state!;
     final pageFocused = BlocProvider.of<PageCubit>(context).state as PageLoaded;
 
     final list = [

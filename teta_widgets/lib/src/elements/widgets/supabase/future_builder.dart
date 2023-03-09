@@ -1,23 +1,11 @@
-// Flutter imports:
-// Package imports:
-// ignore_for_file: avoid_dynamic_calls
-
-// Flutter imports:
 import 'dart:async';
 
-import 'package:after_layout/after_layout.dart';
 import 'package:flutter/material.dart';
-// Package imports:
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:supabase/supabase.dart';
 import 'package:teta_core/teta_core.dart';
-import 'package:teta_widgets/src/core/teta_widget/index.dart';
-// Project imports:
-import 'package:teta_widgets/src/elements/index.dart';
-
-import '../../builder/remove_dataset.dart';
-
-// ignore_for_file: public_member_api_docs
+import '../../../core/teta_widget/index.dart';
+import '../../index.dart';
 
 class WSupabaseFutureBuilder extends StatefulWidget {
   /// Construct
@@ -82,14 +70,6 @@ class _WSupabaseFutureBuilderState extends State<WSupabaseFutureBuilder> {
   void initState() {
     super.initState();
     WidgetsBinding.instance.addPostFrameCallback((_) => calc());
-  }
-
-  @override
-  void dispose() {
-    final node = widget.state.node;
-    final datasetName = node.name ?? node.intrinsicState.displayName;
-    removeDataset(context, datasetName);
-    super.dispose();
   }
 
   Future calc() async {
