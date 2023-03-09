@@ -88,7 +88,7 @@ class WTetaStoreProductsBuilderState extends State<WTetaStoreProductsBuilder> {
               )
               .toList(growable: true),
         );
-        addDataset(context, widget.state.dataset, datasetObject);
+        addDataset(context, datasetObject);
       } else {
         debugPrint(
           'Error in calc WTetaStoreProductsList -> ${r.error?.message ?? 'no message'}',

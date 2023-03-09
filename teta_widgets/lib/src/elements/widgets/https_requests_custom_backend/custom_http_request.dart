@@ -151,7 +151,7 @@ class _WCustomHttpRequestState extends State<WCustomHttpRequest>
           .toList(),
     );
 
-    final datasets = addDataset(context, widget.state.dataset, _map);
+    final datasets = addDataset(context, _map);
 
     return widget.state.dataset.isEmpty ? datasets : widget.state.dataset;
   }

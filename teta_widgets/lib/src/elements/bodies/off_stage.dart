@@ -5,6 +5,7 @@
 import 'package:flutter/material.dart';
 // Package imports:
 import 'package:teta_core/gen/assets.gen.dart';
+import 'package:teta_core/teta_core.dart';
 import 'package:teta_widgets/src/core/teta_widget/index.dart';
 import 'package:teta_widgets/src/elements/code/snippets.dart';
 // Project imports:
@@ -19,6 +20,8 @@ import 'package:teta_widgets/src/elements/nodes/node.dart';
 import 'package:teta_widgets/src/elements/nodes/node_body.dart';
 import 'package:teta_widgets/src/elements/nodes/suggestion.dart';
 import 'package:teta_widgets/src/elements/widgets/off_stage.dart';
+
+import '../index.dart';
 
 const _globalType = NType.offStage;
 
@@ -61,18 +64,20 @@ class OffStageBody extends NodeBody {
   @override
   // ignore: overridden_fields
   Map<String, dynamic> attributes = <String, dynamic>{
-    DBKeys.flag: false,
+    DBKeys.value: FTextTypeInput(),
   };
 
   @override
   List<ControlModel> get controls => [
-        FlagControlObject(
+        ControlObject(
           title: 'OffStage',
-          key: DBKeys.flag,
-          value: attributes[DBKeys.flag],
+          type: ControlType.value,
+          key: DBKeys.value,
+          value: attributes[DBKeys.value],
+          valueType: VariableType.bool,
           description:
               'If true, the child is laid out as if it was in the tree, but without painting anything, if false, the child is included in the tree as normal.',
-        )
+        ),
       ];
 
   @override
@@ -86,12 +91,12 @@ class OffStageBody extends NodeBody {
         '''
       ${state.toKey}
       ${child ?? children}
-      ${attributes[DBKeys.flag] as bool}
+      ${(attributes[DBKeys.value] as FTextTypeInput).toJson()}
       ''',
       ),
       state: state,
       child: child,
-      offStage: attributes[DBKeys.flag] as bool,
+      value: attributes[DBKeys.value] as FTextTypeInput,
     );
   }
 

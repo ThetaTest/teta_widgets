@@ -86,7 +86,7 @@ class WTetaStoreShippingBuilderState extends State<WTetaStoreShippingBuilder> {
           name: 'shipping',
           map: r.data!.map((final e) => e.toJson()).toList(growable: true),
         );
-        addDataset(context, widget.state.dataset, datasetObject);
+        addDataset(context, datasetObject);
       } else {
         debugPrint(
             'Error in calc WTetaStoreProductsList -> ${r.error?.message ?? 'no message'}');

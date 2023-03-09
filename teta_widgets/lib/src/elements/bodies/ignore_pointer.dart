@@ -2,6 +2,7 @@
 import 'package:flutter/material.dart';
 // Package imports:
 import 'package:teta_core/gen/assets.gen.dart';
+import 'package:teta_core/teta_core.dart';
 import 'package:teta_widgets/src/core/teta_widget/index.dart';
 import 'package:teta_widgets/src/elements/code/snippets.dart';
 // Project imports:
@@ -16,6 +17,7 @@ import 'package:teta_widgets/src/elements/nodes/node.dart';
 import 'package:teta_widgets/src/elements/nodes/node_body.dart';
 import 'package:teta_widgets/src/elements/nodes/suggestion.dart';
 import 'package:teta_widgets/src/elements/widgets/ignore_pointer.dart';
+import 'package:teta_widgets/teta_widgets.dart';
 
 const _globalType = NType.ignorePointer;
 
@@ -57,16 +59,19 @@ class IgnorePointerBody extends NodeBody {
   @override
   // ignore: overridden_fields
   Map<String, dynamic> attributes = <String, dynamic>{
-    DBKeys.flag: false,
+    DBKeys.value: FTextTypeInput(),
   };
 
   @override
   List<ControlModel> get controls => [
-        FlagControlObject(
+        ControlObject(
           title: 'Ignoring',
-          key: DBKeys.flag,
-          value: attributes[DBKeys.flag],
-          description: '',
+          type: ControlType.value,
+          key: DBKeys.value,
+          value: attributes[DBKeys.value],
+          valueType: VariableType.bool,
+          description:
+              'Ignore Pointer makes its child widget non-responsive to user touch or click interactions. When set to true, the child widget is effectively disabled, and when set to false, the child widget behaves normally.',
         ),
       ];
 
@@ -81,12 +86,12 @@ class IgnorePointerBody extends NodeBody {
           '''
           ${state.toKey}
           ${child ?? children}
-          ${attributes[DBKeys.flag] as bool}
+          ${(attributes[DBKeys.value] as FTextTypeInput).toJson()}
           ''',
         ),
         state: state,
         child: child,
-        flag: attributes[DBKeys.flag] as bool,
+        value: attributes[DBKeys.value] as FTextTypeInput,
       );
 
   @override
@@ -102,7 +107,7 @@ class IgnorePointerBody extends NodeBody {
         context,
         node,
         pageId,
-        IgnorePointerCodeTemplate.toCode(context, this, child),
+        IgnorePointerCodeTemplate.toCode(context, this, child, loop),
         loop ?? 0,
       );
 }

@@ -92,7 +92,7 @@ class _WHTTPRequestFutureBuilderState extends State<WHTTPRequestFutureBuilder>
           final dataset = snapshot.data as DatasetObject?;
           var datasets = <DatasetObject>[];
           if (dataset != null) {
-            datasets = addDataset(context, widget.state.dataset, dataset);
+            datasets = addDataset(context, dataset);
           }
 
           // Returns child

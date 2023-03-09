@@ -145,7 +145,7 @@ class _WCmsStreamState extends State<WCmsStream> with AfterLayoutMixin {
                     .map((final dynamic e) => e as Map<String, dynamic>)
                     .toList(),
               );
-              final datasets = addDataset(context, widget.state.dataset, _map);
+              final datasets = addDataset(context, _map);
 
               // Returns child
               if (widget.children.isNotEmpty) {

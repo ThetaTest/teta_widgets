@@ -1,21 +1,11 @@
-// Flutter imports:
-// Package imports:
-// ignore_for_file: avoid_dynamic_calls
-
-// Flutter imports:
 import 'dart:async';
 
-import 'package:after_layout/after_layout.dart';
 import 'package:flutter/material.dart';
-// Package imports:
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:supabase/supabase.dart';
 import 'package:teta_core/teta_core.dart';
-import 'package:teta_widgets/src/core/teta_widget/index.dart';
-// Project imports:
-import 'package:teta_widgets/src/elements/index.dart';
-
-// ignore_for_file: public_member_api_docs
+import '../../../core/teta_widget/index.dart';
+import '../../index.dart';
 
 class WSupabaseFutureBuilder extends StatefulWidget {
   /// Construct
@@ -67,8 +57,7 @@ class WSupabaseFutureBuilder extends StatefulWidget {
   _WSupabaseFutureBuilderState createState() => _WSupabaseFutureBuilderState();
 }
 
-class _WSupabaseFutureBuilderState extends State<WSupabaseFutureBuilder>
-    with AfterLayoutMixin {
+class _WSupabaseFutureBuilderState extends State<WSupabaseFutureBuilder> {
   DatasetObject _map = const DatasetObject(
     name: 'Supabase Query',
     map: [<String, dynamic>{}],
@@ -78,11 +67,14 @@ class _WSupabaseFutureBuilderState extends State<WSupabaseFutureBuilder>
   SupabaseClient? client;
 
   @override
-  FutureOr<void> afterFirstLayout(final BuildContext context) {
-    calc();
+  void initState() {
+    super.initState();
+    WidgetsBinding.instance.addPostFrameCallback((_) => calc());
   }
 
   Future calc() async {
+    if (_future != null) return;
+
     final from = widget.from.get(
       widget.state.params,
       widget.state.states,
@@ -175,7 +167,6 @@ class _WSupabaseFutureBuilderState extends State<WSupabaseFutureBuilder>
     client = BlocProvider.of<SupabaseCubit>(context).state;
     final query = client!.from(from).select(select);
 
-    // ignore: literal_only_boolean_expressions
     if (order.isNotEmpty) {
       query.order(order, ascending: true);
     }
@@ -191,20 +182,16 @@ class _WSupabaseFutureBuilderState extends State<WSupabaseFutureBuilder>
       }
     }
     // ignore: literal_only_boolean_expressions
-    if (true) {
-      query.range(valueFromRange, valueToRange * valueToPage);
-    }
+    query.range(valueFromRange, valueToRange * valueToPage);
 
-    _future = query.execute();
+    setState(() => _future = query.execute());
   }
 
   @override
   Widget build(final BuildContext context) {
     if (client == null) {
       return const Center(
-        child: THeadline3(
-          'Supabase is not initialized yet',
-        ),
+        child: THeadline3('Supabase is not initialized yet'),
       );
     }
 
@@ -213,32 +200,40 @@ class _WSupabaseFutureBuilderState extends State<WSupabaseFutureBuilder>
       child: FutureBuilder(
         future: _future,
         builder: (final context, final snapshot) {
+          if (snapshot.error != null) {
+            return Text(
+              'Supabase error while fetching data: ${snapshot.error}',
+            );
+          }
           if (!snapshot.hasData) {
             if (widget.children.isNotEmpty) {
-              return widget.children.last.toWidget(state: widget.state);
+              return widget.children.last.toWidget(
+                state: widget.state,
+              );
             } else {
               return const CircularProgressIndicator();
             }
           }
-          if (snapshot.error != null) {
-            // TODO: Returns a error widget
-          }
+
           final response = snapshot.data as PostgrestResponse?;
           if (response?.error != null) {
-            // TODO: Returns a error widget
+            return Text(
+              'Supabase error while fetching data: ${response?.error}',
+            );
           }
           if (response?.data.runtimeType != List) {
-            // TODO: Returns a message error, probably from and select are not selected well
+            return const Text(
+              'Supabase error while fetching data. '
+              'Check if "from" and "select" are correctly setupped.',
+            );
           }
           final list = response?.data as List<dynamic>?;
           _map = _map.copyWith(
             name: widget.state.node.name ??
                 widget.state.node.intrinsicState.displayName,
-            map: (list ?? const <dynamic>[])
-                .map((final dynamic e) => e as Map<String, dynamic>)
-                .toList(),
+            map: (list ?? const <dynamic>[]).cast<Map<String, dynamic>>(),
           );
-          final datasets = addDataset(context, widget.state.dataset, _map);
+          final datasets = addDataset(context, _map);
 
           // Returns child
           if (widget.children.isNotEmpty) {

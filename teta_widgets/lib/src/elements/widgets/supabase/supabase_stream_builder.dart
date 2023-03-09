@@ -1,19 +1,12 @@
-// Flutter imports:
-
-// Flutter imports:
 import 'dart:async';
 
-import 'package:after_layout/after_layout.dart';
 import 'package:flutter/material.dart';
-// Package imports:
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:supabase/supabase.dart';
 import 'package:teta_core/teta_core.dart';
-import 'package:teta_widgets/src/core/teta_widget/index.dart';
-// Project imports:
-import 'package:teta_widgets/src/elements/index.dart';
 
-// ignore_for_file: public_member_api_docs
+import '../../../core/teta_widget/index.dart';
+import '../../index.dart';
 
 class WSupabaseStreamBuilder extends StatefulWidget {
   /// Construct
@@ -44,8 +37,7 @@ class WSupabaseStreamBuilder extends StatefulWidget {
   _WSupabaseStreamBuilderState createState() => _WSupabaseStreamBuilderState();
 }
 
-class _WSupabaseStreamBuilderState extends State<WSupabaseStreamBuilder>
-    with AfterLayoutMixin {
+class _WSupabaseStreamBuilderState extends State<WSupabaseStreamBuilder> {
   DatasetObject _map = const DatasetObject(
     name: 'Supabase Query',
     map: [<String, dynamic>{}],
@@ -54,11 +46,14 @@ class _WSupabaseStreamBuilderState extends State<WSupabaseStreamBuilder>
   SupabaseClient? client;
 
   @override
-  FutureOr<void> afterFirstLayout(final BuildContext context) {
-    calc();
+  void initState() {
+    super.initState();
+    WidgetsBinding.instance.addPostFrameCallback((_) => calc());
   }
 
   Future calc() async {
+    if (_stream != null) return;
+
     final from = widget.from.get(
       widget.state.params,
       widget.state.states,
@@ -97,19 +92,21 @@ class _WSupabaseStreamBuilderState extends State<WSupabaseStreamBuilder>
       query.limit(valueFromRange);
     }
 
-    _stream = query.execute();
+    setState(() => _stream = query.execute());
   }
 
   @override
   Widget build(final BuildContext context) {
-    final client = BlocProvider.of<SupabaseCubit>(context).state;
+    final client = context.read<SupabaseCubit>().state;
 
     if (client == null) {
       return const Center(
-        child: THeadline3(
-          'Supabase is not initialized yet',
-        ),
+        child: THeadline3('Supabase is not initialized yet'),
       );
+    }
+
+    if (_stream == null) {
+      return const Center(child: CircularProgressIndicator());
     }
 
     return NodeSelectionBuilder(
@@ -117,8 +114,13 @@ class _WSupabaseStreamBuilderState extends State<WSupabaseStreamBuilder>
       child: StreamBuilder(
         stream: _stream,
         builder: (final context, final snapshot) {
+          if (snapshot.error != null) {
+            return Text(
+              'Supabase error while fetching data: ${snapshot.error}',
+            );
+          }
+
           if (!snapshot.hasData) {
-            // snapshot has no data yet
             if (widget.children.isNotEmpty) {
               return widget.children.last.toWidget(
                 state: widget.state,
@@ -127,19 +129,14 @@ class _WSupabaseStreamBuilderState extends State<WSupabaseStreamBuilder>
               return const CircularProgressIndicator();
             }
           }
-          if (snapshot.error != null) {
-            // TODO: Returns a error widget
-          }
+
           final response = snapshot.data as List<Map<String, dynamic>>?;
-          if ((response ?? <Map<String, dynamic>>[]).isEmpty) {
-            // TODO: Returns a error widget
-          }
           _map = _map.copyWith(
             name: widget.state.node.name ??
                 widget.state.node.intrinsicState.displayName,
             map: response?.map((final Map<String, dynamic> e) => e).toList(),
           );
-          final datasets = addDataset(context, widget.state.dataset, _map);
+          final datasets = addDataset(context, _map);
 
           // Returns child
           if (widget.children.isNotEmpty) {
@@ -151,7 +148,7 @@ class _WSupabaseStreamBuilderState extends State<WSupabaseStreamBuilder>
               ),
             );
           } else {
-            return const SizedBox();
+            return const SizedBox.shrink();
           }
         },
       ),

@@ -95,7 +95,7 @@ class _WAdaptyProductsListState extends State<WAdaptyProductsList> {
       //! Commented out because .toJson() method is not available in AdaptyProduct
       // map: products.map((final e) => e.toJson()).toList(),
     );
-    final datasets = addDataset(context, widget.state.dataset, _map);
+    final datasets = addDataset(context, _map);
 
     return NodeSelectionBuilder(
       state: widget.state,

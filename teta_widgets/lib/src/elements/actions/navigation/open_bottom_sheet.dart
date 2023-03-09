@@ -18,6 +18,7 @@ import 'package:teta_widgets/src/core/teta_widget/index.dart';
 import 'package:teta_widgets/src/elements/actions/navigation/pass_params_builder.dart';
 import 'package:teta_widgets/src/elements/code/formatter_test.dart';
 import 'package:teta_widgets/src/elements/nodes/node.dart';
+import 'package:teta_core/src/pages/play_page/cubit_value_initializer.dart';
 
 class FActionNavigationOpenBottomSheet {
   static Future action(
@@ -59,20 +60,32 @@ class FActionNavigationOpenBottomSheet {
           final scaffold = sl.get<NodeRendering>().renderTree(nodes);
           page = page.copyWith(flatList: nodes, scaffold: scaffold);
           await showModalBottomSheet<void>(
+            backgroundColor: Colors.transparent,
             context: context,
-            builder: (final context) => page!.scaffold.toWidget(
-              state: state.copyWith(
-                forPlay: true,
-                params: passParamsToNewPage(
-                  page.defaultParams,
-                  currentPageState.params,
-                  paramsToSend,
-                  state.dataset,
-                  loop: state.loop,
+            builder: (final c) => BlocProvider(
+              create: (final c) => PageCubit(
+                sl.get(),
+                sl.get(),
+                sl.get(),
+                sl.get(),
+              )..onFocus(page: page!, forPlay: true),
+              child: PlayCubitsValueInitializer(
+                originalContext: context,
+                child: page!.scaffold.toWidget(
+                  state: state.copyWith(
+                    forPlay: true,
+                    states: page.defaultStates,
+                    dataset: currentPageState.datasets,
+                    params: passParamsToNewPage(
+                      page.defaultParams,
+                      currentPageState.params,
+                      paramsToSend,
+                      state.dataset,
+                      loop: state.loop,
+                    ),
+                  ),
                 ),
-                states: page.defaultStates,
-                dataset: currentPageState.datasets,
-              ),
+              ).build(),
             ),
           );
         }
@@ -133,6 +146,7 @@ class FActionNavigationOpenBottomSheet {
       return '''
       await showModalBottomSheet<void>(
         context: context,
+        backgroundColor: Colors.transparent,
         builder: (context) => Page${pageNameRC.pascalCase}(
           ${stringParamsToSend.toString()}
         ),

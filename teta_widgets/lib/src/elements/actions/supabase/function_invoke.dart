@@ -93,7 +93,7 @@ class FASupabaseFunctionsInvoke {
           }).toList(),
         );
       }
-      final datasets = addDataset(context, pageState.datasets, _map);
+      final datasets = addDataset(context, _map);
     }
   }
 

@@ -84,7 +84,7 @@ class _WCMSLoggedUserState extends State<WCMSLoggedUser> {
             name: 'Teta Auth User',
             map: [map],
           );
-          final datasets = addDataset(context, widget.state.dataset, _map);
+          final datasets = addDataset(context, _map);
           if (widget.children.isNotEmpty) {
             return widget.children.first.toWidget(
               state: widget.state.copyWith(

@@ -6,6 +6,7 @@ import 'package:teta_widgets/src/elements/code/snippets.dart';
 import 'package:teta_widgets/src/elements/controls/key_constants.dart';
 import 'package:teta_widgets/src/elements/nodes/node.dart';
 import 'package:teta_widgets/src/elements/nodes/node_body.dart';
+import 'package:teta_widgets/teta_widgets.dart';
 
 /// Generates the code for IgnorePointer widget
 class IgnorePointerCodeTemplate {
@@ -13,22 +14,33 @@ class IgnorePointerCodeTemplate {
     final BuildContext context,
     final NodeBody body,
     final CNode? child,
+    final int? loop,
   ) async {
-    final flag = body.attributes[DBKeys.flag] as bool;
-
-    if (!flag) {
-      return CS.child(
+    final abstract = body.attributes[DBKeys.value] as FTextTypeInput;
+    final ignore = abstract.toCode(
+      loop,
+      resultType: ResultTypeEnum.bool,
+      defaultValue: 'false',
+    );
+    if (abstract.type == FTextTypeEnum.text && abstract.value == 'true') {
+      final code = await CS.child(
         context,
         child,
         comma: false,
         withChild: false,
       );
+      final res = FormatterTest.format(code);
+      if (res) {
+        return code;
+      } else {
+        return 'const SizedBox()';
+      }
     }
 
     final childString = await CS.child(context, child, comma: true);
     final code = '''
     IgnorePointer(
-      ignoring: $flag,
+      ignoring: $ignore,
       $childString
     )
   ''';

@@ -13,20 +13,30 @@ class WOffStage extends StatelessWidget {
   const WOffStage(
     final Key? key, {
     required this.state,
-    required this.offStage,
+    required this.value,
     this.child,
   }) : super(key: key);
 
   final TetaWidgetState state;
   final CNode? child;
-  final bool offStage;
+  final FTextTypeInput value;
 
   @override
   Widget build(final BuildContext context) {
+    final val = value
+        .get(
+          state.params,
+          state.states,
+          state.dataset,
+          state.forPlay,
+          state.loop,
+          context,
+        )
+        .replaceAll(' ', '');
     return TetaWidget(
       state: state,
       child: Offstage(
-        offstage: offStage,
+        offstage: val == 'true',
         child: ChildConditionBuilder(
           ValueKey(state.toKey),
           state: state,
