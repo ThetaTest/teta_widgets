@@ -144,6 +144,11 @@ class FActionNavigationOpenSnackBar {
 
       return '''
       final snackBar = SnackBar(
+        padding: EdgeInsets.zero,
+        margin: EdgeInsets.zero,
+        behavior: SnackBarBehavior.floating,
+        backgroundColor: Colors.transparent,
+        elevation: 0,
         content: Page${pageNameRC.pascalCase}(
           ${stringParamsToSend.toString()}
         ),

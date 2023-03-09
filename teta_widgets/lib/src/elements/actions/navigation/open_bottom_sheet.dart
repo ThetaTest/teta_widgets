@@ -146,6 +146,7 @@ class FActionNavigationOpenBottomSheet {
       return '''
       await showModalBottomSheet<void>(
         context: context,
+        backgroundColor: Colors.transparent,
         builder: (context) => Page${pageNameRC.pascalCase}(
           ${stringParamsToSend.toString()}
         ),
