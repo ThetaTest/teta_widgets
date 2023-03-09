@@ -6,25 +6,14 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:teta_core/teta_core.dart';
-import 'package:teta_widgets/src/core/teta_widget/index.dart';
-import 'package:teta_widgets/src/elements/code/page/code_component.dart';
+import '../../../teta_widgets.dart';
+import '../../core/teta_widget/index.dart';
+import '../code/page/code_component.dart';
 // Project imports:
-import 'package:teta_widgets/src/elements/code/page/scaffold.dart';
-import 'package:teta_widgets/src/elements/controls/control_model.dart';
-import 'package:teta_widgets/src/elements/controls/key_constants.dart';
-import 'package:teta_widgets/src/elements/features/action.dart';
-import 'package:teta_widgets/src/elements/features/actions/enums/index.dart';
-import 'package:teta_widgets/src/elements/features/children_ids.dart';
-import 'package:teta_widgets/src/elements/features/fill.dart';
-import 'package:teta_widgets/src/elements/features/sizes.dart';
-import 'package:teta_widgets/src/elements/intrinsic_states/class.dart';
-import 'package:teta_widgets/src/elements/nodes/categories.dart';
-import 'package:teta_widgets/src/elements/nodes/children_enum.dart';
-import 'package:teta_widgets/src/elements/nodes/dynamic.dart';
-import 'package:teta_widgets/src/elements/nodes/enum.dart';
-import 'package:teta_widgets/src/elements/nodes/node.dart';
-import 'package:teta_widgets/src/elements/nodes/node_body.dart';
-import 'package:teta_widgets/src/elements/widgets/scaffold.dart';
+import '../code/page/scaffold.dart';
+import '../intrinsic_states/class.dart';
+import '../nodes/categories.dart';
+import '../nodes/node_body.dart';
 
 const _globalType = NType.scaffold;
 
@@ -78,6 +67,7 @@ class ScaffoldBody extends NodeBody {
     DBKeys.showBottomBar: true,
     DBKeys.showDrawer: false,
     DBKeys.flag: true,
+    DBKeys.isBoxed: false,
   };
 
   /// AppBar node. It will be instantiate in node rendering class.
@@ -106,13 +96,6 @@ class ScaffoldBody extends NodeBody {
 
   @override
   List<ControlModel> get controls => [
-        FlagControlObject(
-          title: 'ResizeToAvoidBottomInset',
-          key: DBKeys.flag,
-          value: attributes[DBKeys.flag],
-          description:
-              'if true, the bottombar is hidden under the keyboard. if false it is put on top',
-        ),
         FillControlObject(
           title: 'Background color',
           key: DBKeys.fill,
@@ -122,21 +105,20 @@ class ScaffoldBody extends NodeBody {
           isNoneEnabled: false,
           isOnlySolid: true,
         ),
-        /*FlagControlObject(
-          title: 'Show AppBar',
-          key: DBKeys.showAppBar,
-          value: attributes[DBKeys.showAppBar],
-          description:
-              'It is a horizontal bar typically shown at the top of an app using the appBar property',
+        ControlObject(
+          title: 'Content Width',
+          type: ControlType.boxedWidth,
+          key: DBKeys.isBoxed,
+          value: attributes[DBKeys.isBoxed] as bool,
+          valueType: VariableType.dynamic,
         ),
         FlagControlObject(
-          title: 'Show BottomBar',
-          key: DBKeys.showBottomBar,
-          value: attributes[DBKeys.showBottomBar],
+          title: 'ResizeToAvoidBottomInset',
+          key: DBKeys.flag,
+          value: attributes[DBKeys.flag],
           description:
-              'It is a horizontal bar typically shown at the bottom of an app using the bottomNavigationBar property',
+              'if true, the bottombar is hidden under the keyboard. if false it is put on top',
         ),
-        */
       ];
 
   @override
@@ -158,6 +140,7 @@ class ScaffoldBody extends NodeBody {
             ${attributes[DBKeys.showBottomBar] as bool}
             ${attributes[DBKeys.showDrawer] as bool}
             ${attributes[DBKeys.flag] as bool}
+            ${attributes[DBKeys.isBoxed] as bool}
             ''',
         ),
         state: state,
@@ -170,6 +153,7 @@ class ScaffoldBody extends NodeBody {
         bottomBar: bottomBar,
         drawer: drawer,
         flag: attributes[DBKeys.flag] as bool,
+        isBoxed: attributes[DBKeys.isBoxed] as bool,
         showAppBar: attributes[DBKeys.showAppBar] as bool,
         showBottomBar: attributes[DBKeys.showBottomBar] as bool,
         showDrawer: attributes[DBKeys.showDrawer] as bool,

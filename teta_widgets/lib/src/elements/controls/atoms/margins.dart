@@ -12,7 +12,7 @@ import 'package:gap/gap.dart';
 import 'package:teta_core/src/design_system/textfield/minitextfield.dart';
 import 'package:teta_core/teta_core.dart';
 // Project imports:
-import 'package:teta_widgets/src/elements/features/margins.dart';
+import '../../features/margins.dart';
 
 class Margins extends StatefulWidget {
   const Margins({
@@ -171,7 +171,6 @@ class MarginsState extends State<Margins> {
                       context,
                       forPlay: false,
                     )[0],
-                    hpadding: 4,
                     withSwipe: true,
                     callBack: (final text) {
                       final finalText = text.replaceAll('-', '');
@@ -190,6 +189,7 @@ class MarginsState extends State<Margins> {
                     },
                   ),
                 ),
+                const Gap(4),
                 Expanded(
                   child: Opacity(
                     opacity: isLinked ? 0.3 : 1,
@@ -200,7 +200,6 @@ class MarginsState extends State<Margins> {
                         context,
                         forPlay: false,
                       )[1],
-                      hpadding: 4,
                       withSwipe: true,
                       callBack: (final text) {
                         final finalText = text.replaceAll('-', '');
@@ -212,6 +211,7 @@ class MarginsState extends State<Margins> {
                     ),
                   ),
                 ),
+                const Gap(4),
                 Expanded(
                   child: Opacity(
                     opacity: isLinked ? 0.3 : 1,
@@ -222,7 +222,6 @@ class MarginsState extends State<Margins> {
                         context,
                         forPlay: false,
                       )[2],
-                      hpadding: 4,
                       withSwipe: true,
                       callBack: (final text) {
                         final finalText = text.replaceAll('-', '');
@@ -234,6 +233,7 @@ class MarginsState extends State<Margins> {
                     ),
                   ),
                 ),
+                const Gap(4),
                 Expanded(
                   child: Opacity(
                     opacity: isLinked ? 0.3 : 1,
@@ -244,7 +244,6 @@ class MarginsState extends State<Margins> {
                         context,
                         forPlay: false,
                       )[3],
-                      hpadding: 4,
                       withSwipe: true,
                       callBack: (final text) {
                         final finalText = text.replaceAll('-', '');

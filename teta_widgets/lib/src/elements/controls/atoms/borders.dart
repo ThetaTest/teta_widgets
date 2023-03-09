@@ -6,15 +6,17 @@ import 'package:flutter/material.dart';
 // Package imports:
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_feather_icons/flutter_feather_icons.dart';
+import 'package:gap/gap.dart';
 import 'package:hovering/hovering.dart';
 import 'package:teta_core/teta_core.dart';
+
+import '../../features/border.dart';
+import '../../features/border_style.dart';
+import '../../features/fill.dart';
+import '../../features/margins.dart';
 // Project imports:
-import 'package:teta_widgets/src/elements/controls/atoms/fill.dart';
-import 'package:teta_widgets/src/elements/controls/atoms/margins.dart';
-import 'package:teta_widgets/src/elements/features/border.dart';
-import 'package:teta_widgets/src/elements/features/border_style.dart';
-import 'package:teta_widgets/src/elements/features/fill.dart';
-import 'package:teta_widgets/src/elements/features/margins.dart';
+import 'fill.dart';
+import 'margins.dart';
 
 class BordersControl extends StatefulWidget {
   const BordersControl({
@@ -112,6 +114,7 @@ class BordersControlState extends State<BordersControl> {
                 widget.callBack(widget.borders.toJson(), old);
               },
             ),
+            const Gap(Grid.medium),
             FillControl(
               callBack: (final fill, final isStyled, final old) {
                 final old = widget.borders.toJson();

@@ -19,7 +19,7 @@ import 'package:teta_core/src/design_system/textfield/multi_line_textfield.dart'
 import 'package:teta_core/src/design_system/textfield/textfield.dart';
 import 'package:teta_core/teta_core.dart';
 // Project imports:
-import 'package:teta_widgets/teta_widgets.dart';
+import '../../../../teta_widgets.dart';
 
 class TextControl extends StatefulWidget {
   const TextControl({

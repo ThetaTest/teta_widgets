@@ -3,10 +3,10 @@ import 'package:flutter/material.dart';
 import 'package:flutter_staggered_animations/flutter_staggered_animations.dart';
 // Package imports:
 import 'package:teta_core/teta_core.dart';
-import 'package:teta_widgets/src/core/teta_widget/teta_widget_state.dart';
+import '../../core/teta_widget/teta_widget_state.dart';
 // Project imports:
-import 'package:teta_widgets/src/elements/index.dart';
-import 'package:teta_widgets/src/elements/nodes/node_body.dart';
+import '../index.dart';
+import '../nodes/node_body.dart';
 
 /// Builder
 class GestureBuilderBase {
@@ -364,9 +364,9 @@ class EntryAnimationsBase {
     required final Widget child,
     required final int? loop,
   }) {
-    if ((node.body.attributes[DBKeys.fadeAnimationEnabled] as bool? ?? false) &&
+    if ((node.body.attributes[DBKeys.fadeAnimationEnabled] as bool? ?? false) ||
         (node.body.attributes[DBKeys.scaleAnimationEnabled] as bool? ??
-            false) &&
+            false) ||
         (node.body.attributes[DBKeys.slideAnimationEnabled] as bool? ??
             false)) {
       return AnimationConfiguration.staggeredList(

@@ -10,9 +10,9 @@ import 'package:collection/collection.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:teta_core/teta_core.dart';
-import 'package:teta_widgets/src/core/teta_widget/index.dart';
+import '../../core/teta_widget/index.dart';
 // Project imports:
-import 'package:teta_widgets/src/elements/index.dart';
+import '../index.dart';
 
 class WScaffold extends StatefulWidget {
   /// Returns a Scaffold
@@ -30,6 +30,7 @@ class WScaffold extends StatefulWidget {
     required this.isScrollable,
     required this.isClipped,
     required this.bodyExtended,
+    required this.isBoxed,
     required this.flag,
     this.appBar,
     this.bottomBar,
@@ -38,6 +39,7 @@ class WScaffold extends StatefulWidget {
 
   final TetaWidgetState state;
   final List<CNode> children;
+  final bool isBoxed;
   final FFill fill;
   final FSize width;
   final FSize height;
@@ -222,9 +224,17 @@ class _WScaffoldState extends State<WScaffold> with AfterLayoutMixin {
         )
         .toList();
     return widgets.isNotEmpty
-        ? Stack(
-            children: [widgets.first],
-          )
+        ? widget.isBoxed
+            ? Center(
+                child: WrapperContainer(
+                  child: Stack(
+                    children: [widgets.first],
+                  ),
+                ),
+              )
+            : Stack(
+                children: [widgets.first],
+              )
         : _placeholder(context);
   }
 

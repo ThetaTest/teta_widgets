@@ -7,7 +7,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:teta_core/teta_core.dart';
 // Project imports:
-import 'package:teta_widgets/src/elements/features/features.dart';
+import '../../../features/features.dart';
 
 //ignore: must_be_immutable
 class StyleFillControl extends StatefulWidget {
@@ -40,7 +40,7 @@ class StyleFillControlState extends State<StyleFillControl> {
             return Row(
               children: [
                 Expanded(
-                  child: CDropdown(
+                  child: CDropdownFillStyles(
                     value: widget.model.name,
                     items: paletteStyles
                         .where(
@@ -50,7 +50,6 @@ class StyleFillControlState extends State<StyleFillControl> {
                                       element.fill.type == FFillType.none)) ||
                               !widget.onlySolid,
                         )
-                        .map((final e) => e.name)
                         .toSet()
                         .toList(),
                     onChange: (final value) {

@@ -4,13 +4,11 @@
 // Flutter imports:
 import 'package:flutter/foundation.dart';
 // Package imports:
-import 'package:teta_core/src/models/variable.dart';
 import 'package:teta_core/teta_core.dart';
 // Project imports:
-import 'package:teta_widgets/src/elements/features/font_weight.dart';
-import 'package:teta_widgets/src/elements/features/google_maps_map_style.dart';
-import 'package:teta_widgets/src/elements/features/physic.dart';
-import 'package:teta_widgets/src/elements/index.dart';
+import '../features/google_maps_map_style.dart';
+import '../features/physic.dart';
+import '../index.dart';
 
 class DBKeys {
   // DB param keys
@@ -61,6 +59,7 @@ class DBKeys {
   static const String borders = 'brd';
   static const String activeBorders = 'abrd';
   static const String flag = 'f';
+  static const String isBoxed = 'isBox';
   static const String action = 'a';
   static const String actionValue = 'aVl';
   static const String image = 'img';
@@ -306,6 +305,8 @@ class DynamicAttributes {
         case DBKeys.firestorePath:
           return FFirestorePath.fromJson(value as List<Map<String, dynamic>>);
         case DBKeys.flag:
+          return value;
+        case DBKeys.isBoxed:
           return value;
         case DBKeys.markerDrawPathToUserCurrentLocation:
           return FDataset.fromJson(value as Map<String, dynamic>);
@@ -657,9 +658,9 @@ class DynamicAttributes {
       case DBKeys.actionValue:
         return value != null ? value.toJson() : FTextTypeInput().toJson();
       case DBKeys.align:
-        return value != null ? value.toJson() : FAlign().toJson();
+        return value != null ? value.toJson() : const FAlign().toJson();
       case DBKeys.physic:
-        return value != null ? value.toJson() : FPhysic().toJson();
+        return value != null ? value.toJson() : const FPhysic().toJson();
       case DBKeys.bgFill:
         return value != null ? value.toJson() : FFill().toJson();
       case DBKeys.bgTwoFill:
@@ -691,6 +692,8 @@ class DynamicAttributes {
       case DBKeys.firestorePath:
         return value != null ? value.toJson() : FFirestorePath().toJson();
       case DBKeys.flag:
+        return value;
+      case DBKeys.isBoxed:
         return value;
       case DBKeys.markerDrawPathToUserCurrentLocation:
         return value != null ? value.toJson() : FDataset().toJson();
@@ -753,7 +756,7 @@ class DynamicAttributes {
       case DBKeys.right:
         return value;
       case DBKeys.shadows:
-        return value != null ? value.toJson() : FShadow().toJson();
+        return value != null ? value.toJson() : const FShadow().toJson();
       case DBKeys.showControls:
         return value;
       case DBKeys.startAt:

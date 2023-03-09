@@ -10,7 +10,7 @@ import 'package:gap/gap.dart';
 import 'package:teta_core/src/design_system/textfield/minitextfield.dart';
 import 'package:teta_core/teta_core.dart';
 // Project imports:
-import 'package:teta_widgets/src/elements/features/border_radius.dart';
+import '../../features/border_radius.dart';
 
 class BorderRadiusControl extends StatefulWidget {
   const BorderRadiusControl({
@@ -147,7 +147,6 @@ class BorderRadiusControlState extends State<BorderRadiusControl> {
                           title: (!isLinked) ? 'T. L.' : 'ALL',
                           controller: controllers[0],
                           text: widget.borderRadius.radius![0].toString(),
-                          hpadding: 4,
                           withSwipe: true,
                           callBack: (final text) {
                             radius![0] = double.parse(text);
@@ -170,6 +169,7 @@ class BorderRadiusControlState extends State<BorderRadiusControl> {
                           },
                         ),
                       ),
+                      const Gap(4),
                       Expanded(
                         child: Opacity(
                           opacity: isLinked ? 0.3 : 1,
@@ -177,7 +177,6 @@ class BorderRadiusControlState extends State<BorderRadiusControl> {
                             title: 'T. R.',
                             controller: controllers[1],
                             text: widget.borderRadius.radius![1].toString(),
-                            hpadding: 4,
                             withSwipe: true,
                             callBack: (final text) {
                               radius![1] = double.parse(text);
@@ -201,6 +200,7 @@ class BorderRadiusControlState extends State<BorderRadiusControl> {
                           ),
                         ),
                       ),
+                      const Gap(4),
                       Expanded(
                         child: Opacity(
                           opacity: isLinked ? 0.3 : 1,
@@ -208,7 +208,6 @@ class BorderRadiusControlState extends State<BorderRadiusControl> {
                             title: 'B. R.',
                             controller: controllers[2],
                             text: widget.borderRadius.radius![2].toString(),
-                            hpadding: 4,
                             withSwipe: true,
                             callBack: (final text) {
                               radius![2] = double.parse(text);
@@ -232,6 +231,7 @@ class BorderRadiusControlState extends State<BorderRadiusControl> {
                           ),
                         ),
                       ),
+                      const Gap(4),
                       Expanded(
                         child: Opacity(
                           opacity: isLinked ? 0.3 : 1,
@@ -239,7 +239,6 @@ class BorderRadiusControlState extends State<BorderRadiusControl> {
                             title: 'B. L.',
                             controller: controllers[3],
                             text: widget.borderRadius.radius![3].toString(),
-                            hpadding: 4,
                             withSwipe: true,
                             callBack: (final text) {
                               radius![3] = double.parse(text);

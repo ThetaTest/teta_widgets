@@ -9,13 +9,14 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:recase/recase.dart';
 import 'package:teta_core/src/services/packages_service.dart';
 import 'package:teta_core/teta_core.dart';
-import 'package:teta_widgets/src/elements/code/snippets.dart';
+
 // Project imports:
-import 'package:teta_widgets/src/elements/controls/key_constants.dart';
-import 'package:teta_widgets/src/elements/features/actions/enums/gestures.dart';
-import 'package:teta_widgets/src/elements/features/fill.dart';
-import 'package:teta_widgets/src/elements/nodes/enum.dart';
-import 'package:teta_widgets/src/elements/nodes/node.dart';
+import '../../controls/key_constants.dart';
+import '../../features/actions/enums/gestures.dart';
+import '../../features/fill.dart';
+import '../../nodes/enum.dart';
+import '../../nodes/node.dart';
+import '../snippets.dart';
 
 /// Generates the code for a page
 Future<String> pageCodeTemplate(
@@ -27,7 +28,6 @@ Future<String> pageCodeTemplate(
   final String onInitCode,
   final int? loop,
 ) async {
-  final prj = BlocProvider.of<FocusProjectCubit>(context).state!;
   final pages = BlocProvider.of<PagesCubit>(context).state;
   final config =
       (BlocProvider.of<ConfigCubit>(context).state as ConfigStateLoaded).config;
@@ -165,6 +165,33 @@ Future<String> pageCodeTemplate(
     '',
     loop: loop,
   );
+
+  final stringBody = (node.body.attributes[DBKeys.isBoxed] as bool)
+      ? '''
+Builder(
+      builder: (context) {
+        if (MediaQuery.of(context).size.width > 1200) {
+          return Center(
+            child: ConstrainedBox(
+              constraints: const BoxConstraints(maxWidth: 1200),
+              ${strChildren.toString()}
+            ),
+          );
+        }
+        if (MediaQuery.of(context).size.width > 600) {
+          return Padding(
+            padding: const EdgeInsets.symmetric(horizontal: 100),
+            ${strChildren.toString()}
+          );
+        }
+        return Padding(
+          padding: const EdgeInsets.symmetric(horizontal: 16),
+          ${strChildren.toString()}
+        );
+      },
+    ),'''
+      : strChildren.toString();
+
   return '''
     import 'dart:async';
     import 'package:myapp/src/teta_files/imports.dart';
@@ -232,7 +259,7 @@ Future<String> pageCodeTemplate(
           body: IntrinsicHeight(
             child: Stack(
             children: [
-                ${strChildren.toString()}
+                $stringBody
                 $bottomBarString
               ],
             ),
