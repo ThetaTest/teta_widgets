@@ -124,7 +124,6 @@ class PaddingsState extends State<TextControl> with AfterLayoutMixin {
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
                     Row(
                       children: [
@@ -176,84 +175,77 @@ class PaddingsState extends State<TextControl> with AfterLayoutMixin {
                           ),
                         ),
                       ),
-                    CDropdownCustom(
-                      background: Colors.transparent,
-                      value: widget.value.type == FTextTypeEnum.dataset
-                          ? 'dataset'
-                          : widget.value.type == FTextTypeEnum.state
-                              ? 'state'
-                              : widget.value.type == FTextTypeEnum.param
-                                  ? 'param'
-                                  : widget.value.type == FTextTypeEnum.combined
-                                      ? 'combined'
-                                      : widget.value.type ==
-                                              FTextTypeEnum.languages
-                                          ? 'languages'
-                                          : 'text',
-                      items: <DropdownCustomMenuItem<String>>[
-                        DropdownCustomMenuItem(
-                          value: 'text',
-                          child: Row(
-                            mainAxisSize: MainAxisSize.min,
-                            mainAxisAlignment: MainAxisAlignment.end,
-                            children: const [
-                              Icon(
-                                FeatherIcons.type,
-                                color: Palette.txtPrimary,
-                                size: 22,
-                              ),
-                              Gap(Grid.small),
-                              TDetailLabel('Text'),
-                            ],
-                          ),
-                        ),
-                        DropdownCustomMenuItem(
-                          value: 'param',
-                          child: Row(
-                            mainAxisSize: MainAxisSize.min,
-                            children: const [
-                              Icon(
-                                FeatherIcons.cpu,
-                                color: Palette.txtPrimary,
-                                size: 22,
-                              ),
-                              Gap(Grid.small),
-                              TDetailLabel('Param'),
-                            ],
-                          ),
-                        ),
-                        DropdownCustomMenuItem(
-                          value: 'state',
-                          child: Row(
-                            mainAxisSize: MainAxisSize.min,
-                            children: const [
-                              Icon(
-                                FeatherIcons.cpu,
-                                color: Palette.txtPrimary,
-                                size: 22,
-                              ),
-                              Gap(Grid.small),
-                              TDetailLabel('State'),
-                            ],
-                          ),
-                        ),
-                        DropdownCustomMenuItem(
-                          value: 'dataset',
-                          child: Row(
-                            children: const [
-                              Icon(
-                                FeatherIcons.server,
-                                color: Palette.txtPrimary,
-                                size: 22,
-                              ),
-                              Gap(Grid.small),
-                              TDetailLabel('Dataset'),
-                            ],
-                          ),
-                        ),
-                        if (!widget.isSubControl)
+                  ],
+                ),
+                const Gap(Grid.small),
+                Row(
+                  children: [
+                    Expanded(
+                      child: CDropdownCustom(
+                        expanded: true,
+                        background: Colors.transparent,
+                        value: widget.value.type == FTextTypeEnum.dataset
+                            ? 'dataset'
+                            : widget.value.type == FTextTypeEnum.state
+                                ? 'state'
+                                : widget.value.type == FTextTypeEnum.param
+                                    ? 'param'
+                                    : widget.value.type ==
+                                            FTextTypeEnum.combined
+                                        ? 'combined'
+                                        : widget.value.type ==
+                                                FTextTypeEnum.languages
+                                            ? 'languages'
+                                            : 'text',
+                        items: <DropdownCustomMenuItem<String>>[
                           DropdownCustomMenuItem(
-                            value: 'combined',
+                            value: 'text',
+                            child: Row(
+                              mainAxisSize: MainAxisSize.min,
+                              mainAxisAlignment: MainAxisAlignment.end,
+                              children: const [
+                                Icon(
+                                  FeatherIcons.type,
+                                  color: Palette.txtPrimary,
+                                  size: 22,
+                                ),
+                                Gap(Grid.small),
+                                TDetailLabel('Text'),
+                              ],
+                            ),
+                          ),
+                          DropdownCustomMenuItem(
+                            value: 'param',
+                            child: Row(
+                              mainAxisSize: MainAxisSize.min,
+                              children: const [
+                                Icon(
+                                  FeatherIcons.cpu,
+                                  color: Palette.txtPrimary,
+                                  size: 22,
+                                ),
+                                Gap(Grid.small),
+                                TDetailLabel('Param'),
+                              ],
+                            ),
+                          ),
+                          DropdownCustomMenuItem(
+                            value: 'state',
+                            child: Row(
+                              mainAxisSize: MainAxisSize.min,
+                              children: const [
+                                Icon(
+                                  FeatherIcons.cpu,
+                                  color: Palette.txtPrimary,
+                                  size: 22,
+                                ),
+                                Gap(Grid.small),
+                                TDetailLabel('State'),
+                              ],
+                            ),
+                          ),
+                          DropdownCustomMenuItem(
+                            value: 'dataset',
                             child: Row(
                               children: const [
                                 Icon(
@@ -262,49 +254,65 @@ class PaddingsState extends State<TextControl> with AfterLayoutMixin {
                                   size: 22,
                                 ),
                                 Gap(Grid.small),
-                                TDetailLabel('Combined'),
+                                TDetailLabel('Dataset'),
                               ],
                             ),
                           ),
-                        DropdownCustomMenuItem(
-                          value: 'languages',
-                          child: Row(
-                            children: const [
-                              Icon(
-                                FeatherIcons.globe,
-                                color: Palette.txtPrimary,
-                                size: 22,
+                          if (!widget.isSubControl)
+                            DropdownCustomMenuItem(
+                              value: 'combined',
+                              child: Row(
+                                children: const [
+                                  Icon(
+                                    FeatherIcons.server,
+                                    color: Palette.txtPrimary,
+                                    size: 22,
+                                  ),
+                                  Gap(Grid.small),
+                                  TDetailLabel('Combined'),
+                                ],
                               ),
-                              Gap(Grid.small),
-                              TDetailLabel('Languages'),
-                            ],
+                            ),
+                          DropdownCustomMenuItem(
+                            value: 'languages',
+                            child: Row(
+                              children: const [
+                                Icon(
+                                  FeatherIcons.globe,
+                                  color: Palette.txtPrimary,
+                                  size: 22,
+                                ),
+                                Gap(Grid.small),
+                                TDetailLabel('Languages'),
+                              ],
+                            ),
                           ),
-                        ),
-                      ],
-                      onChange: (final value) {
-                        var typeOfInput = FTextTypeEnum.text;
-                        if (value == 'text') {
-                          typeOfInput = FTextTypeEnum.text;
-                        }
-                        if (value == 'param') {
-                          typeOfInput = FTextTypeEnum.param;
-                        }
-                        if (value == 'state') {
-                          typeOfInput = FTextTypeEnum.state;
-                        }
-                        if (value == 'dataset') {
-                          typeOfInput = FTextTypeEnum.dataset;
-                        }
-                        if (value == 'combined') {
-                          typeOfInput = FTextTypeEnum.combined;
-                        }
-                        if (value == 'languages') {
-                          typeOfInput = FTextTypeEnum.languages;
-                        }
-                        final old = widget.value;
-                        widget.value.type = typeOfInput;
-                        widget.callBack(widget.value, old);
-                      },
+                        ],
+                        onChange: (final value) {
+                          var typeOfInput = FTextTypeEnum.text;
+                          if (value == 'text') {
+                            typeOfInput = FTextTypeEnum.text;
+                          }
+                          if (value == 'param') {
+                            typeOfInput = FTextTypeEnum.param;
+                          }
+                          if (value == 'state') {
+                            typeOfInput = FTextTypeEnum.state;
+                          }
+                          if (value == 'dataset') {
+                            typeOfInput = FTextTypeEnum.dataset;
+                          }
+                          if (value == 'combined') {
+                            typeOfInput = FTextTypeEnum.combined;
+                          }
+                          if (value == 'languages') {
+                            typeOfInput = FTextTypeEnum.languages;
+                          }
+                          final old = widget.value;
+                          widget.value.type = typeOfInput;
+                          widget.callBack(widget.value, old);
+                        },
+                      ),
                     ),
                   ],
                 ),

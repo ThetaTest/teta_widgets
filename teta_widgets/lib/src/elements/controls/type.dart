@@ -9,52 +9,54 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:teta_core/teta_core.dart';
 import 'package:teta_repositories/teta_repositories.dart';
+
+import '../features/google_maps_map_style.dart';
+import '../features/physic.dart';
+import '../index.dart';
 // Project imports:
-import 'package:teta_widgets/src/elements/controls/atoms/action.dart';
-import 'package:teta_widgets/src/elements/controls/atoms/aligns.dart';
-import 'package:teta_widgets/src/elements/controls/atoms/apicalls_request.dart';
-import 'package:teta_widgets/src/elements/controls/atoms/audio_controller.dart';
-import 'package:teta_widgets/src/elements/controls/atoms/barcode.dart';
-import 'package:teta_widgets/src/elements/controls/atoms/border_radius.dart';
-import 'package:teta_widgets/src/elements/controls/atoms/borders.dart';
-import 'package:teta_widgets/src/elements/controls/atoms/box_fit.dart';
-import 'package:teta_widgets/src/elements/controls/atoms/boxed_width.dart';
-import 'package:teta_widgets/src/elements/controls/atoms/camera_controller.dart';
-import 'package:teta_widgets/src/elements/controls/atoms/cms_collections.dart';
-import 'package:teta_widgets/src/elements/controls/atoms/code_field.dart';
-import 'package:teta_widgets/src/elements/controls/atoms/cross_axis_alignment.dart';
-import 'package:teta_widgets/src/elements/controls/atoms/dataset.dart';
-import 'package:teta_widgets/src/elements/controls/atoms/dropdownControl.dart';
-import 'package:teta_widgets/src/elements/controls/atoms/fill.dart';
-import 'package:teta_widgets/src/elements/controls/atoms/firebase/path.dart';
-import 'package:teta_widgets/src/elements/controls/atoms/flag.dart';
-import 'package:teta_widgets/src/elements/controls/atoms/google_maps_control.dart';
-import 'package:teta_widgets/src/elements/controls/atoms/google_maps_map_style_controls.dart';
-import 'package:teta_widgets/src/elements/controls/atoms/httpMethodControl.dart';
-import 'package:teta_widgets/src/elements/controls/atoms/icon.dart';
-import 'package:teta_widgets/src/elements/controls/atoms/icon_feather.dart';
-import 'package:teta_widgets/src/elements/controls/atoms/icon_fontawesome.dart';
-import 'package:teta_widgets/src/elements/controls/atoms/icon_line.dart';
-import 'package:teta_widgets/src/elements/controls/atoms/main_axis_alignment.dart';
-import 'package:teta_widgets/src/elements/controls/atoms/main_axis_size.dart';
-import 'package:teta_widgets/src/elements/controls/atoms/map_controller.dart';
-import 'package:teta_widgets/src/elements/controls/atoms/margins.dart';
-import 'package:teta_widgets/src/elements/controls/atoms/navigation/component.dart';
-import 'package:teta_widgets/src/elements/controls/atoms/page_params.dart';
-import 'package:teta_widgets/src/elements/controls/atoms/page_states.dart';
-import 'package:teta_widgets/src/elements/controls/atoms/physics.dart';
-import 'package:teta_widgets/src/elements/controls/atoms/size.dart';
-import 'package:teta_widgets/src/elements/controls/atoms/src_image.dart';
-import 'package:teta_widgets/src/elements/controls/atoms/text.dart';
-import 'package:teta_widgets/src/elements/controls/atoms/webview_controller.dart';
-import 'package:teta_widgets/src/elements/controls/current_song_controll.dart';
-import 'package:teta_widgets/src/elements/controls/google_maps_cubit_control.dart';
-import 'package:teta_widgets/src/elements/controls/http_params.dart';
-import 'package:teta_widgets/src/elements/controls/prefabs/sizes_prefab_control.dart';
-import 'package:teta_widgets/src/elements/controls/prefabs/text_prefab_control.dart';
-import 'package:teta_widgets/src/elements/features/google_maps_map_style.dart';
-import 'package:teta_widgets/src/elements/features/physic.dart';
-import 'package:teta_widgets/src/elements/index.dart';
+import 'atoms/action.dart';
+import 'atoms/aligns.dart';
+import 'atoms/apicalls_request.dart';
+import 'atoms/audio_controller.dart';
+import 'atoms/barcode.dart';
+import 'atoms/border_radius.dart';
+import 'atoms/borders.dart';
+import 'atoms/box_fit.dart';
+import 'atoms/boxed_width.dart';
+import 'atoms/camera_controller.dart';
+import 'atoms/cms_collections.dart';
+import 'atoms/code_field.dart';
+import 'atoms/cross_axis_alignment.dart';
+import 'atoms/dataset.dart';
+import 'atoms/dropdownControl.dart';
+import 'atoms/fill.dart';
+import 'atoms/firebase/path.dart';
+import 'atoms/flag.dart';
+import 'atoms/flex.dart';
+import 'atoms/google_maps_control.dart';
+import 'atoms/google_maps_map_style_controls.dart';
+import 'atoms/httpMethodControl.dart';
+import 'atoms/icon.dart';
+import 'atoms/icon_feather.dart';
+import 'atoms/icon_fontawesome.dart';
+import 'atoms/icon_line.dart';
+import 'atoms/main_axis_alignment.dart';
+import 'atoms/main_axis_size.dart';
+import 'atoms/map_controller.dart';
+import 'atoms/margins.dart';
+import 'atoms/navigation/component.dart';
+import 'atoms/page_params.dart';
+import 'atoms/page_states.dart';
+import 'atoms/physics.dart';
+import 'atoms/size.dart';
+import 'atoms/src_image.dart';
+import 'atoms/text.dart';
+import 'atoms/webview_controller.dart';
+import 'current_song_controll.dart';
+import 'google_maps_cubit_control.dart';
+import 'http_params.dart';
+import 'prefabs/sizes_prefab_control.dart';
+import 'prefabs/text_prefab_control.dart';
 
 enum ControlType {
   /// Made for colors, gradients and images.
@@ -161,6 +163,8 @@ enum ControlType {
 
   /// Made to select dataset only
   datasetType,
+
+  flex,
 
   ///dropdown List select
   dropdownControl,
@@ -792,6 +796,21 @@ class ControlBuilder {
         key: ValueKey('${node.nid}'),
         textStyle: control.value as FTextStyle,
         keyValue: control.key,
+      );
+    } else if (control.type == ControlType.flex) {
+      return FlexControls(
+        key: ValueKey('${node.nid}'),
+        isTight: control.value as bool,
+        callBack: (final value, final old) => {
+          node.body.attributes[control.key] = value,
+          ControlBuilder.toDB(
+            node,
+            context,
+            control.key,
+            value,
+            old,
+          ),
+        },
       );
     } else if (control.type == ControlType.httpParamsControl) {
       return HttpParamsControl(

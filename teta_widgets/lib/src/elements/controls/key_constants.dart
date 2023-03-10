@@ -60,6 +60,8 @@ class DBKeys {
   static const String activeBorders = 'abrd';
   static const String flag = 'f';
   static const String isBoxed = 'isBox';
+  static const String isTight = 'isTight';
+  static const String flexValue = 'flexValue';
   static const String action = 'a';
   static const String actionValue = 'aVl';
   static const String image = 'img';
@@ -307,6 +309,10 @@ class DynamicAttributes {
         case DBKeys.flag:
           return value;
         case DBKeys.isBoxed:
+          return value;
+        case DBKeys.isTight:
+          return value;
+        case DBKeys.flexValue:
           return value;
         case DBKeys.markerDrawPathToUserCurrentLocation:
           return FDataset.fromJson(value as Map<String, dynamic>);
@@ -694,6 +700,10 @@ class DynamicAttributes {
       case DBKeys.flag:
         return value;
       case DBKeys.isBoxed:
+        return value;
+      case DBKeys.isTight:
+        return value;
+      case DBKeys.flexValue:
         return value;
       case DBKeys.markerDrawPathToUserCurrentLocation:
         return value != null ? value.toJson() : FDataset().toJson();

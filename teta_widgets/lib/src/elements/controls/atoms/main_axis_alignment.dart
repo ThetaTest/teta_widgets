@@ -9,7 +9,7 @@ import 'package:gap/gap.dart';
 import 'package:hovering/hovering.dart';
 import 'package:teta_core/teta_core.dart';
 // Project imports:
-import 'package:teta_widgets/teta_widgets.dart';
+import '../../../../teta_widgets.dart';
 
 class MainAxisAlignmentControls extends StatefulWidget {
   const MainAxisAlignmentControls({
@@ -281,9 +281,11 @@ class AlignmentButton extends StatelessWidget {
     required this.value,
     required this.selectedValue,
     required this.callback,
+    this.icon,
   });
 
   final String iconPath;
+  final IconData? icon;
   final String value;
   final String selectedValue;
   final Function() callback;
@@ -315,7 +317,15 @@ class AlignmentButton extends StatelessWidget {
                 Radius.circular(4),
               ),
             ),
-            child: Center(child: Image.asset(iconPath, width: 24, height: 24)),
+            child: Center(
+              child: icon != null
+                  ? Icon(
+                      icon,
+                      size: 20,
+                      color: Palette.txtPrimary,
+                    )
+                  : Image.asset(iconPath, width: 24, height: 24),
+            ),
           ),
         ),
         child: TContainer(
@@ -344,7 +354,13 @@ class AlignmentButton extends StatelessWidget {
               ),
             ),
             child: Center(
-              child: Image.asset(iconPath, width: 24, height: 24),
+              child: icon != null
+                  ? Icon(
+                      icon,
+                      size: 20,
+                      color: Palette.txtPrimary,
+                    )
+                  : Image.asset(iconPath, width: 24, height: 24),
             ),
           ),
         ),

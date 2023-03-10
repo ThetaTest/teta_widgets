@@ -1,8 +1,11 @@
-// Flutter imports:
+// Flutter imports
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_staggered_animations/flutter_staggered_animations.dart';
+import 'package:teta_core/src/rendering/find.dart';
 // Package imports:
 import 'package:teta_core/teta_core.dart';
+
 import '../../core/teta_widget/teta_widget_state.dart';
 // Project imports:
 import '../index.dart';
@@ -16,31 +19,26 @@ class GestureBuilderBase {
     required final TetaWidgetState state,
     required final Widget child,
   }) =>
-      ResponsiveVisibilityBase.get(
+      FlexBase.get(
         context: context,
         node: state.node,
-        child: VisibilityBase.get(
+        child: ResponsiveVisibilityBase.get(
+          context: context,
           node: state.node,
-          child: MarginOrPaddingBase.get(
-            context: context,
+          child: VisibilityBase.get(
             node: state.node,
-            params: state.params,
-            states: state.states,
-            dataset: state.dataset,
-            forPlay: state.forPlay,
-            loop: state.loop,
-            child: GestureBuilderBase.getGesture(
+            child: MarginOrPaddingBase.get(
               context: context,
-              state: state,
-              child: TranslateBase.get(
+              node: state.node,
+              params: state.params,
+              states: state.states,
+              dataset: state.dataset,
+              forPlay: state.forPlay,
+              loop: state.loop,
+              child: GestureBuilderBase.getGesture(
                 context: context,
-                node: state.node,
-                params: state.params,
-                states: state.states,
-                dataset: state.dataset,
-                forPlay: state.forPlay,
-                loop: state.loop,
-                child: RotationBase.get(
+                state: state,
+                child: TranslateBase.get(
                   context: context,
                   node: state.node,
                   params: state.params,
@@ -48,7 +46,7 @@ class GestureBuilderBase {
                   dataset: state.dataset,
                   forPlay: state.forPlay,
                   loop: state.loop,
-                  child: PerspectiveBase.get(
+                  child: RotationBase.get(
                     context: context,
                     node: state.node,
                     params: state.params,
@@ -56,7 +54,7 @@ class GestureBuilderBase {
                     dataset: state.dataset,
                     forPlay: state.forPlay,
                     loop: state.loop,
-                    child: MarginOrPaddingBase.get(
+                    child: PerspectiveBase.get(
                       context: context,
                       node: state.node,
                       params: state.params,
@@ -64,18 +62,27 @@ class GestureBuilderBase {
                       dataset: state.dataset,
                       forPlay: state.forPlay,
                       loop: state.loop,
-                      child: EntryAnimationsBase().get(
+                      child: MarginOrPaddingBase.get(
+                        context: context,
                         node: state.node,
-                        child: child,
+                        params: state.params,
+                        states: state.states,
+                        dataset: state.dataset,
+                        forPlay: state.forPlay,
                         loop: state.loop,
+                        child: EntryAnimationsBase().get(
+                          node: state.node,
+                          child: child,
+                          loop: state.loop,
+                        ),
+                        isMargins: false,
                       ),
-                      isMargins: false,
                     ),
                   ),
                 ),
               ),
+              isMargins: true,
             ),
-            isMargins: true,
           ),
         ),
       );
@@ -225,6 +232,35 @@ class RotationBase {
       }
     }
     return child;
+  }
+}
+
+class FlexBase {
+  /// Get a gesture code based on FAction
+  static Widget get({
+    required final BuildContext context,
+    required final CNode node,
+    required final Widget child,
+  }) {
+    if (node.globalType == NType.expanded) return child;
+    final state = context.read<PageCubit>().state;
+    if (state is! PageLoaded) return child;
+    final parent = sl.get<FindNodeRendering>().findParentByChildrenIds(
+          element: node,
+          flatList: state.page.flatList,
+        );
+    if (parent?.globalType != NType.row && parent?.globalType != NType.column) {
+      return child;
+    }
+    final flag = node.body.attributes[DBKeys.isTight] as bool? ?? false;
+    if (flag) {
+      return Expanded(
+        child: child,
+      );
+    }
+    return Flexible(
+      child: child,
+    );
   }
 }
 

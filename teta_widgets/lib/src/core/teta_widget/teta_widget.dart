@@ -1,7 +1,8 @@
 import 'package:flutter/material.dart';
-import 'package:teta_widgets/src/core/teta_widget/index.dart';
-import 'package:teta_widgets/src/elements/builder/gesture_detector_base.dart';
-import 'package:teta_widgets/src/elements/index.dart';
+
+import '../../elements/builder/gesture_detector_base.dart';
+import '../../elements/index.dart';
+import 'index.dart';
 
 class TetaWidget extends StatelessWidget {
   const TetaWidget({
@@ -15,10 +16,10 @@ class TetaWidget extends StatelessWidget {
 
   @override
   Widget build(final BuildContext context) {
-    return NodeSelectionBuilder(
+    return GestureBuilderBase.get(
+      context: context,
       state: state,
-      child: GestureBuilderBase.get(
-        context: context,
+      child: NodeSelectionBuilder(
         state: state,
         child: child ?? const SizedBox.shrink(),
       ),

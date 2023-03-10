@@ -1,10 +1,10 @@
 // Flutter imports:
 import 'package:flutter/material.dart';
 // Package imports:
-import 'package:teta_widgets/src/core/teta_widget/index.dart';
-import 'package:teta_widgets/src/elements/builder/gesture_detector_base.dart';
+import '../../core/teta_widget/index.dart';
+import '../builder/gesture_detector_base.dart';
 // Project imports:
-import 'package:teta_widgets/src/elements/index.dart';
+import '../index.dart';
 
 // ignore_for_file: public_member_api_docs
 
@@ -39,35 +39,35 @@ class WButton extends StatelessWidget {
 
   @override
   Widget build(final BuildContext context) {
-    return NodeSelectionBuilder(
+    return GestureBuilderBase.get(
+      context: context,
       state: state,
-      child: IgnorePointer(
-        ignoring: !state.forPlay,
-        child: GestureDetector(
-          onTap: () => GestureBuilder.get(
-            context: context,
-            state: state,
-            gesture: ActionGesture.onTap,
-            action: action,
-            actionValue: null,
-          ),
-          onDoubleTap: () => GestureBuilder.get(
-            context: context,
-            state: state,
-            gesture: ActionGesture.onDoubleTap,
-            action: action,
-            actionValue: null,
-          ),
-          onLongPress: () => GestureBuilder.get(
-            context: context,
-            state: state,
-            gesture: ActionGesture.onLongPress,
-            action: action,
-            actionValue: null,
-          ),
-          child: GestureBuilderBase.get(
-            context: context,
-            state: state,
+      child: NodeSelectionBuilder(
+        state: state,
+        child: IgnorePointer(
+          ignoring: !state.forPlay,
+          child: GestureDetector(
+            onTap: () => GestureBuilder.get(
+              context: context,
+              state: state,
+              gesture: ActionGesture.onTap,
+              action: action,
+              actionValue: null,
+            ),
+            onDoubleTap: () => GestureBuilder.get(
+              context: context,
+              state: state,
+              gesture: ActionGesture.onDoubleTap,
+              action: action,
+              actionValue: null,
+            ),
+            onLongPress: () => GestureBuilder.get(
+              context: context,
+              state: state,
+              gesture: ActionGesture.onLongPress,
+              action: action,
+              actionValue: null,
+            ),
             child: SizedBox(
               width: width.get(
                 context: context,
