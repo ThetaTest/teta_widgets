@@ -3,12 +3,15 @@
 import 'dart:async';
 
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_staggered_animations/flutter_staggered_animations.dart';
+import 'package:teta_core/src/rendering/find.dart';
 import 'package:teta_core/teta_core.dart';
+
 // Project imports:
-import 'package:teta_widgets/src/elements/features/physic.dart';
-import 'package:teta_widgets/src/elements/index.dart';
-import 'package:teta_widgets/src/elements/nodes/node_body.dart';
+import '../features/physic.dart';
+import '../index.dart';
+import '../nodes/node_body.dart';
 
 /// Code Snippets. Set of funcs to generate properties' code string.
 ///
@@ -187,29 +190,34 @@ class CS {
     final Future<String> child,
     final int loop,
   ) async {
-    return defaultWidgetVisibility(
+    return defaultWidgetFlexible(
+      context,
       node,
-      defaultWidgetResponsive(
+      defaultWidgetVisibility(
         node,
-        defaultWidgetMarginOrPadding(
-          context,
+        defaultWidgetResponsive(
           node,
-          pageId,
-          defaultWidgetGestureDetector(
+          defaultWidgetMarginOrPadding(
             context,
             node,
             pageId,
-            defaultWidgetTranslate(
-              node.body,
-              defaultWidgetRotate(
-                node,
-                defaultWidgetPerspective(
-                  node.body,
-                  defaultWidgetMarginOrPadding(
-                    context,
-                    node,
-                    pageId,
-                    defaultWidgetAnimation(node, child, loop),
+            defaultWidgetGestureDetector(
+              context,
+              node,
+              pageId,
+              defaultWidgetTranslate(
+                node.body,
+                defaultWidgetRotate(
+                  node,
+                  defaultWidgetPerspective(
+                    node.body,
+                    defaultWidgetMarginOrPadding(
+                      context,
+                      node,
+                      pageId,
+                      defaultWidgetAnimation(node, child, loop),
+                      loop,
+                    ),
                     loop,
                   ),
                   loop,
@@ -219,14 +227,38 @@ class CS {
               loop,
             ),
             loop,
+            isMargin: true,
           ),
           loop,
-          isMargin: true,
         ),
         loop,
       ),
-      loop,
     );
+  }
+
+  static Future<String> defaultWidgetFlexible(
+    final BuildContext context,
+    final CNode node,
+    final Future<String> child,
+  ) async {
+    final childString = await child;
+    if (node.globalType == NType.expanded) return childString;
+    final state = context.read<PageCubit>().state;
+    if (state is! PageLoaded) return childString;
+    final parent = sl.get<FindNodeRendering>().findParentByChildrenIds(
+          element: node,
+          flatList: state.page.flatList,
+        );
+    if (parent?.globalType != NType.row && parent?.globalType != NType.column) {
+      return childString;
+    }
+    if (node.body.attributes[DBKeys.isTight] == true) {
+      return '''
+      Expanded(
+        child: $childString
+      )''';
+    }
+    return childString;
   }
 
   static Future<String> defaultWidgetGestureDetector(

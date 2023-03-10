@@ -258,9 +258,7 @@ class FlexBase {
         child: child,
       );
     }
-    return Flexible(
-      child: child,
-    );
+    return child;
   }
 }
 
