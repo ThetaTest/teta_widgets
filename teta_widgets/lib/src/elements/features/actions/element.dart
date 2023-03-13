@@ -558,13 +558,25 @@ class FActionElement extends Equatable {
     firebaseMessagesTopic = FTextTypeInput.fromJson(
       doc['sFirebaseMessagesTopic'] as Map<String, dynamic>?,
     );
-    textStyle = FTextStyle.fromJson(doc['sTxtStl'] as Map<String, dynamic>);
-    textStyle2 = FTextStyle.fromJson(doc['sTxtStl2'] as Map<String, dynamic>);
-    fill = FFill().fromJson(doc['sFill'] as Map<String, dynamic>);
-    fill2 = FFill().fromJson(doc['sFill2'] as Map<String, dynamic>);
-    bgFill = FFill().fromJson(doc['sBgFill'] as Map<String, dynamic>);
+    textStyle = FTextStyle.fromJson(
+      doc['sTxtStl'] as Map<String, dynamic>? ?? {},
+    );
+    textStyle2 = FTextStyle.fromJson(
+      doc['sTxtStl2'] as Map<String, dynamic>? ?? {},
+    );
+    fill = FFill().fromJson(
+      doc['sFill'] as Map<String, dynamic>? ?? {},
+    );
+    fill2 = FFill().fromJson(
+      doc['sFill2'] as Map<String, dynamic>? ?? {},
+    );
+    bgFill = FFill().fromJson(
+      doc['sBgFill'] as Map<String, dynamic>? ?? {},
+    );
     borderRadius = FBorderRadius.fromJson(doc['sBrdrR'] as dynamic);
-    width = FSize.fromJson(doc['sWidth'] as Map<String, dynamic>);
+    width = FSize.fromJson(
+      doc['sWidth'] as Map<String, dynamic>? ?? {},
+    );
     dropdownItem = doc['sDrpdownI'] as String?;
     dropdownItem2 = doc['sDrpdownI2'] as String?;
     duration = FTextTypeInput.fromJson(
@@ -1236,7 +1248,7 @@ class FActionElement extends Equatable {
         'sDrpdownI': dropdownItem,
         'sDrpdownI2': dropdownItem2,
         'sDuration': duration != null ? duration!.toJson() : null,
-        'sMargin':margin != null ? margin!.toJson() : FMargins().toJson(),
+        'sMargin': margin != null ? margin!.toJson() : FMargins().toJson(),
         'sSnackbarTitle':
             snackbarTitle != null ? snackbarTitle!.toJson() : null,
         'sSnackbarMessage':
@@ -2780,7 +2792,7 @@ class FActionElement extends Equatable {
       case ActionType.alert:
         switch (actionAlert) {
           case ActionAlert.snackbar:
-          PackagesService.instance
+            PackagesService.instance
                 .insertPackages(FActionAlertSnackbar.packages);
             await actionS(
               () => FActionAlertSnackbar.action(
@@ -2804,7 +2816,7 @@ class FActionElement extends Equatable {
                 dropdownItem,
                 dropdownItem2,
                 duration,
-                margin
+                margin,
               ),
               context: context,
               state: state,
@@ -4077,7 +4089,7 @@ class FActionElement extends Equatable {
       case ActionType.alert:
         switch (actionAlert) {
           case ActionAlert.snackbar:
-          PackagesService.instance
+            PackagesService.instance
                 .insertPackages(FActionAlertSnackbar.packages);
             return codeS(
               FActionAlertSnackbar.toCode(
@@ -4098,8 +4110,7 @@ class FActionElement extends Equatable {
                 dropdownItem,
                 dropdownItem2,
                 duration,
-                margin
-
+                margin,
               ),
               context,
             );
