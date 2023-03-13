@@ -8,8 +8,8 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:hovering/hovering.dart';
 import 'package:teta_core/src/rendering/find.dart';
 import 'package:teta_core/teta_core.dart';
-import 'package:teta_widgets/src/core/teta_widget/index.dart';
-import 'package:teta_widgets/src/elements/index.dart';
+import '../../core/teta_widget/index.dart';
+import '../index.dart';
 // Project imports:
 
 class NodeSelection extends StatelessWidget {
@@ -196,7 +196,7 @@ class _BodyState extends State<_Body> {
                       children: [
                         for (final parent in widget.parents.reversed)
                           _ParentIndicator(
-                            name: parent.intrinsicState.displayName,
+                            node: parent,
                           ),
                         TDetailLabel(
                           widget.state.node.intrinsicState.displayName,
@@ -215,17 +215,17 @@ class _BodyState extends State<_Body> {
 
 class _ParentIndicator extends StatelessWidget {
   const _ParentIndicator({
-    required this.name,
+    required this.node,
     final Key? key,
   }) : super(key: key);
 
-  final String name;
+  final CNode node;
 
   @override
   Widget build(final BuildContext context) {
     return Row(
       children: [
-        _HoverNodeName(name: name),
+        _HoverNodeName(node: node),
         TDetailLabel(
           ' > ',
           color: Palette.txtPrimary.withOpacity(0.6),
@@ -237,22 +237,27 @@ class _ParentIndicator extends StatelessWidget {
 
 class _HoverNodeName extends StatelessWidget {
   const _HoverNodeName({
-    required this.name,
+    required this.node,
     final Key? key,
   }) : super(key: key);
 
-  final String name;
+  final CNode node;
 
   @override
   Widget build(final BuildContext context) {
-    return HoverWidget(
-      onHover: (final e) {},
-      hoverChild: TDetailLabel(
-        name,
-      ),
-      child: TDetailLabel(
-        name,
-        color: Palette.txtPrimary.withOpacity(0.6),
+    return GestureDetector(
+      onTap: () {
+        context.read<FocusBloc>().add(OnFocus(node: node));
+      },
+      child: HoverWidget(
+        onHover: (final e) {},
+        hoverChild: TDetailLabel(
+          node.intrinsicState.displayName,
+        ),
+        child: TDetailLabel(
+          node.intrinsicState.displayName,
+          color: Palette.txtPrimary.withOpacity(0.6),
+        ),
       ),
     );
   }
