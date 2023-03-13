@@ -168,6 +168,53 @@ class _BodyState extends State<_Body> {
           ),
           child: widget.child,
         ),
+        if (widget.state.node.globalType == NType.column &&
+            onFocusNodes.contains(widget.state.node.nid) &&
+            widget.state.node.children!.isNotEmpty)
+          Positioned(
+            left: 0,
+            right: 0,
+            bottom: 0,
+            child: HoverWidget(
+              onHover: (e) {},
+              hoverChild: Center(
+                child: IntrinsicWidth(
+                  child: Container(
+                    padding: EdgeInsets.symmetric(
+                      horizontal: Grid.medium,
+                    ),
+                    height: 32,
+                    foregroundDecoration: BoxDecoration(
+                      color: primaryColor,
+                      borderRadius: BorderRadius.only(
+                        topLeft: Radius.circular(
+                          Grid.medium,
+                        ),
+                        topRight: Radius.circular(
+                          Grid.medium,
+                        ),
+                      ),
+                    ),
+                    decoration: BoxDecoration(
+                      color: primaryColor,
+                      borderRadius: BorderRadius.only(
+                        topLeft: Radius.circular(
+                          Grid.medium,
+                        ),
+                        topRight: Radius.circular(
+                          Grid.medium,
+                        ),
+                      ),
+                    ),
+                    child: Center(
+                      child: TDetailLabel('Add new in Column'),
+                    ),
+                  ),
+                ),
+              ),
+              child: const SizedBox(),
+            ),
+          ),
         if (onFocusNodes.firstWhereOrNull(
                   (final element) => element == widget.state.node.nid,
                 ) !=

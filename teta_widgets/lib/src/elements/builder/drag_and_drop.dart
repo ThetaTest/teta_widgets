@@ -43,9 +43,7 @@ class _DragAndDropBuilderState extends State<DragAndDropBuilder> {
   @override
   Widget build(final BuildContext context) {
     if (!canReceiveDrag) return widget.child;
-    if (widget.state.node.globalType == NType.column) {
-      return widget.child;
-    }
+
     return Stack(
       children: [
         widget.child,
