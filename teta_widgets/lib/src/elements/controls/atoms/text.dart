@@ -322,6 +322,7 @@ class PaddingsState extends State<TextControl> with AfterLayoutMixin {
                     children: [
                       CMultiLinesTextField(
                         //text: text,
+
                         controller: controller,
                         callBack: (final value) {
                           final old = widget.value;
@@ -395,18 +396,26 @@ class PaddingsState extends State<TextControl> with AfterLayoutMixin {
                             color: Palette.txtPrimary.withOpacity(0.6),
                           ),
                           const Gap(Grid.small),
-                          CDropdown(
+                          CDropdownCustom<String>(
                             value: state.page.defaultParams
                                     .map((final e) => e.name)
                                     .contains(widget.value.paramName)
                                 ? widget.value.paramName
                                 : null,
-                            items: variables.map((final e) => e.name).toList(),
+                            items: variables
+                                .map(
+                                  (final e) => DropdownCustomMenuItem(
+                                    value: e.name,
+                                    child: TParagraph(e.name),
+                                  ),
+                                )
+                                .toList(),
                             onChange: (final newValue) {
                               final old = widget.value;
                               widget.value.paramName = newValue;
                               widget.callBack(widget.value, old);
                             },
+                            expanded: true,
                           ),
                           if ((state.page.defaultParams
                                       .firstWhereOrNull(
@@ -475,18 +484,26 @@ class PaddingsState extends State<TextControl> with AfterLayoutMixin {
                             color: Palette.txtPrimary.withOpacity(0.6),
                           ),
                           const Gap(Grid.small),
-                          CDropdown(
+                          CDropdownCustom<String>(
                             value: state.page.defaultStates
                                     .map((final e) => e.name)
                                     .contains(widget.value.stateName)
                                 ? widget.value.stateName
                                 : null,
-                            items: variables.map((final e) => e.name).toList(),
+                            items: variables
+                                .map(
+                                  (final e) => DropdownCustomMenuItem(
+                                    value: e.name,
+                                    child: TParagraph(e.name),
+                                  ),
+                                )
+                                .toList(),
                             onChange: (final newValue) {
                               final old = widget.value;
                               widget.value.stateName = newValue;
                               widget.callBack(widget.value, old);
                             },
+                            expanded: true,
                           ),
                           if (state.page.defaultStates
                                   .firstWhereOrNull(
@@ -496,6 +513,7 @@ class PaddingsState extends State<TextControl> with AfterLayoutMixin {
                                   ?.type ==
                               VariableType.json)
                             CMiniTextField(
+                              backgroundColor: Palette.bgTertiary,
                               text: widget.value.mapKey,
                               title: 'Map Key',
                               callBack: (final key) {
@@ -512,10 +530,15 @@ class PaddingsState extends State<TextControl> with AfterLayoutMixin {
                   BlocBuilder<ConfigCubit, ConfigState>(
                     builder: (final context, final state) {
                       if (state is! ConfigStateLoaded) return const SizedBox();
-                      return CDropdown(
+                      return CDropdownCustom<String>(
                         value: widget.value.keyTranslator,
                         items: state.config.appLanguage.terms.entries
-                            .map((final e) => e.key)
+                            .map(
+                              (final e) => DropdownCustomMenuItem(
+                                value: e.key,
+                                child: TParagraph(e.key),
+                              ),
+                            )
                             .toList(),
                         onChange: (final value) {
                           final old = widget.value;
@@ -523,6 +546,7 @@ class PaddingsState extends State<TextControl> with AfterLayoutMixin {
                           widget.callBack(widget.value, old);
                           setState(() {});
                         },
+                        expanded: true,
                       );
                     },
                   ),
@@ -530,7 +554,7 @@ class PaddingsState extends State<TextControl> with AfterLayoutMixin {
                   BlocBuilder<PageCubit, PageState>(
                     builder: (final context, final state) {
                       if (state is! PageLoaded) return const SizedBox();
-                      return CDropdown(
+                      return CDropdownCustom<String>(
                         value: state.datasets
                                 .map((final e) => e.getName)
                                 .where((final element) => element != 'null')
@@ -540,6 +564,12 @@ class PaddingsState extends State<TextControl> with AfterLayoutMixin {
                         items: state.datasets
                             .map((final e) => e.getName)
                             .where((final element) => element != 'null')
+                            .map(
+                              (final e) => DropdownCustomMenuItem(
+                                value: e,
+                                child: TParagraph(e),
+                              ),
+                            )
                             .toList(),
                         onChange: (final newValue) {
                           setState(() {
@@ -549,6 +579,7 @@ class PaddingsState extends State<TextControl> with AfterLayoutMixin {
                           widget.value.datasetName = newValue;
                           widget.callBack(widget.value, old);
                         },
+                        expanded: true,
                       );
                     },
                   ),
@@ -558,7 +589,7 @@ class PaddingsState extends State<TextControl> with AfterLayoutMixin {
                       widget.value.datasetName != null)
                     Padding(
                       padding: EI.smT,
-                      child: CDropdown(
+                      child: CDropdownCustom<String>(
                         value: (dataset.getMap.isNotEmpty
                                     ? dataset.getMap.first
                                     : <String, dynamic>{})
@@ -572,6 +603,12 @@ class PaddingsState extends State<TextControl> with AfterLayoutMixin {
                                 : <String, dynamic>{})
                             .keys
                             .toSet()
+                            .map(
+                              (final e) => DropdownCustomMenuItem(
+                                value: e,
+                                child: TParagraph(e),
+                              ),
+                            )
                             .toList(),
                         onChange: (final newValue) {
                           setState(() {
@@ -594,6 +631,7 @@ class PaddingsState extends State<TextControl> with AfterLayoutMixin {
                           widget.value.datasetSubMapData = '';
                           widget.callBack(widget.value, old);
                         },
+                        expanded: true,
                       ),
                     ),
                 //////////

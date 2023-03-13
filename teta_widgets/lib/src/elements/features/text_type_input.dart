@@ -253,9 +253,11 @@ class FTextTypeInput {
     }
     if (type == FTextTypeEnum.languages) {
       if (keyTranslator != null) {
-        return BlocProvider.of<TranslatorGeneratorCubit>(
-          context,
-        ).state.getString(keyTranslator!);
+        return context
+            .watch<TranslatorGeneratorCubit>()
+            .state
+            .instance
+            .getString(keyTranslator!);
       }
     }
     if (forPlay) {

@@ -3,8 +3,8 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:teta_core/src/rendering/find.dart';
 import 'package:teta_core/src/services/node_service.dart';
 import 'package:teta_core/teta_core.dart';
-import 'package:teta_widgets/src/core/teta_widget/index.dart';
-import 'package:teta_widgets/src/elements/index.dart';
+import '../../core/teta_widget/index.dart';
+import '../index.dart';
 
 class DragAndDropBuilder extends StatefulWidget {
   const DragAndDropBuilder({
@@ -25,7 +25,6 @@ class _DragAndDropBuilderState extends State<DragAndDropBuilder> {
   bool isDragging = false;
   bool? onLeft;
   CNode? parent;
-  final key = GlobalKey();
 
   @override
   void initState() {
@@ -41,158 +40,150 @@ class _DragAndDropBuilderState extends State<DragAndDropBuilder> {
     super.initState();
   }
 
-  bool isLeft(
-    final double pointCoord,
-    final double offset,
-    final double screenOffset,
-    final double sideSize,
-  ) {
-    return pointCoord - screenOffset > offset - screenOffset &&
-        pointCoord - screenOffset < (offset - screenOffset) + (sideSize / 2);
-  }
-
   @override
   Widget build(final BuildContext context) {
     if (!canReceiveDrag) return widget.child;
+    if (widget.state.node.globalType == NType.column) {
+      return widget.child;
+    }
+    return Stack(
+      children: [
+        widget.child,
+        Positioned.fill(
+          child: (widget.state.isVertical)
+              ? Column(
+                  crossAxisAlignment: CrossAxisAlignment.stretch,
+                  children: [
+                    Expanded(
+                      child: _DragTarget(
+                        parent: parent!,
+                        state: widget.state,
+                        startAligned: true,
+                      ),
+                    ),
+                    Expanded(
+                      child: _DragTarget(
+                        parent: parent!,
+                        state: widget.state,
+                        startAligned: false,
+                      ),
+                    ),
+                  ],
+                )
+              : Row(
+                  crossAxisAlignment: CrossAxisAlignment.stretch,
+                  children: [
+                    Expanded(
+                      child: _DragTarget(
+                        parent: parent!,
+                        state: widget.state,
+                        startAligned: true,
+                      ),
+                    ),
+                    Expanded(
+                      child: _DragTarget(
+                        parent: parent!,
+                        state: widget.state,
+                        startAligned: false,
+                      ),
+                    ),
+                  ],
+                ),
+        ),
+      ],
+    );
+  }
+}
+
+class _DragTarget extends StatefulWidget {
+  const _DragTarget({
+    required this.state,
+    required this.parent,
+    required this.startAligned,
+  });
+
+  final TetaWidgetState state;
+  final CNode parent;
+  final bool startAligned;
+
+  @override
+  State<_DragTarget> createState() => _DragTargetState();
+}
+
+class _DragTargetState extends State<_DragTarget> {
+  bool isActive = false;
+
+  @override
+  Widget build(final BuildContext context) {
     return DragTarget<DragTargetModel>(
-      key: key,
       onAccept: (final data) async {
-        context.read<DragCubit>().update(DragState.active);
+        //context.read<DragCubit>().update(DragState.active);
         setState(() {
-          isDragging = true;
+          isActive = true;
         });
         final currentIndex =
-            parent?.childrenIds.ids.indexOf(widget.state.node.nid);
-        if (currentIndex == null) return;
-        if (parent == null) return;
+            widget.parent.childrenIds.ids.indexOf(widget.state.node.nid);
         await sl.get<NodeService>().add(
               dragTarget: data,
-              parent: parent!,
+              parent: widget.parent,
               context: context,
-              customIndex: onLeft ?? false ? currentIndex : currentIndex + 1,
+              customIndex:
+                  widget.startAligned ? currentIndex : currentIndex + 1,
             );
+        //context.read<DragCubit>().update(DragState.disable);
       },
-      onMove: (final details) {
-        late bool leftFlag;
-        final screenOffset = context.read<ScreenPositionCubit>().state;
-        if (widget.state.isVertical) {
-          leftFlag = isLeft(
-            details.offset.dy,
-            key.globalPaintBounds!.top,
-            screenOffset.dy,
-            key.globalPaintBounds!.height,
-          );
-        } else {
-          leftFlag = isLeft(
-            details.offset.dx,
-            key.globalPaintBounds!.left,
-            screenOffset.dx,
-            key.globalPaintBounds!.width,
-          );
-        }
-        context.read<DragCubit>().update(DragState.active);
+      onWillAccept: (final details) {
+        //context.read<DragCubit>().update(DragState.active);
         setState(() {
-          isDragging = true;
-          if (key.globalPaintBounds != null) {
-            onLeft = leftFlag;
-          }
+          isActive = true;
         });
+        return true;
       },
       onLeave: (final details) {
-        context.read<DragCubit>().update(DragState.disable);
+        //context.read<DragCubit>().update(DragState.disable);
         setState(() {
-          isDragging = false;
-          onLeft = null;
+          isActive = false;
         });
       },
       builder: (final context, final candidateData, final rejectedData) {
-        if (!isDragging) {
-          return widget.child;
+        if (!isActive) {
+          return const SizedBox();
         }
-        return Stack(
-          children: [
-            widget.child,
-            Positioned.fill(
-              child: widget.state.isVertical
-                  ? Column(
-                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                      crossAxisAlignment: CrossAxisAlignment.stretch,
-                      children: [
-                        if (onLeft ?? false)
-                          TContainer(
-                            margin: EI.smH,
-                            width: key.globalPaintBounds!.width,
-                            height: 5,
-                            decoration:
-                                const BoxDecoration(color: primaryColor),
-                          )
-                        else
-                          const Spacer(),
-                        if (!(onLeft ?? true))
-                          TContainer(
-                            margin: EI.smH,
-                            width: key.globalPaintBounds!.width,
-                            height: 5,
-                            decoration:
-                                const BoxDecoration(color: primaryColor),
-                          )
-                        else
-                          const Spacer(),
-                      ],
-                    )
-                  : Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                      crossAxisAlignment: CrossAxisAlignment.stretch,
-                      children: [
-                        if (onLeft ?? false)
-                          TContainer(
-                            margin: EI.smV,
-                            width: 5,
-                            height: key.globalPaintBounds!.height,
-                            decoration:
-                                const BoxDecoration(color: primaryColor),
-                          )
-                        else
-                          const Spacer(),
-                        if (!(onLeft ?? true))
-                          TContainer(
-                            margin: EI.smV,
-                            width: 5,
-                            height: key.globalPaintBounds!.height,
-                            decoration:
-                                const BoxDecoration(color: primaryColor),
-                          )
-                        else
-                          const Spacer(),
-                      ],
+        return widget.state.isVertical
+            ? widget.startAligned
+                ? const Align(
+                    alignment: Alignment.topCenter,
+                    child: TContainer(
+                      margin: EI.smH,
+                      height: 5,
+                      decoration: BoxDecoration(color: Colors.red),
                     ),
-            ),
-            Positioned(
-              top: (key.globalPaintBounds?.top ?? 0) <
-                      (MediaQuery.of(context).size.height / 3)
-                  ? (key.globalPaintBounds?.height ?? 0)
-                  : -20,
-              child: RepaintBoundary(
-                child: ColoredBox(
-                  color: primaryColor,
-                  child: Padding(
-                    padding: const EdgeInsets.symmetric(
-                      vertical: 2,
-                      horizontal: 4,
+                  )
+                : const Align(
+                    alignment: Alignment.bottomCenter,
+                    child: TContainer(
+                      margin: EI.smH,
+                      height: 5,
+                      decoration: BoxDecoration(color: Colors.red),
                     ),
-                    child: Row(
-                      children: [
-                        TDetailLabel(
-                          'Drop in ${parent!.intrinsicState.displayName}',
-                        ),
-                      ],
+                  )
+            : widget.startAligned
+                ? const Align(
+                    alignment: Alignment.topLeft,
+                    child: TContainer(
+                      margin: EI.smH,
+                      width: 5,
+                      decoration: BoxDecoration(color: Colors.red),
                     ),
-                  ),
-                ),
-              ),
-            ),
-          ],
-        );
+                  )
+                : const Align(
+                    alignment: Alignment.topRight,
+                    child: TContainer(
+                      margin: EI.smH,
+                      width: 5,
+                      decoration: BoxDecoration(color: Colors.red),
+                    ),
+                  );
       },
     );
   }

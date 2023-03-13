@@ -56,8 +56,9 @@ class BordersControlState extends State<BordersControl> {
                   const TParagraph(
                     'Borders',
                   ),
-                  GestureDetector(
-                    onTap: () {
+                  CSwitch(
+                    value: isLinked,
+                    callback: (final e) {
                       setState(() {
                         isLinked = !isLinked;
                       });
@@ -71,35 +72,6 @@ class BordersControlState extends State<BordersControl> {
                       }
                       widget.callBack(widget.borders.toJson(), old);
                     },
-                    child: HoverWidget(
-                      hoverChild: Container(
-                        padding: const EdgeInsets.all(4),
-                        decoration: BoxDecoration(
-                          border: Border.all(
-                            color: Colors.white,
-                          ),
-                        ),
-                        child: Icon(
-                          isLinked ? FeatherIcons.eye : FeatherIcons.eyeOff,
-                          size: 24,
-                          color: Colors.white,
-                        ),
-                      ),
-                      onHover: (final e) {},
-                      child: Container(
-                        padding: const EdgeInsets.all(4),
-                        decoration: BoxDecoration(
-                          border: Border.all(
-                            color: Colors.transparent,
-                          ),
-                        ),
-                        child: Icon(
-                          isLinked ? FeatherIcons.eye : FeatherIcons.eyeOff,
-                          size: 24,
-                          color: Colors.white,
-                        ),
-                      ),
-                    ),
                   ),
                 ],
               ),
