@@ -10,6 +10,7 @@ import 'package:teta_widgets/src/elements/code/templates/condition.dart';
 import 'package:teta_widgets/src/elements/controls/control_model.dart';
 import 'package:teta_widgets/src/elements/controls/key_constants.dart';
 import 'package:teta_widgets/src/elements/controls/type.dart';
+import 'package:teta_widgets/src/elements/features/condition_type.dart';
 import 'package:teta_widgets/src/elements/features/text_type_input.dart';
 import 'package:teta_widgets/src/elements/intrinsic_states/class.dart';
 import 'package:teta_widgets/src/elements/nodes/categories.dart';
@@ -57,6 +58,7 @@ class ConditionBody extends NodeBody {
   Map<String, dynamic> attributes = <String, dynamic>{
     DBKeys.value: FTextTypeInput(),
     DBKeys.valueOfCondition: FTextTypeInput(),
+    DBKeys.conditionType: FConditionType(),
   };
 
   @override
@@ -65,14 +67,25 @@ class ConditionBody extends NodeBody {
           type: ControlType.value,
           key: DBKeys.value,
           value: attributes[DBKeys.value],
-          title: 'Condition',
+          title: 'Value 1',
           valueType: VariableType.dynamic,
+          description: 'First value to compare',
         ),
+        ControlObject(
+            type: ControlType.condition,
+            key: DBKeys.conditionType,
+            value: attributes[DBKeys.conditionType],
+            title: 'Condition type',
+            valueType: VariableType.dynamic,
+            description:
+                'Choose between Is Equal, Is Greater Than, Is Less Than'),
         ControlObject(
           type: ControlType.value,
           key: DBKeys.valueOfCondition,
           value: attributes[DBKeys.valueOfCondition],
           valueType: VariableType.dynamic,
+          title: 'Value 2',
+          description: 'Second value to compare',
         ),
       ];
 
@@ -95,7 +108,7 @@ class ConditionBody extends NodeBody {
         children: children ?? [],
         value: attributes[DBKeys.value] as FTextTypeInput,
         valueOfCond: attributes[DBKeys.valueOfCondition] as FTextTypeInput,
-        conditionType: ConditionType.equal,
+        conditionType: attributes[DBKeys.conditionType] as FConditionType,
       );
 
   @override

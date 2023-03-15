@@ -9,6 +9,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:teta_core/teta_core.dart';
 import 'package:teta_repositories/teta_repositories.dart';
+import 'package:teta_widgets/src/elements/controls/atoms/condition_type.dart';
+import 'package:teta_widgets/src/elements/features/condition_type.dart';
 
 import '../features/google_maps_map_style.dart';
 import '../features/physic.dart';
@@ -545,8 +547,6 @@ class ControlBuilder {
           null,
         ),
       );
-    } else if (control.type == ControlType.condition) {
-      return const SizedBox();
     } else if (control.type == ControlType.crossAxisAlignment) {
       return descriptionControlWidget(
         description: control.description,
@@ -711,6 +711,24 @@ class ControlBuilder {
             value.toJson(),
             old.toJson(),
           ),
+        ),
+      );
+    } else if (control.type == ControlType.condition) {
+      return descriptionControlWidget(
+        description: control.description,
+        control: ConditionTypeControl(
+          key: ValueKey('${node.nid}'),
+          conditionType: control.value as FConditionType,
+          callBack: (final value, final old) {
+            node.body.attributes[control.key] = value;
+            ControlBuilder.toDB(
+              node,
+              context,
+              control.key,
+              value.toJson(),
+              old.toJson(),
+            );
+          },
         ),
       );
     } else if (control.type == ControlType.margins) {

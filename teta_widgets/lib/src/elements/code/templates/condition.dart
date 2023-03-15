@@ -5,6 +5,7 @@ import 'package:teta_widgets/src/elements/code/formatter_test.dart';
 // Project imports:
 import 'package:teta_widgets/src/elements/code/snippets.dart';
 import 'package:teta_widgets/src/elements/controls/key_constants.dart';
+import 'package:teta_widgets/src/elements/features/condition_type.dart';
 import 'package:teta_widgets/src/elements/features/text_type_input.dart';
 import 'package:teta_widgets/src/elements/nodes/node.dart';
 import 'package:teta_widgets/src/elements/nodes/node_body.dart';
@@ -17,6 +18,8 @@ class ConditionCodeTemplate {
     final List<CNode> children,
     final int? loop,
   ) async {
+    final condition =
+        (body.attributes[DBKeys.conditionType] as FConditionType).get;
     final abstract = body.attributes[DBKeys.value] as FTextTypeInput;
     var value = abstract.toCode(
       loop,
@@ -47,9 +50,52 @@ class ConditionCodeTemplate {
       childIfFalse = (await CS.child(context, children.last, comma: false))
           .replaceFirst('child:', '');
     }
-    final code = '''
+    var code = '';
+    if (condition == ConditionType.equal) {
+      code = '''
     ($value == $valueOfCondition) ? $childIfTrue : $childIfFalse
   ''';
+    } else if (condition == ConditionType.notEqual) {
+      code = '''
+    ($value != $valueOfCondition) ? $childIfTrue : $childIfFalse
+  ''';
+    } else if (condition == ConditionType.isNull) {
+      code = '''
+    ($value == null) ? $childIfTrue : $childIfFalse
+  ''';
+    } else if (condition == ConditionType.notNull) {
+      code = '''
+    ($value != null) ? $childIfTrue : $childIfFalse
+  ''';
+    } else if (condition == ConditionType.greaterThan) {
+      code = '''
+    ((double.tryParse($value) ?? 0) > (double.tryParse($valueOfCondition) ?? 0)) ? $childIfTrue : $childIfFalse
+  ''';
+    } else if (condition == ConditionType.greaterOrEqualThan) {
+      code = '''
+    ((double.tryParse($value) ?? 0) >= (double.tryParse($valueOfCondition) ?? 0)) ? $childIfTrue : $childIfFalse
+  ''';
+    } else if (condition == ConditionType.lessThan) {
+      code = '''
+    ((double.tryParse($value) ?? 0) < (double.tryParse($valueOfCondition) ?? 0)) ? $childIfTrue : $childIfFalse
+  ''';
+    } else if (condition == ConditionType.lessOrEqualThan) {
+      code = '''
+    ((double.tryParse($value) ?? 0) <= (double.tryParse($valueOfCondition) ?? 0)) ? $childIfTrue : $childIfFalse
+  ''';
+    } else if (condition == ConditionType.contains) {
+      code = '''
+    ($value.contains($valueOfCondition)) ? $childIfTrue : $childIfFalse
+  ''';
+    } else if (condition == ConditionType.startsWith) {
+      code = '''
+    ($value.startsWith($valueOfCondition)) ? $childIfTrue : $childIfFalse
+  ''';
+    } else if (condition == ConditionType.endsWith) {
+      code = '''
+    ($value.endsWith($valueOfCondition)) ? $childIfTrue : $childIfFalse
+  ''';
+    }
     Logger.printMessage(code);
     final res = FormatterTest.format(code);
     if (res) {

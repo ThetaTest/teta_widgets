@@ -5,6 +5,7 @@
 import 'package:flutter/foundation.dart';
 // Package imports:
 import 'package:teta_core/teta_core.dart';
+import 'package:teta_widgets/src/elements/features/condition_type.dart';
 // Project imports:
 import '../features/google_maps_map_style.dart';
 import '../features/physic.dart';
@@ -40,6 +41,7 @@ class DBKeys {
   static const String heightFactor = 'hghFct';
   static const String minHeight = 'mihgh';
   static const String maxHeight = 'mahgh';
+  static const String conditionType = 'conditionT';
   static const String textAlign = 'txtAlg';
   static const String borderRadius = 'bR';
   static const String borderRadiusTwo = 'bRT';
@@ -74,7 +76,6 @@ class DBKeys {
   static const String paramsToSend = 'prm';
   static const String condition = 'cndt';
   static const String valueOfCondition = 'vCndt';
-  static const String conditionType = 'cndT';
   static const String isVertical = 'isV';
   static const String icon = 'icn';
   static const String featherIcon = 'fiicn';
@@ -286,16 +287,6 @@ class DynamicAttributes {
           return FBoxFit.fromJson(value as String);
         case DBKeys.componentName:
           return value;
-        case DBKeys.conditionType:
-          {
-            ConditionType? condType;
-            if (value == 'e') condType = ConditionType.equal;
-            if (value == 'mi') condType = ConditionType.minor;
-            if (value == 'ma') condType = ConditionType.major;
-            if (value == 'miE') condType = ConditionType.minorEqual;
-            if (value == 'maE') condType = ConditionType.majorEqual;
-            return condType;
-          }
         case DBKeys.crossAxisAlignment:
           return FCrossAxisAlignment().fromJson(value as String);
         case DBKeys.fill:
@@ -368,6 +359,8 @@ class DynamicAttributes {
           return FMargins.fromJson(value as dynamic);
         case DBKeys.padding:
           return FMargins.fromJson(value as dynamic);
+        case DBKeys.conditionType:
+          return FConditionType().fromJson(value as String);
         case DBKeys.pageTransition:
           return FPageTransition.fromJson(value as String);
         case DBKeys.paramsToSend:
@@ -685,8 +678,6 @@ class DynamicAttributes {
         return value != null ? value.toJson() : FBoxFit().toJson();
       case DBKeys.componentName:
         return value;
-      case DBKeys.conditionType:
-        return value ?? ConditionType.equal;
       case DBKeys.crossAxisAlignment:
         return value != null ? value.toJson() : FCrossAxisAlignment().toJson();
       case DBKeys.fill:
@@ -759,6 +750,8 @@ class DynamicAttributes {
         return value != null ? value.toJson() : FMargins().toJson();
       case DBKeys.padding:
         return value != null ? value.toJson() : FMargins().toJson();
+      case DBKeys.conditionType:
+        return value != null ? value.toJson() : FConditionType().toJson();
       case DBKeys.pageTransition:
         return value != null ? value.toJson() : FPageTransition().toJson();
       case DBKeys.paramsToSend:

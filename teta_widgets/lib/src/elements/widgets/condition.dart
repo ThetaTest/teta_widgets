@@ -6,6 +6,7 @@ import 'package:flutter/material.dart';
 // Package imports:
 import 'package:teta_core/teta_core.dart';
 import 'package:teta_widgets/src/core/teta_widget/index.dart';
+import 'package:teta_widgets/src/elements/features/condition_type.dart';
 // Project imports:
 import 'package:teta_widgets/src/elements/index.dart';
 
@@ -25,7 +26,7 @@ class WCondition extends StatelessWidget {
   final List<CNode> children;
   final FTextTypeInput value;
   final FTextTypeInput valueOfCond;
-  final ConditionType conditionType;
+  final FConditionType conditionType;
 
   @override
   Widget build(final BuildContext context) {
@@ -36,6 +37,7 @@ class WCondition extends StatelessWidget {
   }
 
   Widget _body(final BuildContext context) {
+    final condition = conditionType.get;
     final finalValue = value.get(
       state.params,
       state.states,
@@ -53,18 +55,187 @@ class WCondition extends StatelessWidget {
       context,
     );
 
-    return (finalValue == finalValueOfCond)
-        ? children.isNotEmpty
+    if (condition == ConditionType.equal) {
+      if (finalValue == finalValueOfCond) {
+        return children.isNotEmpty
             ? children.first.toWidget(state: state)
             : PlaceholderChildBuilder(
                 name: state.node.intrinsicState.displayName,
                 node: state.node,
                 forPlay: state.forPlay,
-              )
-        : children.isNotEmpty
+              );
+      } else {
+        return children.isNotEmpty
             ? children.length > 1
                 ? children.last.toWidget(state: state)
                 : const SizedBox()
             : const SizedBox();
+      }
+    } else if (condition == ConditionType.notEqual) {
+      if (finalValue != finalValueOfCond) {
+        return children.isNotEmpty
+            ? children.first.toWidget(state: state)
+            : PlaceholderChildBuilder(
+                name: state.node.intrinsicState.displayName,
+                node: state.node,
+                forPlay: state.forPlay,
+              );
+      } else {
+        return children.isNotEmpty
+            ? children.length > 1
+                ? children.last.toWidget(state: state)
+                : const SizedBox()
+            : const SizedBox();
+      }
+    } else if (condition == ConditionType.isNull) {
+      if (finalValue == 'null') {
+        return children.isNotEmpty
+            ? children.first.toWidget(state: state)
+            : PlaceholderChildBuilder(
+                name: state.node.intrinsicState.displayName,
+                node: state.node,
+                forPlay: state.forPlay,
+              );
+      } else {
+        return children.isNotEmpty
+            ? children.length > 1
+                ? children.last.toWidget(state: state)
+                : const SizedBox()
+            : const SizedBox();
+      }
+    } else if (condition == ConditionType.notNull) {
+      if (finalValue != 'null') {
+        return children.isNotEmpty
+            ? children.first.toWidget(state: state)
+            : PlaceholderChildBuilder(
+                name: state.node.intrinsicState.displayName,
+                node: state.node,
+                forPlay: state.forPlay,
+              );
+      } else {
+        return children.isNotEmpty
+            ? children.length > 1
+                ? children.last.toWidget(state: state)
+                : const SizedBox()
+            : const SizedBox();
+      }
+    } else if (condition == ConditionType.greaterThan) {
+      if ((double.tryParse(finalValue) ?? 0) >
+          (double.tryParse(finalValueOfCond) ?? 0)) {
+        return children.isNotEmpty
+            ? children.first.toWidget(state: state)
+            : PlaceholderChildBuilder(
+                name: state.node.intrinsicState.displayName,
+                node: state.node,
+                forPlay: state.forPlay,
+              );
+      } else {
+        return children.isNotEmpty
+            ? children.length > 1
+                ? children.last.toWidget(state: state)
+                : const SizedBox()
+            : const SizedBox();
+      }
+    } else if (condition == ConditionType.greaterOrEqualThan) {
+      if ((double.tryParse(finalValue) ?? 0) >=
+          (double.tryParse(finalValueOfCond) ?? 0)) {
+        return children.isNotEmpty
+            ? children.first.toWidget(state: state)
+            : PlaceholderChildBuilder(
+                name: state.node.intrinsicState.displayName,
+                node: state.node,
+                forPlay: state.forPlay,
+              );
+      } else {
+        return children.isNotEmpty
+            ? children.length > 1
+                ? children.last.toWidget(state: state)
+                : const SizedBox()
+            : const SizedBox();
+      }
+    } else if (condition == ConditionType.lessThan) {
+      if ((double.tryParse(finalValue) ?? 0) <
+          (double.tryParse(finalValueOfCond) ?? 0)) {
+        return children.isNotEmpty
+            ? children.first.toWidget(state: state)
+            : PlaceholderChildBuilder(
+                name: state.node.intrinsicState.displayName,
+                node: state.node,
+                forPlay: state.forPlay,
+              );
+      } else {
+        return children.isNotEmpty
+            ? children.length > 1
+                ? children.last.toWidget(state: state)
+                : const SizedBox()
+            : const SizedBox();
+      }
+    } else if (condition == ConditionType.lessOrEqualThan) {
+      if ((double.tryParse(finalValue) ?? 0) <=
+          (double.tryParse(finalValueOfCond) ?? 0)) {
+        return children.isNotEmpty
+            ? children.first.toWidget(state: state)
+            : PlaceholderChildBuilder(
+                name: state.node.intrinsicState.displayName,
+                node: state.node,
+                forPlay: state.forPlay,
+              );
+      } else {
+        return children.isNotEmpty
+            ? children.length > 1
+                ? children.last.toWidget(state: state)
+                : const SizedBox()
+            : const SizedBox();
+      }
+    } else if (condition == ConditionType.contains) {
+      if (finalValue.contains(finalValueOfCond)) {
+        return children.isNotEmpty
+            ? children.first.toWidget(state: state)
+            : PlaceholderChildBuilder(
+                name: state.node.intrinsicState.displayName,
+                node: state.node,
+                forPlay: state.forPlay,
+              );
+      } else {
+        return children.isNotEmpty
+            ? children.length > 1
+                ? children.last.toWidget(state: state)
+                : const SizedBox()
+            : const SizedBox();
+      }
+    } else if (condition == ConditionType.startsWith) {
+      if (finalValue.startsWith(finalValueOfCond)) {
+        return children.isNotEmpty
+            ? children.first.toWidget(state: state)
+            : PlaceholderChildBuilder(
+                name: state.node.intrinsicState.displayName,
+                node: state.node,
+                forPlay: state.forPlay,
+              );
+      } else {
+        return children.isNotEmpty
+            ? children.length > 1
+                ? children.last.toWidget(state: state)
+                : const SizedBox()
+            : const SizedBox();
+      }
+    } else if (condition == ConditionType.endsWith) {
+      if (finalValue.endsWith(finalValueOfCond)) {
+        return children.isNotEmpty
+            ? children.first.toWidget(state: state)
+            : PlaceholderChildBuilder(
+                name: state.node.intrinsicState.displayName,
+                node: state.node,
+                forPlay: state.forPlay,
+              );
+      } else {
+        return children.isNotEmpty
+            ? children.length > 1
+                ? children.last.toWidget(state: state)
+                : const SizedBox()
+            : const SizedBox();
+      }
+    }
+    return const SizedBox();
   }
 }
