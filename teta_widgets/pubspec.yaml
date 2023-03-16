@@ -13,13 +13,21 @@ dependencies:
     sdk: flutter
 
   teta_core:
-    path: ../../Teta/teta_core
+    git:
+      url: git@github.com:andreabuttarelli/Teta.git
+      ref: develop
+      path: teta_core
 
   teta_cms:
-    path: ../../teta-db
+    git:
+      url: git@github.com:teta-so/cms-dart.git
+      ref: main
 
   teta_repositories:
-    path: ../../Teta/teta_repositories
+    git:
+      url: git@github.com:andreabuttarelli/Teta.git
+      ref: develop
+      path: teta_repositories
 
   flutter_polyline_points:
     git:
@@ -168,6 +176,16 @@ dependencies:
   easy_debounce: ^2.0.3
   #flutter_stripe:
   #flutter_stripe_web:
+
+dependency_overrides:
+  teta_core:
+    path: ../../Teta/teta_core
+
+  teta_cms:
+    path: ../../teta-db
+
+  teta_repositories:
+    path: ../../Teta/teta_repositories
 
 dev_dependencies:
   flutter_test:
