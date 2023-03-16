@@ -1,10 +1,10 @@
 import 'package:flutter/material.dart';
+import 'package:gap/gap.dart';
 import 'package:teta_core/teta_core.dart';
 import 'package:teta_widgets/src/elements/controls/atoms/db_map.dart';
 import 'package:teta_widgets/src/elements/controls/atoms/text.dart';
 import 'package:teta_widgets/src/elements/features/actions/element.dart';
 import 'package:teta_widgets/src/elements/features/text_type_input.dart';
-import 'package:teta_widgets/src/elements/nodes/node.dart';
 
 class AirtableInsertControl extends StatelessWidget {
   const AirtableInsertControl({
@@ -21,6 +21,7 @@ class AirtableInsertControl extends StatelessWidget {
       mainAxisSize: MainAxisSize.min,
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
+        const Gap(Grid.medium),
         Padding(
           padding: const EdgeInsets.only(top: 8),
           child: Row(
@@ -29,7 +30,7 @@ class AirtableInsertControl extends StatelessWidget {
               const Padding(
                 padding: EdgeInsets.only(left: 8),
                 child: TParagraph(
-                  'INSERT NEW DATA',
+                  'Insert data',
                   color: Color(0xFFe7e7e7),
                 ),
               ),

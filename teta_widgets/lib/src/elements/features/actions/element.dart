@@ -126,10 +126,7 @@ import 'package:teta_widgets/src/elements/features/actions/enums/theme.dart';
 import 'package:teta_widgets/src/elements/features/actions/enums/translator.dart';
 import 'package:teta_widgets/src/elements/features/actions/enums/webview.dart';
 import 'package:teta_widgets/src/elements/features/actions/snippets.dart';
-import 'package:teta_widgets/src/elements/features/text_type_input.dart';
-import 'package:teta_widgets/src/elements/nodes/dynamic.dart';
-import 'package:teta_widgets/src/elements/nodes/enum.dart';
-import 'package:teta_widgets/src/elements/nodes/node.dart';
+import 'package:teta_widgets/src/elements/features/condition_type.dart';
 import 'package:teta_widgets/teta_widgets.dart';
 import 'package:uuid/uuid.dart';
 
@@ -228,6 +225,7 @@ class FActionElement extends Equatable {
     withCondition ??= false;
     condition ??= FTextTypeInput(value: '0');
     valueOfCondition ??= FTextTypeInput(value: '0');
+    conditionType ??= FConditionType();
     icon ??= 'plus';
     duration ??= FTextTypeInput(value: '3000');
     fill ??= FFill();
@@ -448,6 +446,9 @@ class FActionElement extends Equatable {
     valueOfCondition = doc['vCond'] != null
         ? FTextTypeInput.fromJson(doc['vCond'] as Map<String, dynamic>)
         : FTextTypeInput();
+    conditionType = doc['condType'] != null
+        ? FConditionType().fromJson(doc['condType'] as String)
+        : FConditionType();
     withLoop = doc['wLoop'] != null ? doc['wLoop'] as bool? ?? false : false;
     everyMilliseconds = doc['evrMll'] != null
         ? FTextTypeInput.fromJson(doc['evrMll'] as Map<String, dynamic>)
@@ -630,6 +631,7 @@ class FActionElement extends Equatable {
   bool? withCondition;
   FTextTypeInput? condition;
   FTextTypeInput? valueOfCondition;
+  FConditionType? conditionType;
   bool? withLoop;
   FTextTypeInput? everyMilliseconds;
   FTextTypeInput? revenueCatProductIdentifier;
@@ -744,6 +746,7 @@ class FActionElement extends Equatable {
         withCondition,
         condition,
         valueOfCondition,
+        conditionType,
         withLoop,
         everyMilliseconds,
         dbFrom,
@@ -1130,6 +1133,7 @@ class FActionElement extends Equatable {
         'wCond': withCondition,
         'cond': condition != null ? condition!.toJson() : null,
         'vCond': valueOfCondition != null ? valueOfCondition!.toJson() : null,
+        'condType': conditionType != null ? conditionType!.toJson() : null,
         'wLoop': withLoop,
         'evrMll':
             everyMilliseconds != null ? everyMilliseconds!.toJson() : null,

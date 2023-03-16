@@ -1,10 +1,10 @@
 import 'package:flutter/material.dart';
+import 'package:gap/gap.dart';
 import 'package:teta_core/teta_core.dart';
 import 'package:teta_widgets/src/elements/controls/atoms/db_map.dart';
 import 'package:teta_widgets/src/elements/controls/atoms/text.dart';
 import 'package:teta_widgets/src/elements/features/actions/element.dart';
 import 'package:teta_widgets/src/elements/features/text_type_input.dart';
-import 'package:teta_widgets/src/elements/nodes/node.dart';
 
 class AirtableDeleteControl extends StatelessWidget {
   const AirtableDeleteControl({
@@ -22,6 +22,7 @@ class AirtableDeleteControl extends StatelessWidget {
       mainAxisSize: MainAxisSize.min,
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
+        const Gap(Grid.medium),
         Padding(
           padding: const EdgeInsets.only(top: 8),
           child: Row(
@@ -30,7 +31,7 @@ class AirtableDeleteControl extends StatelessWidget {
               const Padding(
                 padding: EdgeInsets.only(left: 8),
                 child: TParagraph(
-                  'INSERT NEW DATA',
+                  'Delete data',
                   color: Color(0xFFe7e7e7),
                 ),
               ),
