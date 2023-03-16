@@ -20,7 +20,7 @@ dependencies:
 
   teta_cms:
     git:
-      url: git@github.com:teta-so/cms-dart.git
+      url: https://github.com/teta-so/cms-dart.git
       ref: main
 
   teta_repositories:
