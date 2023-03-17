@@ -37,7 +37,7 @@ final paddingIntrinsicStates = IntrinsicStates(
   advicedChildrenCanHaveAtLeastAChild: [],
   displayName: NodeType.name(_globalType),
   type: _globalType,
-  category: NodeCategories.basic,
+  category: NodeCategories.unclassified,
   maxChildren: 1,
   canHave: ChildrenEnum.child,
   addChildLabels: [],
@@ -60,7 +60,7 @@ class PaddingBody extends NodeBody {
   // ignore: overridden_fields
   Map<String, dynamic> attributes = <String, dynamic>{
     DBKeys.padding: FMargins(
-      margins: ['0', '0', '0', '0'],
+      margins: const ['0', '0', '0', '0'],
     ),
   };
 
