@@ -77,6 +77,13 @@ class ActionControlState extends State<ActionControl> {
           return Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
+              const THeadline1('Workflows'),
+              const Gap(Grid.small),
+              TDetailLabel(
+                'Add actions to workflows for the following triggers.',
+                color: Palette.txtPrimary.withOpacity(0.6),
+              ),
+              const Gap(Grid.small),
               for (final trigger in node.intrinsicState.gestures.isNotEmpty
                   ? node.intrinsicState.gestures
                   : [
@@ -88,11 +95,35 @@ class ActionControlState extends State<ActionControl> {
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
                     TParagraph(
-                      EnumToString.convertToString(trigger, camelCase: true),
+                      '${EnumToString.convertToString(trigger, camelCase: true)} workflow',
                     ),
-                    Divider(
-                      color: Palette.txtPrimary.withOpacity(0.3),
-                    ),
+                    const Gap(Grid.small),
+                    for (final element
+                        in (widget.action.actions ?? <FActionElement>[])
+                            .where(
+                              (final element) =>
+                                  element.actionGesture == trigger,
+                            )
+                            .toList())
+                      ActionElementControl(
+                        name:
+                            '${widget.action.actions!.indexOf(element)}: ${EnumToString.convertToString(
+                          element.actionType,
+                          camelCase: true,
+                        )}',
+                        element: element,
+                        callBack: (final value, final old) {
+                          final old = widget.action;
+                          final index = widget.action.actions!.indexOf(element);
+                          widget.action.actions![index] = value;
+                          widget.callBack(widget.action, old);
+                        },
+                        callBackToDelete: () {
+                          final old = widget.action;
+                          widget.action.actions!.remove(element);
+                          widget.callBack(widget.action, old);
+                        },
+                      ),
                     ElementButton(
                       title: 'New action',
                       isSelected: false,
@@ -188,10 +219,9 @@ class ActionControlState extends State<ActionControl> {
                                             (action is ActionTranslator)
                                                 ? action
                                                 : null,
-                                        actionAlert:
-                                            (action is ActionAlert)
-                                                ? action
-                                                : null,
+                                        actionAlert: (action is ActionAlert)
+                                            ? action
+                                            : null,
                                       )
                                     ];
                                     widget.callBack(widget.action, old);
@@ -205,31 +235,6 @@ class ActionControlState extends State<ActionControl> {
                         );
                       },
                     ),
-                    for (final element
-                        in (widget.action.actions ?? <FActionElement>[])
-                            .where(
-                              (final element) =>
-                                  element.actionGesture == trigger,
-                            )
-                            .toList())
-                      ActionElementControl(
-                        name: EnumToString.convertToString(
-                          element.actionType,
-                          camelCase: true,
-                        ),
-                        element: element,
-                        callBack: (final value, final old) {
-                          final old = widget.action;
-                          final index = widget.action.actions!.indexOf(element);
-                          widget.action.actions![index] = value;
-                          widget.callBack(widget.action, old);
-                        },
-                        callBackToDelete: () {
-                          final old = widget.action;
-                          widget.action.actions!.remove(element);
-                          widget.callBack(widget.action, old);
-                        },
-                      ),
                     const Gap(Grid.medium),
                   ],
                 ),

@@ -4,6 +4,7 @@
 // Flutter imports:
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
+import 'package:gap/gap.dart';
 // Package imports:
 import 'package:teta_core/teta_core.dart';
 import 'package:teta_widgets/src/elements/controls/atoms/cms_collections.dart';
@@ -27,6 +28,7 @@ class TetaCmsInsertControl extends StatelessWidget {
       mainAxisSize: MainAxisSize.min,
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
+        const Gap(Grid.medium),
         Padding(
           padding: const EdgeInsets.only(top: 8),
           child: Row(
@@ -35,13 +37,14 @@ class TetaCmsInsertControl extends StatelessWidget {
               const Padding(
                 padding: EdgeInsets.only(left: 8),
                 child: TParagraph(
-                  'INSERT NEW DATA',
+                  'Insert data',
                   color: Color(0xFFe7e7e7),
                 ),
               ),
             ],
           ),
         ),
+        const Gap(Grid.small),
         CMSCollectionControl(
           collectionName: action.cmsCollectionId,
           callBack: (final value, final old) {
