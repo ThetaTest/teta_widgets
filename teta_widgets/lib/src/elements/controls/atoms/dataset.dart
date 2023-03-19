@@ -54,7 +54,7 @@ class DatasetControlState extends State<DatasetControl> {
         BlocBuilder<PageCubit, PageState>(
           builder: (final context, final state) {
             if (state is! PageLoaded) return const SizedBox();
-            return CDropdown(
+            return CDropdownCustom<String>(
               value: state.datasets
                       .map((final e) => e.getName)
                       .where((final element) => element != 'null')
@@ -64,6 +64,12 @@ class DatasetControlState extends State<DatasetControl> {
               items: state.datasets
                   .map((final e) => e.getName)
                   .where((final element) => element != 'null')
+                  .map(
+                    (final e) => DropdownCustomMenuItem<String>(
+                      value: e,
+                      child: TParagraph(e),
+                    ),
+                  )
                   .toList(),
               onChange: (final newValue) {
                 setState(() {
@@ -73,9 +79,11 @@ class DatasetControlState extends State<DatasetControl> {
                 widget.value.datasetName = newValue;
                 widget.callBack(widget.value, old);
               },
+              expanded: true,
             );
           },
         ),
+        const SizedBox(height: Grid.small),
         _BuildAttrSelection(
           value: widget.value,
           isAttrRequired: widget.isAttrRequired ?? false,
@@ -142,7 +150,7 @@ class __BuildAttrSelectionState extends State<_BuildAttrSelection> {
       return BlocBuilder<PageCubit, PageState>(
         builder: (final context, final state) {
           if (state is! PageLoaded) return const SizedBox();
-          return CDropdown(
+          return CDropdownCustom<String>(
             value: (state.datasets
                             .where(
                               (final element) =>
@@ -184,6 +192,12 @@ class __BuildAttrSelectionState extends State<_BuildAttrSelection> {
                     : <String, dynamic>{})
                 .keys
                 .toSet()
+                .map(
+                  (e) => DropdownCustomMenuItem<String>(
+                    value: e,
+                    child: TParagraph(e),
+                  ),
+                )
                 .toList(),
             onChange: (final newValue) {
               setState(() {
@@ -193,6 +207,7 @@ class __BuildAttrSelectionState extends State<_BuildAttrSelection> {
               widget.value.datasetAttrName = newValue;
               widget.callBack(widget.value, old);
             },
+            expanded: true,
           );
         },
       );

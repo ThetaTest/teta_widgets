@@ -95,9 +95,10 @@ class NodeSelectionState extends State<_NodeSelection> {
           ),
           child: GestureDetector(
             onTap: () {
-              sl.get<PageCubit>().onFocus(
+              sl.get<PageCubit>().onFocusFromLocalToGlobalCubit(
                     page: (context.read<PageCubit>().state as PageLoaded).page,
-                    forPlay: true,
+                    datasets: (context.read<PageCubit>().state as PageLoaded)
+                        .datasets,
                   );
               if (!BlocProvider.of<FocusBloc>(context)
                   .state

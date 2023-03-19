@@ -590,6 +590,7 @@ class PaddingsState extends State<TextControl> with AfterLayoutMixin {
                     Padding(
                       padding: EI.smT,
                       child: CDropdownCustom<String>(
+                        expanded: true,
                         value: (dataset.getMap.isNotEmpty
                                     ? dataset.getMap.first
                                     : <String, dynamic>{})
@@ -631,7 +632,6 @@ class PaddingsState extends State<TextControl> with AfterLayoutMixin {
                           widget.value.datasetSubMapData = '';
                           widget.callBack(widget.value, old);
                         },
-                        expanded: true,
                       ),
                     ),
                 //////////
@@ -643,7 +643,8 @@ class PaddingsState extends State<TextControl> with AfterLayoutMixin {
                       dataset.isSubMap(widget.value.datasetAttr ?? ''))
                     Padding(
                       padding: EI.smT,
-                      child: CDropdown(
+                      child: CDropdownCustom<String>(
+                        expanded: true,
                         value: (dataset.getMap.first[widget.value.datasetAttr]
                                     as Map<String, dynamic>)
                                 .keys
@@ -655,6 +656,12 @@ class PaddingsState extends State<TextControl> with AfterLayoutMixin {
                                 as Map<String, dynamic>)
                             .keys
                             .toSet()
+                            .map(
+                              (final e) => DropdownCustomMenuItem(
+                                value: e,
+                                child: TParagraph(e),
+                              ),
+                            )
                             .toList(),
                         onChange: (final newValue) {
                           setState(() {
@@ -676,7 +683,8 @@ class PaddingsState extends State<TextControl> with AfterLayoutMixin {
                       dataset.isSubList(widget.value.datasetAttr ?? ''))
                     Padding(
                       padding: EI.smT,
-                      child: CDropdown(
+                      child: CDropdownCustom<String>(
+                        expanded: true,
                         value: ((dataset.getMap.first[widget.value.datasetAttr]
                                         as List)
                                     .map(
@@ -699,6 +707,12 @@ class PaddingsState extends State<TextControl> with AfterLayoutMixin {
                             .first
                             .keys
                             .toSet()
+                            .map(
+                              (final e) => DropdownCustomMenuItem(
+                                value: e,
+                                child: TParagraph(e),
+                              ),
+                            )
                             .toList(),
                         onChange: (final newValue) {
                           setState(() {
@@ -836,7 +850,8 @@ class PaddingsState extends State<TextControl> with AfterLayoutMixin {
                       const TDetailLabel('Convert to:'),
                       Padding(
                         padding: EI.smT,
-                        child: CDropdown(
+                        child: CDropdownCustom<String>(
+                          expanded: true,
                           value: EnumToString.convertToString(
                             widget.value.resultType,
                             camelCase: true,
@@ -844,7 +859,14 @@ class PaddingsState extends State<TextControl> with AfterLayoutMixin {
                           items: EnumToString.toList(
                             ResultTypeEnum.values,
                             camelCase: true,
-                          ).toList(),
+                          )
+                              .map(
+                                (e) => DropdownCustomMenuItem(
+                                  value: e,
+                                  child: TParagraph(e),
+                                ),
+                              )
+                              .toList(),
                           onChange: (final newValue) {
                             if (newValue != null) {
                               final old = widget.value;
@@ -862,7 +884,8 @@ class PaddingsState extends State<TextControl> with AfterLayoutMixin {
                       if (widget.value.resultType == ResultTypeEnum.dateTime)
                         Padding(
                           padding: EI.smT,
-                          child: CDropdown(
+                          child: CDropdownCustom<String>(
+                            expanded: true,
                             value: widget.value.typeDateTimeFormat != null
                                 ? EnumToString.convertToString(
                                     widget.value.typeDateTimeFormat,
@@ -872,7 +895,14 @@ class PaddingsState extends State<TextControl> with AfterLayoutMixin {
                             items: EnumToString.toList(
                               TypeDateTimeFormat.values,
                               camelCase: true,
-                            ).toList(),
+                            )
+                                .map(
+                                  (e) => DropdownCustomMenuItem(
+                                    value: e,
+                                    child: TParagraph(e),
+                                  ),
+                                )
+                                .toList(),
                             onChange: (final newValue) {
                               if (newValue != null) {
                                 final old = widget.value;
