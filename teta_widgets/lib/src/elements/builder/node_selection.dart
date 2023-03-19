@@ -95,6 +95,10 @@ class NodeSelectionState extends State<_NodeSelection> {
           ),
           child: GestureDetector(
             onTap: () {
+              sl.get<PageCubit>().onFocus(
+                    page: (context.read<PageCubit>().state as PageLoaded).page,
+                    forPlay: true,
+                  );
               if (!BlocProvider.of<FocusBloc>(context)
                   .state
                   .contains(widget.state.node.nid)) {
@@ -180,11 +184,11 @@ class _BodyState extends State<_Body> {
               hoverChild: Center(
                 child: IntrinsicWidth(
                   child: Container(
-                    padding: EdgeInsets.symmetric(
+                    padding: const EdgeInsets.symmetric(
                       horizontal: Grid.medium,
                     ),
                     height: 32,
-                    foregroundDecoration: BoxDecoration(
+                    foregroundDecoration: const BoxDecoration(
                       color: primaryColor,
                       borderRadius: BorderRadius.only(
                         topLeft: Radius.circular(
@@ -195,7 +199,7 @@ class _BodyState extends State<_Body> {
                         ),
                       ),
                     ),
-                    decoration: BoxDecoration(
+                    decoration: const BoxDecoration(
                       color: primaryColor,
                       borderRadius: BorderRadius.only(
                         topLeft: Radius.circular(
@@ -206,7 +210,7 @@ class _BodyState extends State<_Body> {
                         ),
                       ),
                     ),
-                    child: Center(
+                    child: const Center(
                       child: TDetailLabel('Add new in Column'),
                     ),
                   ),
