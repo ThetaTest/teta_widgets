@@ -11,6 +11,7 @@ import 'package:teta_widgets/src/elements/controls/atoms/size.dart';
 import 'package:teta_widgets/src/elements/controls/key_constants.dart';
 import 'package:teta_widgets/src/elements/controls/type.dart';
 import 'package:teta_widgets/src/elements/features/sizes.dart';
+import 'package:teta_front_end/teta_front_end.dart';
 
 class SizesPrefabControl extends StatelessWidget {
   const SizesPrefabControl({

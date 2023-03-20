@@ -17,6 +17,7 @@ import '../../features/margins.dart';
 // Project imports:
 import 'fill.dart';
 import 'margins.dart';
+import 'package:teta_front_end/teta_front_end.dart';
 
 class BordersControl extends StatefulWidget {
   const BordersControl({

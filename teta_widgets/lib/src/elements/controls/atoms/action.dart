@@ -7,7 +7,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_feather_icons/flutter_feather_icons.dart';
 import 'package:gap/gap.dart';
 // Package imports:
-import 'package:teta_core/src/design_system/buttons/element_button.dart';
+import 'package:teta_front_end/src/design_system/buttons/element_button.dart';
 import 'package:teta_core/teta_core.dart';
 // Project imports:
 import 'package:teta_widgets/src/elements/controls/atoms/action_element.dart';
@@ -32,6 +32,7 @@ import 'package:teta_widgets/src/elements/features/actions/enums/translator.dart
 import 'package:teta_widgets/src/elements/features/actions/enums/webview.dart';
 import 'package:teta_widgets/src/elements/index.dart';
 import 'package:uuid/uuid.dart';
+import 'package:teta_front_end/teta_front_end.dart';
 
 class ActionControl extends StatefulWidget {
   const ActionControl({

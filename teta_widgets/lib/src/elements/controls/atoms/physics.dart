@@ -8,6 +8,7 @@ import 'package:teta_core/teta_core.dart';
 // Project imports:
 import 'package:teta_widgets/src/elements/features/physic.dart';
 import 'package:teta_widgets/src/elements/nodes/node.dart';
+import 'package:teta_front_end/teta_front_end.dart';
 
 class PhysicsControl extends StatefulWidget {
   const PhysicsControl({

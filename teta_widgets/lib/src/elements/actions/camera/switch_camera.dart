@@ -12,6 +12,7 @@ import 'package:teta_core/teta_core.dart';
 import 'package:teta_widgets/src/elements/actions/navigation/open_page.dart';
 import 'package:teta_widgets/src/elements/actions/snippets/get_page_on_code.dart';
 import 'package:teta_widgets/src/elements/actions/snippets/take_state_from.dart';
+import 'package:teta_front_end/teta_front_end.dart';
 
 class FACameraSwitch {
   static Future action(
@@ -25,7 +26,6 @@ class FACameraSwitch {
     final controller = state?.controller;
     if (controller != null) {
       //controller.
-
     }
   }
 

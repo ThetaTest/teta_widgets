@@ -11,6 +11,7 @@ import 'package:responsive_builder/responsive_builder.dart';
 // Package imports:
 import 'package:teta_core/src/utils/expression/expression.dart';
 import 'package:teta_core/teta_core.dart';
+import 'package:teta_front_end/teta_front_end.dart';
 
 class FMargins extends Equatable {
   FMargins({
@@ -109,13 +110,13 @@ class FMargins extends Equatable {
     }
     try {
       return FMargins(
-        margins: (json['m'] as List<dynamic>)
+        margins: (json['m'] as List<dynamic>? ?? ['0', '0', '0', '0'])
             .map((final dynamic e) => '$e')
             .toList(),
-        marginsTablet: (json['t'] as List<dynamic>)
+        marginsTablet: (json['t'] as List<dynamic>? ?? ['0', '0', '0', '0'])
             .map((final dynamic e) => '$e')
             .toList(),
-        marginsDesktop: (json['d'] as List<dynamic>)
+        marginsDesktop: (json['d'] as List<dynamic>? ?? ['0', '0', '0', '0'])
             .map((final dynamic e) => '$e')
             .toList(),
       );

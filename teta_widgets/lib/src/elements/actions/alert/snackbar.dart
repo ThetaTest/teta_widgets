@@ -6,6 +6,7 @@ import 'package:flutter/material.dart';
 import 'package:another_flushbar/flushbar.dart';
 import 'package:flutter_feather_icons/flutter_feather_icons.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:teta_front_end/teta_front_end.dart';
 
 // Teta imports:
 import 'package:teta_core/teta_core.dart';

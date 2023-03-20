@@ -15,6 +15,7 @@ import 'package:intl/intl.dart';
 import 'package:recase/recase.dart';
 import 'package:responsive_builder/responsive_builder.dart';
 import 'package:teta_core/teta_core.dart';
+import 'package:teta_front_end/teta_front_end.dart';
 
 enum FTextTypeEnum {
   text,

@@ -8,6 +8,7 @@ import 'package:teta_widgets/src/core/teta_widget/index.dart';
 import 'package:teta_widgets/src/elements/features/action.dart';
 import 'package:teta_widgets/src/elements/features/actions/enums/gestures.dart';
 import 'package:teta_widgets/src/elements/features/text_type_input.dart';
+import 'package:teta_front_end/teta_front_end.dart';
 
 /// Builder
 class GestureBuilder {

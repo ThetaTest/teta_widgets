@@ -6,6 +6,7 @@ import 'package:flutter/material.dart';
 // Package imports:
 import 'package:teta_core/teta_core.dart';
 // Project imports:
+import 'package:teta_front_end/teta_front_end.dart';
 
 class DeleteControl extends StatelessWidget {
   const DeleteControl({

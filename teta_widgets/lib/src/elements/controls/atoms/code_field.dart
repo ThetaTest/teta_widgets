@@ -5,12 +5,13 @@
 import 'package:flutter/material.dart';
 import 'package:gap/gap.dart';
 import 'package:google_fonts/google_fonts.dart';
-import 'package:teta_core/src/design_system/dialogs/cms/db/custom_query_documentation.dart';
+import 'package:teta_front_end/src/design_system/dialogs/cms/db/custom_query_documentation.dart';
 import 'package:teta_core/src/utils/code_text_field/code_text_field.dart';
 import 'package:teta_core/src/utils/code_theme.dart';
 import 'package:teta_core/teta_core.dart';
 // Project imports:
 import 'package:teta_widgets/src/elements/features/text_type_input.dart';
+import 'package:teta_front_end/teta_front_end.dart';
 
 class CodeFieldControl extends StatefulWidget {
   const CodeFieldControl({

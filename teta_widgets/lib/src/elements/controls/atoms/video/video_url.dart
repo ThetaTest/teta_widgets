@@ -5,13 +5,14 @@
 import 'package:flutter/material.dart';
 // Package imports:
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:teta_core/src/design_system/textfield/textfield.dart';
+import 'package:teta_front_end/src/design_system/textfield/textfield.dart';
 import 'package:teta_core/teta_core.dart';
 // Project imports:
 import 'package:teta_widgets/src/elements/controls/key_constants.dart';
 import 'package:teta_widgets/src/elements/features/text_type_input.dart';
 import 'package:teta_widgets/src/elements/nodes/node.dart';
 import 'package:youtube_player_iframe/youtube_player_iframe.dart';
+import 'package:teta_front_end/teta_front_end.dart';
 
 class VideoUrlControl extends StatefulWidget {
   const VideoUrlControl({

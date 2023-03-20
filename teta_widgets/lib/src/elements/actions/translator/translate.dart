@@ -9,6 +9,7 @@ import 'package:recase/recase.dart';
 import 'package:teta_core/teta_core.dart';
 import '../snippets/get_page_on_code.dart';
 import '../snippets/take_state_from.dart';
+import 'package:teta_front_end/teta_front_end.dart';
 
 class FActionTranslatorTranslate {
   static Future action(

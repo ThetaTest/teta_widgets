@@ -10,6 +10,7 @@ import 'package:teta_core/teta_core.dart';
 import 'package:teta_widgets/src/elements/controls/atoms/widgets/selection_tab.dart';
 import 'package:teta_widgets/src/elements/features/font_style.dart';
 import 'package:teta_widgets/src/elements/features/text_style.dart';
+import 'package:teta_front_end/teta_front_end.dart';
 
 class FontStyleControls extends StatefulWidget {
   const FontStyleControls({

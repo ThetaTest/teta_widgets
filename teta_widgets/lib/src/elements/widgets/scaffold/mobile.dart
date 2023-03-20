@@ -11,6 +11,7 @@ import 'package:teta_widgets/src/core/teta_widget/index.dart';
 // Project imports:
 import 'package:teta_widgets/src/elements/index.dart';
 import 'package:tinycolor/tinycolor.dart';
+import 'package:teta_front_end/teta_front_end.dart';
 
 // ignore: import_of_legacy_library_into_null_safe
 

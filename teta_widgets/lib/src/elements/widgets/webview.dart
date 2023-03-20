@@ -11,7 +11,7 @@ import 'package:teta_widgets/src/elements/builder/gesture_detector_base.dart';
 // Project imports:
 import 'package:teta_widgets/src/elements/index.dart';
 import 'package:webviewx/webviewx.dart';
-
+import 'package:teta_front_end/teta_front_end.dart';
 // ignore_for_file: public_member_api_docs
 
 class WWebViewXPage extends StatefulWidget {

@@ -4,7 +4,7 @@
 // Flutter imports:
 import 'package:flutter/material.dart';
 // Package imports:
-import 'package:teta_core/src/design_system/dropdowns/dropdown.dart';
+import 'package:teta_front_end/src/design_system/dropdowns/dropdown.dart';
 // Project imports:
 import 'package:teta_widgets/src/elements/features/box_fit.dart';
 

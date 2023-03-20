@@ -5,6 +5,7 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:teta_core/teta_core.dart';
+import 'package:teta_front_end/teta_front_end.dart';
 
 class SliderControls extends StatelessWidget {
   const SliderControls({

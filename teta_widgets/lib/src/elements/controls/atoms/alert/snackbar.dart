@@ -17,6 +17,7 @@ import 'package:teta_widgets/src/elements/controls/atoms/text_styles.dart';
 import 'package:teta_widgets/src/elements/controls/prefabs/text_prefab_control.dart';
 // Project imports:
 import 'package:teta_widgets/src/elements/index.dart';
+import 'package:teta_front_end/teta_front_end.dart';
 
 class AlertSnackbarControl extends StatelessWidget {
   const AlertSnackbarControl({

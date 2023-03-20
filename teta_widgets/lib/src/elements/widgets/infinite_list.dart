@@ -9,6 +9,7 @@ import 'package:teta_core/teta_core.dart';
 import 'package:teta_widgets/src/core/teta_widget/index.dart';
 // Project imports:
 import 'package:teta_widgets/src/elements/index.dart';
+import 'package:teta_front_end/teta_front_end.dart';
 
 class WInfiniteListView extends StatefulWidget {
   /// Returns a ListView in Teta
@@ -45,10 +46,12 @@ class _WInfiniteListViewState extends State<WInfiniteListView> {
       state: widget.state,
       child: MouseRegion(
         onEnter: (final v) {
-          BlocProvider.of<ZoomableCubit>(context).changeZoomableFlag(value: false);
+          BlocProvider.of<ZoomableCubit>(context)
+              .changeZoomableFlag(value: false);
         },
         onExit: (final v) {
-          BlocProvider.of<ZoomableCubit>(context).changeZoomableFlag(value: true);
+          BlocProvider.of<ZoomableCubit>(context)
+              .changeZoomableFlag(value: true);
         },
         child: _getBody(context),
       ),

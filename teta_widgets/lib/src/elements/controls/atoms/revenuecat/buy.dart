@@ -6,6 +6,7 @@ import 'package:teta_widgets/src/elements/controls/atoms/text.dart';
 import 'package:teta_widgets/src/elements/features/actions/enums/revenue_cat.dart';
 import 'package:teta_widgets/src/elements/index.dart';
 import 'package:teta_widgets/src/elements/nodes/dynamic.dart';
+import 'package:teta_front_end/teta_front_end.dart';
 
 class RevenueCatBuyActionWidget extends StatelessWidget {
   const RevenueCatBuyActionWidget({

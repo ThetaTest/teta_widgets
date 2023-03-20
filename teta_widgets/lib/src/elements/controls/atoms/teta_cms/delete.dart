@@ -11,6 +11,7 @@ import 'package:teta_widgets/src/elements/controls/atoms/text.dart';
 // Project imports:
 import 'package:teta_widgets/src/elements/features/actions/element.dart';
 import 'package:teta_widgets/src/elements/features/text_type_input.dart';
+import 'package:teta_front_end/teta_front_end.dart';
 
 class TetaCmsDeleteControl extends StatelessWidget {
   const TetaCmsDeleteControl({

@@ -5,7 +5,7 @@
 import 'package:flutter/material.dart';
 // Package imports:
 import 'package:hovering/hovering.dart';
-import 'package:teta_core/src/design_system/palette.dart';
+import 'package:teta_front_end/src/design_system/palette.dart';
 
 class SelectionTab extends StatelessWidget {
   const SelectionTab({

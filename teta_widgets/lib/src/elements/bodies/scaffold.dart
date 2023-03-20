@@ -14,6 +14,7 @@ import '../code/page/scaffold.dart';
 import '../intrinsic_states/class.dart';
 import '../nodes/categories.dart';
 import '../nodes/node_body.dart';
+import 'package:teta_front_end/teta_front_end.dart';
 
 const _globalType = NType.scaffold;
 

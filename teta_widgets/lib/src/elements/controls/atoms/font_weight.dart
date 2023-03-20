@@ -9,6 +9,7 @@ import 'package:teta_core/teta_core.dart';
 import 'package:teta_widgets/src/elements/features/font_weight.dart';
 import 'package:teta_widgets/src/elements/features/text_style.dart';
 import 'package:teta_widgets/src/elements/nodes/node.dart';
+import 'package:teta_front_end/teta_front_end.dart';
 
 class FontWeightControl extends StatefulWidget {
   const FontWeightControl({

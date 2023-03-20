@@ -2,7 +2,6 @@
 // ignore_for_file: public_member_api_docs, avoid_dynamic_calls
 
 // Package imports:
-import 'package:collection/collection.dart';
 import 'package:diacritic/diacritic.dart';
 // Flutter imports:
 import 'package:flutter/foundation.dart';
@@ -10,7 +9,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:recase/recase.dart';
-import 'package:teta_core/src/pages/play_page/cubit_value_initializer.dart';
+import 'package:teta_front_end/src/pages/play_page/cubit_value_initializer.dart';
 import 'package:teta_core/src/rendering/nodes.dart';
 import 'package:teta_core/teta_core.dart';
 import 'package:teta_db/teta_db.dart';
@@ -23,7 +22,8 @@ import 'package:teta_widgets/src/elements/features/page_transition.dart';
 import 'package:teta_widgets/src/elements/nodes/node.dart';
 import 'package:transition/transition.dart' as T;
 import 'package:universal_platform/universal_platform.dart';
-
+import 'package:teta_front_end/teta_front_end.dart';
+import 'package:collection/collection.dart';
 // ignore: library_prefixes
 
 void goTo(final CNode node, final BuildContext context, final Widget child) {

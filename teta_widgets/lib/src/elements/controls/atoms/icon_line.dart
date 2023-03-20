@@ -8,11 +8,12 @@ import 'package:gap/gap.dart';
 // ignore_for_file: import_of_legacy_library_into_null_safe, public_member_api_docs, avoid_equals_and_hash_code_on_mutable_classes, lines_longer_than_80_chars
 
 import 'package:line_icons/line_icons.dart';
-import 'package:teta_core/src/design_system/textfield/textfield.dart';
+import 'package:teta_front_end/src/design_system/textfield/textfield.dart';
 import 'package:teta_core/teta_core.dart';
 // Project imports:
 import 'package:teta_widgets/src/elements/nodes/node.dart';
 import 'package:universal_platform/universal_platform.dart';
+import 'package:teta_front_end/teta_front_end.dart';
 
 class IconLineControl extends StatefulWidget {
   const IconLineControl({

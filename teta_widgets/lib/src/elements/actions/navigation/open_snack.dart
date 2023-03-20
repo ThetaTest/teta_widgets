@@ -16,7 +16,8 @@ import 'package:teta_widgets/src/core/teta_widget/index.dart';
 import 'package:teta_widgets/src/elements/actions/navigation/pass_params_builder.dart';
 import 'package:teta_widgets/src/elements/code/formatter_test.dart';
 import 'package:teta_widgets/src/elements/index.dart';
-import 'package:teta_core/src/pages/play_page/cubit_value_initializer.dart';
+import 'package:teta_front_end/src/pages/play_page/cubit_value_initializer.dart';
+import 'package:teta_front_end/teta_front_end.dart';
 
 class FActionNavigationOpenSnackBar {
   static Future action(
@@ -109,8 +110,10 @@ class FActionNavigationOpenSnackBar {
       final pages = BlocProvider.of<PagesCubit>(context).state;
 
       if (nameOfPage == null ||
-          pages.indexWhere((final element) => element.name == nameOfPage) == -1)
+          pages.indexWhere((final element) => element.name == nameOfPage) ==
+              -1) {
         return '';
+      }
       final page =
           pages.firstWhere((final element) => element.name == nameOfPage);
       final temp = removeDiacritics(

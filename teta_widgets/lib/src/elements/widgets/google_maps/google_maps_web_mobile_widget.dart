@@ -17,6 +17,7 @@ import 'package:teta_widgets/src/elements/features/google_maps_map_style.dart';
 import 'package:teta_widgets/src/elements/nodes/node.dart';
 import 'package:teta_widgets/src/elements/widgets/google_maps/google_maps_base_widget.dart';
 import 'package:teta_widgets/src/elements/widgets/google_maps/google_maps_cubit.dart';
+import 'package:teta_front_end/teta_front_end.dart';
 
 // ignore_for_file: public_member_api_docs
 

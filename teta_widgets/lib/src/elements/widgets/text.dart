@@ -14,6 +14,7 @@ import 'package:teta_widgets/src/core/teta_widget/index.dart';
 import 'package:teta_widgets/src/elements/builder/gesture_detector_base.dart';
 // Project imports:
 import 'package:teta_widgets/src/elements/index.dart';
+import 'package:teta_front_end/teta_front_end.dart';
 
 class WText extends StatefulWidget {
   /// Returns a Text widget in Teta

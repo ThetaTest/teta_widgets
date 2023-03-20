@@ -7,6 +7,7 @@ import 'package:teta_core/teta_core.dart';
 import 'package:teta_widgets/src/elements/features/fill.dart';
 import 'package:teta_widgets/src/elements/features/text_style.dart';
 import 'package:teta_widgets/src/elements/features/text_type_input.dart';
+import 'package:teta_front_end/teta_front_end.dart';
 
 /// Returns a [Text] widget with all the properties
 class TextBuilder extends StatelessWidget {

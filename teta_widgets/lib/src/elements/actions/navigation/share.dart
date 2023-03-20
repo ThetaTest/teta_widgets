@@ -7,6 +7,7 @@ import 'package:teta_core/teta_core.dart';
 import 'package:teta_widgets/src/elements/code/formatter_test.dart';
 import 'package:teta_widgets/src/elements/index.dart';
 import 'package:teta_widgets/src/elements/packages.dart';
+import 'package:teta_front_end/teta_front_end.dart';
 
 class FActionNavigationShare {
   //list of packages needed for this action

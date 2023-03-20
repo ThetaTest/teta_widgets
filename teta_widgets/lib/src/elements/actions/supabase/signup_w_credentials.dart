@@ -13,6 +13,7 @@ import 'package:teta_widgets/src/core/teta_widget/index.dart';
 import 'package:teta_widgets/src/elements/actions/navigation/open_page.dart';
 import 'package:teta_widgets/src/elements/actions/snippets/take_state_from.dart';
 import 'package:teta_widgets/src/elements/nodes/node.dart';
+import 'package:teta_front_end/teta_front_end.dart';
 
 class FASupabaseSignUp {
   static Future action(

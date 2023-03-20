@@ -8,10 +8,11 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:gap/gap.dart';
 import 'package:hovering/hovering.dart';
-import 'package:teta_core/src/design_system/textfield/minitextfield.dart';
+import 'package:teta_front_end/src/design_system/textfield/minitextfield.dart';
 import 'package:teta_core/teta_core.dart';
 // Project imports:
 import 'package:teta_widgets/src/elements/features/features.dart';
+import 'package:teta_front_end/teta_front_end.dart';
 
 class SizeControl extends StatefulWidget {
   const SizeControl({

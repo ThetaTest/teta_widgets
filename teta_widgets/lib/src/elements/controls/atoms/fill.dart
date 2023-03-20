@@ -14,6 +14,7 @@ import 'package:teta_widgets/src/elements/controls/atoms/fill/radial.dart';
 import 'package:teta_widgets/src/elements/controls/atoms/fill/solid.dart';
 import 'package:teta_widgets/src/elements/controls/atoms/fill/style.dart';
 import 'package:teta_widgets/src/elements/features/features.dart';
+import 'package:teta_front_end/teta_front_end.dart';
 
 enum FillTypeControlType {
   onlySolid,

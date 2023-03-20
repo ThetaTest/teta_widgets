@@ -10,6 +10,7 @@ import 'package:teta_core/teta_core.dart';
 import 'package:teta_widgets/src/elements/controls/atoms/main_axis_alignment.dart';
 // Project imports:
 import 'package:teta_widgets/teta_widgets.dart';
+import 'package:teta_front_end/teta_front_end.dart';
 
 class CrossAxisAlignmentControls extends StatefulWidget {
   const CrossAxisAlignmentControls({

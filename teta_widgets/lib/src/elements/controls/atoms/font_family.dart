@@ -9,11 +9,12 @@ import 'package:flutter/material.dart';
 // Package imports:
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:google_fonts/google_fonts.dart';
-import 'package:teta_core/src/design_system/textfield/minitextfield.dart';
+import 'package:teta_front_end/src/design_system/textfield/minitextfield.dart';
 import 'package:teta_core/teta_core.dart';
 // Project imports:
 import 'package:teta_widgets/src/elements/features/text_style.dart';
 import 'package:teta_widgets/src/elements/nodes/node.dart';
+import 'package:teta_front_end/teta_front_end.dart';
 
 class FontFamilyControl extends StatefulWidget {
   const FontFamilyControl({

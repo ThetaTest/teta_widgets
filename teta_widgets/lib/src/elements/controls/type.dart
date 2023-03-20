@@ -11,6 +11,7 @@ import 'package:teta_core/teta_core.dart';
 import 'package:teta_repositories/teta_repositories.dart';
 import 'package:teta_widgets/src/elements/controls/atoms/condition_type.dart';
 import 'package:teta_widgets/src/elements/features/condition_type.dart';
+import 'package:teta_front_end/teta_front_end.dart';
 
 import '../features/google_maps_map_style.dart';
 import '../features/physic.dart';

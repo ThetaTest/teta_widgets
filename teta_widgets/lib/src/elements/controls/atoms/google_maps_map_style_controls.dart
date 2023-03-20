@@ -9,6 +9,7 @@ import 'package:teta_core/teta_core.dart';
 import 'package:teta_widgets/src/elements/features/google_maps_map_style.dart';
 // Project imports:
 import 'package:teta_widgets/src/elements/nodes/node.dart';
+import 'package:teta_front_end/teta_front_end.dart';
 
 class GoogleMapsMapStyleControls extends StatefulWidget {
   const GoogleMapsMapStyleControls({
@@ -96,7 +97,9 @@ class GoogleMapsMapStyleControlsState
   }
 
   DropdownCustomMenuItem<String> buildMapStyleMenuItem(
-          final String value, final String asset,) =>
+    final String value,
+    final String asset,
+  ) =>
       DropdownCustomMenuItem<String>(
         value: value,
         child: Row(

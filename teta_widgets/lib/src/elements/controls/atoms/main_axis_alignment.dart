@@ -10,6 +10,7 @@ import 'package:hovering/hovering.dart';
 import 'package:teta_core/teta_core.dart';
 // Project imports:
 import '../../../../teta_widgets.dart';
+import 'package:teta_front_end/teta_front_end.dart';
 
 class MainAxisAlignmentControls extends StatefulWidget {
   const MainAxisAlignmentControls({

@@ -10,6 +10,7 @@ import 'package:teta_core/teta_core.dart';
 import 'package:teta_widgets/src/elements/controls/atoms/firebase/parameter.dart';
 import 'package:teta_widgets/src/elements/features/firestore_path.dart';
 import 'package:teta_widgets/src/elements/features/text_type_input.dart';
+import 'package:teta_front_end/teta_front_end.dart';
 
 class FirestorePathControl extends StatefulWidget {
   const FirestorePathControl({

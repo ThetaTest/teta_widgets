@@ -9,11 +9,12 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:gap/gap.dart';
 import 'package:material_design_icons_flutter/icon_map.dart';
 import 'package:material_design_icons_flutter/material_design_icons_flutter.dart';
-import 'package:teta_core/src/design_system/textfield/textfield.dart';
+import 'package:teta_front_end/src/design_system/textfield/textfield.dart';
 import 'package:teta_core/teta_core.dart';
 // Project imports:
 import 'package:teta_widgets/src/elements/nodes/node.dart';
 import 'package:universal_platform/universal_platform.dart';
+import 'package:teta_front_end/teta_front_end.dart';
 
 class IconControl extends StatefulWidget {
   const IconControl({

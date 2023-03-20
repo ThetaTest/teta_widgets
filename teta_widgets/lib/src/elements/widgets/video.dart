@@ -18,6 +18,7 @@ import 'package:teta_widgets/src/elements/index.dart';
 import 'package:universal_platform/universal_platform.dart';
 import 'package:url_launcher/url_launcher_string.dart';
 import 'package:youtube_player_iframe/youtube_player_iframe.dart';
+import 'package:teta_front_end/teta_front_end.dart';
 
 class WVideo extends StatefulWidget {
   /// Returns a Video widget in Teta

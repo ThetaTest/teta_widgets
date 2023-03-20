@@ -13,6 +13,7 @@ import 'package:teta_core/teta_core.dart';
 import '../../core/teta_widget/index.dart';
 // Project imports:
 import '../index.dart';
+import 'package:teta_front_end/teta_front_end.dart';
 
 class WScaffold extends StatefulWidget {
   /// Returns a Scaffold

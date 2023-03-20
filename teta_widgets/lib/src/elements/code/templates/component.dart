@@ -12,6 +12,7 @@ import 'package:teta_widgets/src/elements/code/formatter_test.dart';
 // Project imports:
 import 'package:teta_widgets/src/elements/index.dart';
 import 'package:teta_widgets/src/elements/nodes/node_body.dart';
+import 'package:teta_front_end/teta_front_end.dart';
 
 /// Component Template
 Future<String> componentCodeTemplate(

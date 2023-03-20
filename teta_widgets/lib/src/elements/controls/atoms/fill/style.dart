@@ -8,6 +8,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:teta_core/teta_core.dart';
 // Project imports:
 import '../../../features/features.dart';
+import 'package:teta_front_end/teta_front_end.dart';
 
 //ignore: must_be_immutable
 class StyleFillControl extends StatefulWidget {

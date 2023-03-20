@@ -18,6 +18,12 @@ dependencies:
       path: teta_core
       ref: develop
 
+  teta_front_end:
+    git:
+      url: git@github.com:andreabuttarelli/Teta.git
+      path: teta_front_end
+      ref: develop
+
   teta_cms:
     git:
       url: https://github.com/teta-so/cms-dart.git
@@ -180,6 +186,8 @@ dependencies:
 dependency_overrides:
   teta_core:
     path: ../../Teta/teta_core
+  teta_front_end:
+    path: ../../Teta/teta_front_end
   teta_cms:
     path: ../../teta-db
   teta_repositories:

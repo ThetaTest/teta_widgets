@@ -5,7 +5,7 @@
 
 // Package imports:
 import 'package:flutter_staggered_grid_view/flutter_staggered_grid_view.dart';
-import 'package:teta_core/src/design_system/text.dart';
+import 'package:teta_front_end/src/design_system/text.dart';
 import 'package:teta_core/src/elements/builder/add_dataset.dart';
 import 'package:teta_core/src/elements/builder/node_selection_builder.dart';
 import 'package:teta_core/src/elements/nodes/node.dart';

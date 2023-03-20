@@ -19,6 +19,7 @@ import 'package:teta_widgets/src/elements/controls/atoms/text_decoration.dart';
 import 'package:teta_widgets/src/elements/controls/atoms/text_direction.dart';
 import 'package:teta_widgets/src/elements/controls/atoms/text_styles.dart';
 import 'package:teta_widgets/src/elements/index.dart';
+import 'package:teta_front_end/teta_front_end.dart';
 
 class TextPrefabControl extends StatelessWidget {
   const TextPrefabControl({

@@ -5,7 +5,7 @@
 import 'package:flutter/material.dart';
 import 'package:teta_core/gen/assets.gen.dart';
 // Package imports:
-import 'package:teta_core/src/pages/assets_constants.dart';
+import 'package:teta_front_end/src/pages/assets_constants.dart';
 import 'package:teta_widgets/src/core/teta_widget/index.dart';
 import 'package:teta_widgets/src/elements/code/templates/qonversion/qonversion_products.dart';
 // Project imports:

@@ -9,6 +9,7 @@ import 'package:teta_core/teta_core.dart';
 import 'package:teta_widgets/src/core/teta_widget/index.dart';
 // Project imports:
 import 'package:teta_widgets/src/elements/index.dart';
+import 'package:teta_front_end/teta_front_end.dart';
 
 class WTextField extends StatefulWidget {
   /// Returns a TextField widget in Teta

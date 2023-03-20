@@ -11,6 +11,8 @@ import 'package:teta_core/teta_core.dart';
 import '../../core/teta_widget/index.dart';
 import '../index.dart';
 // Project imports:
+import 'package:teta_front_end/teta_front_end.dart';
+import 'package:teta_core/src/services/right_context_menu.dart';
 
 class NodeSelection extends StatelessWidget {
   const NodeSelection({

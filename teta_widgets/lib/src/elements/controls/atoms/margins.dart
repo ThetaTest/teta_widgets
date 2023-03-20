@@ -9,10 +9,11 @@ import 'package:flutter/material.dart';
 // Package imports:
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:gap/gap.dart';
-import 'package:teta_core/src/design_system/textfield/minitextfield.dart';
+import 'package:teta_front_end/src/design_system/textfield/minitextfield.dart';
 import 'package:teta_core/teta_core.dart';
 // Project imports:
 import '../../features/margins.dart';
+import 'package:teta_front_end/teta_front_end.dart';
 
 class Margins extends StatefulWidget {
   const Margins({
