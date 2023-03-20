@@ -45,6 +45,7 @@ class ApiCallsControl extends StatelessWidget {
             borderRadius: BorderRadius.circular(8),
           ),
           child: TextControl(
+            ignoreDeviceTypeValue: true,
             valueType: VariableType.string,
             value:
                 action.customHttpRequestExpectedStatusCode ?? FTextTypeInput(),
@@ -63,6 +64,7 @@ class ApiCallsControl extends StatelessWidget {
             borderRadius: BorderRadius.circular(8),
           ),
           child: TextControl(
+            ignoreDeviceTypeValue: true,
             valueType: VariableType.string,
             value: action.apiCallsResponseName ?? FTextTypeInput(),
             title: 'Response Name',

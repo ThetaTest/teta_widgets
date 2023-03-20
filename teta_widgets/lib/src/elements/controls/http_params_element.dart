@@ -58,6 +58,7 @@ class HttpParamsElementControlState extends State<HttpParamsElementControl> {
           },
         ),
         TextControl(
+          ignoreDeviceTypeValue: true,
           valueType: VariableType.dynamic,
           value: widget.value.value,
           title: 'Value',

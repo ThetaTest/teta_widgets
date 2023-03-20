@@ -31,6 +31,7 @@ class ControlObject extends ControlModel {
     this.description,
     this.flag,
     this.list,
+    this.ignoreDeviceTypeValue = false,
   });
 
   final ControlType type;
@@ -41,20 +42,15 @@ class ControlObject extends ControlModel {
   final bool? flag;
   final VariableType valueType;
   final List<String>? list;
+  final bool? ignoreDeviceTypeValue;
 
   @override
-  List<Object?> get props => [
-        type,
-        key,
-        value,
-        title,
-        valueType,
-        list,
-      ];
+  List<Object?> get props =>
+      [type, key, value, title, valueType, list, ignoreDeviceTypeValue];
 
   @override
   String toString() =>
-      'ControlObject { type: $type, key: $key, value: $value, title: $title }';
+      'ControlObject { type: $type, key: $key, value: $value, title: $title ,ignoreDeviceTypeValue: $ignoreDeviceTypeValue }';
 }
 
 class SizeControlObject extends ControlModel {

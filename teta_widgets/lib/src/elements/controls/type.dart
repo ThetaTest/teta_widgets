@@ -775,6 +775,7 @@ class ControlBuilder {
       return descriptionControlWidget(
         description: control.description,
         control: TextControl(
+          ignoreDeviceTypeValue: control.ignoreDeviceTypeValue ?? false,
           key: ValueKey('${node.nid}'),
           valueType: control.valueType,
           title: control.title ?? 'Value',
