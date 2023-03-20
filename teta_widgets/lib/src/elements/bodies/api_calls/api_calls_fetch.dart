@@ -78,6 +78,7 @@ class ApiCallsFetchBody extends NodeBody {
           valueType: VariableType.string,
         ),
         ControlObject(
+          ignoreDeviceTypeValue: true,
           title: 'Response Name',
           type: ControlType.value,
           key: DBKeys.apiCallsResponseName,
@@ -85,6 +86,7 @@ class ApiCallsFetchBody extends NodeBody {
           valueType: VariableType.string,
         ),
         ControlObject(
+          ignoreDeviceTypeValue: true,
           title: 'Add Dynamic Value',
           type: ControlType.httpParamsControl,
           key: DBKeys.apiCallsDynamicValue,

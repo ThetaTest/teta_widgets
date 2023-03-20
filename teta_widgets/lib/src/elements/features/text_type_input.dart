@@ -300,7 +300,14 @@ class FTextTypeInput {
     }
   }
 
-  void updateValue(final String val, final BuildContext context) {
+  void updateValue(final String val, final BuildContext context,
+      {final bool ignoreDeviceTypeValue = false}) {
+    if (ignoreDeviceTypeValue) {
+      value = val;
+      valueTablet = val;
+      valueDesktop = val;
+      return;
+    }
     final device = BlocProvider.of<DeviceModeCubit>(context).state;
     if (device.info.identifier.type == DeviceType.phone) {
       value = val;

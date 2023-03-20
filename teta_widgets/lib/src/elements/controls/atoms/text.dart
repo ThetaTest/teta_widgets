@@ -28,6 +28,7 @@ class TextControl extends StatefulWidget {
     required this.value,
     required this.title,
     required this.callBack,
+    this.ignoreDeviceTypeValue = false,
     this.withConvertTo = false,
     this.isSubControl = false,
     this.remove,
@@ -37,6 +38,8 @@ class TextControl extends StatefulWidget {
   final VariableType? valueType;
   final FTextTypeInput value;
   final String title;
+  /// Updated each value: value,valueTable, valueDesktop
+  final bool ignoreDeviceTypeValue;
   final bool isSubControl;
   final bool withConvertTo;
   final Function(FTextTypeInput, FTextTypeInput) callBack;
@@ -131,9 +134,11 @@ class PaddingsState extends State<TextControl> with AfterLayoutMixin {
                   children: [
                     Row(
                       children: [
-                        if (widget.value.type == FTextTypeEnum.text)
+                        if (widget.value.type == FTextTypeEnum.text &&
+                            widget.ignoreDeviceTypeValue == false)
                           const DeviceIndicatorForControls(),
-                        if (widget.value.type == FTextTypeEnum.text)
+                        if (widget.value.type == FTextTypeEnum.text &&
+                            widget.ignoreDeviceTypeValue == false)
                           const Gap(Grid.small),
                         if (!widget.isSubControl)
                           TParagraph(
@@ -333,6 +338,7 @@ class PaddingsState extends State<TextControl> with AfterLayoutMixin {
                           widget.value.updateValue(
                             controller.text.replaceAll(r'\', r'\\'),
                             context,
+                            ignoreDeviceTypeValue: widget.ignoreDeviceTypeValue,
                           );
                           EasyDebounce.debounce(
                             'Editing text ${focusState.first}',
@@ -346,7 +352,11 @@ class PaddingsState extends State<TextControl> with AfterLayoutMixin {
                         onSubmitted: (final value) {
                           value.replaceAll(r'\', r'\\');
                           final old = widget.value;
-                          widget.value.updateValue(value, context);
+                          widget.value.updateValue(
+                            value,
+                            context,
+                            ignoreDeviceTypeValue: widget.ignoreDeviceTypeValue,
+                          );
                           widget.callBack(widget.value, old);
                           setState(() {
                             isChanged = false;
