@@ -88,26 +88,36 @@ class NodeSelectionState extends State<_NodeSelection> {
           }
         },
         child: Listener(
-          onPointerDown: (final event) => RightContextMenu.instance.open(
-            event,
-            context,
-            widget.state.node,
-          ),
+          onPointerDown: (final event) {
+            sl.get<PageCubit>().onFocusFromLocalToGlobalCubit(
+                  page: (context.read<PageCubit>().state as PageLoaded).page,
+                  datasets:
+                      (context.read<PageCubit>().state as PageLoaded).datasets,
+                );
+            RightContextMenu.instance.open(
+              event,
+              context,
+              widget.state.node,
+            );
+          },
           child: GestureDetector(
             onTap: () {
-              sl.get<PageCubit>().onFocusFromLocalToGlobalCubit(
-                    page: (context.read<PageCubit>().state as PageLoaded).page,
-                    datasets: (context.read<PageCubit>().state as PageLoaded)
-                        .datasets,
-                  );
-              if (!BlocProvider.of<FocusBloc>(context)
-                  .state
-                  .contains(widget.state.node.nid)) {
-                BlocProvider.of<FocusBloc>(context)
-                    .add(OnFocus(node: widget.state.node));
-              }
-              BlocProvider.of<JumpToCubit>(context)
-                  .jumpTo(context, widget.state.node);
+              WidgetsBinding.instance.addPostFrameCallback((_) {
+                sl.get<PageCubit>().onFocusFromLocalToGlobalCubit(
+                      page:
+                          (context.read<PageCubit>().state as PageLoaded).page,
+                      datasets: (context.read<PageCubit>().state as PageLoaded)
+                          .datasets,
+                    );
+                if (!BlocProvider.of<FocusBloc>(context)
+                    .state
+                    .contains(widget.state.node.nid)) {
+                  BlocProvider.of<FocusBloc>(context)
+                      .add(OnFocus(node: widget.state.node));
+                }
+                BlocProvider.of<JumpToCubit>(context)
+                    .jumpTo(context, widget.state.node);
+              });
             },
             child: _Body(
               state: widget.state,
@@ -299,7 +309,14 @@ class _HoverNodeName extends StatelessWidget {
   Widget build(final BuildContext context) {
     return GestureDetector(
       onTap: () {
-        context.read<FocusBloc>().add(OnFocus(node: node));
+        WidgetsBinding.instance.addPostFrameCallback((_) {
+          sl.get<PageCubit>().onFocusFromLocalToGlobalCubit(
+                page: (context.read<PageCubit>().state as PageLoaded).page,
+                datasets:
+                    (context.read<PageCubit>().state as PageLoaded).datasets,
+              );
+          context.read<FocusBloc>().add(OnFocus(node: node));
+        });
       },
       child: HoverWidget(
         onHover: (final e) {},

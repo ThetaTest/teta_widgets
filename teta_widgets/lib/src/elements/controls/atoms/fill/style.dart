@@ -51,7 +51,8 @@ class StyleFillControlState extends State<StyleFillControl> {
                               !widget.onlySolid,
                         )
                         .toSet()
-                        .toList(),
+                        .toList()
+                        .unique(),
                     onChange: (final value) {
                       ColorStyleModel? model;
                       for (final element in paletteStyles) {

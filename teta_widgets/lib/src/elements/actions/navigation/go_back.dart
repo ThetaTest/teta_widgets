@@ -4,10 +4,19 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:teta_widgets/src/elements/code/formatter_test.dart';
+import 'package:universal_platform/universal_platform.dart';
 
 class FActionNavigationGoBack {
   static Future action(final BuildContext context) async {
-    Navigator.pop(context);
+    if (UniversalPlatform.isWeb) {
+      final uri = Uri.base;
+      if (uri.toString().contains('/editor/')) {
+        return;
+      }
+    }
+    if (Navigator.canPop(context)) {
+      Navigator.pop(context);
+    }
   }
 
   static String toCode() {

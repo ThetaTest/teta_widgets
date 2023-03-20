@@ -165,6 +165,9 @@ class FillControlState extends State<FillControl> {
   Widget control(final BuildContext context) {
     return BlocBuilder<ColorStylesCubit, List<ColorStyleModel>>(
       builder: (final context, final state) {
+        if (widget.fill.paletteStyle == 'Background / Blank') {
+          widget.fill.paletteStyle = 'Background / Primary';
+        }
         ColorStyleModel? model;
         if (widget.fill.paletteStyle != null) {
           for (final element in state) {

@@ -258,8 +258,12 @@ class FFill extends Equatable {
           boxFit: FBoxFit.fromJson(json['bF'] as String),
         );
       } else {
+        var value = json['pltt'] as String;
+        if (value == 'Background / Blank') {
+          value = 'Background / Primary';
+        }
         return FFill(
-          paletteStyle: json['pltt'],
+          paletteStyle: value,
         );
       }
     } catch (e) {

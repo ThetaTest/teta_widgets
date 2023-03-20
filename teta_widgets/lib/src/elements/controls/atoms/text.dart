@@ -61,37 +61,40 @@ class PaddingsState extends State<TextControl> with AfterLayoutMixin {
 
   @override
   FutureOr<void> afterFirstLayout(final BuildContext context) {
-    setState(() {
-      controller.text = widget.value.getValue(
-        context,
-        forPlay: false,
-      );
-      typeOfInput = widget.value.type!;
-      if (widget.value.datasetName != null) {
-        databaseName = widget.value.datasetName!;
-      }
-      final datasets = (context.read<PageCubit>().state as PageLoaded).datasets;
-      final index = datasets.indexWhere(
-        (final element) => element.getName == widget.value.datasetName,
-      );
-      dataset = index != -1 ? datasets[index] : DatasetObject.empty();
-      Logger.printMessage(
-        'Datasets: $datasets, name: ${widget.value.datasetName}, index: $index',
-      );
-      if (widget.value.datasetAttr != null) {
-        databaseAttribute = widget.value.datasetAttr!;
-      }
-      if (widget.value.datasetSubListData != null) {
-        datasetSubListData = widget.value.datasetSubListData!;
-      }
-      if (widget.value.datasetSubMapData != null) {
-        datasetSubMapData = widget.value.datasetSubMapData!;
-      }
-      if (widget.value.datasetLength != null) {
-        datasetLength = widget.value.datasetLength!;
-      }
-      keyController.text = widget.value.mapKey ?? '';
-    });
+    try {
+      setState(() {
+        controller.text = widget.value.getValue(
+          context,
+          forPlay: false,
+        );
+        typeOfInput = widget.value.type!;
+        if (widget.value.datasetName != null) {
+          databaseName = widget.value.datasetName!;
+        }
+        final datasets =
+            (context.read<PageCubit>().state as PageLoaded).datasets;
+        final index = datasets.indexWhere(
+          (final element) => element.getName == widget.value.datasetName,
+        );
+        dataset = index != -1 ? datasets[index] : DatasetObject.empty();
+        Logger.printMessage(
+          'Datasets: $datasets, name: ${widget.value.datasetName}, index: $index',
+        );
+        if (widget.value.datasetAttr != null) {
+          databaseAttribute = widget.value.datasetAttr!;
+        }
+        if (widget.value.datasetSubListData != null) {
+          datasetSubListData = widget.value.datasetSubListData!;
+        }
+        if (widget.value.datasetSubMapData != null) {
+          datasetSubMapData = widget.value.datasetSubMapData!;
+        }
+        if (widget.value.datasetLength != null) {
+          datasetLength = widget.value.datasetLength!;
+        }
+        keyController.text = widget.value.mapKey ?? '';
+      });
+    } catch (e) {}
   }
 
   @override
