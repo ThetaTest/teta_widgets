@@ -50,6 +50,9 @@ class _WApiCallsFetchState extends State<WApiCallsFetch> with AfterLayoutMixin {
     final apiCallsDynamicValues = <String, dynamic>{};
     final apiCallsDynamicValue = widget.apiCallsDynamicValue;
     for (final e in apiCallsDynamicValue ?? <MapElement>[]) {
+      if (e.key.isEmpty) {
+        break;
+      }
       var value = e.value.toCode(
         0,
         resultType: ResultTypeEnum.string,
@@ -60,7 +63,9 @@ class _WApiCallsFetchState extends State<WApiCallsFetch> with AfterLayoutMixin {
       } else {
         value = value.replaceAll("'", '').replaceAll(' ', '');
       }
-      apiCallsDynamicValues[e.key] = value;
+      if (value != null && value != '' && value != '0') {
+        apiCallsDynamicValues[e.key] = value;
+      }
     }
     //
     var mapParameters = <String, dynamic>{};

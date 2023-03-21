@@ -32,6 +32,9 @@ class ApiCallsFetchCodeTemplate {
     final apiCallsDynamicValue =
         node.body.attributes[DBKeys.apiCallsDynamicValue] as List<MapElement>;
     for (final e in apiCallsDynamicValue) {
+      if (e.key.isEmpty) {
+        break;
+      }
       var value = e.value.toCode(
         0,
         resultType: ResultTypeEnum.string,
@@ -42,7 +45,9 @@ class ApiCallsFetchCodeTemplate {
       } else {
         value = value.replaceAll("'", '').replaceAll(' ', '');
       }
-      apiCallsDynamicValues[e.key] = value;
+      if (value != null && value != '' && value != '0') {
+        apiCallsDynamicValues[e.key] = value;
+      }
     }
     //
     var mapParameters = <String, dynamic>{};

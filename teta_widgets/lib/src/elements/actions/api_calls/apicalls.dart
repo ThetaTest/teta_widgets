@@ -26,8 +26,13 @@ class FAApiCalls {
 
     final apiCallsDynamicValues = <String, dynamic>{};
     for (final e in apiCallsDynamicValue ?? <MapElement>[]) {
-      apiCallsDynamicValues[e.key] =
-          e.value.get(params, states, dataset, true, loop, context);
+      if (e.key.isEmpty) {
+        break;
+      }
+      final value = e.value.get(params, states, dataset, true, loop, context);
+      if (value != null && value != '' && value != '0') {
+        apiCallsDynamicValues[e.key] = value;
+      }
     }
     final customHttpRequestExpectedStatusCodeNew =
         customHttpRequestExpectedStatusCode?.get(
@@ -397,6 +402,10 @@ class FAApiCalls {
   ) {
     final apiCallsDynamicValues = <String, dynamic>{};
     for (final e in apiCallsDynamicValue ?? <MapElement>[]) {
+      if (e.key.isEmpty) {
+        break;
+      }
+
       var value = e.value.toCode(
         0,
         resultType: ResultTypeEnum.string,
@@ -407,7 +416,9 @@ class FAApiCalls {
       } else {
         value = value.replaceAll("'", '').replaceAll(' ', '');
       }
-      apiCallsDynamicValues[e.key] = value;
+      if (value != null && value != '' && value != '0') {
+        apiCallsDynamicValues[e.key] = value;
+      }
     }
     var mapParameters = <String, dynamic>{};
     var mapHeaders = <String, dynamic>{};
