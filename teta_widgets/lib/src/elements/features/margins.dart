@@ -10,7 +10,6 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:responsive_builder/responsive_builder.dart';
 // Package imports:
 import 'package:teta_core/src/utils/expression/expression.dart';
-import 'package:teta_core/teta_core.dart';
 import 'package:teta_front_end/teta_front_end.dart';
 
 class FMargins extends Equatable {
@@ -103,6 +102,7 @@ class FMargins extends Equatable {
   }
 
   static FMargins fromJson(final dynamic json) {
+    print('FMargins.fromJson: $json');
     if (json is List<dynamic>) {
       return FMargins(
         margins: json.map((final dynamic e) => '$e').toList(),

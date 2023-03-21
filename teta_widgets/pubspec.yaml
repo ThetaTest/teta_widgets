@@ -37,13 +37,13 @@ dependencies:
 
   flutter_polyline_points:
     git:
-      url: https://github.com/AndreiCosmaTeta/flutter_polyline_points.git
+      url: https://github.com/andreabuttarelli/flutter_polyline_points.git
       ref: web
 
   # DB & Services
   supabase: ^0.3.6
   supabase_flutter: ^0.3.3
-  http: 0.13.4
+  http: 0.13.5
   github: 9.3.0
   socket_io_client: 2.0.0
   dart_airtable: 1.1.0
@@ -164,7 +164,7 @@ dependencies:
   # Code
   syntax_highlighter: 0.1.1
   flutter_highlight: 0.7.0
-  dart_style: 2.2.3
+  dart_style:
 
   # Payments
   purchases_flutter: 3.10.0
@@ -197,7 +197,7 @@ dev_dependencies:
   flutter_test:
     sdk: flutter
   import_sorter: 4.6.0
-  flutter_gen_runner: 4.2.0
+  flutter_gen_runner:
   flutter_lints: ^2.0.1
 
 # For information on the generic Dart part of this file, see the

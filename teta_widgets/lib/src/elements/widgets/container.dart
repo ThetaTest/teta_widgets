@@ -1,17 +1,13 @@
 // Flutter imports:
-// ignore_for_file: public_member_api_docs
+// ignore_for_file: public_member_api_docs, no_leading_underscores_for_local_identifiers
 
 // Flutter imports:
 
 import 'package:flutter/material.dart';
-import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:teta_core/src/rendering/find.dart';
-import 'package:teta_core/teta_core.dart';
 // Package imports:
 import 'package:teta_widgets/src/core/teta_widget/index.dart';
 // Project imports:
 import 'package:teta_widgets/src/elements/index.dart';
-import 'package:teta_front_end/teta_front_end.dart';
 
 class WContainer extends StatelessWidget {
   /// Returns a Container widget
@@ -42,12 +38,6 @@ class WContainer extends StatelessWidget {
 
   @override
   Widget build(final BuildContext context) {
-    final nodes =
-        (context.watch<PageCubit>().state as PageLoaded).page.flatList;
-    final parent = sl.get<FindNodeRendering>().findParentByChildrenIds(
-          flatList: nodes,
-          element: state.node,
-        )!;
     final _width = width.get(
       context: context,
       isWidth: true,
@@ -58,13 +48,6 @@ class WContainer extends StatelessWidget {
       isWidth: false,
       forPlay: state.forPlay,
     );
-    var mustBeWrappedInExpanded = false;
-    if (parent.globalType == NType.row && _width == double.maxFinite) {
-      mustBeWrappedInExpanded = true;
-    } else if (parent.globalType == NType.column &&
-        _height == double.maxFinite) {
-      mustBeWrappedInExpanded = true;
-    }
     return TetaWidget(
       state: state,
       child: Container(
