@@ -164,7 +164,7 @@ dependencies:
   # Code
   syntax_highlighter: 0.1.1
   flutter_highlight: 0.7.0
-  dart_style:
+  dart_style: ^2.3.0
 
   # Payments
   purchases_flutter: 3.10.0
