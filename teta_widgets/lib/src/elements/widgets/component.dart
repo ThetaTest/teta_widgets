@@ -17,6 +17,7 @@ import 'package:teta_widgets/src/elements/builder/get_variable_from_params.dart'
 import 'package:teta_widgets/src/elements/index.dart';
 import 'package:webviewx/webviewx.dart';
 import 'package:teta_front_end/teta_front_end.dart';
+import 'package:teta_models/teta_models.dart';
 
 class WComponent extends StatefulWidget {
   /// Returns a Component

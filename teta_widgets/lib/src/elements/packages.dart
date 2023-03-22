@@ -1,4 +1,4 @@
-import 'package:teta_core/src/models/package.dart';
+import 'package:teta_models/src/models/package.dart';
 
 ///This file contains all the packages we support & export in each app.
 const PackageModel pLottie = PackageModel(

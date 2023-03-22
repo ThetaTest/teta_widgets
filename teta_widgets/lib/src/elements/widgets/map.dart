@@ -14,6 +14,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:latlng/latlng.dart';
 import 'package:map/map.dart';
 import 'package:teta_core/teta_core.dart';
+import 'package:teta_models/teta_models.dart';
 import 'package:teta_widgets/src/core/teta_widget/index.dart';
 // Project imports:
 import 'package:teta_widgets/src/elements/index.dart';
@@ -53,12 +54,11 @@ class _WMapState extends State<WMap> {
   }
 
   Future<void> init() async {
-    final page = BlocProvider.of<PageCubit>(context).state as PageLoaded;
     if (widget.controller.type == FTextTypeEnum.param) {
-      variable = page.params
+      variable = widget.state.params
           .firstWhereOrNull((final e) => e.name == widget.controller.paramName);
     } else {
-      variable = page.states
+      variable = widget.state.states
           .firstWhereOrNull((final e) => e.name == widget.controller.stateName);
     }
     variable = variable!.copyWith(

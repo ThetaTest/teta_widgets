@@ -1,5 +1,5 @@
-import 'package:teta_core/teta_core.dart';
 import 'package:teta_widgets/src/elements/index.dart';
+import 'package:teta_models/teta_models.dart';
 
 class TetaWidgetState {
   const TetaWidgetState({
@@ -9,6 +9,10 @@ class TetaWidgetState {
     required this.params,
     required this.states,
     required this.dataset,
+    required this.pageId,
+    required this.isPage,
+    required this.colorStyles,
+    required this.textStyles,
     this.isVertical = true,
   });
 
@@ -32,6 +36,11 @@ class TetaWidgetState {
   /// The dataset list created by other widgets inside the same page
   final List<DatasetObject> dataset;
 
+  final int pageId;
+  final bool isPage;
+  final List<ColorStyleModel> colorStyles;
+  final List<TextStyleModel> textStyles;
+
   final bool isVertical;
 
   TetaWidgetState copyWith({
@@ -42,6 +51,10 @@ class TetaWidgetState {
     final List<VariableObject>? states,
     final List<DatasetObject>? dataset,
     final bool? isVertical,
+    final int? pageId,
+    final bool? isPage,
+    final List<ColorStyleModel>? colorStyles,
+    final List<TextStyleModel>? textStyles,
   }) {
     return TetaWidgetState(
       node: node ?? this.node,
@@ -51,6 +64,10 @@ class TetaWidgetState {
       states: states ?? this.states,
       dataset: dataset ?? this.dataset,
       isVertical: isVertical ?? this.isVertical,
+      pageId: pageId ?? this.pageId,
+      isPage: isPage ?? this.isPage,
+      colorStyles: colorStyles ?? this.colorStyles,
+      textStyles: textStyles ?? this.textStyles,
     );
   }
 

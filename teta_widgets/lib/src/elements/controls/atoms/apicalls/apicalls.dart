@@ -12,6 +12,7 @@ import 'package:teta_widgets/src/elements/controls/http_params.dart';
 // Project imports:
 import 'package:teta_widgets/src/elements/index.dart';
 import 'package:teta_front_end/teta_front_end.dart';
+import 'package:teta_models/teta_models.dart';
 
 class ApiCallsControl extends StatelessWidget {
   const ApiCallsControl({

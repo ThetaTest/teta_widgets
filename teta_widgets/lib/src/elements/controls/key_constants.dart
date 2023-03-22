@@ -10,6 +10,7 @@ import 'package:teta_widgets/src/elements/features/condition_type.dart';
 import '../features/google_maps_map_style.dart';
 import '../features/physic.dart';
 import '../index.dart';
+import 'package:teta_models/teta_models.dart';
 
 class DBKeys {
   // DB param keys

@@ -7,6 +7,7 @@ import 'package:teta_core/teta_core.dart';
 import '../../../core/teta_widget/index.dart';
 import '../../index.dart';
 import 'package:teta_front_end/teta_front_end.dart';
+import 'package:teta_models/teta_models.dart';
 
 class WSupabaseFutureBuilder extends StatefulWidget {
   /// Construct

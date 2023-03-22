@@ -2,7 +2,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 // Package imports:
-import 'package:teta_core/teta_core.dart';
+import 'package:teta_models/teta_models.dart';
 import 'package:teta_widgets/src/core/teta_widget/index.dart';
 // Project imports:
 import 'package:teta_widgets/src/elements/index.dart';

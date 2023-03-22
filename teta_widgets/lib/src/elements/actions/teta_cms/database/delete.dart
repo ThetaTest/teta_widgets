@@ -9,6 +9,7 @@ import 'package:teta_cms/teta_cms.dart';
 import 'package:teta_core/teta_core.dart';
 import 'package:teta_widgets/src/elements/index.dart';
 // Project imports:
+import 'package:teta_models/teta_models.dart';
 
 class FATetaCMSDelete {
   static Future action(

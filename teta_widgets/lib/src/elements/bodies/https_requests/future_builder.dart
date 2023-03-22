@@ -2,7 +2,7 @@
 import 'package:flutter/material.dart';
 // Package imports:
 import 'package:teta_core/gen/assets.gen.dart';
-import 'package:teta_core/src/models/variable.dart';
+import 'package:teta_models/src/models/variable.dart';
 import 'package:teta_widgets/src/core/teta_widget/index.dart';
 // Project imports:
 import 'package:teta_widgets/src/elements/controls/control_model.dart';
@@ -16,6 +16,7 @@ import 'package:teta_widgets/src/elements/nodes/enum.dart';
 import 'package:teta_widgets/src/elements/nodes/node.dart';
 import 'package:teta_widgets/src/elements/nodes/node_body.dart';
 import 'package:teta_widgets/src/elements/widgets/http_requests/future_builder.dart';
+import 'package:teta_models/teta_models.dart';
 
 const _globalType = NType.httpRequest;
 

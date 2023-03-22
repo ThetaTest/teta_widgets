@@ -18,6 +18,7 @@ import 'package:teta_widgets/src/elements/nodes/node.dart';
 import 'package:teta_widgets/src/elements/widgets/google_maps/google_maps_base_widget.dart';
 import 'package:teta_widgets/src/elements/widgets/google_maps/google_maps_cubit.dart';
 import 'package:teta_front_end/teta_front_end.dart';
+import 'package:teta_models/teta_models.dart';
 
 // ignore_for_file: public_member_api_docs
 
@@ -195,14 +196,13 @@ class _WGoogleMapsState extends State<WGoogleMaps> {
       googleMapsKey = (context.read<ConfigCubit>().state as ConfigStateLoaded)
           .config
           .googleMapsKey;
-      final page = BlocProvider.of<PageCubit>(context).state as PageLoaded;
       final VariableObject? variable;
 
-      final index = page.states.indexWhere(
+      final index = widget.state.states.indexWhere(
         (final e) => e.name == widget.cubitName,
       );
       if (index == -1) return;
-      variable = page.states[index];
+      variable = widget.state.states[index];
 
       if (variable.googleMapsCubit == null) {
         context.read<PageCubit>().updateState(

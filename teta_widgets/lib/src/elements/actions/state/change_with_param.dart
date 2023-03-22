@@ -12,6 +12,7 @@ import 'package:teta_widgets/src/elements/actions/snippets/get_page_on_code.dart
 import 'package:teta_widgets/src/elements/actions/snippets/take_param_from.dart';
 import 'package:teta_widgets/src/elements/actions/snippets/take_state_from.dart';
 import 'package:teta_front_end/teta_front_end.dart';
+import 'package:teta_models/teta_models.dart';
 
 class FActionStateChangeWithParam {
   static Future action(

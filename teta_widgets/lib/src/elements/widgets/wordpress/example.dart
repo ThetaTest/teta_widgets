@@ -10,7 +10,7 @@ import 'package:teta_core/src/elements/builder/add_dataset.dart';
 import 'package:teta_core/src/elements/builder/node_selection_builder.dart';
 import 'package:teta_core/src/elements/nodes/node.dart';
 import 'package:teta_core/src/models/dataset.dart';
-import 'package:teta_core/src/models/variable.dart';
+import 'package:teta_models/src/models/variable.dart';
 import 'package:teta_core/src/utils/shopify/flutter_simple_shopify.dart';
 import 'package:teta_core/src/utils/shopify/models/models.dart';
 import 'package:teta_core/src/utils/wordpress/flutter_wordpress.dart' as wp;

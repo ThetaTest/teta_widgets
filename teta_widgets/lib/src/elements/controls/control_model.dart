@@ -10,6 +10,7 @@ import 'package:teta_widgets/src/elements/features/box_fit.dart';
 import 'package:teta_widgets/src/elements/features/fill.dart';
 import 'package:teta_widgets/src/elements/features/firestore_path.dart';
 import 'package:teta_widgets/src/elements/features/sizes.dart';
+import 'package:teta_models/teta_models.dart';
 
 abstract class ControlModel extends Equatable {
   const ControlModel();

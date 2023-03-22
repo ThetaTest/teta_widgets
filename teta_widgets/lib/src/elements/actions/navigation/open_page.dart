@@ -25,6 +25,8 @@ import 'package:universal_platform/universal_platform.dart';
 import 'package:teta_front_end/teta_front_end.dart';
 import 'package:collection/collection.dart';
 // ignore: library_prefixes
+import 'package:teta_models/teta_models.dart';
+import 'package:teta_models/src/models/variable.dart';
 
 void goTo(final CNode node, final BuildContext context, final Widget child) {
   if (node.body.attributes[DBKeys.pageTransition] != null) {

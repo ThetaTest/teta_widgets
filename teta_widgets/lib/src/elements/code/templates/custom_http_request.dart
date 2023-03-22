@@ -8,6 +8,7 @@ import 'package:teta_widgets/src/elements/features/text_type_input.dart';
 import 'package:teta_widgets/src/elements/nodes/dynamic.dart';
 import 'package:teta_widgets/src/elements/nodes/node.dart';
 import 'package:teta_widgets/src/elements/code/formatter_test.dart';
+import 'package:teta_models/teta_models.dart';
 
 /// Generates the code for Custom Http Request widget
 class CustomHttpRequestCodeTemplate {

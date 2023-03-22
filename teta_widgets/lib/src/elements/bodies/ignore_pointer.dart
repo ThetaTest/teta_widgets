@@ -18,6 +18,7 @@ import 'package:teta_widgets/src/elements/nodes/node_body.dart';
 import 'package:teta_widgets/src/elements/nodes/suggestion.dart';
 import 'package:teta_widgets/src/elements/widgets/ignore_pointer.dart';
 import 'package:teta_widgets/teta_widgets.dart';
+import 'package:teta_models/src/models/variable.dart';
 
 const _globalType = NType.ignorePointer;
 

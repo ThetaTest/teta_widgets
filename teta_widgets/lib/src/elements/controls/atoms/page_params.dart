@@ -14,6 +14,7 @@ import 'package:teta_front_end/src/design_system/textfield/multi_line_textfield.
 import 'package:teta_core/teta_core.dart';
 // Project imports:
 import 'package:teta_front_end/teta_front_end.dart';
+import 'package:teta_models/teta_models.dart';
 
 class PageParamsControl extends StatefulWidget {
   const PageParamsControl({

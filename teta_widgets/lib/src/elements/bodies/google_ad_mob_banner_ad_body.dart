@@ -19,6 +19,7 @@ import 'package:teta_widgets/src/elements/nodes/node_body.dart';
 import 'package:teta_widgets/src/elements/nodes/suggestion.dart';
 import 'package:teta_widgets/src/elements/packages.dart';
 import 'package:teta_widgets/src/elements/widgets/w_google_ad_mob_banner_ad_body.dart';
+import 'package:teta_models/src/models/variable.dart';
 
 /// GlobalType for [] widget
 const _globalType = NType.adMobBanner;

@@ -8,8 +8,6 @@ import 'package:after_layout/after_layout.dart';
 import 'package:collection/collection.dart';
 // Flutter imports:
 import 'package:flutter/material.dart';
-import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:teta_core/teta_core.dart';
 import '../../core/teta_widget/index.dart';
 // Project imports:
 import '../index.dart';
@@ -76,9 +74,7 @@ class _WScaffoldState extends State<WScaffold> with AfterLayoutMixin {
 
   @override
   Widget build(final BuildContext context) {
-    final pageState = context.watch<PageCubit>().state;
-    if (pageState is! PageLoaded) return const SizedBox();
-    final isPage = pageState.page.isPage;
+    final isPage = widget.state.isPage;
     if (!isPage && !widget.state.forPlay) {
       return SizedBox(
         child: Center(
@@ -156,7 +152,7 @@ class _WScaffoldState extends State<WScaffold> with AfterLayoutMixin {
       (final element) => element.globalType == NType.drawer,
     );
 
-    final isPage = (context.watch<PageCubit>().state as PageLoaded).page.isPage;
+    final isPage = widget.state.isPage;
     if (!isPage) return _childWids(context);
     return Stack(
       children: [

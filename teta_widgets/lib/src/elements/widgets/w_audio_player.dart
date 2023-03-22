@@ -2,9 +2,8 @@
 import 'package:collection/collection.dart';
 import 'package:flutter/material.dart';
 // Package imports:
-import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:just_audio/just_audio.dart';
-import 'package:teta_core/teta_core.dart';
+import 'package:teta_models/teta_models.dart';
 // Project imports:
 import 'package:teta_widgets/src/core/teta_widget/teta_widget_state.dart';
 import 'package:teta_widgets/src/elements/builder/gesture_detector_base.dart';
@@ -43,8 +42,6 @@ class _WAudioPlayerState extends State<WAudioPlayer> {
 
   Future<void> initAudioPlayer() async {
     try {
-      final page = BlocProvider.of<PageCubit>(context).state as PageLoaded;
-
       _map = DatasetObject(
         name: widget.state.node.name ??
             widget.state.node.intrinsicState.displayName,
@@ -52,11 +49,11 @@ class _WAudioPlayerState extends State<WAudioPlayer> {
       );
 
       if (widget.controller.type == FTextTypeEnum.param) {
-        variable = page.params.firstWhereOrNull(
+        variable = widget.state.params.firstWhereOrNull(
           (final e) => e.name == widget.controller.paramName,
         );
       } else {
-        variable = page.states.firstWhereOrNull(
+        variable = widget.state.states.firstWhereOrNull(
           (final e) => e.name == widget.controller.stateName,
         );
       }
@@ -110,7 +107,6 @@ class _WAudioPlayerState extends State<WAudioPlayer> {
         // BlocProvider.of<RefreshCubit>(context).change();
       }
     } catch (e) {
-      Logger.printError('WAudioPlayer.initAudioPlayer.error -> $e');
       throw Exception(e);
     }
   }

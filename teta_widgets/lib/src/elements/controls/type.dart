@@ -60,6 +60,7 @@ import 'google_maps_cubit_control.dart';
 import 'http_params.dart';
 import 'prefabs/sizes_prefab_control.dart';
 import 'prefabs/text_prefab_control.dart';
+import 'package:teta_models/teta_models.dart';
 
 enum ControlType {
   /// Made for colors, gradients and images.

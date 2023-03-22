@@ -4,6 +4,7 @@
 // Flutter imports:
 import 'package:flutter/material.dart';
 import 'package:teta_core/src/services/node_service.dart';
+import 'package:teta_models/teta_models.dart';
 import 'package:teta_core/teta_core.dart';
 import 'package:teta_widgets/src/core/teta_widget/index.dart';
 // Project imports:

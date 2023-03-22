@@ -10,6 +10,7 @@ import 'package:teta_core/teta_core.dart';
 import 'package:teta_widgets/src/elements/controls/atoms/text.dart';
 import 'package:teta_widgets/src/elements/features/actions/element.dart';
 import 'package:teta_widgets/src/elements/features/text_type_input.dart';
+import 'package:teta_models/teta_models.dart';
 
 class SupabaseInvokeControl extends StatelessWidget {
   const SupabaseInvokeControl({

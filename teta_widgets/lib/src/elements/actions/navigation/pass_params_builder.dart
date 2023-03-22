@@ -1,6 +1,6 @@
 import 'package:camera/camera.dart';
 import 'package:just_audio/just_audio.dart';
-import 'package:teta_core/teta_core.dart';
+import 'package:teta_models/teta_models.dart';
 
 List<VariableObject> passParamsToNewPage(
   final List<VariableObject> newPageParams,

@@ -6,12 +6,12 @@
 import 'package:enum_to_string/enum_to_string.dart';
 // Flutter imports:
 import 'package:flutter/material.dart';
-import 'package:teta_core/teta_core.dart';
 import 'package:teta_widgets/src/core/teta_widget/index.dart';
 // Project imports:
 import 'package:teta_widgets/src/elements/index.dart';
 import 'package:teta_widgets/src/elements/intrinsic_states/class.dart';
 import 'package:teta_widgets/src/elements/nodes/node_body.dart';
+import 'package:teta_models/teta_models.dart';
 
 // ignore: must_be_immutable
 class NDynamic extends CNode {
@@ -239,6 +239,10 @@ class NDynamic extends CNode {
     required final List<VariableObject> params,
     required final List<VariableObject> states,
     required final List<DatasetObject> datasets,
+    required final List<ColorStyleModel> colorStyles,
+    required final List<TextStyleModel> textStyles,
+    required final int pageId,
+    required final bool isPage,
   }) {
     return body.toWidget(
       child: child,
@@ -250,6 +254,10 @@ class NDynamic extends CNode {
         params: params,
         states: states,
         dataset: datasets,
+        pageId: pageId,
+        isPage: isPage,
+        colorStyles: colorStyles,
+        textStyles: textStyles,
       ),
     );
   }

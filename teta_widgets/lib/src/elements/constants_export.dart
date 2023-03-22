@@ -1,4 +1,4 @@
-import 'package:teta_core/src/models/constants_model.dart';
+import 'package:teta_models/src/models/constants_model.dart';
 import 'package:teta_widgets/src/elements/widgets/google_maps/maps/aubergine_map.dart';
 import 'package:teta_widgets/src/elements/widgets/google_maps/maps/dark_map.dart';
 import 'package:teta_widgets/src/elements/widgets/google_maps/maps/night_map.dart';

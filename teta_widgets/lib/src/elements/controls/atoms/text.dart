@@ -21,6 +21,7 @@ import 'package:teta_core/teta_core.dart';
 // Project imports:
 import '../../../../teta_widgets.dart';
 import 'package:teta_front_end/teta_front_end.dart';
+import 'package:teta_models/teta_models.dart';
 
 class TextControl extends StatefulWidget {
   const TextControl({
@@ -38,6 +39,7 @@ class TextControl extends StatefulWidget {
   final VariableType? valueType;
   final FTextTypeInput value;
   final String title;
+
   /// Updated each value: value,valueTable, valueDesktop
   final bool ignoreDeviceTypeValue;
   final bool isSubControl;
@@ -394,6 +396,9 @@ class PaddingsState extends State<TextControl> with AfterLayoutMixin {
                               label: 'Add ${widget.valueType!.name} param',
                               isPrimary: true,
                               callback: () {
+                                sl
+                                    .get<PageCubit>()
+                                    .addParam(type: widget.valueType);
                                 context
                                     .read<PageCubit>()
                                     .addParam(type: widget.valueType);
@@ -482,6 +487,9 @@ class PaddingsState extends State<TextControl> with AfterLayoutMixin {
                               label: 'Add ${widget.valueType!.name} state',
                               isPrimary: true,
                               callback: () {
+                                sl
+                                    .get<PageCubit>()
+                                    .addParam(type: widget.valueType);
                                 context
                                     .read<PageCubit>()
                                     .addState(type: widget.valueType);

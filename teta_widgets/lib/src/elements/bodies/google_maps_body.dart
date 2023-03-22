@@ -28,6 +28,7 @@ import 'package:teta_widgets/src/elements/packages.dart';
 import 'package:teta_widgets/src/elements/widgets/google_maps/google_maps_stub_widget.dart'
     if (dart.library.io) 'package:teta_widgets/src/elements/widgets/google_maps/google_maps_web_mobile_widget.dart'
     if (dart.library.html) 'package:teta_widgets/src/elements/widgets/google_maps/google_maps_web_mobile_widget.dart';
+import 'package:teta_models/src/models/variable.dart';
 
 const _globalType = NType.googleMaps;
 

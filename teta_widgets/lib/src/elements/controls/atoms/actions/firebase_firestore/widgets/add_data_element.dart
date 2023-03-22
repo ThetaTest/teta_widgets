@@ -8,11 +8,12 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:teta_front_end/src/design_system/dropdowns/dropdown.dart';
 import 'package:teta_front_end/src/design_system/dropdowns/dropdown_for_type.dart';
 import 'package:teta_front_end/src/design_system/textfield/textfield.dart';
-import 'package:teta_core/src/models/page.dart';
+import 'package:teta_models/src/models/page.dart';
 import 'package:teta_core/teta_core.dart';
 // Project imports:
 import 'package:teta_widgets/src/elements/features/text_type_input.dart';
 import 'package:teta_front_end/teta_front_end.dart';
+import 'package:teta_models/teta_models.dart';
 
 class AddDataElement extends StatefulWidget {
   const AddDataElement({

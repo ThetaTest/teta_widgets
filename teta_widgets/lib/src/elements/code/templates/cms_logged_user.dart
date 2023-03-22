@@ -7,6 +7,7 @@ import 'package:teta_widgets/src/elements/code/formatter_test.dart';
 // Project imports:
 import 'package:teta_widgets/src/elements/nodes/dynamic.dart';
 import 'package:teta_widgets/src/elements/nodes/node.dart';
+import 'package:teta_models/teta_models.dart';
 
 /// Generates the code for CMS Logged User widget
 class CmsLoggedUserCodeTemplate {

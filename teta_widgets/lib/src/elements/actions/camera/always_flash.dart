@@ -12,6 +12,7 @@ import 'package:recase/recase.dart';
 import 'package:teta_core/teta_core.dart';
 import 'package:teta_widgets/src/elements/actions/snippets/get_page_on_code.dart';
 import 'package:teta_front_end/teta_front_end.dart';
+import 'package:teta_models/teta_models.dart';
 
 class FACameraAlwaysFlash {
   static Future action(final BuildContext context) async {

@@ -238,10 +238,7 @@ class _BodyState extends State<_Body> {
                 null ||
             onHover == widget.state.node.nid)
           Positioned(
-            top: (key.globalPaintBounds?.top ?? 0) <
-                    (MediaQuery.of(context).size.height / 3)
-                ? (key.globalPaintBounds?.height ?? 0)
-                : -20,
+            top: -20,
             child: RepaintBoundary(
               child: InkWell(
                 onHover: (final e) {

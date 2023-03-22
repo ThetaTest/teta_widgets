@@ -11,6 +11,7 @@ import '../../core/teta_widget/teta_widget_state.dart';
 // Project imports:
 import '../index.dart';
 import '../nodes/node_body.dart';
+import 'package:teta_models/teta_models.dart';
 
 /// Builder
 class GestureBuilderBase {

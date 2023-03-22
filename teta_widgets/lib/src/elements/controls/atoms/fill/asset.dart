@@ -12,6 +12,7 @@ import 'package:teta_core/teta_core.dart';
 import 'package:teta_widgets/src/elements/features/features.dart';
 import 'package:teta_widgets/src/elements/nodes/node.dart';
 import 'package:teta_front_end/teta_front_end.dart';
+import 'package:teta_models/teta_models.dart';
 
 class AssetFillControl extends StatefulWidget {
   const AssetFillControl({

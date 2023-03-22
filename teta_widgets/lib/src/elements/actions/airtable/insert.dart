@@ -2,8 +2,8 @@ import 'package:dart_airtable/dart_airtable.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:teta_core/src/cubits/airtable.dart';
-import 'package:teta_core/teta_core.dart';
 import 'package:teta_widgets/src/elements/features/text_type_input.dart';
+import 'package:teta_models/teta_models.dart';
 
 class FAAirtableInsert {
   static Future<AirtableRecord?> action(
@@ -43,19 +43,17 @@ class FAAirtableInsert {
     final FTextTypeInput? airtableRecordName,
     final List<MapElement> airtableData,
   ) {
-
     List<String> stringRecordField = [];
 
-    airtableData.forEach((element) {
-      stringRecordField.add('AirtableRecordField(fieldName: ${element.key}, value: ${element.value.toCode(0, resultType: ResultTypeEnum.string)})');
-    });
-
+    for (var element in airtableData) {
+      stringRecordField.add(
+          'AirtableRecordField(fieldName: ${element.key}, value: ${element.value.toCode(0, resultType: ResultTypeEnum.string)})');
+    }
 
     final stringRecord = '''
         AirtableRecord(
         fields: $stringRecordField)
     ''';
-
 
     return '''
     AirtableInstance.instance.insert(recordName: ${airtableRecordName?.toCode(

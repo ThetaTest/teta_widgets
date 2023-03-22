@@ -4,14 +4,12 @@
 import 'package:collection/collection.dart';
 // Flutter imports:
 import 'package:flutter/material.dart';
-import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:teta_core/teta_core.dart';
+import 'package:teta_models/teta_models.dart';
 import 'package:teta_widgets/src/core/teta_widget/teta_widget_state.dart';
 import 'package:teta_widgets/src/elements/builder/gesture_detector_base.dart';
 // Project imports:
 import 'package:teta_widgets/src/elements/index.dart';
 import 'package:webviewx/webviewx.dart';
-import 'package:teta_front_end/teta_front_end.dart';
 // ignore_for_file: public_member_api_docs
 
 class WWebViewXPage extends StatefulWidget {
@@ -37,13 +35,11 @@ class _WWebViewXPageState extends State<WWebViewXPage> {
 
   @override
   void initState() {
-    final page = BlocProvider.of<PageCubit>(context).state as PageLoaded;
-
     if (widget.controller.type == FTextTypeEnum.param) {
-      variable = page.params
+      variable = widget.state.params
           .firstWhereOrNull((final e) => e.name == widget.controller.paramName);
     } else {
-      variable = page.states
+      variable = widget.state.states
           .firstWhereOrNull((final e) => e.name == widget.controller.stateName);
     }
 

@@ -1,6 +1,6 @@
 // Flutter imports:
 // Package imports:
-// ignore_for_file: avoid_dynamic_calls
+// ignore_for_file: avoid_dynamic_calls, no_leading_underscores_for_local_identifiers
 
 // Flutter imports:
 import 'dart:async';
@@ -15,6 +15,7 @@ import 'package:teta_widgets/src/core/teta_widget/index.dart';
 // Project imports:
 import 'package:teta_widgets/src/elements/index.dart';
 import 'package:teta_front_end/teta_front_end.dart';
+import 'package:teta_models/teta_models.dart';
 
 // ignore_for_file: public_member_api_docs
 

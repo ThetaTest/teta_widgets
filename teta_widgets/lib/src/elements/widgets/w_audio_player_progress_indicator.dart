@@ -2,10 +2,9 @@
 import 'package:collection/collection.dart';
 import 'package:flutter/material.dart';
 // Package imports:
-import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:just_audio/just_audio.dart';
 import 'package:rxdart/rxdart.dart';
-import 'package:teta_core/teta_core.dart';
+import 'package:teta_models/teta_models.dart';
 import 'package:teta_widgets/src/core/teta_widget/teta_widget_state.dart';
 import 'package:teta_widgets/src/elements/builder/gesture_detector_base.dart';
 // Project imports:
@@ -44,13 +43,12 @@ class _WAudioPlayerProgressIndicatorState
   }
 
   Future<void> init() async {
-    final page = BlocProvider.of<PageCubit>(context).state as PageLoaded;
     VariableObject? variable;
     if (widget.controller.type == FTextTypeEnum.param) {
-      variable = page.params
+      variable = widget.state.params
           .firstWhereOrNull((final e) => e.name == widget.controller.paramName);
     } else {
-      variable = page.states
+      variable = widget.state.states
           .firstWhereOrNull((final e) => e.name == widget.controller.stateName);
     }
     if (variable?.audioController != null) {

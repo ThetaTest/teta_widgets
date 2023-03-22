@@ -9,6 +9,7 @@ import 'package:teta_widgets/src/elements/features/condition_type.dart';
 import 'package:teta_widgets/src/elements/features/text_type_input.dart';
 import 'package:teta_widgets/src/elements/nodes/node.dart';
 import 'package:teta_widgets/src/elements/nodes/node_body.dart';
+import 'package:teta_models/teta_models.dart';
 
 /// Condition Template
 class ConditionCodeTemplate {

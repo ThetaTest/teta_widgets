@@ -4,9 +4,11 @@
 
 // Flutter imports:
 // Package imports:
+import 'dart:html';
+
 import 'package:flutter/material.dart';
 import 'package:teta_cms/teta_cms.dart';
-import 'package:teta_core/teta_core.dart';
+import 'package:teta_models/teta_models.dart';
 import 'package:teta_widgets/src/core/teta_widget/index.dart';
 import 'package:teta_widgets/src/elements/index.dart';
 // Project imports:
@@ -21,7 +23,7 @@ class FACustomHttpRequestPost {
     final List<MapElement>? body,
     final List<MapElement>? headers,
   ) async {
-    var _map = DatasetObject(
+    var map = const DatasetObject(
       name: 'Custom Http Request Post',
       map: [<String, dynamic>{}],
     );
@@ -84,7 +86,7 @@ class FACustomHttpRequestPost {
           mapBody,
           mapHeaders);
       if (response.data != null) {
-        _map = _map.copyWith(
+        map = map.copyWith(
           name: 'Custom Http Request Post',
           map: (response.data ?? const <dynamic>[])
               .map((final dynamic e) => <String, dynamic>{...e})
@@ -92,7 +94,7 @@ class FACustomHttpRequestPost {
         );
       }
       if (response.error != null) {
-        _map = _map.copyWith(
+        map = map.copyWith(
           name: 'Custom Http Request Post',
           map: (response.error!).map((final dynamic e) {
             return e as Map<String, dynamic>;
@@ -100,7 +102,7 @@ class FACustomHttpRequestPost {
         );
       }
 
-      final datasets = addDataset(context, _map);
+      final datasets = addDataset(context, map);
     }
   }
 

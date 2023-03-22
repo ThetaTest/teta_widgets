@@ -6,7 +6,7 @@ import 'package:flutter/material.dart';
 // Package imports:
 import 'package:google_fonts/google_fonts.dart';
 import 'package:teta_front_end/src/design_system/hex_color.dart';
-import 'package:teta_core/src/models/text_style.dart';
+import 'package:teta_models/src/models/text_style.dart';
 // Project imports:
 import 'package:teta_widgets/src/elements/features/fill.dart';
 import 'package:teta_widgets/src/elements/features/font_size.dart';

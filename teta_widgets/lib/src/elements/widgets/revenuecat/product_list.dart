@@ -8,6 +8,7 @@ import 'package:teta_widgets/src/elements/builder/gesture_detector_base.dart';
 // Project imports:
 import 'package:teta_widgets/src/elements/index.dart';
 import 'package:universal_platform/universal_platform.dart';
+import 'package:teta_models/teta_models.dart';
 
 // Project imports:
 
@@ -40,7 +41,7 @@ class _WRevenueCatProductsListState extends State<WRevenueCatProductsList> {
     _map = DatasetObject(
       name: widget.state.node.name ??
           widget.state.node.intrinsicState.displayName,
-      map: [<String, dynamic>{}],
+      map: const [<String, dynamic>{}],
     );
     super.initState();
   }

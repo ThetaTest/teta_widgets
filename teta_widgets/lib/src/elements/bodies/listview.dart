@@ -5,7 +5,7 @@
 import 'package:flutter/material.dart';
 // Package imports:
 import 'package:teta_core/gen/assets.gen.dart';
-import 'package:teta_core/src/models/variable.dart';
+import 'package:teta_models/src/models/variable.dart';
 import 'package:teta_widgets/src/core/teta_widget/index.dart';
 // Project imports:
 import 'package:teta_widgets/src/elements/code/advanced/listview.dart';

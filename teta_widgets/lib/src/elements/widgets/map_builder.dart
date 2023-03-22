@@ -25,6 +25,7 @@ import 'package:teta_widgets/src/elements/nodes/dynamic.dart';
 import 'package:teta_widgets/src/elements/nodes/enum.dart';
 import 'package:teta_widgets/src/elements/nodes/node.dart';
 import 'package:teta_front_end/teta_front_end.dart';
+import 'package:teta_models/teta_models.dart';
 
 // ignore_for_file: public_member_api_docs
 
@@ -68,12 +69,11 @@ class _WMapBuilderState extends State<WMapBuilder> {
   }
 
   Future<void> init() async {
-    final page = BlocProvider.of<PageCubit>(context).state as PageLoaded;
     if (widget.controller.type == FTextTypeEnum.param) {
-      variable = page.params
+      variable = widget.state.params
           .firstWhereOrNull((final e) => e.name == widget.controller.paramName);
     } else {
-      variable = page.states
+      variable = widget.state.states
           .firstWhereOrNull((final e) => e.name == widget.controller.stateName);
     }
     variable = variable!.copyWith(

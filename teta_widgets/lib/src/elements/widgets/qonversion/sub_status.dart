@@ -6,6 +6,7 @@ import 'package:teta_core/teta_core.dart';
 import 'package:teta_widgets/src/core/teta_widget/index.dart';
 // Project imports:
 import 'package:teta_widgets/src/elements/index.dart';
+import 'package:teta_models/teta_models.dart';
 
 // Project imports:
 
@@ -32,7 +33,7 @@ class WQonversionSingleSubStatus extends StatefulWidget {
 class _WQonversionSingleSubStatusState
     extends State<WQonversionSingleSubStatus> {
   static const mapTitle = 'Qonversion Sub Status';
-  DatasetObject _map = DatasetObject(
+  DatasetObject _map = const DatasetObject(
     name: mapTitle,
     map: [<String, dynamic>{}],
   );

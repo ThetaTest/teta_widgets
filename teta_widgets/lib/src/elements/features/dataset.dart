@@ -4,8 +4,8 @@
 
 import 'package:equatable/equatable.dart';
 // Package imports:
-import 'package:teta_core/src/models/dataset.dart';
-import 'package:teta_core/src/models/variable.dart';
+import 'package:teta_models/src/models/dataset.dart';
+import 'package:teta_models/src/models/variable.dart';
 
 class FDataset extends Equatable {
   /// Set of func to use text string in Teta's widgets

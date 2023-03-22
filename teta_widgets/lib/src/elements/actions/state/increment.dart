@@ -5,11 +5,12 @@
 import 'package:flutter/material.dart';
 // Package imports:
 import 'package:recase/recase.dart';
-import 'package:teta_core/src/models/variable.dart';
+import 'package:teta_models/src/models/variable.dart';
 import 'package:teta_widgets/src/elements/actions/snippets/get_page_on_code.dart';
 // Project imports:
 import 'package:teta_widgets/src/elements/actions/snippets/take_state_from.dart';
 import 'package:teta_widgets/src/elements/actions/snippets/update_state_value.dart';
+import 'package:teta_models/teta_models.dart';
 
 class FActionStateIncrement {
   static Future action(

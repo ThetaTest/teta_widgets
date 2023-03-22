@@ -77,6 +77,7 @@ import 'package:teta_widgets/src/elements/features/condition_type.dart';
 import 'package:teta_widgets/src/elements/index.dart';
 import 'package:uuid/uuid.dart';
 import 'package:teta_front_end/teta_front_end.dart';
+import 'package:teta_models/teta_models.dart';
 
 /// Widget to control a single action
 class ActionElementControl extends StatefulWidget {
