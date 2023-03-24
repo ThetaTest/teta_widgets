@@ -452,8 +452,8 @@ class ControlBuilder {
         description: control.description,
         control: ActionControl(
           key: ValueKey('${node.nid}'),
-          action: control.value as NodeGestureActions,
-          callBack: (final value, final old) {
+          nodeGestureActions: control.value as NodeGestureActions,
+          onActionChanged: (final value, final old) {
             node.body.attributes[DBKeys.action] = value;
             ControlBuilder.toDB(
               node,
