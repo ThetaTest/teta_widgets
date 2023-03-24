@@ -940,16 +940,14 @@ class CS {
     final code = StringBuffer()..write('');
     if (node.body.attributes[DBKeys.action] == null) return '';
     for (final element
-        in (node.body.attributes[DBKeys.action] as FAction).actions!) {
-      if (element.actionGesture == gesture) {
+        in (node.body.attributes[DBKeys.action] as NodeGestureActions)
+            .actions) {
+      if (element.gesture == gesture) {
         code.write(
-          element.toCode(
-            pageId: pageId,
-            value: value,
-            context: context,
-            body: node,
-            loop: loop ?? 0,
-            withValue: withValue,
+          element.action.toCode(
+            context,
+            pageId,
+            loop ?? 0,
           ),
         );
       }
@@ -979,16 +977,14 @@ class CS {
     final code = StringBuffer()..write('');
     if (node.body.attributes[DBKeys.action] == null) return '';
     for (final element
-        in (node.body.attributes[DBKeys.action] as FAction).actions!) {
-      if (element.actionGesture == gesture) {
+        in (node.body.attributes[DBKeys.action] as NodeGestureActions)
+            .actions) {
+      if (element.gesture == gesture) {
         code.write(
-          element.toCode(
-            pageId: pageId,
-            value: value,
-            context: context,
-            body: node,
-            loop: loop ?? 0,
-            withValue: withValue,
+          element.action.toCode(
+            context,
+            pageId,
+            loop ?? 0,
           ),
         );
       }

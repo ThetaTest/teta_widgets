@@ -64,7 +64,7 @@ class ScaffoldBody extends NodeBody {
     DBKeys.fill: FFill(
       paletteStyle: 'Background / Primary',
     ),
-    DBKeys.action: FAction(),
+    DBKeys.action: NodeGestureActions.empty(),
     DBKeys.showAppBar: true,
     DBKeys.showBottomBar: true,
     DBKeys.showDrawer: false,
@@ -137,7 +137,7 @@ class ScaffoldBody extends NodeBody {
             ${(attributes[DBKeys.fill] as FFill).toJson()}
             ${(attributes[DBKeys.width] as FSize).toJson()}
             ${(attributes[DBKeys.height] as FSize).toJson()}
-            ${(attributes[DBKeys.action] as FAction).toJson()}
+            ${(attributes[DBKeys.action] as NodeGestureActions).toJson()}
             ${attributes[DBKeys.showAppBar] as bool}
             ${attributes[DBKeys.showBottomBar] as bool}
             ${attributes[DBKeys.showDrawer] as bool}
@@ -150,7 +150,7 @@ class ScaffoldBody extends NodeBody {
         fill: attributes[DBKeys.fill] as FFill,
         width: attributes[DBKeys.width] as FSize,
         height: attributes[DBKeys.height] as FSize,
-        action: attributes[DBKeys.action] as FAction,
+        action: attributes[DBKeys.action] as NodeGestureActions,
         appBar: appBar,
         bottomBar: bottomBar,
         drawer: drawer,

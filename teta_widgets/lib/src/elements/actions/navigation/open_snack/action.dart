@@ -76,7 +76,7 @@ class TANavigationOpenSnackBar extends TetaAction {
           );
           if (list.error != null) {
             Logger.printError(
-              'Error fetching nodes FActionNavigationOpenPage func, error: ${list.error?.message}',
+              'Error fetching nodes NodeGestureActionsNavigationOpenPage func, error: ${list.error?.message}',
             );
           }
           final nodes = <CNode>[];

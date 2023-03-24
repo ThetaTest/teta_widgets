@@ -33,7 +33,7 @@ class WButton extends StatelessWidget {
   final FBorderRadius borderRadius;
   final FTextStyle textStyle;
   final FAlign textAlignPosition;
-  final FAction action;
+  final NodeGestureActions action;
   final FTextTypeInput actionValue;
   final FPageTransition pageTransition;
 
@@ -51,21 +51,21 @@ class WButton extends StatelessWidget {
               context: context,
               state: state,
               gesture: ActionGesture.onTap,
-              action: action,
+              nodeGestureActions: action,
               actionValue: null,
             ),
             onDoubleTap: () => GestureBuilder.get(
               context: context,
               state: state,
               gesture: ActionGesture.onDoubleTap,
-              action: action,
+              nodeGestureActions: action,
               actionValue: null,
             ),
             onLongPress: () => GestureBuilder.get(
               context: context,
               state: state,
               gesture: ActionGesture.onLongPress,
-              action: action,
+              nodeGestureActions: action,
               actionValue: null,
             ),
             child: SizedBox(

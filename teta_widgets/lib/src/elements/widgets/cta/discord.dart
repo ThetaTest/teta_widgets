@@ -24,7 +24,7 @@ class WLoginWithDiscord extends StatelessWidget {
 
   final TetaWidgetState state;
   final CNode? child;
-  final FAction? action;
+  final NodeGestureActions? action;
   final FSize width;
   final FSize height;
 
@@ -51,14 +51,14 @@ class WLoginWithDiscord extends StatelessWidget {
               context: context,
               state: state,
               gesture: ActionGesture.onTap,
-              action: action,
+              nodeGestureActions: action,
               actionValue: null,
             ),
             onLongPress: () => GestureBuilder.get(
               context: context,
               state: state,
               gesture: ActionGesture.onLongPress,
-              action: action,
+              nodeGestureActions: action,
               actionValue: null,
             ),
             style: ButtonStyle(

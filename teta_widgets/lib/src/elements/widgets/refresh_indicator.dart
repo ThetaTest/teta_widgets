@@ -23,7 +23,7 @@ class WRefreshIndicator extends StatelessWidget {
   final TetaWidgetState state;
   final List<CNode> children;
 
-  final FAction? action;
+  final NodeGestureActions? action;
   final FTextTypeInput actionValue;
   final FSize height;
   final FTextTypeInput duration;
@@ -100,7 +100,7 @@ class WRefreshIndicator extends StatelessWidget {
             context: context,
             state: state,
             gesture: ActionGesture.onTap,
-            action: action,
+            nodeGestureActions: action,
             actionValue: actionValue,
           );
           return;

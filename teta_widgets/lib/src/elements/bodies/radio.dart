@@ -75,7 +75,7 @@ class RadioBody extends NodeBody {
   @override
   // ignore: overridden_fields
   Map<String, dynamic> attributes = <String, dynamic>{
-    DBKeys.action: FAction(),
+    DBKeys.action: NodeGestureActions.empty(),
     DBKeys.value: FTextTypeInput(),
     DBKeys.actionValue: FTextTypeInput(),
   };
@@ -112,13 +112,13 @@ class RadioBody extends NodeBody {
           '''
             ${state.toKey}
             ${child ?? children}
-            ${(attributes[DBKeys.action] as FAction).toJson()}
+            ${(attributes[DBKeys.action] as NodeGestureActions).toJson()}
             ${(attributes[DBKeys.value] as FTextTypeInput).toJson()}
             ${(attributes[DBKeys.actionValue] as FTextTypeInput).toJson()}
             ''',
         ),
         state: state,
-        action: attributes[DBKeys.action] as FAction,
+        action: attributes[DBKeys.action] as NodeGestureActions,
         value: attributes[DBKeys.value] as FTextTypeInput,
         groupValue: attributes[DBKeys.actionValue] as FTextTypeInput,
       );

@@ -145,7 +145,7 @@ enum ControlType {
   /// Made to use conditions.
   condition,
 
-  /// Made to use FAction.
+  /// Made to use NodeGestureActions.
   action,
 
   /// Made to use flat string.
@@ -452,7 +452,7 @@ class ControlBuilder {
         description: control.description,
         control: ActionControl(
           key: ValueKey('${node.nid}'),
-          action: control.value as FAction,
+          action: control.value as NodeGestureActions,
           callBack: (final value, final old) {
             node.body.attributes[DBKeys.action] = value;
             ControlBuilder.toDB(

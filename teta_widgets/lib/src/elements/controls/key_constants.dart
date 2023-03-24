@@ -263,7 +263,7 @@ class DynamicAttributes {
     try {
       switch (key) {
         case DBKeys.action:
-          return FAction.fromJson(value as Map<String, dynamic>);
+          return NodeGestureActions.fromJson(value as Map<String, dynamic>);
         case DBKeys.actionValue:
           return FTextTypeInput.fromJson(value as Map<String, dynamic>);
         case DBKeys.align:
@@ -654,7 +654,9 @@ class DynamicAttributes {
   static dynamic toJson(final String key, final dynamic value) {
     switch (key) {
       case DBKeys.action:
-        return value != null ? value.toJson() : FAction().toJson();
+        return value != null
+            ? value.toJson()
+            : NodeGestureActions.empty().toJson();
       case DBKeys.actionValue:
         return value != null ? value.toJson() : FTextTypeInput().toJson();
       case DBKeys.align:

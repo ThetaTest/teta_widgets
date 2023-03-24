@@ -1,14 +1,7 @@
-// Flutter imports:
 import 'package:flutter/material.dart';
-// Package imports:
-import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:teta_core/teta_core.dart';
-import 'package:teta_widgets/src/core/teta_widget/index.dart';
-// Project imports:
-import 'package:teta_widgets/src/elements/features/action.dart';
-import 'package:teta_widgets/src/elements/features/actions/enums/gestures.dart';
-import 'package:teta_widgets/src/elements/features/text_type_input.dart';
-import 'package:teta_front_end/teta_front_end.dart';
+
+import '../../../teta_widgets.dart';
+import '../../core/teta_widget/index.dart';
 
 /// Builder
 class GestureBuilder {
@@ -18,38 +11,24 @@ class GestureBuilder {
     required final TetaWidgetState state,
     required final ActionGesture gesture,
     required final FTextTypeInput? actionValue,
-    required final FAction? action,
+    required final NodeGestureActions? nodeGestureActions,
   }) {
-    if (state.forPlay) {
-      String? finalValue;
-      if (actionValue != null) {
-        finalValue = actionValue.get(
-          state.params,
-          state.states,
-          state.dataset,
-          state.forPlay,
-          state.loop,
-          context,
-        );
-      }
-      if (action != null) {
-        final pageState = context.read<PageCubit>().state;
-        if (pageState is! PageLoaded) return;
-        final page = pageState.page;
-        action.actions!
-            .where((final element) => element.actionGesture == gesture)
-            .forEach(
-          (final element) {
-            element.getAction(
-              context,
-              state,
-              finalValue,
-              page.scaffold,
-            );
-            Logger.printMessage('Action performed');
-          },
-        );
-      }
+    if (state.forPlay && nodeGestureActions != null) {
+      final runtimeValue = actionValue?.get(
+        state.params,
+        state.states,
+        state.dataset,
+        state.forPlay,
+        state.loop,
+        context,
+      );
+
+      nodeGestureActions.execute(
+        context,
+        gesture,
+        state,
+        runtimeValue,
+      );
     }
   }
 }

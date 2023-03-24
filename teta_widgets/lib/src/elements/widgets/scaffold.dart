@@ -42,7 +42,7 @@ class WScaffold extends StatefulWidget {
   final FFill fill;
   final FSize width;
   final FSize height;
-  final FAction action;
+  final NodeGestureActions action;
   final CNode? appBar;
   final CNode? bottomBar;
   final CNode? drawer;
@@ -67,7 +67,7 @@ class _WScaffoldState extends State<WScaffold> with AfterLayoutMixin {
         state: widget.state,
         gesture: ActionGesture.initState,
         actionValue: null,
-        action: widget.action,
+        nodeGestureActions: widget.action,
       );
     }
   }

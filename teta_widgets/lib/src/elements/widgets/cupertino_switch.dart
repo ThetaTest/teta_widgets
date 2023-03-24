@@ -19,7 +19,7 @@ class WCupertinoSwitch extends StatefulWidget {
 
   final TetaWidgetState state;
   final CNode? child;
-  final FAction action;
+  final NodeGestureActions action;
 
   @override
   State<WCupertinoSwitch> createState() => _WCupertinoSwitchState();
@@ -37,7 +37,7 @@ class _WCupertinoSwitchState extends State<WCupertinoSwitch> {
           GestureBuilder.get(
             context: context,
             state: widget.state,
-            action: widget.action,
+            nodeGestureActions: widget.action,
             actionValue: null,
             gesture: ActionGesture.onTap,
           );

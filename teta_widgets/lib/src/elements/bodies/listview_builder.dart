@@ -70,7 +70,7 @@ class ListViewBuilderBody extends NodeBody {
     DBKeys.isPrimary: true,
     DBKeys.isFullWidth: false,
     DBKeys.physic: FPhysic(),
-    DBKeys.action: FAction(),
+    DBKeys.action: NodeGestureActions.empty(),
     DBKeys.value: FTextTypeInput(value: '0'),
     DBKeys.valueOfCondition: FTextTypeInput(),
   };
@@ -145,7 +145,7 @@ class ListViewBuilderBody extends NodeBody {
           ${attributes[DBKeys.flag] as bool}
           ${attributes[DBKeys.isFullWidth] as bool}
           ${(attributes[DBKeys.physic] as FPhysic).toJson()}
-          ${(attributes[DBKeys.action] as FAction).toJson()}
+          ${(attributes[DBKeys.action] as NodeGestureActions).toJson()}
           ${(attributes[DBKeys.value] as FTextTypeInput).toJson()}
           ${(attributes[DBKeys.valueOfCondition] as FTextTypeInput).toJson()}
           ''',
@@ -157,7 +157,7 @@ class ListViewBuilderBody extends NodeBody {
         shrinkWrap: attributes[DBKeys.flag] as bool,
         isReverse: attributes[DBKeys.isFullWidth] as bool,
         physic: attributes[DBKeys.physic] as FPhysic,
-        action: attributes[DBKeys.action] as FAction,
+        action: attributes[DBKeys.action] as NodeGestureActions,
         startFromIndex: attributes[DBKeys.value] as FTextTypeInput,
         limit: attributes[DBKeys.valueOfCondition] as FTextTypeInput,
       );

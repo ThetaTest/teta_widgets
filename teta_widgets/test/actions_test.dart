@@ -9,11 +9,11 @@ import 'package:teta_widgets/src/elements/actions/navigation/open_snack.dart';
 ///Tests for all actions
 void main() {
   //Navigation
-  FActionNavigationGoBack.testActionCode();
-  FActionNavigationLaunchURL.testActionCode();
-  FActionNavigationOpenBottomSheet.testActionCode();
-  FActionNavigationOpenDatePicker.testActionCode();
-  FActionNavigationOpenDrawer.testActionCode();
-  FActionNavigationOpenPage.testActionCode();
-  FActionNavigationOpenSnackBar.testActionCode();
+  NodeGestureActionsNavigationGoBack.testActionCode();
+  NodeGestureActionsNavigationLaunchURL.testActionCode();
+  NodeGestureActionsNavigationOpenBottomSheet.testActionCode();
+  NodeGestureActionsNavigationOpenDatePicker.testActionCode();
+  NodeGestureActionsNavigationOpenDrawer.testActionCode();
+  NodeGestureActionsNavigationOpenPage.testActionCode();
+  NodeGestureActionsNavigationOpenSnackBar.testActionCode();
 }

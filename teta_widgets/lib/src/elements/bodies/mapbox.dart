@@ -76,7 +76,7 @@ class MapBoxBody extends NodeBody {
     DBKeys.value: FTextTypeInput(),
     DBKeys.latitude: FTextTypeInput(),
     DBKeys.longitude: FTextTypeInput(),
-    DBKeys.action: FAction(),
+    DBKeys.action: NodeGestureActions.empty(),
     DBKeys.fill: FFill(),
   };
 
@@ -98,7 +98,7 @@ class MapBoxBody extends NodeBody {
         boxFit: attributes[DBKeys.boxFit] as FBoxFit,
         latitude: attributes[DBKeys.latitude] as FTextTypeInput,
         longitude: attributes[DBKeys.longitude] as FTextTypeInput,
-        action: attributes[DBKeys.action] as FAction,
+        action: attributes[DBKeys.action] as NodeGestureActions,
         fill: attributes[DBKeys.fill] as FFill,
       );
 

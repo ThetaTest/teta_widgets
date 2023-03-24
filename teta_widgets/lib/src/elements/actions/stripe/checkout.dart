@@ -7,7 +7,7 @@ import 'package:flutter/material.dart';
 import 'package:teta_core/src/utils/stripe/html/stripe_checkout.dart';
 import 'package:teta_models/teta_models.dart';
 
-class FActionStripe {
+class NodeGestureActionsStripe {
   Future makeAction(
     final BuildContext context,
     final List<VariableObject> states,

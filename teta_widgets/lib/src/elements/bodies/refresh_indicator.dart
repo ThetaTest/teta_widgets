@@ -56,7 +56,7 @@ class RefreshIndicatorBody extends NodeBody {
   // ignore: overridden_fields
   Map<String, dynamic> attributes = <String, dynamic>{
     DBKeys.height: FSize(size: '150', unit: SizeUnit.pixel),
-    DBKeys.action: FAction(),
+    DBKeys.action: NodeGestureActions.empty(),
     DBKeys.duration: FTextTypeInput(value: '1000'),
     DBKeys.actionValue: FTextTypeInput(),
   };
@@ -92,13 +92,13 @@ class RefreshIndicatorBody extends NodeBody {
           '''
             ${state.toKey}
             ${child ?? children}
-            ${(attributes[DBKeys.action] as FAction).toJson()}
+            ${(attributes[DBKeys.action] as NodeGestureActions).toJson()}
             ${(attributes[DBKeys.actionValue] as FTextTypeInput).toJson()}
             ${(attributes[DBKeys.height] as FSize).toJson()}
             ${(attributes[DBKeys.duration] as FTextTypeInput).toJson()}
             ''',
         ),
-        action: attributes[DBKeys.action] as FAction,
+        action: attributes[DBKeys.action] as NodeGestureActions,
         actionValue: attributes[DBKeys.actionValue] as FTextTypeInput,
         height: attributes[DBKeys.height] as FSize,
         duration: attributes[DBKeys.duration] as FTextTypeInput,

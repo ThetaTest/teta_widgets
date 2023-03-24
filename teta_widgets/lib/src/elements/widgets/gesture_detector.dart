@@ -20,7 +20,7 @@ class WGestureDetector extends StatelessWidget {
 
   final TetaWidgetState state;
   final CNode? child;
-  final FAction? action;
+  final NodeGestureActions? action;
 
   @override
   Widget build(final BuildContext context) {
@@ -30,7 +30,7 @@ class WGestureDetector extends StatelessWidget {
           context: context,
           state: state,
           gesture: ActionGesture.onTap,
-          action: action,
+          nodeGestureActions: action,
           actionValue: null,
         );
       },
@@ -38,14 +38,14 @@ class WGestureDetector extends StatelessWidget {
         context: context,
         state: state,
         gesture: ActionGesture.onDoubleTap,
-        action: action,
+        nodeGestureActions: action,
         actionValue: null,
       ),
       onLongPress: () => GestureBuilder.get(
         context: context,
         state: state,
         gesture: ActionGesture.onLongPress,
-        action: action,
+        nodeGestureActions: action,
         actionValue: null,
       ),
       child: GestureBuilderBase.get(
