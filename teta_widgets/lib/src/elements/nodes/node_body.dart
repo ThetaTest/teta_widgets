@@ -7,10 +7,7 @@ import 'package:teta_widgets/src/core/teta_widget/index.dart';
 
 // Project imports:
 import 'package:teta_widgets/src/elements/control_center.dart';
-import 'package:teta_widgets/src/elements/controls/control_model.dart';
-import 'package:teta_widgets/src/elements/controls/key_constants.dart';
-import 'package:teta_widgets/src/elements/nodes/enum.dart';
-import 'package:teta_widgets/src/elements/nodes/node.dart';
+import 'package:teta_widgets/teta_widgets.dart';
 
 /// The body of nodes, you can declare here all the node' attributes
 class NodeBody extends Equatable {
@@ -33,6 +30,15 @@ class NodeBody extends Equatable {
     final body = NodeBody.get(type);
     for (final key in doc.keys) {
       body.attributes[key] = doc[key];
+      if (key == 'text') {
+        body.attributes[DBKeys.value] = FTextTypeInput(value: doc[key]);
+      }
+      if (key == 'textStyle') {
+        body.attributes[DBKeys.textStyle] = FTextStyle.fromJson(doc[key]);
+      }
+      if (key == 'icon') {
+        body.attributes[DBKeys.icon] = doc[key];
+      }
     }
     return body;
   }

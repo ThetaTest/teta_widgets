@@ -7,7 +7,6 @@ import 'package:flutter/material.dart';
 // Package imports:
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:recase/recase.dart';
-import 'package:teta_core/teta_core.dart';
 // Project imports:
 import 'package:teta_widgets/src/elements/index.dart';
 import 'package:teta_front_end/teta_front_end.dart';
@@ -89,18 +88,22 @@ class FTextStyle extends Equatable {
   static FTextStyle fromJson(final Map<String, dynamic> doc) {
     try {
       return FTextStyle(
-        fill: doc[DBKeys.fill] != null
-            ? FFill().fromJson(doc[DBKeys.fill] as Map<String, dynamic>)
+        fill: doc[DBKeys.fill] ?? doc['fill'] != null
+            ? FFill().fromJson(
+                (doc[DBKeys.fill] ?? doc['fill']) as Map<String, dynamic>)
             : FFill(
                 type: FFillType.solid,
                 levels: [FFillElement(color: '000000', stop: 0)],
               ),
-        fontSize: doc[DBKeys.fontSize] != null
-            ? FFontSize().fromJson(doc[DBKeys.fontSize])
+        fontSize: doc[DBKeys.fontSize] ?? doc['size'] != null
+            ? FFontSize().fromJson(doc[DBKeys.fontSize] ?? doc['size'])
             : FFontSize(),
-        fontFamily: doc[DBKeys.fontFamily] as String? ?? 'Poppins',
-        fontWeight: doc[DBKeys.fontWeight] != null
-            ? FFontWeight().fromJson(doc[DBKeys.fontWeight] as String)
+        fontFamily: doc[DBKeys.fontFamily] as String? ??
+            doc['family'] as String? ??
+            'Poppins',
+        fontWeight: doc[DBKeys.fontWeight] ?? doc['weight'] != null
+            ? FFontWeight().fromJson(
+                doc[DBKeys.fontWeight] as String? ?? doc['weight'] as String)
             : FFontWeight(),
         textDecoration: doc[DBKeys.textDecoration] != null
             ? FTextDecoration.fromJson(doc[DBKeys.textDecoration] as String)

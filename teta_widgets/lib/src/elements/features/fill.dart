@@ -6,7 +6,6 @@ import 'package:equatable/equatable.dart';
 import 'package:flutter/material.dart';
 // Package imports:
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:teta_core/teta_core.dart';
 // Project imports:
 import 'package:teta_widgets/src/elements/features/box_fit.dart';
 import 'package:teta_front_end/teta_front_end.dart';
@@ -229,6 +228,17 @@ class FFill extends Equatable {
 
   FFill fromJson(final Map<String, dynamic> json) {
     try {
+      if (json['color'] != null) {
+        return FFill(
+          levels: [
+            FFillElement(
+              color: json['color'] as String,
+              stop: 0,
+            ),
+          ],
+          type: FFillType.solid,
+        );
+      }
       if (json['pltt'] == null) {
         final levels = <FFillElement>[];
         var type = FFillType.solid;

@@ -96,8 +96,6 @@ class _WCollectionState extends State<WCollection> {
                 list.add(map!);
                 final prjState =
                     BlocProvider.of<FocusProjectBloc>(context).state;
-                final pageFocused =
-                    BlocProvider.of<PageCubit>(context).state;
                 try {
                   if (pageFocused.scaffold!.dataset != null) {
                     bool flag = true;

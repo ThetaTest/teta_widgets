@@ -51,35 +51,35 @@ class _WComponentState extends State<WComponent> {
 
   Future<void> calc() async {
     final pages = context.read<PagesCubit>().state;
-    PageObject? _component;
-    _component = pages.firstWhereOrNull(
+    PageObject? component;
+    component = pages.firstWhereOrNull(
       (final element) => element.name == widget.componentName,
     );
-    if (_component != null) {
-      await fetch(_component, context);
-      if (_component.isHardCoded) {
+    if (component != null) {
+      await fetch(component, context);
+      if (component.isHardCoded) {
         if (mounted) {
           setState(() {
             _paramsString = initializeParamsForUri(
               getVariableObjectsFromParams(
                 widget.state,
-                _component!,
+                component!,
                 widget.paramsToSend,
               ),
             );
-            component = _component;
+            component = component;
             isLoaded = true;
           });
         }
       } else {
         if (component?.scaffold == null) {
-          final nodes = await fetch(_component, context);
+          final nodes = await fetch(component, context);
           final scaffold = sl.get<NodeRendering>().renderTree(nodes);
-          _component = _component.copyWith(flatList: nodes, scaffold: scaffold);
+          component = component.copyWith(flatList: nodes, scaffold: scaffold);
         }
         if (mounted) {
           setState(() {
-            component = _component;
+            component = component;
             isLoaded = true;
           });
         }
@@ -98,8 +98,6 @@ class _WComponentState extends State<WComponent> {
 
   @override
   Widget build(final BuildContext context) {
-    final pageState = context.watch<PageCubit>().state;
-    if (pageState is! PageLoaded) return const SizedBox();
     if (!isLoaded && component == null) {
       return const SizedBox();
     }

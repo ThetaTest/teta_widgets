@@ -73,7 +73,6 @@ class _WShopifyProductState extends State<WShopifyProduct> {
     list.add(map);
     if (_isLoading) _fetchProducts(context, id);
     final prjState = BlocProvider.of<FocusProjectBloc>(context).state;
-    final pageFocused = BlocProvider.of<PageCubit>(context).state;
     try {
       if (pageFocused.scaffold!.dataset != null) {
         bool flag = true;

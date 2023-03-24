@@ -5,8 +5,6 @@
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 // Package imports:
-import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:teta_core/teta_core.dart';
 import 'package:teta_widgets/src/core/teta_widget/index.dart';
 // Project imports:
 import 'package:teta_widgets/src/elements/index.dart';
@@ -54,7 +52,7 @@ class ScaffoldMobile extends StatelessWidget {
 
   @override
   Widget build(final BuildContext context) {
-    final isPage = (context.watch<PageCubit>().state as PageLoaded).page.isPage;
+    final isPage = state.isPage;
     if (!isPage ||
         children.indexWhere(
               (final element) => element.globalType == NType.appBar,
@@ -154,7 +152,7 @@ class ScaffoldMobile extends StatelessWidget {
         );
       }
     }
-    final isPage = (context.watch<PageCubit>().state as PageLoaded).page.isPage;
+    final isPage = state.isPage;
     if (!isPage) return childWids(context);
     return Stack(
       children: [
