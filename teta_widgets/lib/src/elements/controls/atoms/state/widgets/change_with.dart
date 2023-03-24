@@ -69,29 +69,33 @@ class StateChangeWithControlState extends State<StateChangeWithControl> {
 
   @override
   Widget build(final BuildContext context) {
-    final pageLoaded = context.read<PageCubit>().state as PageLoaded;
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
-        CDropdown(
-          value: pageLoaded.states
-                      .map((final e) => e.name)
-                      .where((final element) => element != 'null')
-                      .toList()
-                      .indexWhere(
-                        (final e) => e == widget.action.params.stateName,
-                      ) !=
-                  -1
-              ? widget.action.params.stateName
-              : null,
-          items: pageLoaded.states
-              .map((final e) => e.name)
-              .where((final element) => element != 'null')
-              .toList(),
-          onChange: (final newValue) {
-            if (newValue == null) return;
-            stateName = newValue;
-            updateParams();
+        BlocBuilder<PageCubit, PageState>(
+          builder: (context, state) {
+            state as PageLoaded;
+            return CDropdown(
+              value: state.page.defaultStates
+                          .map((final e) => e.name)
+                          .where((final element) => element != 'null')
+                          .toList()
+                          .indexWhere(
+                            (final e) => e == widget.action.params.stateName,
+                          ) !=
+                      -1
+                  ? widget.action.params.stateName
+                  : null,
+              items: state.page.defaultStates
+                  .map((final e) => e.name)
+                  .where((final element) => element != 'null')
+                  .toList(),
+              onChange: (final newValue) {
+                if (newValue == null) return;
+                stateName = newValue;
+                updateParams();
+              },
+            );
           },
         ),
         if (isValueInputControlVisible(context))
