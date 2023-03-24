@@ -1,8 +1,3 @@
-// Flutter imports:
-// Project imports:
-// ignore_for_file: public_member_api_docs, lines_longer_than_80_chars, avoid_escaping_inner_quotes
-
-// Package imports:
 import 'dart:convert';
 
 import 'package:camera/camera.dart';
@@ -62,7 +57,6 @@ class FTextTypeInput {
     this.datasetLength,
     this.keyTranslator,
     this.file,
-    this.mapKey,
     this.combination,
     this.resultType = ResultTypeEnum.string,
     this.typeDateTimeFormat,
@@ -84,7 +78,6 @@ class FTextTypeInput {
   String? datasetSubMapData;
   String? keyTranslator;
   AssetFile? file;
-  String? mapKey;
   List<FTextTypeInput>? combination;
   ResultTypeEnum resultType;
   TypeDateTimeFormat? typeDateTimeFormat;
@@ -153,7 +146,9 @@ class FTextTypeInput {
       placeholder,
       context,
     );
-    if (result.runtimeType == XFile) {
+    Logger.printSuccess('runtimeType: ${result.runtimeType}');
+    if (result.runtimeType == XFile ||
+        result.runtimeType.toString().contains('Map')) {
       return result;
     } else if (result.runtimeType == String) {
       switch (resultType) {
@@ -353,7 +348,6 @@ class FTextTypeInput {
         file: json?['f'] != null
             ? AssetFile.fromJson(json?['f'] as Map<String, dynamic>?)
             : null,
-        mapKey: json?['mK'] as String?,
         combination: json?['cmb'] != null
             ? (json?['cmb'] as List<dynamic>)
                 .map(
@@ -406,7 +400,6 @@ class FTextTypeInput {
         'dAT': datasetSubMapData,
         'dL': datasetLength,
         'kTrans': keyTranslator,
-        'mK': mapKey,
         'cmb': combination?.map((final e) => e.toJson()).toList(),
         'rType': EnumToString.convertToString(resultType),
         'tDateTime': typeDateTimeFormat != null

@@ -36,7 +36,7 @@ class CustomHttpRequestPostControlState
     widget.onParamsChanged(
       TACustomHttpRequestPostParams(
         url: url,
-        customHttpRequestExpectedStatusCode: expectedStatusCode,
+        expectedStatusCode: expectedStatusCode,
         parameters: parameters,
         headers: headers,
         body: body,
@@ -75,8 +75,7 @@ class CustomHttpRequestPostControlState
           ),
           child: TextControl(
             valueType: VariableType.string,
-            value: widget.action.params.customHttpRequestExpectedStatusCode ??
-                FTextTypeInput(),
+            value: widget.action.params.expectedStatusCode ?? FTextTypeInput(),
             title: 'Status Code',
             callBack: (final value, final old) {
               expectedStatusCode = value;

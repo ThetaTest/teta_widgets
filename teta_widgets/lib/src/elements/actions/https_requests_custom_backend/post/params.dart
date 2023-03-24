@@ -6,7 +6,7 @@ import '../../../features/text_type_input.dart';
 class TACustomHttpRequestPostParams extends TetaActionParams {
   const TACustomHttpRequestPostParams({
     required this.url,
-    required this.customHttpRequestExpectedStatusCode,
+    required this.expectedStatusCode,
     required this.parameters,
     required this.headers,
     required this.body,
@@ -14,7 +14,7 @@ class TACustomHttpRequestPostParams extends TetaActionParams {
 
   const TACustomHttpRequestPostParams.empty()
       : url = null,
-        customHttpRequestExpectedStatusCode = null,
+        expectedStatusCode = null,
         parameters = null,
         headers = null,
         body = null;
@@ -23,7 +23,7 @@ class TACustomHttpRequestPostParams extends TetaActionParams {
       : url = FTextTypeInput.fromJson(
           json['sCustomHttpRequestURL'] as Map<String, dynamic>?,
         ),
-        customHttpRequestExpectedStatusCode = FTextTypeInput.fromJson(
+        expectedStatusCode = FTextTypeInput.fromJson(
           json['sCustomHttpRequestExpectedStatusCode'] as Map<String, dynamic>?,
         ),
         parameters =
@@ -51,15 +51,14 @@ class TACustomHttpRequestPostParams extends TetaActionParams {
             .toList();
 
   final FTextTypeInput? url;
-  final FTextTypeInput? customHttpRequestExpectedStatusCode;
+  final FTextTypeInput? expectedStatusCode;
   final List<MapElement>? parameters;
   final List<MapElement>? headers;
   final List<MapElement>? body;
 
   @override
   Map<String, dynamic> toJson() => <String, dynamic>{
-        'sCustomHttpRequestExpectedStatusCode':
-            customHttpRequestExpectedStatusCode?.toJson(),
+        'sCustomHttpRequestExpectedStatusCode': expectedStatusCode?.toJson(),
         'sCustomHttpRequestURL': url?.toJson(),
         'sCustomHttpRequestHeader':
             headers?.map((final e) => e.toJson()).toList(),
@@ -69,17 +68,15 @@ class TACustomHttpRequestPostParams extends TetaActionParams {
       };
 
   TACustomHttpRequestPostParams copyWith({
-    final FTextTypeInput? url,
-    final FTextTypeInput? customHttpRequestExpectedStatusCode,
-    final List<MapElement>? parameters,
-    final List<MapElement>? headers,
-    final List<MapElement>? body,
+    FTextTypeInput? url,
+    FTextTypeInput? expectedStatusCode,
+    List<MapElement>? parameters,
+    List<MapElement>? headers,
+    List<MapElement>? body,
   }) =>
       TACustomHttpRequestPostParams(
         url: url ?? this.url,
-        customHttpRequestExpectedStatusCode:
-            customHttpRequestExpectedStatusCode ??
-                this.customHttpRequestExpectedStatusCode,
+        expectedStatusCode: expectedStatusCode ?? this.expectedStatusCode,
         parameters: parameters ?? this.parameters,
         headers: headers ?? this.headers,
         body: body ?? this.body,

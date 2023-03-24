@@ -1,22 +1,11 @@
-// Flutter imports:
-// Package imports:
-// ignore_for_file: public_member_api_docs
-
-// Flutter imports:
-// Package imports:
-import 'dart:html';
-
 import 'package:flutter/material.dart';
 import 'package:teta_cms/teta_cms.dart';
 import 'package:teta_models/teta_models.dart';
 import 'package:teta_widgets/src/core/teta_widget/index.dart';
+import 'package:teta_widgets/src/elements/actions/snippets/update_state_value.dart';
 import 'package:teta_widgets/src/elements/index.dart';
-// Project imports:
 
 import '../../../../core/teta_action/index.dart';
-import '../../../../core/teta_widget/index.dart';
-import '../../../builder/add_dataset.dart';
-import '../../../features/text_type_input.dart';
 import 'params.dart';
 
 class TACustomHttpRequestPost extends TetaAction {
@@ -62,7 +51,7 @@ class TACustomHttpRequestPost extends TetaAction {
       name: 'Custom Http Request Post',
       map: [<String, dynamic>{}],
     );
-    final urlNew = params.url?.get(
+    final url = params.url?.get(
       state.params,
       state.states,
       state.dataset,
@@ -70,8 +59,7 @@ class TACustomHttpRequestPost extends TetaAction {
       state.loop,
       context,
     );
-    final customHttpRequestExpectedStatusCodeNew =
-        params.customHttpRequestExpectedStatusCode?.get(
+    final expectedStatusCode = params.expectedStatusCode?.get(
       state.params,
       state.states,
       state.dataset,
@@ -112,11 +100,10 @@ class TACustomHttpRequestPost extends TetaAction {
         context,
       );
     }
-
-    if (urlNew != null && customHttpRequestExpectedStatusCodeNew != null) {
+    if (url != null && expectedStatusCode != null) {
       final response = await TetaCMS.instance.httpRequest.post(
-        urlNew,
-        customHttpRequestExpectedStatusCodeNew,
+        url,
+        expectedStatusCode,
         mapParameters,
         mapBody,
         mapHeaders,
@@ -137,8 +124,12 @@ class TACustomHttpRequestPost extends TetaAction {
           }).toList(),
         );
       }
-
-      final datasets = addDataset(context, map);
+      updateStateValue(
+        context,
+        'State 3',
+        response.error?[0] as Map<String, dynamic>?,
+      );
+      // addDataset(context, map);
     }
   }
 
@@ -214,14 +205,13 @@ class TACustomHttpRequestPost extends TetaAction {
         )
         .replaceAll("'", '')
         .replaceAll(' ', '');
-    final customHttpRequestExpectedStatusCodeNew =
-        params.customHttpRequestExpectedStatusCode
-            ?.toCode(
-              loop,
-              resultType: ResultTypeEnum.string,
-            )
-            .replaceAll("'", '')
-            .replaceAll(' ', '');
+    final customHttpRequestExpectedStatusCodeNew = params.expectedStatusCode
+        ?.toCode(
+          loop,
+          resultType: ResultTypeEnum.string,
+        )
+        .replaceAll("'", '')
+        .replaceAll(' ', '');
     return '''
       final response = await TetaCMS.instance.httpRequest.post(
         '$urlNew',

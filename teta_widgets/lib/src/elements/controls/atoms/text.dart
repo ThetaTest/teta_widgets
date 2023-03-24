@@ -53,7 +53,6 @@ class TextControl extends StatefulWidget {
 
 class PaddingsState extends State<TextControl> with AfterLayoutMixin {
   TextEditingController controller = TextEditingController();
-  TextEditingController keyController = TextEditingController();
   String databaseName = '';
   String databaseAttribute = '';
   String datasetSubListData = '';
@@ -98,7 +97,6 @@ class PaddingsState extends State<TextControl> with AfterLayoutMixin {
         if (widget.value.datasetLength != null) {
           datasetLength = widget.value.datasetLength!;
         }
-        keyController.text = widget.value.mapKey ?? '';
       });
     } catch (e) {}
   }
@@ -106,7 +104,6 @@ class PaddingsState extends State<TextControl> with AfterLayoutMixin {
   @override
   void dispose() {
     controller.dispose();
-    keyController.dispose();
     super.dispose();
   }
 
@@ -436,24 +433,6 @@ class PaddingsState extends State<TextControl> with AfterLayoutMixin {
                             },
                             expanded: true,
                           ),
-                          if ((state.page.defaultParams
-                                      .firstWhereOrNull(
-                                        (final element) =>
-                                            element.name ==
-                                            widget.value.paramName,
-                                      )
-                                      ?.type ??
-                                  VariableType.int) ==
-                              VariableType.json)
-                            CTextField(
-                              controller: keyController,
-                              title: 'Map Key',
-                              callBack: (final key) {
-                                final old = widget.value;
-                                widget.value.mapKey = key;
-                                widget.callBack(widget.value, old);
-                              },
-                            ),
                         ],
                       );
                     },
@@ -527,23 +506,6 @@ class PaddingsState extends State<TextControl> with AfterLayoutMixin {
                             },
                             expanded: true,
                           ),
-                          if (state.page.defaultStates
-                                  .firstWhereOrNull(
-                                    (final element) =>
-                                        element.name == widget.value.stateName,
-                                  )
-                                  ?.type ==
-                              VariableType.json)
-                            CMiniTextField(
-                              backgroundColor: Palette.bgTertiary,
-                              text: widget.value.mapKey,
-                              title: 'Map Key',
-                              callBack: (final key) {
-                                final old = widget.value;
-                                widget.value.mapKey = key;
-                                widget.callBack(widget.value, old);
-                              },
-                            ),
                         ],
                       );
                     },
