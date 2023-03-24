@@ -74,7 +74,7 @@ class StateChangeWithControlState extends State<StateChangeWithControl> {
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
         CDropdown(
-          value: pageLoaded.page.defaultStates
+          value: pageLoaded.states
                       .map((final e) => e.name)
                       .where((final element) => element != 'null')
                       .toList()
@@ -84,7 +84,7 @@ class StateChangeWithControlState extends State<StateChangeWithControl> {
                   -1
               ? widget.action.params.stateName
               : null,
-          items: pageLoaded.page.defaultStates
+          items: pageLoaded.states
               .map((final e) => e.name)
               .where((final element) => element != 'null')
               .toList(),
