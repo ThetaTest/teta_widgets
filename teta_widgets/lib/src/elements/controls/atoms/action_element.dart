@@ -2786,9 +2786,8 @@ class ActionElementControlState extends State<ActionElementControl> {
                                       ActionApiCalls.apiCalls)
                                 ApiCallsControl(
                                   action: widget.element,
-                                  callback: () {
-                                    final old = widget.element;
-                                    widget.callBack(widget.element, old);
+                                  callback:  (final value, final old)  {
+                                    widget.callBack(value, old);
                                   },
                                 ),
                               if (widget.element.actionType ==

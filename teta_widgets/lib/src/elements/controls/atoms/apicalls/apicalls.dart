@@ -22,7 +22,7 @@ class ApiCallsControl extends StatelessWidget {
   }) : super(key: key);
 
   final FActionElement action;
-  final Function() callback;
+  final Function(FActionElement, FActionElement) callback;
 
   @override
   Widget build(final BuildContext context) {
@@ -34,9 +34,10 @@ class ApiCallsControl extends StatelessWidget {
           //TODO request name must be unique! kasapiniz
           requestName: action.apiCallsRequestName ?? '',
           callBack: (final value, final old, final apiCallsSelectedRequest) {
+            final oldAction= action;
             action.apiCallsRequestName = value;
             action.apiCallsSelectedRequest = apiCallsSelectedRequest;
-            callback();
+            callback(action,oldAction);
           },
         ),
         const Gap(Grid.small),
@@ -53,8 +54,9 @@ class ApiCallsControl extends StatelessWidget {
                 action.customHttpRequestExpectedStatusCode ?? FTextTypeInput(),
             title: 'Status Code',
             callBack: (final value, final old) {
+          final oldAction = action;
               action.customHttpRequestExpectedStatusCode = value;
-              callback();
+              callback(action,oldAction);
             },
           ),
         ),
@@ -71,8 +73,9 @@ class ApiCallsControl extends StatelessWidget {
             value: action.apiCallsResponseName ?? FTextTypeInput(),
             title: 'Response Name',
             callBack: (final value, final old) {
+          final oldAction = action;
               action.apiCallsResponseName = value;
-              callback();
+              callback(action,oldAction);
             },
           ),
         ),
@@ -81,8 +84,9 @@ class ApiCallsControl extends StatelessWidget {
           title: 'Add Dynamic Value',
           list: action.apiCallsDynamicValue ?? <MapElement>[],
           callBack: (final value, final old) {
+          final oldAction = action;
             action.apiCallsDynamicValue = value;
-            callback();
+            callback(action,oldAction);
           },
         ),
       ],
