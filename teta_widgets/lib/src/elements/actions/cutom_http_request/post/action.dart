@@ -124,12 +124,10 @@ class TACustomHttpRequestPost extends TetaAction {
           }).toList(),
         );
       }
-      updateStateValue(
-        context,
-        'State 3',
-        response.error?[0] as Map<String, dynamic>?,
-      );
-      // addDataset(context, map);
+
+      if (params.responseState != null) {
+        updateStateValue(context, params.responseState!, map.getMap[0]);
+      }
     }
   }
 

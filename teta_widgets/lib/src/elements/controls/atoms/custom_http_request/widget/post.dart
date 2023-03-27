@@ -1,7 +1,9 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:gap/gap.dart';
 import 'package:teta_front_end/teta_front_end.dart';
 import 'package:teta_models/teta_models.dart';
+import 'package:teta_widgets/teta_widgets.dart';
 
 import '../../../../actions/cutom_http_request/post/action.dart';
 import '../../../../actions/cutom_http_request/post/params.dart';
@@ -31,6 +33,7 @@ class CustomHttpRequestPostControlState
   List<MapElement>? parameters;
   List<MapElement>? headers;
   List<MapElement>? body;
+  String? responseState;
 
   void updateParams() {
     widget.onParamsChanged(
@@ -40,16 +43,42 @@ class CustomHttpRequestPostControlState
         parameters: parameters,
         headers: headers,
         body: body,
+        responseState: responseState,
       ),
     );
   }
 
   @override
   Widget build(final BuildContext context) {
+    final pageLoaded = context.read<PageCubit>().state as PageLoaded;
     return Column(
       mainAxisSize: MainAxisSize.min,
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
+        const TParagraph('Response JSON State'),
+        const Gap(Grid.small),
+        descriptionControlWidget(
+          description: 'The state where the JSON response will be stored',
+          control: CDropdown(
+            value: pageLoaded.page.defaultStates
+                    .where((final element) => element.type == VariableType.json)
+                    .map((final e) => e.name)
+                    .toList()
+                    .contains(widget.action.params.responseState)
+                ? widget.action.params.responseState
+                : null,
+            items: pageLoaded.page.defaultStates
+                .where((final element) => element.type == VariableType.json)
+                .map((final e) => e.name)
+                .toList(),
+            onChange: (final newValue) {
+              if (newValue == null) return;
+              responseState = newValue;
+              updateParams();
+            },
+          ),
+        ),
+        const Gap(Grid.medium),
         Container(
           padding: const EdgeInsets.all(16),
           decoration: BoxDecoration(

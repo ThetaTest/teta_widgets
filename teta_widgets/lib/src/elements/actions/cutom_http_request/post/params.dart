@@ -10,6 +10,7 @@ class TACustomHttpRequestPostParams extends TetaActionParams {
     required this.parameters,
     required this.headers,
     required this.body,
+    required this.responseState,
   });
 
   const TACustomHttpRequestPostParams.empty()
@@ -17,7 +18,8 @@ class TACustomHttpRequestPostParams extends TetaActionParams {
         expectedStatusCode = null,
         parameters = null,
         headers = null,
-        body = null;
+        body = null,
+        responseState = null;
 
   TACustomHttpRequestPostParams.fromJson(final Map<String, dynamic> json)
       : url = FTextTypeInput.fromJson(
@@ -48,13 +50,15 @@ class TACustomHttpRequestPostParams extends TetaActionParams {
                 e as Map<String, dynamic>,
               ),
             )
-            .toList();
+            .toList(),
+        responseState = json['sN'] as String?;
 
   final FTextTypeInput? url;
   final FTextTypeInput? expectedStatusCode;
   final List<MapElement>? parameters;
   final List<MapElement>? headers;
   final List<MapElement>? body;
+  final String? responseState;
 
   @override
   Map<String, dynamic> toJson() => <String, dynamic>{
@@ -65,6 +69,7 @@ class TACustomHttpRequestPostParams extends TetaActionParams {
         'sCustomHttpRequestList':
             parameters?.map((final e) => e.toJson()).toList(),
         'sCustomHttpRequestBody': body?.map((final e) => e.toJson()).toList(),
+        'sN': responseState,
       };
 
   TACustomHttpRequestPostParams copyWith({
@@ -73,6 +78,7 @@ class TACustomHttpRequestPostParams extends TetaActionParams {
     List<MapElement>? parameters,
     List<MapElement>? headers,
     List<MapElement>? body,
+    String? responseState,
   }) =>
       TACustomHttpRequestPostParams(
         url: url ?? this.url,
@@ -80,5 +86,6 @@ class TACustomHttpRequestPostParams extends TetaActionParams {
         parameters: parameters ?? this.parameters,
         headers: headers ?? this.headers,
         body: body ?? this.body,
+        responseState: responseState ?? this.responseState,
       );
 }

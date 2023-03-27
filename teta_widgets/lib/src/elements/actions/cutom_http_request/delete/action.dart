@@ -5,6 +5,7 @@ import 'package:teta_widgets/src/core/teta_widget/index.dart';
 import 'package:teta_widgets/src/elements/index.dart';
 
 import '../../../../core/teta_action/index.dart';
+import '../../snippets/update_state_value.dart';
 import 'params.dart';
 
 class TACustomHttpRequestDelete extends TetaAction {
@@ -112,7 +113,10 @@ class TACustomHttpRequestDelete extends TetaAction {
           }).toList(),
         );
       }
-      final datasets = addDataset(context, _map);
+
+      if (params.responseState != null) {
+        updateStateValue(context, params.responseState!, _map.getMap[0]);
+      }
     }
   }
 

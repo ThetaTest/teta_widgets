@@ -6,24 +6,26 @@ import '../../../features/text_type_input.dart';
 class TACustomHttpRequestUpdateParams extends TetaActionParams {
   const TACustomHttpRequestUpdateParams({
     required this.url,
-    required this.customHttpRequestExpectedStatusCode,
+    required this.expectedStatusCode,
     required this.parameters,
     required this.headers,
     required this.body,
+    required this.responseState,
   });
 
   const TACustomHttpRequestUpdateParams.empty()
       : url = null,
-        customHttpRequestExpectedStatusCode = null,
+        expectedStatusCode = null,
         parameters = null,
         headers = null,
-        body = null;
+        body = null,
+        responseState = null;
 
   TACustomHttpRequestUpdateParams.fromJson(final Map<String, dynamic> json)
       : url = FTextTypeInput.fromJson(
           json['sCustomHttpRequestURL'] as Map<String, dynamic>?,
         ),
-        customHttpRequestExpectedStatusCode = FTextTypeInput.fromJson(
+        expectedStatusCode = FTextTypeInput.fromJson(
           json['sCustomHttpRequestExpectedStatusCode'] as Map<String, dynamic>?,
         ),
         parameters =
@@ -48,40 +50,42 @@ class TACustomHttpRequestUpdateParams extends TetaActionParams {
                 e as Map<String, dynamic>,
               ),
             )
-            .toList();
+            .toList(),
+        responseState = json['sN'] as String?;
 
   final FTextTypeInput? url;
-  final FTextTypeInput? customHttpRequestExpectedStatusCode;
+  final FTextTypeInput? expectedStatusCode;
   final List<MapElement>? parameters;
   final List<MapElement>? headers;
   final List<MapElement>? body;
+  final String? responseState;
 
   @override
   Map<String, dynamic> toJson() => <String, dynamic>{
-        'sCustomHttpRequestExpectedStatusCode':
-            customHttpRequestExpectedStatusCode?.toJson(),
+        'sCustomHttpRequestExpectedStatusCode': expectedStatusCode?.toJson(),
         'sCustomHttpRequestURL': url?.toJson(),
         'sCustomHttpRequestHeader':
             headers?.map((final e) => e.toJson()).toList(),
         'sCustomHttpRequestList':
             parameters?.map((final e) => e.toJson()).toList(),
         'sCustomHttpRequestBody': body?.map((final e) => e.toJson()).toList(),
+        'sN': responseState,
       };
 
   TACustomHttpRequestUpdateParams copyWith({
     final FTextTypeInput? url,
-    final FTextTypeInput? customHttpRequestExpectedStatusCode,
+    final FTextTypeInput? expectedStatusCode,
     final List<MapElement>? parameters,
     final List<MapElement>? headers,
     final List<MapElement>? body,
+    final String? responseState,
   }) =>
       TACustomHttpRequestUpdateParams(
         url: url ?? this.url,
-        customHttpRequestExpectedStatusCode:
-            customHttpRequestExpectedStatusCode ??
-                this.customHttpRequestExpectedStatusCode,
+        expectedStatusCode: expectedStatusCode ?? this.expectedStatusCode,
         parameters: parameters ?? this.parameters,
         headers: headers ?? this.headers,
         body: body ?? this.body,
+        responseState: responseState ?? this.responseState,
       );
 }

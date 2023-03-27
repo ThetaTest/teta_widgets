@@ -1,9 +1,8 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:gap/gap.dart';
-import 'package:teta_core/teta_core.dart';
 import 'package:teta_widgets/src/elements/controls/atoms/text.dart';
 import 'package:teta_widgets/src/elements/controls/http_params.dart';
-// Project imports:
 import 'package:teta_widgets/src/elements/index.dart';
 import 'package:teta_front_end/teta_front_end.dart';
 import 'package:teta_models/teta_models.dart';
@@ -11,8 +10,6 @@ import 'package:teta_models/teta_models.dart';
 import '../../../../actions/cutom_http_request/delete/action.dart';
 import '../../../../actions/cutom_http_request/delete/params.dart';
 import '../../../../features/text_type_input.dart';
-import '../../../atoms/text.dart';
-import '../../../http_params.dart';
 
 class CustomHttpRequestDeleteControl extends StatefulWidget {
   const CustomHttpRequestDeleteControl({
@@ -35,6 +32,7 @@ class CustomHttpRequestDeleteControlState
   FTextTypeInput? expectedStatusCode;
   List<MapElement>? parameters;
   List<MapElement>? headers;
+  String? responseState;
 
   void updateParams() {
     widget.onParamsChanged(
@@ -43,16 +41,42 @@ class CustomHttpRequestDeleteControlState
         expectedStatusCode: expectedStatusCode,
         parameters: parameters,
         headers: headers,
+        responseState: responseState,
       ),
     );
   }
 
   @override
   Widget build(final BuildContext context) {
+    final pageLoaded = context.read<PageCubit>().state as PageLoaded;
     return Column(
       mainAxisSize: MainAxisSize.min,
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
+        const TParagraph('Response JSON State'),
+        const Gap(Grid.small),
+        descriptionControlWidget(
+          description: 'The state where the JSON response will be stored',
+          control: CDropdown(
+            value: pageLoaded.page.defaultStates
+                    .where((final element) => element.type == VariableType.json)
+                    .map((final e) => e.name)
+                    .toList()
+                    .contains(widget.action.params.responseState)
+                ? widget.action.params.responseState
+                : null,
+            items: pageLoaded.page.defaultStates
+                .where((final element) => element.type == VariableType.json)
+                .map((final e) => e.name)
+                .toList(),
+            onChange: (final newValue) {
+              if (newValue == null) return;
+              responseState = newValue;
+              updateParams();
+            },
+          ),
+        ),
+        const Gap(Grid.medium),
         Container(
           padding: const EdgeInsets.all(16),
           decoration: BoxDecoration(

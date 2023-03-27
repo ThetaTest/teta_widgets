@@ -5,6 +5,7 @@ import 'package:teta_widgets/src/core/teta_widget/index.dart';
 import 'package:teta_widgets/src/elements/index.dart';
 
 import '../../../../core/teta_action/index.dart';
+import '../../snippets/update_state_value.dart';
 import 'params.dart';
 
 class TACustomHttpRequestUpdate extends TetaAction {
@@ -58,8 +59,7 @@ class TACustomHttpRequestUpdate extends TetaAction {
       state.loop,
       context,
     );
-    final customHttpRequestExpectedStatusCodeNew =
-        params.customHttpRequestExpectedStatusCode?.get(
+    final expectedStatusCodeNew = params.expectedStatusCode?.get(
       state.params,
       state.states,
       state.dataset,
@@ -100,10 +100,10 @@ class TACustomHttpRequestUpdate extends TetaAction {
         context,
       );
     }
-    if (urlNew != null && customHttpRequestExpectedStatusCodeNew != null) {
+    if (urlNew != null && expectedStatusCodeNew != null) {
       final response = await TetaCMS.instance.httpRequest.update(
         urlNew,
-        customHttpRequestExpectedStatusCodeNew,
+        expectedStatusCodeNew,
         mapParameters,
         mapBody,
         mapHeaders,
@@ -131,7 +131,10 @@ class TACustomHttpRequestUpdate extends TetaAction {
               .toList(),
         );
       }
-      final datasets = addDataset(context, map);
+
+      if (params.responseState != null) {
+        updateStateValue(context, params.responseState!, map.getMap[0]);
+      }
     }
   }
 
@@ -206,14 +209,13 @@ class TACustomHttpRequestUpdate extends TetaAction {
         )
         .replaceAll("'", '')
         .replaceAll(' ', '');
-    final customHttpRequestExpectedStatusCodeNew =
-        params.customHttpRequestExpectedStatusCode
-            ?.toCode(
-              loop,
-              resultType: ResultTypeEnum.string,
-            )
-            .replaceAll("'", '')
-            .replaceAll(' ', '');
+    final customHttpRequestExpectedStatusCodeNew = params.expectedStatusCode
+        ?.toCode(
+          loop,
+          resultType: ResultTypeEnum.string,
+        )
+        .replaceAll("'", '')
+        .replaceAll(' ', '');
 
     return '''
       final response = await TetaCMS.instance.httpRequest.update('$urlNew','$customHttpRequestExpectedStatusCodeNew', <String, dynamic>$mapParamatersString,  <String, dynamic>$mapBodyString, <String, dynamic>$mapHeadersString );

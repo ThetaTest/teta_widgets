@@ -9,13 +9,15 @@ class TACustomHttpRequestDeleteParams extends TetaActionParams {
     required this.expectedStatusCode,
     required this.parameters,
     required this.headers,
+    required this.responseState,
   });
 
   const TACustomHttpRequestDeleteParams.empty()
       : url = null,
         expectedStatusCode = null,
         parameters = null,
-        headers = null;
+        headers = null,
+        responseState = null;
 
   TACustomHttpRequestDeleteParams.fromJson(final Map<String, dynamic> json)
       : url = FTextTypeInput.fromJson(
@@ -39,12 +41,14 @@ class TACustomHttpRequestDeleteParams extends TetaActionParams {
                     e as Map<String, dynamic>,
                   ),
                 )
-                .toList();
+                .toList(),
+        responseState = json['sN'] as String?;
 
   final FTextTypeInput? url;
   final FTextTypeInput? expectedStatusCode;
   final List<MapElement>? parameters;
   final List<MapElement>? headers;
+  final String? responseState;
 
   @override
   Map<String, dynamic> toJson() => <String, dynamic>{
@@ -54,6 +58,7 @@ class TACustomHttpRequestDeleteParams extends TetaActionParams {
             headers?.map((final e) => e.toJson()).toList(),
         'customHttpRequestList':
             parameters?.map((final e) => e.toJson()).toList(),
+        'sN': responseState,
       };
 
   TACustomHttpRequestDeleteParams copyWith({
@@ -61,12 +66,14 @@ class TACustomHttpRequestDeleteParams extends TetaActionParams {
     final FTextTypeInput? expectedStatusCode,
     final List<MapElement>? parameters,
     final List<MapElement>? headers,
+    final String? responseState,
   }) {
     return TACustomHttpRequestDeleteParams(
       url: url ?? this.url,
       expectedStatusCode: expectedStatusCode ?? this.expectedStatusCode,
       parameters: parameters ?? this.parameters,
       headers: headers ?? this.headers,
+      responseState: responseState ?? this.responseState,
     );
   }
 }
