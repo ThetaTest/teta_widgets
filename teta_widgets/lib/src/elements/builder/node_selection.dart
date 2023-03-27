@@ -6,13 +6,13 @@ import 'package:collection/collection.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:hovering/hovering.dart';
-import 'package:teta_core/src/rendering/find.dart';
 import 'package:teta_core/teta_core.dart';
 import '../../core/teta_widget/index.dart';
 import '../index.dart';
 // Project imports:
 import 'package:teta_front_end/teta_front_end.dart';
 import 'package:teta_core/src/services/right_context_menu.dart';
+import './overflow_detector.dart';
 
 class NodeSelection extends StatelessWidget {
   const NodeSelection({
@@ -67,7 +67,9 @@ class NodeSelectionState extends State<_NodeSelection> {
   @override
   Widget build(final BuildContext context) {
     if (widget.state.forPlay) {
-      return widget.child;
+      return OverflowIndicator(
+        child: widget.child,
+      );
     }
     final dragState = context.watch<DragCubit>().state;
     if (dragState == DragState.active) {

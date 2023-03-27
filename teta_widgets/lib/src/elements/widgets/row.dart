@@ -9,6 +9,7 @@ import 'package:teta_core/teta_core.dart';
 import 'package:teta_widgets/src/core/teta_widget/index.dart';
 // Project imports:
 import 'package:teta_widgets/src/elements/index.dart';
+import 'package:teta_widgets/src/elements/builder/drag_list.dart';
 
 class WRow extends StatelessWidget {
   /// Constructor
@@ -46,7 +47,8 @@ class WRow extends StatelessWidget {
               );
         },
         builder: (final context, final candidateData, final rejectedData) {
-          return Row(
+          return DragAndDropList(
+            direction: DragAndDropDirection.horizontal,
             mainAxisAlignment: _mainAxisAlignment.get,
             crossAxisAlignment: _crossAxisAlignment.get,
             mainAxisSize: _mainAxisSize.get,

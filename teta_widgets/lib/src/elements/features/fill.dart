@@ -232,7 +232,7 @@ class FFill extends Equatable {
         return FFill(
           levels: [
             FFillElement(
-              color: json['color'] as String,
+              color: (json['color'] as String).replaceAll('#', ''),
               stop: 0,
             ),
           ],

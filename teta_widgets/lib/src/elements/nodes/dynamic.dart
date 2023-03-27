@@ -116,7 +116,9 @@ class NDynamic extends CNode {
     final Map<String, dynamic> doc,
     final int pageId,
   ) {
-    final globalType = NodeType.fromString(doc[DBKeys.type] as String);
+    NType? globalType;
+    if (doc[DBKeys.type] == 'image.network') globalType = NType.image;
+    globalType ??= NodeType.fromString(doc[DBKeys.type] as String);
 
     List<VariableObject>? params;
     List<VariableObject>? states;

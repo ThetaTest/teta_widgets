@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:teta_widgets/src/core/teta_widget/index.dart';
 // Project imports:
 import 'package:teta_widgets/src/elements/index.dart';
+import './overflow_detector.dart';
 
 /// Builder
 class NodeSelectionBuilder extends StatelessWidget {
@@ -25,6 +26,8 @@ class NodeSelectionBuilder extends StatelessWidget {
             state: _state,
             child: _child,
           )
-        : _child;
+        : OverflowIndicator(
+            child: _child,
+          );
   }
 }

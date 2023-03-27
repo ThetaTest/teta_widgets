@@ -8,6 +8,7 @@ import 'package:teta_widgets/src/core/teta_widget/index.dart';
 // Project imports:
 import 'package:teta_widgets/src/elements/index.dart';
 import 'package:teta_models/teta_models.dart';
+import 'package:teta_widgets/src/elements/builder/drag_list.dart';
 
 // ignore_for_file: public_member_api_docs
 
@@ -42,7 +43,8 @@ class WColumn extends StatelessWidget {
               );
         },
         builder: (final context, final candidateData, final rejectedData) {
-          return Column(
+          return DragAndDropList(
+            direction: DragAndDropDirection.vertical,
             mainAxisSize: mainAxisSize.get,
             mainAxisAlignment: mainAxisAlignment.get,
             crossAxisAlignment: crossAxisAlignment.get,
