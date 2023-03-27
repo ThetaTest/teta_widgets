@@ -555,9 +555,16 @@ class PaddingsState extends State<TextControl> with AfterLayoutMixin {
                               ),
                             )
                             .toList(),
-                        onChange: (final newValue) {
+                        onChange: (final newValue)async {
+                          final index = state.datasets.indexWhere(
+                            (final element) =>
+                                element.getName ==newValue,
+                          );
                           setState(() {
                             databaseName = newValue!;
+                            dataset = index != -1
+                              ?  state.datasets[index]
+                              : DatasetObject.empty();
                           });
                           final old = widget.value;
                           widget.value.datasetName = newValue;

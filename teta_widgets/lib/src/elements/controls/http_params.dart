@@ -111,8 +111,10 @@ class HttpParamsControlState extends State<HttpParamsControl> {
                         value: e,
                         callBack: (final value, final old) {
                           final old = widget.list;
-                          final index = widget.list.indexOf(e);
-                          widget.list[index] = value;
+                          setState(() {
+                            final index = widget.list.indexOf(e);
+                            widget.list[index] = value;
+                          });
                           widget.callBack(widget.list, old);
                         },
                       ),

@@ -118,8 +118,23 @@ class __BuildAttrSelectionState extends State<_BuildAttrSelection> {
   String databaseAttribute = '';
 
   @override
+  void didUpdateWidget(_BuildAttrSelection oldWidget) {
+    super.didUpdateWidget(oldWidget);
+    if (widget.isAttrRequired != oldWidget.isAttrRequired ||
+        widget.datasetName != oldWidget.datasetName) {
+      isAttrRequired = widget.isAttrRequired;
+      updateIsAttrRequired();
+    }
+  }
+
+  @override
   void initState() {
     isAttrRequired = widget.isAttrRequired;
+    updateIsAttrRequired();
+    super.initState();
+  }
+
+  void updateIsAttrRequired() {
     if (widget.datasetName != '') {
       bool hasSubList;
       final datasets = (context.read<PageCubit>().state as PageLoaded).datasets;
@@ -141,7 +156,6 @@ class __BuildAttrSelectionState extends State<_BuildAttrSelection> {
         isAttrRequired = true;
       }
     }
-    super.initState();
   }
 
   @override
