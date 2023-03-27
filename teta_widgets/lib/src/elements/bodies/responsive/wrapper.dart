@@ -12,7 +12,7 @@ import 'package:teta_widgets/src/elements/intrinsic_states/class.dart';
 import 'package:teta_widgets/src/elements/nodes/categories.dart';
 import 'package:teta_widgets/src/elements/nodes/node_body.dart';
 import 'package:teta_widgets/teta_widgets.dart';
-import 'package:teta_models/teta_models.dart';
+import 'package:theta_models/theta_models.dart';
 
 const _globalType = NType.wrapper;
 

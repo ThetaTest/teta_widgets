@@ -11,7 +11,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:recase/recase.dart';
 import 'package:teta_widgets/src/elements/actions/snippets/get_page_on_code.dart';
 import 'package:teta_front_end/teta_front_end.dart';
-import 'package:teta_models/teta_models.dart';
+import 'package:theta_models/theta_models.dart';
 
 class FACameraAlwaysFlash {
   static Future action(final BuildContext context) async {

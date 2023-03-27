@@ -6,7 +6,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:hive/hive.dart';
 import 'package:teta_core/teta_core.dart';
 import 'package:teta_front_end/teta_front_end.dart';
-import 'package:teta_models/teta_models.dart';
+import 'package:theta_models/theta_models.dart';
 
 /// Function to add a new dataset to scaffold and widgets' tree
 /// Save local storage(Hive)

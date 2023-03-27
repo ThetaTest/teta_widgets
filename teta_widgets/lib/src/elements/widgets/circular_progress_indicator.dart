@@ -9,7 +9,7 @@ import 'package:teta_widgets/src/elements/index.dart';
 
 // ignore_for_file: public_member_api_docs
 import 'package:teta_front_end/teta_front_end.dart';
-import 'package:teta_models/teta_models.dart';
+import 'package:theta_models/theta_models.dart';
 
 class WCircularProgressIndicator extends StatelessWidget {
   /// Returns a [Center] widget in Teta

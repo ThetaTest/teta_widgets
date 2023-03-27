@@ -9,7 +9,7 @@ import 'package:teta_widgets/src/core/teta_widget/index.dart';
 import 'package:teta_widgets/src/elements/features/condition_type.dart';
 // Project imports:
 import 'package:teta_widgets/src/elements/index.dart';
-import 'package:teta_models/teta_models.dart';
+import 'package:theta_models/theta_models.dart';
 
 //ignore: must_be_immutable
 class WCondition extends StatelessWidget {

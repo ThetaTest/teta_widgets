@@ -16,19 +16,19 @@ dependencies:
     git:
       url: git@github.com:andreabuttarelli/Teta.git
       path: teta_front_end
-      ref: develop
+      ref: theta
 
   teta_core:
     git:
       url: git@github.com:andreabuttarelli/Teta.git
       path: teta_core
-      ref: develop
+      ref: theta
 
-  teta_models:
+  theta_models:
     git:
       url: git@github.com:andreabuttarelli/Teta.git
-      path: teta_models
-      ref: develop
+      path: theta_models
+      ref: theta
 
   teta_cms:
     git:

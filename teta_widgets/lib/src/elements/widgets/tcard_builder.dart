@@ -9,7 +9,7 @@ import 'dart:async';
 import 'package:flutter/material.dart';
 // Package imports:
 import 'package:tcard/tcard.dart';
-import 'package:teta_models/teta_models.dart';
+import 'package:theta_models/theta_models.dart';
 import 'package:teta_widgets/src/core/teta_widget/index.dart';
 // Project imports:
 import 'package:teta_widgets/src/elements/index.dart';

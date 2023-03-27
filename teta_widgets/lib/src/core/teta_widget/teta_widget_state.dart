@@ -1,5 +1,5 @@
 import 'package:teta_widgets/src/elements/index.dart';
-import 'package:teta_models/teta_models.dart';
+import 'package:theta_models/theta_models.dart';
 
 class TetaWidgetState {
   const TetaWidgetState({

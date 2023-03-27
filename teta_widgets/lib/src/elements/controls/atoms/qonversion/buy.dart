@@ -6,7 +6,7 @@ import 'package:teta_widgets/src/elements/controls/atoms/text.dart';
 import 'package:teta_widgets/src/elements/features/actions/enums/qonversion.dart';
 import 'package:teta_widgets/src/elements/index.dart';
 import 'package:teta_front_end/teta_front_end.dart';
-import 'package:teta_models/teta_models.dart';
+import 'package:theta_models/theta_models.dart';
 
 class QonversionActionWidget extends StatelessWidget {
   const QonversionActionWidget({

@@ -12,7 +12,7 @@ import 'package:teta_widgets/src/elements/controls/atoms/cms_collections.dart';
 import 'package:teta_widgets/src/elements/controls/atoms/db_map.dart';
 import 'package:teta_widgets/src/elements/features/actions/element.dart';
 import 'package:teta_front_end/teta_front_end.dart';
-import 'package:teta_models/teta_models.dart';
+import 'package:theta_models/theta_models.dart';
 
 class TetaCmsInsertControl extends StatelessWidget {
   const TetaCmsInsertControl({

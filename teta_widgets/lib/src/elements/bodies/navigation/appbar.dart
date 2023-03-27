@@ -14,7 +14,7 @@ import 'package:teta_widgets/src/elements/nodes/node.dart';
 import 'package:teta_widgets/src/elements/nodes/node_body.dart';
 import 'package:teta_widgets/src/elements/tips/schema.dart';
 import 'package:teta_widgets/src/elements/widgets/navigation/appbar.dart';
-import 'package:teta_models/teta_models.dart';
+import 'package:theta_models/theta_models.dart';
 
 const _globalType = NType.appBar;
 

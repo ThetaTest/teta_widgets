@@ -9,7 +9,7 @@ import 'package:teta_front_end/teta_front_end.dart';
 // Teta imports:
 import 'package:teta_widgets/teta_widgets.dart';
 import 'package:teta_widgets/src/elements/packages.dart';
-import 'package:teta_models/teta_models.dart';
+import 'package:theta_models/theta_models.dart';
 
 class FActionAlertSnackbar {
   //list of packages needed for this action

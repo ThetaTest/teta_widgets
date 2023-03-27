@@ -14,7 +14,7 @@ import 'package:gap/gap.dart';
 import 'package:hovering/hovering.dart';
 import 'package:teta_front_end/src/design_system/textfield/minitextfield.dart';
 import 'package:teta_core/teta_core.dart';
-import 'package:teta_repositories/src/node_repository.dart';
+import 'package:theta_repositories/src/node_repository.dart';
 import 'package:teta_widgets/src/elements/controls/atoms/actions/validator.dart';
 import 'package:teta_widgets/src/elements/controls/atoms/airtable/delete.dart';
 import 'package:teta_widgets/src/elements/controls/atoms/airtable/insert.dart';
@@ -77,7 +77,7 @@ import 'package:teta_widgets/src/elements/features/condition_type.dart';
 import 'package:teta_widgets/src/elements/index.dart';
 import 'package:uuid/uuid.dart';
 import 'package:teta_front_end/teta_front_end.dart';
-import 'package:teta_models/teta_models.dart';
+import 'package:theta_models/theta_models.dart';
 
 /// Widget to control a single action
 class ActionElementControl extends StatefulWidget {

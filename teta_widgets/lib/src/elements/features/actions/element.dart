@@ -13,7 +13,7 @@ import 'package:supabase/supabase.dart';
 import 'package:teta_cms/teta_cms.dart';
 import 'package:teta_core/src/services/packages_service.dart';
 // Project imports:
-import 'package:teta_models/teta_models.dart';
+import 'package:theta_models/theta_models.dart';
 
 import 'package:teta_core/teta_core.dart';
 import 'package:teta_widgets/src/core/teta_widget/index.dart';

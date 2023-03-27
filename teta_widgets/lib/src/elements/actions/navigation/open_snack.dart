@@ -18,7 +18,7 @@ import 'package:teta_widgets/src/elements/code/formatter_test.dart';
 import 'package:teta_widgets/src/elements/index.dart';
 import 'package:teta_front_end/src/pages/play_page/cubit_value_initializer.dart';
 import 'package:teta_front_end/teta_front_end.dart';
-import 'package:teta_models/teta_models.dart';
+import 'package:theta_models/theta_models.dart';
 import 'package:teta_models/src/models/variable.dart';
 
 class FActionNavigationOpenSnackBar {

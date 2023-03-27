@@ -4,7 +4,7 @@
 import 'package:collection/collection.dart';
 // Flutter imports:
 import 'package:flutter/material.dart';
-import 'package:teta_models/teta_models.dart';
+import 'package:theta_models/theta_models.dart';
 import 'package:teta_widgets/src/core/teta_widget/teta_widget_state.dart';
 import 'package:teta_widgets/src/elements/builder/gesture_detector_base.dart';
 // Project imports:

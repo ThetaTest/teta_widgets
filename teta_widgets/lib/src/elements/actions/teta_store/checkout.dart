@@ -5,7 +5,7 @@
 import 'package:flutter/material.dart';
 // Package imports:
 import 'package:teta_core/src/utils/stripe/html/stripe_checkout.dart';
-import 'package:teta_models/teta_models.dart';
+import 'package:theta_models/theta_models.dart';
 
 class FActionTetaStoreCheckout {
   Future makeAction(

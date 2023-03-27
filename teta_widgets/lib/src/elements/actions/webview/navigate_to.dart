@@ -13,7 +13,7 @@ import 'package:teta_widgets/src/elements/actions/snippets/get_page_on_code.dart
 import 'package:teta_widgets/src/elements/actions/snippets/take_state_from.dart';
 import 'package:teta_widgets/src/elements/index.dart';
 import 'package:webviewx/webviewx.dart';
-import 'package:teta_models/teta_models.dart';
+import 'package:theta_models/theta_models.dart';
 
 class FActionWebViewNavigateTo {
   static Future action({

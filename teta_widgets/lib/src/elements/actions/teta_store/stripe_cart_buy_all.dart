@@ -8,7 +8,7 @@ import 'package:teta_cms/teta_cms.dart';
 // Package imports:
 import 'package:teta_core/teta_core.dart';
 import 'package:teta_widgets/src/elements/nodes/node.dart';
-import 'package:teta_models/teta_models.dart';
+import 'package:theta_models/theta_models.dart';
 
 class FActionTetaStoreCartBuyAll {
   static Future action(

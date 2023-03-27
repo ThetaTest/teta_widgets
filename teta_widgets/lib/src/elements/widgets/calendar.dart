@@ -9,7 +9,7 @@ import 'package:teta_core/teta_core.dart';
 import 'package:teta_widgets/src/core/teta_widget/index.dart';
 import 'package:teta_widgets/src/elements/builder/save_dataset.dart';
 import 'package:teta_widgets/src/elements/index.dart';
-import 'package:teta_models/teta_models.dart';
+import 'package:theta_models/theta_models.dart';
 
 // ignore_for_file: public_member_api_docs
 

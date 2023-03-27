@@ -13,7 +13,7 @@ import 'package:teta_widgets/src/elements/actions/snippets/take_state_from.dart'
 import 'package:teta_widgets/src/elements/actions/snippets/update_state_value.dart';
 import 'package:teta_widgets/src/elements/index.dart';
 import 'package:teta_front_end/teta_front_end.dart';
-import 'package:teta_models/teta_models.dart';
+import 'package:theta_models/theta_models.dart';
 
 class FActionStateChangeWith {
   static Future action({

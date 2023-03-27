@@ -7,7 +7,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:gap/gap.dart';
 import 'package:teta_core/teta_core.dart';
-import 'package:teta_repositories/src/project_styles_repository.dart';
+import 'package:theta_repositories/src/project_styles_repository.dart';
 // Project imports:
 import 'package:teta_widgets/src/elements/controls/atoms/fill.dart';
 import 'package:teta_widgets/src/elements/controls/atoms/font_family.dart';

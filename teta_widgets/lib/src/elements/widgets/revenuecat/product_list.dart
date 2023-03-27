@@ -8,7 +8,7 @@ import 'package:teta_widgets/src/elements/builder/gesture_detector_base.dart';
 // Project imports:
 import 'package:teta_widgets/src/elements/index.dart';
 import 'package:universal_platform/universal_platform.dart';
-import 'package:teta_models/teta_models.dart';
+import 'package:theta_models/theta_models.dart';
 
 // Project imports:
 

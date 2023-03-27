@@ -10,7 +10,7 @@ import 'package:teta_core/teta_core.dart';
 import 'package:teta_widgets/src/core/teta_widget/index.dart';
 // Project imports:
 import 'package:teta_widgets/src/elements/index.dart';
-import 'package:teta_models/teta_models.dart';
+import 'package:theta_models/theta_models.dart';
 
 class WTetaStoreTransactionsBuilder extends StatefulWidget {
   /// Returns a ListView.builder in Teta

@@ -18,7 +18,7 @@ import '../../features/fill.dart';
 import '../../nodes/enum.dart';
 import '../../nodes/node.dart';
 import '../snippets.dart';
-import 'package:teta_models/teta_models.dart';
+import 'package:theta_models/theta_models.dart';
 
 /// Generates the code for a page
 Future<String> pageCodeTemplate(

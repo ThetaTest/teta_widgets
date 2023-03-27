@@ -2,7 +2,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_staggered_animations/flutter_staggered_animations.dart';
-import 'package:teta_core/src/rendering/find.dart';
+import 'package:theta_rendering/theta_rendering.dart';
 // Package imports:
 import 'package:teta_core/teta_core.dart';
 import 'package:teta_front_end/teta_front_end.dart';
@@ -11,7 +11,7 @@ import '../../core/teta_widget/teta_widget_state.dart';
 // Project imports:
 import '../index.dart';
 import '../nodes/node_body.dart';
-import 'package:teta_models/teta_models.dart';
+import 'package:theta_models/theta_models.dart';
 
 /// Builder
 class GestureBuilderBase {

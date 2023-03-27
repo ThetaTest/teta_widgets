@@ -5,7 +5,7 @@ import 'package:equatable/equatable.dart';
 // Flutter imports:
 import 'package:flutter/material.dart';
 import 'package:teta_core/teta_core.dart';
-import 'package:teta_models/teta_models.dart';
+import 'package:theta_models/theta_models.dart';
 
 class FConditionType extends Equatable {
   /// Constructor

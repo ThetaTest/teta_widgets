@@ -3,7 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:teta_core/src/cubits/airtable.dart';
 import 'package:teta_widgets/src/elements/features/text_type_input.dart';
-import 'package:teta_models/teta_models.dart';
+import 'package:theta_models/theta_models.dart';
 
 class FAAirtableInsert {
   static Future<AirtableRecord?> action(
