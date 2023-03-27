@@ -2,6 +2,8 @@
 
 import 'dart:core';
 
+import 'package:teta_cms/teta_cms.dart';
+
 import 'action_types/types.dart';
 
 class TetaActionLegacyAdapter {
@@ -46,6 +48,33 @@ class TetaActionLegacyAdapter {
       ..remove('cond')
       ..remove('vCond')
       ..remove('delay');
+
+    // Teta Auth Providers
+    if (legacyJson.containsKey('aTAu') && legacyJson['aTAu'] != null) {
+      final providerString =
+          '${legacyJson['aTAu']}'.toLowerCase().split(' ').join();
+      if (providerString.contains('github')) {
+        legacyJson['provider'] = TetaProvider.github.toString();
+      } else if (providerString.contains('google')) {
+        legacyJson['provider'] = TetaProvider.google.toString();
+      } else if (providerString.contains('facebook')) {
+        legacyJson['provider'] = TetaProvider.facebook.toString();
+      } else if (providerString.contains('apple')) {
+        legacyJson['provider'] = TetaProvider.apple.toString();
+      } else if (providerString.contains('twitter')) {
+        legacyJson['provider'] = TetaProvider.twitter.toString();
+      } else if (providerString.contains('gitlab')) {
+        legacyJson['provider'] = TetaProvider.gitlab.toString();
+      } else if (providerString.contains('discord')) {
+        legacyJson['provider'] = TetaProvider.discord.toString();
+      } else if (providerString.contains('linkedin')) {
+        legacyJson['provider'] = TetaProvider.linkedin.toString();
+      } else if (providerString.contains('bitbucket')) {
+        legacyJson['provider'] = TetaProvider.bitbucket.toString();
+      } else if (providerString.contains('twitch')) {
+        legacyJson['provider'] = TetaProvider.twitch.toString();
+      }
+    }
 
     // Params
     json['params'] = legacyJson;
