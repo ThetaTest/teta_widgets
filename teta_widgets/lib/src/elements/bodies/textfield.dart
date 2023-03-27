@@ -86,7 +86,7 @@ class TextFieldBody extends NodeBody {
     DBKeys.showBorders: false,
     DBKeys.enabledBorderColor: FFill(),
     DBKeys.focusedBorderColor: FFill(),
-    DBKeys.action: FAction(),
+    DBKeys.action: NodeGestureActions.empty(),
     DBKeys.cursorColor: FFill(),
     DBKeys.hintTextColor: FFill(),
   };
@@ -247,7 +247,7 @@ class TextFieldBody extends NodeBody {
             ${(attributes[DBKeys.width] as FSize).toJson()}
             ${(attributes[DBKeys.margins] as FMargins).toJson()}
             ${(attributes[DBKeys.padding] as FMargins).toJson()}
-            ${(attributes[DBKeys.action] as FAction).toJson()}
+            ${(attributes[DBKeys.action] as NodeGestureActions).toJson()}
             ${(attributes[DBKeys.keyboardType] as FKeyboardType? ?? FKeyboardType()).toJson()}
             ${(attributes[DBKeys.borderRadius] as FBorderRadius).toJson()}
             ${(attributes[DBKeys.maxLenght] as FTextTypeInput?)?.toJson()}
@@ -272,7 +272,7 @@ class TextFieldBody extends NodeBody {
         width: attributes[DBKeys.width] as FSize,
         margins: attributes[DBKeys.margins] as FMargins,
         paddings: attributes[DBKeys.padding] as FMargins,
-        action: attributes[DBKeys.action] as FAction,
+        action: attributes[DBKeys.action] as NodeGestureActions,
         keyboardType: attributes[DBKeys.keyboardType] as FKeyboardType,
         borderRadius: attributes[DBKeys.borderRadius] as FBorderRadius,
         maxLenght: attributes[DBKeys.maxLenght] as FTextTypeInput,

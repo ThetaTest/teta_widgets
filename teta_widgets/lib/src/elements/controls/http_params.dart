@@ -1,18 +1,10 @@
-// Flutter imports:
-// ignore_for_file: public_member_api_docs
-
-// Flutter imports:
 import 'package:flutter/material.dart';
-// Package imports:
-import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:hovering/hovering.dart';
-import 'package:teta_core/teta_core.dart';
-// Project imports:
-import 'package:teta_widgets/src/elements/controls/http_params_element.dart';
-import 'package:teta_widgets/src/elements/features/text_type_input.dart';
-import 'package:teta_widgets/src/elements/nodes/node.dart';
 import 'package:teta_front_end/teta_front_end.dart';
 import 'package:theta_models/theta_models.dart';
+
+import '../features/text_type_input.dart';
+import 'http_params_element.dart';
 
 class HttpParamsControl extends StatefulWidget {
   const HttpParamsControl({
@@ -119,8 +111,10 @@ class HttpParamsControlState extends State<HttpParamsControl> {
                         value: e,
                         callBack: (final value, final old) {
                           final old = widget.list;
-                          final index = widget.list.indexOf(e);
-                          widget.list[index] = value;
+                          setState(() {
+                            final index = widget.list.indexOf(e);
+                            widget.list[index] = value;
+                          });
                           widget.callBack(widget.list, old);
                         },
                       ),

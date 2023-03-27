@@ -74,7 +74,7 @@ class CalenderV2Body extends NodeBody {
   // ignore: overridden_fields
   Map<String, dynamic> attributes = <String, dynamic>{
     DBKeys.datasetInput: FDataset(),
-    DBKeys.action: FAction(),
+    DBKeys.action: NodeGestureActions.empty(),
     DBKeys.dropdownItem: 'month',
     DBKeys.textStyle: FTextStyle(),
     DBKeys.textStyle2: FTextStyle(),
@@ -200,7 +200,7 @@ class CalenderV2Body extends NodeBody {
           '''
           ${state.toKey}
           ${child ?? children}
-          ${(attributes[DBKeys.action] as FAction).toJson()},
+          ${(attributes[DBKeys.action] as NodeGestureActions).toJson()},
           ${(attributes[DBKeys.datasetInput] as FDataset).toJson()},
           ${(attributes[DBKeys.selectedItemName] as FTextTypeInput).toJson()}
           ${(attributes[DBKeys.selectedItemName] as FTextTypeInput).getStateValue(state.states)}
@@ -218,7 +218,7 @@ class CalenderV2Body extends NodeBody {
         ),
         state: state,
         children: children ?? <CNode>[],
-        action: attributes[DBKeys.action] as FAction,
+        action: attributes[DBKeys.action] as NodeGestureActions,
         calendarEvents: attributes[DBKeys.datasetInput] as FDataset,
         selectedItemName: attributes[DBKeys.selectedItemName] as FTextTypeInput,
         calendarView: attributes[DBKeys.dropdownItem] as String,

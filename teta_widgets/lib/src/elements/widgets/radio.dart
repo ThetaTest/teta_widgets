@@ -18,7 +18,7 @@ class WRadio extends StatefulWidget {
   }) : super(key: key);
 
   final TetaWidgetState state;
-  final FAction action;
+  final NodeGestureActions action;
   final FTextTypeInput value;
   final FTextTypeInput groupValue;
 
@@ -54,7 +54,7 @@ class _WRadioState extends State<WRadio> {
             context: context,
             state: widget.state,
             gesture: ActionGesture.onTap,
-            action: widget.action,
+            nodeGestureActions: widget.action,
             actionValue: null,
           );
           if (widget.state.forPlay) {

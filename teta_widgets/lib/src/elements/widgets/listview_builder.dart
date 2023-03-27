@@ -36,7 +36,7 @@ class WListViewBuilder extends StatefulWidget {
   final bool shrinkWrap;
   final bool isVertical;
   final bool isReverse;
-  final FAction action;
+  final NodeGestureActions action;
   final FDataset value;
   final FPhysic physic;
 
@@ -125,7 +125,7 @@ class WListViewBuilderState extends State<WListViewBuilder> {
                     context: context,
                     state: widget.state,
                     gesture: ActionGesture.scrollToTop,
-                    action: widget.action,
+                    nodeGestureActions: widget.action,
                     actionValue: null,
                   );
                 } else {
@@ -134,7 +134,7 @@ class WListViewBuilderState extends State<WListViewBuilder> {
                     context: context,
                     state: widget.state,
                     gesture: ActionGesture.scrollToBottom,
-                    action: widget.action,
+                    nodeGestureActions: widget.action,
                     actionValue: null,
                   );
                 }

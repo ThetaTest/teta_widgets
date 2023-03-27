@@ -65,7 +65,7 @@ class ListViewBody extends NodeBody {
     DBKeys.isPrimary: true,
     DBKeys.isFullWidth: false,
     DBKeys.physic: FPhysic(),
-    DBKeys.action: FAction(),
+    DBKeys.action: NodeGestureActions.empty(),
   };
 
   @override
@@ -121,7 +121,7 @@ class ListViewBody extends NodeBody {
           ${attributes[DBKeys.flag] as bool}
           ${attributes[DBKeys.isFullWidth] as bool}
           ${(attributes[DBKeys.physic] as FPhysic).toJson()}
-          ${(attributes[DBKeys.action] as FAction).toJson()}
+          ${(attributes[DBKeys.action] as NodeGestureActions).toJson()}
           ''',
         ),
         state: state,
@@ -133,7 +133,7 @@ class ListViewBody extends NodeBody {
         isVertical: attributes[DBKeys.isVertical] as bool,
         shrinkWrap: attributes[DBKeys.flag] as bool,
         isReverse: attributes[DBKeys.isFullWidth] as bool,
-        action: attributes[DBKeys.action] as FAction,
+        action: attributes[DBKeys.action] as NodeGestureActions,
       );
 
   @override

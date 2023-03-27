@@ -44,7 +44,7 @@ class WMapBuilder extends StatefulWidget {
   final TetaWidgetState state;
   final CNode? child;
   final FTextTypeInput controller;
-  final FAction? action;
+  final NodeGestureActions? action;
   final FDataset datasetInput;
   final bool flag;
 

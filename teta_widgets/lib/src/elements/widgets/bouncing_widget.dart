@@ -22,7 +22,7 @@ class WBouncingWidget extends StatelessWidget {
 
   final TetaWidgetState state;
   final CNode? child;
-  final FAction action;
+  final NodeGestureActions action;
   final FTextTypeInput value;
   final FTextTypeInput valueOfCondition;
 
@@ -53,7 +53,7 @@ class WBouncingWidget extends StatelessWidget {
           context: context,
           state: state,
           gesture: ActionGesture.onTap,
-          action: action,
+          nodeGestureActions: action,
           actionValue: null,
         ),
         child: ChildConditionBuilder(

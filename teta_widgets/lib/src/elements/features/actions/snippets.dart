@@ -18,7 +18,6 @@ class AS {
     required final bool? withLoop,
   }) {
     return FCondition.toCode(
-      context,
       condition,
       valueOfCondition,
       FDelay.toCode(int.tryParse('${delay?.value}') ?? 0) +

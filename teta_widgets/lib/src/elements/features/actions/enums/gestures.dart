@@ -1,21 +1,22 @@
-/// [ActionGesture] identifies gesture
-// ignore_for_file: public_member_api_docs
-
 enum ActionGesture {
-  onTap,
-  onLongPress,
-  onDoubleTap,
-  onChange,
-  onSubmitted,
-  onHover,
-  swipeLeft,
-  swipeRight,
-  onEnd,
-  onMonthLoaded,
-  onDayPressed,
-  onPaginationCompleted,
-  initState,
-  onStreamNewValue,
-  scrollToTop,
-  scrollToBottom,
+  onTap('On Tap'),
+  onLongPress('On Long Press'),
+  onDoubleTap('On Double Tap'),
+  onChange('On Change'),
+  onSubmitted('On Submitted'),
+  onHover('On Hover'),
+  swipeLeft('Swipe Left'),
+  swipeRight('Swipe Right'),
+  onEnd('On End'),
+  onMonthLoaded('On Month Loaded'),
+  onDayPressed('On Day Pressed'),
+  onPaginationCompleted('On Pagination Completed'),
+  initState('Init State'),
+  onStreamNewValue('On Stream New Value'),
+  scrollToTop('Scroll To Top'),
+  scrollToBottom('Scroll To Bottom');
+
+  const ActionGesture(this.gestureName);
+
+  final String gestureName;
 }

@@ -72,7 +72,7 @@ class _WComponentState extends State<WComponent> {
           });
         }
       } else {
-        if (component?.scaffold == null) {
+        if (component.scaffold == null) {
           final nodes = await fetch(component, context);
           final scaffold = sl.get<NodeRendering>().renderTree(nodes);
           component = component.copyWith(flatList: nodes, scaffold: scaffold);

@@ -1,11 +1,5 @@
-// Flutter imports:
-// Package imports:
-// ignore_for_file: import_of_legacy_library_into_null_safe, public_member_api_docs, lines_longer_than_80_chars, avoid_dynamic_calls
-
 import 'package:collection/collection.dart';
-// Flutter imports:
 import 'package:flutter/material.dart';
-// Package imports:
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_feather_icons/flutter_feather_icons.dart';
 import 'package:gap/gap.dart';

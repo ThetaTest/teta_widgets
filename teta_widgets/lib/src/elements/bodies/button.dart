@@ -96,7 +96,7 @@ class ButtonBody extends NodeBody {
         ],
       ),
     ),
-    DBKeys.action: FAction(),
+    DBKeys.action: NodeGestureActions.empty(),
     DBKeys.actionValue: FTextTypeInput(),
     DBKeys.pageTransition: FPageTransition(),
     DBKeys.align: FAlign()
@@ -158,7 +158,7 @@ class ButtonBody extends NodeBody {
           ${(attributes[DBKeys.fill] as FFill).toJson()}
           ${(attributes[DBKeys.textStyle] as FTextStyle).toJson()}
           ${(attributes[DBKeys.align] as FAlign).toJson()}
-          ${(attributes[DBKeys.action] as FAction).toJson()}
+          ${(attributes[DBKeys.action] as NodeGestureActions).toJson()}
           ${(attributes[DBKeys.actionValue] as FTextTypeInput).toJson()}
           ${(attributes[DBKeys.pageTransition] as FPageTransition).toJson()}
           ''',
@@ -171,7 +171,7 @@ class ButtonBody extends NodeBody {
         fill: attributes[DBKeys.fill] as FFill,
         textStyle: attributes[DBKeys.textStyle] as FTextStyle,
         textAlignPosition: attributes[DBKeys.align] as FAlign,
-        action: attributes[DBKeys.action] as FAction,
+        action: attributes[DBKeys.action] as NodeGestureActions,
         actionValue: attributes[DBKeys.actionValue] as FTextTypeInput,
         pageTransition: attributes[DBKeys.pageTransition] as FPageTransition,
       );

@@ -25,7 +25,7 @@ class WPageView extends StatefulWidget {
   final List<CNode> children;
   final bool isVertical;
   final bool flagValue;
-  final FAction action;
+  final NodeGestureActions action;
 
   @override
   _WPageViewState createState() => _WPageViewState();
@@ -53,7 +53,7 @@ class _WPageViewState extends State<WPageView> {
             context: context,
             state: widget.state,
             gesture: ActionGesture.onChange,
-            action: widget.action,
+            nodeGestureActions: widget.action,
             actionValue: FTextTypeInput(value: '$i'),
           ),
           itemCount: widget.children.length,

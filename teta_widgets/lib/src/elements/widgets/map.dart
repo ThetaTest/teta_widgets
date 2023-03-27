@@ -36,7 +36,7 @@ class WMap extends StatefulWidget {
   final TetaWidgetState state;
   final List<CNode> children;
   final FTextTypeInput controller;
-  final FAction? action;
+  final NodeGestureActions? action;
   final bool flag;
 
   @override

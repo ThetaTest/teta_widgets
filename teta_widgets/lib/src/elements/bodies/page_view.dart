@@ -60,7 +60,7 @@ class PageViewBody extends NodeBody {
   // ignore: overridden_fields
   Map<String, dynamic> attributes = <String, dynamic>{
     DBKeys.isVertical: true,
-    DBKeys.action: FAction(),
+    DBKeys.action: NodeGestureActions.empty(),
   };
 
   @override
@@ -85,14 +85,14 @@ class PageViewBody extends NodeBody {
           ${state.toKey}
           ${child ?? children}
           ${attributes[DBKeys.isVertical] as bool}
-          ${(attributes[DBKeys.action] as FAction).toJson()}
+          ${(attributes[DBKeys.action] as NodeGestureActions).toJson()}
           ''',
         ),
         state: state,
         children: children ?? [],
         flagValue: false,
         isVertical: attributes[DBKeys.isVertical] as bool,
-        action: attributes[DBKeys.action] as FAction,
+        action: attributes[DBKeys.action] as NodeGestureActions,
       );
 
   @override

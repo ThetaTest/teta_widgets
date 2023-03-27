@@ -52,7 +52,7 @@ class LoginWithGoogleBody extends NodeBody {
   @override
   // ignore: overridden_fields
   Map<String, dynamic> attributes = <String, dynamic>{
-    DBKeys.action: FAction(),
+    DBKeys.action: NodeGestureActions.empty(),
     DBKeys.pageTransition: FPageTransition(),
     DBKeys.width: FSize(size: 'max', unit: SizeUnit.pixel),
     DBKeys.height: FSize(size: '42', unit: SizeUnit.pixel),
@@ -79,7 +79,7 @@ class LoginWithGoogleBody extends NodeBody {
         ValueKey(state.toKey),
         state: state,
         child: child,
-        action: attributes[DBKeys.action] as FAction,
+        action: attributes[DBKeys.action] as NodeGestureActions,
         width: attributes[DBKeys.width] as FSize,
         height: attributes[DBKeys.height] as FSize,
       );

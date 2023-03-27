@@ -34,7 +34,7 @@ class WListView extends StatelessWidget {
   final bool isVertical;
   final bool flagValue;
   final FTextTypeInput value;
-  final FAction action;
+  final NodeGestureActions action;
   final FPhysic physic;
   final bool isPrimary;
   final bool isReverse;
@@ -64,7 +64,7 @@ class WListView extends StatelessWidget {
                     context: context,
                     state: state,
                     gesture: ActionGesture.scrollToTop,
-                    action: action,
+                    nodeGestureActions: action,
                     actionValue: null,
                   );
                 } else {
@@ -72,7 +72,7 @@ class WListView extends StatelessWidget {
                     context: context,
                     state: state,
                     gesture: ActionGesture.scrollToBottom,
-                    action: action,
+                    nodeGestureActions: action,
                     actionValue: null,
                   );
                 }

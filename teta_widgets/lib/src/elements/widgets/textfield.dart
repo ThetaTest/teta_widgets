@@ -63,7 +63,7 @@ class WTextField extends StatefulWidget {
 
   final FFill enabledBorderColor;
   final FFill focusedBorderColor;
-  final FAction action;
+  final NodeGestureActions action;
 
   @override
   _WTextFieldState createState() => _WTextFieldState();
@@ -266,7 +266,7 @@ class _WTextFieldState extends State<WTextField> with AfterLayoutMixin {
                 context: context,
                 state: widget.state,
                 gesture: ActionGesture.onChange,
-                action: widget.action,
+                nodeGestureActions: widget.action,
                 actionValue: FTextTypeInput(value: text),
               );
             },
@@ -276,7 +276,7 @@ class _WTextFieldState extends State<WTextField> with AfterLayoutMixin {
                 context: context,
                 state: widget.state,
                 gesture: ActionGesture.onSubmitted,
-                action: widget.action,
+                nodeGestureActions: widget.action,
                 actionValue: FTextTypeInput(value: text),
               );
             },

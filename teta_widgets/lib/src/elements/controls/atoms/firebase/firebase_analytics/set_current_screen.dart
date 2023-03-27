@@ -17,7 +17,7 @@ class FirebaseAnalyticsLogSetCurrentScreenControl extends StatelessWidget {
     final Key? key,
   }) : super(key: key);
 
-  final FActionElement action;
+  final NodeGestureActionsElement action;
   final Function() callback;
 
   @override
