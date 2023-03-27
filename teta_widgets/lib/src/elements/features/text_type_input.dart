@@ -146,7 +146,7 @@ class FTextTypeInput {
       placeholder,
       context,
     );
-    Logger.printSuccess('runtimeType: ${result.runtimeType}');
+
     if (result.runtimeType == XFile ||
         result.runtimeType.toString().contains('Map')) {
       return result;

@@ -4,7 +4,6 @@ import 'package:supabase_flutter/supabase_flutter.dart';
 import 'package:teta_core/src/services/user_social_login/services/social_login_service/index.dart';
 import 'package:teta_widgets/src/core/teta_widget/index.dart';
 import 'package:teta_widgets/src/elements/actions/snippets/take_state_from.dart';
-import 'package:teta_widgets/src/elements/nodes/node.dart';
 import 'package:uni_links/uni_links.dart';
 import 'package:universal_platform/universal_platform.dart';
 import 'package:url_launcher/url_launcher.dart';
