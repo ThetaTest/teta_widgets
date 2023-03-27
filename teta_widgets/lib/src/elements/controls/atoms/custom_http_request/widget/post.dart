@@ -3,8 +3,8 @@ import 'package:gap/gap.dart';
 import 'package:teta_front_end/teta_front_end.dart';
 import 'package:teta_models/teta_models.dart';
 
-import '../../../../actions/https_requests_custom_backend/post/action.dart';
-import '../../../../actions/https_requests_custom_backend/post/params.dart';
+import '../../../../actions/cutom_http_request/post/action.dart';
+import '../../../../actions/cutom_http_request/post/params.dart';
 import '../../../../features/text_type_input.dart';
 import '../../../atoms/text.dart';
 import '../../../http_params.dart';

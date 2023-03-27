@@ -1,5 +1,3 @@
-import 'package:teta_models/teta_models.dart';
-
 import '../../../../../core/teta_action/action_options/teta_action_params.dart';
 import '../../../../features/text_type_input.dart';
 
@@ -30,7 +28,6 @@ class TATetaCMSDeleteParams implements TetaActionParams {
   TATetaCMSDeleteParams copyWith({
     final FTextTypeInput? documentId,
     final String? collectionId,
-    final List<MapElement>? dbData,
   }) {
     return TATetaCMSDeleteParams(
       documentId: documentId ?? this.documentId,

@@ -220,9 +220,9 @@ class TetaActionLegacyAdapter {
     } else if (json['aT'] == 'Teta database') {
       if (json['aTDb'] == 'Insert') {
         return TetaActionType.tetaCmsDbInsert;
-      } else if (json['aW'] == 'Update') {
+      } else if (json['aTDb'] == 'Update') {
         return TetaActionType.tetaCmsDbUpdate;
-      } else if (json['aW'] == 'Delete') {
+      } else if (json['aTDb'] == 'Delete') {
         return TetaActionType.tetaCmsDbDelete;
       }
     } else if (json['aT'] == 'Braintree') {

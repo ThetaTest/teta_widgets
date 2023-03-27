@@ -2,9 +2,9 @@ import 'package:flutter/material.dart';
 
 import '../../../../core/teta_action/action_options/teta_action_params.dart';
 import '../../../../core/teta_action/teta_action.dart';
-import '../../../actions/https_requests_custom_backend/delete/action.dart';
-import '../../../actions/https_requests_custom_backend/post/action.dart';
-import '../../../actions/https_requests_custom_backend/update/action.dart';
+import '../../../actions/cutom_http_request/delete/action.dart';
+import '../../../actions/cutom_http_request/post/action.dart';
+import '../../../actions/cutom_http_request/update/action.dart';
 import 'widget/delete.dart';
 import 'widget/post.dart';
 import 'widget/update.dart';
