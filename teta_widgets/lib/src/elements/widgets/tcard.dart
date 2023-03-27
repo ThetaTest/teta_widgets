@@ -28,7 +28,7 @@ class WTCard extends StatefulWidget {
   final bool lockYAxis;
   final FTextTypeInput slideSpeed;
   final FTextTypeInput delaySlideFor;
-  final FAction action;
+  final NodeGestureActions action;
 
   @override
   _WTCardState createState() => _WTCardState();
@@ -107,7 +107,7 @@ class _WTCardState extends State<WTCard> {
               context: context,
               state: widget.state,
               gesture: ActionGesture.onEnd,
-              action: widget.action,
+              nodeGestureActions: widget.action,
               actionValue: null,
             );
           },
@@ -118,7 +118,7 @@ class _WTCardState extends State<WTCard> {
                 context: context,
                 state: widget.state,
                 gesture: ActionGesture.swipeRight,
-                action: widget.action,
+                nodeGestureActions: widget.action,
                 actionValue: null,
               );
             } else {
@@ -127,7 +127,7 @@ class _WTCardState extends State<WTCard> {
                 context: context,
                 state: widget.state,
                 gesture: ActionGesture.swipeLeft,
-                action: widget.action,
+                nodeGestureActions: widget.action,
                 actionValue: null,
               );
             }

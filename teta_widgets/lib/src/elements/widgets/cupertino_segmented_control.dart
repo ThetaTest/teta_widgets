@@ -26,7 +26,7 @@ class WCupertinoSegmentedControl extends StatefulWidget {
 
   final TetaWidgetState state;
   final List<CNode> children;
-  //final FAction action;
+  //final NodeGestureActions action;
   final FFill pressedColor;
   final FFill selectedColor;
   final FFill unselectedColor;
@@ -80,7 +80,7 @@ class _WCupertinoSegmentedControlState
             GestureBuilder.get(
               context: context,
               state: widget.state,
-              action: null, //widget.action,
+              nodeGestureActions: null, //widget.action,
               actionValue: null, //FTextTypeInput(value: '$v'),
               gesture: ActionGesture.onTap,
             );

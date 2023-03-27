@@ -19,7 +19,7 @@ class WTextButton extends StatelessWidget {
 
   final TetaWidgetState state;
   final CNode? child;
-  final FAction? action;
+  final NodeGestureActions? action;
 
   @override
   Widget build(final BuildContext context) {
@@ -31,7 +31,7 @@ class WTextButton extends StatelessWidget {
           state: state,
           gesture: ActionGesture.onTap,
           actionValue: null,
-          action: action,
+          nodeGestureActions: action,
         ),
         child: ChildConditionBuilder(
           ValueKey(state.toKey),

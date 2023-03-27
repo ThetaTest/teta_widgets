@@ -56,7 +56,7 @@ class CupertinoPickerBody extends NodeBody {
   @override
   // ignore: overridden_fields
   Map<String, dynamic> attributes = <String, dynamic>{
-    DBKeys.action: FAction(),
+    DBKeys.action: NodeGestureActions.empty(),
     DBKeys.flag: false,
     DBKeys.height: FSize(size: '44'),
   };
@@ -96,14 +96,14 @@ class CupertinoPickerBody extends NodeBody {
           ${child ?? children}
           ${attributes[DBKeys.flag] as bool}
           ${(attributes[DBKeys.height] as FSize).toJson()}
-          ${(attributes[DBKeys.action] as FAction).toJson()}
+          ${(attributes[DBKeys.action] as NodeGestureActions).toJson()}
           ''',
         ),
         state: state,
         children: children ?? <CNode>[],
         loopingFlag: attributes[DBKeys.flag] as bool,
         height: attributes[DBKeys.height] as FSize,
-        action: attributes[DBKeys.action] as FAction,
+        action: attributes[DBKeys.action] as NodeGestureActions,
       );
 
   @override

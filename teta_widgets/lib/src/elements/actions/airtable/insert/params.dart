@@ -1,0 +1,35 @@
+import 'package:teta_models/teta_models.dart';
+import '../../../../core/teta_action/action_options/teta_action_params.dart';
+import '../../../features/text_type_input.dart';
+
+class TAAirtableInsertParams implements TetaActionParams {
+  const TAAirtableInsertParams({
+    required this.airtableRecordName,
+    required this.airtableData,
+  });
+
+  const TAAirtableInsertParams.empty()
+      : airtableRecordName = null,
+        airtableData = const [];
+
+  TAAirtableInsertParams.fromJson(final Map<String, dynamic> json)
+      : airtableData = (json['sData'] as List<dynamic>? ?? <dynamic>[])
+            .map(
+              (final dynamic e) => MapElement.fromJson(
+                e as Map<String, dynamic>,
+              ),
+            )
+            .toList(),
+        airtableRecordName = FTextTypeInput.fromJson(
+          json['recordName'] as Map<String, dynamic>?,
+        );
+
+  final FTextTypeInput? airtableRecordName;
+  final List<MapElement> airtableData;
+
+  @override
+  Map<String, dynamic> toJson() => <String, dynamic>{
+        'sData': airtableData.map((final e) => e.toJson()).toList(),
+        'recordName': airtableRecordName?.toJson(),
+      };
+}

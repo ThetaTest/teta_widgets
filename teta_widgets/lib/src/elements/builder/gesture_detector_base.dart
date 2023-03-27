@@ -15,7 +15,7 @@ import 'package:teta_models/teta_models.dart';
 
 /// Builder
 class GestureBuilderBase {
-  /// Get a gesture code based on FAction
+  /// Get a gesture code based on NodeGestureActions
   static Widget get({
     required final BuildContext context,
     required final TetaWidgetState state,
@@ -103,7 +103,8 @@ class GestureBuilderBase {
               context: context,
               state: state,
               gesture: ActionGesture.onTap,
-              action: state.node.body.attributes[DBKeys.action] as FAction,
+              nodeGestureActions: state.node.body.attributes[DBKeys.action]
+                  as NodeGestureActions,
               actionValue: null,
             );
           },
@@ -111,14 +112,16 @@ class GestureBuilderBase {
             context: context,
             state: state,
             gesture: ActionGesture.onDoubleTap,
-            action: state.node.body.attributes[DBKeys.action] as FAction,
+            nodeGestureActions:
+                state.node.body.attributes[DBKeys.action] as NodeGestureActions,
             actionValue: null,
           ),
           onLongPress: () => GestureBuilder.get(
             context: context,
             state: state,
             gesture: ActionGesture.onLongPress,
-            action: state.node.body.attributes[DBKeys.action] as FAction,
+            nodeGestureActions:
+                state.node.body.attributes[DBKeys.action] as NodeGestureActions,
             actionValue: null,
           ),
           child: child,
@@ -130,7 +133,7 @@ class GestureBuilderBase {
 }
 
 class MarginOrPaddingBase {
-  /// Get a gesture code based on FAction
+  /// Get a gesture code based on NodeGestureActions
   static Widget get({
     required final BuildContext context,
     required final CNode node,
@@ -174,7 +177,7 @@ class MarginOrPaddingBase {
 }
 
 class TranslateBase {
-  /// Get a gesture code based on FAction
+  /// Get a gesture code based on NodeGestureActions
   static Widget get({
     required final BuildContext context,
     required final CNode node,
@@ -208,7 +211,7 @@ class TranslateBase {
 }
 
 class RotationBase {
-  /// Get a gesture code based on FAction
+  /// Get a gesture code based on NodeGestureActions
   static Widget get({
     required final BuildContext context,
     required final CNode node,
@@ -238,7 +241,7 @@ class RotationBase {
 }
 
 class FlexBase {
-  /// Get a gesture code based on FAction
+  /// Get a gesture code based on NodeGestureActions
   static Widget get({
     required final BuildContext context,
     required final CNode node,
@@ -265,7 +268,7 @@ class FlexBase {
 }
 
 class PerspectiveBase {
-  /// Get a gesture code based on FAction
+  /// Get a gesture code based on NodeGestureActions
   static Widget get({
     required final BuildContext context,
     required final CNode node,
@@ -424,7 +427,7 @@ class EntryAnimationsBase {
 }
 
 class VisibilityBase {
-  /// Get a gesture code based on FAction
+  /// Get a gesture code based on NodeGestureActions
   static Widget get({
     required final CNode node,
     required final Widget child,

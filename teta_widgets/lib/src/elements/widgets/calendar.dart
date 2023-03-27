@@ -49,7 +49,7 @@ class WCalendar extends StatefulWidget {
   final TetaWidgetState state;
   final List<CNode> children;
   final FDataset value;
-  final FAction action;
+  final NodeGestureActions action;
   final FTextStyle textStyle;
   final FTextStyle textStyle2;
   final FMargins margins;
@@ -248,7 +248,7 @@ class _WCalendarState extends State<WCalendar> {
             loop: loop,
           ),
           gesture: ActionGesture.onDayPressed,
-          action: widget.action,
+          nodeGestureActions: widget.action,
           actionValue: FTextTypeInput(value: date.toIso8601String()),
         );
       },
@@ -256,7 +256,7 @@ class _WCalendarState extends State<WCalendar> {
         context: context,
         state: widget.state,
         gesture: ActionGesture.onMonthLoaded,
-        action: widget.action,
+        nodeGestureActions: widget.action,
         actionValue: FTextTypeInput(value: '$month'),
       ),
     );

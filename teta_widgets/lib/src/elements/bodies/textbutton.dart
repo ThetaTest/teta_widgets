@@ -72,7 +72,7 @@ class TextButtonBody extends NodeBody {
   @override
   // ignore: overridden_fields
   Map<String, dynamic> attributes = <String, dynamic>{
-    DBKeys.action: FAction(),
+    DBKeys.action: NodeGestureActions.empty(),
     DBKeys.pageTransition: FPageTransition(),
   };
 
@@ -90,12 +90,12 @@ class TextButtonBody extends NodeBody {
           '''
             ${state.toKey}
             ${child ?? children}
-            ${(attributes[DBKeys.action] as FAction).toJson()}
+            ${(attributes[DBKeys.action] as NodeGestureActions).toJson()}
             ''',
         ),
         state: state,
         child: child,
-        action: attributes[DBKeys.action] as FAction,
+        action: attributes[DBKeys.action] as NodeGestureActions,
       );
 
   @override

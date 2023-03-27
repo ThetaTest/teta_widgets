@@ -1,49 +1,29 @@
-// Flutter imports:
-// ignore_for_file: public_member_api_docs
-
-import 'package:enum_to_string/enum_to_string.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_feather_icons/flutter_feather_icons.dart';
 import 'package:gap/gap.dart';
-// Package imports:
 import 'package:teta_front_end/src/design_system/buttons/element_button.dart';
 import 'package:teta_core/teta_core.dart';
-// Project imports:
-import 'package:teta_widgets/src/elements/controls/atoms/action_element.dart';
-import 'package:teta_widgets/src/elements/features/actions/enums/action_google_maps.dart';
-import 'package:teta_widgets/src/elements/features/actions/enums/airtable.dart';
-import 'package:teta_widgets/src/elements/features/actions/enums/alert.dart';
-import 'package:teta_widgets/src/elements/features/actions/enums/apicalls.dart';
-import 'package:teta_widgets/src/elements/features/actions/enums/audio_player_actions.dart';
-import 'package:teta_widgets/src/elements/features/actions/enums/braintree.dart';
-import 'package:teta_widgets/src/elements/features/actions/enums/camera.dart';
-import 'package:teta_widgets/src/elements/features/actions/enums/custom_http_request.dart';
-import 'package:teta_widgets/src/elements/features/actions/enums/firebase/firebase_analytics.dart';
-import 'package:teta_widgets/src/elements/features/actions/enums/firebase/firebase_message.dart';
-import 'package:teta_widgets/src/elements/features/actions/enums/index.dart';
-import 'package:teta_widgets/src/elements/features/actions/enums/mixpanel.dart';
-import 'package:teta_widgets/src/elements/features/actions/enums/qonversion.dart';
-import 'package:teta_widgets/src/elements/features/actions/enums/revenue_cat.dart';
-import 'package:teta_widgets/src/elements/features/actions/enums/stripe.dart';
-import 'package:teta_widgets/src/elements/features/actions/enums/teta_cms.dart';
-import 'package:teta_widgets/src/elements/features/actions/enums/theme.dart';
-import 'package:teta_widgets/src/elements/features/actions/enums/translator.dart';
-import 'package:teta_widgets/src/elements/features/actions/enums/webview.dart';
-import 'package:teta_widgets/src/elements/index.dart';
-import 'package:uuid/uuid.dart';
 import 'package:teta_front_end/teta_front_end.dart';
 import 'package:teta_models/teta_models.dart';
 
+import '../../../../teta_widgets.dart';
+import '../../../core/teta_action/action_types/groups.dart';
+import '../../../core/teta_action/index.dart';
+import 'action_element.dart';
+
 class ActionControl extends StatefulWidget {
   const ActionControl({
-    required this.action,
-    required this.callBack,
+    required this.nodeGestureActions,
+    required this.onActionChanged,
     final Key? key,
   }) : super(key: key);
 
-  final FAction action;
-  final Function(FAction, FAction) callBack;
+  final NodeGestureActions nodeGestureActions;
+  final Function(
+    NodeGestureActions newActions,
+    NodeGestureActions oldActions,
+  ) onActionChanged;
 
   @override
   ActionControlState createState() => ActionControlState();
@@ -57,8 +37,8 @@ class ActionControlState extends State<ActionControl> {
   @override
   void initState() {
     super.initState();
-    final pages = context.read<PagesCubit>().state;
-    pageObject = pages.first;
+    final projectPages = context.read<PagesCubit>().state;
+    if (projectPages.isNotEmpty) pageObject = projectPages.first;
     if (pageObject != null) dropdown = pageObject!.name;
   }
 
@@ -79,13 +59,6 @@ class ActionControlState extends State<ActionControl> {
           return Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              const THeadline1('Workflows'),
-              const Gap(Grid.small),
-              TDetailLabel(
-                'Add actions to workflows for the following triggers.',
-                color: Palette.txtPrimary.withOpacity(0.6),
-              ),
-              const Gap(Grid.small),
               for (final trigger in node.intrinsicState.gestures.isNotEmpty
                   ? node.intrinsicState.gestures
                   : [
@@ -96,425 +69,106 @@ class ActionControlState extends State<ActionControl> {
                 Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
-                    TParagraph(
-                      '${EnumToString.convertToString(trigger, camelCase: true)} workflow',
+                    TParagraph(trigger.gestureName),
+                    Divider(
+                      color: Palette.txtPrimary.withOpacity(0.3),
                     ),
-                    const Gap(Grid.small),
-                    for (final element
-                        in (widget.action.actions ?? <FActionElement>[])
-                            .where(
-                              (final element) =>
-                                  element.actionGesture == trigger,
-                            )
-                            .toList())
-                      ActionElementControl(
-                        name:
-                            '${widget.action.actions!.indexOf(element)}: ${EnumToString.convertToString(
-                          element.actionType,
-                          camelCase: true,
-                        )}',
-                        element: element,
-                        callBack: (final value, final old) {
-                          final old = widget.action;
-                          final index = widget.action.actions!.indexOf(element);
-                          widget.action.actions![index] = value;
-                          widget.callBack(widget.action, old);
-                        },
-                        callBackToDelete: () {
-                          final old = widget.action;
-                          widget.action.actions!.remove(element);
-                          widget.callBack(widget.action, old);
-                        },
-                      ),
                     ElementButton(
                       title: 'New action',
                       isSelected: false,
                       icon: FeatherIcons.plus,
-                      onTap: () {
-                        final pageBloc = BlocProvider.of<PageCubit>(context);
-                        final prjCubit = context.read<FocusProjectCubit>();
-                        final configCubit = context.read<ConfigCubit>();
-
-                        showDialog<void>(
-                          context: context,
-                          builder: (final context) => BlocProvider.value(
-                            value: configCubit,
-                            child: BlocProvider.value(
-                              value: prjCubit,
-                              child: BlocProvider.value(
-                                value: pageBloc,
-                                child: _NewActionAlert(
-                                  callback: (final value, final actionString) {
-                                    final dynamic action =
-                                        FActionElement.convertDropdownToValue(
-                                      value.type,
-                                      actionString,
-                                    );
-                                    final old = widget.action;
-                                    widget.action.actions = [
-                                      ...widget.action.actions ?? [],
-                                      FActionElement(
-                                        id: const Uuid().v1(),
-                                        actionType: value.actionType,
-                                        actionGesture: trigger,
-                                        actionState: (action is ActionState)
-                                            ? action
-                                            : null,
-                                        actionNavigation:
-                                            (action is ActionNavigation)
-                                                ? action
-                                                : null,
-                                        actionTheme: (action is ActionTheme)
-                                            ? action
-                                            : null,
-                                        actionWebView: (action is ActionWebView)
-                                            ? action
-                                            : null,
-                                        actionQonversion:
-                                            (action is ActionQonversion)
-                                                ? action
-                                                : null,
-                                        actionAudioPlayer:
-                                            (action is ActionAudioPlayerActions)
-                                                ? action
-                                                : null,
-                                        actionRevenueCat:
-                                            (action is ActionRevenueCat)
-                                                ? action
-                                                : null,
-                                        actionCamera: (action is ActionCamera)
-                                            ? action
-                                            : null,
-                                        actionSupabaseAuth:
-                                            (action is ActionSupabaseAuth)
-                                                ? action
-                                                : null,
-                                        actionSupabaseDB:
-                                            (action is ActionSupabaseDB)
-                                                ? action
-                                                : null,
-                                        actionAirtableDB:
-                                            (action is ActionAirtableDB)
-                                                ? action
-                                                : null,
-                                        actionTetaAuth:
-                                            (action is ActionTetaCmsAuth)
-                                                ? action
-                                                : null,
-                                        actionTetaDB:
-                                            (action is ActionTetaCmsDB)
-                                                ? action
-                                                : null,
-                                        actionTetaStore:
-                                            (action is ActionTetaStore)
-                                                ? action
-                                                : null,
-                                        actionCustomHttpRequest:
-                                            (action is ActionCustomHttpRequest)
-                                                ? action
-                                                : null,
-                                        actionApiCalls:
-                                            (action is ActionApiCalls)
-                                                ? action
-                                                : null,
-                                        actionTranslator:
-                                            (action is ActionTranslator)
-                                                ? action
-                                                : null,
-                                        actionAlert: (action is ActionAlert)
-                                            ? action
-                                            : null,
-                                      )
-                                    ];
-                                    widget.callBack(widget.action, old);
-                                    Navigator.of(context, rootNavigator: true)
-                                        .pop(null);
-                                  },
-                                ),
-                              ),
-                            ),
-                          ),
-                        );
-                      },
+                      onTap: () => openNewActionDialog(context, trigger),
                     ),
+                    for (final element in widget.nodeGestureActions.actions
+                        .where((final element) => element.gesture == trigger)
+                        .toList())
+                      ActionElementControl(
+                        name: element.action.type.actionName,
+                        action: element.action,
+                        node: node,
+                        onActionUpdated: (final newAction, final oldAction) {
+                          widget.onActionChanged(
+                            widget.nodeGestureActions
+                              ..replace(newAction, oldAction),
+                            widget.nodeGestureActions,
+                          );
+                        },
+                        onActionDeleted: (final actionId) {
+                          widget.onActionChanged(
+                            widget.nodeGestureActions..deleteAction(actionId),
+                            widget.nodeGestureActions,
+                          );
+                        },
+                      ),
                     const Gap(Grid.medium),
                   ],
                 ),
-              /*Padding(
-                  padding: EdgeInsets.only(
-                    bottom: widget.action.actions?.isEmpty ?? true ? 0 : 8,
-                  ),
-                  child: Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                    children: [
-                      const THeadline3(
-                        'Actions',
-                      ),
-                      Row(
-                        children: [
-                          BounceSmall(
-                            onTap: () {
-                              final old = widget.action;
-                              widget.action.actions = [
-                                ...widget.action.actions ?? [],
-                                FActionElement(id: const Uuid().v1())
-                              ];
-                              widget.callBack(widget.action, old);
-                            },
-                            child: HoverWidget(
-                              hoverChild: Container(
-                                padding: const EdgeInsets.all(4),
-                                decoration: BoxDecoration(
-                                  border: Border.all(
-                                    color: Colors.white,
-                                  ),
-                                ),
-                                child: const Icon(
-                                  Icons.add,
-                                  size: 24,
-                                  color: Colors.white,
-                                ),
-                              ),
-                              onHover: (final e) {},
-                              child: Container(
-                                padding: const EdgeInsets.all(4),
-                                decoration: BoxDecoration(
-                                  border: Border.all(
-                                    color: Colors.transparent,
-                                  ),
-                                ),
-                                child: const Icon(
-                                  Icons.add,
-                                  size: 24,
-                                  color: Colors.white,
-                                ),
-                              ),
-                            ),
-                          ),
-                        ],
-                      ),
-                    ],
-                  ),
-                ),
-                Column(
-                  children: widget.action.actions!
-                      .map(
-                        (final e) => ActionElementControl(
-                          name: 'Action ${widget.action.actions!.indexOf(e)}',
-                          element: e,
-                          prj: widget.prj,
-                          page: widget.page,
-                          node: widget.node,
-                          callBack: (final value, final old) {
-                            final old = widget.action;
-                            final index = widget.action.actions!.indexOf(e);
-                            widget.action.actions![index] = value;
-                            widget.callBack(widget.action, old);
-                          },
-                          callBackToDelete: () {
-                            final old = widget.action;
-                            widget.action.actions!.remove(e);
-                            widget.callBack(widget.action, old);
-                          },
-                        ),
-                      )
-                      .toList(),
-                ),*/
             ],
           );
         },
       ),
     );
   }
+
+  void openNewActionDialog(
+    final BuildContext context,
+    final ActionGesture trigger,
+  ) {
+    final pageBloc = BlocProvider.of<PageCubit>(context);
+    final prjCubit = context.read<FocusProjectCubit>();
+    final configCubit = context.read<ConfigCubit>();
+    showDialog<void>(
+      context: context,
+      builder: (final context) => MultiBlocProvider(
+        providers: [
+          BlocProvider<PageCubit>.value(value: pageBloc),
+          BlocProvider<FocusProjectCubit>.value(value: prjCubit),
+          BlocProvider<ConfigCubit>.value(value: configCubit),
+        ],
+        child: _NewActionPickerDialog(
+          onActionSelected: (final actionType) {
+            final action = TetaActionFactory.create(
+              type: actionType,
+              params: null,
+            );
+            if (action == null) return;
+            widget.onActionChanged(
+              widget.nodeGestureActions..add(trigger, action),
+              widget.nodeGestureActions,
+            );
+            Navigator.of(context, rootNavigator: true).pop(null);
+          },
+        ),
+      ),
+    );
+  }
 }
 
-class _NewActionAlert extends StatefulWidget {
-  const _NewActionAlert({
-    final Key? key,
-    required this.callback,
-  }) : super(key: key);
+class _NewActionPickerDialog extends StatefulWidget {
+  const _NewActionPickerDialog({required this.onActionSelected});
 
-  final Function(_SelectionClass, String) callback;
+  final Function(TetaActionType actionType) onActionSelected;
 
   @override
-  State<_NewActionAlert> createState() => __NewActionAlertState();
+  State<_NewActionPickerDialog> createState() => _NewActionPickerDialogState();
 }
 
-class __NewActionAlertState extends State<_NewActionAlert> {
+class _NewActionPickerDialogState extends State<_NewActionPickerDialog> {
   final elements = <_SelectionClass>[];
 
   @override
   void initState() {
     super.initState();
-    final prj = BlocProvider.of<FocusProjectCubit>(context).state!;
-    final page = BlocProvider.of<PageCubit>(context).state as PageLoaded;
-    final config =
-        (BlocProvider.of<ConfigCubit>(context).state as ConfigStateLoaded)
-            .config;
-    elements.addAll([
-      _SelectionClass(
-        title: 'State',
-        actionType: ActionType.state,
-        options: FActionElement.getState(),
-        type: ActionState.values,
+    final pageCubit = BlocProvider.of<PageCubit>(context);
+    final pageState = pageCubit.state as PageLoaded;
+    final configCubit =
+        BlocProvider.of<ConfigCubit>(context).state as ConfigStateLoaded;
+
+    elements.addAll(
+      TetaActionGroups.getActionGroups(pageState.page, configCubit.config).map(
+        (final e) => _SelectionClass(title: e.name, actions: e.actions),
       ),
-      _SelectionClass(
-        title: 'Navigation',
-        actionType: ActionType.navigation,
-        options: FActionElement.getNavigation(),
-        type: ActionNavigation.values,
-      ),
-      _SelectionClass(
-        title: 'Teta Auth',
-        actionType: ActionType.tetaAuth,
-        options: FActionElement.getTetaAuth(),
-        type: ActionTetaCmsAuth.values,
-      ),
-      _SelectionClass(
-        title: 'Teta CMS',
-        actionType: ActionType.tetaDatabase,
-        options: FActionElement.getTetaDB(),
-        type: ActionTetaCmsDB.values,
-      ),
-      _SelectionClass(
-        title: 'Teta Store',
-        actionType: ActionType.tetaStore,
-        options: FActionElement.getTetaStore(),
-        type: ActionTetaCmsDB.values,
-      ),
-      _SelectionClass(
-        title: 'Custom Http Request',
-        actionType: ActionType.customHttpRequest,
-        options: FActionElement.getCustomHttpRequest(),
-        type: ActionCustomHttpRequest.values,
-      ),
-      _SelectionClass(
-        title: 'Api Calls',
-        actionType: ActionType.apiCalls,
-        options: FActionElement.getApiCalls(),
-        type: ActionApiCalls.values,
-      ),
-      _SelectionClass(
-        title: 'Multi languages',
-        actionType: ActionType.translator,
-        options: FActionElement.getTranslator(),
-        type: ActionTranslator.values,
-      ),
-      _SelectionClass(
-        title: 'Theme',
-        actionType: ActionType.theme,
-        options: FActionElement.getTheme(),
-        type: ActionTheme.values,
-      ),
-      _SelectionClass(
-        title: 'Mixpanel',
-        actionType: ActionType.mixpanel,
-        options: FActionElement.getMixpanel(config),
-        type: ActionMixpanel.values,
-      ),
-      _SelectionClass(
-        title: 'Supabase Auth',
-        actionType: ActionType.supabaseAuth,
-        options: FActionElement.getSupabaseAuth(config),
-        type: ActionSupabaseAuth.values,
-      ),
-      _SelectionClass(
-        title: 'Supabase DB',
-        actionType: ActionType.supabaseDatabase,
-        options: FActionElement.getSupabaseDB(config),
-        type: ActionSupabaseDB.values,
-      ),
-      _SelectionClass(
-        title: 'Supabase Functions',
-        actionType: ActionType.supabaseFunctions,
-        options: FActionElement.getSupabaseFunctions(config),
-        type: ActionSupabaseFunctions.values,
-      ),
-      _SelectionClass(
-        title: 'Supabase Storage',
-        actionType: ActionType.supabaseStorage,
-        options: FActionElement.getSupabaseStorage(config),
-        type: ActionSupabaseStorage.values,
-      ),
-      _SelectionClass(
-        title: 'Airtable Database',
-        actionType: ActionType.airtable,
-        options: FActionElement.getAirtableDB(config),
-        type: ActionAirtableDB.values,
-      ),
-      _SelectionClass(
-        title: 'RevenueCat',
-        actionType: ActionType.revenueCat,
-        options: FActionElement.getRevenueCat(config),
-        type: ActionRevenueCat.values,
-      ),
-      _SelectionClass(
-        title: 'Qonversion',
-        actionType: ActionType.qonversion,
-        options: FActionElement.getQonversion(config),
-        type: ActionQonversion.values,
-      ),
-      _SelectionClass(
-        title: 'Braintree',
-        actionType: ActionType.braintree,
-        options: FActionElement.getBraintree(config),
-        type: ActionBraintree.values,
-      ),
-      _SelectionClass(
-        title: 'Firebase Analytics',
-        actionType: ActionType.firebaseAnalytics,
-        options: FActionElement.getFirebaseAnalytics(config),
-        type: ActionFirebaseAnalytics.values,
-      ),
-      _SelectionClass(
-        title: 'Firebase Messages',
-        actionType: ActionType.firebaseMessages,
-        options: FActionElement.getFirebaseMessages(config),
-        type: ActionFirebaseMessages.values,
-      ),
-      _SelectionClass(
-        title: 'WebView',
-        actionType: ActionType.webview,
-        options: (page.page.flatList.indexWhere(
-                  (final element) =>
-                      element.intrinsicState.type == NType.webview,
-                ) !=
-                -1)
-            ? FActionElement.getWebView()
-            : [],
-        type: ActionWebView.values,
-      ),
-      _SelectionClass(
-        title: 'Audio Player',
-        actionType: ActionType.audioPlayer,
-        options: (page.page.flatList.indexWhere(
-                  (final element) =>
-                      element.intrinsicState.type == NType.audioPlayer,
-                ) !=
-                -1)
-            ? FActionElement.getAudioPlayer()
-            : [],
-        type: ActionAudioPlayerActions.values,
-      ),
-      _SelectionClass(
-        title: 'Google Maps',
-        actionType: ActionType.googleMaps,
-        options: (page.page.flatList.indexWhere(
-                  (final element) =>
-                      element.intrinsicState.type == NType.googleMaps,
-                ) !=
-                -1)
-            ? FActionElement.getGoogleMaps(config)
-            : [],
-        type: ActionGoogleMaps.values,
-      ),
-      _SelectionClass(
-        title: 'Alert',
-        actionType: ActionType.alert,
-        options: FActionElement.getAlert(),
-        type: ActionAlert.values,
-      ),
-    ]);
+    );
   }
 
   @override
@@ -533,20 +187,12 @@ class __NewActionAlertState extends State<_NewActionAlert> {
               const Gap(Grid.small),
               Wrap(
                 children: elements[index]
-                    .options
+                    .actions
                     .map(
                       (final e) => BounceSmall(
-                        onTap: () {
-                          widget.callback(
-                            elements[index],
-                            e,
-                          );
-                        },
+                        onTap: () => widget.onActionSelected(e),
                         child: TContainer(
-                          margin: const EdgeInsets.only(
-                            right: 8,
-                            bottom: 8,
-                          ),
+                          margin: const EdgeInsets.only(right: 8, bottom: 8),
                           padding: const EdgeInsets.symmetric(
                             horizontal: 16,
                             vertical: 8,
@@ -555,7 +201,7 @@ class __NewActionAlertState extends State<_NewActionAlert> {
                             color: Palette.bgGrey,
                             borderRadius: BR(40),
                           ),
-                          child: TParagraph(e),
+                          child: TParagraph(e.actionName),
                         ),
                       ),
                     )
@@ -573,13 +219,9 @@ class __NewActionAlertState extends State<_NewActionAlert> {
 class _SelectionClass {
   _SelectionClass({
     required this.title,
-    required this.actionType,
-    required this.options,
-    required this.type,
+    required this.actions,
   });
 
   final String title;
-  final ActionType actionType;
-  final List<String> options;
-  final List<dynamic> type;
+  final List<TetaActionType> actions;
 }

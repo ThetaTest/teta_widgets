@@ -48,7 +48,7 @@ class WCalendarV2 extends StatefulWidget {
   final TetaWidgetState state;
   final List<CNode> children;
   final FDataset calendarEvents;
-  final FAction action;
+  final NodeGestureActions action;
   final String calendarView;
   final FTextStyle textStyle;
   final FTextStyle textStyle2;
@@ -350,7 +350,7 @@ class _WCalendarV2State extends State<WCalendarV2> {
               loop: loop,
             ),
             gesture: ActionGesture.onDayPressed,
-            action: widget.action,
+            nodeGestureActions: widget.action,
             actionValue: FTextTypeInput(value: selectedDay.toIso8601String()),
           );
         }
@@ -396,7 +396,7 @@ class _WCalendarV2State extends State<WCalendarV2> {
               loop: loop,
             ),
             gesture: ActionGesture.onDayPressed,
-            action: widget.action,
+            nodeGestureActions: widget.action,
             actionValue: FTextTypeInput(value: selectedDay.toIso8601String()),
           );
         }

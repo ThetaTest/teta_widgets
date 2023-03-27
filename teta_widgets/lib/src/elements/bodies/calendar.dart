@@ -81,7 +81,7 @@ class CalendarBody extends NodeBody {
   // ignore: overridden_fields
   Map<String, dynamic> attributes = <String, dynamic>{
     DBKeys.datasetInput: FDataset(),
-    DBKeys.action: FAction(),
+    DBKeys.action: NodeGestureActions.empty(),
     DBKeys.textStyle: FTextStyle(),
     DBKeys.textStyle2: FTextStyle(),
     DBKeys.margins: FMargins(),
@@ -207,7 +207,7 @@ class CalendarBody extends NodeBody {
           ${child ?? children}
           ${(attributes[DBKeys.selectedItemName] as FTextTypeInput).toJson()}
           ${(attributes[DBKeys.selectedItemName] as FTextTypeInput).getStateValue(state.states)}
-          ${(attributes[DBKeys.action] as FAction).toJson()},
+          ${(attributes[DBKeys.action] as NodeGestureActions).toJson()},
           ${(attributes[DBKeys.datasetInput] as FDataset).toJson()},
           ${(attributes[DBKeys.textStyle] as FTextStyle).toJson()},
           ${(attributes[DBKeys.textStyle2] as FTextStyle).toJson()},
@@ -227,7 +227,7 @@ class CalendarBody extends NodeBody {
         children: children ?? <CNode>[],
         selectedItemName: attributes[DBKeys.selectedItemName] as FTextTypeInput,
         value: attributes[DBKeys.datasetInput] as FDataset,
-        action: attributes[DBKeys.action] as FAction,
+        action: attributes[DBKeys.action] as NodeGestureActions,
         textStyle: attributes[DBKeys.textStyle] as FTextStyle,
         textStyle2: attributes[DBKeys.textStyle2] as FTextStyle,
         margins: attributes[DBKeys.margins] as FMargins,

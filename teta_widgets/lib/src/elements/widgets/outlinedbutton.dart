@@ -19,7 +19,7 @@ class WOutlinedButton extends StatelessWidget {
 
   final TetaWidgetState state;
   final CNode? child;
-  final FAction? action;
+  final NodeGestureActions? action;
 
   @override
   Widget build(final BuildContext context) {
@@ -30,7 +30,7 @@ class WOutlinedButton extends StatelessWidget {
           context: context,
           state: state,
           gesture: ActionGesture.onTap,
-          action: action,
+          nodeGestureActions: action,
           actionValue: null,
         ),
         child: ChildConditionBuilder(

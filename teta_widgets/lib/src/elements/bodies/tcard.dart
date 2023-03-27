@@ -71,7 +71,7 @@ class TCardBody extends NodeBody {
   // ignore: overridden_fields
   Map<String, dynamic> attributes = <String, dynamic>{
     DBKeys.flag: false,
-    DBKeys.action: FAction(),
+    DBKeys.action: NodeGestureActions.empty(),
     DBKeys.width: FSize(size: '400', unit: SizeUnit.pixel),
     DBKeys.height: FSize(size: '600', unit: SizeUnit.pixel),
     DBKeys.value: FTextTypeInput(value: '20'),
@@ -117,7 +117,7 @@ class TCardBody extends NodeBody {
           '''
             ${state.toKey}
             ${child ?? children}
-            ${(attributes[DBKeys.action] as FAction).toJson()}
+            ${(attributes[DBKeys.action] as NodeGestureActions).toJson()}
             ${(attributes[DBKeys.value] as FTextTypeInput).toJson()}
             ${(attributes[DBKeys.valueOfCondition] as FTextTypeInput).toJson()}
             ${attributes[DBKeys.flag] as bool}
@@ -126,7 +126,7 @@ class TCardBody extends NodeBody {
         state: state,
         children: children ?? [],
         lockYAxis: attributes[DBKeys.flag] as bool,
-        action: attributes[DBKeys.action] as FAction,
+        action: attributes[DBKeys.action] as NodeGestureActions,
         slideSpeed: attributes[DBKeys.value] as FTextTypeInput,
         delaySlideFor: attributes[DBKeys.valueOfCondition] as FTextTypeInput,
       );

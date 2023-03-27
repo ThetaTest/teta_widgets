@@ -1,9 +1,7 @@
 export './action.dart';
-export './actions/element.dart';
 export './actions/enums/gestures.dart';
 export './align.dart';
 export './blend_mode.dart';
-export './border.dart';
 export './border.dart';
 export './border_radius.dart';
 export './border_style.dart';
@@ -17,7 +15,6 @@ export './decoration.dart';
 export './fill.dart';
 export './firestore_path.dart';
 export './font_size.dart';
-export './font_style.dart';
 export './font_style.dart';
 export './font_weight.dart';
 export './keyboard_type.dart';

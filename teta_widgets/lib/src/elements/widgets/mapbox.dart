@@ -33,7 +33,7 @@ class WMapBox extends StatefulWidget {
   final FBoxFit boxFit;
   final FTextTypeInput latitude;
   final FTextTypeInput longitude;
-  final FAction? action;
+  final NodeGestureActions? action;
   final FFill fill;
 
   @override

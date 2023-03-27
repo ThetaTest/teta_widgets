@@ -54,7 +54,7 @@ class MapBody extends NodeBody {
   @override
   // ignore: overridden_fields
   Map<String, dynamic> attributes = <String, dynamic>{
-    DBKeys.action: FAction(),
+    DBKeys.action: NodeGestureActions.empty(),
     DBKeys.flag: true,
     DBKeys.valueOfCondition: FTextTypeInput(),
   };
@@ -98,13 +98,13 @@ class MapBody extends NodeBody {
           ${child ?? children}
           ${attributes[DBKeys.flag] as bool}
           ${(attributes[DBKeys.valueOfCondition] as FTextTypeInput).toJson()}
-          ${(attributes[DBKeys.action] as FAction).toJson()}
+          ${(attributes[DBKeys.action] as NodeGestureActions).toJson()}
           ''',
         ),
         state: state,
         children: children ?? [],
         controller: attributes[DBKeys.valueOfCondition] as FTextTypeInput,
-        action: attributes[DBKeys.action] as FAction,
+        action: attributes[DBKeys.action] as NodeGestureActions,
         flag: attributes[DBKeys.flag] as bool? ?? false,
       );
 

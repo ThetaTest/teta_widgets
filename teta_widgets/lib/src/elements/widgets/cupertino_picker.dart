@@ -21,7 +21,7 @@ class WCupertinoPicker extends StatefulWidget {
 
   final TetaWidgetState state;
   final List<CNode> children;
-  final FAction action;
+  final NodeGestureActions action;
   final FSize height;
   final bool loopingFlag;
 
@@ -45,7 +45,7 @@ class _WCupertinoPickerState extends State<WCupertinoPicker> {
           GestureBuilder.get(
             context: context,
             state: widget.state,
-            action: widget.action,
+            nodeGestureActions: widget.action,
             actionValue: null,
             gesture: ActionGesture.onChange,
           );

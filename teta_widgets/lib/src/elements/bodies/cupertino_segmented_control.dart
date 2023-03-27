@@ -73,7 +73,7 @@ class CupertinoSegmentedControlBody extends NodeBody {
   @override
   // ignore: overridden_fields
   Map<String, dynamic> attributes = <String, dynamic>{
-    //DBKeys.action: FAction(),
+    //DBKeys.action: NodeGestureActions.empty(),
     DBKeys.fill: FFill(
       levels: [
         FFillElement(color: '3285FF', stop: 0),
@@ -164,7 +164,7 @@ class CupertinoSegmentedControlBody extends NodeBody {
         borderColor: attributes[DBKeys.activeFill] as FFill,
         selectedColor: attributes[DBKeys.fill] as FFill,
         unselectedColor: attributes[DBKeys.bgFill] as FFill,
-        //action: attributes[DBKeys.action] as FAction,
+        //action: attributes[DBKeys.action] as NodeGestureActions,
       );
 
   @override
