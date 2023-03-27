@@ -47,18 +47,22 @@ class TATetaCMSLogin extends TetaAction {
     final TetaWidgetState state, {
     final String? runtimeValue,
   }) async {
-    await TetaCMS.instance.auth.signIn(
-      provider: params.provider,
-      fromEditor: true,
-      onSuccess: (final isFirstTime) async {
-        await TANavigationOpenPage(
-          params: TANavigationOpenPageParams(
-            nameOfPage: params.nameOfPage,
-            paramsToSend: params.paramsToSend,
-          ),
-        ).execute(context, state);
-      },
-    );
+    try {
+      await TetaCMS.instance.auth.signIn(
+        provider: params.provider,
+        fromEditor: true,
+        onSuccess: (final isFirstTime) async {
+          await TANavigationOpenPage(
+            params: TANavigationOpenPageParams(
+              nameOfPage: params.nameOfPage,
+              paramsToSend: params.paramsToSend,
+            ),
+          ).execute(context, state);
+        },
+      );
+    } catch (e) {
+      Logger.printError('TATetaCMSLogin $e');
+    }
   }
 
   @override
