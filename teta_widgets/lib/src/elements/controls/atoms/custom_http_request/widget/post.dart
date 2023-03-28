@@ -35,6 +35,17 @@ class CustomHttpRequestPostControlState
   List<MapElement>? body;
   String? responseState;
 
+  @override
+  void initState() {
+    super.initState();
+    url = widget.action.params.url;
+    expectedStatusCode = widget.action.params.expectedStatusCode;
+    parameters = widget.action.params.parameters;
+    headers = widget.action.params.headers;
+    body = widget.action.params.body;
+    responseState = widget.action.params.responseState;
+  }
+
   void updateParams() {
     widget.onParamsChanged(
       TACustomHttpRequestPostParams(
