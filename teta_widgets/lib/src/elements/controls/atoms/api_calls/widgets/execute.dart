@@ -31,6 +31,17 @@ class ApiCallsExecuteControlState extends State<ApiCallsExecuteControl> {
   FTextTypeInput? responseName;
   List<MapElement>? dynamicValue;
 
+  @override
+  void initState() {
+    super.initState();
+    requestName = widget.action.params.apiCallsRequestName;
+    selectedRequest = widget.action.params.apiCallsSelectedRequest;
+    expectedStatusCode =
+        widget.action.params.customHttpRequestExpectedStatusCode;
+    responseName = widget.action.params.apiCallsResponseName;
+    dynamicValue = widget.action.params.apiCallsDynamicValue;
+  }
+
   void updateParams() {
     widget.onParamsChanged(
       TAApiCallsExecuteParams(
@@ -65,6 +76,7 @@ class ApiCallsExecuteControlState extends State<ApiCallsExecuteControl> {
             borderRadius: BorderRadius.circular(8),
           ),
           child: TextControl(
+            ignoreDeviceTypeValue: true,
             title: 'Status Code',
             valueType: VariableType.string,
             value: expectedStatusCode ?? FTextTypeInput(),
@@ -82,6 +94,7 @@ class ApiCallsExecuteControlState extends State<ApiCallsExecuteControl> {
             borderRadius: BorderRadius.circular(8),
           ),
           child: TextControl(
+            ignoreDeviceTypeValue: true,
             title: 'Response Name',
             valueType: VariableType.string,
             value: responseName ?? FTextTypeInput(),

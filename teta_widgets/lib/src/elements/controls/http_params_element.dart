@@ -61,7 +61,6 @@ class HttpParamsElementControlState extends State<HttpParamsElementControl> {
           callBack: (final value) {
             final old = widget.value;
             final newValue = widget.value.copyWith(key: value);
-            Logger.printError("kasapiniz+newValue"+ newValue.key);
             widget.callBack(newValue, old);
           },
         ),
