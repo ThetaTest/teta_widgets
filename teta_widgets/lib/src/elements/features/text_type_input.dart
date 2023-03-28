@@ -9,7 +9,6 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:intl/intl.dart';
 import 'package:recase/recase.dart';
 import 'package:responsive_builder/responsive_builder.dart';
-import 'package:teta_core/teta_core.dart';
 import 'package:teta_front_end/teta_front_end.dart';
 import 'package:teta_models/teta_models.dart';
 
@@ -56,6 +55,7 @@ class FTextTypeInput {
     this.datasetSubMapData,
     this.datasetLength,
     this.keyTranslator,
+    this.jsonMapPath,
     this.file,
     this.combination,
     this.resultType = ResultTypeEnum.string,
@@ -77,6 +77,7 @@ class FTextTypeInput {
   String? datasetSubListData;
   String? datasetSubMapData;
   String? keyTranslator;
+  String? jsonMapPath;
   AssetFile? file;
   List<FTextTypeInput>? combination;
   ResultTypeEnum resultType;
@@ -146,9 +147,22 @@ class FTextTypeInput {
       placeholder,
       context,
     );
-
-    if (result.runtimeType == XFile ||
-        result.runtimeType.toString().contains('Map')) {
+    if (result.runtimeType == XFile) {
+      return result;
+    } else if (result.runtimeType.toString().contains('_JsonMap')) {
+      if (jsonMapPath != null && jsonMapPath!.trim().isNotEmpty) {
+        final path = jsonMapPath!.split('.');
+        dynamic value = result;
+        for (final key in path) {
+          final index = int.tryParse(key);
+          if (index != null) {
+            value = value[index];
+          } else {
+            value = value[key];
+          }
+        }
+        return value;
+      }
       return result;
     } else if (result.runtimeType == String) {
       switch (resultType) {
@@ -367,6 +381,7 @@ class FTextTypeInput {
                   EnumToString.convertToString(TypeDateTimeFormat.dateWithTime),
             ) ??
             TypeDateTimeFormat.dateWithTime,
+        jsonMapPath: json?['jMP'] as String?,
       );
     } catch (e) {
       return FTextTypeInput();
@@ -400,6 +415,7 @@ class FTextTypeInput {
         'dAT': datasetSubMapData,
         'dL': datasetLength,
         'kTrans': keyTranslator,
+        'jMP': jsonMapPath,
         'cmb': combination?.map((final e) => e.toJson()).toList(),
         'rType': EnumToString.convertToString(resultType),
         'tDateTime': typeDateTimeFormat != null

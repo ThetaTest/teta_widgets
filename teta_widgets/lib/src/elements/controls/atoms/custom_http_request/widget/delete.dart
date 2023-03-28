@@ -9,7 +9,6 @@ import 'package:teta_models/teta_models.dart';
 
 import '../../../../actions/cutom_http_request/delete/action.dart';
 import '../../../../actions/cutom_http_request/delete/params.dart';
-import '../../../../features/text_type_input.dart';
 
 class CustomHttpRequestDeleteControl extends StatefulWidget {
   const CustomHttpRequestDeleteControl({
@@ -34,6 +33,16 @@ class CustomHttpRequestDeleteControlState
   List<MapElement>? headers;
   String? responseState;
 
+  @override
+  void initState() {
+    super.initState();
+    url = widget.action.params.url;
+    expectedStatusCode = widget.action.params.expectedStatusCode;
+    parameters = widget.action.params.parameters;
+    headers = widget.action.params.headers;
+    responseState = widget.action.params.responseState;
+  }
+
   void updateParams() {
     widget.onParamsChanged(
       TACustomHttpRequestDeleteParams(
@@ -53,23 +62,23 @@ class CustomHttpRequestDeleteControlState
       mainAxisSize: MainAxisSize.min,
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
-        const TParagraph('Response JSON State'),
+        const TParagraph('JSON Response State'),
         const Gap(Grid.small),
         descriptionControlWidget(
           description: 'The state where the JSON response will be stored',
           control: CDropdown(
             value: pageLoaded.page.defaultStates
-                    .where((final element) => element.type == VariableType.json)
-                    .map((final e) => e.name)
+                    .where((e) => e.type == VariableType.json)
+                    .map((e) => e.name)
                     .toList()
                     .contains(widget.action.params.responseState)
                 ? widget.action.params.responseState
                 : null,
             items: pageLoaded.page.defaultStates
-                .where((final element) => element.type == VariableType.json)
-                .map((final e) => e.name)
+                .where((e) => e.type == VariableType.json)
+                .map((e) => e.name)
                 .toList(),
-            onChange: (final newValue) {
+            onChange: (newValue) {
               if (newValue == null) return;
               responseState = newValue;
               updateParams();
@@ -87,7 +96,7 @@ class CustomHttpRequestDeleteControlState
             valueType: VariableType.string,
             value: widget.action.params.url ?? FTextTypeInput(),
             title: 'URL',
-            callBack: (final value, final old) {
+            callBack: (value, old) {
               url = value;
               updateParams();
             },
@@ -102,35 +111,29 @@ class CustomHttpRequestDeleteControlState
           ),
           child: TextControl(
             valueType: VariableType.string,
-            value: widget.action.params.expectedStatusCode ?? FTextTypeInput(),
+            value: widget.action.params.expectedStatusCode ??
+                FTextTypeInput(value: '200'),
             title: 'Status Code',
-            callBack: (final value, final old) {
+            callBack: (value, old) {
               expectedStatusCode = value;
               updateParams();
             },
           ),
         ),
+        // Query Params
         HttpParamsControl(
-          title: 'Add Params',
+          title: 'Add Query Params',
           list: widget.action.params.parameters ?? <MapElement>[],
-          callBack: (final value, final old) {
+          callBack: (value, old) {
             parameters = value;
             updateParams();
           },
         ),
-        const Padding(
-          padding: EdgeInsets.only(top: 16),
-          child: Padding(
-            padding: EdgeInsets.only(bottom: 8),
-            child: TDetailLabel(
-              r'Add Params. Example : www.example.com/users/?key=${value}',
-            ),
-          ),
-        ),
+        // Headers
         HttpParamsControl(
           title: 'Add Headers',
           list: widget.action.params.headers ?? <MapElement>[],
-          callBack: (final value, final old) {
+          callBack: (value, old) {
             headers = value;
             updateParams();
           },

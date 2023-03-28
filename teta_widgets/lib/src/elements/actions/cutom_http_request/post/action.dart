@@ -1,5 +1,7 @@
+import 'dart:convert';
+
 import 'package:flutter/material.dart';
-import 'package:teta_cms/teta_cms.dart';
+import 'package:http/http.dart' as http;
 import 'package:teta_models/teta_models.dart';
 import 'package:teta_widgets/src/core/teta_widget/index.dart';
 import 'package:teta_widgets/src/elements/actions/snippets/update_state_value.dart';
@@ -47,29 +49,8 @@ class TACustomHttpRequestPost extends TetaAction {
     final TetaWidgetState state, {
     final String? runtimeValue,
   }) async {
-    var map = const DatasetObject(
-      name: 'Custom Http Request Post',
-      map: [<String, dynamic>{}],
-    );
-    final url = params.url?.get(
-      state.params,
-      state.states,
-      state.dataset,
-      true,
-      state.loop,
-      context,
-    );
-    final expectedStatusCode = params.expectedStatusCode?.get(
-      state.params,
-      state.states,
-      state.dataset,
-      true,
-      state.loop,
-      context,
-    );
-    final mapParameters = <String, dynamic>{};
-    for (final e in params.parameters ?? <MapElement>[]) {
-      mapParameters[e.key] = e.value.get(
+    try {
+      final url = params.url?.get(
         state.params,
         state.states,
         state.dataset,
@@ -77,10 +58,8 @@ class TACustomHttpRequestPost extends TetaAction {
         state.loop,
         context,
       );
-    }
-    final mapHeaders = <String, dynamic>{};
-    for (final e in params.headers ?? <MapElement>[]) {
-      mapHeaders[e.key] = e.value.get(
+
+      final expectedStatusCode = params.expectedStatusCode?.get(
         state.params,
         state.states,
         state.dataset,
@@ -88,46 +67,57 @@ class TACustomHttpRequestPost extends TetaAction {
         state.loop,
         context,
       );
-    }
-    final mapBody = <String, dynamic>{};
-    for (final e in params.body ?? <MapElement>[]) {
-      mapBody[e.key] = e.value.get(
-        state.params,
-        state.states,
-        state.dataset,
-        true,
-        state.loop,
-        context,
-      );
-    }
-    if (url != null && expectedStatusCode != null) {
-      final response = await TetaCMS.instance.httpRequest.post(
-        url,
-        expectedStatusCode,
-        mapParameters,
-        mapBody,
-        mapHeaders,
-      );
-      if (response.data != null) {
-        map = map.copyWith(
-          name: 'Custom Http Request Post',
-          map: (response.data ?? const <dynamic>[])
-              .map((final dynamic e) => <String, dynamic>{...e})
-              .toList(),
+      final mapParameters = <String, dynamic>{};
+      for (final e in params.parameters ?? <MapElement>[]) {
+        mapParameters[e.key] = e.value.get(
+          state.params,
+          state.states,
+          state.dataset,
+          true,
+          state.loop,
+          context,
         );
       }
-      if (response.error != null) {
-        map = map.copyWith(
-          name: 'Custom Http Request Post',
-          map: (response.error!).map((final dynamic e) {
-            return e as Map<String, dynamic>;
-          }).toList(),
+      final mapHeaders = <String, String>{};
+      for (final e in params.headers ?? <MapElement>[]) {
+        mapHeaders[e.key] = e.value.get(
+          state.params,
+          state.states,
+          state.dataset,
+          true,
+          state.loop,
+          context,
+        );
+      }
+      final mapBody = <String, dynamic>{};
+      for (final e in params.body ?? <MapElement>[]) {
+        mapBody[e.key] = e.value.get(
+          state.params,
+          state.states,
+          state.dataset,
+          true,
+          state.loop,
+          context,
         );
       }
 
-      if (params.responseState != null) {
-        updateStateValue(context, params.responseState!, map.getMap[0]);
+      if (url != null && expectedStatusCode != null) {
+        final response = await http.post(
+          Uri.parse(url)..replace(queryParameters: mapParameters),
+          headers: mapHeaders,
+          body: jsonEncode(mapBody),
+        );
+
+        if (params.responseState != null) {
+          updateStateValue(
+            context,
+            params.responseState!,
+            jsonDecode(response.body),
+          );
+        }
       }
+    } catch (e) {
+      updateStateValue(context, params.responseState!, '$e');
     }
   }
 
@@ -141,10 +131,7 @@ class TACustomHttpRequestPost extends TetaAction {
     final mapParameters = <String, dynamic>{};
     for (final e in params.parameters ?? <MapElement>[]) {
       mapParameters[e.key] = e.value
-          .toCode(
-            0,
-            resultType: ResultTypeEnum.string,
-          )
+          .toCode(0, resultType: ResultTypeEnum.string)
           .replaceAll("'", '')
           .replaceAll(' ', '');
     }
@@ -181,10 +168,7 @@ class TACustomHttpRequestPost extends TetaAction {
     final mapBody = <String, dynamic>{};
     for (final e in params.body ?? <MapElement>[]) {
       mapBody[e.key] = e.value
-          .toCode(
-            0,
-            resultType: ResultTypeEnum.string,
-          )
+          .toCode(0, resultType: ResultTypeEnum.string)
           .replaceAll("'", '')
           .replaceAll(' ', '');
     }
@@ -197,17 +181,11 @@ class TACustomHttpRequestPost extends TetaAction {
 
     //url
     final urlNew = params.url
-        ?.toCode(
-          loop,
-          resultType: ResultTypeEnum.string,
-        )
+        ?.toCode(loop, resultType: ResultTypeEnum.string)
         .replaceAll("'", '')
         .replaceAll(' ', '');
     final customHttpRequestExpectedStatusCodeNew = params.expectedStatusCode
-        ?.toCode(
-          loop,
-          resultType: ResultTypeEnum.string,
-        )
+        ?.toCode(loop, resultType: ResultTypeEnum.string)
         .replaceAll("'", '')
         .replaceAll(' ', '');
     return '''
