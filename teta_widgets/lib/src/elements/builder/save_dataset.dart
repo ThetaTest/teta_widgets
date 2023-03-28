@@ -30,7 +30,7 @@ Future<List<DatasetObject>> saveDatasets(
     final boxMap = box.toMap();
 
     final list2 = <DatasetObject>[];
-
+    final listOfExistDatasets = <DatasetObject>[];
     for (final dynamic key in boxMap.keys) {
       final map2 = box.get(key)!;
       final map3 = map2
@@ -50,30 +50,12 @@ Future<List<DatasetObject>> saveDatasets(
         }
       }
       if (flag) {
-        context
-            .read<PageCubit>()
-            .updateDatasets([...pageFocused.datasets, map]);
+        listOfExistDatasets.add(element);
       }
     }
-
-    /*final pages = BlocProvider.of<PagesCubit>(context).state;
-    for (final page in pages) {
-      for (final element in list2) {
-        var flag = true;
-        for (final e in page.datasets) {
-          if (e.getName == element.getName) {
-            page.datasets[page.datasets.indexOf(e)] = element;
-
-            flag = false;
-            break;
-          }
-        }
-        if (flag) page.datasets = [...page.datasets, element];
-      }
-    }
-
-    final list3 = <DatasetObject>[...dataset, ...list2];*/
-
+    context
+        .read<PageCubit>()
+        .updateDatasets([...pageFocused.datasets, ...listOfExistDatasets]);
     return [...pageFocused.datasets, map];
   } catch (e) {
     if (kDebugMode) {
