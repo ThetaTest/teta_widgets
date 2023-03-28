@@ -5,7 +5,6 @@
 import 'dart:async';
 
 import 'package:after_layout/after_layout.dart';
-import 'package:collection/collection.dart';
 import 'package:easy_debounce/easy_debounce.dart';
 import 'package:enum_to_string/enum_to_string.dart';
 // Flutter imports:
@@ -14,14 +13,12 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_feather_icons/flutter_feather_icons.dart';
 import 'package:gap/gap.dart';
 import 'package:hovering/hovering.dart';
-import 'package:teta_front_end/src/design_system/textfield/minitextfield.dart';
-import 'package:teta_front_end/src/design_system/textfield/multi_line_textfield.dart';
-import 'package:teta_front_end/src/design_system/textfield/textfield.dart';
 import 'package:teta_core/teta_core.dart';
-// Project imports:
-import '../../../../teta_widgets.dart';
+import 'package:teta_front_end/src/design_system/textfield/multi_line_textfield.dart';
 import 'package:teta_front_end/teta_front_end.dart';
 import 'package:teta_models/teta_models.dart';
+
+import '../../../../teta_widgets.dart';
 
 class TextControl extends StatefulWidget {
   const TextControl({
@@ -52,7 +49,8 @@ class TextControl extends StatefulWidget {
 }
 
 class PaddingsState extends State<TextControl> with AfterLayoutMixin {
-  TextEditingController controller = TextEditingController();
+  final controller = TextEditingController();
+  final jsonMapPathController = TextEditingController();
   String databaseName = '';
   String databaseAttribute = '';
   String datasetSubListData = '';
@@ -72,6 +70,7 @@ class PaddingsState extends State<TextControl> with AfterLayoutMixin {
           context,
           forPlay: false,
         );
+        jsonMapPathController.text = widget.value.jsonMapPath ?? '';
         typeOfInput = widget.value.type!;
         if (widget.value.datasetName != null) {
           databaseName = widget.value.datasetName!;
@@ -111,15 +110,11 @@ class PaddingsState extends State<TextControl> with AfterLayoutMixin {
   Widget build(final BuildContext context) {
     return BlocListener<DeviceModeCubit, DeviceState>(
       listener: (final context, final device) {
-        if (controller.text !=
-            widget.value.getValue(
-              context,
-              forPlay: false,
-            )) {
-          controller.text = widget.value.getValue(
-            context,
-            forPlay: false,
-          );
+        if (controller.text != widget.value.getValue(context, forPlay: false)) {
+          controller.text = widget.value.getValue(context, forPlay: false);
+        }
+        if (jsonMapPathController.text != (widget.value.jsonMapPath ?? '')) {
+          jsonMapPathController.text = widget.value.jsonMapPath ?? '';
         }
       },
       child: BlocBuilder<DeviceModeCubit, DeviceState>(
@@ -506,6 +501,40 @@ class PaddingsState extends State<TextControl> with AfterLayoutMixin {
                             },
                             expanded: true,
                           ),
+                          const Gap(Grid.small),
+                          if (variables
+                              .where((final e) => e.type == VariableType.json)
+                              .isNotEmpty)
+                            descriptionControlWidget(
+                              description:
+                                  'Specify the path to the value. Path can '
+                                  'contain indexes (e.g. `list.0.message`).\n'
+                                  'Leave empty to use the whole JSON',
+                              control: CMultiLinesTextField(
+                                placeholder: 'Path to value '
+                                    '(e.g. `messages.0.sender`)',
+                                controller: jsonMapPathController,
+                                callBack: (final value) {
+                                  EasyDebounce.debounce(
+                                    'Editing text ${focusState.first}',
+                                    const Duration(milliseconds: 500),
+                                    () => {
+                                      widget.callBack(
+                                        widget.value..jsonMapPath = value,
+                                        widget.value,
+                                      ),
+                                    },
+                                  );
+                                },
+                                onSubmitted: (final value) {
+                                  value.replaceAll(r'\', r'\\');
+                                  widget.callBack(
+                                    widget.value..jsonMapPath = value,
+                                    widget.value,
+                                  );
+                                },
+                              ),
+                            ),
                         ],
                       );
                     },
@@ -555,16 +584,15 @@ class PaddingsState extends State<TextControl> with AfterLayoutMixin {
                               ),
                             )
                             .toList(),
-                        onChange: (final newValue)async {
+                        onChange: (final newValue) async {
                           final index = state.datasets.indexWhere(
-                            (final element) =>
-                                element.getName ==newValue,
+                            (final element) => element.getName == newValue,
                           );
                           setState(() {
                             databaseName = newValue!;
                             dataset = index != -1
-                              ?  state.datasets[index]
-                              : DatasetObject.empty();
+                                ? state.datasets[index]
+                                : DatasetObject.empty();
                           });
                           final old = widget.value;
                           widget.value.datasetName = newValue;
