@@ -3,10 +3,10 @@ import 'package:flutter/material.dart';
 import 'package:purchases_flutter/purchases_flutter.dart';
 // Package imports:
 import 'package:teta_core/teta_core.dart';
-import 'package:teta_widgets/src/core/teta_widget/index.dart';
-import 'package:teta_widgets/src/elements/builder/gesture_detector_base.dart';
+import 'package:theta_widgets/src/core/teta_widget/index.dart';
+import 'package:theta_widgets/src/elements/builder/gesture_detector_base.dart';
 // Project imports:
-import 'package:teta_widgets/src/elements/index.dart';
+import 'package:theta_widgets/src/elements/index.dart';
 import 'package:universal_platform/universal_platform.dart';
 import 'package:theta_models/theta_models.dart';
 

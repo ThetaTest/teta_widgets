@@ -4,11 +4,11 @@
 // Flutter imports:
 import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
-import 'package:teta_widgets/src/elements/code/formatter_test.dart';
-import 'package:teta_widgets/src/elements/controls/key_constants.dart';
-import 'package:teta_widgets/src/elements/index.dart';
-import 'package:teta_widgets/src/elements/nodes/dynamic.dart';
-import 'package:teta_widgets/src/elements/nodes/node_body.dart';
+import 'package:theta_widgets/src/elements/code/formatter_test.dart';
+import 'package:theta_widgets/src/elements/controls/key_constants.dart';
+import 'package:theta_widgets/src/elements/index.dart';
+import 'package:theta_widgets/src/elements/nodes/dynamic.dart';
+import 'package:theta_widgets/src/elements/nodes/node_body.dart';
 // Project imports:
 
 /// Generates the code for Qonversion product list widget, unclassified for now

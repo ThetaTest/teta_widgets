@@ -5,8 +5,8 @@
 import 'package:flutter/material.dart';
 import 'package:table_calendar/table_calendar.dart';
 // Project imports:
-import 'package:teta_widgets/src/elements/code/snippets.dart';
-import 'package:teta_widgets/src/elements/index.dart';
+import 'package:theta_widgets/src/elements/code/snippets.dart';
+import 'package:theta_widgets/src/elements/index.dart';
 
 /// Generates the code for Calendar widget
 class CalendarV2CodeTemplate {

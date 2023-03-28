@@ -1,5 +1,5 @@
 import 'package:theta_models/theta_models.dart';
-import 'package:teta_widgets/src/core/teta_action/action_options/teta_action_params.dart';
+import 'package:theta_widgets/src/core/teta_action/action_options/teta_action_params.dart';
 
 import '../../../../features/text_type_input.dart';
 

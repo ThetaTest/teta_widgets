@@ -5,20 +5,20 @@
 import 'package:flutter/material.dart';
 // Package imports:
 import 'package:teta_core/gen/assets.gen.dart';
-import 'package:teta_widgets/src/core/teta_widget/index.dart';
-import 'package:teta_widgets/src/elements/code/snippets.dart';
+import 'package:theta_widgets/src/core/teta_widget/index.dart';
+import 'package:theta_widgets/src/elements/code/snippets.dart';
 // Project imports:
-import 'package:teta_widgets/src/elements/code/templates/teta_store/teta_store_shipping_builder_template.dart';
-import 'package:teta_widgets/src/elements/controls/control_model.dart';
-import 'package:teta_widgets/src/elements/controls/key_constants.dart';
-import 'package:teta_widgets/src/elements/features/dataset.dart';
-import 'package:teta_widgets/src/elements/intrinsic_states/class.dart';
-import 'package:teta_widgets/src/elements/nodes/categories.dart';
-import 'package:teta_widgets/src/elements/nodes/children_enum.dart';
-import 'package:teta_widgets/src/elements/nodes/enum.dart';
-import 'package:teta_widgets/src/elements/nodes/node.dart';
-import 'package:teta_widgets/src/elements/nodes/node_body.dart';
-import 'package:teta_widgets/src/elements/widgets/teta_store/teta_store_shipping_builder.dart';
+import 'package:theta_widgets/src/elements/code/templates/teta_store/teta_store_shipping_builder_template.dart';
+import 'package:theta_widgets/src/elements/controls/control_model.dart';
+import 'package:theta_widgets/src/elements/controls/key_constants.dart';
+import 'package:theta_widgets/src/elements/features/dataset.dart';
+import 'package:theta_widgets/src/elements/intrinsic_states/class.dart';
+import 'package:theta_widgets/src/elements/nodes/categories.dart';
+import 'package:theta_widgets/src/elements/nodes/children_enum.dart';
+import 'package:theta_widgets/src/elements/nodes/enum.dart';
+import 'package:theta_widgets/src/elements/nodes/node.dart';
+import 'package:theta_widgets/src/elements/nodes/node_body.dart';
+import 'package:theta_widgets/src/elements/widgets/teta_store/teta_store_shipping_builder.dart';
 
 const _globalType = NType.tetaStoreShippingBuilder;
 

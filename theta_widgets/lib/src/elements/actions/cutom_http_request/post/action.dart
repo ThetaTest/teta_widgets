@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:teta_cms/teta_cms.dart';
 import 'package:theta_models/theta_models.dart';
-import 'package:teta_widgets/src/core/teta_widget/index.dart';
-import 'package:teta_widgets/src/elements/actions/snippets/update_state_value.dart';
-import 'package:teta_widgets/src/elements/index.dart';
+import 'package:theta_widgets/src/core/teta_widget/index.dart';
+import 'package:theta_widgets/src/elements/actions/snippets/update_state_value.dart';
+import 'package:theta_widgets/src/elements/index.dart';
 
 import '../../../../core/teta_action/index.dart';
 import 'params.dart';

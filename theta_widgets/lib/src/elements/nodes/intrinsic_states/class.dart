@@ -5,13 +5,13 @@ import 'package:teta_core/gen/assets.gen.dart';
 import 'package:theta_models/src/models/constants_model.dart';
 import 'package:theta_models/src/models/package.dart';
 // Project imports:
-import 'package:teta_widgets/src/elements/control_center.dart';
-import 'package:teta_widgets/src/elements/features/actions/enums/gestures.dart';
-import 'package:teta_widgets/src/elements/features/actions/enums/permissions.dart';
-import 'package:teta_widgets/src/elements/nodes/categories.dart';
-import 'package:teta_widgets/src/elements/nodes/children_enum.dart';
-import 'package:teta_widgets/src/elements/nodes/enum.dart';
-import 'package:teta_widgets/src/elements/nodes/suggestion.dart';
+import 'package:theta_widgets/src/elements/control_center.dart';
+import 'package:theta_widgets/src/elements/features/actions/enums/gestures.dart';
+import 'package:theta_widgets/src/elements/features/actions/enums/permissions.dart';
+import 'package:theta_widgets/src/elements/nodes/categories.dart';
+import 'package:theta_widgets/src/elements/nodes/children_enum.dart';
+import 'package:theta_widgets/src/elements/nodes/enum.dart';
+import 'package:theta_widgets/src/elements/nodes/suggestion.dart';
 
 class IntrinsicStates {
   IntrinsicStates({

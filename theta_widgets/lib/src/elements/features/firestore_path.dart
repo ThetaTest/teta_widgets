@@ -7,7 +7,7 @@ import 'package:flutter/material.dart';
 import 'package:theta_models/src/models/dataset.dart';
 import 'package:theta_models/src/models/variable.dart';
 // Project imports:
-import 'package:teta_widgets/src/elements/features/text_type_input.dart';
+import 'package:theta_widgets/src/elements/features/text_type_input.dart';
 
 class FFirestorePath {
   /// Constructor

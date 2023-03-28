@@ -1,14 +1,14 @@
 // Flutter imports:
 import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
-import 'package:teta_widgets/src/elements/code/formatter_test.dart';
+import 'package:theta_widgets/src/elements/code/formatter_test.dart';
 // Project imports:
-import 'package:teta_widgets/src/elements/controls/key_constants.dart';
-import 'package:teta_widgets/src/elements/features/text_type_input.dart';
-import 'package:teta_widgets/teta_open_classes/lib/src/nodes/dynamic.dart';
-import 'package:teta_widgets/teta_open_classes/lib/src/nodes/enum.dart';
-import 'package:teta_widgets/teta_open_classes/lib/src/nodes/node.dart';
-import 'package:teta_widgets/teta_open_classes/lib/src/nodes/node_body.dart';
+import 'package:theta_widgets/src/elements/controls/key_constants.dart';
+import 'package:theta_widgets/src/elements/features/text_type_input.dart';
+import 'package:theta_widgets/teta_open_classes/lib/src/nodes/dynamic.dart';
+import 'package:theta_widgets/teta_open_classes/lib/src/nodes/enum.dart';
+import 'package:theta_widgets/teta_open_classes/lib/src/nodes/node.dart';
+import 'package:theta_widgets/teta_open_classes/lib/src/nodes/node_body.dart';
 
 /// Generates the code for CMS Fetch widget
 class AirtableFetchCodeTemplate {

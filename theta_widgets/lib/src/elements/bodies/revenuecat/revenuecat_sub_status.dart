@@ -6,15 +6,15 @@ import 'package:flutter/material.dart';
 // Package imports:
 import 'package:teta_core/gen/assets.gen.dart';
 import 'package:teta_front_end/src/pages/assets_constants.dart';
-import 'package:teta_widgets/src/core/teta_widget/index.dart';
-import 'package:teta_widgets/src/elements/code/templates/revenuecat/revenuecat_status_sub.dart';
+import 'package:theta_widgets/src/core/teta_widget/index.dart';
+import 'package:theta_widgets/src/elements/code/templates/revenuecat/revenuecat_status_sub.dart';
 // Project imports:
-import 'package:teta_widgets/src/elements/features/actions/enums/permissions.dart';
-import 'package:teta_widgets/src/elements/index.dart';
-import 'package:teta_widgets/src/elements/intrinsic_states/class.dart';
-import 'package:teta_widgets/src/elements/nodes/categories.dart';
-import 'package:teta_widgets/src/elements/nodes/node_body.dart';
-import 'package:teta_widgets/src/elements/widgets/revenuecat/sub_status.dart';
+import 'package:theta_widgets/src/elements/features/actions/enums/permissions.dart';
+import 'package:theta_widgets/src/elements/index.dart';
+import 'package:theta_widgets/src/elements/intrinsic_states/class.dart';
+import 'package:theta_widgets/src/elements/nodes/categories.dart';
+import 'package:theta_widgets/src/elements/nodes/node_body.dart';
+import 'package:theta_widgets/src/elements/widgets/revenuecat/sub_status.dart';
 import 'package:theta_models/theta_models.dart';
 
 const _globalType = NType.revenueCatSubStatus;

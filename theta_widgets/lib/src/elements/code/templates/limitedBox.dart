@@ -1,12 +1,12 @@
 // Flutter imports:
 import 'package:flutter/material.dart';
 // Project imports:
-import 'package:teta_widgets/src/elements/code/snippets.dart';
+import 'package:theta_widgets/src/elements/code/snippets.dart';
 import '../../../../../../../teta_open_classes/lib/src/nodes/node.dart';
 import '../../../../../../../teta_open_classes/lib/src/nodes/node_body.dart';
-import 'package:teta_widgets/src/elements/features/sizes.dart';
-import 'package:teta_widgets/src/elements/controls/key_constants.dart';
-import 'package:teta_widgets/src/elements/code/formatter_test.dart';
+import 'package:theta_widgets/src/elements/features/sizes.dart';
+import 'package:theta_widgets/src/elements/controls/key_constants.dart';
+import 'package:theta_widgets/src/elements/code/formatter_test.dart';
 
 /// LimitedBox Template
 class LimitedBoxCodeTemplate {

@@ -6,10 +6,10 @@
 import 'package:enum_to_string/enum_to_string.dart';
 // Flutter imports:
 import 'package:flutter/material.dart';
-import 'package:teta_widgets/src/core/teta_widget/index.dart';
+import 'package:theta_widgets/src/core/teta_widget/index.dart';
 // Project imports:
-import 'package:teta_widgets/src/elements/index.dart';
-import 'package:teta_widgets/src/elements/intrinsic_states/class.dart';
+import 'package:theta_widgets/src/elements/index.dart';
+import 'package:theta_widgets/src/elements/intrinsic_states/class.dart';
 import 'node_body.dart';
 import 'package:theta_models/theta_models.dart';
 

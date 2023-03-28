@@ -2,7 +2,7 @@
 import 'package:flutter/material.dart';
 import 'package:mobile_scanner/mobile_scanner.dart';
 // Package imports:
-import 'package:teta_widgets/src/core/teta_widget/index.dart';
+import 'package:theta_widgets/src/core/teta_widget/index.dart';
 // Project imports:
 import 'package:url_launcher/url_launcher_string.dart';
 

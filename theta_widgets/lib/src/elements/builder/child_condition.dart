@@ -1,8 +1,8 @@
 // Flutter imports:
 import 'package:flutter/material.dart';
 // Project imports:
-import 'package:teta_widgets/src/core/teta_widget/index.dart';
-import 'package:teta_widgets/src/elements/builder/placeholder_child.dart';
+import 'package:theta_widgets/src/core/teta_widget/index.dart';
+import 'package:theta_widgets/src/elements/builder/placeholder_child.dart';
 import '../../../../../../teta_open_classes/lib/src/nodes/node.dart';
 
 /// Builder

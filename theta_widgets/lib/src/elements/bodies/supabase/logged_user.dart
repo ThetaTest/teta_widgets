@@ -2,16 +2,16 @@
 import 'package:flutter/material.dart';
 // Package imports:
 import 'package:teta_core/gen/assets.gen.dart';
-import 'package:teta_widgets/src/core/teta_widget/index.dart';
+import 'package:theta_widgets/src/core/teta_widget/index.dart';
 // Project imports:
-import 'package:teta_widgets/src/elements/controls/control_model.dart';
-import 'package:teta_widgets/src/elements/intrinsic_states/class.dart';
-import 'package:teta_widgets/teta_open_classes/lib/src/nodes/categories.dart';
-import 'package:teta_widgets/teta_open_classes/lib/src/nodes/children_enum.dart';
-import 'package:teta_widgets/teta_open_classes/lib/src/nodes/enum.dart';
-import 'package:teta_widgets/teta_open_classes/lib/src/nodes/node.dart';
-import 'package:teta_widgets/teta_open_classes/lib/src/nodes/node_body.dart';
-import 'package:teta_widgets/src/elements/widgets/supabase/logged_user.dart';
+import 'package:theta_widgets/src/elements/controls/control_model.dart';
+import 'package:theta_widgets/src/elements/intrinsic_states/class.dart';
+import 'package:theta_widgets/teta_open_classes/lib/src/nodes/categories.dart';
+import 'package:theta_widgets/teta_open_classes/lib/src/nodes/children_enum.dart';
+import 'package:theta_widgets/teta_open_classes/lib/src/nodes/enum.dart';
+import 'package:theta_widgets/teta_open_classes/lib/src/nodes/node.dart';
+import 'package:theta_widgets/teta_open_classes/lib/src/nodes/node_body.dart';
+import 'package:theta_widgets/src/elements/widgets/supabase/logged_user.dart';
 
 const _globalType = NType.supabaseLoggedUser;
 

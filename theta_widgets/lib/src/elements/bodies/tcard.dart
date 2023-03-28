@@ -6,26 +6,26 @@ import 'package:flutter/material.dart';
 // Package imports:
 import 'package:teta_core/gen/assets.gen.dart';
 import 'package:theta_models/src/models/variable.dart';
-import 'package:teta_widgets/src/core/teta_widget/index.dart';
+import 'package:theta_widgets/src/core/teta_widget/index.dart';
 // Project imports:
-import 'package:teta_widgets/src/elements/code/advanced/tcard.dart';
-import 'package:teta_widgets/src/elements/code/snippets.dart';
-import 'package:teta_widgets/src/elements/controls/control_model.dart';
-import 'package:teta_widgets/src/elements/controls/key_constants.dart';
-import 'package:teta_widgets/src/elements/controls/type.dart';
-import 'package:teta_widgets/src/elements/features/action.dart';
-import 'package:teta_widgets/src/elements/features/actions/enums/index.dart';
-import 'package:teta_widgets/src/elements/features/sizes.dart';
-import 'package:teta_widgets/src/elements/features/text_type_input.dart';
-import 'package:teta_widgets/src/elements/intrinsic_states/class.dart';
+import 'package:theta_widgets/src/elements/code/advanced/tcard.dart';
+import 'package:theta_widgets/src/elements/code/snippets.dart';
+import 'package:theta_widgets/src/elements/controls/control_model.dart';
+import 'package:theta_widgets/src/elements/controls/key_constants.dart';
+import 'package:theta_widgets/src/elements/controls/type.dart';
+import 'package:theta_widgets/src/elements/features/action.dart';
+import 'package:theta_widgets/src/elements/features/actions/enums/index.dart';
+import 'package:theta_widgets/src/elements/features/sizes.dart';
+import 'package:theta_widgets/src/elements/features/text_type_input.dart';
+import 'package:theta_widgets/src/elements/intrinsic_states/class.dart';
 import '../../../../../../teta_open_classes/lib/src/nodes/categories.dart';
 import '../../../../../../teta_open_classes/lib/src/nodes/children_enum.dart';
 import '../../../../../../teta_open_classes/lib/src/nodes/enum.dart';
 import '../../../../../../teta_open_classes/lib/src/nodes/node.dart';
 import '../../../../../../teta_open_classes/lib/src/nodes/node_body.dart';
 import '../../../../../../teta_open_classes/lib/src/nodes/suggestion.dart';
-import 'package:teta_widgets/src/elements/packages.dart';
-import 'package:teta_widgets/src/elements/widgets/tcard.dart';
+import 'package:theta_widgets/src/elements/packages.dart';
+import 'package:theta_widgets/src/elements/widgets/tcard.dart';
 
 const _globalType = NType.tcard;
 

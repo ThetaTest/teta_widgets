@@ -11,8 +11,8 @@ import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:http/http.dart' as http;
 import 'package:teta_cms/teta_cms.dart';
 import 'package:teta_core/teta_core.dart';
-import 'package:teta_widgets/src/elements/widgets/google_maps/maps/map_style.dart';
-import 'package:teta_widgets/src/elements/widgets/google_maps/maps/standard_map.dart';
+import 'package:theta_widgets/src/elements/widgets/google_maps/maps/map_style.dart';
+import 'package:theta_widgets/src/elements/widgets/google_maps/maps/standard_map.dart';
 import 'package:teta_front_end/teta_front_end.dart';
 import 'package:theta_models/theta_models.dart';
 

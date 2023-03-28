@@ -1,6 +1,6 @@
 import 'package:camera/camera.dart';
 import 'package:teta_core/teta_core.dart';
-import 'package:teta_widgets/src/core/teta_widget/index.dart';
+import 'package:theta_widgets/src/core/teta_widget/index.dart';
 import 'package:theta_models/theta_models.dart';
 
 List<VariableObject> getVariableObjectsFromParams(

@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
-import 'package:teta_widgets/src/elements/actions/condition.dart';
-import 'package:teta_widgets/src/elements/actions/delay.dart';
-import 'package:teta_widgets/src/elements/actions/loop.dart';
-import 'package:teta_widgets/src/elements/index.dart';
+import 'package:theta_widgets/src/elements/actions/condition.dart';
+import 'package:theta_widgets/src/elements/actions/delay.dart';
+import 'package:theta_widgets/src/elements/actions/loop.dart';
+import 'package:theta_widgets/src/elements/index.dart';
 
 class AS {
   static Future action() async {}

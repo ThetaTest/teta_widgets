@@ -6,9 +6,9 @@ import 'package:intl/intl.dart';
 import 'package:paged_vertical_calendar/paged_vertical_calendar.dart';
 import 'package:teta_core/teta_core.dart';
 // Project imports:
-import 'package:teta_widgets/src/core/teta_widget/index.dart';
-import 'package:teta_widgets/src/elements/builder/save_dataset.dart';
-import 'package:teta_widgets/src/elements/index.dart';
+import 'package:theta_widgets/src/core/teta_widget/index.dart';
+import 'package:theta_widgets/src/elements/builder/save_dataset.dart';
+import 'package:theta_widgets/src/elements/index.dart';
 import 'package:theta_models/theta_models.dart';
 
 // ignore_for_file: public_member_api_docs

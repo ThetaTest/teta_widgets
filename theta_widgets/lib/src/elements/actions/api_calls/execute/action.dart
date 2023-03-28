@@ -3,9 +3,9 @@ import 'dart:convert';
 import 'package:flutter/material.dart';
 import 'package:teta_cms/teta_cms.dart';
 import 'package:teta_core/teta_core.dart';
-import 'package:teta_widgets/src/elements/builder/save_dataset.dart';
+import 'package:theta_widgets/src/elements/builder/save_dataset.dart';
 // Project imports:
-import 'package:teta_widgets/src/elements/index.dart';
+import 'package:theta_widgets/src/elements/index.dart';
 import 'package:theta_models/theta_models.dart';
 
 import '../../../../core/teta_action/index.dart';

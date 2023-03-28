@@ -3,9 +3,9 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:teta_core/teta_core.dart';
 // Project imports:
-import 'package:teta_widgets/src/elements/actions/snippets/take_state_from.dart';
-import 'package:teta_widgets/src/elements/actions/snippets/update_state_value.dart';
-import 'package:teta_widgets/src/elements/features/text_type_input.dart';
+import 'package:theta_widgets/src/elements/actions/snippets/take_state_from.dart';
+import 'package:theta_widgets/src/elements/actions/snippets/update_state_value.dart';
+import 'package:theta_widgets/src/elements/features/text_type_input.dart';
 import 'package:teta_front_end/teta_front_end.dart';
 import 'package:theta_models/theta_models.dart';
 

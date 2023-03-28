@@ -2,23 +2,23 @@
 import 'package:flutter/material.dart';
 // Package imports:
 import 'package:teta_core/gen/assets.gen.dart';
-import 'package:teta_widgets/src/core/teta_widget/index.dart';
-import 'package:teta_widgets/src/elements/code/snippets.dart';
+import 'package:theta_widgets/src/core/teta_widget/index.dart';
+import 'package:theta_widgets/src/elements/code/snippets.dart';
 // Project imports:
-import 'package:teta_widgets/src/elements/code/templates/outlinedbutton.dart';
-import 'package:teta_widgets/src/elements/controls/control_model.dart';
-import 'package:teta_widgets/src/elements/controls/key_constants.dart';
-import 'package:teta_widgets/src/elements/features/action.dart';
-import 'package:teta_widgets/src/elements/features/actions/enums/gestures.dart';
-import 'package:teta_widgets/src/elements/features/page_transition.dart';
-import 'package:teta_widgets/src/elements/features/text_type_input.dart';
-import 'package:teta_widgets/src/elements/intrinsic_states/class.dart';
+import 'package:theta_widgets/src/elements/code/templates/outlinedbutton.dart';
+import 'package:theta_widgets/src/elements/controls/control_model.dart';
+import 'package:theta_widgets/src/elements/controls/key_constants.dart';
+import 'package:theta_widgets/src/elements/features/action.dart';
+import 'package:theta_widgets/src/elements/features/actions/enums/gestures.dart';
+import 'package:theta_widgets/src/elements/features/page_transition.dart';
+import 'package:theta_widgets/src/elements/features/text_type_input.dart';
+import 'package:theta_widgets/src/elements/intrinsic_states/class.dart';
 import '../../../../../../teta_open_classes/lib/src/nodes/categories.dart';
 import '../../../../../../teta_open_classes/lib/src/nodes/children_enum.dart';
 import '../../../../../../teta_open_classes/lib/src/nodes/enum.dart';
 import '../../../../../../teta_open_classes/lib/src/nodes/node.dart';
 import '../../../../../../teta_open_classes/lib/src/nodes/node_body.dart';
-import 'package:teta_widgets/src/elements/widgets/outlinedbutton.dart';
+import 'package:theta_widgets/src/elements/widgets/outlinedbutton.dart';
 
 const _globalType = NType.outlinedButton;
 

@@ -3,10 +3,10 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:teta_core/teta_core.dart';
-import 'package:teta_widgets/src/elements/code/formatter_test.dart';
+import 'package:theta_widgets/src/elements/code/formatter_test.dart';
 // Project imports:
-import 'package:teta_widgets/src/elements/nodes/dynamic.dart';
-import 'package:teta_widgets/src/elements/nodes/node.dart';
+import 'package:theta_widgets/src/elements/nodes/dynamic.dart';
+import 'package:theta_widgets/src/elements/nodes/node.dart';
 import 'package:theta_models/theta_models.dart';
 
 /// Generates the code for CMS Logged User widget

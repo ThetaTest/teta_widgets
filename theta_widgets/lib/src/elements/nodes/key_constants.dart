@@ -5,7 +5,7 @@
 import 'package:flutter/foundation.dart';
 // Package imports:
 import 'package:teta_core/teta_core.dart';
-import 'package:teta_widgets/src/elements/features/condition_type.dart';
+import 'package:theta_widgets/src/elements/features/condition_type.dart';
 // Project imports:
 import '../features/google_maps_map_style.dart';
 import '../features/physic.dart';

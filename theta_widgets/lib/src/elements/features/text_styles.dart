@@ -8,11 +8,11 @@ import 'package:google_fonts/google_fonts.dart';
 import 'package:teta_front_end/src/design_system/hex_color.dart';
 import 'package:theta_models/src/models/text_style.dart';
 // Project imports:
-import 'package:teta_widgets/src/elements/features/fill.dart';
-import 'package:teta_widgets/src/elements/features/font_size.dart';
-import 'package:teta_widgets/src/elements/features/font_style.dart';
-import 'package:teta_widgets/src/elements/features/font_weight.dart';
-import 'package:teta_widgets/src/elements/features/text_decoration.dart';
+import 'package:theta_widgets/src/elements/features/fill.dart';
+import 'package:theta_widgets/src/elements/features/font_size.dart';
+import 'package:theta_widgets/src/elements/features/font_style.dart';
+import 'package:theta_widgets/src/elements/features/font_weight.dart';
+import 'package:theta_widgets/src/elements/features/text_decoration.dart';
 
 class TetaTextStyles {
   /// Returns the current TextStyle object

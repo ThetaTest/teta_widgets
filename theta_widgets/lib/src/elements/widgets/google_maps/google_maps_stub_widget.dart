@@ -3,13 +3,13 @@
 // Flutter imports:
 import 'package:flutter/material.dart';
 import 'package:teta_core/teta_core.dart';
-import 'package:teta_widgets/src/core/teta_widget/index.dart';
-import 'package:teta_widgets/src/elements/features/features.dart';
-import 'package:teta_widgets/src/elements/features/google_maps_map_style.dart';
+import 'package:theta_widgets/src/core/teta_widget/index.dart';
+import 'package:theta_widgets/src/elements/features/features.dart';
+import 'package:theta_widgets/src/elements/features/google_maps_map_style.dart';
 
 // Project imports:
 import '../../../../../../../teta_open_classes/lib/src/nodes/node.dart';
-import 'package:teta_widgets/src/elements/widgets/google_maps/google_maps_base_widget.dart';
+import 'package:theta_widgets/src/elements/widgets/google_maps/google_maps_base_widget.dart';
 
 // ignore_for_file: public_member_api_docs
 

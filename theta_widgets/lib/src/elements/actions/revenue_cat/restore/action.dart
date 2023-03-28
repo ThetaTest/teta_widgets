@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:recase/recase.dart';
 import 'package:teta_core/teta_core.dart';
-import 'package:teta_widgets/src/core/teta_widget/index.dart';
-import 'package:teta_widgets/src/elements/actions/snippets/get_page_on_code.dart';
-import 'package:teta_widgets/src/elements/actions/snippets/take_state_from.dart';
+import 'package:theta_widgets/src/core/teta_widget/index.dart';
+import 'package:theta_widgets/src/elements/actions/snippets/get_page_on_code.dart';
+import 'package:theta_widgets/src/elements/actions/snippets/take_state_from.dart';
 import 'package:teta_front_end/teta_front_end.dart';
 
 import '../../../../core/teta_action/index.dart';

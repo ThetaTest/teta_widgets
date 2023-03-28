@@ -1,6 +1,6 @@
 // Project imports:
 import 'package:equatable/equatable.dart';
-import 'package:teta_widgets/src/elements/controls/key_constants.dart';
+import 'package:theta_widgets/src/elements/controls/key_constants.dart';
 
 /// [FChildrenIds] is a set of functions to save children' ids
 class FChildrenIds extends Equatable {

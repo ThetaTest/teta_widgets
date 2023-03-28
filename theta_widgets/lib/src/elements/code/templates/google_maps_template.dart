@@ -1,7 +1,7 @@
 // Flutter imports:
 import 'package:flutter/material.dart';
-import 'package:teta_widgets/src/elements/code/formatter_test.dart';
-import 'package:teta_widgets/src/elements/widgets/google_maps/maps/map_style.dart';
+import 'package:theta_widgets/src/elements/code/formatter_test.dart';
+import 'package:theta_widgets/src/elements/widgets/google_maps/maps/map_style.dart';
 
 // Project imports:
 

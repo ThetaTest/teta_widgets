@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:teta_widgets/src/elements/code/formatter_test.dart';
-import 'package:teta_widgets/src/elements/code/snippets.dart';
-import 'package:teta_widgets/src/elements/index.dart';
+import 'package:theta_widgets/src/elements/code/formatter_test.dart';
+import 'package:theta_widgets/src/elements/code/snippets.dart';
+import 'package:theta_widgets/src/elements/index.dart';
 
 ///Generates code for Radio widget
 class RadioButtonTemplate {

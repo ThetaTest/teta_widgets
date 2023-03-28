@@ -1,6 +1,6 @@
 // Flutter imports:
 import 'package:equatable/equatable.dart';
-import 'package:teta_widgets/src/elements/widgets/google_maps/maps/map_style.dart';
+import 'package:theta_widgets/src/elements/widgets/google_maps/maps/map_style.dart';
 
 ///
 class FGoogleMapsMapStyle extends Equatable {

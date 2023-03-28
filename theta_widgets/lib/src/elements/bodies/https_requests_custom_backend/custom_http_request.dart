@@ -5,13 +5,13 @@
 import 'package:flutter/material.dart';
 // Package imports:
 import 'package:teta_core/teta_core.dart';
-import 'package:teta_widgets/src/core/teta_widget/index.dart';
-import 'package:teta_widgets/src/elements/code/templates/custom_http_request.dart';
-import 'package:teta_widgets/src/elements/controls/control_model.dart';
-import 'package:teta_widgets/src/elements/controls/key_constants.dart';
-import 'package:teta_widgets/src/elements/controls/type.dart';
-import 'package:teta_widgets/src/elements/features/text_type_input.dart';
-import 'package:teta_widgets/src/elements/intrinsic_states/class.dart';
+import 'package:theta_widgets/src/core/teta_widget/index.dart';
+import 'package:theta_widgets/src/elements/code/templates/custom_http_request.dart';
+import 'package:theta_widgets/src/elements/controls/control_model.dart';
+import 'package:theta_widgets/src/elements/controls/key_constants.dart';
+import 'package:theta_widgets/src/elements/controls/type.dart';
+import 'package:theta_widgets/src/elements/features/text_type_input.dart';
+import 'package:theta_widgets/src/elements/intrinsic_states/class.dart';
 import '../../../../../../../teta_open_classes/lib/src/nodes/categories.dart';
 import '../../../../../../../teta_open_classes/lib/src/nodes/children_enum.dart';
 import '../../../../../../../teta_open_classes/lib/src/nodes/dynamic.dart';
@@ -19,7 +19,7 @@ import '../../../../../../../teta_open_classes/lib/src/nodes/dynamic.dart';
 import '../../../../../../../teta_open_classes/lib/src/nodes/enum.dart';
 import '../../../../../../../teta_open_classes/lib/src/nodes/node.dart';
 import '../../../../../../../teta_open_classes/lib/src/nodes/node_body.dart';
-import 'package:teta_widgets/src/elements/widgets/https_requests_custom_backend/custom_http_request.dart';
+import 'package:theta_widgets/src/elements/widgets/https_requests_custom_backend/custom_http_request.dart';
 import 'package:theta_models/theta_models.dart';
 
 const _globalType = NType.customHttpRequest;

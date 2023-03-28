@@ -3,29 +3,29 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 // Package imports:
 import 'package:teta_core/teta_core.dart';
-import 'package:teta_widgets/src/core/teta_widget/index.dart';
-import 'package:teta_widgets/src/elements/code/snippets.dart';
-import 'package:teta_widgets/src/elements/code/templates/google_maps_cubit_template.dart';
-import 'package:teta_widgets/src/elements/code/templates/google_maps_template.dart';
-import 'package:teta_widgets/src/elements/constants_export.dart';
+import 'package:theta_widgets/src/core/teta_widget/index.dart';
+import 'package:theta_widgets/src/elements/code/snippets.dart';
+import 'package:theta_widgets/src/elements/code/templates/google_maps_cubit_template.dart';
+import 'package:theta_widgets/src/elements/code/templates/google_maps_template.dart';
+import 'package:theta_widgets/src/elements/constants_export.dart';
 // Project imports:
-import 'package:teta_widgets/src/elements/controls/control_model.dart';
-import 'package:teta_widgets/src/elements/controls/key_constants.dart';
-import 'package:teta_widgets/src/elements/controls/type.dart';
-import 'package:teta_widgets/src/elements/features/actions/enums/permissions.dart';
-import 'package:teta_widgets/src/elements/features/dataset.dart';
-import 'package:teta_widgets/src/elements/features/features.dart';
-import 'package:teta_widgets/src/elements/features/google_maps_map_style.dart';
-import 'package:teta_widgets/src/elements/features/text_type_input.dart';
-import 'package:teta_widgets/src/elements/intrinsic_states/class.dart';
+import 'package:theta_widgets/src/elements/controls/control_model.dart';
+import 'package:theta_widgets/src/elements/controls/key_constants.dart';
+import 'package:theta_widgets/src/elements/controls/type.dart';
+import 'package:theta_widgets/src/elements/features/actions/enums/permissions.dart';
+import 'package:theta_widgets/src/elements/features/dataset.dart';
+import 'package:theta_widgets/src/elements/features/features.dart';
+import 'package:theta_widgets/src/elements/features/google_maps_map_style.dart';
+import 'package:theta_widgets/src/elements/features/text_type_input.dart';
+import 'package:theta_widgets/src/elements/intrinsic_states/class.dart';
 import '../../../../../../teta_open_classes/lib/src/nodes/categories.dart';
 import '../../../../../../teta_open_classes/lib/src/nodes/children_enum.dart';
 import '../../../../../../teta_open_classes/lib/src/nodes/enum.dart';
 import '../../../../../../teta_open_classes/lib/src/nodes/node.dart';
 import '../../../../../../teta_open_classes/lib/src/nodes/node_body.dart';
 import '../../../../../../teta_open_classes/lib/src/nodes/suggestion.dart';
-import 'package:teta_widgets/src/elements/packages.dart';
-import 'package:teta_widgets/src/elements/widgets/google_maps/google_maps_stub_widget.dart'
+import 'package:theta_widgets/src/elements/packages.dart';
+import 'package:theta_widgets/src/elements/widgets/google_maps/google_maps_stub_widget.dart'
     if (dart.library.io) 'package:teta_widgets/src/elements/widgets/google_maps/google_maps_web_mobile_widget.dart'
     if (dart.library.html) 'package:teta_widgets/src/elements/widgets/google_maps/google_maps_web_mobile_widget.dart';
 import 'package:theta_models/src/models/variable.dart';

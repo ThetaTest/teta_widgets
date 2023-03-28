@@ -3,8 +3,8 @@
 import 'package:flutter/material.dart';
 // Package imports:
 // Project imports:
-import 'package:teta_widgets/src/core/teta_widget/index.dart';
-import 'package:teta_widgets/src/elements/index.dart';
+import 'package:theta_widgets/src/core/teta_widget/index.dart';
+import 'package:theta_widgets/src/elements/index.dart';
 
 class WGoogleAdMobBannerAd extends StatelessWidget {
   /// Returns a widget in Teta

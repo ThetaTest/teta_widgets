@@ -1,4 +1,4 @@
-import 'package:teta_widgets/src/elements/index.dart';
+import 'package:theta_widgets/src/elements/index.dart';
 import 'package:theta_models/theta_models.dart';
 
 class TetaWidgetState {

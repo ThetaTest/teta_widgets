@@ -2,7 +2,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:teta_core/teta_core.dart';
-import 'package:teta_widgets/src/elements/code/formatter_test.dart';
+import 'package:theta_widgets/src/elements/code/formatter_test.dart';
 // Project imports:
 
 /// Generates the code for Align widget

@@ -1,10 +1,10 @@
 // Flutter imports:
 import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
-import 'package:teta_widgets/src/elements/code/formatter_test.dart';
+import 'package:theta_widgets/src/elements/code/formatter_test.dart';
 // Project imports:
-import 'package:teta_widgets/src/elements/code/snippets.dart';
-import 'package:teta_widgets/src/elements/features/actions/enums/gestures.dart';
+import 'package:theta_widgets/src/elements/code/snippets.dart';
+import 'package:theta_widgets/src/elements/features/actions/enums/gestures.dart';
 import '../../../../../../../teta_open_classes/lib/src/nodes/node.dart';
 
 /// Generates the code for Twitter widget

@@ -5,7 +5,7 @@
 import 'package:flutter/material.dart';
 // Package imports:
 // Project imports:
-import 'package:teta_widgets/src/core/teta_widget/index.dart';
+import 'package:theta_widgets/src/core/teta_widget/index.dart';
 
 class WSpacer extends StatelessWidget {
   /// Returns a Spacer widget

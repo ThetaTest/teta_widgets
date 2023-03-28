@@ -8,9 +8,9 @@ import 'package:flutter/material.dart';
 import 'package:teta_core/src/services/node_service.dart';
 // Package imports:
 import 'package:teta_core/teta_core.dart';
-import 'package:teta_widgets/src/core/teta_widget/index.dart';
-import 'package:teta_widgets/src/elements/features/physic.dart';
-import 'package:teta_widgets/src/elements/index.dart';
+import 'package:theta_widgets/src/core/teta_widget/index.dart';
+import 'package:theta_widgets/src/elements/features/physic.dart';
+import 'package:theta_widgets/src/elements/index.dart';
 import 'package:theta_models/theta_models.dart';
 
 class WListViewBuilder extends StatefulWidget {

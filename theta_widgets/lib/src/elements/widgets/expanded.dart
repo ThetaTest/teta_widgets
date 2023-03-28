@@ -4,10 +4,10 @@
 // Flutter imports:
 import 'package:flutter/material.dart';
 // Package imports:
-import 'package:teta_widgets/src/core/teta_widget/teta_widget_state.dart';
-import 'package:teta_widgets/src/elements/builder/gesture_detector_base.dart';
+import 'package:theta_widgets/src/core/teta_widget/teta_widget_state.dart';
+import 'package:theta_widgets/src/elements/builder/gesture_detector_base.dart';
 // Project imports:
-import 'package:teta_widgets/src/elements/index.dart';
+import 'package:theta_widgets/src/elements/index.dart';
 
 /// This widget doesn't work correctly.
 /// Try to instantiate a Row and then as its children 2 Expanded.

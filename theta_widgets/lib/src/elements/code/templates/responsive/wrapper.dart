@@ -1,11 +1,11 @@
 // Flutter imports:
 import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
-import 'package:teta_widgets/src/elements/code/formatter_test.dart';
+import 'package:theta_widgets/src/elements/code/formatter_test.dart';
 // Project imports:
-import 'package:teta_widgets/src/elements/code/snippets.dart';
-import 'package:teta_widgets/src/elements/nodes/node_body.dart';
-import 'package:teta_widgets/teta_widgets.dart';
+import 'package:theta_widgets/src/elements/code/snippets.dart';
+import 'package:theta_widgets/src/elements/nodes/node_body.dart';
+import 'package:theta_widgets/teta_widgets.dart';
 
 /// Generates the code for Padding widget
 class WrapperCodeTemplate {

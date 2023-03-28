@@ -8,7 +8,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:recase/recase.dart';
 // Project imports:
-import 'package:teta_widgets/src/elements/index.dart';
+import 'package:theta_widgets/src/elements/index.dart';
 import 'package:theta_models/theta_models.dart';
 
 class FTextStyle extends Equatable {

@@ -6,18 +6,18 @@ import 'package:flutter/material.dart';
 import 'package:teta_core/gen/assets.gen.dart';
 // Package imports:
 import 'package:teta_front_end/src/pages/assets_constants.dart';
-import 'package:teta_widgets/src/core/teta_widget/index.dart';
+import 'package:theta_widgets/src/core/teta_widget/index.dart';
 // Project imports:
-import 'package:teta_widgets/src/elements/code/templates/revenuecat/revenuecat_products.dart';
-import 'package:teta_widgets/src/elements/features/actions/enums/permissions.dart';
-import 'package:teta_widgets/src/elements/intrinsic_states/class.dart';
+import 'package:theta_widgets/src/elements/code/templates/revenuecat/revenuecat_products.dart';
+import 'package:theta_widgets/src/elements/features/actions/enums/permissions.dart';
+import 'package:theta_widgets/src/elements/intrinsic_states/class.dart';
 import '../../../../../../../teta_open_classes/lib/src/nodes/categories.dart';
 import '../../../../../../../teta_open_classes/lib/src/nodes/children_enum.dart';
 import '../../../../../../../teta_open_classes/lib/src/nodes/dynamic.dart';
 import '../../../../../../../teta_open_classes/lib/src/nodes/enum.dart';
 import '../../../../../../../teta_open_classes/lib/src/nodes/node.dart';
 import '../../../../../../../teta_open_classes/lib/src/nodes/node_body.dart';
-import 'package:teta_widgets/src/elements/widgets/revenuecat/product_list.dart';
+import 'package:theta_widgets/src/elements/widgets/revenuecat/product_list.dart';
 
 const _globalType = NType.revenueCatProducts;
 

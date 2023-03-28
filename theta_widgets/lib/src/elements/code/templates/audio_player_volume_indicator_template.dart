@@ -1,9 +1,9 @@
 // Flutter imports:
 import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
-import 'package:teta_widgets/src/elements/code/formatter_test.dart';
-import 'package:teta_widgets/src/elements/nodes/enum.dart';
-import 'package:teta_widgets/src/elements/nodes/node_body.dart';
+import 'package:theta_widgets/src/elements/code/formatter_test.dart';
+import 'package:theta_widgets/src/elements/nodes/enum.dart';
+import 'package:theta_widgets/src/elements/nodes/node_body.dart';
 
 /// Generates the code for Audio Player Volume Indicator widget
 class AudioPlayerVolumeIndicatorTemplate {
