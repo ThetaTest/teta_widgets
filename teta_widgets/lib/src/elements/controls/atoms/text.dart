@@ -1,13 +1,8 @@
-// Flutter imports:
-// ignore_for_file: public_member_api_docs
-
-// Package imports:
 import 'dart:async';
 
 import 'package:after_layout/after_layout.dart';
 import 'package:easy_debounce/easy_debounce.dart';
 import 'package:enum_to_string/enum_to_string.dart';
-// Flutter imports:
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_feather_icons/flutter_feather_icons.dart';
@@ -50,7 +45,6 @@ class TextControl extends StatefulWidget {
 
 class PaddingsState extends State<TextControl> with AfterLayoutMixin {
   final controller = TextEditingController();
-  final jsonMapPathController = TextEditingController();
   String databaseName = '';
   String databaseAttribute = '';
   String datasetSubListData = '';
@@ -70,7 +64,6 @@ class PaddingsState extends State<TextControl> with AfterLayoutMixin {
           context,
           forPlay: false,
         );
-        jsonMapPathController.text = widget.value.jsonMapPath ?? '';
         typeOfInput = widget.value.type!;
         if (widget.value.datasetName != null) {
           databaseName = widget.value.datasetName!;
@@ -112,9 +105,6 @@ class PaddingsState extends State<TextControl> with AfterLayoutMixin {
       listener: (final context, final device) {
         if (controller.text != widget.value.getValue(context, forPlay: false)) {
           controller.text = widget.value.getValue(context, forPlay: false);
-        }
-        if (jsonMapPathController.text != (widget.value.jsonMapPath ?? '')) {
-          jsonMapPathController.text = widget.value.jsonMapPath ?? '';
         }
       },
       child: BlocBuilder<DeviceModeCubit, DeviceState>(
@@ -472,6 +462,10 @@ class PaddingsState extends State<TextControl> with AfterLayoutMixin {
                           ],
                         );
                       }
+                      final selectedState = state.page.defaultStates.firstWhere(
+                        (e) => e.name == widget.value.stateName,
+                        orElse: () => state.page.defaultStates.first,
+                      );
                       return Column(
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
@@ -481,11 +475,7 @@ class PaddingsState extends State<TextControl> with AfterLayoutMixin {
                           ),
                           const Gap(Grid.small),
                           CDropdownCustom<String>(
-                            value: state.page.defaultStates
-                                    .map((final e) => e.name)
-                                    .contains(widget.value.stateName)
-                                ? widget.value.stateName
-                                : null,
+                            value: selectedState.name,
                             items: variables
                                 .map(
                                   (final e) => DropdownCustomMenuItem(
@@ -502,9 +492,7 @@ class PaddingsState extends State<TextControl> with AfterLayoutMixin {
                             expanded: true,
                           ),
                           const Gap(Grid.small),
-                          if (variables
-                              .where((final e) => e.type == VariableType.json)
-                              .isNotEmpty)
+                          if (selectedState.type == VariableType.json)
                             descriptionControlWidget(
                               description:
                                   'Specify the path to the value. Path can '
@@ -513,7 +501,9 @@ class PaddingsState extends State<TextControl> with AfterLayoutMixin {
                               control: CMultiLinesTextField(
                                 placeholder: 'Path to value '
                                     '(e.g. `messages.0.sender`)',
-                                controller: jsonMapPathController,
+                                controller: TextEditingController(
+                                  text: widget.value.jsonMapPath,
+                                ),
                                 callBack: (final value) {
                                   EasyDebounce.debounce(
                                     'Editing text ${focusState.first}',

@@ -9,7 +9,6 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:intl/intl.dart';
 import 'package:recase/recase.dart';
 import 'package:responsive_builder/responsive_builder.dart';
-import 'package:teta_core/teta_core.dart';
 import 'package:teta_front_end/teta_front_end.dart';
 import 'package:teta_models/teta_models.dart';
 
@@ -148,14 +147,12 @@ class FTextTypeInput {
       placeholder,
       context,
     );
-
     if (result.runtimeType == XFile) {
       return result;
-    } else if (result.runtimeType.toString().contains('Map')) {
+    } else if (result.runtimeType.toString().contains('_JsonMap')) {
       if (jsonMapPath != null && jsonMapPath!.trim().isNotEmpty) {
-        final map = result as Map<String, dynamic>;
         final path = jsonMapPath!.split('.');
-        dynamic value = map;
+        dynamic value = result;
         for (final key in path) {
           final index = int.tryParse(key);
           if (index != null) {

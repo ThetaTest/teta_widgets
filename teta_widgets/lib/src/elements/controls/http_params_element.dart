@@ -1,15 +1,7 @@
-// Flutter imports:
-// ignore_for_file: public_member_api_docs
-
-// Flutter imports:
 import 'package:flutter/material.dart';
-// Package imports:
-import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:gap/gap.dart';
 import 'package:teta_front_end/src/design_system/textfield/textfield.dart';
-import 'package:teta_core/teta_core.dart';
-// Project imports:
 import 'package:teta_widgets/src/elements/controls/atoms/text.dart';
-import 'package:teta_widgets/src/elements/nodes/node.dart';
 import 'package:teta_front_end/teta_front_end.dart';
 import 'package:teta_models/teta_models.dart';
 
@@ -33,13 +25,13 @@ class HttpParamsElementControlState extends State<HttpParamsElementControl> {
 
   @override
   void initState() {
-    controller = TextEditingController();
-    controller.text = widget.value.key;
     super.initState();
+    controller = TextEditingController()..text = widget.value.key;
   }
+
   @override
   void dispose() {
-  controller.dispose();
+    controller.dispose();
     super.dispose();
   }
 
@@ -49,22 +41,17 @@ class HttpParamsElementControlState extends State<HttpParamsElementControl> {
       mainAxisSize: MainAxisSize.min,
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
-        const Padding(
-          padding: EdgeInsets.only(bottom: 8),
-          child: TParagraph(
-            'Key',
-          ),
-        ),
+        const TParagraph('Key'),
+        const SizedBox(height: 8),
         CTextField(
-          //text: text,
           controller: controller,
           callBack: (final value) {
             final old = widget.value;
             final newValue = widget.value.copyWith(key: value);
-            Logger.printError("kasapiniz+newValue"+ newValue.key);
             widget.callBack(newValue, old);
           },
         ),
+        const Gap(Grid.medium),
         TextControl(
           ignoreDeviceTypeValue: true,
           valueType: VariableType.dynamic,
