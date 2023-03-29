@@ -59,14 +59,15 @@ class TACustomHttpRequestDelete extends TetaAction {
         context,
       );
 
-      final expectedStatusCode = params.expectedStatusCode?.get(
-        state.params,
-        state.states,
-        state.dataset,
-        true,
-        state.loop,
-        context,
-      );
+      final expectedStatusCode = int.tryParse(params.expectedStatusCode?.get(
+            state.params,
+            state.states,
+            state.dataset,
+            true,
+            state.loop,
+            context,
+          ) ??
+          '200');
       final mapParameters = <String, dynamic>{};
       for (final e in params.parameters ?? <MapElement>[]) {
         mapParameters[e.key] = e.value.get(
@@ -96,11 +97,30 @@ class TACustomHttpRequestDelete extends TetaAction {
           headers: mapHeaders,
         );
 
+        Map<String, dynamic> responseBody;
+        try {
+          if (response.statusCode != expectedStatusCode) {
+            throw Exception(
+              'Expected status code: $expectedStatusCode, '
+              'but got: ${response.statusCode}',
+            );
+          }
+          responseBody = {
+            'response': jsonDecode(response.body),
+            'statusCode': response.statusCode,
+          };
+        } catch (e) {
+          responseBody = {
+            'error': response.body,
+            'statusCode': response.statusCode,
+          };
+        }
+
         if (params.responseState != null) {
           updateStateValue(
             context,
             params.responseState!,
-            jsonDecode(response.body),
+            jsonEncode(responseBody),
           );
         }
       }

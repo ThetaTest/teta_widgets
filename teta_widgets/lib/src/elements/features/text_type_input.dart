@@ -9,6 +9,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:intl/intl.dart';
 import 'package:recase/recase.dart';
 import 'package:responsive_builder/responsive_builder.dart';
+import 'package:teta_core/teta_core.dart';
 import 'package:teta_front_end/teta_front_end.dart';
 import 'package:teta_models/teta_models.dart';
 
@@ -150,20 +151,7 @@ class FTextTypeInput {
     if (result.runtimeType == XFile) {
       return result;
     } else if (result.runtimeType.toString().contains('_JsonMap')) {
-      if (jsonMapPath != null && jsonMapPath!.trim().isNotEmpty) {
-        final path = jsonMapPath!.split('.');
-        dynamic value = result;
-        for (final key in path) {
-          final index = int.tryParse(key);
-          if (index != null) {
-            value = value[index];
-          } else {
-            value = value[key];
-          }
-        }
-        return value;
-      }
-      return result;
+      return _getJsonValue(result);
     } else if (result.runtimeType == String) {
       switch (resultType) {
         case ResultTypeEnum.string:
@@ -192,6 +180,27 @@ class FTextTypeInput {
           }
           return 'Impossible to convert to DateTime type';
       }
+    }
+  }
+
+  dynamic _getJsonValue(dynamic rawValue) {
+    try {
+      if (jsonMapPath != null && jsonMapPath!.trim().isNotEmpty) {
+        final path = jsonMapPath!.split('.');
+        dynamic value = rawValue;
+        for (final key in path) {
+          final index = int.tryParse(key);
+          if (index != null) {
+            value = value[index];
+          } else {
+            value = value[key];
+          }
+        }
+        return value;
+      }
+      return rawValue;
+    } catch (e) {
+      return null;
     }
   }
 
