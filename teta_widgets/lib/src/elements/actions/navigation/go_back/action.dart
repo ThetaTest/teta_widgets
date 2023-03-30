@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:universal_platform/universal_platform.dart';
 import '../../../../core/teta_action/index.dart';
 import '../../../../core/teta_widget/index.dart';
 import 'params.dart';
@@ -40,7 +41,15 @@ class TANavigationGoBack extends TetaAction {
     final TetaWidgetState state, {
     final String? runtimeValue,
   }) async {
-    Navigator.pop(context);
+    if (UniversalPlatform.isWeb) {
+      final uri = Uri.base;
+      if (uri.toString().contains('/editor/')) {
+        return;
+      }
+    }
+    if (Navigator.canPop(context)) {
+      Navigator.pop(context);
+    }
   }
 
   @override

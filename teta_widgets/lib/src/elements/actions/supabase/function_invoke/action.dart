@@ -1,8 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:flutter_test/flutter_test.dart';
-import 'package:teta_core/teta_core.dart';
-// Project imports:
 import 'package:teta_widgets/src/elements/actions/snippets/take_state_from.dart';
 import 'package:teta_widgets/src/elements/index.dart';
 import 'package:teta_front_end/teta_front_end.dart';
@@ -10,9 +7,6 @@ import 'package:teta_models/teta_models.dart';
 
 import '../../../../core/teta_action/index.dart';
 import '../../../../core/teta_widget/index.dart';
-import '../../../builder/add_dataset.dart';
-import '../../../features/text_type_input.dart';
-import '../../snippets/take_state_from.dart';
 import 'params.dart';
 
 class TASupabaseFunctionInvoke extends TetaAction {

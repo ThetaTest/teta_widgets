@@ -9,37 +9,13 @@ import 'package:teta_core/teta_core.dart';
 import 'package:teta_db/teta_db.dart';
 import 'package:teta_front_end/teta_front_end.dart';
 import 'package:teta_models/teta_models.dart';
-import 'package:transition/transition.dart' as t;
 import 'package:universal_platform/universal_platform.dart';
 
 import '../../../../core/teta_action/index.dart';
 import '../../../../core/teta_widget/index.dart';
-import '../../../controls/key_constants.dart';
-import '../../../features/page_transition.dart';
 import '../../../nodes/node.dart';
 import '../pass_params_builder.dart';
 import 'params.dart';
-
-void goTo(final CNode node, final BuildContext context, final Widget child) {
-  if (node.body.attributes[DBKeys.pageTransition] != null) {
-    Navigator.push<void>(
-      context,
-      t.Transition(
-        child: child,
-        transitionEffect:
-            (node.body.attributes[DBKeys.pageTransition] as FPageTransition)
-                .transitionEffect!,
-      ),
-    );
-  } else {
-    Navigator.push<void>(
-      context,
-      MaterialPageRoute(
-        builder: (final context) => child,
-      ),
-    );
-  }
-}
 
 class TANavigationOpenPage extends TetaAction {
   TANavigationOpenPage({
@@ -93,8 +69,7 @@ class TANavigationOpenPage extends TetaAction {
           BlocProvider.of<PageCubit>(context).state as PageLoaded;
       PageObject? page;
       page = pages.firstWhereOrNull(
-        (final element) => element.name == params.nameOfPage,
-      );
+          (final element) => element.name == params.nameOfPage);
       if (page == null) return;
       final list = await TetaDB.instance.client.selectList(
         'nodes',
@@ -103,9 +78,7 @@ class TANavigationOpenPage extends TetaAction {
         },
       );
       if (list.error != null) {
-        Logger.printError(
-          'Error fetching nodes NodeGestureActionsNavigationOpenPage func, error: ${list.error?.message}',
-        );
+        Logger.printError('TANavigationOpenPage: ${list.error?.message}');
       }
       final nodes = <CNode>[];
       for (final e in list.data ?? <dynamic>[]) {
