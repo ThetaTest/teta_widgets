@@ -45,6 +45,7 @@ class TextControl extends StatefulWidget {
 
 class PaddingsState extends State<TextControl> with AfterLayoutMixin {
   final controller = TextEditingController();
+  final jsonMapPathController = TextEditingController();
   String databaseName = '';
   String databaseAttribute = '';
   String datasetSubListData = '';
@@ -64,6 +65,7 @@ class PaddingsState extends State<TextControl> with AfterLayoutMixin {
           context,
           forPlay: false,
         );
+        jsonMapPathController.text = widget.value.jsonMapPath ?? '';
         typeOfInput = widget.value.type!;
         if (widget.value.datasetName != null) {
           databaseName = widget.value.datasetName!;
@@ -96,6 +98,7 @@ class PaddingsState extends State<TextControl> with AfterLayoutMixin {
   @override
   void dispose() {
     controller.dispose();
+    jsonMapPathController.dispose();
     super.dispose();
   }
 
@@ -501,9 +504,7 @@ class PaddingsState extends State<TextControl> with AfterLayoutMixin {
                               control: CMultiLinesTextField(
                                 placeholder: 'Path to value '
                                     '(e.g. `messages.0.sender`)',
-                                controller: TextEditingController(
-                                  text: widget.value.jsonMapPath,
-                                ),
+                                controller: jsonMapPathController,
                                 callBack: (final value) {
                                   EasyDebounce.debounce(
                                     'Editing text ${focusState.first}',
