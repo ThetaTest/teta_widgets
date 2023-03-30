@@ -78,7 +78,7 @@ class TANavigationOpenPage extends TetaAction {
         },
       );
       if (list.error != null) {
-        Logger.printError('TANavigationOpenPage: ${list.error?.message}');
+        throw list.error!.message ?? 'Unknown error';
       }
       final nodes = <CNode>[];
       for (final e in list.data ?? <dynamic>[]) {
@@ -111,7 +111,7 @@ class TANavigationOpenPage extends TetaAction {
                   dataset: [],
                   params: passParamsToNewPage(
                     page.defaultParams,
-                    currentPage.params,
+                    [...currentPage.params, ...currentPage.states],
                     params.paramsToSend,
                     state.dataset,
                     loop: state.loop,
@@ -123,10 +123,7 @@ class TANavigationOpenPage extends TetaAction {
         ),
       );
     } catch (e) {
-      if (kDebugMode) {
-        // ignore: avoid_print
-        print(e);
-      }
+      Logger.printError('TANavigationOpenPage: $e');
     }
   }
 

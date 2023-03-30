@@ -97,7 +97,8 @@ class NodeGestureActions {
       );
       Logger.printSuccess(
         'Action ${actionElement.action.type} '
-        'with id ${actionElement.action.id} executed',
+        'with id ${actionElement.action.id} '
+        'and params ${actionElement.action.params.toJson()} executed.',
       );
     }
   }

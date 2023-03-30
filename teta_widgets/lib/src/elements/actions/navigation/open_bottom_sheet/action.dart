@@ -107,7 +107,7 @@ class TANavigationOpenBottomSheet extends TetaAction {
                     dataset: currentPageState.datasets,
                     params: passParamsToNewPage(
                       page.defaultParams,
-                      currentPageState.params,
+                      [...currentPageState.params, ...currentPageState.states],
                       params.paramsToSend,
                       state.dataset,
                       loop: state.loop,

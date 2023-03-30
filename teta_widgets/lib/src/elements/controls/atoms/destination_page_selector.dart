@@ -75,8 +75,7 @@ class _DestinationPageSelectorState extends State<DestinationPageSelector> {
             widget.onParamsChanged(pageToOpen, paramsToSend);
           },
         ),
-        if (selectedPage != null &&
-            selectedPage!.defaultParams != <VariableObject>[])
+        if (selectedPage != null && selectedPage!.defaultParams.isNotEmpty)
           selectedPage!.defaultParams.isNotEmpty
               ? Padding(
                   padding: const EdgeInsets.only(top: 16),
@@ -102,7 +101,6 @@ class _DestinationPageSelectorState extends State<DestinationPageSelector> {
                               .map(
                                 (final e) => _PageParamsControl(
                                   variable: e,
-                                  page: selectedPage!,
                                   pageLoaded: pageLoaded,
                                   initialValue:
                                       paramsToSend ?? <String, dynamic>{},
@@ -134,9 +132,7 @@ class _DestinationPageSelectorState extends State<DestinationPageSelector> {
                             ),
                             Padding(
                               padding: EdgeInsets.only(left: 4),
-                              child: TActionLabel(
-                                'Send Params',
-                              ),
+                              child: TActionLabel('Send Params'),
                             )
                           ],
                         ),
@@ -163,7 +159,6 @@ class _DestinationPageSelectorState extends State<DestinationPageSelector> {
 class _PageParamsControl extends StatefulWidget {
   const _PageParamsControl({
     required this.variable,
-    required this.page,
     required this.pageLoaded,
     required this.initialValue,
     required this.onParamsChanged,
@@ -171,7 +166,6 @@ class _PageParamsControl extends StatefulWidget {
   }) : super(key: key);
 
   final VariableObject variable;
-  final PageObject page;
   final PageLoaded pageLoaded;
   final Map<String, dynamic> initialValue;
   final Function(Map<String, dynamic> paramsToSend) onParamsChanged;
@@ -192,12 +186,12 @@ class __PageParamsControlState extends State<_PageParamsControl> {
     super.initState();
     paramsToSend = widget.initialValue;
     final params = Map<String, dynamic>.fromEntries(
-      widget.page.defaultParams
+      widget.pageLoaded.page.defaultParams
           .where((final element) => widget.variable.type == element.type)
           .map((final e) => MapEntry<String, dynamic>(e.name, e.get)),
     );
     final states = Map<String, dynamic>.fromEntries(
-      widget.page.defaultStates
+      widget.pageLoaded.page.defaultStates
           .where((final element) => widget.variable.type == element.type)
           .map((final e) => MapEntry<String, dynamic>(e.name, e.get)),
     );
