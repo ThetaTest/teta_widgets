@@ -18,7 +18,7 @@ abstract class TetaActionGroups {
     TetaActionGroup('Navigation', TetaActionType.navigationActions),
     TetaActionGroup('Teta Auth', TetaActionType.tetaAuthActions),
     TetaActionGroup('Teta CMS', TetaActionType.tetaDbActions),
-    TetaActionGroup('Custom HTTP Request', TetaActionType.customHttpActions),
+    TetaActionGroup('Inline HTTP Request', TetaActionType.customHttpActions),
     TetaActionGroup('Api Calls', TetaActionType.apiCallsActions),
     TetaActionGroup('Translator', TetaActionType.translatorActions),
     TetaActionGroup('Theme', TetaActionType.themeActions),
