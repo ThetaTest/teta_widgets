@@ -28,6 +28,7 @@ abstract class CNode extends Equatable {
     this.nid = 0,
     this.child,
     this.children,
+    this.oldId = 0,
   });
 
   /// Type of the node
@@ -44,6 +45,9 @@ abstract class CNode extends Equatable {
 
   /// The id of the node (node-id)
   int nid;
+
+  /// The old id of the node (node-id)
+  int oldId;
 
   /// The position of the widget in the parent's childrenIds
   int? index;
@@ -98,6 +102,7 @@ abstract class CNode extends Equatable {
   List<Object?> get props => [
         parent,
         nid,
+        oldId,
         child,
         children,
         body,
@@ -111,16 +116,15 @@ abstract class CNode extends Equatable {
   List<ControlModel> get controls => [];
 
   /// Transform json to node
-  static CNode fromJson(
-    final Map<String, dynamic> doc,
-    final int pageId,
-  ) {
-    return NDynamic.fromJson(doc, pageId);
+  static CNode fromJson(final Map<String, dynamic> doc, final int pageId,
+      {oldId = 0}) {
+    return NDynamic.fromJson(doc, pageId, oldId);
   }
 
   /// Transform members in json
   Map<String, dynamic> toJson() {
     return NDynamic(
+      oldId: oldId,
       globalType: intrinsicState.type,
       body: body,
       childrenIds: FChildrenIds(),

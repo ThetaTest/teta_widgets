@@ -24,6 +24,7 @@ class NDynamic extends CNode {
     this.name,
     this.description,
     this.nid = 0,
+    this.oldId = 0,
     this.parent,
     this.index,
     this.pageId,
@@ -50,6 +51,9 @@ class NDynamic extends CNode {
 
   @override
   int nid;
+
+  @override
+  int oldId;
 
   @override
   int? parent;
@@ -98,6 +102,7 @@ class NDynamic extends CNode {
         name,
         description,
         nid,
+        oldId,
         globalType,
         parent,
         index,
@@ -115,6 +120,7 @@ class NDynamic extends CNode {
   static NDynamic fromJson(
     final Map<String, dynamic> doc,
     final int pageId,
+    final int oldId,
   ) {
     final globalType = NodeType.fromString(doc[DBKeys.type] as String);
 
@@ -180,6 +186,7 @@ class NDynamic extends CNode {
       name: doc['name'] as String?,
       description: doc['desc'] as String?,
       nid: doc['_id'] as int,
+      oldId: doc['oldId'] ?? oldId,
       globalType: globalType,
       body: body,
       childrenIds: ids,
@@ -204,6 +211,7 @@ class NDynamic extends CNode {
   /// Returns type and childrenIds
   @override
   Map<String, dynamic> toJson() => <String, dynamic>{
+        'oldId': oldId,
         DBKeys.type: NodeType.type(intrinsicState.type),
         DBKeys.childrenIds: childrenIds.toJson(),
         'body': body.toJson(),
@@ -215,7 +223,7 @@ class NDynamic extends CNode {
 
   @override
   String toString() =>
-      '$globalType { nid: $nid, children: $children, child: $child }';
+      '$globalType { nid: $nid, children: $children, child: $child , oldId:$oldId}';
 
   @override
   Widget toWidget({
@@ -308,6 +316,7 @@ class NDynamic extends CNode {
   /// Instantiate a new node (deep copy)
   NDynamic clone() => NDynamic(
         nid: nid,
+        oldId: oldId,
         name: name,
         globalType: globalType,
         parent: parent,
@@ -322,6 +331,7 @@ class NDynamic extends CNode {
   /// Instantiate a new node (deep copy) with optional parameters
   NDynamic copyWith({
     final int? nid,
+    final int? oldId,
     final int? parent,
     final String? name,
     final int? index,
@@ -332,6 +342,7 @@ class NDynamic extends CNode {
   }) =>
       NDynamic(
         nid: nid ?? this.nid,
+        oldId: oldId ?? this.oldId,
         name: name ?? this.name,
         globalType: globalType,
         parent: parent ?? this.parent,
