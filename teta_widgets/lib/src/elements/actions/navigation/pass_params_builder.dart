@@ -1,5 +1,6 @@
 import 'package:camera/camera.dart';
 import 'package:just_audio/just_audio.dart';
+import 'package:teta_core/teta_core.dart';
 import 'package:teta_models/teta_models.dart';
 
 List<VariableObject> passParamsToNewPage(
@@ -78,6 +79,14 @@ List<VariableObject> passParamsToNewPage(
                     name: element.keys.toList()[loop ?? 0],
                     type: VariableType.file,
                     file: element[element.keys.toList()[loop ?? 0]] as XFile,
+                  );
+                }
+                if ('${element[element.keys.toList()[loop ?? 0]].runtimeType}'
+                    .contains('Map')) {
+                  variable = VariableObject(
+                    name: element.keys.toList()[loop ?? 0],
+                    type: VariableType.json,
+                    value: element[element.keys.toList()[loop ?? 0]],
                   );
                 }
               }
