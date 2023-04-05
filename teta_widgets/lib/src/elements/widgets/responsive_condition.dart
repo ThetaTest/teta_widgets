@@ -33,8 +33,8 @@ class WResponsiveCondition extends StatelessWidget {
   Widget build(final BuildContext context) {
     return BlocBuilder<DeviceModeCubit, DeviceState>(
       builder: (final context, final deviceInfostate) {
-        if (deviceInfostate.info.identifier.type == DeviceType.desktop) {
-          return visibleOnDesktop
+        if (deviceInfostate.info.identifier.type == DeviceType.phone) {
+          return visibleOnMobile
               ? ChildConditionBuilder(
                   ValueKey(state.toKey),
                   state: state,
@@ -51,7 +51,7 @@ class WResponsiveCondition extends StatelessWidget {
                 )
               : const SizedBox();
         }
-        return visibleOnMobile
+        return visibleOnDesktop
             ? ChildConditionBuilder(
                 ValueKey(state.toKey),
                 state: state,
