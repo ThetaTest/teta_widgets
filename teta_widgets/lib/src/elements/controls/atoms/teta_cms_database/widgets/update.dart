@@ -38,13 +38,15 @@ class _TetaCmsUpdateControlState extends State<TetaCmsUpdateControl> {
   }
 
   void updateParams() {
-    widget.onParamsChanged(
-      TATetaCMSUpdateParams(
-        collectionId: cmsCollectionId,
-        dbData: dbData,
-        documentId: documentId,
-      ),
-    );
+    setState(() {
+      widget.onParamsChanged(
+        TATetaCMSUpdateParams(
+          collectionId: cmsCollectionId,
+          dbData: dbData,
+          documentId: documentId,
+        ),
+      );
+    });
   }
 
   @override

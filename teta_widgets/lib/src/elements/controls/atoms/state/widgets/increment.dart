@@ -30,7 +30,9 @@ class StateIncrementControlState extends State<StateIncrementControl> {
   }
 
   void updateParams() {
-    widget.onParamsChanged(TAStateIncrementParams(stateName: stateName));
+    setState(() {
+      widget.onParamsChanged(TAStateIncrementParams(stateName: stateName));
+    });
   }
 
   @override

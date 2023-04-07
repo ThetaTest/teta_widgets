@@ -25,7 +25,9 @@ class _StateValidatorControlState extends State<StateValidatorControl> {
   String? stateName2;
 
   void updateParams() {
-    widget.onStateNameChanged(stateName, stateName2);
+    setState(() {
+      widget.onStateNameChanged(stateName, stateName2);
+    });
   }
 
   @override

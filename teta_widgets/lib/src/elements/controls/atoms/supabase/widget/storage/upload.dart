@@ -32,14 +32,16 @@ class SupabaseStorageUploadControlState
   String? stateName2;
 
   void updateParams() {
-    widget.onParamsChanged(
-      TASupabaseStorageUploadParams(
-        pathFile: pathFile,
-        supabaseFrom: supabaseFrom,
-        stateName: stateName,
-        stateName2: stateName2,
-      ),
-    );
+    setState(() {
+      widget.onParamsChanged(
+        TASupabaseStorageUploadParams(
+          pathFile: pathFile,
+          supabaseFrom: supabaseFrom,
+          stateName: stateName,
+          stateName2: stateName2,
+        ),
+      );
+    });
   }
 
   @override

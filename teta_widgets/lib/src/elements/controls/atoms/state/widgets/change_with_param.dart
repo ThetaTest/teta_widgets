@@ -35,12 +35,14 @@ class StateChangeWithParamControlState
   }
 
   void updateParams() {
-    widget.onParamsChanged(
-      TAStateChangeWithParamParams(
-        stateName: stateName,
-        paramName: paramName,
-      ),
-    );
+    setState(() {
+      widget.onParamsChanged(
+        TAStateChangeWithParamParams(
+          stateName: stateName,
+          paramName: paramName,
+        ),
+      );
+    });
   }
 
   @override

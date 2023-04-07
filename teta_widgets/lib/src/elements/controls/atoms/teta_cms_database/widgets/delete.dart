@@ -37,12 +37,14 @@ class _TetaCmsDeleteControlState extends State<TetaCmsDeleteControl> {
   }
 
   void updateParams() {
-    widget.onParamsChanged(
-      TATetaCMSDeleteParams(
-        collectionId: cmsCollectionId,
-        documentId: documentId,
-      ),
-    );
+    setState(() {
+      widget.onParamsChanged(
+        TATetaCMSDeleteParams(
+          collectionId: cmsCollectionId,
+          documentId: documentId,
+        ),
+      );
+    });
   }
 
   @override

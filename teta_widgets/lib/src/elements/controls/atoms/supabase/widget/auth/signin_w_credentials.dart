@@ -40,12 +40,14 @@ class SupabaseSigninWCredentialsControlState
   }
 
   void updateParams() {
-    widget.onParamsChanged(
-      TASupabaseSignInWithCredentialsParams(
-        nameOfPage: pageToOpen,
-        paramsToSend: paramsToSend,
-      ),
-    );
+    setState(() {
+      widget.onParamsChanged(
+        TASupabaseSignInWithCredentialsParams(
+          nameOfPage: pageToOpen,
+          paramsToSend: paramsToSend,
+        ),
+      );
+    });
   }
 
   @override

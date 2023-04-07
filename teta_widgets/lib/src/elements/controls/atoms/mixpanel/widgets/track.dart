@@ -29,12 +29,14 @@ class _MixpanelTrackControlState extends State<MixpanelTrackControl> {
   List<MapElement>? props;
 
   void updateParams() {
-    widget.onParamsChanged(
-      TAMixpanelTrackParams(
-        eventName: eventName,
-        props: props,
-      ),
-    );
+    setState(() {
+      widget.onParamsChanged(
+        TAMixpanelTrackParams(
+          eventName: eventName,
+          props: props,
+        ),
+      );
+    });
   }
 
   @override

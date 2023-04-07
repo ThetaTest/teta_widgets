@@ -82,8 +82,9 @@ class _TANavigationControlsState extends State<TANavigationControls> {
                       );
                     }
                     newParams ??= TANavigationLaunchUrlParams(value: value);
-
-                    widget.onParamsChanged(newParams!);
+                    setState(() {
+                      widget.onParamsChanged(newParams!);
+                    });
                   },
                 ),
               ),
@@ -122,8 +123,9 @@ class _TANavigationControlsState extends State<TANavigationControls> {
                       newParams ??= TANavigationOpenDatePickerParams(
                         stateName: openDatePickerStateName,
                       );
-
-                      widget.onParamsChanged(newParams!);
+                      setState(() {
+                        widget.onParamsChanged(newParams!);
+                      });
                     },
                   );
                 },
@@ -152,8 +154,9 @@ class _TANavigationControlsState extends State<TANavigationControls> {
                       );
                     }
                     newParams ??= TANavigationShareParams(value: value);
-
-                    widget.onParamsChanged(newParams!);
+                    setState(() {
+                      widget.onParamsChanged(newParams!);
+                    });
                   },
                 ),
               ),
@@ -170,7 +173,9 @@ class _TANavigationControlsState extends State<TANavigationControls> {
                 nameOfPage: pageToOpen,
                 paramsToSend: paramsToSend,
               );
-              widget.onParamsChanged(newParams!);
+              setState(() {
+                widget.onParamsChanged(newParams!);
+              });
             },
           )
       ],

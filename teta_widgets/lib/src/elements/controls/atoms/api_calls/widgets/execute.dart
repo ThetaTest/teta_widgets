@@ -43,15 +43,17 @@ class ApiCallsExecuteControlState extends State<ApiCallsExecuteControl> {
   }
 
   void updateParams() {
-    widget.onParamsChanged(
-      TAApiCallsExecuteParams(
-        apiCallsRequestName: requestName,
-        apiCallsSelectedRequest: selectedRequest,
-        customHttpRequestExpectedStatusCode: expectedStatusCode,
-        apiCallsResponseName: responseName,
-        apiCallsDynamicValue: dynamicValue,
-      ),
-    );
+    setState(() {
+      widget.onParamsChanged(
+        TAApiCallsExecuteParams(
+          apiCallsRequestName: requestName,
+          apiCallsSelectedRequest: selectedRequest,
+          customHttpRequestExpectedStatusCode: expectedStatusCode,
+          apiCallsResponseName: responseName,
+          apiCallsDynamicValue: dynamicValue,
+        ),
+      );
+    });
   }
 
   @override

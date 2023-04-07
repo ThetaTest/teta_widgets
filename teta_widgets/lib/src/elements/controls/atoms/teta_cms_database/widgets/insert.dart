@@ -34,12 +34,14 @@ class _TetaCmsInsertControlState extends State<TetaCmsInsertControl> {
   }
 
   void updateParams() {
-    widget.onParamsChanged(
-      TATetaCMSInsertParams(
-        collectionId: collectionId,
-        dbData: dbData,
-      ),
-    );
+    setState(() {
+      widget.onParamsChanged(
+        TATetaCMSInsertParams(
+          collectionId: collectionId,
+          dbData: dbData,
+        ),
+      );
+    });
   }
 
   @override

@@ -11,9 +11,6 @@ import 'package:teta_models/teta_models.dart';
 
 import '../../../../../actions/supabase/delete/action.dart';
 import '../../../../../actions/supabase/delete/params.dart';
-import '../../../../../features/text_type_input.dart';
-import '../../../../atoms/map_element.dart';
-import '../../../../atoms/text.dart';
 
 class SupabaseDeleteControl extends StatefulWidget {
   const SupabaseDeleteControl({
@@ -41,12 +38,14 @@ class SupabaseDeleteControlState extends State<SupabaseDeleteControl> {
   }
 
   void updateParams() {
-    widget.onParamsChanged(
-      TASupabaseDeleteParams(
-        supabaseEq: supabaseEq,
-        supabaseFrom: supabaseFrom,
-      ),
-    );
+    setState(() {
+      widget.onParamsChanged(
+        TASupabaseDeleteParams(
+          supabaseEq: supabaseEq,
+          supabaseFrom: supabaseFrom,
+        ),
+      );
+    });
   }
 
   @override

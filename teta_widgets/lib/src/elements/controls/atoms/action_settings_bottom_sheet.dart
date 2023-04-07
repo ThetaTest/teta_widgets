@@ -339,7 +339,7 @@ class _ActionSettingsBottomSheetState extends State<ActionSettingsBottomSheet> {
                 initializeAndReturnNewAction();
               },
             ),
-          if (currentActionGroup.name == 'Custom HTTP Request')
+          if (currentActionGroup.name == 'Inline HTTP Request')
             TACustomHttpRequestControl(
               action: widget.action,
               onParamsChanged: (final params) {

@@ -25,11 +25,13 @@ class RevenueCatRestoreControlState extends State<RevenueCatRestoreControl> {
   String? stateName;
 
   void updateParams() {
-    widget.onParamsChanged(
-      TARevenueCatRestoreParams(
-        stateName: stateName,
-      ),
-    );
+    setState(() {
+      widget.onParamsChanged(
+        TARevenueCatRestoreParams(
+          stateName: stateName,
+        ),
+      );
+    });
   }
 
   @override

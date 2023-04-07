@@ -46,16 +46,18 @@ class CustomHttpRequestPostControlState
   }
 
   void updateParams() {
-    widget.onParamsChanged(
-      TACustomHttpRequestPostParams(
-        url: url,
-        expectedStatusCode: expectedStatusCode,
-        parameters: parameters,
-        headers: headers,
-        body: body,
-        responseState: responseState,
-      ),
-    );
+    setState(() {
+      widget.onParamsChanged(
+        TACustomHttpRequestPostParams(
+          url: url,
+          expectedStatusCode: expectedStatusCode,
+          parameters: parameters,
+          headers: headers,
+          body: body,
+          responseState: responseState,
+        ),
+      );
+    });
   }
 
   @override

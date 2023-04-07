@@ -52,13 +52,15 @@ class _TetaCmsLoginControlState extends State<TetaCmsLoginControl> {
   }
 
   void updateParams() {
-    widget.onParamsChanged(
-      TATetaCMSLoginParams(
-        nameOfPage: selectedPage?.name,
-        provider: provider,
-        paramsToSend: paramsToSend,
-      ),
-    );
+    setState(() {
+      widget.onParamsChanged(
+        TATetaCMSLoginParams(
+          nameOfPage: selectedPage?.name,
+          provider: provider,
+          paramsToSend: paramsToSend,
+        ),
+      );
+    });
   }
 
   @override

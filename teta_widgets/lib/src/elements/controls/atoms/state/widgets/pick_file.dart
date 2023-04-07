@@ -29,11 +29,13 @@ class StatePickFileControlState extends State<StatePickFileControl> {
   }
 
   void updateParams() {
-    widget.onParamsChanged(
-      TAStatePickFileParams(
-        stateName: stateName,
-      ),
-    );
+    setState(() {
+      widget.onParamsChanged(
+        TAStatePickFileParams(
+          stateName: stateName,
+        ),
+      );
+    });
   }
 
   @override

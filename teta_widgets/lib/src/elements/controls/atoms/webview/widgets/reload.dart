@@ -30,11 +30,13 @@ class WebViewReloadControlState extends State<WebViewReloadControl> {
   }
 
   void updateParams() {
-    widget.onParamsChanged(
-      TAWebViewReloadParams(
-        stateName: stateName,
-      ),
-    );
+    setState(() {
+      widget.onParamsChanged(
+        TAWebViewReloadParams(
+          stateName: stateName,
+        ),
+      );
+    });
   }
 
   @override

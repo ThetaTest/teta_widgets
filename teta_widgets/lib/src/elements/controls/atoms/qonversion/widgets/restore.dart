@@ -25,11 +25,13 @@ class QonversionRestoreControlState extends State<QonversionRestoreControl> {
   String? stateName;
 
   void updateParams() {
-    widget.onParamsChanged(
-      TAQonversionRestoreParams(
-        stateName: stateName,
-      ),
-    );
+    setState(() {
+      widget.onParamsChanged(
+        TAQonversionRestoreParams(
+          stateName: stateName,
+        ),
+      );
+    });
   }
 
   @override

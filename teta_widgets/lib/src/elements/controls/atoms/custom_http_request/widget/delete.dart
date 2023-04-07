@@ -44,15 +44,17 @@ class CustomHttpRequestDeleteControlState
   }
 
   void updateParams() {
-    widget.onParamsChanged(
-      TACustomHttpRequestDeleteParams(
-        url: url,
-        expectedStatusCode: expectedStatusCode,
-        parameters: parameters,
-        headers: headers,
-        responseState: responseState,
-      ),
-    );
+    setState(() {
+      widget.onParamsChanged(
+        TACustomHttpRequestDeleteParams(
+          url: url,
+          expectedStatusCode: expectedStatusCode,
+          parameters: parameters,
+          headers: headers,
+          responseState: responseState,
+        ),
+      );
+    });
   }
 
   @override

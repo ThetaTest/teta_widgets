@@ -28,12 +28,14 @@ class RevenueCatBuyControlState extends State<RevenueCatBuyControl> {
   FTextTypeInput? productIdentifier;
 
   void updateParams() {
-    widget.onParamsChanged(
-      TARevenueCatBuyParams(
-        productIdentifier: productIdentifier,
-        stateName: stateName,
-      ),
-    );
+    setState(() {
+      widget.onParamsChanged(
+        TARevenueCatBuyParams(
+          productIdentifier: productIdentifier,
+          stateName: stateName,
+        ),
+      );
+    });
   }
 
   @override

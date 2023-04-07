@@ -31,11 +31,13 @@ class WebViewGoForwardControlState extends State<WebViewGoForwardControl> {
   }
 
   void updateParams() {
-    widget.onParamsChanged(
-      TAWebViewGoForwardParams(
-        stateName: stateName,
-      ),
-    );
+    setState(() {
+      widget.onParamsChanged(
+        TAWebViewGoForwardParams(
+          stateName: stateName,
+        ),
+      );
+    });
   }
 
   @override

@@ -39,13 +39,15 @@ class StateChangeWithControlState extends State<StateChangeWithControl> {
   }
 
   void updateParams() {
-    widget.onParamsChanged(
-      TAStateChangeWithParams(
-        stateName: stateName,
-        isValueDefault: isValueDefault,
-        valueToChangeWith: valueToChangeWith,
-      ),
-    );
+    setState(() {
+      widget.onParamsChanged(
+        TAStateChangeWithParams(
+          stateName: stateName,
+          isValueDefault: isValueDefault,
+          valueToChangeWith: valueToChangeWith,
+        ),
+      );
+    });
   }
 
   /// Returns true if the value input control should be visible.

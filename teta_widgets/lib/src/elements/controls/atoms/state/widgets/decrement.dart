@@ -30,7 +30,9 @@ class StateDecrementControlState extends State<StateDecrementControl> {
   }
 
   void updateParams() {
-    widget.onParamsChanged(TAStateDecrementParams(stateName: stateName));
+    setState(() {
+      widget.onParamsChanged(TAStateDecrementParams(stateName: stateName));
+    });
   }
 
   @override

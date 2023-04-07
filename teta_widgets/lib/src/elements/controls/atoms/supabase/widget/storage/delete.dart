@@ -28,12 +28,14 @@ class SupabaseStorageDeleteControlState
   FTextTypeInput? supabaseFrom;
 
   void updateParams() {
-    widget.onParamsChanged(
-      TASupabaseStorageDeleteParams(
-        pathFile: pathFile,
-        supabaseFrom: supabaseFrom,
-      ),
-    );
+    setState(() {
+      widget.onParamsChanged(
+        TASupabaseStorageDeleteParams(
+          pathFile: pathFile,
+          supabaseFrom: supabaseFrom,
+        ),
+      );
+    });
   }
 
   @override

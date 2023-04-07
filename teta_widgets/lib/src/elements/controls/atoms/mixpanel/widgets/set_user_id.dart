@@ -26,7 +26,9 @@ class _MixpanelSetUserIdControlState extends State<MixpanelSetUserIdControl> {
   FTextTypeInput? userId;
 
   void updateParams() {
-    widget.onParamsChanged(TAMixpanelSetUserIdParams(userIdValue: userId));
+    setState(() {
+      widget.onParamsChanged(TAMixpanelSetUserIdParams(userIdValue: userId));
+    });
   }
 
   @override

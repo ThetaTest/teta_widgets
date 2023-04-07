@@ -30,11 +30,13 @@ class WebViewGoBackControlState extends State<WebViewGoBackControl> {
   }
 
   void updateParams() {
-    widget.onParamsChanged(
-      TAWebViewGoBackParams(
-        stateName: stateName,
-      ),
-    );
+    setState(() {
+      widget.onParamsChanged(
+        TAWebViewGoBackParams(
+          stateName: stateName,
+        ),
+      );
+    });
   }
 
   @override

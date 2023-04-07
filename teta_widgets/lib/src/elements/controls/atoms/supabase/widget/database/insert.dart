@@ -35,12 +35,14 @@ class SupabaseInsertControlState extends State<SupabaseInsertControl> {
   }
 
   void updateParams() {
-    widget.onParamsChanged(
-      TASupabaseInsertParams(
-        supabaseData: supabaseData,
-        supabaseFrom: supabaseFrom,
-      ),
-    );
+    setState(() {
+      widget.onParamsChanged(
+        TASupabaseInsertParams(
+          supabaseData: supabaseData,
+          supabaseFrom: supabaseFrom,
+        ),
+      );
+    });
   }
 
   @override

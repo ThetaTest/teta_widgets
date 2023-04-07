@@ -36,12 +36,14 @@ class WebViewNavigateToControlState extends State<WebViewNavigateToControl> {
   }
 
   void updateParams() {
-    widget.onParamsChanged(
-      TAWebViewNavigateToParams(
-        stateName: stateName,
-        url: url,
-      ),
-    );
+    setState(() {
+      widget.onParamsChanged(
+        TAWebViewNavigateToParams(
+          stateName: stateName,
+          url: url,
+        ),
+      );
+    });
   }
 
   @override

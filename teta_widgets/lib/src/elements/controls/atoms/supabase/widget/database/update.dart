@@ -38,13 +38,15 @@ class SupabaseUpdateControlState extends State<SupabaseUpdateControl> {
   }
 
   void updateParams() {
-    widget.onParamsChanged(
-      TASupabaseUpdateParams(
-        supabaseData: supabaseData,
-        supabaseEq: supabaseEq,
-        supabaseFrom: supabaseFrom,
-      ),
-    );
+    setState(() {
+      widget.onParamsChanged(
+        TASupabaseUpdateParams(
+          supabaseData: supabaseData,
+          supabaseEq: supabaseEq,
+          supabaseFrom: supabaseFrom,
+        ),
+      );
+    });
   }
 
   @override

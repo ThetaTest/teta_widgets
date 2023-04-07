@@ -48,12 +48,14 @@ class _TetaCmsLogoutControlState extends State<TetaCmsLogoutControl> {
   }
 
   void updateParams() {
-    widget.onParamsChanged(
-      TATetaCMSLogoutParams(
-        nameOfPage: selectedPage?.name,
-        paramsToSend: paramsToSend,
-      ),
-    );
+    setState(() {
+      widget.onParamsChanged(
+        TATetaCMSLogoutParams(
+          nameOfPage: selectedPage?.name,
+          paramsToSend: paramsToSend,
+        ),
+      );
+    });
   }
 
   @override

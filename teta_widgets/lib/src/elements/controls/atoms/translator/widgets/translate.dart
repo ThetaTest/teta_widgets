@@ -31,7 +31,9 @@ class TranslatorTranslateControlState
   }
 
   void updateParams() {
-    widget.onParamsChanged(TATranslatorTranslateParams(stateName: stateName));
+    setState(() {
+      widget.onParamsChanged(TATranslatorTranslateParams(stateName: stateName));
+    });
   }
 
   @override

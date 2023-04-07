@@ -43,13 +43,15 @@ class SupabaseSignInWProviderControlState
   }
 
   void updateParams() {
-    widget.onParamsChanged(
-      TASupabaseSignInWithProviderParams(
-        provider: provider,
-        nameOfPage: pageToOpen,
-        paramsToSend: paramsToSend,
-      ),
-    );
+    setState(() {
+      widget.onParamsChanged(
+        TASupabaseSignInWithProviderParams(
+          provider: provider,
+          nameOfPage: pageToOpen,
+          paramsToSend: paramsToSend,
+        ),
+      );
+    });
   }
 
   @override

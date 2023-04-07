@@ -30,14 +30,16 @@ class SupabaseFunctionInvokeControlState
   MapElement? supabaseEq;
 
   void updateParams() {
-    widget.onParamsChanged(
-      TASupabaseFunctionInvokeParams(
-        supabaseFrom: supabaseFrom,
-        body: body,
-        headers: headers,
-        supabaseEq: supabaseEq,
-      ),
-    );
+    setState(() {
+      widget.onParamsChanged(
+        TASupabaseFunctionInvokeParams(
+          supabaseFrom: supabaseFrom,
+          body: body,
+          headers: headers,
+          supabaseEq: supabaseEq,
+        ),
+      );
+    });
   }
 
   @override

@@ -28,12 +28,14 @@ class QonversionBuyControlState extends State<QonversionBuyControl> {
   FTextTypeInput? productIdentifier;
 
   void updateParams() {
-    widget.onParamsChanged(
-      TAQonversionBuyParams(
-        productIdentifier: productIdentifier,
-        stateName: stateName,
-      ),
-    );
+    setState(() {
+      widget.onParamsChanged(
+        TAQonversionBuyParams(
+          productIdentifier: productIdentifier,
+          stateName: stateName,
+        ),
+      );
+    });
   }
 
   @override
