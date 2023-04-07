@@ -46,6 +46,7 @@ class _ActionSettingsBottomSheetState extends State<ActionSettingsBottomSheet> {
   final delayInputController = TextEditingController();
 
   // New action configuration
+  late TetaAction newAction;
   late TetaActionGroup currentActionGroup;
   late TetaActionType newActionType;
   late TetaActionParams? newActionParams;
@@ -56,30 +57,32 @@ class _ActionSettingsBottomSheetState extends State<ActionSettingsBottomSheet> {
   @override
   void initState() {
     super.initState();
-    final pageLoaded = context.read<PageCubit>().state as PageLoaded;
-    final configCubit = context.read<ConfigCubit>().state as ConfigStateLoaded;
-    availableActionGroups = TetaActionGroups.getActionGroups(
-      pageLoaded.page,
-      configCubit.config,
-    );
-
-    currentActionGroup = availableActionGroups.firstWhere(
-      (final group) => group.actions.contains(widget.action.type),
-    );
-
     // Initialize new action configuration
+    newAction = widget.action;
     newActionType = widget.action.type;
     newActionParams = widget.action.params;
     newActionDelay = widget.action.delay;
     newActionLoop = widget.action.loop;
     newActionCondition = widget.action.condition;
 
+    // Initialize action groups
+    final pageLoaded = context.read<PageCubit>().state as PageLoaded;
+    final configCubit = context.read<ConfigCubit>().state as ConfigStateLoaded;
+    availableActionGroups = TetaActionGroups.getActionGroups(
+      pageLoaded.page,
+      configCubit.config,
+    );
+    currentActionGroup = availableActionGroups.firstWhere(
+      (final group) => group.actions.contains(widget.action.type),
+    );
+
+    // Initialize input controllers
     delayInputController.text = newActionDelay.toString();
     loopInputController.text = newActionLoop?.interval.toString() ?? '0';
   }
 
   void initializeAndReturnNewAction() {
-    final newAction = TetaActionFactory.create(
+    final action = TetaActionFactory.create(
       type: newActionType,
       params: newActionParams,
       loop: newActionLoop,
@@ -87,8 +90,10 @@ class _ActionSettingsBottomSheetState extends State<ActionSettingsBottomSheet> {
       delay: newActionDelay,
     );
 
-    if (newAction != null) {
-      setState(() => widget.onActionUpdated.call(newAction, widget.action));
+    if (action != null) {
+      final oldAction = newAction;
+      newAction = action;
+      setState(() => widget.onActionUpdated.call(newAction, oldAction));
     }
   }
 
@@ -282,16 +287,16 @@ class _ActionSettingsBottomSheetState extends State<ActionSettingsBottomSheet> {
           const SizedBox(height: 8),
           if (currentActionGroup.name == 'State')
             TAStateControl(
-              action: widget.action,
-              onParamsChanged: (final params) {
+              action: newAction,
+              onParamsChanged: (params) {
                 newActionParams = params;
                 initializeAndReturnNewAction();
               },
             ),
           if (currentActionGroup.name == 'Teta Auth')
             TATetaCMSAuthControls(
-              action: widget.action,
-              onParamsChanged: (final params) {
+              action: newAction,
+              onParamsChanged: (params) {
                 newActionParams = params;
                 initializeAndReturnNewAction();
               },
@@ -301,72 +306,72 @@ class _ActionSettingsBottomSheetState extends State<ActionSettingsBottomSheet> {
               currentActionGroup.name == 'Supabase Storage' ||
               currentActionGroup.name == 'Supabase Auth')
             TASupabaseControl(
-              action: widget.action,
-              onParamsChanged: (final params) {
+              action: newAction,
+              onParamsChanged: (params) {
                 newActionParams = params;
                 initializeAndReturnNewAction();
               },
             ),
           if (currentActionGroup.name == 'Teta CMS')
             TATetaCMSDatabaseControls(
-              action: widget.action,
-              onParamsChanged: (final params) {
+              action: newAction,
+              onParamsChanged: (params) {
                 newActionParams = params;
                 initializeAndReturnNewAction();
               },
             ),
           if (currentActionGroup.name == 'Navigation')
-            TANavigationControls(
-              action: widget.action,
-              onParamsChanged: (final params) {
+            TANavigationControl(
+              action: newAction,
+              onParamsChanged: (params) {
                 newActionParams = params;
                 initializeAndReturnNewAction();
               },
             ),
           if (currentActionGroup.name == 'Api Calls')
             TAApiCallsControl(
-              action: widget.action,
-              onParamsChanged: (final params) {
+              action: newAction,
+              onParamsChanged: (params) {
                 newActionParams = params;
                 initializeAndReturnNewAction();
               },
             ),
           if (currentActionGroup.name == 'Translator')
             TATranslatorControl(
-              action: widget.action,
-              onParamsChanged: (final params) {
+              action: newAction,
+              onParamsChanged: (params) {
                 newActionParams = params;
                 initializeAndReturnNewAction();
               },
             ),
           if (currentActionGroup.name == 'Inline HTTP Request')
             TACustomHttpRequestControl(
-              action: widget.action,
-              onParamsChanged: (final params) {
+              action: newAction,
+              onParamsChanged: (params) {
                 newActionParams = params;
                 initializeAndReturnNewAction();
               },
             ),
           if (currentActionGroup.name == 'Qonversion')
             TAQonversionControl(
-              action: widget.action,
-              onParamsChanged: (final params) {
+              action: newAction,
+              onParamsChanged: (params) {
                 newActionParams = params;
                 initializeAndReturnNewAction();
               },
             ),
           if (currentActionGroup.name == 'Airtable')
             TAAirtableControl(
-              action: widget.action,
-              onParamsChanged: (final params) {
+              action: newAction,
+              onParamsChanged: (params) {
                 newActionParams = params;
                 initializeAndReturnNewAction();
               },
             ),
           if (currentActionGroup.name == 'WebView')
             TAWebViewControl(
-              action: widget.action,
-              onParamsChanged: (final params) {
+              action: newAction,
+              onParamsChanged: (params) {
                 newActionParams = params;
                 initializeAndReturnNewAction();
               },
