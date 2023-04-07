@@ -104,22 +104,20 @@ class NodeSelectionState extends State<_NodeSelection> {
           },
           child: GestureDetector(
             onTap: () {
-              WidgetsBinding.instance.addPostFrameCallback((_) {
+              if (!BlocProvider.of<FocusBloc>(context)
+                  .state
+                  .contains(widget.state.node.nid)) {
                 sl.get<PageCubit>().onFocusFromLocalToGlobalCubit(
                       page:
                           (context.read<PageCubit>().state as PageLoaded).page,
                       datasets: (context.read<PageCubit>().state as PageLoaded)
                           .datasets,
                     );
-                if (!BlocProvider.of<FocusBloc>(context)
-                    .state
-                    .contains(widget.state.node.nid)) {
-                  BlocProvider.of<FocusBloc>(context)
-                      .add(OnFocus(node: widget.state.node));
-                }
-                BlocProvider.of<JumpToCubit>(context)
-                    .jumpTo(context, widget.state.node);
-              });
+                BlocProvider.of<FocusBloc>(context)
+                    .add(OnFocus(node: widget.state.node));
+              }
+              BlocProvider.of<JumpToCubit>(context)
+                  .jumpTo(context, widget.state.node);
             },
             child: _Body(
               state: widget.state,
