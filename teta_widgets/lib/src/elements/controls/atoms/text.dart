@@ -1,6 +1,7 @@
 import 'dart:async';
 
 import 'package:after_layout/after_layout.dart';
+import 'package:dart_airtable/dart_airtable.dart';
 import 'package:easy_debounce/easy_debounce.dart';
 import 'package:enum_to_string/enum_to_string.dart';
 import 'package:flutter/material.dart';
@@ -465,9 +466,9 @@ class PaddingsState extends State<TextControl> with AfterLayoutMixin {
                           ],
                         );
                       }
-                      final selectedState = state.page.defaultStates.firstWhere(
+                      final selectedState =
+                          state.page.defaultStates.firstWhereOrNull(
                         (e) => e.name == widget.value.stateName,
-                        orElse: () => state.page.defaultStates.first,
                       );
                       return Column(
                         crossAxisAlignment: CrossAxisAlignment.start,
@@ -478,7 +479,7 @@ class PaddingsState extends State<TextControl> with AfterLayoutMixin {
                           ),
                           const Gap(Grid.small),
                           CDropdownCustom<String>(
-                            value: selectedState.name,
+                            value: selectedState?.name,
                             items: variables
                                 .map(
                                   (final e) => DropdownCustomMenuItem(
@@ -495,7 +496,7 @@ class PaddingsState extends State<TextControl> with AfterLayoutMixin {
                             expanded: true,
                           ),
                           const Gap(Grid.small),
-                          if (selectedState.type == VariableType.json)
+                          if (selectedState?.type == VariableType.json)
                             descriptionControlWidget(
                               description:
                                   'Specify the path to the value. Path can '
