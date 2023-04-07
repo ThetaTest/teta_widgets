@@ -132,7 +132,6 @@ class _TANavigationControlsState extends State<TANavigationControls> {
               ),
             ],
           ),
-
         // Share
         if (widget.action.type == TetaActionType.navigationShare)
           Padding(
@@ -161,6 +160,38 @@ class _TANavigationControlsState extends State<TANavigationControls> {
                 ),
               ),
             ),
+          ),
+        // Open Bottom Sheet
+        if (widget.action.type == TetaActionType.navigationOpenBottomSheet)
+          DestinationPageSelector(
+            pageToOpen: selectedPage?.name,
+            paramsToSend:
+                (newParams as TANavigationOpenBottomSheetParams?)?.paramsToSend,
+            onParamsChanged: (pageToOpen, paramsToSend) {
+              newParams = TANavigationOpenBottomSheetParams(
+                nameOfPage: pageToOpen,
+                paramsToSend: paramsToSend,
+              );
+              setState(() {
+                widget.onParamsChanged(newParams!);
+              });
+            },
+          ),
+        // Open SnackBar
+        if (widget.action.type == TetaActionType.navigationOpenSnackBar)
+          DestinationPageSelector(
+            pageToOpen: selectedPage?.name,
+            paramsToSend:
+                (newParams as TANavigationOpenSnackBarParams?)?.paramsToSend,
+            onParamsChanged: (pageToOpen, paramsToSend) {
+              newParams = TANavigationOpenSnackBarParams(
+                nameOfPage: pageToOpen,
+                paramsToSend: paramsToSend,
+              );
+              setState(() {
+                widget.onParamsChanged(newParams!);
+              });
+            },
           ),
         // Open Page
         if (widget.action.type == TetaActionType.navigationOpenPage)
