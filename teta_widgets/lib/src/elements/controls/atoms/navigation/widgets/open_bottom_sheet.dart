@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 
 import '../../../../actions/navigation/open_bottom_sheet/action.dart';
 import '../../../../actions/navigation/open_bottom_sheet/params.dart';
-import '../../destination_page_selector.dart';
+import '../../component_selector.dart';
 
 class NavigationOpenBottomSheetControl extends StatefulWidget {
   const NavigationOpenBottomSheetControl({
@@ -44,7 +44,7 @@ class NavigationOpenBottomSheetControlState
 
   @override
   Widget build(final BuildContext context) {
-    return DestinationPageSelector(
+    return ComponentSelector(
       pageToOpen: nameOfPage,
       paramsToSend: paramsToSend,
       onParamsChanged: (pageToOpen, paramsToSend) {
