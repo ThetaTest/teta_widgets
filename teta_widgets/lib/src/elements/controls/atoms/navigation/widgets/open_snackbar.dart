@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 
 import '../../../../actions/navigation/open_snack/action.dart';
 import '../../../../actions/navigation/open_snack/params.dart';
-import '../../destination_page_selector.dart';
+import '../../component_selector.dart';
 
 class NavigationOpenSnackBarControl extends StatefulWidget {
   const NavigationOpenSnackBarControl({
@@ -44,7 +44,7 @@ class NavigationOpenSnackBarControlState
 
   @override
   Widget build(final BuildContext context) {
-    return DestinationPageSelector(
+    return ComponentSelector(
       pageToOpen: nameOfPage,
       paramsToSend: paramsToSend,
       onParamsChanged: (pageToOpen, paramsToSend) {
