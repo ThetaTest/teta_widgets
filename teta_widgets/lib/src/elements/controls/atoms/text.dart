@@ -68,9 +68,7 @@ class PaddingsState extends State<TextControl> with AfterLayoutMixin {
         );
         jsonMapPathController.text = widget.value.jsonMapPath ?? '';
         typeOfInput = widget.value.type!;
-        if (widget.value.datasetName != null) {
-          databaseName = widget.value.datasetName!;
-        }
+        databaseName = widget.value.datasetName ?? '';
         final datasets =
             (context.read<PageCubit>().state as PageLoaded).datasets;
         final index = datasets.indexWhere(
@@ -80,20 +78,14 @@ class PaddingsState extends State<TextControl> with AfterLayoutMixin {
         Logger.printMessage(
           'Datasets: $datasets, name: ${widget.value.datasetName}, index: $index',
         );
-        if (widget.value.datasetAttr != null) {
-          databaseAttribute = widget.value.datasetAttr!;
-        }
-        if (widget.value.datasetSubListData != null) {
-          datasetSubListData = widget.value.datasetSubListData!;
-        }
-        if (widget.value.datasetSubMapData != null) {
-          datasetSubMapData = widget.value.datasetSubMapData!;
-        }
-        if (widget.value.datasetLength != null) {
-          datasetLength = widget.value.datasetLength!;
-        }
+        databaseAttribute = widget.value.datasetAttr ?? '';
+        datasetSubListData = widget.value.datasetSubListData ?? '';
+        datasetSubMapData = widget.value.datasetSubMapData ?? '';
+        datasetLength = widget.value.datasetLength!;
       });
-    } catch (e) {}
+    } catch (e) {
+      Logger.printError('Error in afterFirstLayout: $e');
+    }
   }
 
   @override
@@ -104,17 +96,16 @@ class PaddingsState extends State<TextControl> with AfterLayoutMixin {
   }
 
   @override
-  Widget build(final BuildContext context) {
+  Widget build(BuildContext context) {
     return BlocListener<DeviceModeCubit, DeviceState>(
-      listener: (final context, final device) {
+      listener: (context, device) {
         if (controller.text != widget.value.getValue(context, forPlay: false)) {
           controller.text = widget.value.getValue(context, forPlay: false);
         }
       },
       child: BlocBuilder<DeviceModeCubit, DeviceState>(
-        builder: (final context, final device) =>
-            BlocBuilder<FocusBloc, List<int>>(
-          builder: (final context, final focusState) {
+        builder: (context, device) => BlocBuilder<FocusBloc, List<int>>(
+          builder: (context, focusState) {
             return Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
@@ -333,9 +324,7 @@ class PaddingsState extends State<TextControl> with AfterLayoutMixin {
                             const Duration(milliseconds: 500),
                             () => widget.callBack(widget.value, old),
                           );
-                          setState(() {
-                            isChanged = false;
-                          });
+                          setState(() => isChanged = false);
                         },
                         onSubmitted: (final value) {
                           value.replaceAll(r'\', r'\\');
