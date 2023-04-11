@@ -321,7 +321,7 @@ class PaddingsState extends State<TextControl> with AfterLayoutMixin {
                           );
                           EasyDebounce.debounce(
                             'Editing text ${focusState.first}',
-                            const Duration(milliseconds: 500),
+                            const Duration(milliseconds: 250),
                             () => widget.callBack(widget.value, old),
                           );
                           setState(() => isChanged = false);
@@ -498,7 +498,7 @@ class PaddingsState extends State<TextControl> with AfterLayoutMixin {
                                 callBack: (final value) {
                                   EasyDebounce.debounce(
                                     'Editing text ${focusState.first}',
-                                    const Duration(milliseconds: 500),
+                                    const Duration(milliseconds: 250),
                                     () => {
                                       widget.callBack(
                                         widget.value..jsonMapPath = value,
