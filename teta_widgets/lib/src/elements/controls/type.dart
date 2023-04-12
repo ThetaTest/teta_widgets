@@ -201,7 +201,7 @@ class ControlBuilder {
   ) async {
     EasyDebounce.debounce(
       'toDB ${node.nid}',
-      const Duration(milliseconds: 500),
+      const Duration(milliseconds: 300),
       () => _toDB(node, context, key, value, old),
     );
   }
