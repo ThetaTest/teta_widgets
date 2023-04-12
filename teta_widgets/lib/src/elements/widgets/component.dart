@@ -67,7 +67,7 @@ class _WComponentState extends State<WComponent> {
                 widget.paramsToSend,
               ),
             );
-            component = component;
+            this.component = component;
             isLoaded = true;
           });
         }
@@ -79,7 +79,7 @@ class _WComponentState extends State<WComponent> {
         }
         if (mounted) {
           setState(() {
-            component = component;
+            this.component = component;
             isLoaded = true;
           });
         }
