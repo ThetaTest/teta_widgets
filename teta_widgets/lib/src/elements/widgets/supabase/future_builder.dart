@@ -185,8 +185,11 @@ class _WSupabaseFutureBuilderState extends State<WSupabaseFutureBuilder> {
     }
     // ignore: literal_only_boolean_expressions
     query.range(valueFromRange, valueToRange * valueToPage);
-
-    setState(() => _future = query.execute());
+    await query.execute().then((value) {
+      setState(() {
+        _future = Future.value(value);
+      });
+    });
   }
 
   @override
