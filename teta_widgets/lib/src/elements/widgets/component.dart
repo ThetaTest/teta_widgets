@@ -212,19 +212,21 @@ class _VBody extends StatelessWidget {
       state: state,
       child: IgnorePointer(
         ignoring: !state.forPlay,
-        child: pageState.page.scaffold.toWidget(
-          state: state.copyWith(
-            params: (paramsToSend != null)
-                ? getVariableObjectsFromParams(
-                    state,
-                    pageState.page,
-                    paramsToSend,
-                  )
-                : pageState.params,
-            states: pageState.states,
-            dataset: pageState.datasets,
-          ),
-        ),
+        child: pageState.page.scaffold.children != null
+            ? pageState.page.scaffold.children!.first.toWidget(
+                state: state.copyWith(
+                  params: (paramsToSend != null)
+                      ? getVariableObjectsFromParams(
+                          state,
+                          pageState.page,
+                          paramsToSend,
+                        )
+                      : pageState.params,
+                  states: pageState.states,
+                  dataset: pageState.datasets,
+                ),
+              )
+            : const SizedBox(),
       ),
     );
   }
